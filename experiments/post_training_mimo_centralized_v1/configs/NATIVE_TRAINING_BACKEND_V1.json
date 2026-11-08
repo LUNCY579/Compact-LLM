@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "status": "FROZEN_INTERNAL_NATIVE_BACKEND_SOURCE_ONLY",
+  "amendment": "AMENDMENT_020.md",
+  "source_files": {
+    "scripts/native_training_backend.py": {
+      "sha256": "587696b67614bb674efe3e382be5446708c5402d489273c2e04605012f4030f7",
+      "bytes": 34450
+    },
+    "tests/test_native_training_backend.py": {
+      "sha256": "240417ac0a8bbc29c2cbbacef36095fecbbfb27341f7cb447f780a5d34bca550",
+      "bytes": 25299
+    },
+    "scripts/e1_training_engine_v2.py": {
+      "sha256": "2c15f248c360bf218caf3ad607016cabcf1344830fca2a4c7d5cbe46a9d990b3",
+      "bytes": 13488
+    },
+    "tests/test_e1_training_engine_v2.py": {
+      "sha256": "5c38cc8eb5921ee031839e4c63ec8ffccfbce269e8fe7a3041f34827b7b02266",
+      "bytes": 8587
+    }
+  },
+  "constructor": "NativeTrainingBackend.create; originalconstructorfailure retainsprimitivecounter snapshot on exception",
+  "backend_scope": "UNQUALIFIED_NATIVE_COMPONENT",
+  "model_source": "Exact596049920BF16Titan/310base tensors plus112FP32 q/v adapters1146880; callerowns verifiedloader/runtime/source admission",
+  "loss": "Existingqualified completion_loss; engine mean20, backwardscale1/20 exactlyonce",
+  "optimizer": "QualifiedAdamW betas.9,.999 eps1e-8 weightdecay0 foreach/fusedNone/capturableFalse/differentiableFalse; GPUF32moments,CPUscalarsteps allowed",
+  "checkpoint": "Adapterparameters/optimizer/Python+TorchCPU+CUDA0 RNG only; sharedowned32MiB artifact,CPUcopies bounded; verifiedsameBytesIO weights_only/mapCPU restoration",
+  "engine": "VersionedV2 publication beforeboundary exposure; explicitplannedcomponent supplied; finalprimitivecounter snapshot retained",
+  "cost_scope": "Outerbackendmethod spans and immediateactualTorchprimitive attempt/returned/failed/pending witnesses separate; latervalidationfailurecannoteraseTorchreturn",
+  "restore_scope": "Controlledsameprocess completedboundary only; requiresown durablypublishedmanifest; crossprocess reconstruction/failedrollback unsupported",
+  "required_physical_qualification": [
+    "Ownedsource/runtime/resource supervisor",
+    "Exactload/zeroadapter parity throughnewbackend",
+    "Real20sequence accumulation and unequal-target weighting",
+    "Confinedfinitegradients/oneclip/update",
+    "Durableartifact/publication integrity and bitwisecontinuation",
+    "Frozenbase/source unchanged andsustainedRAM/VRAM"
+  ],
+  "owned_native_worker_connected": false,
+  "native_tensor_math_qualified": false,
+  "native_resume_qualified": false,
+  "E1_authorized": false,
+  "CHECK_FINAL_access": false,
+  "goal_complete": false
+}

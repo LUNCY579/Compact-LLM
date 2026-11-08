@@ -1,0 +1,101 @@
+======================================================================
+ERROR: test_open_roles_only_never_read_sealed_payload_preserve_twins_write_once (test_tokenize_retention.RetentionDatasetTests.test_open_roles_only_never_read_sealed_payload_preserve_twins_write_once)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\clclc\BusinessProject\ChatBubble-post-training-Mimo\experiments\post_training_mimo_centralized_v1\tests\test_tokenize_retention.py", line 153, in test_open_roles_only_never_read_sealed_payload_preserve_twins_write_once
+    receipt = t.tokenize_dataset(source, token_receipt, output)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\clclc\BusinessProject\ChatBubble-post-training-Mimo\experiments\post_training_mimo_centralized_v1\scripts\tokenize_retention.py", line 158, in tokenize_dataset
+    require("torch" not in sys.modules, "tokenizer process must not already contain torch")
+  File "C:\Users\clclc\BusinessProject\ChatBubble-post-training-Mimo\experiments\post_training_mimo_centralized_v1\scripts\tokenize_bridge.py", line 39, in require
+    raise ValueError(message)
+ValueError: tokenizer process must not already contain torch
+
+======================================================================
+FAIL: test_duplicate_twin_cannot_replace_missing_variant (test_tokenize_retention.RetentionDatasetTests.test_duplicate_twin_cannot_replace_missing_variant)
+----------------------------------------------------------------------
+ValueError: tokenizer process must not already contain torch
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\clclc\BusinessProject\ChatBubble-post-training-Mimo\experiments\post_training_mimo_centralized_v1\tests\test_tokenize_retention.py", line 182, in test_duplicate_twin_cannot_replace_missing_variant
+    with patch.object(t, "load_tokenizer", side_effect=AssertionError("must fail before tokenizer")), \
+AssertionError: "duplicate retention row ID" does not match "tokenizer process must not already contain torch"
+
+======================================================================
+FAIL: test_empty_open_population_cannot_claim_token_fit (test_tokenize_retention.RetentionDatasetTests.test_empty_open_population_cannot_claim_token_fit)
+----------------------------------------------------------------------
+ValueError: tokenizer process must not already contain torch
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\clclc\BusinessProject\ChatBubble-post-training-Mimo\experiments\post_training_mimo_centralized_v1\tests\test_tokenize_retention.py", line 244, in test_empty_open_population_cannot_claim_token_fit
+    with patch.object(t, "load_tokenizer", side_effect=AssertionError("must fail before tokenizer")), \
+AssertionError: "no open retention parents" does not match "tokenizer process must not already contain torch"
+
+======================================================================
+FAIL: test_missing_twin_is_rejected_not_silently_deduplicated (test_tokenize_retention.RetentionDatasetTests.test_missing_twin_is_rejected_not_silently_deduplicated)
+----------------------------------------------------------------------
+ValueError: tokenizer process must not already contain torch
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\clclc\BusinessProject\ChatBubble-post-training-Mimo\experiments\post_training_mimo_centralized_v1\tests\test_tokenize_retention.py", line 194, in test_missing_twin_is_rejected_not_silently_deduplicated
+    with patch.object(t, "load_tokenizer", side_effect=AssertionError("must fail before tokenizer")), \
+AssertionError: "domain row count" does not match "tokenizer process must not already contain torch"
+
+======================================================================
+FAIL: test_source_file_and_generator_hash_drift_fail_before_tokenizer (test_tokenize_retention.RetentionDatasetTests.test_source_file_and_generator_hash_drift_fail_before_tokenizer) (kind='file')
+----------------------------------------------------------------------
+ValueError: tokenizer process must not already contain torch
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\clclc\BusinessProject\ChatBubble-post-training-Mimo\experiments\post_training_mimo_centralized_v1\tests\test_tokenize_retention.py", line 212, in test_source_file_and_generator_hash_drift_fail_before_tokenizer
+    with patch.object(t, "load_tokenizer", side_effect=AssertionError("must fail before tokenizer")), \
+AssertionError: "drift" does not match "tokenizer process must not already contain torch"
+
+======================================================================
+FAIL: test_source_file_and_generator_hash_drift_fail_before_tokenizer (test_tokenize_retention.RetentionDatasetTests.test_source_file_and_generator_hash_drift_fail_before_tokenizer) (kind='generator')
+----------------------------------------------------------------------
+ValueError: tokenizer process must not already contain torch
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\clclc\BusinessProject\ChatBubble-post-training-Mimo\experiments\post_training_mimo_centralized_v1\tests\test_tokenize_retention.py", line 212, in test_source_file_and_generator_hash_drift_fail_before_tokenizer
+    with patch.object(t, "load_tokenizer", side_effect=AssertionError("must fail before tokenizer")), \
+AssertionError: "drift" does not match "tokenizer process must not already contain torch"
+
+======================================================================
+FAIL: test_tokenizer_asset_and_runtime_template_drift (test_tokenize_retention.RetentionDatasetTests.test_tokenizer_asset_and_runtime_template_drift) (kind='asset')
+----------------------------------------------------------------------
+ValueError: tokenizer process must not already contain torch
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\clclc\BusinessProject\ChatBubble-post-training-Mimo\experiments\post_training_mimo_centralized_v1\tests\test_tokenize_retention.py", line 227, in test_tokenizer_asset_and_runtime_template_drift
+    with patch.object(t, "load_tokenizer", return_value=tokenizer), self.assertRaisesRegex(ValueError, "drift"):
+AssertionError: "drift" does not match "tokenizer process must not already contain torch"
+
+======================================================================
+FAIL: test_tokenizer_asset_and_runtime_template_drift (test_tokenize_retention.RetentionDatasetTests.test_tokenizer_asset_and_runtime_template_drift) (kind='runtime')
+----------------------------------------------------------------------
+ValueError: tokenizer process must not already contain torch
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\clclc\BusinessProject\ChatBubble-post-training-Mimo\experiments\post_training_mimo_centralized_v1\tests\test_tokenize_retention.py", line 227, in test_tokenizer_asset_and_runtime_template_drift
+    with patch.object(t, "load_tokenizer", return_value=tokenizer), self.assertRaisesRegex(ValueError, "drift"):
+AssertionError: "drift" does not match "tokenizer process must not already contain torch"
+
+----------------------------------------------------------------------
+Ran 128 tests in 43.105s
+
+FAILED (failures=7, errors=1)

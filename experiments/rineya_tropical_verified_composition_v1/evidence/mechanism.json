@@ -1,0 +1,171 @@
+{
+  "archive": {
+    "candidates": [
+      {
+        "actions": [
+          "inc_x",
+          "inc_y"
+        ],
+        "discovered_at": 2,
+        "id": "349ac8bfd80ced5aa4bec879b5b1b93f5075f67204cbcdb184ec046565582291",
+        "origin": "restart_completion",
+        "sampled_from_root": false,
+        "support_attempts": [
+          "failed-root",
+          "successful-frontier"
+        ],
+        "task_key": "26e0bd11a0a3dfba20e8c8eb57d82c161d1f9131aa863baca55758f7f64e7b02"
+      }
+    ],
+    "capacity_events": 0,
+    "edges": [
+      {
+        "action": "inc_x",
+        "after": {
+          "depth": 1,
+          "task_key": "26e0bd11a0a3dfba20e8c8eb57d82c161d1f9131aa863baca55758f7f64e7b02",
+          "x": 1,
+          "y": 0
+        },
+        "before": {
+          "depth": 0,
+          "task_key": "26e0bd11a0a3dfba20e8c8eb57d82c161d1f9131aa863baca55758f7f64e7b02",
+          "x": 0,
+          "y": 0
+        },
+        "id": "6946a2840d0f721f382439d4ade31c2f959f683308f43540aa64493df09ce415",
+        "sources": [
+          "failed-root"
+        ],
+        "training_uses": 0
+      },
+      {
+        "action": "inc_y",
+        "after": {
+          "depth": 2,
+          "task_key": "26e0bd11a0a3dfba20e8c8eb57d82c161d1f9131aa863baca55758f7f64e7b02",
+          "x": 1,
+          "y": 1
+        },
+        "before": {
+          "depth": 1,
+          "task_key": "26e0bd11a0a3dfba20e8c8eb57d82c161d1f9131aa863baca55758f7f64e7b02",
+          "x": 1,
+          "y": 0
+        },
+        "id": "cebc276c7bf574ce165a51b5e2ff505cb0cf194418d29bdf8cb9e29fe940a8b8",
+        "sources": [
+          "successful-frontier"
+        ],
+        "training_uses": 0
+      }
+    ],
+    "episodes": [
+      {
+        "accepted": false,
+        "actions": [
+          "inc_x"
+        ],
+        "attempt_id": "failed-root",
+        "invalid_action": "INVALID",
+        "kind": "root",
+        "states": [
+          {
+            "depth": 0,
+            "task_key": "26e0bd11a0a3dfba20e8c8eb57d82c161d1f9131aa863baca55758f7f64e7b02",
+            "x": 0,
+            "y": 0
+          },
+          {
+            "depth": 1,
+            "task_key": "26e0bd11a0a3dfba20e8c8eb57d82c161d1f9131aa863baca55758f7f64e7b02",
+            "x": 1,
+            "y": 0
+          }
+        ]
+      },
+      {
+        "accepted": true,
+        "actions": [
+          "inc_y"
+        ],
+        "attempt_id": "successful-frontier",
+        "invalid_action": null,
+        "kind": "frontier",
+        "states": [
+          {
+            "depth": 1,
+            "task_key": "26e0bd11a0a3dfba20e8c8eb57d82c161d1f9131aa863baca55758f7f64e7b02",
+            "x": 1,
+            "y": 0
+          },
+          {
+            "depth": 2,
+            "task_key": "26e0bd11a0a3dfba20e8c8eb57d82c161d1f9131aa863baca55758f7f64e7b02",
+            "x": 1,
+            "y": 1
+          }
+        ]
+      }
+    ],
+    "revision": "fixture-v1",
+    "task": {
+      "bound": 32,
+      "goal": [
+        1,
+        1
+      ],
+      "horizon": 3,
+      "initial": [
+        0,
+        0
+      ],
+      "parent_id": "fixture-parent",
+      "role": "train",
+      "rules": "register-pair-v1",
+      "task_id": "fixture"
+    },
+    "task_key": "26e0bd11a0a3dfba20e8c8eb57d82c161d1f9131aa863baca55758f7f64e7b02"
+  },
+  "certified_solutions": 1,
+  "failed_only_candidates": 0,
+  "first_origin": "restart_completion",
+  "ledger": {
+    "limits": {},
+    "used": {
+      "env_steps": 3,
+      "generated_tokens": 0,
+      "join_candidates": 0,
+      "optimizer_steps": 0,
+      "policy_calls": 3,
+      "prompt_tokens": 0,
+      "replay_steps": 3,
+      "restart_attempts": 1,
+      "root_attempts": 1,
+      "score_calls": 3,
+      "scored_tokens": 0,
+      "supervised_tokens": 0,
+      "trained_actions": 0,
+      "verification_calls": 4
+    },
+    "violations": []
+  },
+  "max_vs_pass1_counterexample": {
+    "after": [
+      0.5,
+      0.05
+    ],
+    "before": [
+      0.3,
+      0.3
+    ]
+  },
+  "root_sampled_successes": 0,
+  "runtime": {
+    "device": "cpu",
+    "platform": "Linux-6.18.44-x86_64-with-glibc2.41",
+    "python": "3.13.5",
+    "torch": "2.10.0+cpu"
+  },
+  "status": "SCRIPTED_MECHANISM_PASS_NOT_MODEL_EFFICACY"
+}

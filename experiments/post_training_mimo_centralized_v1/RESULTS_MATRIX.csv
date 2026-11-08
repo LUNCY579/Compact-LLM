@@ -1,0 +1,52 @@
+experiment,status,evidence,primary_endpoint,acquisition_delta,retention_delta,interpretation
+STATIC_TITAN_BINDING,PASS,MEASURED / REPRODUCED,596049920 params;310 BF16 tensors;weight hash matched,,,Identity only
+CPU_CONTROLS,PASS,MEASURED / REPRODUCED,80 focused synthetic tests passed; one integration-test isolation failure fixed without production changes,,,Mechanics only
+BRIDGE_DATA,PASS_MECHANICS,MEASURED / REPRODUCED,4608 open parents verified;512 CHECK hashes only;FINAL closed,,,Data mechanics not efficacy
+E0_v1,IMPLEMENTATION_FAILURE,MEASURED / REPRODUCED,WindowsPath rejected by psutil.disk_usage before model load,,,Fixed without changing thresholds
+E0_v2,BLOCKED,MEASURED / REPRODUCED,Host free6.9113GiB<7.4GiB floor,,,No model memory-fit or quality result
+E1,BLOCKED,UNMEASURED,Requires E0 and qualified replay/preservation,,,No training; no candidate promoted
+TOKENIZER_v2,PASS_TOKEN_ONLY,MEASURED / REPRODUCED,4608 rows;max157 total/38 completion;TRAIN414554/49272tokens;no truncation,,,Tokenizer data fit only; E1 blocked
+RETENTION_DATA,PASS_DATA_MECHANICS,MEASURED / REPRODUCED,768TRAIN/256DEVrows verified;max401open-role tokens,,,Not actual preservation
+LANGUAGE_SOURCE_AUDIT,SOURCE_DEFECT_VERIFIED,MEASURED / REPRODUCED,4000V1rows mislabeledV2;originrecovered by exactTRAINmembership,,,Original bytes preserved
+LANGUAGE_REVIEW,ASSISTANT_SOURCE_REVIEW,MEASURED / REPRODUCED,250accepted/6flags;6replacements under frozen amendment,,,No humanapproval or calibratednativegrading
+CANDIDATE_DOSE,MEASURED_NOT_LAUNCH,MEASURED / REPRODUCED,5120rows;680532nonpadding/63546supervisedtokens,,,E1 blocked
+CONTINUATION_TESTS,PASS_CPU_ONLY,MEASURED / REPRODUCED,129aggregate+5focusedtests pass,,,No pretrained effect
+LONG_CONTEXT_DEV_DATA,PASS_TOKENIZER_MECHANICS,MEASURED / REPRODUCED,32parents/256rows;exact2024/4072prompts;172CPUtests,,,No model fit/source competence/preservation evidence
+E1_INPUT_SCHEDULE_PLAN,PASS_PLAN_ONLY,MEASURED / REPRODUCED,5120TRAINrows;256steps;680532/63546tokens;native launch denied,,,No E1 execution or efficacy
+E1_PREPARATION_CONTROLS,PASS_CPU_ONLY,MEASURED / REPRODUCED,89newfocusedtests in70.474s;172priorbaseline retained separately,,,No native qualification
+LANGUAGE_DEV_CAL_CANDIDATES,PREPARED_UNQUALIFIED_GRADING,MEASURED / REPRODUCED,64DEV/16CALworlds;96authoredcontrols;2unassigned112itempackets,,,No native responses or qualified labels
+LANGUAGE_DEV_CAL_TOKENIZER,PASS_TOKEN_ONLY,MEASURED / REPRODUCED,80prompts/8680tokens/max166;160references/5603tokens/max63EOSincluded,,,No truncation; no model fit implication
+LANGUAGE_SCOPED_EXCLUSIONS,PARTIAL_COMPARISONS_ONLY,MEASURED / REPRODUCED,42000TRAINrows+32800historicalhashes separately;0matches;240neighborcontexts reviewed,,,Not semantic independence or unknown-pretraining exclusion
+LANGUAGE_PREPARATION_CONTROLS,PASS_CPU_ONLY,MEASURED / REPRODUCED,43newtests in40.998s plus2focusedfingerprintcontrols;214artifactchecks,,,Separate runs; no grader or pretrained qualification
+DEV_INPUT_SCORER_BINDING,PASS_STATIC_ONLY,MEASURED / REPRODUCED,832DEVrows/544parents/890874prompttokens;6883shortreferencepositions separated,,,No generated responses or native enrollment
+DEV_BINDING_CONTROLS,PASS_CPU_ONLY,MEASURED / REPRODUCED,40newtests in87.582s;832artifactrow comparisons and34filechecks,,,No pretrained or language-grader qualification
+E0_v3,BLOCKED,MEASURED / REPRODUCED,Host free6.936687469482422GiB<7.4GiB floor; source trace confirms no model operations,,,First blocked observation after resumption; previous seven-turn audit not reused
+E0_ACCOUNTING_V2,PASS_CPU_ONLY,MEASURED / REPRODUCED,52 stdlib tests and12 existing tiny random CPU controls passed,,,Attempt/return/pending accounting and retained profiles; native math/settings unchanged; no native qualification
+E0_v4,BLOCKED,MEASURED / REPRODUCED,Host free7.378871917724609GiB<7.4GiB floor; v2journalall8operationszero,,,Meaningful OS headroom improvement stillinsufficient afterimports; samefirstresumedgoalturn
+e0_laptop_load_v1,PASS_E0_LOAD_FORWARD_RESOURCE_ONLY,MEASURED / REPRODUCED,Exact load and one finite256token frozen forward,,,Resource/native mechanics only; no learning efficacy or E1 grant
+e0_laptop_full_v1,BLOCKED_E0,MEASURED / REPRODUCED,native padding likelihood disagreement,,,Resource/native mechanics only; no learning efficacy or E1 grant
+e0_laptop_full_v2,BLOCKED_E0,MEASURED / REPRODUCED,HOST_RAM_GUARD,,,Resource/native mechanics only; no learning efficacy or E1 grant
+e0_laptop_stream_load_v1,BLOCKED_E0,MEASURED / REPRODUCED,HOST_RAM_GUARD,,,Resource/native mechanics only; no learning efficacy or E1 grant
+LAPTOP_STREAMED_LOADER_CPU,PASS_CPU_ONLY,MEASURED / REPRODUCED,71stdlib controls and9actual CPUloader controls passed; fixed2MiBbuffer byteidentity,,,New completeGPUloader path stillunqualified; preload guard stopped its first attempt
+UNPADDED_CE_SCOPE_V1,PASS_STDLIB_ONLY,VERIFIED SOURCE,76CPU controls; exact microbatch1 unpadded input boundary and mandatorynativechecks registered,,,Scope hasnot run natively; known fullpaddingfail retained; noE1grant
+UNPADDED_CE_NATIVE_V1,BLOCKED_E0,MEASURED / REPRODUCED,Exact streamedGPUload and unpadded checks;256/512updates completed;1024VRAMguard,,,No save/resume/fullscopedpass or learning efficacy
+UNPADDED_CE512_SCOPE_V1,PASS_STDLIB_ONLY,VERIFIED SOURCE,107CPU controls; distinct512scope/checker and completefour-step mechanicsfixture frozen,,,No512nativepass; previous1024failure retained; no E1grant
+CE512_ADMISSION_V1,BLOCKED_RESOURCE_ADMISSION,MEASURED / REPRODUCED,27OSsamples1.441-1.853GiB during62.552s verifiedwait,,,No native supervisor invoked; no512model fit/efficacy finding
+UNPADDED_CE512_NATIVE_V2,PASS_E0_UNPADDED_CE512_SCOPED,MEASURED / REPRODUCED,All8scopedchecks;4disposableupdates;bitwiseresume;frozenbaseunchanged,,,RSSpeak1.748646GiB;393calls; no heldout learning/preservation or E1grant
+TRAIN_SCOPE_V1,PASS_DATA_ONLY,MEASURED / REPRODUCED,5120actualsource/arrayjoins;680532nonpad/63546supervised/max398;81priorassistantturnsmasked,,,Committedproducer/28pins/semanticreferences/interfacebound; no newtokenization orE1grant
+CAPTURE_SHORT_V1,BLOCKED_NUMERICAL,MEASURED / REPRODUCED,3greedyIDs[16 22 EOS] visible17;rawLMmax.0414324mean.0262994 >.03125/.01,,,318returnedcalls/1286positions;384unattempted; resourcespassed; no capture/enrollment/E1grant
+CAPTURE_GEOMETRY_D1,COMPLETE_DIAGNOSTIC_ONLY,MEASURED / REPRODUCED,Original likelihood gap reproduced exactly; BF16 head row-layout error0; hidden max1.25; FP32 head alone still fails,,,320 returned calls/16 direct projections/1036 positions; upstream difference established without cause attribution or capture/E1 grant
+CAPTURE_CAUSAL_D2,ADMISSION_PENDING_NATIVE,MEASURED / REPRODUCED,Four-forward diagnostic source reviewed;14 CPU controls passed;12 OS samples failed admission,,,Window30.897s;available0.221680-3.228485GiB;no native supervisor/model work; original likelihood failure remains
+E1_TRAINING_COMPONENTS,PASS_CPU_AND_ACTUAL_READER_ONLY,MEASURED / REPRODUCED,53 stdlib controls; actual5120 ordered lookups/680532inputs/63546targets;128MiB bound held,,,Reader and synthetic engine components only; no native backend/training/resume/efficacy grant
+CAPTURE_CAUSAL_D2_PRELOAD,BLOCKED_RESOURCE_BEFORE_MODEL,MEASURED / REPRODUCED,Preworker3.797/3.802GiB admitted; postimport1.986759<2.581776GiB,,,All model counters0; no causal or model-fit finding; register bounded postimport admission wait
+POST_IMPORT_WAIT_V2,SOURCE_READY_CPU_PASS_ADMISSION_WAIT,MEASURED / REPRODUCED,28 CPU controls and source review;12 preworker samples2.061-2.100GiB below3.3125,,,No native supervisor or postimportwait exercise; same full guards/numerical fixtures preserved
+NATIVE_BACKEND_CONTRACT_V1,PASS_METADATA_BYTE_CONTROLS_ONLY,VERIFIED SOURCE,21 purecontrols;112adapter/310base-name metadata; boundedsharedartifact/checkpointrefs,,,No physicaltensors/deserialization/RNG/native/efficacy evidence; actualbackend stillneeded
+NATIVE_TRAINING_BACKEND_V1,PASS_SOURCE_AND_FAKE_CONTROLS_ONLY,VERIFIED SOURCE,ActualTorchoperation source implemented;35 fake/syntheticcontrols;publication/primitivefailure witnesses,,,No actualTensor/GPUqualification/ownedworker/scientificlaunch; E1 gainsunmeasured
+NATIVE_BACKEND_QUAL_V1_PREFIX,PASS_ACTUAL_TRAIN_PREFIX_BINDING_ONLY,MEASURED / REPRODUCED,40 orderedTRAIN rows;5248input/463supervised;15 distincttargetlengths;51.23MiB highwater,,,Qualification fixtures bound only; no model/update/capability evidence; nativeworker still under source review
+NATIVE_BACKEND_QUAL_V1_SOURCE,PASS_SOURCE_CPU_CONTROLS_ONLY,VERIFIED SOURCE,Owned40-row/two-update worker;17CPU controls and independent review,,,Physical qualification remains unproven; all E1 and closed-bank grants false
+NATIVE_BACKEND_QUAL_V1_ADMISSION,BLOCKED_PREWORKER_NO_MODEL,MEASURED / REPRODUCED,15 samples2.208-2.245GiB below3.3125GiB,,,No framework/GPU worker; no model-fit or efficacy result; records archived without byte changes
+NATIVE_BACKEND_QUAL_V1_NATIVE,PASS_TWO_UPDATE_MECHANICS_ONLY,MEASURED / REPRODUCED,40TRAIN/2nativeupdates;112grad comparisons;bitwise parity/restoration/Adam,,,Observed bounded mechanics only; source19551dde; full epoch/crossprocess/acquisition/retention unmeasured
+CAPTURE_CAUSAL_WAIT_V2_NATIVE,COMPLETE_FIXED_SHAPE_DIAGNOSTIC_ONLY,MEASURED / REPRODUCED,4forwards/524positions;6protected hidden/logit comparisons bitwise equal,,,Original likelihood failure and shape invariance remain unresolved; no capture or E1 grant
+PUBLICATION_REVIEW_20261009,PASS_EVIDENCE_REVIEW_WITH_SCOPED_CODE_CORRECTION,VERIFIED SOURCE,35native text records indexed;688distinctCPU controls validated with process isolation,,,V2 accounting correction unconnected to worker; historical source/results preserved; no new experiment
+CAPTURE_EXACT_PREFIX_V1_SOURCE,PASS_SOURCE_CPU_ONLY,VERIFIED SOURCE,Distinct exact-prefix scoring scope;20controls;514/826/164352ceiling,,,Originalbulk gate remainsfailed; native/GPU admission and capture qualification unproven
+CAPTURE_EXACT_PREFIX_V1_ADMISSION,BLOCKED_GPU_BEFORE_WORKER,MEASURED / REPRODUCED,15samples;RAM5.993-6.225GiB/GPU1.999GiB below4,,,No framework/model/scoring result; resource guards preserved; ownedwindow archived byteexact

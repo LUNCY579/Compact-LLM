@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "artifact": "D28-001 local P1 launcher",
+  "target_execution_head": "cd6ef9bd49724da6879bfa4d945af3bfaa6d9758",
+  "target_implementation_sha256": "570fa72d5f07979a8e4a57954d1aa2006e607788e6f5ad684321868c0ca1ea74",
+  "helper_tests": {"runner": "stdlib unittest", "tests": 11, "failures": 0, "errors": 0, "skipped": 0},
+  "test_host": {"python": "3.12.14", "os": "Linux", "git": "2.51.1"},
+  "scope": ["real synthetic Git repository/worktree isolation", "dirty original checkout preserved", "synthetic source hashes and pointer rejection", "symlink rejection", "create-only directories and retained failures", "unsupported host rejection", "no P2 command dispatch", "receipt-validation failure cannot report success"],
+  "limitations": ["package installations mocked in launcher tests", "model execution and official receipt validation mocked in launcher tests", "Windows not executed in delivery environment", "no measured RAM fit", "transitive libraries recorded at local installation, not globally hash-locked"],
+  "original_94_tests_rerun_here": false,
+  "official_weights_loaded": false,
+  "official_P1_executed": false,
+  "official_P1_pass": false,
+  "P2_executed": false,
+  "efficacy_claim": false,
+  "recovery_claim": false,
+  "gpu_fit_claim": false,
+  "deployment_claim": false
+}

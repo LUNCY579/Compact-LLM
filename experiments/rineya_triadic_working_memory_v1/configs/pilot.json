@@ -1,0 +1,24 @@
+{
+  "schema": "twm-pilot-v1",
+  "experiment_id": "TWM-001",
+  "layer": 13,
+  "memory": {
+    "d_model": 1024,
+    "heads": 4,
+    "key_dim": 64,
+    "value_dim": 64,
+    "slices": 4,
+    "conv_width": 4,
+    "gate_init": 0.0,
+    "max_state_bytes": 67108864
+  },
+  "seeds": [17, 43, 91],
+  "steps": 100,
+  "max_seq_len": 512,
+  "max_new_tokens": 24,
+  "learning_rate": 0.001,
+  "clip_grad_norm": 1.0,
+  "teacher_kl": 0.02,
+  "min_free_gib": 6.5,
+  "peak_budget_gib": 7.0
+}

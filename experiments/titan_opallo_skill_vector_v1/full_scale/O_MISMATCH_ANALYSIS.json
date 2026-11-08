@@ -1,0 +1,72 @@
+{
+  "schema": 1,
+  "instrument": "OPALLO-HELDOUT-REPLY-MISMATCH-CONTROL-001",
+  "matched_sha256": "f5cbaea0f3ee67932e55c79fa784ecf09d03a59b95651f49b10aef56e57004aa",
+  "mismatch_sha256": "d7a0d8cf3768028b5c6852673a4fd42dde404896c99074950409c446e5a6aea1",
+  "bootstrap": {
+    "n": 10000,
+    "seed": 20260923
+  },
+  "arms": {
+    "ADD-100": {
+      "matched_mean_nll": 2.250163945658587,
+      "mismatch_mean_nll": 4.067498694790314,
+      "mismatch_minus_matched": {
+        "mean": 1.817334749131727,
+        "ci95": [
+          1.772272909782614,
+          1.8618425944911248
+        ]
+      },
+      "rows": 6741
+    },
+    "ADD-O75": {
+      "matched_mean_nll": 2.262913519586564,
+      "mismatch_mean_nll": 4.155564451119062,
+      "mismatch_minus_matched": {
+        "mean": 1.8926509315324975,
+        "ci95": [
+          1.846110277719711,
+          1.9381636285086792
+        ]
+      },
+      "rows": 6741
+    },
+    "BASE": {
+      "matched_mean_nll": 3.0734735050629243,
+      "mismatch_mean_nll": 5.080668377736576,
+      "mismatch_minus_matched": {
+        "mean": 2.007194872673652,
+        "ci95": [
+          1.9548577124304172,
+          2.0600355903413563
+        ]
+      },
+      "rows": 6741
+    },
+    "OPALLO": {
+      "matched_mean_nll": 2.226668347839096,
+      "mismatch_mean_nll": 4.066973297554597,
+      "mismatch_minus_matched": {
+        "mean": 1.8403049497155008,
+        "ci95": [
+          1.7948737220685862,
+          1.8854478057517763
+        ]
+      },
+      "rows": 6741
+    },
+    "SPARSE": {
+      "matched_mean_nll": 2.9364793152277446,
+      "mismatch_mean_nll": 4.94302042099864,
+      "mismatch_minus_matched": {
+        "mean": 2.0065411057708955,
+        "ci95": [
+          1.955477621696317,
+          2.0589676007692272
+        ]
+      },
+      "rows": 6741
+    }
+  }
+}

@@ -1,0 +1,9 @@
+# Maintained source uses LF; archival receipts retain their exact original bytes.
+*.py text eol=lf
+*.md text eol=lf
+configs/*.json text eol=lf
+NATIVE_QUALIFICATION_20261003.json -text whitespace=cr-at-eol
+evidence/** -text whitespace=-blank-at-eol,-blank-at-eof,cr-at-eol
+evidence/README.md text eol=lf whitespace=blank-at-eol,blank-at-eof,space-before-tab
+evidence/REVIEW_20261009.md text eol=lf whitespace=blank-at-eol,blank-at-eof,space-before-tab
+evidence/verify.py text eol=lf whitespace=blank-at-eol,blank-at-eof,space-before-tab

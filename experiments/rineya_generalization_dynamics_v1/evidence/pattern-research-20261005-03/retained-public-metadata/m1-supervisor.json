@@ -1,0 +1,43 @@
+{
+  "action": "qualify",
+  "inventory": {
+    "model_calls": 0,
+    "optimizer_steps": 0,
+    "permissions": {
+      "deployment": false,
+      "efficacy_claim": false,
+      "merged_checkpoint": false,
+      "sealed_evaluation": false,
+      "training": false
+    },
+    "reasons": [],
+    "runtime": {
+      "psutil": "7.2.2",
+      "safetensors": "0.8.0",
+      "torch": "2.10.0+cu126",
+      "transformers": "5.14.1"
+    },
+    "status": "READY_FOR_NATIVE_ATTEMPT"
+  },
+  "native_status": "FAIL_PREMODEL_INTEGRITY",
+  "optimizer_steps": 0,
+  "permissions": {
+    "deployment": false,
+    "efficacy_claim": false,
+    "merged_checkpoint": false,
+    "sealed_evaluation": false,
+    "training": false
+  },
+  "release_candidate": false,
+  "schema": "mlp_ship.supervisor/1",
+  "source_sha256": "4a3aa695f5f9cc31a4be7af1e06c1cfcc3dbf8d01d1c0e3bd1137c09140dce1a",
+  "status": "FAIL_CHILD_OR_MISSING_RECEIPT",
+  "supervisor": {
+    "elapsed_seconds": 10.921999999998661,
+    "host_limit_mib": 6144,
+    "observed_peak_process_tree_rss_mib": 519.1484375,
+    "returncode": 2,
+    "stop_reason": null,
+    "wall_limit_seconds": 900
+  }
+}

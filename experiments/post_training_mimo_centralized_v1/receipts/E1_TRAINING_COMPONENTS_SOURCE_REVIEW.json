@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "status": "PASS_COMPONENT_SOURCE_REVIEW_ONLY",
+  "human_approval": false,
+  "reviews": [
+    {
+      "component": "TRAIN_reader",
+      "reviewer": "non-author root",
+      "source": {
+        "sha256": "dd118645057c0819c49b297f9a00f7148d1e82c6c67d6ec5abc88d82f4fa931c",
+        "bytes": 30225
+      },
+      "findings": "Pinned helpers and historical metadata; actual file/hash/offset identity, selected line validation, immutable schedule and final full hashes. Caller metadata pins must come from trusted frozen registration. Windows ChangeTime is practical detection, not adversarial immutability. Retained metadata is not whole process RSS. No blocking source issue found."
+    },
+    {
+      "component": "E1_accounting",
+      "reviewer": "non-author /root/e1_bound_reader",
+      "source": {
+        "sha256": "da0b9515ec594cf44fe2a1f08de4c1a929b50444f4c330e8fef9a9d7190e0dec",
+        "bytes": 9174
+      },
+      "independent_control_count": 16,
+      "independent_reported_test_seconds": 0.009,
+      "findings": "Attempts and returned/failed/pending reconcile; publication failures preserve actual returned costs, restore refuses pending/type/budget/position drift; no counter resets or launch grants."
+    },
+    {
+      "component": "accumulation_engine",
+      "reviewer": "non-author /root/e1_bound_reader",
+      "source": {
+        "sha256": "81a3359713cacb8a21b75590562723a8adfd7a5ae61506f8ecfe029bdf357780",
+        "bytes": 11899
+      },
+      "independent_control_count": 4,
+      "independent_reported_test_seconds": 0.845,
+      "findings": "Sequence mean scaled1/20; reset/clip/update once, LR0 call retained; controlled saved-boundary costs and parameter/optimizer/RNG envelope. Missing/later terminal cost rollback refused. Native backend and cross-process resume remain unqualified."
+    }
+  ],
+  "independent_agent_streams_retained": false,
+  "stream_limitation": "Reviewer results supplied by internal collaboration messages; exact independent stdout/stderr streams were not returned. Root combined53-control streams are preserved separately.",
+  "native_model_calls": 0,
+  "E1_authorized": false
+}

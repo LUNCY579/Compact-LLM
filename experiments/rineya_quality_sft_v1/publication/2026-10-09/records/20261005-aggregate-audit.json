@@ -1,0 +1,666 @@
+{
+  "content": {
+    "architecture_record_counts": {
+      "eligible_exact_aggregates": 16,
+      "excluded": 16,
+      "total": 32
+    },
+    "derived_findings": {
+      "bundled_recipe_across_draws": {
+        "all_four_acquisition_directions_positive": true,
+        "caveats": [
+          "Beta2, warmup, schedule and exploration harness differ together.",
+          "The four draws reuse one exposed arithmetic panel; repeated rows are not independent evaluation trials."
+        ],
+        "excluded_pairs": [],
+        "pairs": [
+          {
+            "artifact_sha256s": [
+              "92f710edb29accbcaf2e5e813fd1ad58de8032ef468ca23c205ce1ebf64fe3f6",
+              "25872b78c594a232ad81c513dd6542d1eb00c44856fcfa92d6683ea3a091d242"
+            ],
+            "artifacts": [
+              "experiments/architecture_benchmark_001/evidence/retention-design-v1/ARM_DOSE_B28last20_lr1e-05_b5200_seed17.json",
+              "experiments/architecture_benchmark_001/evidence/retention-design-v1/ARM_DOSE_B28last20_lr1e-05_b5200_seed17_wsd0.2-0.2_b20.95.json"
+            ],
+            "correct_delta": 7,
+            "cosine_correct": 67,
+            "declared_beta2": [
+              0.999,
+              0.95
+            ],
+            "draw": 17,
+            "exploration_harness_changed": true,
+            "gained_delta": 6,
+            "optimizer_except_declared_beta2": {
+              "algorithm": "AdamW(offloaded)",
+              "beta1": 0.9,
+              "clip": 1.0,
+              "eps": 1e-08,
+              "lr": 1e-05,
+              "micro_batch": 1,
+              "wd": 0.0
+            },
+            "ordered_row_sha256": "13b008ec63ee36836aa6a521897ac5081b2972efb289ce6439b9b4daef9bc9c6",
+            "retained_delta": 1,
+            "wsd_correct": 74
+          },
+          {
+            "artifact_sha256s": [
+              "b45cbf99e2451f3a441b404d1e711aef5264a01b2ef821596522d3c7cb8457ec",
+              "d6e168bd583fbfbec38ba18d6674eff8ac6922596c99d601588e45c902d68b7f"
+            ],
+            "artifacts": [
+              "experiments/architecture_benchmark_001/evidence/retention-design-v1/ARM_DOSE_B28last20_lr1e-05_b5200_seed23.json",
+              "experiments/architecture_benchmark_001/evidence/retention-design-v1/ARM_DOSE_B28last20_lr1e-05_b5200_seed23_wsd0.2-0.2_b20.95.json"
+            ],
+            "correct_delta": 4,
+            "cosine_correct": 58,
+            "declared_beta2": [
+              0.999,
+              0.95
+            ],
+            "draw": 23,
+            "exploration_harness_changed": true,
+            "gained_delta": 6,
+            "optimizer_except_declared_beta2": {
+              "algorithm": "AdamW(offloaded)",
+              "beta1": 0.9,
+              "clip": 1.0,
+              "eps": 1e-08,
+              "lr": 1e-05,
+              "micro_batch": 1,
+              "wd": 0.0
+            },
+            "ordered_row_sha256": "1d016ac289ebd741c4ed6ff6fb0d7c6601aaf6afbc9d53d017c03c06ea2bf1e5",
+            "retained_delta": -2,
+            "wsd_correct": 62
+          },
+          {
+            "artifact_sha256s": [
+              "43414bfcf5780183ce375f9b8fbbb92fc00c7609972d58f05b9b6d8301558f89",
+              "9d6a8bf4ad77f30ae197c2a18fe5a158c0457a6e2628648aa0b1f21bbd19a5f7"
+            ],
+            "artifacts": [
+              "experiments/architecture_benchmark_001/evidence/retention-design-v1/ARM_DOSE_B28last20_lr1e-05_b5200_seed29_retry1.json",
+              "experiments/architecture_benchmark_001/evidence/retention-design-v1/ARM_DOSE_B28last20_lr1e-05_b5200_seed29_wsd0.2-0.2_b20.95.json"
+            ],
+            "correct_delta": 13,
+            "cosine_correct": 60,
+            "declared_beta2": [
+              0.999,
+              0.95
+            ],
+            "draw": 29,
+            "exploration_harness_changed": true,
+            "gained_delta": 10,
+            "optimizer_except_declared_beta2": {
+              "algorithm": "AdamW(offloaded)",
+              "beta1": 0.9,
+              "clip": 1.0,
+              "eps": 1e-08,
+              "lr": 1e-05,
+              "micro_batch": 1,
+              "wd": 0.0
+            },
+            "ordered_row_sha256": "7f4a88f26e6a01042b3ff461678704afd106000df93b8f4f977612fd834af1bc",
+            "retained_delta": 3,
+            "wsd_correct": 73
+          },
+          {
+            "artifact_sha256s": [
+              "f1ab1c0aed6bfe925cb0c5a955c8a481800c690c189eec1ae9cb6ba94ee23f9a",
+              "33d3dc47b7a7f3ea128bb6fb30837aac3b980b64ee1c8eef6a513c70bbedd49c"
+            ],
+            "artifacts": [
+              "experiments/architecture_benchmark_001/evidence/retention-design-v1/ARM_DOSE_B28last20_lr1e-05_b5200_seed41.json",
+              "experiments/architecture_benchmark_001/evidence/retention-design-v1/ARM_DOSE_B28last20_lr1e-05_b5200_seed41_wsd0.2-0.2_b20.95.json"
+            ],
+            "correct_delta": 6,
+            "cosine_correct": 62,
+            "declared_beta2": [
+              0.999,
+              0.95
+            ],
+            "draw": 41,
+            "exploration_harness_changed": true,
+            "gained_delta": 6,
+            "optimizer_except_declared_beta2": {
+              "algorithm": "AdamW(offloaded)",
+              "beta1": 0.9,
+              "clip": 1.0,
+              "eps": 1e-08,
+              "lr": 1e-05,
+              "micro_batch": 1,
+              "wd": 0.0
+            },
+            "ordered_row_sha256": "38e1f1af8863d7b1bbd7a9e772673850ac7d9db79cdcb921daea63af4cf639d8",
+            "retained_delta": 0,
+            "wsd_correct": 68
+          }
+        ],
+        "pooled_row_p_value": null,
+        "retention_direction_uniformly_positive": false,
+        "schedule_only_causal_claim": false,
+        "status": "DESCRIPTIVE_BUNDLED_RECIPE_PATTERN"
+      },
+      "dose_nonmonotonicity": {
+        "adjacent_changes": [
+          {
+            "correct_delta": 27,
+            "left_requested": 1300,
+            "retained_delta": 2,
+            "right_requested": 5200
+          },
+          {
+            "correct_delta": -10,
+            "left_requested": 5200,
+            "retained_delta": -3,
+            "right_requested": 15600
+          }
+        ],
+        "caveats": [
+          "One training draw; unique worlds, updates and schedule pacing change together.",
+          "LR sums are schedule proxies, not measured parameter dose or comparable compute.",
+          "Exploration harness differs; this is not a clean isolated causal dose experiment."
+        ],
+        "exploration_harness_changed": true,
+        "less_exposure_always_preserves_better_refuted_here": true,
+        "monotonic_quality_with_more_exposure_refuted_here": true,
+        "points": [
+          {
+            "actual_supervised_tokens": 1397,
+            "artifact_path": "experiments/architecture_benchmark_001/evidence/retention-design-v1/ARM_DOSE_B28last20_lr1e-05_b1300_seed17_wsd0.2-0.2_b20.95.json",
+            "artifact_sha256": "27d6f5889b7b40bb1b5425218c2de5919081cdef618c8e95335722e931f3cb10",
+            "clipped_steps_at_norm1": 10,
+            "correct": 47,
+            "dev_ce_nats": 3.375802172836852,
+            "first_lr": 7.153846153846154e-06,
+            "first_lr_fraction_of_peak": 0.7153846153846153,
+            "first_preclip_gradient_norm": 56.50450134277344,
+            "gained": 8,
+            "last_lr": 1.000000000000001e-06,
+            "lost": 8,
+            "lr_sum_proxy": 7.473615820939587e-05,
+            "measured_parameter_update_dose": null,
+            "processed_tokens": 1407,
+            "requested_tokens": 1300,
+            "retained": 39,
+            "sha256": "25ac59f9dfcd8ffb8b91fda7634321c3045b483f20eb135021e12144607d4d37",
+            "steps": 10,
+            "updates": 10,
+            "worlds": 10
+          },
+          {
+            "actual_supervised_tokens": 5233,
+            "artifact_path": "experiments/architecture_benchmark_001/evidence/retention-design-v1/ARM_DOSE_B28last20_lr1e-05_b5200_seed17_wsd0.2-0.2_b20.95.json",
+            "artifact_sha256": "25872b78c594a232ad81c513dd6542d1eb00c44856fcfa92d6683ea3a091d242",
+            "clipped_steps_at_norm1": 41,
+            "correct": 74,
+            "dev_ce_nats": 2.202433993524757,
+            "first_lr": 1.7884615384615384e-06,
+            "first_lr_fraction_of_peak": 0.17884615384615382,
+            "first_preclip_gradient_norm": 56.50450134277344,
+            "gained": 33,
+            "last_lr": 1.000000000000001e-06,
+            "lost": 6,
+            "lr_sum_proxy": 0.00032216866733938016,
+            "measured_parameter_update_dose": null,
+            "processed_tokens": 5274,
+            "requested_tokens": 5200,
+            "retained": 41,
+            "sha256": "c1aaf3cda9d57c69fbac66b5cf31795471d0ab1455d15911018ed3dcb0f3b6c3",
+            "steps": 41,
+            "updates": 41,
+            "worlds": 41
+          },
+          {
+            "actual_supervised_tokens": 15734,
+            "artifact_path": "experiments/architecture_benchmark_001/evidence/retention-design-v1/ARM_DOSE_B28last20_lr1e-05_b15600_seed17_wsd0.2-0.2_b20.95.json",
+            "artifact_sha256": "8469e50c759db9c6862c1c81d3a5b12aaf1346b1a4bce11ba4b98348b3a3a255",
+            "clipped_steps_at_norm1": 118,
+            "correct": 64,
+            "dev_ce_nats": 1.2711510230173761,
+            "first_lr": 5.961538461538463e-07,
+            "first_lr_fraction_of_peak": 0.05961538461538462,
+            "first_preclip_gradient_norm": 56.50450134277344,
+            "gained": 26,
+            "last_lr": 1.000000000000001e-06,
+            "lost": 9,
+            "lr_sum_proxy": 0.0009238988799194807,
+            "measured_parameter_update_dose": null,
+            "processed_tokens": 15852,
+            "requested_tokens": 15600,
+            "retained": 38,
+            "sha256": "f4683d0dae52bad95d4830382757c07f8e98366f9efd9a9e87c3c51ea3cbdebb",
+            "steps": 118,
+            "updates": 118,
+            "worlds": 118
+          }
+        ],
+        "pooled": false,
+        "status": "DESCRIPTIVE_MATCHED_SOURCE_CORPUS_RECIPE"
+      },
+      "whole_response_across_orders": {
+        "all_three_response_directions_positive": true,
+        "balanced_grounding_evidence": false,
+        "caveats": [
+          "One 238-world training set, three orders; this is not three independent training draws.",
+          "1944 versus24672 supervised targets is a global ratio, not a per-group gradient or FLOP proof.",
+          "Declared answerability-false count is zero; source-success denominator is only three on corrected scoring.",
+          "Corrected cells lack supervisor receipts; no checkpoints survive. Preserve their bounded historical class."
+        ],
+        "distinct_training_sets": 1,
+        "excluded_cells_or_pairs": [
+          {
+            "cell": "cell-response_1e-5-001",
+            "reason": "superseded_scoring_version_separate_historical_evidence"
+          },
+          {
+            "cell": "cell-s17-whole",
+            "reason": "failed_or_unverified_cell_not_pooled"
+          },
+          {
+            "cell": "cell-whole_1e-5-001",
+            "reason": "superseded_scoring_version_separate_historical_evidence"
+          }
+        ],
+        "independent_training_draw_replication": false,
+        "measured_parameter_update_dose": null,
+        "pairs": [
+          {
+            "answerability_false": 0,
+            "checkout": "1e41cc5d9f8f59b62559c0e58384fce77423b8f4",
+            "code_sha256": "c27d7e782ef6dd6684cb87533cb14a1ccaae66c0b21f535cb98f2a976a2d0b9b",
+            "global_supervision_ratio": 12.691358024691358,
+            "order_seed": 17,
+            "plan_sha256": "83347512d3b66ff6357a7c4c062148067b0502a5d770160e60534661a866e35b",
+            "processed_tokens": 24910,
+            "response_correct": 13,
+            "response_lost": 0,
+            "response_minus_whole": 6,
+            "response_supervised_tokens": 1944,
+            "scored": 51,
+            "selection_seed": 17,
+            "source_correct": 3,
+            "supervisor_present_both": false,
+            "train_id_set_sha256": "0d89057d047c720552f1905ab8647951e27e21731874ec47764822ae3a9b3704",
+            "updates": 13,
+            "whole_correct": 7,
+            "whole_lost": 0,
+            "whole_supervised_tokens": 24672,
+            "worlds": 238
+          },
+          {
+            "answerability_false": 0,
+            "checkout": "1e41cc5d9f8f59b62559c0e58384fce77423b8f4",
+            "code_sha256": "c27d7e782ef6dd6684cb87533cb14a1ccaae66c0b21f535cb98f2a976a2d0b9b",
+            "global_supervision_ratio": 12.691358024691358,
+            "order_seed": 23,
+            "plan_sha256": "ba0333d57ba71faa7106835fcbd90177d9723e701c420120898887c62403f5eb",
+            "processed_tokens": 24910,
+            "response_correct": 13,
+            "response_lost": 0,
+            "response_minus_whole": 6,
+            "response_supervised_tokens": 1944,
+            "scored": 51,
+            "selection_seed": 17,
+            "source_correct": 3,
+            "supervisor_present_both": false,
+            "train_id_set_sha256": "0d89057d047c720552f1905ab8647951e27e21731874ec47764822ae3a9b3704",
+            "updates": 13,
+            "whole_correct": 7,
+            "whole_lost": 0,
+            "whole_supervised_tokens": 24672,
+            "worlds": 238
+          },
+          {
+            "answerability_false": 0,
+            "checkout": "1e41cc5d9f8f59b62559c0e58384fce77423b8f4",
+            "code_sha256": "c27d7e782ef6dd6684cb87533cb14a1ccaae66c0b21f535cb98f2a976a2d0b9b",
+            "global_supervision_ratio": 12.691358024691358,
+            "order_seed": 29,
+            "plan_sha256": "d5c4c43fc4b2249363afbe3e5a55abf3882e431597579b7f8e10f0f7b4adef1d",
+            "processed_tokens": 24910,
+            "response_correct": 13,
+            "response_lost": 0,
+            "response_minus_whole": 5,
+            "response_supervised_tokens": 1944,
+            "scored": 51,
+            "selection_seed": 17,
+            "source_correct": 3,
+            "supervisor_present_both": false,
+            "train_id_set_sha256": "0d89057d047c720552f1905ab8647951e27e21731874ec47764822ae3a9b3704",
+            "updates": 13,
+            "whole_correct": 8,
+            "whole_lost": 0,
+            "whole_supervised_tokens": 24672,
+            "worlds": 238
+          }
+        ],
+        "status": "DESCRIPTIVE_ORDER_REPEATED_PATTERN"
+      }
+    },
+    "efficacy_verified": false,
+    "excluded_architecture_attempts": [
+      {
+        "artifact_commit": "f53cf4a56998e76e79df19f81b6d5141633f9c7d",
+        "artifact_path": "experiments/architecture_benchmark_001/evidence/retention-design-v1/ARM_DOSE_B28_lr1e-05_b5200_seed17.json",
+        "artifact_text_sha256": "c94aaf143507101b012b9b7ab45678ff8020cff1c8f6db1bc2142e2e1c22c55e",
+        "completed": false,
+        "index": 0,
+        "reasons": [
+          "endpoint_not_the_complete_recorded_dose",
+          "partial_or_failed_attempt_not_pooled"
+        ],
+        "status": "EXCLUDED"
+      },
+      {
+        "artifact_commit": "f53cf4a56998e76e79df19f81b6d5141633f9c7d",
+        "artifact_path": "experiments/architecture_benchmark_001/evidence/retention-design-v1/ARM_DOSE_B28_lr1e-05_b5200_seed23.json",
+        "artifact_text_sha256": "89f3d1bb182f8f322ded07b2edb284325a1bd1ca2d01aeac9369b7eb3a150f21",
+        "completed": false,
+        "index": 3,
+        "reasons": [
+          "endpoint_not_the_complete_recorded_dose",
+          "partial_or_failed_attempt_not_pooled"
+        ],
+        "status": "EXCLUDED"
+      },
+      {
+        "artifact_commit": "f53cf4a56998e76e79df19f81b6d5141633f9c7d",
+        "artifact_path": "experiments/architecture_benchmark_001/evidence/retention-design-v1/ARM_DOSE_B28last16_lr1e-05_b5200_seed17.json",
+        "artifact_text_sha256": "8819f9568a75932724bc2d24db9f31d32d88bb3f209189246af2d5f8c33dfac2",
+        "completed": true,
+        "index": 6,
+        "reasons": [
+          "exact_source_data_code_provenance_incomplete"
+        ],
+        "status": "EXCLUDED"
+      },
+      {
+        "artifact_commit": "f53cf4a56998e76e79df19f81b6d5141633f9c7d",
+        "artifact_path": "experiments/architecture_benchmark_001/evidence/retention-design-v1/ARM_DOSE_B28last20_lr1e-05_b26000_seed17_wsd0.2-0.2_b20.95_exhausttest.json",
+        "artifact_text_sha256": "d4a49cc958b3c348085ee4957d796bf4c7fb8e290e81b2a47a37fbf2e0ea3d5d",
+        "completed": false,
+        "index": 11,
+        "reasons": [
+          "endpoint_not_the_complete_recorded_dose",
+          "partial_or_failed_attempt_not_pooled"
+        ],
+        "status": "EXCLUDED"
+      },
+      {
+        "artifact_commit": "f53cf4a56998e76e79df19f81b6d5141633f9c7d",
+        "artifact_path": "experiments/architecture_benchmark_001/evidence/retention-design-v1/ARM_DOSE_B28last20_lr1e-05_b26000_seed17_wsd0.2-0.2_b20.95_exhausttest3.json",
+        "artifact_text_sha256": "923f6573cbe7761f7dbb9933d2c06c1fc80bab3c2a8bf5745ef737f1c29d60d8",
+        "completed": false,
+        "index": 12,
+        "reasons": [
+          "partial_or_failed_attempt_not_pooled"
+        ],
+        "status": "EXCLUDED"
+      },
+      {
+        "artifact_commit": "f53cf4a56998e76e79df19f81b6d5141633f9c7d",
+        "artifact_path": "experiments/architecture_benchmark_001/evidence/retention-design-v1/ARM_DOSE_B28last20_lr1e-05_b26000_seed17_wsd0.2-0.2_b20.95_mixed30.json",
+        "artifact_text_sha256": "cc03d83f0d6633febb11b701e1515257df50345b8a338cedb30dba7844bda1d9",
+        "completed": false,
+        "index": 13,
+        "reasons": [
+          "endpoint_not_the_complete_recorded_dose",
+          "partial_or_failed_attempt_not_pooled"
+        ],
+        "status": "EXCLUDED"
+      },
+      {
+        "artifact_commit": "f53cf4a56998e76e79df19f81b6d5141633f9c7d",
+        "artifact_path": "experiments/architecture_benchmark_001/evidence/retention-design-v1/ARM_DOSE_B28last20_lr1e-05_b26000_seed17_wsd0.2-0.2_b20.95_mixed30L1024.json",
+        "artifact_text_sha256": "bc8454b06c3feb0910db1e7d7db9ee2817d230119431b8f7326b90e2b259797e",
+        "completed": false,
+        "index": 14,
+        "reasons": [
+          "endpoint_not_the_complete_recorded_dose",
+          "partial_or_failed_attempt_not_pooled"
+        ],
+        "status": "EXCLUDED"
+      },
+      {
+        "artifact_commit": "f53cf4a56998e76e79df19f81b6d5141633f9c7d",
+        "artifact_path": "experiments/architecture_benchmark_001/evidence/retention-design-v1/ARM_DOSE_B28last20_lr1e-05_b26000_seed17_wsd0.2-0.2_b20.95_mixed30L1024exp.json",
+        "artifact_text_sha256": "7ad9629cc35318c7b8a45787fb2ce5dc5d689137c0ac42d3090a2c6e2717a72a",
+        "completed": false,
+        "index": 15,
+        "reasons": [
+          "endpoint_not_the_complete_recorded_dose",
+          "partial_or_failed_attempt_not_pooled"
+        ],
+        "status": "EXCLUDED"
+      },
+      {
+        "artifact_commit": "f53cf4a56998e76e79df19f81b6d5141633f9c7d",
+        "artifact_path": "experiments/architecture_benchmark_001/evidence/retention-design-v1/ARM_DOSE_B28last20_lr1e-05_b26000_seed17_wsd0.2-0.2_b20.95_mixed30L1024gc.json",
+        "artifact_text_sha256": "592ed83f956ec48fac1a5720a7db78c2405a215ec4bdd475376482e1da789bde",
+        "completed": false,
+        "index": 16,
+        "reasons": [
+          "endpoint_not_the_complete_recorded_dose",
+          "partial_or_failed_attempt_not_pooled"
+        ],
+        "status": "EXCLUDED"
+      },
+      {
+        "artifact_commit": "f53cf4a56998e76e79df19f81b6d5141633f9c7d",
+        "artifact_path": "experiments/architecture_benchmark_001/evidence/retention-design-v1/ARM_DOSE_B28last20_lr1e-05_b5200_seed29.json",
+        "artifact_text_sha256": "8eeb55f24a53d91515d12b4c94aec9a5de77b615249d9cf327ccb81165800163",
+        "completed": false,
+        "index": 21,
+        "reasons": [
+          "endpoint_not_the_complete_recorded_dose",
+          "partial_or_failed_attempt_not_pooled"
+        ],
+        "status": "EXCLUDED"
+      },
+      {
+        "artifact_commit": "f53cf4a56998e76e79df19f81b6d5141633f9c7d",
+        "artifact_path": "experiments/architecture_benchmark_001/evidence/retention-design-v1/ARM_DOSE_B28last8_lr1e-05_b5200_seed17.json",
+        "artifact_text_sha256": "cbff993390eb52fe48a8088c457bfd1f9ee46e0f0538c273f676f4335765f046",
+        "completed": true,
+        "index": 26,
+        "reasons": [
+          "exact_source_data_code_provenance_incomplete"
+        ],
+        "status": "EXCLUDED"
+      },
+      {
+        "artifact_commit": "f53cf4a56998e76e79df19f81b6d5141633f9c7d",
+        "artifact_path": "experiments/architecture_benchmark_001/evidence/retention-design-v1/ARM_DOSE_H_lr1e-05_b5200_seed17.json",
+        "artifact_text_sha256": "b2ba10bbe36de9d76ef43401bec7acc1cf4e5f95f2004a1ead3e2715413cd20c",
+        "completed": true,
+        "index": 27,
+        "reasons": [
+          "exact_source_data_code_provenance_incomplete",
+          "optimizer_descriptor_or_parameter_inventory_invalid",
+          "recipe_scalars_invalid",
+          "unique_complete_scalar_lr_trace_invalid"
+        ],
+        "status": "EXCLUDED"
+      },
+      {
+        "artifact_commit": "f53cf4a56998e76e79df19f81b6d5141633f9c7d",
+        "artifact_path": "experiments/architecture_benchmark_001/evidence/retention-design-v1/ARM_DOSE_H_lr1e-05_b5200_seed17_wsd0.2-0.2_b20.95.json",
+        "artifact_text_sha256": "76dc1bc1c165747726daa28f7894c1fb0dd6b3ea390e6cd79a6a2003fb8f01c5",
+        "completed": true,
+        "index": 28,
+        "reasons": [
+          "exact_source_data_code_provenance_incomplete"
+        ],
+        "status": "EXCLUDED"
+      },
+      {
+        "artifact_commit": "f53cf4a56998e76e79df19f81b6d5141633f9c7d",
+        "artifact_path": "experiments/architecture_benchmark_001/evidence/retention-design-v1/ARM_DOSE_Hlast4_lr1e-05_b5200_seed17_wsd0.2-0.2_b20.95.json",
+        "artifact_text_sha256": "361b699091e6062f4d35fd099982c245d872a572f0a76135de5c3d4a033cf421",
+        "completed": true,
+        "index": 29,
+        "reasons": [
+          "exact_source_data_code_provenance_incomplete"
+        ],
+        "status": "EXCLUDED"
+      },
+      {
+        "artifact_commit": "f53cf4a56998e76e79df19f81b6d5141633f9c7d",
+        "artifact_path": "experiments/architecture_benchmark_001/evidence/retention-design-v1/ARM_DOSE_P_lr1e-05_b5200_seed17.json",
+        "artifact_text_sha256": "6d798f6d8aa5ab6474c286ca5e76cfeb0486828f10aad646c33208941a83a642",
+        "completed": true,
+        "index": 30,
+        "reasons": [
+          "exact_source_data_code_provenance_incomplete"
+        ],
+        "status": "EXCLUDED"
+      },
+      {
+        "artifact_commit": "f53cf4a56998e76e79df19f81b6d5141633f9c7d",
+        "artifact_path": "experiments/architecture_benchmark_001/evidence/retention-design-v1/ARM_DOSE_P_lr1e-05_b5200_seed17_wsd0.2-0.2_b20.95.json",
+        "artifact_text_sha256": "9fe10a513e89055bbdfad11c19e23cd4746eacdec0652dd9cad1f7b9ad90dd2e",
+        "completed": true,
+        "index": 31,
+        "reasons": [
+          "exact_source_data_code_provenance_incomplete"
+        ],
+        "status": "EXCLUDED"
+      }
+    ],
+    "experiment": "RQSFT-001",
+    "fixed_next_falsifiers": [
+      {
+        "hypothesis": "Less update always preserves better",
+        "opposite": "More exposure improved both score and retention from quarter to middle dose.",
+        "test": "After a separately reviewed design, hold every admitted world/group and early warmup fixed; vary one LR-dose knob and measure actual updates plus acquisition/retention. Do not silently subset the current200-row plan."
+      },
+      {
+        "hypothesis": "WSD alone causes the repeated improvement",
+        "opposite": "Beta2, warmup and exploration code may explain it.",
+        "test": "One prospective matched pair at fixed beta2 and warmup can test decay shape; do not infer schedule-only causality from the historical bundle."
+      },
+      {
+        "hypothesis": "Response masks give general quality improvements",
+        "opposite": "Answer-weight emphasis or answer bias may explain the narrow gain.",
+        "test": "Use the already proposed verified whole/response pair with measured update norms, balanced evidence pairs and harder-transfer gains; then replicate on independently selected training worlds before calling it a reproducible general effect."
+      }
+    ],
+    "inputs": [
+      {
+        "path": "<BusinessProject>/ChatBubble-rineya-quality-sft-v1/docs/model-quality/audit-2026-09-15/chatbubble-results-audit.json",
+        "role": "architecture_aggregate",
+        "sha256": "63e9e5b108b124c8f4d9bb42a70868ca9022bf25c8b603c4bdb31bda93a31cfb"
+      },
+      {
+        "path": "<BusinessProject>/ChatBubble-rineya-quality-sft-v1/docs/model-quality/audit-2026-09-15/mq-audit.json",
+        "role": "mq_aggregate",
+        "sha256": "acc07d6bfff2747acdf70f0affc62ccaccec2a5dd420623633dc282acbaffd26"
+      }
+    ],
+    "model_calls": 0,
+    "native_runs_this_audit": 0,
+    "new_bank_created": false,
+    "next_action": "Retain the reviewed whole/response first screen; qualify its real bank first. Do not choose a weaker update as a retention winner or launch a schedule/dose grid from these aggregates.",
+    "pending_mechanisms": [
+      "Early-update pacing versus total exposure; data worlds and schedule position change together.",
+      "Beta2/warmup/decay versus other exploration-harness changes.",
+      "Response emphasis or answer bias versus verifier-backed solving and harder transfer.",
+      "No actual parameter-update magnitudes are available in these aggregate inputs."
+    ],
+    "projection": {
+      "architecture_fields": [
+        "arm",
+        "completed",
+        "parameters",
+        "trainable_parameters",
+        "lr",
+        "beta2",
+        "schedule_spec",
+        "supervised_target_tokens",
+        "processed_full_sequence_tokens_derived",
+        "train_rows_consumed",
+        "optimizer_steps",
+        "last_measured_steps",
+        "last_measured_tokens",
+        "source_weights_sha256",
+        "train_row_ids_sha256",
+        "optimizer",
+        "exploration_harness_sha256",
+        "optimizer_harness_sha256",
+        "loss_objective_code_audit",
+        "artifact_path",
+        "artifact_commit",
+        "artifact_text_sha256",
+        "dev_ce_nats"
+      ],
+      "individual_outcomes_or_text_inspected": false,
+      "mq_cell_fields": [
+        "arm",
+        "checkout",
+        "plan_sha256",
+        "code_sha256",
+        "result_hashes_valid",
+        "baseline_correct",
+        "final_correct",
+        "scored",
+        "retained",
+        "gained",
+        "lost",
+        "baseline_ce",
+        "final_ce",
+        "generated_mean",
+        "termination",
+        "literal_unknown",
+        "finite_gradients_and_losses",
+        "row_order_sha256",
+        "supervisor_present",
+        "checkpoint_present"
+      ],
+      "mq_plan_fields": [
+        "sha256",
+        "seal_valid",
+        "selection_seed",
+        "order_seed",
+        "train_rows",
+        "processed_tokens",
+        "whole_targets",
+        "response_targets",
+        "groups",
+        "train_id_set_sha256",
+        "ordered_id_sha256",
+        "dev_rows",
+        "dev_scored",
+        "answerability_false",
+        "mask_bounds_valid"
+      ],
+      "panel_fields": [
+        "correct_total",
+        "retained_total",
+        "gained_total",
+        "lost_total",
+        "reference_n",
+        "terminated_total"
+      ],
+      "trace_fields": [
+        "step",
+        "tokens",
+        "lr",
+        "grad_norm"
+      ]
+    },
+    "promotion_allowed": false,
+    "recipe_or_gate_changed": false,
+    "schema": "RQSFT_HISTORICAL_PATTERN_AUDIT_V1",
+    "training_authorized": false
+  },
+  "execution_authority": false,
+  "original_bytes": 20431,
+  "original_raw_sha256": "5bf87ad8d3f5b7fff06c0b9c02dae3c8ddd7cf181c61b9c61c3cc6536bd233d3",
+  "original_source": "<BusinessProject>/rineya-quality-sft-records/pattern-research-20261005-001/AGGREGATE_AUDIT_FINAL.json",
+  "publication_policy": "Portable historical evidence only, not an executable packet or admission/qualification permit. Local paths, chat UUIDs and XML hostnames are removed; original raw-file hashes are retained separately from hashes of these exports. No banks, predictions, weights, checkpoints, environments or raw process inventories are exported. Originals remain unchanged outside Git.",
+  "record_type": "PORTABLE_EVIDENCE_EXPORT"
+}

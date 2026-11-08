@@ -1,0 +1,39 @@
+{
+  "schema_version": "1.0",
+  "experiment": "gflowrl_reasoning_v1",
+  "audit_date": "2026-09-25",
+  "historical_branch_label": "research/rineya-reasoning-posttraining-v1",
+  "inspected_commit": "c2b09f7413bfbff3f9f582ca8438ce922e0f916b",
+  "inspected_files": {
+    "research/reasoning_posttraining_v1/STATUS.json": "1d0f928cfbe76c48f9cba3d8fd0607c52cf4a7f6",
+    "research/reasoning_posttraining_v1/EXPERIMENT_REGISTRY.json": "0df37e00d0c343e04b386f97732c1f380c6599e3",
+    "experiments/reasoning_posttraining_v1/engine.py": "b6c9748f75ee55bc8c244ee82733d1931a857ace",
+    "experiments/reasoning_posttraining_v1/arm.py": "dd17d73c07636321cc53ef99b29d1e7216d304c8"
+  },
+  "canonical_harness": "experiments/reasoning_posttraining_v1",
+  "current_canonical_training_objective": {
+    "name": "assistant_response_plus_eos",
+    "family": "supervised response cross-entropy",
+    "evidence": "arm.py registers the objective and engine.py optimizes chunked response CE over supervised tokens",
+    "qualified_native_shape_tokens": 2048,
+    "note": "this is a reasoning posttraining objective, but it is not a matched reward-maximizing RL control"
+  },
+  "on_policy_rl_lane": {
+    "registry_id": "D-on-policy-RL",
+    "status": "UNRUN_REQUIRES_SFT_AND_VERIFIER_ROLLOUT_READINESS",
+    "on_policy_rl_rollout_tokens": 0
+  },
+  "requested_r0": {
+    "status": "NOT_ESTABLISHED",
+    "required_definition": "the exact current/authorized reward-maximizing Rineya reasoning RL objective, with its rollout, policy/reference logprob, optimizer, data, and resource contracts",
+    "reason": "inventing a GRPO/PPO-like control here would change more than the requested scientific variable and would not be the canonical Rineya baseline"
+  },
+  "provisional_toy_r0": {
+    "implementation": "experiments/gflowrl_reasoning_v1/objective.py::compute_r0_loss",
+    "status": "QUALIFICATION_FIXTURE_ONLY",
+    "allowed_use": "unit tests and mathematical plumbing",
+    "forbidden_use": "efficacy comparison, canonical-baseline claim, native training authorization"
+  },
+  "launch_decision": "BLOCKED_UNTIL_CANONICAL_R0_IS_QUALIFIED_AND_BOUND",
+  "sealed_access": "DENIED"
+}

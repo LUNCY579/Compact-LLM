@@ -1,0 +1,20 @@
+Audit receipt selection, 2026-10-05
+
+The authoritative offline resource audit is resources_audit_v2.json, produced by
+resources_audit.py. The earlier resources_audit.json is preserved as an auditor
+draft. Its static sentence for D-minus-C added trainable parameters was mistyped
+as 1049616. The corrected audit computes 1131664 - 81920 = 1049744 directly from
+the authoritative native receipts. No native measurement, historical receipt,
+model, corpus or tracked source was changed to make this correction.
+
+Reproduce into a new output filename:
+python C:/Users/clclc/BusinessProject/sbhm-001-audits/20261005-closeout-01a10d69/resources_audit.py --output C:/Users/clclc/BusinessProject/sbhm-001-audits/20261005-closeout-01a10d69/resources_reproduction.json
+
+The output has a different created_utc timestamp. All input hashes, assertions,
+geometry, resource distributions, elapsed intervals and scientific counts should
+be identical. Exclusive creation prevents overwriting either audit receipt.
+
+Input_files records SHA256/size for the successful config, locked source config
+only (no weights or bank contents), all sbhm/*.py source files, and all 21 model
+stage receipt.json/request.json pairs. Native status and resource fields are
+read directly; prior audit conclusions are not copied as evidence.

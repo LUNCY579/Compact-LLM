@@ -1,0 +1,42 @@
+{
+  "k": 32,
+  "seed": 20260923,
+  "per_direction_in_dOpallo_subspace": {
+    "n": 4480,
+    "mean_abs": 0.033071055934748184,
+    "median_abs": 0.024070333573698883,
+    "p90_abs": 0.0721896757245486,
+    "p99_abs": 0.1438444396317493,
+    "max_abs": 0.2660060355980404,
+    "sd": 0.04546746678561571,
+    "frac_above_0.05": 0.2174107142857143,
+    "frac_above_0.10": 0.04375
+  },
+  "per_direction_in_haar_null": {
+    "n": 4480,
+    "mean_abs": 0.02875149391224831,
+    "median_abs": 0.021515968217612598,
+    "p90_abs": 0.0633333836607239,
+    "p99_abs": 0.11184306222899003,
+    "max_abs": 0.18706854870037165,
+    "sd": 0.038274541092508794,
+    "frac_above_0.05": 0.17589285714285716,
+    "frac_above_0.10": 0.018526785714285714
+  },
+  "subspace_aggregate_for_comparison": {
+    "n": 140,
+    "mean_abs": 0.015583136310580281,
+    "median_abs": 0.012564101600877096,
+    "max_abs": 0.062320955079364415
+  },
+  "by_kind_median_abs_per_direction": {
+    "self_attn.o_proj": 0.029117577181374962,
+    "mlp.down_proj": 0.025902307201136485,
+    "self_attn.v_proj": 0.024849760159777835,
+    "mlp.gate_proj": 0.01195995537007821,
+    "self_attn.k_proj": 0.04048960587842372,
+    "mlp.up_proj": 0.014908814489468205,
+    "self_attn.q_proj": 0.03968517319616183
+  },
+  "reading": "If per-direction spread greatly exceeds the aggregate AND the Haar null, then the subspace aggregate was hiding direction-level alignment and the sign-cancellation concern stands. If per-direction tracks the null, it does not."
+}

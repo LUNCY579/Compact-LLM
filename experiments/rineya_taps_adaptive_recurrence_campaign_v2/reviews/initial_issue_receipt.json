@@ -1,0 +1,938 @@
+{
+  "answer_blind_floors": {
+    "constant_NO": {
+      "accuracy": 0.0,
+      "correct": 0.0,
+      "input_contract": "prompt string only; no target access",
+      "items": 16,
+      "rows": [
+        {
+          "case_id": "mergedev_common_sense_025ea65887df6a1b",
+          "format_score": 1.0,
+          "score": 0.0
+        },
+        {
+          "case_id": "mergedev_counterfactual_reasoning_770aaf5dae0c1fb5",
+          "format_score": 0.0,
+          "score": 0.0
+        },
+        {
+          "case_id": "mergedev_general_reasoning_078451b6adf65710",
+          "format_score": 0.0,
+          "score": 0.0
+        },
+        {
+          "case_id": "mergedev_grounded_qa_rag_10414013c88bdaac",
+          "format_score": 0.0,
+          "score": 0.0
+        },
+        {
+          "case_id": "mergedev_instruction_following_7c4b4480b4835c0f",
+          "format_score": 0.0,
+          "score": 0.0
+        },
+        {
+          "case_id": "mergedev_long_context_retrieval_20550a305b3b2af6",
+          "format_score": 0.0,
+          "score": 0.0
+        },
+        {
+          "case_id": "mergedev_lost_in_the_middle_e4e7cc76239741de",
+          "format_score": 0.0,
+          "score": 0.0
+        },
+        {
+          "case_id": "mergedev_mathematics_12cd1363c6e3df98",
+          "format_score": 0.0,
+          "score": 0.0
+        },
+        {
+          "case_id": "mergedev_multi_hop_binding_492bf31e1ae5deff",
+          "format_score": 0.0,
+          "score": 0.0
+        },
+        {
+          "case_id": "mergedev_normal_conversation_4a73375fc950bab7",
+          "format_score": 0.0,
+          "score": 0.0
+        },
+        {
+          "case_id": "mergedev_paraphrase_robustness_0cfbf1026bf11fe7",
+          "format_score": 0.0,
+          "score": 0.0
+        },
+        {
+          "case_id": "mergedev_paraphrase_robustness_44e3777f1aad20a2",
+          "format_score": 0.0,
+          "score": 0.0
+        },
+        {
+          "case_id": "mergedev_paraphrase_robustness_c26fef498d2d9fd3",
+          "format_score": 0.0,
+          "score": 0.0
+        },
+        {
+          "case_id": "mergedev_science_0ac5af678b239ec5",
+          "format_score": 1.0,
+          "score": 0.0
+        },
+        {
+          "case_id": "mergedev_short_response_30785feeb5a8abdf",
+          "format_score": 0.0,
+          "score": 0.0
+        },
+        {
+          "case_id": "mergedev_unanswerable_abstention_22f9fcfd9ce716c8",
+          "format_score": 0.0,
+          "score": 0.0
+        }
+      ]
+    },
+    "constant_UNKNOWN": {
+      "accuracy": 0.0625,
+      "correct": 1.0,
+      "input_contract": "prompt string only; no target access",
+      "items": 16,
+      "rows": [
+        {
+          "case_id": "mergedev_common_sense_025ea65887df6a1b",
+          "format_score": 1.0,
+          "score": 0.0
+        },
+        {
+          "case_id": "mergedev_counterfactual_reasoning_770aaf5dae0c1fb5",
+          "format_score": 0.0,
+          "score": 0.0
+        },
+        {
+          "case_id": "mergedev_general_reasoning_078451b6adf65710",
+          "format_score": 0.0,
+          "score": 0.0
+        },
+        {
+          "case_id": "mergedev_grounded_qa_rag_10414013c88bdaac",
+          "format_score": 0.0,
+          "score": 0.0
+        },
+        {
+          "case_id": "mergedev_instruction_following_7c4b4480b4835c0f",
+          "format_score": 0.0,
+          "score": 0.0
+        },
+        {
+          "case_id": "mergedev_long_context_retrieval_20550a305b3b2af6",
+          "format_score": 0.0,
+          "score": 0.0
+        },
+        {
+          "case_id": "mergedev_lost_in_the_middle_e4e7cc76239741de",
+          "format_score": 0.0,
+          "score": 0.0
+        },
+        {
+          "case_id": "mergedev_mathematics_12cd1363c6e3df98",
+          "format_score": 0.0,
+          "score": 0.0
+        },
+        {
+          "case_id": "mergedev_multi_hop_binding_492bf31e1ae5deff",
+          "format_score": 0.0,
+          "score": 0.0
+        },
+        {
+          "case_id": "mergedev_normal_conversation_4a73375fc950bab7",
+          "format_score": 0.0,
+          "score": 0.0
+        },
+        {
+          "case_id": "mergedev_paraphrase_robustness_0cfbf1026bf11fe7",
+          "format_score": 0.0,
+          "score": 0.0
+        },
+        {
+          "case_id": "mergedev_paraphrase_robustness_44e3777f1aad20a2",
+          "format_score": 0.0,
+          "score": 0.0
+        },
+        {
+          "case_id": "mergedev_paraphrase_robustness_c26fef498d2d9fd3",
+          "format_score": 0.0,
+          "score": 0.0
+        },
+        {
+          "case_id": "mergedev_science_0ac5af678b239ec5",
+          "format_score": 1.0,
+          "score": 0.0
+        },
+        {
+          "case_id": "mergedev_short_response_30785feeb5a8abdf",
+          "format_score": 0.0,
+          "score": 0.0
+        },
+        {
+          "case_id": "mergedev_unanswerable_abstention_22f9fcfd9ce716c8",
+          "format_score": 1.0,
+          "score": 1.0
+        }
+      ]
+    },
+    "constant_YES": {
+      "accuracy": 0.0625,
+      "correct": 1.0,
+      "input_contract": "prompt string only; no target access",
+      "items": 16,
+      "rows": [
+        {
+          "case_id": "mergedev_common_sense_025ea65887df6a1b",
+          "format_score": 1.0,
+          "score": 0.0
+        },
+        {
+          "case_id": "mergedev_counterfactual_reasoning_770aaf5dae0c1fb5",
+          "format_score": 1.0,
+          "score": 1.0
+        },
+        {
+          "case_id": "mergedev_general_reasoning_078451b6adf65710",
+          "format_score": 0.0,
+          "score": 0.0
+        },
+        {
+          "case_id": "mergedev_grounded_qa_rag_10414013c88bdaac",
+          "format_score": 0.0,
+          "score": 0.0
+        },
+        {
+          "case_id": "mergedev_instruction_following_7c4b4480b4835c0f",
+          "format_score": 0.0,
+          "score": 0.0
+        },
+        {
+          "case_id": "mergedev_long_context_retrieval_20550a305b3b2af6",
+          "format_score": 0.0,
+          "score": 0.0
+        },
+        {
+          "case_id": "mergedev_lost_in_the_middle_e4e7cc76239741de",
+          "format_score": 0.0,
+          "score": 0.0
+        },
+        {
+          "case_id": "mergedev_mathematics_12cd1363c6e3df98",
+          "format_score": 0.0,
+          "score": 0.0
+        },
+        {
+          "case_id": "mergedev_multi_hop_binding_492bf31e1ae5deff",
+          "format_score": 0.0,
+          "score": 0.0
+        },
+        {
+          "case_id": "mergedev_normal_conversation_4a73375fc950bab7",
+          "format_score": 0.0,
+          "score": 0.0
+        },
+        {
+          "case_id": "mergedev_paraphrase_robustness_0cfbf1026bf11fe7",
+          "format_score": 0.0,
+          "score": 0.0
+        },
+        {
+          "case_id": "mergedev_paraphrase_robustness_44e3777f1aad20a2",
+          "format_score": 0.0,
+          "score": 0.0
+        },
+        {
+          "case_id": "mergedev_paraphrase_robustness_c26fef498d2d9fd3",
+          "format_score": 0.0,
+          "score": 0.0
+        },
+        {
+          "case_id": "mergedev_science_0ac5af678b239ec5",
+          "format_score": 1.0,
+          "score": 0.0
+        },
+        {
+          "case_id": "mergedev_short_response_30785feeb5a8abdf",
+          "format_score": 0.0,
+          "score": 0.0
+        },
+        {
+          "case_id": "mergedev_unanswerable_abstention_22f9fcfd9ce716c8",
+          "format_score": 0.0,
+          "score": 0.0
+        }
+      ]
+    },
+    "empty_response": {
+      "accuracy": 0.0,
+      "correct": 0.0,
+      "input_contract": "prompt string only; no target access",
+      "items": 16,
+      "rows": [
+        {
+          "case_id": "mergedev_common_sense_025ea65887df6a1b",
+          "format_score": 0.0,
+          "score": 0.0
+        },
+        {
+          "case_id": "mergedev_counterfactual_reasoning_770aaf5dae0c1fb5",
+          "format_score": 0.0,
+          "score": 0.0
+        },
+        {
+          "case_id": "mergedev_general_reasoning_078451b6adf65710",
+          "format_score": 0.0,
+          "score": 0.0
+        },
+        {
+          "case_id": "mergedev_grounded_qa_rag_10414013c88bdaac",
+          "format_score": 0.0,
+          "score": 0.0
+        },
+        {
+          "case_id": "mergedev_instruction_following_7c4b4480b4835c0f",
+          "format_score": 0.0,
+          "score": 0.0
+        },
+        {
+          "case_id": "mergedev_long_context_retrieval_20550a305b3b2af6",
+          "format_score": 0.0,
+          "score": 0.0
+        },
+        {
+          "case_id": "mergedev_lost_in_the_middle_e4e7cc76239741de",
+          "format_score": 0.0,
+          "score": 0.0
+        },
+        {
+          "case_id": "mergedev_mathematics_12cd1363c6e3df98",
+          "format_score": 0.0,
+          "score": 0.0
+        },
+        {
+          "case_id": "mergedev_multi_hop_binding_492bf31e1ae5deff",
+          "format_score": 0.0,
+          "score": 0.0
+        },
+        {
+          "case_id": "mergedev_normal_conversation_4a73375fc950bab7",
+          "format_score": 0.0,
+          "score": 0.0
+        },
+        {
+          "case_id": "mergedev_paraphrase_robustness_0cfbf1026bf11fe7",
+          "format_score": 0.0,
+          "score": 0.0
+        },
+        {
+          "case_id": "mergedev_paraphrase_robustness_44e3777f1aad20a2",
+          "format_score": 0.0,
+          "score": 0.0
+        },
+        {
+          "case_id": "mergedev_paraphrase_robustness_c26fef498d2d9fd3",
+          "format_score": 0.0,
+          "score": 0.0
+        },
+        {
+          "case_id": "mergedev_science_0ac5af678b239ec5",
+          "format_score": 0.0,
+          "score": 0.0
+        },
+        {
+          "case_id": "mergedev_short_response_30785feeb5a8abdf",
+          "format_score": 0.0,
+          "score": 0.0
+        },
+        {
+          "case_id": "mergedev_unanswerable_abstention_22f9fcfd9ce716c8",
+          "format_score": 0.0,
+          "score": 0.0
+        }
+      ]
+    },
+    "prompt_copy": {
+      "accuracy": 0.1875,
+      "correct": 3.0,
+      "input_contract": "prompt string only; no target access",
+      "items": 16,
+      "rows": [
+        {
+          "case_id": "mergedev_common_sense_025ea65887df6a1b",
+          "format_score": 0.0,
+          "score": 0.0
+        },
+        {
+          "case_id": "mergedev_counterfactual_reasoning_770aaf5dae0c1fb5",
+          "format_score": 0.0,
+          "score": 0.0
+        },
+        {
+          "case_id": "mergedev_general_reasoning_078451b6adf65710",
+          "format_score": 0.0,
+          "score": 1.0
+        },
+        {
+          "case_id": "mergedev_grounded_qa_rag_10414013c88bdaac",
+          "format_score": 0.0,
+          "score": 0.0
+        },
+        {
+          "case_id": "mergedev_instruction_following_7c4b4480b4835c0f",
+          "format_score": 0.0,
+          "score": 0.0
+        },
+        {
+          "case_id": "mergedev_long_context_retrieval_20550a305b3b2af6",
+          "format_score": 0.0,
+          "score": 0.0
+        },
+        {
+          "case_id": "mergedev_lost_in_the_middle_e4e7cc76239741de",
+          "format_score": 0.0,
+          "score": 0.0
+        },
+        {
+          "case_id": "mergedev_mathematics_12cd1363c6e3df98",
+          "format_score": 0.0,
+          "score": 0.0
+        },
+        {
+          "case_id": "mergedev_multi_hop_binding_492bf31e1ae5deff",
+          "format_score": 0.0,
+          "score": 1.0
+        },
+        {
+          "case_id": "mergedev_normal_conversation_4a73375fc950bab7",
+          "format_score": 0.0,
+          "score": 0.0
+        },
+        {
+          "case_id": "mergedev_paraphrase_robustness_0cfbf1026bf11fe7",
+          "format_score": 0.0,
+          "score": 0.0
+        },
+        {
+          "case_id": "mergedev_paraphrase_robustness_44e3777f1aad20a2",
+          "format_score": 0.0,
+          "score": 0.0
+        },
+        {
+          "case_id": "mergedev_paraphrase_robustness_c26fef498d2d9fd3",
+          "format_score": 0.0,
+          "score": 0.0
+        },
+        {
+          "case_id": "mergedev_science_0ac5af678b239ec5",
+          "format_score": 1.0,
+          "score": 0.0
+        },
+        {
+          "case_id": "mergedev_short_response_30785feeb5a8abdf",
+          "format_score": 0.0,
+          "score": 0.0
+        },
+        {
+          "case_id": "mergedev_unanswerable_abstention_22f9fcfd9ce716c8",
+          "format_score": 0.0,
+          "score": 1.0
+        }
+      ]
+    }
+  },
+  "authority_sha256": "18f9b5079c05138a28d783404b7c9f919d62e829c17fe0c7a7334b789dd2fa3d",
+  "created_utc": "2026-10-02T04:11:11.093848+00:00",
+  "data_audit": {
+    "dev_items": 16,
+    "dev_sha256": "b75df9368e27cfc7de58e55370090e55bd5bcb4d1bd86aeb079b486555925da0",
+    "exposure": "PREVIOUSLY_INSPECTED_DEV",
+    "family_count": 14,
+    "generator_independence": "NOT_ESTABLISHED",
+    "missing_parent_ids": 16,
+    "scenario_count_upper_bound": 13,
+    "scenario_groups": {
+      "mergedev_binding_0000": [
+        "mergedev_multi_hop_binding_492bf31e1ae5deff"
+      ],
+      "mergedev_chat_0003": [
+        "mergedev_normal_conversation_4a73375fc950bab7"
+      ],
+      "mergedev_common_sense_0001": [
+        "mergedev_common_sense_025ea65887df6a1b"
+      ],
+      "mergedev_counter_0001": [
+        "mergedev_counterfactual_reasoning_770aaf5dae0c1fb5"
+      ],
+      "mergedev_instruction_0003": [
+        "mergedev_instruction_following_7c4b4480b4835c0f"
+      ],
+      "mergedev_long_0000": [
+        "mergedev_long_context_retrieval_20550a305b3b2af6",
+        "mergedev_lost_in_the_middle_e4e7cc76239741de"
+      ],
+      "mergedev_math_0002": [
+        "mergedev_mathematics_12cd1363c6e3df98"
+      ],
+      "mergedev_para_0003": [
+        "mergedev_paraphrase_robustness_0cfbf1026bf11fe7",
+        "mergedev_paraphrase_robustness_44e3777f1aad20a2",
+        "mergedev_paraphrase_robustness_c26fef498d2d9fd3"
+      ],
+      "mergedev_rag_0001": [
+        "mergedev_grounded_qa_rag_10414013c88bdaac"
+      ],
+      "mergedev_reason_0001": [
+        "mergedev_general_reasoning_078451b6adf65710"
+      ],
+      "mergedev_science_0000": [
+        "mergedev_science_0ac5af678b239ec5"
+      ],
+      "mergedev_short_0001": [
+        "mergedev_short_response_30785feeb5a8abdf"
+      ],
+      "mergedev_unknown_0003": [
+        "mergedev_unanswerable_abstention_22f9fcfd9ce716c8"
+      ]
+    },
+    "smoke_items": 8,
+    "smoke_sha256": "404c866f64f36422e5e9e5d52170a358d6c2dd28d276492a38f348ce18f2050f"
+  },
+  "fixture_cost_reconciliation": {
+    "core_calls_total": 2960,
+    "extra_4_step_status": "NOT_ENUMERATED_CAP",
+    "oracle_core_calls": 1200,
+    "oracle_extra_rollouts": 400,
+    "ordinary_rollouts": 640,
+    "physical_total": 1040
+  },
+  "inherited_hash_checks": [
+    {
+      "actual_sha256": "e262761b45105d6586221c2c99b6f56ecc7d3aba2fe276b392e9b1e13cd80bfa",
+      "expected_sha256": "e262761b45105d6586221c2c99b6f56ecc7d3aba2fe276b392e9b1e13cd80bfa",
+      "match": true,
+      "path": "experiments/anchor_routed_middle_recurrence_v1/src/armr/evaluation.py"
+    },
+    {
+      "actual_sha256": "a73baf73515ca905c39a631feb576caad232bec60bb05f0150204e952e0d36a3",
+      "expected_sha256": "a73baf73515ca905c39a631feb576caad232bec60bb05f0150204e952e0d36a3",
+      "match": true,
+      "path": "experiments/anchor_routed_middle_recurrence_v1/src/armr/hooks.py"
+    },
+    {
+      "actual_sha256": "c2653a5129f4cf03b3c7081d0c99f6540fcefd0d17a717c7132b8c1ccf50ed67",
+      "expected_sha256": "c2653a5129f4cf03b3c7081d0c99f6540fcefd0d17a717c7132b8c1ccf50ed67",
+      "match": true,
+      "path": "experiments/anchor_routed_middle_recurrence_v1/src/armr/metrics.py"
+    },
+    {
+      "actual_sha256": "3f84bc41851a4709ff123217b0f781e6d1ec93e3f40dc7c911a95f44c1ee9018",
+      "expected_sha256": "3f84bc41851a4709ff123217b0f781e6d1ec93e3f40dc7c911a95f44c1ee9018",
+      "match": true,
+      "path": "experiments/anchor_routed_middle_recurrence_v1/src/armr/provenance.py"
+    },
+    {
+      "actual_sha256": "88ab4c791b1871dc3765a85f89dbd857023bcf5e4dfa55b6c24142aaee0edea9",
+      "expected_sha256": "88ab4c791b1871dc3765a85f89dbd857023bcf5e4dfa55b6c24142aaee0edea9",
+      "match": true,
+      "path": "experiments/anchor_routed_middle_recurrence_v1/src/armr/recurrence.py"
+    },
+    {
+      "actual_sha256": "99ca41eed1da02d7ef5a3d3a7a43c004c60f18cccaa328267ba41b980cfd2021",
+      "expected_sha256": "99ca41eed1da02d7ef5a3d3a7a43c004c60f18cccaa328267ba41b980cfd2021",
+      "match": true,
+      "path": "experiments/anchor_routed_middle_recurrence_v1/src/armr/reporting.py"
+    },
+    {
+      "actual_sha256": "45bf40eb692379c12c31d90c5e6fe4a78358f28b23783f24a0bf658893ba5065",
+      "expected_sha256": "45bf40eb692379c12c31d90c5e6fe4a78358f28b23783f24a0bf658893ba5065",
+      "match": true,
+      "path": "experiments/anchor_routed_middle_recurrence_v1/src/armr/__init__.py"
+    },
+    {
+      "actual_sha256": "170e5b0a9e49a9867ae847c2ddbc26f306013f7c44402fdfbc65fd28d73a3c98",
+      "expected_sha256": "170e5b0a9e49a9867ae847c2ddbc26f306013f7c44402fdfbc65fd28d73a3c98",
+      "match": true,
+      "path": "experiments/anchor_routed_middle_recurrence_v1/scripts/run_experiment.py"
+    },
+    {
+      "actual_sha256": "207cf9744b7a3c288b6a0dd1f9bd1373f580e7514333bb3ef2b59c82112d373c",
+      "expected_sha256": "207cf9744b7a3c288b6a0dd1f9bd1373f580e7514333bb3ef2b59c82112d373c",
+      "match": true,
+      "path": "experiments/anchor_routed_middle_recurrence_v1/configs/reapplication_screen.json"
+    },
+    {
+      "actual_sha256": "b75df9368e27cfc7de58e55370090e55bd5bcb4d1bd86aeb079b486555925da0",
+      "expected_sha256": "b75df9368e27cfc7de58e55370090e55bd5bcb4d1bd86aeb079b486555925da0",
+      "match": true,
+      "path": "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/data/evaluation/mergedev_fast.jsonl"
+    },
+    {
+      "actual_sha256": "404c866f64f36422e5e9e5d52170a358d6c2dd28d276492a38f348ce18f2050f",
+      "expected_sha256": "404c866f64f36422e5e9e5d52170a358d6c2dd28d276492a38f348ce18f2050f",
+      "match": true,
+      "path": "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/data/evaluation/supa_layer_ablation_smoke.jsonl"
+    },
+    {
+      "actual_sha256": "5a22e1c1ff7b0a56623931c0782f81dd2b3a9df83ccfe77ce3724d37cf320086",
+      "expected_sha256": "5a22e1c1ff7b0a56623931c0782f81dd2b3a9df83ccfe77ce3724d37cf320086",
+      "match": true,
+      "path": "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/evaluation/scoring.py"
+    },
+    {
+      "actual_sha256": "a4e18801cd6f1cf9f1dde2ef040de63b9e845bd04d285b88f43929c7e462c215",
+      "expected_sha256": "a4e18801cd6f1cf9f1dde2ef040de63b9e845bd04d285b88f43929c7e462c215",
+      "match": true,
+      "path": "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/leakage.py"
+    }
+  ],
+  "issues": [
+    {
+      "classification": "REQUIRED_FOR_H4",
+      "disposition": "OPEN_COORDINATOR_DECISION",
+      "evidence": [
+        {
+          "end_line": 118,
+          "path": "experiments/rineya_taps_adaptive_recurrence_v1/native.py",
+          "sha256": "2a0f47512e3f67b6be8d8c5956acd6bbebfab5979fb92c273e7483cf538892e3",
+          "source_excerpt": "            def evaluate(case, arm, cfg, extra, seed, split, legacy=False):\n                torch.manual_seed(seed)\n                case_start = time.perf_counter()\n                def sink(e):\n                    e = {**e, \"case_id\": case[\"case_id\"], \"split\": split, \"seed\": seed, \"arm\": arm,\n                         \"extra_loops\": extra}\n                    trajectory.append(e)\n                    if arm == \"A3\" and split == \"DEV\" and e[\"iteration\"] > 0: traces.append(e)\n                if legacy:\n                    wrapper = FixedBlock(model, [12,13], applications=2) if extra else Reapplication(model)\n                else:\n                    wrapper = BlockRecurrence(model, extra_loops=extra, config=cfg, sample_id=case[\"case_id\"], sink=sink,\n                        guard=lambda: runtime_guard(case_start, 900.))",
+          "start_line": 106
+        },
+        {
+          "end_line": 63,
+          "path": "experiments/rineya_taps_adaptive_recurrence_v1/integration.py",
+          "sha256": "57445e67903309c903655f1de9537658ccf6f8fe83fbc451d2f5062ce61d4b4a",
+          "source_excerpt": "            raise RuntimeError(\"padded native prefixes are not qualified\")\n        self.forward_count += 1\n        self.token_positions += ids.shape[1]\n        self.entry_hidden = None\n        self.scheduler = TAPSScheduler(self.config)",
+          "start_line": 59
+        },
+        {
+          "end_line": 171,
+          "path": "experiments/rineya_taps_adaptive_recurrence_v1/scheduler.py",
+          "sha256": "eaaa5cd8cab8b390dc932f850f7002dcfc81177c07bef50bcc368bf64ac9d546",
+          "source_excerpt": "        previous_ema_cosine = _cosine(d, old_mean)\n        s.mean = c.beta*s.mean + (1-c.beta)*d\n        s.energy = c.beta*s.energy + (1-c.beta)*mean_square(d)\n        k = s.step\n        s.step += 1\n        corrected = s.mean/(1-c.beta**s.step)\n        progress = mean_square(corrected)\n        fluctuation = (s.energy/(1-c.beta**s.step)-progress).clamp_min(0)\n        balance = (progress-c.gamma*fluctuation)/(progress+c.gamma*fluctuation+c.eps)\n        ratio = progress/(fluctuation+c.eps)\n        _finite(s.mean, s.energy, progress, fluctuation, balance, ratio)\n        refreshed = False\n        if not c.enabled or c.scheduler_mode == \"unit\" or force_unit:\n            alpha = torch.ones_like(progress)\n        elif alpha_override is not None:\n            if not math.isfinite(alpha_override) or not c.alpha_min <= alpha_override <= c.alpha_max:\n                raise ValueError(\"override outside bounds\")\n            alpha = torch.full_like(progress, alpha_override)\n        elif c.scheduler_mode == \"fixed\":\n            alpha = torch.full_like(progress, c.fixed_alpha)\n        elif c.scheduler_mode == \"random\":\n            alpha = torch.tensor([r.choice(c.random_pool) for r in self._rng], device=d.device)\n        elif k < c.warmup_loops:\n            alpha = torch.ones_like(progress)\n        elif (k-c.warmup_loops) % c.refresh_interval == 0:\n            alpha = (1+c.rho*balance).clamp(c.alpha_min, c.alpha_max)\n            refreshed = True\n        else:\n            alpha = s.alpha\n        s.alpha = alpha\n        s.previous = d.clone()\n        return alpha, {\n            \"iteration\": k, \"delta_norm\": d.flatten(1).norm(dim=1),\n            \"delta_cosine\": previous_cosine, \"previous_ema_cosine\": previous_ema_cosine,\n            \"ema_cosine\": _cosine(d, corrected), \"progress\": progress,\n            \"fluctuation\": fluctuation, \"progress_fluctuation_ratio\": ratio,\n            \"balance\": balance, \"alpha\": alpha, \"refreshed\": refreshed,",
+          "start_line": 135
+        }
+      ],
+      "id": "R01",
+      "recommendation": "Preserve legacy and restrict its interpretation; freeze and test corrected successor prefix RNG before H4 comparison.",
+      "severity": "HIGH",
+      "title": "Native A5 reset/seed contract degenerates to repeated per-example constants"
+    },
+    {
+      "classification": "REQUIRED_BEFORE_NATIVE_DISPATCH",
+      "disposition": "OPEN_COORDINATOR_DECISION",
+      "evidence": [
+        {
+          "end_line": 85,
+          "path": "experiments/rineya_taps_adaptive_recurrence_v1/safety.py",
+          "sha256": "80bd40abfe83f5f98a95de204dafc6761df6c52e0fc2cad428986ec6f226a1aa",
+          "source_excerpt": "def runtime_guard(started, max_seconds=900., max_rss_bytes=6*GIB):\n    if time.perf_counter()-started > max_seconds:\n        raise TimeoutError(\"registered per-case wall budget exceeded between forwards\")\n    if psutil.Process().memory_info().rss > max_rss_bytes:\n        raise MemoryError(\"registered process RSS ceiling exceeded\")",
+          "start_line": 81
+        },
+        {
+          "end_line": 118,
+          "path": "experiments/rineya_taps_adaptive_recurrence_v1/native.py",
+          "sha256": "2a0f47512e3f67b6be8d8c5956acd6bbebfab5979fb92c273e7483cf538892e3",
+          "source_excerpt": "                else:\n                    wrapper = BlockRecurrence(model, extra_loops=extra, config=cfg, sample_id=case[\"case_id\"], sink=sink,\n                        guard=lambda: runtime_guard(case_start, 900.))",
+          "start_line": 116
+        }
+      ],
+      "id": "R02",
+      "recommendation": "Enforce parent-owned deadline/RSS/exclusivity, reserve finalization, and terminate only admitted worker descendants.",
+      "severity": "HIGH",
+      "title": "Between-forward resource checks require a parent hard supervisor"
+    },
+    {
+      "classification": "REQUIRED_BEFORE_NATIVE_DISPATCH",
+      "disposition": "OPEN_COORDINATOR_DECISION",
+      "evidence": [
+        {
+          "end_line": 58,
+          "path": "experiments/rineya_taps_adaptive_recurrence_v1/native.py",
+          "sha256": "2a0f47512e3f67b6be8d8c5956acd6bbebfab5979fb92c273e7483cf538892e3",
+          "source_excerpt": "def preflight(source):\n    result = native_preflight(source)\n    try:\n        # All inherited Python dependencies must be the exact integrated base.\n        roots = [ARMR/\"src\", ARMR/\"scripts\", REPO/\"Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src\"]\n        for root in roots:\n            if not root.is_dir(): raise RuntimeError(f\"missing inherited source tree: {root.name}\")\n            for path in root.rglob(\"*.py\"): committed_bytes(path)\n        historical = json.loads(committed_bytes(HISTORY/\"run_manifest.json\"))\n        if historical[\"status\"] != \"PASS\": raise RuntimeError(\"historical qualification is not PASS\")\n        committed_bytes(ARMR/\"configs/reapplication_screen.json\")\n        if source is None: raise RuntimeError(\"canonical source directory not provided\")\n        source = Path(source)\n        expected = historical[\"checkpoint_files_before\"]\n        if any(not (source/n).is_file() or file_hash(source/n) != h for n,h in expected.items()):\n            raise RuntimeError(\"checkpoint/tokenizer/custom model bytes differ from qualified ARMR source\")\n        for path in source.rglob(\"*.py\"):\n            if path.relative_to(source).as_posix() not in expected:\n                raise RuntimeError(\"unverified Python inside model source directory\")\n        import transformers\n        from transformers.models.qwen3.modeling_qwen3 import Qwen3DecoderLayer\n        if transformers.__version__ != historical[\"transformers\"]:\n            raise RuntimeError(\"historical Transformers version mismatch\")\n        if file_hash(Path(inspect.getfile(Qwen3DecoderLayer))) != historical[\"qwen_implementation_sha256\"]:\n            raise RuntimeError(\"native Qwen implementation hash mismatch\")\n        result[\"historical_receipt_sha256\"] = file_hash(HISTORY/\"run_manifest.json\")\n    except Exception as exc:\n        result[\"reasons\"].append(f\"{type(exc).__name__}: {exc}\")\n    result[\"status\"] = \"BLOCKED\" if result[\"reasons\"] else \"METADATA_READY_NOT_QUALIFIED\"",
+          "start_line": 30
+        },
+        {
+          "end_line": 91,
+          "path": "experiments/rineya_taps_adaptive_recurrence_v1/native.py",
+          "sha256": "2a0f47512e3f67b6be8d8c5956acd6bbebfab5979fb92c273e7483cf538892e3",
+          "source_excerpt": "    config[\"max_rss_gib\"] = 6  # tighter new memory ceiling, never an old-gate change\n    dev_path = DATA/config[\"development_file\"]\n    if file_hash(dev_path) != historical[\"dataset_sha256\"]:\n        raise RuntimeError(\"MERGEDEV-fast bytes changed\")\n    smoke, dev = cases_from(DATA/config[\"smoke_file\"]), cases_from(dev_path)\n    taps = TAPSConfig()\n    write_json(out/\"registration.json\", {\"base\": BASE, \"taps\": asdict(taps), \"grid\": GRID,\n               \"seeds\": SEEDS, \"native_layers\": [12,13], \"extra_loops\": [0,1],\n               \"config\": config, \"dataset_sha256\": file_hash(dev_path),\n               \"dataset_status\": \"previously inspected DEV; NOT protected TEST\",\n               \"training\": False, \"gold_nll_status\": \"NOT_COLLECTED_CAUSAL_GUARD\", \"gate_interaction\": \"ungated ARMR host; no learned gate changed\"})",
+          "start_line": 81
+        }
+      ],
+      "id": "R03",
+      "recommendation": "Verify historical smoke SHA and freeze commit/uncommitted/source/scorer/config/review digests in campaign admission.",
+      "severity": "HIGH",
+      "title": "Native run does not bind smoke bytes and current experiment digest"
+    },
+    {
+      "classification": "REQUIRED_QUALIFICATION",
+      "disposition": "OPEN_COORDINATOR_DECISION",
+      "evidence": [
+        {
+          "end_line": 148,
+          "path": "experiments/rineya_taps_adaptive_recurrence_v1/native.py",
+          "sha256": "2a0f47512e3f67b6be8d8c5956acd6bbebfab5979fb92c273e7483cf538892e3",
+          "source_excerpt": "            for c in smoke:\n                for extra in (0,1):\n                    old, old_logits = evaluate(c, \"qualification_legacy\", unit, extra, 17, \"SMOKE\", legacy=True)\n                    new, new_logits = evaluate(c, \"qualification_new\", unit, extra, 17, \"SMOKE\")\n                    if old[\"token_ids\"] != new[\"token_ids\"] or not torch.equal(old_logits, new_logits):\n                        raise RuntimeError(\"new wrapper failed exact legacy equivalence\")\n            arms = [(\"A0\",unit,0), (\"A1\",unit,1)] + [(\"A2\",replace(taps,scheduler_mode=\"fixed\",fixed_alpha=a),1) for a in GRID] + [(\"A3\",taps,1)]\n            baseline_smoke = []\n            for arm,cfg,extra in arms:\n                current = []\n                for c in smoke:\n                    r,l = evaluate(c,arm,cfg,extra,17,\"SMOKE\"); current.append(r)\n                    if arm == \"A0\": bases[(\"SMOKE\",17,c[\"case_id\"])] = l\n                if arm == \"A0\": baseline_smoke = current\n                elif not smoke_gate(current,baseline_smoke,config)[\"go_fixed_smoke\"]:\n                    raise RuntimeError(f\"new-arm smoke gate failed: {arm}, alpha={cfg.fixed_alpha}; retain all evidence\")",
+          "start_line": 133
+        },
+        {
+          "end_line": 178,
+          "path": "experiments/rineya_taps_adaptive_recurrence_v1/native.py",
+          "sha256": "2a0f47512e3f67b6be8d8c5956acd6bbebfab5979fb92c273e7483cf538892e3",
+          "source_excerpt": "            restored = state_hash(model)==before_state and checkpoint_files(source)==before_files\n            if not restored: raise RuntimeError(\"model or source mutated\")",
+          "start_line": 177
+        },
+        {
+          "end_line": 202,
+          "path": "experiments/rineya_taps_adaptive_recurrence_v1/native.py",
+          "sha256": "2a0f47512e3f67b6be8d8c5956acd6bbebfab5979fb92c273e7483cf538892e3",
+          "source_excerpt": "    except Exception as exc:\n        receipt[\"error\"] = f\"{type(exc).__name__}: {exc}\"\n    finally:\n        receipt[\"wall_seconds\"] = time.perf_counter()-started\n        receipt[\"checkpoint_files_unchanged\"] = checkpoint_files(source)==before_files\n        if model is not None:\n            receipt[\"trainable_parameters\"] = sum(p.numel() for p in model.parameters() if p.requires_grad)\n        write_json(out/\"receipt.json\",receipt)",
+          "start_line": 195
+        }
+      ],
+      "id": "R04",
+      "recommendation": "Add separately reviewed successor qualification; do not modify inherited identity/gates.",
+      "severity": "HIGH",
+      "title": "Native smoke identity lacks maximum-shape and exception restoration qualification"
+    },
+    {
+      "classification": "REQUIRED_ANALYSIS_CONTRACT",
+      "disposition": "OPEN_COORDINATOR_DECISION",
+      "evidence": [
+        {
+          "end_line": 110,
+          "path": "experiments/anchor_routed_middle_recurrence_v1/src/armr/evaluation.py",
+          "sha256": "e262761b45105d6586221c2c99b6f56ecc7d3aba2fe276b392e9b1e13cd80bfa",
+          "source_excerpt": "    row = {\n        \"case_id\": case[\"case_id\"], \"family\": case[\"family\"], \"response\": text,\n        \"token_ids\": token_ids, **output_flags(text, token_ids), \"termination\": finish,\n        \"eos_emitted\": finish == \"eos\", \"truncated\": finish == \"token_cap\",\n        \"safety_stopped\": finish not in (\"eos\", \"token_cap\"),\n        \"score\": score_response(text, case[\"scorer\"])[\"score\"],\n        \"format_score\": score_response(text, case[\"format_scorer\"])[\"score\"] if case.get(\"format_scorer\") else None,\n        \"gold_nll\": nll, \"gold_answer\": answer,\n        \"prefill_seconds\": prefill, \"decode_seconds\": decode_seconds,\n        \"decode_tokens_per_second\": max(0, len(token_ids)-1) / max(decode_seconds, 1e-12),\n        \"wall_seconds\": time.perf_counter() - start,\n        \"processed_token_positions\": token_positions, \"layer_calls_generation\": generation_calls,\n        \"hidden\": hidden,\n        \"trajectory_min_rms_ratio\": wrapper.min_rms_ratio,\n        \"trajectory_max_rms_ratio\": wrapper.max_rms_ratio,\n        **logit_metrics(first if base is None else base, first, config[\"top_k\"], gold_ids[0] if gold_ids else None),\n    }\n    # Dominant decoder linear matmuls + output projection; excludes attention,\n    # normalization, instrumentation, and optional teacher-forced NLL forward.\n    c = model.config",
+          "start_line": 91
+        }
+      ],
+      "id": "R05",
+      "recommendation": "Bind metadata map; preserve parent units; aggregate repeats within item. Thirteen scenarios are an upper bound, not validated independent generators.",
+      "severity": "HIGH",
+      "title": "Native output drops dependent scenario IDs"
+    },
+    {
+      "classification": "REQUIRED_BEFORE_NATIVE_DISPATCH",
+      "disposition": "OPEN_COORDINATOR_DECISION",
+      "evidence": [
+        {
+          "end_line": 176,
+          "path": "experiments/rineya_taps_adaptive_recurrence_v1/native.py",
+          "sha256": "2a0f47512e3f67b6be8d8c5956acd6bbebfab5979fb92c273e7483cf538892e3",
+          "source_excerpt": "            for c in smoke:\n                for extra in (0,1):\n                    old, old_logits = evaluate(c, \"qualification_legacy\", unit, extra, 17, \"SMOKE\", legacy=True)\n                    new, new_logits = evaluate(c, \"qualification_new\", unit, extra, 17, \"SMOKE\")\n                    if old[\"token_ids\"] != new[\"token_ids\"] or not torch.equal(old_logits, new_logits):\n                        raise RuntimeError(\"new wrapper failed exact legacy equivalence\")\n            arms = [(\"A0\",unit,0), (\"A1\",unit,1)] + [(\"A2\",replace(taps,scheduler_mode=\"fixed\",fixed_alpha=a),1) for a in GRID] + [(\"A3\",taps,1)]\n            baseline_smoke = []\n            for arm,cfg,extra in arms:\n                current = []\n                for c in smoke:\n                    r,l = evaluate(c,arm,cfg,extra,17,\"SMOKE\"); current.append(r)\n                    if arm == \"A0\": bases[(\"SMOKE\",17,c[\"case_id\"])] = l\n                if arm == \"A0\": baseline_smoke = current\n                elif not smoke_gate(current,baseline_smoke,config)[\"go_fixed_smoke\"]:\n                    raise RuntimeError(f\"new-arm smoke gate failed: {arm}, alpha={cfg.fixed_alpha}; retain all evidence\")\n            for seed in SEEDS:\n                # Baseline must precede pairs; rotate only the treatment order.\n                ordered = arms[:1] + (arms[1:] if seed == 17 else list(reversed(arms[1:])))\n                for arm,cfg,extra in ordered:\n                    for c in dev:\n                        r,l = evaluate(c,arm,cfg,extra,seed,\"DEV\"); rows.append(r)\n                        if arm == \"A0\": bases[(\"DEV\",seed,c[\"case_id\"])] = l\n            scores = {a: statistics.mean(r[\"score\"] for r in rows if r[\"arm\"]==\"A2\" and r[\"fixed_alpha\"]==a) for a in GRID}\n            best = max(GRID,key=lambda a:(scores[a],-a))\n            pool = tuple(min(taps.alpha_max,max(taps.alpha_min,e[\"alpha\"])) for e in traces) or (1.,)\n            write_json(out/\"frozen_dev_selection.json\", {\"alpha\":best,\"pool\":pool,\"config\":asdict(taps),\n                       \"dataset_sha256\":file_hash(dev_path),\"native_TEST_authorized\":False})\n            random_config = replace(taps,scheduler_mode=\"random\",random_pool=pool)\n            random_smoke = [evaluate(c,\"A5\",random_config,1,17,\"SMOKE\")[0] for c in smoke]\n            if not smoke_gate(random_smoke,baseline_smoke,config)[\"go_fixed_smoke\"]:\n                raise RuntimeError(\"random-control smoke gate failed; no A5 DEV run\")\n            for seed in SEEDS:\n                for c in dev:\n                    r,_ = evaluate(c,\"A5\",random_config,1,seed,\"DEV\"); rows.append(r)\n            oracle_rows = []\n            for seed in SEEDS:\n                for c in dev:\n                    rr=[r for r in rows if r[\"arm\"]==\"A2\" and r[\"seed\"]==seed and r[\"case_id\"]==c[\"case_id\"]]\n                    selected=max(rr,key=lambda r:(r[\"score\"],-r[\"fixed_alpha\"]))\n                    selected={**selected,\"arm\":\"A4_example\",\"physical_run\":False,\"deployable\":False,\n                              \"note\":\"retrospective constant alpha per problem, not an exhaustive token-prefix schedule oracle\"}\n                    oracle_rows.append(selected); outcomes.append(selected)\n            rows.extend(oracle_rows)",
+          "start_line": 133
+        }
+      ],
+      "id": "R06",
+      "recommendation": "Forecast all 392 evaluations plus failures from qualified cost evidence, with ceiling/reserves and complete-matrix admission.",
+      "severity": "HIGH",
+      "title": "Complete six-hour run feasibility is not established by case limits"
+    },
+    {
+      "classification": "EXPLORATORY_LIMITATION",
+      "disposition": "OPEN_COORDINATOR_DECISION",
+      "evidence": [
+        {
+          "end_line": 274,
+          "path": "experiments/anchor_routed_middle_recurrence_v1/evidence/02c_fixed_cpu_budget_v2/20260905T132743_802018Z/run_manifest.json",
+          "sha256": "daa5bc8e947602a4ed3d7fb19076ec6000e27f7afcc2a1426e544491bff95dfe",
+          "source_excerpt": "        \"losses\": [],\n        \"family_score_deltas\": {\n          \"common_sense\": 0.0,\n          \"counterfactual_reasoning\": 0.0,\n          \"general_reasoning\": 0.0,\n          \"grounded_qa_rag\": 0.0,\n          \"instruction_following\": 0.0,\n          \"long_context_retrieval\": 0.0,\n          \"lost_in_the_middle\": 0.0,\n          \"mathematics\": 0.0,\n          \"multi_hop_binding\": 0.0,\n          \"normal_conversation\": 0.0,\n          \"paraphrase_robustness\": 0.0,\n          \"science\": 0.0,\n          \"short_response\": 0.0,\n          \"unanswerable_abstention\": 0.0\n        },\n        \"checks\": {\n          \"baseline_completed_without_safety_stop\": true,\n          \"overall_no_loss\": true,\n          \"no_family_loss_over_0_10\": true,\n          \"no_invalid_increase\": true,\n          \"no_safety_stops\": true,\n          \"complete\": true\n        },\n        \"preservation_pass\": true,\n        \"router_scaffold_licensed\": false,\n        \"mean_logit_cosine\": 0.9891330078244209,\n        \"mean_kl\": 0.037464934186914434,\n        \"invalid_rate\": 0.0,\n        \"wall_seconds\": 420.7615635000111\n      },\n      \"A3_dev\": {\n        \"items\": 16,\n        \"comparison_valid\": true,\n        \"correct\": 13.0,\n        \"baseline_correct\": 12.0,\n        \"wins\": [\n          \"mergedev_counterfactual_reasoning_770aaf5dae0c1fb5\"\n        ],\n        \"losses\": [],\n        \"family_score_deltas\": {\n          \"common_sense\": 0.0,\n          \"counterfactual_reasoning\": 1.0,\n          \"general_reasoning\": 0.0,\n          \"grounded_qa_rag\": 0.0,\n          \"instruction_following\": 0.0,\n          \"long_context_retrieval\": 0.0,\n          \"lost_in_the_middle\": 0.0,\n          \"mathematics\": 0.0,\n          \"multi_hop_binding\": 0.0,\n          \"normal_conversation\": 0.0,\n          \"paraphrase_robustness\": 0.0,\n          \"science\": 0.0,\n          \"short_response\": 0.0,\n          \"unanswerable_abstention\": 0.0\n        },\n        \"checks\": {\n          \"baseline_completed_without_safety_stop\": true,\n          \"overall_no_loss\": true,\n          \"no_family_loss_over_0_10\": true,\n          \"no_invalid_increase\": true,\n          \"no_safety_stops\": true,\n          \"complete\": true\n        },\n        \"preservation_pass\": true,\n        \"router_scaffold_licensed\": true,\n        \"mean_logit_cosine\": 0.9837603941559792,\n        \"mean_kl\": 0.054217147470666305,\n        \"invalid_rate\": 0.0,\n        \"wall_seconds\": 458.91588130001037\n      }\n    }\n  },\n  \"state_hash_after\": \"b23dec7edc2413189c9a35cc7a2596cdc03cb67b08628a0c443173c305d61551\",\n  \"checkpoint_files_after\": {\n    \"model.safetensors\": \"a99f079d32212bbcbb703c2e2bad801ea32d43afea52004f38bf94eec5dc4026\",\n    \"config.json\": \"89c4ae7398449895d044750c858614584b07db8d67130074920ef524c6eb5705\",\n    \"generation_config.json\": \"0a6ef79013177858dd5820698b12270863e03baf60ec36521e5c6a34da63dbdc\",\n    \"modeling_supa_a11.py\": \"b77b7d709fac3690d86f5978d46de409fd7ad3548c66a9d400188c225d99fa3d\",\n    \"tokenizer_config.json\": \"d5d09f07b48c3086c508b30d1c9114bd1189145b74e982a265350c923acd8101\",\n    \"tokenizer.json\": \"aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4\",\n    \"vocab.json\": \"ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910\",\n    \"merges.txt\": \"8831e4f1a044471340f7c0a83d7bd71306a5b867e95fd870f74d0c5308a904d5\",\n    \"CORE.json\": \"bf640ab323d29c2fc18c306294c7e6f7c53e19cd67364f5df8aa041992075914\",\n    \"FILES.json\": \"4446aef8d1f19f4c968aaa20636200094da0df7d6e518bca6acc4041896b8b6e\"\n  },\n  \"canonical_unchanged\": true,\n  \"trainable_parameter_count\": 0,\n  \"parameters_with_gradients\": 0,\n  \"wall_seconds\": 1406.4925958000022,\n  \"peak_rss_bytes\": 4663623680\n}",
+          "start_line": 151
+        }
+      ],
+      "id": "R07",
+      "recommendation": "Predeclare weights/margins/clusters/multiplicity, report paired counts, retain selection history; require independent authorized confirmation for efficacy.",
+      "severity": "MEDIUM",
+      "title": "Sixteen inspected DEV cases cannot adjudicate broad efficacy or tight preservation"
+    },
+    {
+      "classification": "REQUIRED_POOL_DISCLOSURE",
+      "disposition": "OPEN_COORDINATOR_DECISION",
+      "evidence": [
+        {
+          "end_line": 114,
+          "path": "experiments/rineya_taps_adaptive_recurrence_v1/native.py",
+          "sha256": "2a0f47512e3f67b6be8d8c5956acd6bbebfab5979fb92c273e7483cf538892e3",
+          "source_excerpt": "                def sink(e):\n                    e = {**e, \"case_id\": case[\"case_id\"], \"split\": split, \"seed\": seed, \"arm\": arm,\n                         \"extra_loops\": extra}\n                    trajectory.append(e)\n                    if arm == \"A3\" and split == \"DEV\" and e[\"iteration\"] > 0: traces.append(e)\n                if legacy:",
+          "start_line": 109
+        },
+        {
+          "end_line": 162,
+          "path": "experiments/rineya_taps_adaptive_recurrence_v1/native.py",
+          "sha256": "2a0f47512e3f67b6be8d8c5956acd6bbebfab5979fb92c273e7483cf538892e3",
+          "source_excerpt": "            for seed in SEEDS:\n                # Baseline must precede pairs; rotate only the treatment order.\n                ordered = arms[:1] + (arms[1:] if seed == 17 else list(reversed(arms[1:])))\n                for arm,cfg,extra in ordered:\n                    for c in dev:\n                        r,l = evaluate(c,arm,cfg,extra,seed,\"DEV\"); rows.append(r)\n                        if arm == \"A0\": bases[(\"DEV\",seed,c[\"case_id\"])] = l\n            scores = {a: statistics.mean(r[\"score\"] for r in rows if r[\"arm\"]==\"A2\" and r[\"fixed_alpha\"]==a) for a in GRID}\n            best = max(GRID,key=lambda a:(scores[a],-a))\n            pool = tuple(min(taps.alpha_max,max(taps.alpha_min,e[\"alpha\"])) for e in traces) or (1.,)\n            write_json(out/\"frozen_dev_selection.json\", {\"alpha\":best,\"pool\":pool,\"config\":asdict(taps),\n                       \"dataset_sha256\":file_hash(dev_path),\"native_TEST_authorized\":False})\n            random_config = replace(taps,scheduler_mode=\"random\",random_pool=pool)\n            random_smoke = [evaluate(c,\"A5\",random_config,1,17,\"SMOKE\")[0] for c in smoke]",
+          "start_line": 149
+        }
+      ],
+      "id": "R08",
+      "recommendation": "Freeze pool provenance and weighting; do not call it task-conditional matched control. Keep teacher-forced diagnostic traces separate.",
+      "severity": "MEDIUM",
+      "title": "Generation pool is prefix weighted and duplicate deterministic runs reweight it"
+    },
+    {
+      "classification": "EXPLORATORY_LIMITATION",
+      "disposition": "OPEN_COORDINATOR_DECISION",
+      "evidence": [
+        {
+          "end_line": 106,
+          "path": "experiments/rineya_taps_adaptive_recurrence_v1/integration.py",
+          "sha256": "57445e67903309c903655f1de9537658ccf6f8fe83fbc451d2f5062ce61d4b4a",
+          "source_excerpt": "    def _record(self, old, new, event, normal, core_seconds, controller_seconds):\n        e = scalar_events(event)[0]\n        numerator = new.float().square().mean().sqrt()\n        denominator = normal.float().square().mean().sqrt()\n        ratio = 1. if float(numerator) == 0. and float(denominator) == 0. else float(numerator/denominator.clamp_min(1e-12))\n        self.min_rms_ratio, self.max_rms_ratio = min(self.min_rms_ratio, ratio), max(self.max_rms_ratio, ratio)\n        e.update(sample_id=self.sample_id, forward_index=self.forward_count,\n                 state_norm=float(old.float().norm()), movement=float((new.float()-old.float()).norm()),\n                 rms_ratio_to_normal=ratio, stopping_iteration=self.extra_loops if self.enabled else 0,\n                 loop_core_seconds=core_seconds, loop_controller_seconds=controller_seconds,\n                 logit_movement=None, loss_proxy=None, evidence_kind=\"native_trajectory\",\n                 safety_violation=not .25 <= ratio <= 4.,\n                 note=\"first-pass core timing covers last layer only; logits/NLL use full-depth evaluator\")\n        if self.capture:\n            self.records.append(e)\n        if self.sink:\n            t = time.perf_counter(); self.sink(e); self.logging_seconds += time.perf_counter()-t\n        if e[\"safety_violation\"]:",
+          "start_line": 89
+        },
+        {
+          "end_line": 122,
+          "path": "experiments/anchor_routed_middle_recurrence_v1/src/armr/evaluation.py",
+          "sha256": "e262761b45105d6586221c2c99b6f56ecc7d3aba2fe276b392e9b1e13cd80bfa",
+          "source_excerpt": "    per_layer = 2 * (hd*q + 2*hd*kv + q*hd + 3*hd*inter)\n    depth = c.num_hidden_layers + wrapper.extra_layer_applications\n    row[\"generation_dense_matmul_flops_estimate\"] = int(token_positions * depth * per_layer + len(token_ids) * 2 * hd * c.vocab_size)\n    return row, first",
+          "start_line": 113
+        }
+      ],
+      "id": "R09",
+      "recommendation": "Report null unmeasured peak resources, account failures/qualification, and qualify paired minimal-instrumentation end-to-end timing before speed claims.",
+      "severity": "MEDIUM",
+      "title": "Instrumented native timing and dense FLOPs proxy do not support deployment speed"
+    },
+    {
+      "classification": "REQUIRED_ENDPOINT_DISCLOSURE",
+      "disposition": "OPEN_COORDINATOR_DECISION",
+      "evidence": [
+        {
+          "end_line": 100,
+          "path": "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/evaluation/scoring.py",
+          "sha256": "5a22e1c1ff7b0a56623931c0782f81dd2b3a9df83ccfe77ce3724d37cf320086",
+          "source_excerpt": "        passed = actual is not None and math.isclose(\n            actual, expected, rel_tol=0.0, abs_tol=tolerance\n        )\n        details.update(actual=actual, expected=expected, tolerance=tolerance)\n    elif kind == \"contains_all\":\n        required = [normalize_text(str(value)) for value in scorer[\"values\"]]\n        passed = all(value in normalized for value in required)\n        details[\"required\"] = required\n    elif kind == \"keywords\":\n        expected_tokens = _content_tokens(str(scorer[\"phrase\"]))\n        actual_tokens = set(_content_tokens(response))\n        passed = bool(expected_tokens) and all(\n            token in actual_tokens for token in expected_tokens\n        )\n        details.update(\n            expected_keywords=expected_tokens,\n            matched_keywords=sorted(set(expected_tokens) & actual_tokens),\n        )\n    elif kind == \"choice\":\n        allowed = [normalize_text(str(value)) for value in scorer[\"allowed\"]]\n        tokens = [normalize_text(value) for value in re.findall(r\"[\\w'-]+\", response)]\n        recognized = [token for token in tokens if token in allowed]\n        actual = recognized[-1] if recognized else None\n        expected = normalize_text(str(scorer[\"value\"]))\n        passed = actual == expected\n        details.update(actual=actual, expected=expected, allowed=allowed)\n    elif kind == \"regex\":\n        pattern = str(scorer[\"pattern\"])\n        passed = re.fullmatch(pattern, response.strip(), flags=re.IGNORECASE) is not None\n        details[\"pattern\"] = pattern\n    elif kind == \"json_exact\":\n        try:\n            actual_json = json.loads(response.strip())\n        except json.JSONDecodeError:\n            actual_json = None\n        expected_json = scorer[\"value\"]\n        passed = actual_json == expected_json\n        details.update(actual=actual_json, expected=expected_json)\n    elif kind == \"constraints\":",
+          "start_line": 62
+        }
+      ],
+      "id": "R10",
+      "recommendation": "Report answer-blind floor, exact format, semantic/abstention/preservation endpoints separately; no scorer changes during scale comparison.",
+      "severity": "MEDIUM",
+      "title": "Prompt-copy scorer floors and one abstention item limit semantics"
+    },
+    {
+      "classification": "REQUIRED_SUPERVISOR_RECEIPT",
+      "disposition": "OPEN_COORDINATOR_DECISION",
+      "evidence": [
+        {
+          "end_line": 33,
+          "path": "experiments/rineya_taps_adaptive_recurrence_v1/native.py",
+          "sha256": "2a0f47512e3f67b6be8d8c5956acd6bbebfab5979fb92c273e7483cf538892e3",
+          "source_excerpt": "def preflight(source):\n    result = native_preflight(source)\n    try:\n        # All inherited Python dependencies must be the exact integrated base.",
+          "start_line": 30
+        },
+        {
+          "end_line": 95,
+          "path": "experiments/rineya_taps_adaptive_recurrence_v1/native.py",
+          "sha256": "2a0f47512e3f67b6be8d8c5956acd6bbebfab5979fb92c273e7483cf538892e3",
+          "source_excerpt": "    evaluate_case = generation_only_evaluator(inherited_evaluate_case)\n    from armr.provenance import DATA, cases_from, checkpoint_files, state_hash\n    from armr.hooks import Reapplication\n    from armr.recurrence import FixedBlock\n    from armr.reporting import summarize as smoke_gate\n    historical = json.loads((HISTORY/\"run_manifest.json\").read_text())\n    config = dict(historical[\"config\"])\n    config[\"max_rss_gib\"] = 6  # tighter new memory ceiling, never an old-gate change\n    dev_path = DATA/config[\"development_file\"]\n    if file_hash(dev_path) != historical[\"dataset_sha256\"]:\n        raise RuntimeError(\"MERGEDEV-fast bytes changed\")\n    smoke, dev = cases_from(DATA/config[\"smoke_file\"]), cases_from(dev_path)\n    taps = TAPSConfig()\n    write_json(out/\"registration.json\", {\"base\": BASE, \"taps\": asdict(taps), \"grid\": GRID,\n               \"seeds\": SEEDS, \"native_layers\": [12,13], \"extra_loops\": [0,1],\n               \"config\": config, \"dataset_sha256\": file_hash(dev_path),\n               \"dataset_status\": \"previously inspected DEV; NOT protected TEST\",\n               \"training\": False, \"gold_nll_status\": \"NOT_COLLECTED_CAUSAL_GUARD\", \"gate_interaction\": \"ungated ARMR host; no learned gate changed\"})\n    started = time.perf_counter(); model = None\n    receipt = {\"status\": \"FAIL\", \"native_model_loads\": 0, \"training\": False, \"sealed_read\": False}\n    before_files = checkpoint_files(source)\n    try:",
+          "start_line": 74
+        },
+        {
+          "end_line": 78,
+          "path": "experiments/rineya_taps_adaptive_recurrence_v1/safety.py",
+          "sha256": "80bd40abfe83f5f98a95de204dafc6761df6c52e0fc2cad428986ec6f226a1aa",
+          "source_excerpt": "def resources():\n    import torch\n    available = psutil.virtual_memory().available\n    # Respect container limits rather than reporting the host's unallocatable RAM.\n    try:\n        cap = Path(\"/sys/fs/cgroup/memory.max\").read_text().strip()\n        current = int(Path(\"/sys/fs/cgroup/memory.current\").read_text())\n        if cap != \"max\":\n            available = min(available, max(0, int(cap)-current))\n    except (OSError, ValueError):\n        pass\n    import torch\n    return {\"python\": platform.python_version(), \"torch\": torch.__version__,\n            \"transformers_installed\": importlib.util.find_spec(\"transformers\") is not None,\n            \"cuda_available\": torch.cuda.is_available(), \"free_ram_bytes\": available,\n            \"cuda_free_bytes\": torch.cuda.mem_get_info()[0] if torch.cuda.is_available() else None,\n            \"rss_bytes\": psutil.Process().memory_info().rss}",
+          "start_line": 62
+        }
+      ],
+      "id": "R11",
+      "recommendation": "Parent captures preflight/import/data/worker failures with status and costs; retain inherited refusal.",
+      "severity": "LOW",
+      "title": "Some dependency/early-path errors precede legacy terminal receipt"
+    }
+  ],
+  "legacy_complete_matrix_forecast": {
+    "dev_case_cap_sum": 214,
+    "max_generation_forwards_at_current_caps": 6348,
+    "native_wall_seconds": null,
+    "physical_case_evaluations": 392,
+    "predicted_fit_under_six_hours": null,
+    "reused_oracle_summaries": 32
+  },
+  "limitations": [
+    "No native qualification or efficacy measurement",
+    "No independent validation",
+    "No protected data access",
+    "No claim current dependencies/assets match exact runtime",
+    "Coordinator must record each issue disposition"
+  ],
+  "native_inference_runs": 0,
+  "native_model_loads": 0,
+  "protected_or_test_reads": false,
+  "review_script_sha256": "9b503c5d8166005188e408b8acf1f45adbc5ef7f9af9e673155906be2e13b0c8",
+  "reviewer": "/root/adversarial_review",
+  "rng_source_reproduction": {
+    "config_seed": 17,
+    "method": "Independently emulate source seed derivation and first choice after every reset; no Torch/model import",
+    "nominal_repetitions": {
+      "17": [
+        1.1,
+        1.1,
+        1.1,
+        1.1,
+        1.1
+      ],
+      "29": [
+        1.1,
+        1.1,
+        1.1,
+        1.1,
+        1.1
+      ]
+    },
+    "nominal_seed_values_identical": true,
+    "prefix_values_identical": true
+  },
+  "schema_version": "1.0",
+  "scope": "Independent source review, two explicit allowed DEV/SMOKE files, source-only stdlib calculations.",
+  "source_commit": "7ece5cead285ba65c7d73ab57c0327fae2dc40bb",
+  "source_passes": {
+    "allowlist_before_content_read": {
+      "end_line": 58,
+      "path": "experiments/anchor_routed_middle_recurrence_v1/src/armr/provenance.py",
+      "sha256": "3f84bc41851a4709ff123217b0f781e6d1ec93e3f40dc7c911a95f44c1ee9018",
+      "source_excerpt": "\ndef cases_from(path: Path) -> list[dict]:\n    path = guard_non_sealed_path(path)\n    allowed = {(DATA / name).resolve() for name in\n               (\"supa_layer_ablation_smoke.jsonl\", \"mergedev_fast.jsonl\")}\n    if path not in allowed:\n        raise ValueError(\"input is not an explicitly allowlisted ARMR dataset\")\n    rows = [json.loads(line) for line in path.read_text(encoding=\"utf-8\").splitlines() if line.strip()]\n    if not rows or len({r[\"case_id\"] for r in rows}) != len(rows):\n        raise ValueError(\"empty or duplicate case IDs\")\n    return rows\n",
+      "start_line": 47
+    },
+    "fixture_enumeration_cap_and_cost": {
+      "end_line": 242,
+      "path": "experiments/rineya_taps_adaptive_recurrence_v1/experiment.py",
+      "sha256": "ce189da75251af9d16e96d1192664206cecea7ecc961bd136ceb61bb08812a81",
+      "source_excerpt": "                          \"selection\": \"retrospective per-example constant on fixed-grid records\"}\n                results.append(result)\n                row_sink(result)\n                if len(GRID)**budget > cap:\n                    continue  # explicitly NOT_ENUMERATED in report; never pretend greedy is an oracle\n                if budget <= 1:\n                    step = {**result, \"arm\": \"A4_step\", \"oracle_schedule\": [best[\"fixed_alpha\"]]*budget,\n                            \"selection\": \"exhaustive finite-grid schedule; reuses fixed runs\"}\n                else:\n                    candidates = []\n                    for schedule in product(GRID, repeat=budget):\n                        if len(set(schedule)) == 1:\n                            r = next(r for r in rr if r[\"fixed_alpha\"] == schedule[0])\n                        else:\n                            r, _ = rollout(c, config, budget, seed, schedule=schedule, arm=\"oracle_search\")\n                            r.update(oracle_schedule=list(schedule), deployable=False)\n                            row_sink(r)\n                        candidates.append((r, schedule))\n                    best_step, schedule = max(candidates, key=lambda x: (x[0][\"score\"], -x[0][\"proxy_loss\"], tuple(-a for a in x[1])))\n                    step = {**best_step, \"arm\": \"A4_step\", \"physical_run\": False, \"deployable\": False,\n                            \"oracle_schedule\": list(schedule), \"selection\": \"exhaustive finite-grid schedule\",\n                            \"oracle_search_core_calls\": (len(GRID)**budget-len(GRID))*(budget+1)}\n                results.append(step)\n                row_sink(step)\n    return results",
+      "start_line": 218
+    },
+    "gold_nll_guard": {
+      "end_line": 23,
+      "path": "experiments/rineya_taps_adaptive_recurrence_v1/diagnostics.py",
+      "sha256": "a697b1ed0c27788a0920d7416ab3821f2dc599cb4af2762fdc9d538e7481ff6b",
+      "source_excerpt": "    \"\"\"Reuse the pinned ARMR generation/scoring body, without optional gold NLL.\n\n    The inherited optional NLL sends a whole gold continuation through one model\n    call. Sequence-wide adaptive statistics would let later answer tokens affect\n    earlier logits. This lane therefore disables that diagnostic, rather than\n    calling it a causal LM loss or adding its alphas to the DEV random pool.\n    A fresh function-global dictionary changes only canonical_answer; neither\n    the inherited module nor the scorer/generation bytecode is mutated.\n    \"\"\"\n    if not isinstance(evaluator, FunctionType) or evaluator.__closure__ is not None:\n        raise TypeError(\"a pinned non-closure evaluator function is required\")\n    if \"canonical_answer\" not in evaluator.__code__.co_names or not callable(evaluator.__globals__.get(\"canonical_answer\")):\n        raise ValueError(\"inherited canonical-answer diagnostic boundary changed\")\n    namespace = {**evaluator.__globals__, \"canonical_answer\": lambda _case: None}\n    result = FunctionType(evaluator.__code__, namespace, evaluator.__name__, evaluator.__defaults__)\n    result.__kwdefaults__ = evaluator.__kwdefaults__\n    return result",
+      "start_line": 6
+    },
+    "native_test_entrypoint_absent": true,
+    "preflight_imports_dependency_qwen_and_cuda_probes": true,
+    "preflight_no_from_pretrained_or_forward": true
+  },
+  "statistical_feasibility": {
+    "conditional_historical_12_of_16_max_corrections_p": 0.125,
+    "conditional_historical_13_of_16_max_corrections_p": 0.25,
+    "illustrative_zero_harm_one_sided_95_upper_13_independent_units": 0.20581666518655073,
+    "minimum_all_win_discordances_for_unadjusted_two_sided_p_le_05": 6,
+    "one_row_accuracy_increment": 0.0625,
+    "two_sided_exact_all_wins_p": {
+      "1": 1.0,
+      "2": 0.5,
+      "3": 0.25,
+      "4": 0.125,
+      "5": 0.0625,
+      "6": 0.03125,
+      "7": 0.015625,
+      "8": 0.0078125
+    },
+    "warning": "Conditional mathematical feasibility, not inference from a new model measurement; independence/exchangeability not established."
+  },
+  "status": "CONDITIONAL_APPARATUS_PROCEED_NATIVE_DISPATCH_BLOCKED_PENDING_DISPOSITIONS"
+}

@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "date": "2026-09-16",
+  "artifact": "LCR input preflight and collector",
+  "status": "INPUTS_AND_CONTRACT_PENDING_NOT_A_CORPUS",
+  "corpus_rows_generated": 0,
+  "corpus_acceptance": "NOT_ESTABLISHED",
+  "target_tokenizer_assets_loaded_in_this_runtime": false,
+  "target_tokenizer_corpus_measurement": "NOT_RUN",
+  "native_fixture_probe": "IMPLEMENTED_NOT_EXECUTED",
+  "external_evaluation_exclusion_audit": "NOT_EXECUTED",
+  "model_calls": 0,
+  "optimizer_steps": 0,
+  "repository_writes": 0,
+  "tests": {
+    "scope": "standard-library collector mechanics with invented fixture files",
+    "passed": 14,
+    "failures": 0,
+    "errors": 0,
+    "skips": 0,
+    "receipt": "tests.txt"
+  },
+  "runtime": {
+    "python": "3.13.5"
+  },
+  "original_commission_sha256": "d17f40de84f1292f3934702f4d88288f8d38a9ddc75ef2195efcb7d19f50b514",
+  "required_next_inputs": [
+    "exact four hash-matching Supa 1.7 tokenizer assets",
+    "explicitly permitted evaluation-exclusion inputs and scope",
+    "agreement on unresolved contract interpretations"
+  ],
+  "native_fixture_probe_warning": "Requires already installed local Transformers; no auto-install or model loading.",
+  "corpus_generator_included": false,
+  "corpus_validator_included": false,
+  "required_five_corpus_receipts_included": false
+}

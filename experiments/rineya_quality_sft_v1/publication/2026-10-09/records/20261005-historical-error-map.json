@@ -1,0 +1,63 @@
+{
+  "content": {
+    "experiment": "RQSFT-001",
+    "findings": [
+      {
+        "claim": "Hypothesis for fresh two-arm test, not established general superiority",
+        "evidence": "Historical MQ response13/51 vs whole7,7,8/51; one draw/generator overlap",
+        "pattern": "Response-focused supervision promising",
+        "source": "<BusinessProject>/ChatBubble-rineya-quality-sft-v1/MODEL_QUALITY_STATUS.md"
+      },
+      {
+        "claim": "Restore complete public inputs/history before quality judgments",
+        "evidence": "192 omitted-rule/evidence prompts and31 stripped conversation histories",
+        "pattern": "Broken preservation inputs invalidated older aggregate",
+        "source": "<BusinessProject>/ChatBubble-rineya-quality-sft-v1/research/reasoning_posttraining_v1/rrp005/CONTINUE.md"
+      },
+      {
+        "claim": "Agent-review correction; new independent blinded judgments still required",
+        "evidence": "A3 review found9/29 exposed pairs with valid natural abstention despite canonical recognizer zero",
+        "pattern": "Literal and semantic abstention differ",
+        "source": "<BusinessProject>/ChatBubble-rineya-quality-sft-v1/research/reasoning_posttraining_v1/rrp005/A3_RUNBOOK.md"
+      },
+      {
+        "claim": "Report distinct format and answerability/solving dimensions",
+        "evidence": "Historical Forge-v2 repair validity139 to205, accuracy4 unchanged",
+        "pattern": "Format validity is not solving accuracy",
+        "source": "<BusinessProject>/ChatBubble-rineya-quality-sft-v1/research/reasoning_posttraining_v1/STATUS.json"
+      },
+      {
+        "claim": "Preservation, damages/repairs and actual dose mandatory",
+        "evidence": "Opallo73/150 with41/47 source successes vs source47/150; fullB28 reached76 but retained37",
+        "pattern": "Higher acquisition may damage source successes",
+        "source": "<BusinessProject>/ChatBubble-rineya-quality-sft-v1/MODEL_QUALITY_STATUS.md"
+      }
+    ],
+    "fresh_dimensions": {
+      "communication": "NOT_MEASURED",
+      "grounding_answerability": "NOT_MEASURED",
+      "harder_transfer": "NOT_MEASURED",
+      "output_contract": "NOT_MEASURED",
+      "solving": "NOT_MEASURED"
+    },
+    "historical_evidence_only": true,
+    "missing_knowledge_or_execution_or_binding_cause_established": false,
+    "new_model_measurements": 0,
+    "next_required_artifacts": [
+      "actual owner-admitted200TRAIN/512DEV export",
+      "native exposure review",
+      "matching source qualification",
+      "supervised512 source predictions",
+      "two blinded hash-bound semantic/communication reviews"
+    ],
+    "promotion_allowed": false,
+    "source_weight_sha256": "962abc5bcd5a83e3b7693bd278ae9215b6d83389a847913da9330b34dd5dd24b",
+    "status": "FRESH_SOURCE_BASELINE_PENDING_OWNER_BANK"
+  },
+  "execution_authority": false,
+  "original_bytes": 2483,
+  "original_raw_sha256": "05afe72e09c61ea110258d75a07868b55e4d82b20217d3217408ea60be6cc64e",
+  "original_source": "<BusinessProject>/rineya-quality-sft-records/rqsft001-preparation-20261005/BASELINE_ERROR_REPORT.json",
+  "publication_policy": "Portable historical evidence only, not an executable packet or admission/qualification permit. Local paths, chat UUIDs and XML hostnames are removed; original raw-file hashes are retained separately from hashes of these exports. No banks, predictions, weights, checkpoints, environments or raw process inventories are exported. Originals remain unchanged outside Git.",
+  "record_type": "PORTABLE_EVIDENCE_EXPORT"
+}

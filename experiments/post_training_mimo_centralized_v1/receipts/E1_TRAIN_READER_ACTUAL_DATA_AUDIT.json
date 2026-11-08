@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "status": "PASS_ACTUAL_SCHEDULED_TRAIN_READER_NO_NATIVE",
+  "recorded_at_utc": "2026-09-30T15:17:26.797776+00:00",
+  "producer_commit": "c2fd2619412d9ac6f138ab970aa75795a0cd99a3",
+  "files": [
+    {
+      "source": "artifacts/mimo_central/e1_train_reader_v1_20260930/CONFIG.json",
+      "copy": "experiments/post_training_mimo_centralized_v1/results/e1_train_reader_v1_20260930/CONFIG.json",
+      "sha256": "207783f99de0b7363d8d3f75b15d85044e067650e37dd0567d73cf3196e7049b",
+      "bytes": 3843
+    },
+    {
+      "source": "artifacts/mimo_central/e1_train_reader_v1_20260930/READER_AUDIT_RESULT.json",
+      "copy": "experiments/post_training_mimo_centralized_v1/results/e1_train_reader_v1_20260930/READER_AUDIT_RESULT.json",
+      "sha256": "762dceaf5946c04631aad430b65d0005a02b050ecda76722ff63aaacd8d68835",
+      "bytes": 2734
+    },
+    {
+      "source": "artifacts/mimo_central/e1_train_reader_v1_20260930/SCHEDULED_ROWS.jsonl",
+      "copy": "experiments/post_training_mimo_centralized_v1/results/e1_train_reader_v1_20260930/SCHEDULED_ROWS.jsonl",
+      "sha256": "8483ddbd19f9cfec8c573cc45d2663b2221d0c2e162cef13a90269e2e0fc8269",
+      "bytes": 2765748
+    },
+    {
+      "source": "artifacts/mimo_central/e1_train_reader_v1_20260930/SOURCE_RECEIPT.json",
+      "copy": "experiments/post_training_mimo_centralized_v1/results/e1_train_reader_v1_20260930/SOURCE_RECEIPT.json",
+      "sha256": "a13072f82739fa832e0e351217523e2a39cb5f0e86e56f323357ddea62aa2a16",
+      "bytes": 1453
+    }
+  ],
+  "all_copies_byte_exact": true,
+  "scheduled_rows": 5120,
+  "scheduled_nonpadding_positions": 680532,
+  "scheduled_supervised_positions": 63546,
+  "maximum_sequence_tokens": 398,
+  "language_prior_assistant_turns_masked": 81,
+  "component_rows": {
+    "acquisition": 4096,
+    "deterministic_replay": 768,
+    "language_replay": 256
+  },
+  "scheduled_trace_sha256": "8483ddbd19f9cfec8c573cc45d2663b2221d0c2e162cef13a90269e2e0fc8269",
+  "reader_retained_metadata_bytes": 5653737,
+  "peak_observed_process_RSS_bytes": 53264384,
+  "wall_seconds": 141.09399999999732,
+  "resource_enforcement": "cooperative OS high-water process RSS and wall checks; no hard CPU process containment",
+  "source_files_unchanged": true,
+  "runtime_python": "3.11.15 (main, Jun  2 2026, 22:29:49) [MSC v.1944 64 bit (AMD64)]",
+  "model_calls": 0,
+  "training_updates": 0,
+  "generation_tokens": 0,
+  "teacher_calls": 0,
+  "native_backend_connected": false,
+  "native_resume_qualified": false,
+  "E1_authorized": false,
+  "CHECK_FINAL_access": false,
+  "goal_complete": false
+}

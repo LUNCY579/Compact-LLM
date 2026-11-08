@@ -1,0 +1,3059 @@
+{
+  "schema": 1,
+  "evidence_kind": "exploratory_arm_dose_response_only",
+  "note": "Matched-dose comparison across arms. Trains on the GPU, probes on the CPU (the frozen reference device). Per-row correctness is recorded so arms can be compared as matched pairs. Outside the hashed root: no receipt, no gate, no stage opened, no efficacy claim, no checkpoint released.",
+  "arm": "B28last16",
+  "arm_description": "B28 source, blocks 12..27 trainable (16 of 28); embeddings, final norm and all earlier blocks frozen",
+  "completed": true,
+  "aborted_reason": null,
+  "lr": 1e-05,
+  "token_budget": 5200,
+  "seed": 17,
+  "probe_fractions": [
+    0.25,
+    0.5,
+    0.75,
+    1.0
+  ],
+  "probe_milestones": [
+    0,
+    1300,
+    2600,
+    3900,
+    5200
+  ],
+  "parameters": 596049920,
+  "trainable_parameters": 251695104,
+  "train_device": "cuda",
+  "probe_device": "cpu",
+  "numerics": {
+    "cuda_matmul_allow_tf32": false,
+    "cudnn_allow_tf32": false,
+    "float32_matmul_precision": "highest"
+  },
+  "optimizer": "AdamW(offloaded) lr=1e-05 wd=0 clip=1.0 micro_batch=1 betas=(0.9,0.999) eps=1e-8",
+  "beta2": 0.999,
+  "schedule_spec": "cosine:0.03",
+  "schedule_kind": "cosine",
+  "warmup_fraction": 0.03,
+  "decay_fraction": null,
+  "warmup_tokens": 156,
+  "schedule": "linear warmup 3% then cosine to 10%",
+  "supervised_target_tokens": 5233,
+  "optimizer_steps": 41,
+  "train_rows_consumed": 41,
+  "per_step_target_tokens": [
+    186,
+    115,
+    161,
+    192,
+    106,
+    129,
+    138,
+    90,
+    156,
+    124,
+    148,
+    87,
+    173,
+    100,
+    188,
+    173,
+    112,
+    134,
+    98,
+    110,
+    91,
+    135,
+    102,
+    91,
+    85,
+    142,
+    87,
+    100,
+    134,
+    106,
+    205,
+    110,
+    177,
+    119,
+    109,
+    124,
+    140,
+    103,
+    125,
+    110,
+    118
+  ],
+  "read_o_proj_tensors": 0,
+  "step_trace": [
+    {
+      "step": 1,
+      "tokens": 186,
+      "lr": 9.999214471436537e-06,
+      "train_ce": 5.201079368591309,
+      "grad_norm": 52.36892318725586,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 2,
+      "tokens": 301,
+      "lr": 9.98166111568434e-06,
+      "train_ce": 4.71252965927124,
+      "grad_norm": 32.97800064086914,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 3,
+      "tokens": 462,
+      "lr": 9.918518323367832e-06,
+      "train_ce": 3.652738094329834,
+      "grad_norm": 22.840557098388672,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 4,
+      "tokens": 654,
+      "lr": 9.785263368025993e-06,
+      "train_ce": 3.6256396770477295,
+      "grad_norm": 17.491798400878906,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 5,
+      "tokens": 760,
+      "lr": 9.685313519885776e-06,
+      "train_ce": 4.388131141662598,
+      "grad_norm": 24.80699348449707,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 6,
+      "tokens": 889,
+      "lr": 9.539124496619258e-06,
+      "train_ce": 3.872983932495117,
+      "grad_norm": 22.241573333740234,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 7,
+      "tokens": 1027,
+      "lr": 9.353912693581624e-06,
+      "train_ce": 3.1547210216522217,
+      "grad_norm": 16.482759475708008,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 8,
+      "tokens": 1117,
+      "lr": 9.217698525443661e-06,
+      "train_ce": 3.7110018730163574,
+      "grad_norm": 22.75873565673828,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 9,
+      "tokens": 1273,
+      "lr": 8.95419603985218e-06,
+      "train_ce": 3.1087260246276855,
+      "grad_norm": 18.78093147277832,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 10,
+      "tokens": 1397,
+      "lr": 8.721369758074435e-06,
+      "train_ce": 3.288170099258423,
+      "grad_norm": 18.65498924255371,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 11,
+      "tokens": 1545,
+      "lr": 8.418464811724307e-06,
+      "train_ce": 3.385411500930786,
+      "grad_norm": 15.382841110229492,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 12,
+      "tokens": 1632,
+      "lr": 8.228666700766771e-06,
+      "train_ce": 3.002551794052124,
+      "grad_norm": 19.927255630493164,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 13,
+      "tokens": 1805,
+      "lr": 7.828020163799457e-06,
+      "train_ce": 2.9801199436187744,
+      "grad_norm": 13.226712226867676,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 14,
+      "tokens": 1905,
+      "lr": 7.58380544173676e-06,
+      "train_ce": 3.3050501346588135,
+      "grad_norm": 17.69116973876953,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 15,
+      "tokens": 2093,
+      "lr": 7.1035811051907014e-06,
+      "train_ce": 3.0376315116882324,
+      "grad_norm": 12.170767784118652,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 16,
+      "tokens": 2266,
+      "lr": 6.6421095581672116e-06,
+      "train_ce": 2.295741081237793,
+      "grad_norm": 12.20172119140625,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 17,
+      "tokens": 2378,
+      "lr": 6.335946530924126e-06,
+      "train_ce": 3.8353271484375,
+      "grad_norm": 17.737131118774414,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 18,
+      "tokens": 2512,
+      "lr": 5.9644311855563575e-06,
+      "train_ce": 2.518306255340576,
+      "grad_norm": 13.269697189331055,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 19,
+      "tokens": 2610,
+      "lr": 5.690531319847483e-06,
+      "train_ce": 2.84993314743042,
+      "grad_norm": 17.131973266601562,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 20,
+      "tokens": 2720,
+      "lr": 5.38229712625935e-06,
+      "train_ce": 3.50569486618042,
+      "grad_norm": 16.060102462768555,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 21,
+      "tokens": 2811,
+      "lr": 5.127657898752606e-06,
+      "train_ce": 2.4205455780029297,
+      "grad_norm": 18.884382247924805,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 22,
+      "tokens": 2946,
+      "lr": 4.752341155130067e-06,
+      "train_ce": 2.3352153301239014,
+      "grad_norm": 14.362435340881348,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 23,
+      "tokens": 3048,
+      "lr": 4.472130023645912e-06,
+      "train_ce": 3.746772289276123,
+      "grad_norm": 20.091293334960938,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 24,
+      "tokens": 3139,
+      "lr": 4.225604123415731e-06,
+      "train_ce": 3.1129424571990967,
+      "grad_norm": 17.974624633789062,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 25,
+      "tokens": 3224,
+      "lr": 3.999014057571309e-06,
+      "train_ce": 2.6869256496429443,
+      "grad_norm": 19.294750213623047,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 26,
+      "tokens": 3366,
+      "lr": 3.6301689101376412e-06,
+      "train_ce": 3.1691770553588867,
+      "grad_norm": 15.708064079284668,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 27,
+      "tokens": 3453,
+      "lr": 3.411227859987205e-06,
+      "train_ce": 2.7180604934692383,
+      "grad_norm": 16.894710540771484,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 28,
+      "tokens": 3553,
+      "lr": 3.167184529165693e-06,
+      "train_ce": 2.8017382621765137,
+      "grad_norm": 17.18568229675293,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 29,
+      "tokens": 3687,
+      "lr": 2.8545128876527907e-06,
+      "train_ce": 2.046865701675415,
+      "grad_norm": 13.847821235656738,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 30,
+      "tokens": 3793,
+      "lr": 2.620118897788242e-06,
+      "train_ce": 3.4393413066864014,
+      "grad_norm": 20.611417770385742,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 31,
+      "tokens": 3998,
+      "lr": 2.2032644253076053e-06,
+      "train_ce": 2.596449613571167,
+      "grad_norm": 13.649469375610352,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 32,
+      "tokens": 4108,
+      "lr": 2.0013150219415796e-06,
+      "train_ce": 2.1361987590789795,
+      "grad_norm": 16.49299430847168,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 33,
+      "tokens": 4285,
+      "lr": 1.7111939769074253e-06,
+      "train_ce": 2.179527521133423,
+      "grad_norm": 13.135955810546875,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 34,
+      "tokens": 4404,
+      "lr": 1.5418065838324558e-06,
+      "train_ce": 1.9838178157806396,
+      "grad_norm": 14.318002700805664,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 35,
+      "tokens": 4513,
+      "lr": 1.4057039332603412e-06,
+      "train_ce": 2.0814499855041504,
+      "grad_norm": 14.982772827148438,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 36,
+      "tokens": 4637,
+      "lr": 1.273838326423429e-06,
+      "train_ce": 2.4129068851470947,
+      "grad_norm": 14.263427734375,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 37,
+      "tokens": 4777,
+      "lr": 1.1552742028129704e-06,
+      "train_ce": 2.1532225608825684,
+      "grad_norm": 14.740785598754883,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 38,
+      "tokens": 4880,
+      "lr": 1.08908281659462e-06,
+      "train_ce": 2.1338422298431396,
+      "grad_norm": 17.091289520263672,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 39,
+      "tokens": 5005,
+      "lr": 1.0331487694811421e-06,
+      "train_ce": 3.26896071434021,
+      "grad_norm": 18.56494140625,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 40,
+      "tokens": 5115,
+      "lr": 1.0063047594479043e-06,
+      "train_ce": 2.2405900955200195,
+      "grad_norm": 15.973638534545898,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 41,
+      "tokens": 5233,
+      "lr": 1.0000000000000002e-06,
+      "train_ce": 2.7008001804351807,
+      "grad_norm": 15.149638175964355,
+      "read_o_proj_norm": 0.0
+    }
+  ],
+  "checkpoint": {
+    "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-ced-native-loader-qualification\\experiments\\architecture_benchmark_001\\outputs\\arm-checkpoints\\B28last16_lr1e-05_b5200_seed17",
+    "tensors": 176,
+    "parameters": 251695104,
+    "bytes": 1006798040,
+    "sha256": "52f2ff047b310021ad195f3e288cffc664f56bff2423f45d5f5a117c5f8f8074",
+    "dtype": "float32",
+    "saved_after_steps": 41,
+    "saved_after_tokens": 5233,
+    "complete_model": true,
+    "reconstruct": {
+      "source": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-ced-native-loader-qualification\\Supa",
+      "mode": "B28",
+      "read_tail": null,
+      "builder": "run._load(source)",
+      "then": "load trainable.safetensors and copy_ each tensor by name"
+    },
+    "soup_key": {
+      "mode": "B28",
+      "read_tail": null,
+      "source_digest": "a329eb7bb06fc003a9220ea41713e721fba575c478008240749c425774b2b58e",
+      "tensor_names_sha256": "d5a8b1aa68d4696cead04cded2c65a240c5cc4e6494e541067d8ab718a869e31"
+    }
+  },
+  "save_policy": "final",
+  "read_o_proj_norm_end": 0.0,
+  "reference_receipt": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-ced-native-loader-qualification\\experiments\\architecture_benchmark_001\\outputs\\retention-a329eb7b\\B28\\retention.json",
+  "reference_digest": "a329eb7bb06fc003a9220ea41713e721fba575c478008240749c425774b2b58e",
+  "reference_sizes": {
+    "permissive": 47,
+    "strict": 41
+  },
+  "registered_bare_policy": "permissive",
+  "device_integrity_control_passed": true,
+  "headline": {
+    "dev_ce_start": 5.578190601453841,
+    "dev_ce_end": 2.6423551854801888,
+    "correct_start": 47,
+    "correct_end": 55,
+    "gained_end": 15,
+    "lost_end": 7,
+    "net_end": 8,
+    "retained_end": 40,
+    "answers_changed_end": 128,
+    "status_start": "PASS",
+    "status_end": "FAIL"
+  },
+  "checkpoints": [
+    {
+      "tokens": 0,
+      "milestone": 0,
+      "steps": 0,
+      "lr": 0.0,
+      "dev_ce_nats": 5.578190601453841,
+      "answers_changed_vs_source": 0,
+      "retention": {
+        "permissive": {
+          "status": "PASS",
+          "correct_total": 47,
+          "lost_total": 0,
+          "retained_total": 47,
+          "terminated_total": 148,
+          "gained_total": 0,
+          "reference_n": 47,
+          "per_class": {
+            "percentage_reasoning": {
+              "rows": 50,
+              "reference_n": 21,
+              "lost": 0,
+              "lost_ids": [],
+              "retained": 21,
+              "gained": 0,
+              "terminated": 49,
+              "source_correct_terminated": 21,
+              "arm_correct": 21
+            },
+            "ratio_proportion": {
+              "rows": 50,
+              "reference_n": 16,
+              "lost": 0,
+              "lost_ids": [],
+              "retained": 16,
+              "gained": 0,
+              "terminated": 50,
+              "source_correct_terminated": 16,
+              "arm_correct": 16
+            },
+            "time_duration": {
+              "rows": 50,
+              "reference_n": 10,
+              "lost": 0,
+              "lost_ids": [],
+              "retained": 10,
+              "gained": 0,
+              "terminated": 49,
+              "source_correct_terminated": 10,
+              "arm_correct": 10
+            }
+          },
+          "failed_classes": []
+        },
+        "per_row": {
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s00__00223": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s00__00270": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s00__00280": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00324": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00381": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00487": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00515": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00526": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00564": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00574": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s02__00617": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s02__00729": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s02__00751": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s02__00777": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s03__00947": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s03__00974": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s03__01035": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s03__01139": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s03__01155": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s03__01186": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s04__01208": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s04__01440": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s04__01475": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s05__01533": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s05__01554": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s05__01577": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s05__01599": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s05__01723": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s05__01778": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s06__02013": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s06__02025": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s06__02056": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02233": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02298": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s08__02504": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s08__02515": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s08__02574": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s08__02611": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s08__02622": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s08__02683": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s09__02729": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s09__02753": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s09__02787": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s09__02811": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s09__02825": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s09__02832": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s09__02937": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s09__02944": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s00__00035": true,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s00__00094": true,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s00__00233": true,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s00__00261": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s01__00350": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s01__00374": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s01__00529": true,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s01__00538": true,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s01__00547": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s01__00598": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s02__00699": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s02__00720": true,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s02__00744": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s02__00774": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s02__00812": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s02__00883": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__00933": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__00969": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__01007": true,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__01017": true,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__01086": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__01120": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__01181": true,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s04__01293": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s04__01368": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s05__01592": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s05__01698": true,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s06__01779": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s06__01863": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s06__01931": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s06__01940": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s06__01952": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s06__02027": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s07__02115": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s07__02155": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s07__02247": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s07__02248": true,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s07__02273": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s07__02281": true,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s07__02307": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s08__02526": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s08__02552": true,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s08__02638": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s08__02658": true,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s08__02675": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s09__02752": true,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s09__02851": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s09__02931": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s09__02944": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s09__02970": true,
+          "rineya_v3_sft__time_duration__reas_time_duration_s00__00027": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s00__00171": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s00__00242": true,
+          "rineya_v3_sft__time_duration__reas_time_duration_s01__00538": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s02__00597": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s02__00626": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s02__00681": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s02__00828": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s02__00840": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s02__00849": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s03__00982": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s03__01029": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s03__01033": true,
+          "rineya_v3_sft__time_duration__reas_time_duration_s04__01221": true,
+          "rineya_v3_sft__time_duration__reas_time_duration_s04__01281": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s04__01339": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s04__01408": true,
+          "rineya_v3_sft__time_duration__reas_time_duration_s04__01429": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s05__01539": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s05__01566": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s05__01594": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s05__01600": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s05__01610": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s05__01656": true,
+          "rineya_v3_sft__time_duration__reas_time_duration_s05__01679": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s05__01696": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s05__01739": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s05__01749": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s06__01801": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s06__01827": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s06__01985": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s07__02114": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s07__02213": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s07__02229": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s07__02257": true,
+          "rineya_v3_sft__time_duration__reas_time_duration_s07__02318": true,
+          "rineya_v3_sft__time_duration__reas_time_duration_s07__02345": true,
+          "rineya_v3_sft__time_duration__reas_time_duration_s08__02401": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s08__02422": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s08__02506": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s08__02562": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s08__02628": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s08__02677": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s08__02681": true,
+          "rineya_v3_sft__time_duration__reas_time_duration_s09__02720": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s09__02781": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s09__02842": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s09__02953": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s09__02961": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s09__02996": true
+        },
+        "strict": {
+          "status": "PASS",
+          "correct_total": 41,
+          "lost_total": 0,
+          "retained_total": 41,
+          "terminated_total": 148,
+          "gained_total": 0,
+          "reference_n": 41,
+          "per_class": {
+            "percentage_reasoning": {
+              "rows": 50,
+              "reference_n": 21,
+              "lost": 0,
+              "lost_ids": [],
+              "retained": 21,
+              "gained": 0,
+              "terminated": 49,
+              "source_correct_terminated": 21,
+              "arm_correct": 21
+            },
+            "ratio_proportion": {
+              "rows": 50,
+              "reference_n": 10,
+              "lost": 0,
+              "lost_ids": [],
+              "retained": 10,
+              "gained": 0,
+              "terminated": 50,
+              "source_correct_terminated": 10,
+              "arm_correct": 10
+            },
+            "time_duration": {
+              "rows": 50,
+              "reference_n": 10,
+              "lost": 0,
+              "lost_ids": [],
+              "retained": 10,
+              "gained": 0,
+              "terminated": 49,
+              "source_correct_terminated": 10,
+              "arm_correct": 10
+            }
+          },
+          "failed_classes": []
+        }
+      },
+      "wall_seconds": 181.66317359999994,
+      "outputs": {
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s05__01577": {
+          "text": "60 units.",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00515": {
+          "text": "30 units.",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s08__02677": {
+          "text": "9:15 AM - 8:30 AM = 45 minutes",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s03__00982": {
+          "text": "2 hours",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s06__01827": {
+          "text": "9:15 AM to 10:85 AM",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s05__01656": {
+          "text": "4:20 PM",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s02__00699": {
+          "text": "36 sensor tags.",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s09__02781": {
+          "text": "It ends at 6:55 PM.",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s02__00777": {
+          "text": "50 units.",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s02__00883": {
+          "text": "15",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s09__02787": {
+          "text": "A quantity of 120 decreases by 25%.",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s09__02752": {
+          "text": "55 km",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s05__01554": {
+          "text": "200%",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s00__00171": {
+          "text": "9:15 AM + 70 minutes = 10:45 AM",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s02__00812": {
+          "text": "16 cups",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s07__02155": {
+          "text": "20 cups",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s00__00027": {
+          "text": "10:45 AM",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s07__02213": {
+          "text": "It runs from 2:20 PM to 3:10 PM.",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s07__02114": {
+          "text": "It ends at 4:10 PM.",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s02__00681": {
+          "text": "11:55 AM",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s05__01739": {
+          "text": "1 hour and 40 minutes",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s01__00598": {
+          "text": "$168",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s08__02552": {
+          "text": "9",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s00__00270": {
+          "text": "$108",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s04__01221": {
+          "text": "25 minutes",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s05__01600": {
+          "text": "6:20 PM + 45 minutes = 6:65 PM",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s04__01281": {
+          "text": "1 hour and 25 minutes",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s09__02937": {
+          "text": "25%",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s02__00774": {
+          "text": "162 shipping labels.",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s07__02229": {
+          "text": "2 hours 15 minutes",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00574": {
+          "text": "90",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s08__02504": {
+          "text": "70 units.",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s09__02944": {
+          "text": "60",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s08__02628": {
+          "text": "11:30 AM + 50 minutes = 12:20 PM",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s09__02931": {
+          "text": "24",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s08__02506": {
+          "text": "9:15 AM + 55 minutes = 9:70 AM",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s04__01440": {
+          "text": "110 units",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s05__01778": {
+          "text": "35 units",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s00__00094": {
+          "text": "60 km",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s02__00617": {
+          "text": "60%",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__01017": {
+          "text": "15",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s04__01208": {
+          "text": "12.5%",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s00__00035": {
+          "text": "44 km.",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s07__02345": {
+          "text": "7:40 AM",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s03__01186": {
+          "text": "95 units.",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s03__00947": {
+          "text": "$90",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311": {
+          "text": "10",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s06__01779": {
+          "text": "15",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s01__00374": {
+          "text": "9",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s09__02996": {
+          "text": "1 hour and 30 minutes.",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s01__00350": {
+          "text": "16 cups",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s03__01139": {
+          "text": "The percent increase is 10%.",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02233": {
+          "text": "160 - 20 = 140 units.",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s01__00538": {
+          "text": "15",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s04__01293": {
+          "text": "16 cups",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s05__01592": {
+          "text": "$72",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s06__02027": {
+          "text": "24",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s08__02401": {
+          "text": "The coding sprint ends at 9:55 AM.",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s01__00547": {
+          "text": "24",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s03__01155": {
+          "text": "108",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s09__02811": {
+          "text": "30%",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s09__02851": {
+          "text": "24",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s06__02013": {
+          "text": "$36",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s09__02753": {
+          "text": "40 units.",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s05__01723": {
+          "text": "$90",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s09__02825": {
+          "text": "24 units.",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s07__02307": {
+          "text": "24",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s02__00828": {
+          "text": "1:50 PM to 2:20 PM",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s03__01035": {
+          "text": "$5",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s00__00280": {
+          "text": "125 - 100 = 25. 25 / 100 = 2",
+          "terminated": false
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s06__01863": {
+          "text": "16 drill bits.",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__01086": {
+          "text": "$80",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s06__01940": {
+          "text": "240 pages.",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s02__00744": {
+          "text": "6",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s07__02281": {
+          "text": "18 cups",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__00933": {
+          "text": "16 access badges.",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s07__02257": {
+          "text": "6:30 PM",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s07__02248": {
+          "text": "6 cups.",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s08__02515": {
+          "text": "A 15% tip on a $60 bill is $9.",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s08__02658": {
+          "text": "15",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s05__01533": {
+          "text": "$8",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s09__02832": {
+          "text": "60%",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s06__01952": {
+          "text": "12 cups",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s07__02273": {
+          "text": "120 pages.",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s01__00529": {
+          "text": "12",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__01181": {
+          "text": "16 km",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s01__00538": {
+          "text": "100 minutes",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s06__01985": {
+          "text": "11:55 AM",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s00__00261": {
+          "text": "30 pages.",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s08__02675": {
+          "text": "24",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00381": {
+          "text": "10%",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s02__00840": {
+          "text": "End time: 9:40 AM",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s05__01698": {
+          "text": "15 timing chips",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s05__01610": {
+          "text": "1 hour and 45 minutes",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s02__00849": {
+          "text": "1 hour and 25 minutes",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s08__02681": {
+          "text": "9:55 AM",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s02__00751": {
+          "text": "4",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s04__01339": {
+          "text": "8 hours 25 minutes",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s03__01033": {
+          "text": "9:55 AM",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s09__02961": {
+          "text": "1 hour 30 minutes",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s05__01696": {
+          "text": "10:30 AM",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s02__00626": {
+          "text": "55 minutes",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s05__01594": {
+          "text": "4:50 PM + 45 minutes = 5:35 PM",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s08__02638": {
+          "text": "32 helmets.",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s09__02729": {
+          "text": "200 decreases by 25% is 150.",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s08__02574": {
+          "text": "120",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s09__02953": {
+          "text": "10:55 AM",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s09__02944": {
+          "text": "15",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00526": {
+          "text": "30",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349": {
+          "text": "25",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s08__02611": {
+          "text": "10 units remaining.",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__01007": {
+          "text": "$30",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s08__02526": {
+          "text": "16 cups water.",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s06__02025": {
+          "text": "50% of 120 units = 60 units.",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00324": {
+          "text": "$4",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s06__01801": {
+          "text": "It ends at 10:15 AM.",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s04__01475": {
+          "text": "220",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s06__02056": {
+          "text": "30 units.",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s05__01566": {
+          "text": "10 minutes",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s00__00233": {
+          "text": "12 chips",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s03__01029": {
+          "text": "3:10 PM + 75 minutes = 3:10 PM + 75 minutes =",
+          "terminated": false
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s00__00223": {
+          "text": "60",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02298": {
+          "text": "10% tip on a $40 bill is $4.",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s03__00974": {
+          "text": "$4.",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__01120": {
+          "text": "6",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s08__02622": {
+          "text": "24",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s04__01368": {
+          "text": "160 timing chips.",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s08__02683": {
+          "text": "50 units.",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s08__02422": {
+          "text": "It ends at 10:30 AM.",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s04__01408": {
+          "text": "10:00 AM",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s09__02720": {
+          "text": "9:15 AM + 25 minutes = 9:40 AM",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00487": {
+          "text": "12.5%",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s05__01539": {
+          "text": "1 hour 45 minutes",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s02__00720": {
+          "text": "4 cups",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s07__02247": {
+          "text": "28",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s07__02115": {
+          "text": "24",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s08__02562": {
+          "text": "9:15 AM + 55 minutes = 10:10 AM",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s06__01931": {
+          "text": "12 cups",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00564": {
+          "text": "10 units.",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__00969": {
+          "text": "16 cups",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s09__02842": {
+          "text": "9:15 AM + 55 minutes = 9:70 AM",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s05__01679": {
+          "text": "1:00 PM",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s07__02318": {
+          "text": "40 minutes.",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s00__00242": {
+          "text": "10:10 AM",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s04__01429": {
+          "text": "105 minutes = 1 hour 45 minutes.",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s02__00729": {
+          "text": "20 units.",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s09__02970": {
+          "text": "15",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s05__01749": {
+          "text": "It is 10 minutes.",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s05__01599": {
+          "text": "75",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s02__00597": {
+          "text": "It is 2 hours and 40 minutes.",
+          "terminated": true
+        }
+      }
+    },
+    {
+      "tokens": 1397,
+      "milestone": 1300,
+      "steps": 10,
+      "lr": 8.721369758074435e-06,
+      "dev_ce_nats": 3.3185658390729342,
+      "answers_changed_vs_source": 109,
+      "retention": {
+        "permissive": {
+          "status": "FAIL",
+          "correct_total": 47,
+          "lost_total": 7,
+          "retained_total": 40,
+          "terminated_total": 149,
+          "gained_total": 7,
+          "reference_n": 47,
+          "per_class": {
+            "percentage_reasoning": {
+              "rows": 50,
+              "reference_n": 21,
+              "lost": 2,
+              "lost_ids": [
+                "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349",
+                "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s08__02622"
+              ],
+              "retained": 19,
+              "gained": 1,
+              "terminated": 50,
+              "source_correct_terminated": 21,
+              "arm_correct": 20
+            },
+            "ratio_proportion": {
+              "rows": 50,
+              "reference_n": 16,
+              "lost": 3,
+              "lost_ids": [
+                "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s07__02281",
+                "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s08__02552",
+                "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s09__02970"
+              ],
+              "retained": 13,
+              "gained": 1,
+              "terminated": 50,
+              "source_correct_terminated": 16,
+              "arm_correct": 14
+            },
+            "time_duration": {
+              "rows": 50,
+              "reference_n": 10,
+              "lost": 2,
+              "lost_ids": [
+                "rineya_v3_sft__time_duration__reas_time_duration_s04__01221",
+                "rineya_v3_sft__time_duration__reas_time_duration_s07__02257"
+              ],
+              "retained": 8,
+              "gained": 5,
+              "terminated": 49,
+              "source_correct_terminated": 10,
+              "arm_correct": 13
+            }
+          },
+          "failed_classes": [
+            "percentage_reasoning",
+            "ratio_proportion",
+            "time_duration"
+          ]
+        },
+        "per_row": {
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s00__00223": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s00__00270": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s00__00280": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00324": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00381": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00487": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00515": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00526": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00564": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00574": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s02__00617": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s02__00729": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s02__00751": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s02__00777": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s03__00947": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s03__00974": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s03__01035": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s03__01139": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s03__01155": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s03__01186": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s04__01208": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s04__01440": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s04__01475": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s05__01533": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s05__01554": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s05__01577": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s05__01599": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s05__01723": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s05__01778": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s06__02013": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s06__02025": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s06__02056": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02233": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02298": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s08__02504": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s08__02515": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s08__02574": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s08__02611": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s08__02622": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s08__02683": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s09__02729": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s09__02753": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s09__02787": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s09__02811": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s09__02825": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s09__02832": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s09__02937": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s09__02944": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s00__00035": true,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s00__00094": true,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s00__00233": true,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s00__00261": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s01__00350": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s01__00374": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s01__00529": true,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s01__00538": true,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s01__00547": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s01__00598": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s02__00699": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s02__00720": true,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s02__00744": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s02__00774": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s02__00812": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s02__00883": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__00933": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__00969": true,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__01007": true,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__01017": true,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__01086": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__01120": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__01181": true,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s04__01293": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s04__01368": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s05__01592": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s05__01698": true,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s06__01779": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s06__01863": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s06__01931": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s06__01940": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s06__01952": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s06__02027": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s07__02115": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s07__02155": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s07__02247": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s07__02248": true,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s07__02273": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s07__02281": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s07__02307": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s08__02526": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s08__02552": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s08__02638": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s08__02658": true,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s08__02675": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s09__02752": true,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s09__02851": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s09__02931": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s09__02944": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s09__02970": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s00__00027": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s00__00171": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s00__00242": true,
+          "rineya_v3_sft__time_duration__reas_time_duration_s01__00538": true,
+          "rineya_v3_sft__time_duration__reas_time_duration_s02__00597": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s02__00626": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s02__00681": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s02__00828": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s02__00840": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s02__00849": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s03__00982": true,
+          "rineya_v3_sft__time_duration__reas_time_duration_s03__01029": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s03__01033": true,
+          "rineya_v3_sft__time_duration__reas_time_duration_s04__01221": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s04__01281": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s04__01339": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s04__01408": true,
+          "rineya_v3_sft__time_duration__reas_time_duration_s04__01429": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s05__01539": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s05__01566": true,
+          "rineya_v3_sft__time_duration__reas_time_duration_s05__01594": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s05__01600": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s05__01610": true,
+          "rineya_v3_sft__time_duration__reas_time_duration_s05__01656": true,
+          "rineya_v3_sft__time_duration__reas_time_duration_s05__01679": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s05__01696": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s05__01739": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s05__01749": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s06__01801": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s06__01827": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s06__01985": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s07__02114": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s07__02213": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s07__02229": true,
+          "rineya_v3_sft__time_duration__reas_time_duration_s07__02257": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s07__02318": true,
+          "rineya_v3_sft__time_duration__reas_time_duration_s07__02345": true,
+          "rineya_v3_sft__time_duration__reas_time_duration_s08__02401": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s08__02422": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s08__02506": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s08__02562": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s08__02628": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s08__02677": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s08__02681": true,
+          "rineya_v3_sft__time_duration__reas_time_duration_s09__02720": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s09__02781": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s09__02842": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s09__02953": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s09__02961": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s09__02996": true
+        },
+        "strict": {
+          "status": "FAIL",
+          "correct_total": 44,
+          "lost_total": 6,
+          "retained_total": 35,
+          "terminated_total": 149,
+          "gained_total": 9,
+          "reference_n": 41,
+          "per_class": {
+            "percentage_reasoning": {
+              "rows": 50,
+              "reference_n": 21,
+              "lost": 3,
+              "lost_ids": [
+                "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s03__01035",
+                "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349",
+                "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s08__02622"
+              ],
+              "retained": 18,
+              "gained": 1,
+              "terminated": 50,
+              "source_correct_terminated": 21,
+              "arm_correct": 19
+            },
+            "ratio_proportion": {
+              "rows": 50,
+              "reference_n": 10,
+              "lost": 1,
+              "lost_ids": [
+                "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s07__02281"
+              ],
+              "retained": 9,
+              "gained": 3,
+              "terminated": 50,
+              "source_correct_terminated": 10,
+              "arm_correct": 12
+            },
+            "time_duration": {
+              "rows": 50,
+              "reference_n": 10,
+              "lost": 2,
+              "lost_ids": [
+                "rineya_v3_sft__time_duration__reas_time_duration_s04__01221",
+                "rineya_v3_sft__time_duration__reas_time_duration_s07__02257"
+              ],
+              "retained": 8,
+              "gained": 5,
+              "terminated": 49,
+              "source_correct_terminated": 10,
+              "arm_correct": 13
+            }
+          },
+          "failed_classes": [
+            "percentage_reasoning",
+            "ratio_proportion",
+            "time_duration"
+          ]
+        }
+      },
+      "wall_seconds": 363.89668729999903
+    },
+    {
+      "tokens": 2610,
+      "milestone": 2600,
+      "steps": 19,
+      "lr": 5.690531319847483e-06,
+      "dev_ce_nats": 2.961702069835889,
+      "answers_changed_vs_source": 124,
+      "retention": {
+        "permissive": {
+          "status": "FAIL",
+          "correct_total": 49,
+          "lost_total": 8,
+          "retained_total": 39,
+          "terminated_total": 148,
+          "gained_total": 10,
+          "reference_n": 47,
+          "per_class": {
+            "percentage_reasoning": {
+              "rows": 50,
+              "reference_n": 21,
+              "lost": 2,
+              "lost_ids": [
+                "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s00__00270",
+                "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00381"
+              ],
+              "retained": 19,
+              "gained": 2,
+              "terminated": 50,
+              "source_correct_terminated": 21,
+              "arm_correct": 21
+            },
+            "ratio_proportion": {
+              "rows": 50,
+              "reference_n": 16,
+              "lost": 1,
+              "lost_ids": [
+                "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s08__02552"
+              ],
+              "retained": 15,
+              "gained": 1,
+              "terminated": 50,
+              "source_correct_terminated": 16,
+              "arm_correct": 16
+            },
+            "time_duration": {
+              "rows": 50,
+              "reference_n": 10,
+              "lost": 5,
+              "lost_ids": [
+                "rineya_v3_sft__time_duration__reas_time_duration_s03__01033",
+                "rineya_v3_sft__time_duration__reas_time_duration_s04__01408",
+                "rineya_v3_sft__time_duration__reas_time_duration_s07__02257",
+                "rineya_v3_sft__time_duration__reas_time_duration_s07__02345",
+                "rineya_v3_sft__time_duration__reas_time_duration_s08__02681"
+              ],
+              "retained": 5,
+              "gained": 7,
+              "terminated": 48,
+              "source_correct_terminated": 10,
+              "arm_correct": 12
+            }
+          },
+          "failed_classes": [
+            "percentage_reasoning",
+            "ratio_proportion",
+            "time_duration"
+          ]
+        },
+        "per_row": {
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s00__00223": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s00__00270": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s00__00280": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00324": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00381": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00487": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00515": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00526": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00564": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00574": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s02__00617": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s02__00729": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s02__00751": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s02__00777": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s03__00947": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s03__00974": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s03__01035": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s03__01139": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s03__01155": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s03__01186": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s04__01208": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s04__01440": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s04__01475": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s05__01533": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s05__01554": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s05__01577": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s05__01599": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s05__01723": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s05__01778": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s06__02013": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s06__02025": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s06__02056": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02233": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02298": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s08__02504": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s08__02515": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s08__02574": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s08__02611": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s08__02622": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s08__02683": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s09__02729": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s09__02753": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s09__02787": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s09__02811": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s09__02825": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s09__02832": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s09__02937": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s09__02944": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s00__00035": true,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s00__00094": true,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s00__00233": true,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s00__00261": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s01__00350": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s01__00374": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s01__00529": true,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s01__00538": true,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s01__00547": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s01__00598": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s02__00699": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s02__00720": true,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s02__00744": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s02__00774": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s02__00812": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s02__00883": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__00933": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__00969": true,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__01007": true,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__01017": true,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__01086": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__01120": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__01181": true,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s04__01293": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s04__01368": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s05__01592": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s05__01698": true,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s06__01779": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s06__01863": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s06__01931": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s06__01940": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s06__01952": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s06__02027": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s07__02115": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s07__02155": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s07__02247": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s07__02248": true,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s07__02273": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s07__02281": true,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s07__02307": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s08__02526": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s08__02552": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s08__02638": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s08__02658": true,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s08__02675": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s09__02752": true,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s09__02851": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s09__02931": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s09__02944": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s09__02970": true,
+          "rineya_v3_sft__time_duration__reas_time_duration_s00__00027": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s00__00171": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s00__00242": true,
+          "rineya_v3_sft__time_duration__reas_time_duration_s01__00538": true,
+          "rineya_v3_sft__time_duration__reas_time_duration_s02__00597": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s02__00626": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s02__00681": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s02__00828": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s02__00840": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s02__00849": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s03__00982": true,
+          "rineya_v3_sft__time_duration__reas_time_duration_s03__01029": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s03__01033": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s04__01221": true,
+          "rineya_v3_sft__time_duration__reas_time_duration_s04__01281": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s04__01339": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s04__01408": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s04__01429": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s05__01539": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s05__01566": true,
+          "rineya_v3_sft__time_duration__reas_time_duration_s05__01594": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s05__01600": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s05__01610": true,
+          "rineya_v3_sft__time_duration__reas_time_duration_s05__01656": true,
+          "rineya_v3_sft__time_duration__reas_time_duration_s05__01679": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s05__01696": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s05__01739": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s05__01749": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s06__01801": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s06__01827": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s06__01985": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s07__02114": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s07__02213": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s07__02229": true,
+          "rineya_v3_sft__time_duration__reas_time_duration_s07__02257": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s07__02318": true,
+          "rineya_v3_sft__time_duration__reas_time_duration_s07__02345": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s08__02401": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s08__02422": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s08__02506": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s08__02562": true,
+          "rineya_v3_sft__time_duration__reas_time_duration_s08__02628": true,
+          "rineya_v3_sft__time_duration__reas_time_duration_s08__02677": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s08__02681": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s09__02720": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s09__02781": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s09__02842": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s09__02953": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s09__02961": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s09__02996": true
+        },
+        "strict": {
+          "status": "FAIL",
+          "correct_total": 41,
+          "lost_total": 10,
+          "retained_total": 31,
+          "terminated_total": 148,
+          "gained_total": 10,
+          "reference_n": 41,
+          "per_class": {
+            "percentage_reasoning": {
+              "rows": 50,
+              "reference_n": 21,
+              "lost": 3,
+              "lost_ids": [
+                "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s00__00270",
+                "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00381",
+                "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s03__01035"
+              ],
+              "retained": 18,
+              "gained": 1,
+              "terminated": 50,
+              "source_correct_terminated": 21,
+              "arm_correct": 19
+            },
+            "ratio_proportion": {
+              "rows": 50,
+              "reference_n": 10,
+              "lost": 2,
+              "lost_ids": [
+                "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s00__00233",
+                "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s05__01698"
+              ],
+              "retained": 8,
+              "gained": 2,
+              "terminated": 50,
+              "source_correct_terminated": 10,
+              "arm_correct": 10
+            },
+            "time_duration": {
+              "rows": 50,
+              "reference_n": 10,
+              "lost": 5,
+              "lost_ids": [
+                "rineya_v3_sft__time_duration__reas_time_duration_s03__01033",
+                "rineya_v3_sft__time_duration__reas_time_duration_s04__01408",
+                "rineya_v3_sft__time_duration__reas_time_duration_s07__02257",
+                "rineya_v3_sft__time_duration__reas_time_duration_s07__02345",
+                "rineya_v3_sft__time_duration__reas_time_duration_s08__02681"
+              ],
+              "retained": 5,
+              "gained": 7,
+              "terminated": 48,
+              "source_correct_terminated": 10,
+              "arm_correct": 12
+            }
+          },
+          "failed_classes": [
+            "percentage_reasoning",
+            "ratio_proportion",
+            "time_duration"
+          ]
+        }
+      },
+      "wall_seconds": 540.6724802999997
+    },
+    {
+      "tokens": 3998,
+      "milestone": 3900,
+      "steps": 31,
+      "lr": 2.2032644253076053e-06,
+      "dev_ce_nats": 2.7112315113368726,
+      "answers_changed_vs_source": 127,
+      "retention": {
+        "permissive": {
+          "status": "FAIL",
+          "correct_total": 53,
+          "lost_total": 7,
+          "retained_total": 40,
+          "terminated_total": 149,
+          "gained_total": 13,
+          "reference_n": 47,
+          "per_class": {
+            "percentage_reasoning": {
+              "rows": 50,
+              "reference_n": 21,
+              "lost": 1,
+              "lost_ids": [
+                "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s00__00270"
+              ],
+              "retained": 20,
+              "gained": 4,
+              "terminated": 50,
+              "source_correct_terminated": 21,
+              "arm_correct": 24
+            },
+            "ratio_proportion": {
+              "rows": 50,
+              "reference_n": 16,
+              "lost": 1,
+              "lost_ids": [
+                "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s08__02552"
+              ],
+              "retained": 15,
+              "gained": 1,
+              "terminated": 50,
+              "source_correct_terminated": 16,
+              "arm_correct": 16
+            },
+            "time_duration": {
+              "rows": 50,
+              "reference_n": 10,
+              "lost": 5,
+              "lost_ids": [
+                "rineya_v3_sft__time_duration__reas_time_duration_s03__01033",
+                "rineya_v3_sft__time_duration__reas_time_duration_s04__01408",
+                "rineya_v3_sft__time_duration__reas_time_duration_s07__02257",
+                "rineya_v3_sft__time_duration__reas_time_duration_s07__02345",
+                "rineya_v3_sft__time_duration__reas_time_duration_s08__02681"
+              ],
+              "retained": 5,
+              "gained": 8,
+              "terminated": 49,
+              "source_correct_terminated": 10,
+              "arm_correct": 13
+            }
+          },
+          "failed_classes": [
+            "percentage_reasoning",
+            "ratio_proportion",
+            "time_duration"
+          ]
+        },
+        "per_row": {
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s00__00223": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s00__00270": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s00__00280": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00324": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00381": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00487": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00515": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00526": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00564": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00574": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s02__00617": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s02__00729": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s02__00751": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s02__00777": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s03__00947": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s03__00974": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s03__01035": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s03__01139": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s03__01155": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s03__01186": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s04__01208": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s04__01440": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s04__01475": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s05__01533": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s05__01554": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s05__01577": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s05__01599": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s05__01723": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s05__01778": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s06__02013": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s06__02025": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s06__02056": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02233": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02298": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s08__02504": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s08__02515": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s08__02574": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s08__02611": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s08__02622": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s08__02683": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s09__02729": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s09__02753": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s09__02787": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s09__02811": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s09__02825": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s09__02832": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s09__02937": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s09__02944": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s00__00035": true,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s00__00094": true,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s00__00233": true,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s00__00261": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s01__00350": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s01__00374": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s01__00529": true,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s01__00538": true,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s01__00547": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s01__00598": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s02__00699": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s02__00720": true,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s02__00744": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s02__00774": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s02__00812": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s02__00883": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__00933": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__00969": true,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__01007": true,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__01017": true,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__01086": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__01120": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__01181": true,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s04__01293": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s04__01368": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s05__01592": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s05__01698": true,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s06__01779": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s06__01863": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s06__01931": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s06__01940": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s06__01952": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s06__02027": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s07__02115": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s07__02155": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s07__02247": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s07__02248": true,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s07__02273": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s07__02281": true,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s07__02307": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s08__02526": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s08__02552": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s08__02638": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s08__02658": true,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s08__02675": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s09__02752": true,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s09__02851": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s09__02931": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s09__02944": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s09__02970": true,
+          "rineya_v3_sft__time_duration__reas_time_duration_s00__00027": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s00__00171": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s00__00242": true,
+          "rineya_v3_sft__time_duration__reas_time_duration_s01__00538": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s02__00597": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s02__00626": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s02__00681": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s02__00828": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s02__00840": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s02__00849": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s03__00982": true,
+          "rineya_v3_sft__time_duration__reas_time_duration_s03__01029": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s03__01033": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s04__01221": true,
+          "rineya_v3_sft__time_duration__reas_time_duration_s04__01281": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s04__01339": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s04__01408": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s04__01429": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s05__01539": true,
+          "rineya_v3_sft__time_duration__reas_time_duration_s05__01566": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s05__01594": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s05__01600": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s05__01610": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s05__01656": true,
+          "rineya_v3_sft__time_duration__reas_time_duration_s05__01679": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s05__01696": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s05__01739": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s05__01749": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s06__01801": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s06__01827": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s06__01985": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s07__02114": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s07__02213": true,
+          "rineya_v3_sft__time_duration__reas_time_duration_s07__02229": true,
+          "rineya_v3_sft__time_duration__reas_time_duration_s07__02257": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s07__02318": true,
+          "rineya_v3_sft__time_duration__reas_time_duration_s07__02345": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s08__02401": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s08__02422": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s08__02506": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s08__02562": true,
+          "rineya_v3_sft__time_duration__reas_time_duration_s08__02628": true,
+          "rineya_v3_sft__time_duration__reas_time_duration_s08__02677": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s08__02681": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s09__02720": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s09__02781": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s09__02842": true,
+          "rineya_v3_sft__time_duration__reas_time_duration_s09__02953": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s09__02961": true,
+          "rineya_v3_sft__time_duration__reas_time_duration_s09__02996": true
+        },
+        "strict": {
+          "status": "FAIL",
+          "correct_total": 45,
+          "lost_total": 9,
+          "retained_total": 32,
+          "terminated_total": 149,
+          "gained_total": 13,
+          "reference_n": 41,
+          "per_class": {
+            "percentage_reasoning": {
+              "rows": 50,
+              "reference_n": 21,
+              "lost": 2,
+              "lost_ids": [
+                "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s00__00270",
+                "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s02__00777"
+              ],
+              "retained": 19,
+              "gained": 3,
+              "terminated": 50,
+              "source_correct_terminated": 21,
+              "arm_correct": 22
+            },
+            "ratio_proportion": {
+              "rows": 50,
+              "reference_n": 10,
+              "lost": 2,
+              "lost_ids": [
+                "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s00__00233",
+                "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s05__01698"
+              ],
+              "retained": 8,
+              "gained": 2,
+              "terminated": 50,
+              "source_correct_terminated": 10,
+              "arm_correct": 10
+            },
+            "time_duration": {
+              "rows": 50,
+              "reference_n": 10,
+              "lost": 5,
+              "lost_ids": [
+                "rineya_v3_sft__time_duration__reas_time_duration_s03__01033",
+                "rineya_v3_sft__time_duration__reas_time_duration_s04__01408",
+                "rineya_v3_sft__time_duration__reas_time_duration_s07__02257",
+                "rineya_v3_sft__time_duration__reas_time_duration_s07__02345",
+                "rineya_v3_sft__time_duration__reas_time_duration_s08__02681"
+              ],
+              "retained": 5,
+              "gained": 8,
+              "terminated": 49,
+              "source_correct_terminated": 10,
+              "arm_correct": 13
+            }
+          },
+          "failed_classes": [
+            "percentage_reasoning",
+            "ratio_proportion",
+            "time_duration"
+          ]
+        }
+      },
+      "wall_seconds": 711.8196432999994
+    },
+    {
+      "tokens": 5233,
+      "milestone": 5200,
+      "steps": 41,
+      "lr": 1.0000000000000002e-06,
+      "dev_ce_nats": 2.6423551854801888,
+      "answers_changed_vs_source": 128,
+      "retention": {
+        "permissive": {
+          "status": "FAIL",
+          "correct_total": 55,
+          "lost_total": 7,
+          "retained_total": 40,
+          "terminated_total": 148,
+          "gained_total": 15,
+          "reference_n": 47,
+          "per_class": {
+            "percentage_reasoning": {
+              "rows": 50,
+              "reference_n": 21,
+              "lost": 1,
+              "lost_ids": [
+                "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s00__00270"
+              ],
+              "retained": 20,
+              "gained": 4,
+              "terminated": 50,
+              "source_correct_terminated": 21,
+              "arm_correct": 24
+            },
+            "ratio_proportion": {
+              "rows": 50,
+              "reference_n": 16,
+              "lost": 1,
+              "lost_ids": [
+                "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s08__02552"
+              ],
+              "retained": 15,
+              "gained": 1,
+              "terminated": 50,
+              "source_correct_terminated": 16,
+              "arm_correct": 16
+            },
+            "time_duration": {
+              "rows": 50,
+              "reference_n": 10,
+              "lost": 5,
+              "lost_ids": [
+                "rineya_v3_sft__time_duration__reas_time_duration_s03__01033",
+                "rineya_v3_sft__time_duration__reas_time_duration_s04__01408",
+                "rineya_v3_sft__time_duration__reas_time_duration_s07__02257",
+                "rineya_v3_sft__time_duration__reas_time_duration_s07__02345",
+                "rineya_v3_sft__time_duration__reas_time_duration_s08__02681"
+              ],
+              "retained": 5,
+              "gained": 10,
+              "terminated": 48,
+              "source_correct_terminated": 10,
+              "arm_correct": 15
+            }
+          },
+          "failed_classes": [
+            "percentage_reasoning",
+            "ratio_proportion",
+            "time_duration"
+          ]
+        },
+        "per_row": {
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s00__00223": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s00__00270": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s00__00280": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00324": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00381": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00487": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00515": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00526": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00564": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00574": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s02__00617": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s02__00729": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s02__00751": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s02__00777": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s03__00947": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s03__00974": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s03__01035": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s03__01139": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s03__01155": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s03__01186": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s04__01208": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s04__01440": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s04__01475": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s05__01533": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s05__01554": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s05__01577": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s05__01599": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s05__01723": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s05__01778": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s06__02013": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s06__02025": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s06__02056": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02233": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02298": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s08__02504": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s08__02515": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s08__02574": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s08__02611": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s08__02622": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s08__02683": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s09__02729": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s09__02753": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s09__02787": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s09__02811": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s09__02825": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s09__02832": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s09__02937": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s09__02944": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s00__00035": true,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s00__00094": true,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s00__00233": true,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s00__00261": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s01__00350": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s01__00374": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s01__00529": true,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s01__00538": true,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s01__00547": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s01__00598": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s02__00699": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s02__00720": true,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s02__00744": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s02__00774": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s02__00812": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s02__00883": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__00933": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__00969": true,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__01007": true,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__01017": true,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__01086": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__01120": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__01181": true,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s04__01293": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s04__01368": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s05__01592": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s05__01698": true,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s06__01779": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s06__01863": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s06__01931": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s06__01940": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s06__01952": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s06__02027": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s07__02115": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s07__02155": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s07__02247": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s07__02248": true,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s07__02273": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s07__02281": true,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s07__02307": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s08__02526": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s08__02552": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s08__02638": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s08__02658": true,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s08__02675": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s09__02752": true,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s09__02851": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s09__02931": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s09__02944": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s09__02970": true,
+          "rineya_v3_sft__time_duration__reas_time_duration_s00__00027": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s00__00171": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s00__00242": true,
+          "rineya_v3_sft__time_duration__reas_time_duration_s01__00538": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s02__00597": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s02__00626": true,
+          "rineya_v3_sft__time_duration__reas_time_duration_s02__00681": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s02__00828": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s02__00840": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s02__00849": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s03__00982": true,
+          "rineya_v3_sft__time_duration__reas_time_duration_s03__01029": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s03__01033": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s04__01221": true,
+          "rineya_v3_sft__time_duration__reas_time_duration_s04__01281": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s04__01339": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s04__01408": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s04__01429": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s05__01539": true,
+          "rineya_v3_sft__time_duration__reas_time_duration_s05__01566": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s05__01594": true,
+          "rineya_v3_sft__time_duration__reas_time_duration_s05__01600": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s05__01610": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s05__01656": true,
+          "rineya_v3_sft__time_duration__reas_time_duration_s05__01679": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s05__01696": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s05__01739": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s05__01749": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s06__01801": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s06__01827": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s06__01985": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s07__02114": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s07__02213": true,
+          "rineya_v3_sft__time_duration__reas_time_duration_s07__02229": true,
+          "rineya_v3_sft__time_duration__reas_time_duration_s07__02257": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s07__02318": true,
+          "rineya_v3_sft__time_duration__reas_time_duration_s07__02345": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s08__02401": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s08__02422": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s08__02506": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s08__02562": true,
+          "rineya_v3_sft__time_duration__reas_time_duration_s08__02628": true,
+          "rineya_v3_sft__time_duration__reas_time_duration_s08__02677": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s08__02681": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s09__02720": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s09__02781": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s09__02842": true,
+          "rineya_v3_sft__time_duration__reas_time_duration_s09__02953": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s09__02961": true,
+          "rineya_v3_sft__time_duration__reas_time_duration_s09__02996": true
+        },
+        "strict": {
+          "status": "FAIL",
+          "correct_total": 47,
+          "lost_total": 9,
+          "retained_total": 32,
+          "terminated_total": 148,
+          "gained_total": 15,
+          "reference_n": 41,
+          "per_class": {
+            "percentage_reasoning": {
+              "rows": 50,
+              "reference_n": 21,
+              "lost": 2,
+              "lost_ids": [
+                "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s00__00270",
+                "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s02__00777"
+              ],
+              "retained": 19,
+              "gained": 3,
+              "terminated": 50,
+              "source_correct_terminated": 21,
+              "arm_correct": 22
+            },
+            "ratio_proportion": {
+              "rows": 50,
+              "reference_n": 10,
+              "lost": 2,
+              "lost_ids": [
+                "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s00__00233",
+                "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s05__01698"
+              ],
+              "retained": 8,
+              "gained": 2,
+              "terminated": 50,
+              "source_correct_terminated": 10,
+              "arm_correct": 10
+            },
+            "time_duration": {
+              "rows": 50,
+              "reference_n": 10,
+              "lost": 5,
+              "lost_ids": [
+                "rineya_v3_sft__time_duration__reas_time_duration_s03__01033",
+                "rineya_v3_sft__time_duration__reas_time_duration_s04__01408",
+                "rineya_v3_sft__time_duration__reas_time_duration_s07__02257",
+                "rineya_v3_sft__time_duration__reas_time_duration_s07__02345",
+                "rineya_v3_sft__time_duration__reas_time_duration_s08__02681"
+              ],
+              "retained": 5,
+              "gained": 10,
+              "terminated": 48,
+              "source_correct_terminated": 10,
+              "arm_correct": 15
+            }
+          },
+          "failed_classes": [
+            "percentage_reasoning",
+            "ratio_proportion",
+            "time_duration"
+          ]
+        }
+      },
+      "wall_seconds": 882.9204857999994,
+      "outputs": {
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s05__01577": {
+          "text": "60 units.",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00515": {
+          "text": "30 units.",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s08__02677": {
+          "text": "1 hour and 45 minutes.",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s03__00982": {
+          "text": "1 hour and 30 minutes.",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s06__01827": {
+          "text": "9:15 AM + 70 minutes = 10:45 AM.",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s05__01656": {
+          "text": "4:20 PM.",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s02__00699": {
+          "text": "36.",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s09__02781": {
+          "text": "10:55 PM.",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s02__00777": {
+          "text": "50.",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s02__00883": {
+          "text": "15.",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s09__02787": {
+          "text": "120.",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s09__02752": {
+          "text": "55 km.",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s05__01554": {
+          "text": "20%.",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s00__00171": {
+          "text": "9:85 AM.",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s02__00812": {
+          "text": "12 cups.",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s07__02155": {
+          "text": "25 cups.",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s00__00027": {
+          "text": "9:85 AM.",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s07__02213": {
+          "text": "50 minutes.",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s07__02114": {
+          "text": "It ends at 4:10 PM.",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s02__00681": {
+          "text": "10:55 AM.",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s05__01739": {
+          "text": "1 hour.",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s01__00598": {
+          "text": "$168.",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s08__02552": {
+          "text": "12.",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s00__00270": {
+          "text": "$112.80.",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s04__01221": {
+          "text": "25 minutes.",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s05__01600": {
+          "text": "6:20 PM + 45 minutes = 6:65 PM.",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s04__01281": {
+          "text": "1 hour and 25 minutes.",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s09__02937": {
+          "text": "25%.",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s02__00774": {
+          "text": "162.",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s07__02229": {
+          "text": "2 hours.",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00574": {
+          "text": "90.",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s08__02504": {
+          "text": "70 units.",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s09__02944": {
+          "text": "60.",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s08__02628": {
+          "text": "12:20 PM.",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s09__02931": {
+          "text": "15.",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s08__02506": {
+          "text": "The parent meeting ends at 9:15 AM + 55 minutes = 9:70 AM.",
+          "terminated": false
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s04__01440": {
+          "text": "110 units.",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s05__01778": {
+          "text": "35 units.",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s00__00094": {
+          "text": "60 km.",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s02__00617": {
+          "text": "60%.",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__01017": {
+          "text": "15 blue folding chairs.",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s04__01208": {
+          "text": "12.5%.",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s00__00035": {
+          "text": "44 km.",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s07__02345": {
+          "text": "10:40 AM.",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s03__01186": {
+          "text": "95 units.",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s03__00947": {
+          "text": "$90.",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311": {
+          "text": "10.",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s06__01779": {
+          "text": "15.",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s01__00374": {
+          "text": "9 cups.",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s09__02996": {
+          "text": "1 hour and 30 minutes.",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s01__00350": {
+          "text": "16 cups.",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s03__01139": {
+          "text": "10%.",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02233": {
+          "text": "160 - 20 = 140.",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s01__00538": {
+          "text": "15.",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s04__01293": {
+          "text": "16 cups.",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s05__01592": {
+          "text": "$72.",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s06__02027": {
+          "text": "15.",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s08__02401": {
+          "text": "The coding sprint ends at 9:55 AM.",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s01__00547": {
+          "text": "15.",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s03__01155": {
+          "text": "108.",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s09__02811": {
+          "text": "30%.",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s09__02851": {
+          "text": "15.",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s06__02013": {
+          "text": "$36.",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s09__02753": {
+          "text": "40 units.",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s05__01723": {
+          "text": "$90.",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s09__02825": {
+          "text": "28 units.",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s07__02307": {
+          "text": "15.",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s02__00828": {
+          "text": "1:50 PM \u2013 2:20 PM.",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s03__01035": {
+          "text": "$5.",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s00__00280": {
+          "text": "12.5%.",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s06__01863": {
+          "text": "16.",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__01086": {
+          "text": "$80.",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s06__01940": {
+          "text": "240 pages.",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s02__00744": {
+          "text": "15 \u00d7 3 = 45.",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s07__02281": {
+          "text": "18 cups.",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__00933": {
+          "text": "16 access badges.",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s07__02257": {
+          "text": "16:05 PM.",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s07__02248": {
+          "text": "6 cups.",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s08__02515": {
+          "text": "$9. This is a 15% tip on a $60 bill.",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s08__02658": {
+          "text": "15.",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s05__01533": {
+          "text": "$8.",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s09__02832": {
+          "text": "60%.",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s06__01952": {
+          "text": "12 cups.",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s07__02273": {
+          "text": "120 pages.",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s01__00529": {
+          "text": "12.",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__01181": {
+          "text": "16 km.",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s01__00538": {
+          "text": "10 minutes.",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s06__01985": {
+          "text": "10:55 AM.",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s00__00261": {
+          "text": "90 pages.",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s08__02675": {
+          "text": "15.",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00381": {
+          "text": "10%.",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s02__00840": {
+          "text": "The permit review ends at 9:40 AM.",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s05__01698": {
+          "text": "15.",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s05__01610": {
+          "text": "1 hour and 45 minutes.",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s02__00849": {
+          "text": "1 hour and 25 minutes.",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s08__02681": {
+          "text": "10:55 AM.",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s02__00751": {
+          "text": "4.",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s04__01339": {
+          "text": "1 hour and 25 minutes.",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s03__01033": {
+          "text": "10:55 AM.",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s09__02961": {
+          "text": "30 minutes.",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s05__01696": {
+          "text": "10:30 AM.",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s02__00626": {
+          "text": "45 minutes.",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s05__01594": {
+          "text": "5:35 PM.",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s08__02638": {
+          "text": "32.",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s09__02729": {
+          "text": "175.",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s08__02574": {
+          "text": "120.",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s09__02953": {
+          "text": "10:55 AM.",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s09__02944": {
+          "text": "12.",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00526": {
+          "text": "30.",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349": {
+          "text": "25.",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s08__02611": {
+          "text": "10 units.",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__01007": {
+          "text": "$30.",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s08__02526": {
+          "text": "16 cups.",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s06__02025": {
+          "text": "60.",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00324": {
+          "text": "$4.",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s06__01801": {
+          "text": "It ends at 10:15 AM.",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s04__01475": {
+          "text": "220.",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s06__02056": {
+          "text": "30 units.",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s05__01566": {
+          "text": "10 minutes.",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s00__00233": {
+          "text": "12.",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s03__01029": {
+          "text": "3:10 PM + 75 minutes = 4:45 PM.",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s00__00223": {
+          "text": "60.",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02298": {
+          "text": "$4.00.",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s03__00974": {
+          "text": "$4.",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__01120": {
+          "text": "12.",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s08__02622": {
+          "text": "24.",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s04__01368": {
+          "text": "40.",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s08__02683": {
+          "text": "50 units.",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s08__02422": {
+          "text": "It ends at 10:30 AM.",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s04__01408": {
+          "text": "10:10 AM.",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s09__02720": {
+          "text": "10:40 AM.",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00487": {
+          "text": "12.5%.",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s05__01539": {
+          "text": "45 minutes.",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s02__00720": {
+          "text": "4 cups.",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s07__02247": {
+          "text": "24.",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s07__02115": {
+          "text": "15.",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s08__02562": {
+          "text": "10:10 AM.",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s06__01931": {
+          "text": "12 cups.",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00564": {
+          "text": "10 units.",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__00969": {
+          "text": "2 cups.",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s09__02842": {
+          "text": "10:10 AM.",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s05__01679": {
+          "text": "7:00 PM.",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s07__02318": {
+          "text": "40 minutes.",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s00__00242": {
+          "text": "10:10 AM.",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s04__01429": {
+          "text": "105 minutes is 1 hour and 5 minutes. Add that to 5:35 PM:",
+          "terminated": false
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s02__00729": {
+          "text": "20 units.",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s09__02970": {
+          "text": "15.",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s05__01749": {
+          "text": "It is 10 minutes.",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s05__01599": {
+          "text": "75.",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s02__00597": {
+          "text": "It is 1 hour and 50 minutes.",
+          "terminated": true
+        }
+      }
+    }
+  ],
+  "wall_seconds": 885.3799222999987,
+  "licenses_registered_training": false,
+  "licenses_efficacy_claim": false
+}

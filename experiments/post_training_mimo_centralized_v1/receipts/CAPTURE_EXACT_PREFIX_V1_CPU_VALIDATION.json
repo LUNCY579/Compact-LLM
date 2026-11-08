@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "status": "PASS_20_EXACT_PREFIX_CPU_CONTROLS_ONLY",
+  "command": [
+    "C:\\Users\\clclc\\BusinessProject\\.venv-mq001\\Scripts\\python.exe",
+    "-B",
+    "-m",
+    "unittest",
+    "-v",
+    "experiments.post_training_mimo_centralized_v1.tests.test_qualify_capture_exact_prefix"
+  ],
+  "exit_code": 0,
+  "tests": 20,
+  "reported_seconds": 0.065,
+  "process_seconds": 0.43699999999989814,
+  "source_pins": {
+    "scripts/qualify_capture_exact_prefix.py": {
+      "sha256": "bb29944a287c5b25b69b6923b7b60926e4dc97d8bc3c02f7abbae2c7770cb9dc",
+      "bytes": 47743
+    },
+    "tests/test_qualify_capture_exact_prefix.py": {
+      "sha256": "e813630b2ccc90df45621b7d472dea4e3abc4ed3e18a818fa616f48a57b369d3",
+      "bytes": 21572
+    },
+    "configs/CAPTURE_EXACT_PREFIX_QUAL_V1.json": {
+      "sha256": "ca74db0926b1409bcfe432dadf554b282b01f917e4d107422e0fa673ad65d819",
+      "bytes": 29319
+    }
+  },
+  "framework_imports": 0,
+  "model_calls": 0,
+  "native_qualified": false,
+  "E1_authorized": false,
+  "CHECK_FINAL_access": false
+}

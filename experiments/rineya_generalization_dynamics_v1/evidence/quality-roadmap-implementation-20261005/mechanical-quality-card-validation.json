@@ -1,0 +1,430 @@
+{
+  "authorizes_confirmation": false,
+  "authorizes_execution": false,
+  "authorizes_training": false,
+  "balanced_quality_established": false,
+  "card": {
+    "baseline": {
+      "checkpoint_id": "TOY_BASELINE",
+      "content_sha256": "94b93e838db9984ee1c03e4402cf4a4f1a079c6b8f6238699f36bc147cb8f41f",
+      "model_id": "TOY_FIXTURE_SOURCE_NOT_RINEYA",
+      "policy_sha256": "1bb1cee38f7daf7e406d59d0560ddd439fe5c196f812c4ac2dada8f30abbd6d8",
+      "runtime_sha256": "3378a90004f6f0b6c2f76e92e731684d1fffe192658ff5e55efc85f8e559a7eb",
+      "source_model_sha256": "69e677da5653988ad07d053359fa833686fbf97146cf314e2a1a59542c3dccb3",
+      "tokenizer_sha256": "3fd4fc4e570dfb49478ebed370bf44b55efc4fc159b532fe7de36b8e46fb887b"
+    },
+    "baseline_policy": {
+      "decoding": {
+        "max_new_tokens": 16,
+        "mode": "toy-greedy"
+      },
+      "identity": "TOY_POLICY",
+      "prompt": {
+        "template": "toy-public-only"
+      },
+      "readout": {
+        "bias": 0
+      },
+      "sha256": "1bb1cee38f7daf7e406d59d0560ddd439fe5c196f812c4ac2dada8f30abbd6d8"
+    },
+    "candidate": {
+      "checkpoint_id": "TOY_CANDIDATE",
+      "content_sha256": "e57630660a72196cfb95da6f9e7ab5cc2b99b985272e2e002dcfa9cb44e3419e",
+      "model_id": "TOY_FIXTURE_SOURCE_NOT_RINEYA",
+      "policy_sha256": "1bb1cee38f7daf7e406d59d0560ddd439fe5c196f812c4ac2dada8f30abbd6d8",
+      "runtime_sha256": "3378a90004f6f0b6c2f76e92e731684d1fffe192658ff5e55efc85f8e559a7eb",
+      "source_model_sha256": "69e677da5653988ad07d053359fa833686fbf97146cf314e2a1a59542c3dccb3",
+      "tokenizer_sha256": "3fd4fc4e570dfb49478ebed370bf44b55efc4fc159b532fe7de36b8e46fb887b"
+    },
+    "candidate_policy": {
+      "decoding": {
+        "max_new_tokens": 16,
+        "mode": "toy-greedy"
+      },
+      "identity": "TOY_POLICY",
+      "prompt": {
+        "template": "toy-public-only"
+      },
+      "readout": {
+        "bias": 0
+      },
+      "sha256": "1bb1cee38f7daf7e406d59d0560ddd439fe5c196f812c4ac2dada8f30abbd6d8"
+    },
+    "changed_policy_dimensions": [],
+    "confirmation": null,
+    "data": {
+      "data_id": "TOY_PUBLIC_SUMMARY_DATA",
+      "data_sha256": "e0435cac47d944ef98477c1bffdb7596f325fffbb5ed15848f73b8a412df598c",
+      "receipt_id": "data-receipt",
+      "split": "dev",
+      "split_sha256": "57211141b9407b08a5077e83dbe532939621100e98dae2c66f684f1f04dbadd5"
+    },
+    "domains": {
+      "answerability_abstention": {
+        "endpoints": null,
+        "status": "UNMEASURED"
+      },
+      "arithmetic_state_tracking": {
+        "endpoints": [
+          {
+            "candidate_successes": 5,
+            "cohort": "all-public-toy-rows",
+            "construct": "semantic_correctness",
+            "denominator": 10,
+            "endpoint_id": "toy-semantic",
+            "gained": 2,
+            "lost": 1,
+            "receipt_id": "toy-semantic-receipt",
+            "retained": 3,
+            "retention": {
+              "candidate_evaluated_membership_sha256": "87ae5b9c1d48cb128142b60055e4613009f4c8de931d843fd77ba26ec3fa2c3b",
+              "candidate_evaluated_support": 4,
+              "failures": 1,
+              "retained_successes": 3,
+              "source_correct_support": 4,
+              "source_success_membership_sha256": "87ae5b9c1d48cb128142b60055e4613009f4c8de931d843fd77ba26ec3fa2c3b"
+            },
+            "source_successes": 4,
+            "threshold": {
+              "maximum_source_success_failures": 1,
+              "minimum_accuracy": 0.5,
+              "original_gate_id": "TOY_ORIGINAL_GATE"
+            }
+          }
+        ],
+        "status": "MEASURED"
+      },
+      "grounded_retrieval": {
+        "endpoints": null,
+        "status": "UNMEASURED"
+      },
+      "instruction_following": {
+        "endpoints": null,
+        "status": "UNMEASURED"
+      },
+      "language_long_context_preservation": {
+        "endpoints": null,
+        "status": "UNMEASURED"
+      },
+      "skill_composition": {
+        "endpoints": null,
+        "status": "UNMEASURED"
+      }
+    },
+    "evidence_level": "mechanical",
+    "intervention_type": "mechanical",
+    "owner": "toy-owner",
+    "provenance": {
+      "custody_reviewed_by": "toy-custody-reviewer",
+      "declaration": "caller_supplied_public_receipts",
+      "receipts": [
+        {
+          "file_hash_verified_by": "toy-custody-reviewer",
+          "receipt_id": "data-receipt",
+          "reference": {
+            "path": "C:\\Users\\clclc\\BusinessProject\\quality-card-toy-public-receipts\\data-receipt.json",
+            "sha256": "802b6deeb5a6d2a5b45fe2aa2693dde751bc3495848781ce67f9c6aa0da26058"
+          },
+          "summary": {
+            "baseline": {
+              "checkpoint_id": "TOY_BASELINE",
+              "content_sha256": "94b93e838db9984ee1c03e4402cf4a4f1a079c6b8f6238699f36bc147cb8f41f",
+              "model_id": "TOY_FIXTURE_SOURCE_NOT_RINEYA",
+              "policy_sha256": "1bb1cee38f7daf7e406d59d0560ddd439fe5c196f812c4ac2dada8f30abbd6d8",
+              "runtime_sha256": "3378a90004f6f0b6c2f76e92e731684d1fffe192658ff5e55efc85f8e559a7eb",
+              "source_model_sha256": "69e677da5653988ad07d053359fa833686fbf97146cf314e2a1a59542c3dccb3",
+              "tokenizer_sha256": "3fd4fc4e570dfb49478ebed370bf44b55efc4fc159b532fe7de36b8e46fb887b"
+            },
+            "baseline_checkpoint_id": "TOY_BASELINE",
+            "baseline_policy_sha256": "1bb1cee38f7daf7e406d59d0560ddd439fe5c196f812c4ac2dada8f30abbd6d8",
+            "candidate": {
+              "checkpoint_id": "TOY_CANDIDATE",
+              "content_sha256": "e57630660a72196cfb95da6f9e7ab5cc2b99b985272e2e002dcfa9cb44e3419e",
+              "model_id": "TOY_FIXTURE_SOURCE_NOT_RINEYA",
+              "policy_sha256": "1bb1cee38f7daf7e406d59d0560ddd439fe5c196f812c4ac2dada8f30abbd6d8",
+              "runtime_sha256": "3378a90004f6f0b6c2f76e92e731684d1fffe192658ff5e55efc85f8e559a7eb",
+              "source_model_sha256": "69e677da5653988ad07d053359fa833686fbf97146cf314e2a1a59542c3dccb3",
+              "tokenizer_sha256": "3fd4fc4e570dfb49478ebed370bf44b55efc4fc159b532fe7de36b8e46fb887b"
+            },
+            "candidate_checkpoint_id": "TOY_CANDIDATE",
+            "candidate_policy_sha256": "1bb1cee38f7daf7e406d59d0560ddd439fe5c196f812c4ac2dada8f30abbd6d8",
+            "data_context": {
+              "data_id": "TOY_PUBLIC_SUMMARY_DATA",
+              "data_sha256": "e0435cac47d944ef98477c1bffdb7596f325fffbb5ed15848f73b8a412df598c",
+              "split": "dev",
+              "split_sha256": "57211141b9407b08a5077e83dbe532939621100e98dae2c66f684f1f04dbadd5"
+            },
+            "evidence_level": "mechanical",
+            "native_executed": false,
+            "owner": "toy-owner",
+            "reference_sha256": "802b6deeb5a6d2a5b45fe2aa2693dde751bc3495848781ce67f9c6aa0da26058",
+            "role": "data",
+            "runtime_sha256": "3378a90004f6f0b6c2f76e92e731684d1fffe192658ff5e55efc85f8e559a7eb",
+            "scope": "public_aggregate_metadata",
+            "sha256": "9c941559d0c9b461e1cc61c0ebcac6c6d223f2aad35dec537a6dd8cdec17fcb0",
+            "source": {
+              "model_id": "TOY_FIXTURE_SOURCE_NOT_RINEYA",
+              "model_sha256": "69e677da5653988ad07d053359fa833686fbf97146cf314e2a1a59542c3dccb3",
+              "parameters": 596049920,
+              "tokenizer_id": "TOY_TOKENIZER",
+              "tokenizer_sha256": "3fd4fc4e570dfb49478ebed370bf44b55efc4fc159b532fe7de36b8e46fb887b"
+            },
+            "study_id": "TOY_STUDY"
+          }
+        },
+        {
+          "file_hash_verified_by": "toy-custody-reviewer",
+          "receipt_id": "resources-receipt",
+          "reference": {
+            "path": "C:\\Users\\clclc\\BusinessProject\\quality-card-toy-public-receipts\\resources-receipt.json",
+            "sha256": "dc9702f33d59c225bdd26368e039c0ef99bf91146ab6b51006d1bb4491982145"
+          },
+          "summary": {
+            "baseline": {
+              "checkpoint_id": "TOY_BASELINE",
+              "content_sha256": "94b93e838db9984ee1c03e4402cf4a4f1a079c6b8f6238699f36bc147cb8f41f",
+              "model_id": "TOY_FIXTURE_SOURCE_NOT_RINEYA",
+              "policy_sha256": "1bb1cee38f7daf7e406d59d0560ddd439fe5c196f812c4ac2dada8f30abbd6d8",
+              "runtime_sha256": "3378a90004f6f0b6c2f76e92e731684d1fffe192658ff5e55efc85f8e559a7eb",
+              "source_model_sha256": "69e677da5653988ad07d053359fa833686fbf97146cf314e2a1a59542c3dccb3",
+              "tokenizer_sha256": "3fd4fc4e570dfb49478ebed370bf44b55efc4fc159b532fe7de36b8e46fb887b"
+            },
+            "baseline_checkpoint_id": "TOY_BASELINE",
+            "baseline_policy_sha256": "1bb1cee38f7daf7e406d59d0560ddd439fe5c196f812c4ac2dada8f30abbd6d8",
+            "candidate": {
+              "checkpoint_id": "TOY_CANDIDATE",
+              "content_sha256": "e57630660a72196cfb95da6f9e7ab5cc2b99b985272e2e002dcfa9cb44e3419e",
+              "model_id": "TOY_FIXTURE_SOURCE_NOT_RINEYA",
+              "policy_sha256": "1bb1cee38f7daf7e406d59d0560ddd439fe5c196f812c4ac2dada8f30abbd6d8",
+              "runtime_sha256": "3378a90004f6f0b6c2f76e92e731684d1fffe192658ff5e55efc85f8e559a7eb",
+              "source_model_sha256": "69e677da5653988ad07d053359fa833686fbf97146cf314e2a1a59542c3dccb3",
+              "tokenizer_sha256": "3fd4fc4e570dfb49478ebed370bf44b55efc4fc159b532fe7de36b8e46fb887b"
+            },
+            "candidate_checkpoint_id": "TOY_CANDIDATE",
+            "candidate_policy_sha256": "1bb1cee38f7daf7e406d59d0560ddd439fe5c196f812c4ac2dada8f30abbd6d8",
+            "evidence_level": "mechanical",
+            "native_executed": false,
+            "owner": "toy-owner",
+            "reference_sha256": "dc9702f33d59c225bdd26368e039c0ef99bf91146ab6b51006d1bb4491982145",
+            "resource_context": {
+              "budget_id": "TOY_STUDY_BUDGET",
+              "limits": {
+                "forward_calls": 10,
+                "model_loads": 2,
+                "optimizer_updates": 2,
+                "wall_seconds": 10.0
+              },
+              "observed": {
+                "forward_calls": 0,
+                "model_loads": 0,
+                "optimizer_updates": 0,
+                "wall_seconds": 1.0
+              },
+              "owner": "toy-owner",
+              "scope": "study_specific",
+              "study_id": "TOY_STUDY"
+            },
+            "role": "resources",
+            "runtime_sha256": "3378a90004f6f0b6c2f76e92e731684d1fffe192658ff5e55efc85f8e559a7eb",
+            "scope": "public_aggregate_metadata",
+            "sha256": "6e4b77913bf4ba033fa1844be845264f6d6eeff893486c4d74ef301f98f81459",
+            "source": {
+              "model_id": "TOY_FIXTURE_SOURCE_NOT_RINEYA",
+              "model_sha256": "69e677da5653988ad07d053359fa833686fbf97146cf314e2a1a59542c3dccb3",
+              "parameters": 596049920,
+              "tokenizer_id": "TOY_TOKENIZER",
+              "tokenizer_sha256": "3fd4fc4e570dfb49478ebed370bf44b55efc4fc159b532fe7de36b8e46fb887b"
+            },
+            "study_id": "TOY_STUDY"
+          }
+        },
+        {
+          "file_hash_verified_by": "toy-custody-reviewer",
+          "receipt_id": "toy-semantic-receipt",
+          "reference": {
+            "path": "C:\\Users\\clclc\\BusinessProject\\quality-card-toy-public-receipts\\toy-semantic-receipt.json",
+            "sha256": "cfec84ea83f8d7d507c5ae714b1815c083aee5c08cea5a59c974348a02e7fa84"
+          },
+          "summary": {
+            "baseline": {
+              "checkpoint_id": "TOY_BASELINE",
+              "content_sha256": "94b93e838db9984ee1c03e4402cf4a4f1a079c6b8f6238699f36bc147cb8f41f",
+              "model_id": "TOY_FIXTURE_SOURCE_NOT_RINEYA",
+              "policy_sha256": "1bb1cee38f7daf7e406d59d0560ddd439fe5c196f812c4ac2dada8f30abbd6d8",
+              "runtime_sha256": "3378a90004f6f0b6c2f76e92e731684d1fffe192658ff5e55efc85f8e559a7eb",
+              "source_model_sha256": "69e677da5653988ad07d053359fa833686fbf97146cf314e2a1a59542c3dccb3",
+              "tokenizer_sha256": "3fd4fc4e570dfb49478ebed370bf44b55efc4fc159b532fe7de36b8e46fb887b"
+            },
+            "baseline_checkpoint_id": "TOY_BASELINE",
+            "baseline_policy_sha256": "1bb1cee38f7daf7e406d59d0560ddd439fe5c196f812c4ac2dada8f30abbd6d8",
+            "candidate": {
+              "checkpoint_id": "TOY_CANDIDATE",
+              "content_sha256": "e57630660a72196cfb95da6f9e7ab5cc2b99b985272e2e002dcfa9cb44e3419e",
+              "model_id": "TOY_FIXTURE_SOURCE_NOT_RINEYA",
+              "policy_sha256": "1bb1cee38f7daf7e406d59d0560ddd439fe5c196f812c4ac2dada8f30abbd6d8",
+              "runtime_sha256": "3378a90004f6f0b6c2f76e92e731684d1fffe192658ff5e55efc85f8e559a7eb",
+              "source_model_sha256": "69e677da5653988ad07d053359fa833686fbf97146cf314e2a1a59542c3dccb3",
+              "tokenizer_sha256": "3fd4fc4e570dfb49478ebed370bf44b55efc4fc159b532fe7de36b8e46fb887b"
+            },
+            "candidate_checkpoint_id": "TOY_CANDIDATE",
+            "candidate_policy_sha256": "1bb1cee38f7daf7e406d59d0560ddd439fe5c196f812c4ac2dada8f30abbd6d8",
+            "data_context": {
+              "data_id": "TOY_PUBLIC_SUMMARY_DATA",
+              "data_sha256": "e0435cac47d944ef98477c1bffdb7596f325fffbb5ed15848f73b8a412df598c",
+              "split": "dev",
+              "split_sha256": "57211141b9407b08a5077e83dbe532939621100e98dae2c66f684f1f04dbadd5"
+            },
+            "domain": "arithmetic_state_tracking",
+            "endpoint": {
+              "candidate_successes": 5,
+              "cohort": "all-public-toy-rows",
+              "construct": "semantic_correctness",
+              "denominator": 10,
+              "endpoint_id": "toy-semantic",
+              "gained": 2,
+              "lost": 1,
+              "retained": 3,
+              "retention": {
+                "candidate_evaluated_membership_sha256": "87ae5b9c1d48cb128142b60055e4613009f4c8de931d843fd77ba26ec3fa2c3b",
+                "candidate_evaluated_support": 4,
+                "failures": 1,
+                "retained_successes": 3,
+                "source_correct_support": 4,
+                "source_success_membership_sha256": "87ae5b9c1d48cb128142b60055e4613009f4c8de931d843fd77ba26ec3fa2c3b"
+              },
+              "source_successes": 4,
+              "threshold": {
+                "maximum_source_success_failures": 1,
+                "minimum_accuracy": 0.5,
+                "original_gate_id": "TOY_ORIGINAL_GATE"
+              }
+            },
+            "evidence_level": "mechanical",
+            "native_executed": false,
+            "owner": "toy-owner",
+            "reference_sha256": "cfec84ea83f8d7d507c5ae714b1815c083aee5c08cea5a59c974348a02e7fa84",
+            "role": "endpoint",
+            "runtime_sha256": "3378a90004f6f0b6c2f76e92e731684d1fffe192658ff5e55efc85f8e559a7eb",
+            "scope": "public_aggregate_metadata",
+            "sha256": "f7bc9b08e1c528f13ba89a38e463e91cbfe0225ecad8af5c798e30ca5dd643d7",
+            "source": {
+              "model_id": "TOY_FIXTURE_SOURCE_NOT_RINEYA",
+              "model_sha256": "69e677da5653988ad07d053359fa833686fbf97146cf314e2a1a59542c3dccb3",
+              "parameters": 596049920,
+              "tokenizer_id": "TOY_TOKENIZER",
+              "tokenizer_sha256": "3fd4fc4e570dfb49478ebed370bf44b55efc4fc159b532fe7de36b8e46fb887b"
+            },
+            "study_id": "TOY_STUDY"
+          }
+        }
+      ]
+    },
+    "resource_budget": {
+      "budget_id": "TOY_STUDY_BUDGET",
+      "limits": {
+        "forward_calls": 10,
+        "model_loads": 2,
+        "optimizer_updates": 2,
+        "wall_seconds": 10.0
+      },
+      "observed": {
+        "forward_calls": 0,
+        "model_loads": 0,
+        "optimizer_updates": 0,
+        "wall_seconds": 1.0
+      },
+      "owner": "toy-owner",
+      "receipt_id": "resources-receipt",
+      "scope": "study_specific",
+      "sha256": "a571d96072024567829eb852e86a521133bd78877c8dd28059c0c6dcf9898294",
+      "study_id": "TOY_STUDY"
+    },
+    "runtime": {
+      "identity": "TOY_RUNTIME",
+      "settings": {
+        "backend": "fixture",
+        "threads": 1
+      },
+      "sha256": "3378a90004f6f0b6c2f76e92e731684d1fffe192658ff5e55efc85f8e559a7eb"
+    },
+    "schema": "gd001_quality_card_v1",
+    "sha256": "5bdadf01ed7d3bdcc8661a78995a289b3df2d2ad8a54adb5125568258a2d4897",
+    "source": {
+      "model_id": "TOY_FIXTURE_SOURCE_NOT_RINEYA",
+      "model_sha256": "69e677da5653988ad07d053359fa833686fbf97146cf314e2a1a59542c3dccb3",
+      "parameters": 596049920,
+      "tokenizer_id": "TOY_TOKENIZER",
+      "tokenizer_sha256": "3fd4fc4e570dfb49478ebed370bf44b55efc4fc159b532fe7de36b8e46fb887b"
+    },
+    "study_id": "TOY_STUDY"
+  },
+  "confirmed_chain_metadata_complete": false,
+  "domains": {
+    "answerability_abstention": {
+      "endpoints": null,
+      "status": "UNMEASURED"
+    },
+    "arithmetic_state_tracking": {
+      "endpoints": [
+        {
+          "candidate_accuracy": 0.5,
+          "cohort": "all-public-toy-rows",
+          "construct": "semantic_correctness",
+          "denominator": 10,
+          "endpoint_id": "toy-semantic",
+          "evidence_scope": "aggregate_public_receipt_metadata_only",
+          "independent_source_incorrect_gains": 2,
+          "retention_fraction": 0.75,
+          "source_accuracy": 0.4,
+          "source_correct_losses": 1,
+          "source_correct_retained": 3,
+          "threshold": {
+            "maximum_source_success_failures": 1,
+            "minimum_accuracy": 0.5,
+            "original_gate_id": "TOY_ORIGINAL_GATE"
+          },
+          "threshold_reinterpreted": false
+        }
+      ],
+      "status": "MEASURED"
+    },
+    "grounded_retrieval": {
+      "endpoints": null,
+      "status": "UNMEASURED"
+    },
+    "instruction_following": {
+      "endpoints": null,
+      "status": "UNMEASURED"
+    },
+    "language_long_context_preservation": {
+      "endpoints": null,
+      "status": "UNMEASURED"
+    },
+    "skill_composition": {
+      "endpoints": null,
+      "status": "UNMEASURED"
+    }
+  },
+  "evidence_scope": "aggregate_public_receipt_metadata_only",
+  "external_file_hashes_verified_by_this_module": false,
+  "human_review_verified": false,
+  "input_card_sha256": "f2939f4e82c66e30ea168cac92cde12c861a27498dfdc2023abc658b08ae62d4",
+  "native_execution_verified_by_this_module": false,
+  "permits_model_promotion": false,
+  "schema": "gd001_quality_card_v1",
+  "sha256": "0cf5191bf9495650fb9e4f6f49514fa4f8290cbd43a30776295db01380c01c0b",
+  "status": "PUBLIC_AGGREGATE_CARD_METADATA_VALIDATED",
+  "unmeasured_domains": [
+    "instruction_following",
+    "grounded_retrieval",
+    "skill_composition",
+    "answerability_abstention",
+    "language_long_context_preservation"
+  ],
+  "warnings": [
+    "Only embedded aggregate metadata digests verified; external receipts, human review and native execution remain caller declarations.",
+    "No aggregate gain certifies balanced quality, release or promotion; endpoint thresholds remain the original study's authority.",
+    "Missing quality domains remain UNMEASURED: instruction_following, grounded_retrieval, skill_composition, answerability_abstention, language_long_context_preservation",
+    "Mechanical/native-qualification evidence cannot establish model-quality efficacy."
+  ]
+}

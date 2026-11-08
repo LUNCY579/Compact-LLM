@@ -1,0 +1,81 @@
+Rineya update-order native pilot closeout — 2026-10-05
+
+Decision: HOLD. State: STOPPED_RUNTIME_RAM_GUARD_NO_ADAPTATION_COMPARISON.
+
+The exact authorized 11-command pilot stopped at the unchanged 6 GiB free-host-
+RAM runtime guard during the control training stage. The child exited 2; the
+orchestrator exited 1. There was no automatic retry, guard change, model promotion,
+source modification or recurrence campaign. No SBHM/quality native worker remains.
+
+Completed evidence
+
+Three native qualifications passed (frozen anchor, control initial, candidate
+initial), with full-attention cache geometry at 2048 tokens and exact source/
+code/config/corpus/tokenizer/environment bindings. The frozen anchor completed
+all 672 fresh DEV rows with runtime input/label hashes and cache checks audited.
+
+The retention instrument passed its pre-training sufficiency gate separately
+under strict and typed scoring: 21/64 source-correct cases across five skills.
+Source-correct counts: arithmetic4, boolean5, conditional2, ordering5, short_table5.
+String_rule, temporal and unit_conversion each had zero source-correct cases;
+these skills have no source-correct protection from this panel. Passing this
+instrument gate does not establish broad retention or post-adaptation retention.
+
+The control-train request exists, but no completed training receipt or delta
+was saved. Candidate adaptation, trained DEV evaluations, post-training
+qualifications and the control/candidate comparison were never completed.
+The failed stage does not persist partial optimizer records or its failing RAM
+sample, so the completed-update count and exact load-versus-gradient failure
+phase remain unknown. Do not label them zero or claim training fit.
+
+Admission was fresh and passed: initial host RAM9.15GiB / free VRAM6.89GiB.
+Control-stage admission RAM was 8.961GiB.
+The later runtime guard failure is distinct from admission. It proves failure
+at a checked boundary, not a continuous resource trace or identified cause.
+
+Anchor quality and scoring limits
+
+Strict/typed correct55/672; normalized57/672. ValidJSON632/672; expected key/type
+contract108/672. Updates typed0/384, while198/384 predictions contain the expected
+bare literal value. Missing-present typed0/32, but31/32 bare expected values;
+missing-absent typed0/32 and0/32 bare expected abstentions. Six additional
+retention outputs contain the expected bare value without satisfying contract.
+These are wrapper diagnostics, not typed-correct cases or semantic skill gains.
+The comparison would share JSON supervision across control/candidate, but it
+never ran. Neither ordering benefit nor post-adaptation damage/repair is known.
+
+Instrumented frozen-anchor median TTFT0.409s and decode17.27tokens/s; maximum
+allocated VRAM2.492GiB,
+reserved2.615GiB,
+sampled RSS1.029GiB.
+These costs include safety instrumentation and the loaded model for CUDA peaks,
+exclude loading/tokenization in the inference timing, and do not measure energy.
+They are not matched cost comparisons with the October4 corpus or host state.
+
+Preservation and exact scope
+
+All 838 pre-existing inventoried files and all 15 added qualified source files
+remain byte-identical. The original SBHM negative recurrence result is preserved.
+The source/code/corpus/ledger and exact original approved proposal remain frozen.
+All new evidence/caches are below BusinessProject outside tracked source.
+The earlier implementation and offline receipts remain historical, unmodified;
+this closeout supersedes their pending-execution state without overwriting them.
+
+Canonical authorized proposal: 91fd07797c777c0c90284842544346cae089407abd763e3c4baefcc0b534fe97
+Qualified code: 26f1c07bbe354a422b1a6d4ea5988a21b063621f055c9a92155fa5e5e2a738ef
+Frozen corpus: ce2c1e1489ab5dc6806a4b1dc6a2de1e51c6623df9779313d81d28115ef36dc3
+Frozen ledger: af19ce6a7a31fd07ae481e291478d89386855543b23191b6d1ffb6f1442c6678
+
+Next decision
+
+Hold the stopped run. Its native output root cannot be resumed or overwritten.
+Any later retry requires adequate fresh host headroom and a new exclusive run
+root, exact reviewed proposal and separate authorization. No extra examples,
+steps, sites, seeds, longer contexts or new campaign are proposed here.
+The update-order hypothesis remains untested; this is a resource stop, not a
+positive or negative result for ordering augmentation or recurrent memory.
+
+Receipt links in this directory: native-stop-receipt.json,
+independent-native-stop-audit.json, independent-native-anchor-audit.json,
+preservation-after-native.json, native-execution-log.txt. Authoritative partial
+stage records remain in proposal/native_run/. All measurements are synthetic DEV.

@@ -1,0 +1,139 @@
+{
+  "schema": "rdd001_prospective_preparation_v1",
+  "status": "BLOCKED_NOT_REGISTERED_OR_AUTHORIZED",
+  "client_date": "2026-10-05",
+  "design_review": "ROOT_AND_INDEPENDENT_SELECTED_DESIGN_CODE_REVIEW",
+  "execution_grant": false,
+  "assets": {
+    "student": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\Rineya_Published_Cores\\Rineya-Titan-Experimental-1.0.0-devfreeze",
+      "inventory_sha256": "4e6e8f7f0ef89662c2ec910280a72501e05f2e89cf88498a62edfa029af0609f",
+      "weight_sha256": "537201676814ade103c4efa63f5ebe758ea309971803c4ad633dbca5b6b531b7",
+      "stored_tensor_elements": 596049920,
+      "runtime_qualified": false,
+      "teacher_competence_qualified": false
+    },
+    "teacher": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\Rineya_Published_Cores\\Rineya-Supa-1.7.0-devfreeze",
+      "inventory_sha256": "a1da3fdd639d368c45db9e3ba8b8a0237e2c59abe81ce88493f514c59768c339",
+      "weight_sha256": "962abc5bcd5a83e3b7693bd278ae9215b6d83389a847913da9330b34dd5dd24b",
+      "stored_tensor_elements": 596049920,
+      "runtime_qualified": false,
+      "teacher_competence_qualified": false
+    }
+  },
+  "plan": {
+    "schema": 1,
+    "design": "selected",
+    "selected_cells": [
+      "A",
+      "B",
+      "D",
+      "SFT"
+    ],
+    "seeds": [
+      17
+    ],
+    "learning_rates": [
+      1e-05
+    ],
+    "steps": 2,
+    "batch_tasks": 1,
+    "replay_tasks": 1,
+    "replay_weight": 0.1,
+    "max_new_tokens": 32,
+    "max_context_tokens": 1024,
+    "chunk_tokens": 8,
+    "checkpoint_every": 1,
+    "eval_samples": 2,
+    "sampling_temperature": 1.0,
+    "max_grad_norm": 1.0,
+    "rank": 8,
+    "alpha": 16.0,
+    "weight_decay": 0.0,
+    "teacher_min_accuracy": 0.6,
+    "teacher_min_advantage": 0.1,
+    "min_acquisition_gain": 0.03,
+    "max_retention_drop": 0.02
+  },
+  "learning_rate_engineering_design_reviewed": true,
+  "native_asset_lr_reviewer_attestation_set": false,
+  "next_action": {
+    "mode": "qualification_only",
+    "max_invocations": 1,
+    "max_disposable_optimizer_updates": 2,
+    "treatment_updates": 0,
+    "teacher_dev_distinct_parents": 16,
+    "max_generation_attempts": 35,
+    "max_generated_tokens": 1120,
+    "max_backbone_forward_calls_implied_by_plan": 1130,
+    "confirmation_reads": 0
+  },
+  "resource_limits": {
+    "disk_gib": 4.0,
+    "gpu_admission_gib": 4.0,
+    "gpu_running_gib": 0.5,
+    "host_admission_gib": 7.4,
+    "host_running_gib": 6.0,
+    "wall_seconds": 1800,
+    "worker_tree_rss_gib": 4.0
+  },
+  "blocked_prerequisites": [
+    "genuine matching RDD E0",
+    "reviewed exact-native/HF parity and teacher prefix feedback",
+    "fresh reviewed catalog and complete approved exclusions",
+    "actual named LR/source review and future explicit grant",
+    "owned available host and unchanged shared-lock/resource admission"
+  ],
+  "gd_attachment_complete": false,
+  "native_peft_parity_qualified": false,
+  "document": {
+    "path": "C:\\Users\\clclc\\BusinessProject\\rdd001-records\\preparation-20261005\\PROSPECTIVE_NATIVE_PROPOSAL.md",
+    "sha256": "d058847417989e18dbe7fc91fee6fe8a4fa58833c0791817d22694c83d17e104"
+  },
+  "inventory": {
+    "path": "C:\\Users\\clclc\\BusinessProject\\rdd001-records\\preparation-20261005\\inventory\\asset_inventory.json",
+    "sha256": "ab2dfaf1566886ebde1ca3b4088ff5ee335fb006707bef768921c057d2a87e78"
+  },
+  "source_files": {
+    "experiments/rineya_distillation_dynamics_v1/.gitignore": "f9e5dc7b2698de8a4192cddb3acc187298361fe3020e6823f82a2b25c7501717",
+    "experiments/rineya_distillation_dynamics_v1/__init__.py": "708aa8f46425f7cd27cd5243d52c5293675f41d7b7f66b0b4a588be48b4d3b2e",
+    "experiments/rineya_distillation_dynamics_v1/__main__.py": "307299fda7b77d22c64cb51430ec75e5f59d78e9c948786afb3b2544fe45e4b7",
+    "experiments/rineya_distillation_dynamics_v1/AGENTS.md": "ca0ed3f7996061f7c3e38b5209ee0276d75c68cc7266fb7abcb087fd33f65bcb",
+    "experiments/rineya_distillation_dynamics_v1/backend.py": "f4554951eb857f1cff2c55fe69444ab6657aef8d264314a63f53b2af9a3f50bd",
+    "experiments/rineya_distillation_dynamics_v1/cli.py": "5e1cd58cb0cc465a0d2d1306e960858f5e4cc03e3a2ae6eeea4ef23087e84572",
+    "experiments/rineya_distillation_dynamics_v1/configs/native-binding.example.json": "26697bd681f5d8245bad4460e77c68cb5cd8a69cfdfe36ce33c921d819431d36",
+    "experiments/rineya_distillation_dynamics_v1/configs/pilot.json": "7dcca073c00500d1cbf6eda18838fab1a79aa52a39af286ae434026c5a47ad73",
+    "experiments/rineya_distillation_dynamics_v1/configs/selected-pilot.json": "59c69fad1bb358ff87baa3362d865a6859fc509e6209710a79001dff14cf83c5",
+    "experiments/rineya_distillation_dynamics_v1/contracts.py": "8ac82e23c24170106af490979c9b5ca34dd18d85fbb76c94588d27b337be87a3",
+    "experiments/rineya_distillation_dynamics_v1/data.py": "f8be693b3910897fd58dbf58e24ca0b5b6690c313cf4a7a67a46f72c36bceb99",
+    "experiments/rineya_distillation_dynamics_v1/engine.py": "5c983a5a421e4a8af1e398bd7a092ced851ad7cfb2db4c9518a2cbfd4b37c605",
+    "experiments/rineya_distillation_dynamics_v1/fixtures.py": "a574d9276557c666b7a1713fd32ae76445541902c0080b110fe555e20e7bf0a7",
+    "experiments/rineya_distillation_dynamics_v1/host.py": "9bab48e32ed543fb4d8b0f99b45eb318783749c802a77734444320730f501947",
+    "experiments/rineya_distillation_dynamics_v1/integration.py": "e11287799aede594ca31eeeb9fc00f9421d59d22c5bb535d6590eae5d47ddb3d",
+    "experiments/rineya_distillation_dynamics_v1/manifests.py": "54e81b729319d551e6903f43901611b26bb1d43fb1d7932aa726bd516c615b33",
+    "experiments/rineya_distillation_dynamics_v1/metrics.py": "35c28a71e35577b5973c1492fde473bcb2665679bc14f8b56cf3b25619dc8d7d",
+    "experiments/rineya_distillation_dynamics_v1/native.py": "82b5e2deee904519ba88322993100c907412d967f54f2061a6a7f25c710b03bf",
+    "experiments/rineya_distillation_dynamics_v1/objectives.py": "0ad5ee99585f965c5e2a21230516d236a9807afbfba6881f0f542fafdb76f30f",
+    "experiments/rineya_distillation_dynamics_v1/PROTOCOL.md": "2182ebb857759bfed77adbd61701d610abff805fce891f4383f2079083fcc3cb",
+    "experiments/rineya_distillation_dynamics_v1/qualification.py": "02aecffa02617eb5f363724f4e21f6722499930ff3dad89f24476404b0489a76",
+    "experiments/rineya_distillation_dynamics_v1/README.md": "b544900ab304670a18e4c8ac7b524c83759d7360cb3947a88064910701b133f6",
+    "experiments/rineya_distillation_dynamics_v1/RECONNAISSANCE.md": "69a4978d45c6e791fce9168138d10b71ad598695460bca1e0f59242ad021687b",
+    "experiments/rineya_distillation_dynamics_v1/registry.py": "e1984f50d21e71a78c33efe636b11efc89bad39ff186bb3168136cdce3fbff57",
+    "experiments/rineya_distillation_dynamics_v1/requirements-cpu.txt": "050dcd18dd2a7c31e0851d13639323622d1fd6c8a8d243f055d1711941e2d1de",
+    "experiments/rineya_distillation_dynamics_v1/requirements-native.txt": "904bbc4f5664b684aee09d189e5a6c84f10adbdc75d52092de17b6b4ca8d3b86",
+    "experiments/rineya_distillation_dynamics_v1/RUNBOOK.md": "6919c0cc85d4ac6df55f2fee62b9f51c58e49bda2b04ab984930ded67ef0c131",
+    "experiments/rineya_distillation_dynamics_v1/selection.py": "239fc73253f0bcb1787ad249a8ac8594788f4b1a2c9b36e3627ee743a2e612f5",
+    "experiments/rineya_distillation_dynamics_v1/SOURCES.md": "cd9e49d584968f689f915810d80350b255255160cf112cfbee02d85445426ebf",
+    "experiments/rineya_distillation_dynamics_v1/tests/conftest.py": "225ded3be76cfdf9402051e6de4d92e81b637ad7ff7c421534730fd218ddce0c",
+    "experiments/rineya_distillation_dynamics_v1/tests/test_backend_pipeline.py": "ee21e96b454ef1ab83f1237bb7c6788bb5f161076727da64bbd98f3b28cf50b7",
+    "experiments/rineya_distillation_dynamics_v1/tests/test_contracts_data.py": "a3be72c1425837966ced4622d49509bb5aec61585d1b2ca78d28413a15519da6",
+    "experiments/rineya_distillation_dynamics_v1/tests/test_manifests_exports.py": "0e77e4b497f02ef12748e676ef91a272bea095fd76c716a560c3dce19c4cc678",
+    "experiments/rineya_distillation_dynamics_v1/tests/test_objectives.py": "9569a629e9975c88fb7a78405b21b467912925763c76e50e78baa43851d1a7f3",
+    "experiments/rineya_distillation_dynamics_v1/tests/test_preparation_qualification.py": "42b223cba7957ae8ab44ee575ff9843b3cb9e0eafe34a415ff0c2941771d6077",
+    "experiments/rineya_distillation_dynamics_v1/tests/test_registry_selection.py": "16b9872ab59b6311f893f5c57ebd77687c8cdafc7d041c9e9c7f2bf3fe855413",
+    "experiments/rineya_distillation_dynamics_v1/tests/test_selected_design.py": "4150f092967f71974f068f3437908e9f9b634244c94bb15e2bda763337589b82",
+    "experiments/rineya_distillation_dynamics_v1/tests/test_selected_native_dispatch.py": "c8d647fba5b81fec97ffa8918899270973d0b9c52b186cbbbe81eab69287a5b9",
+    "experiments/rineya_distillation_dynamics_v1/VALIDATION.json": "84d0fe6e33d4c8175a3e594fbec1a351d100b4d3bd99ec561cb8bcf13214d5a2"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "date": "2026-09-29",
+  "kind": "LIVE_ORIGINAL_ENDPOINT_CUSTODY_CHECK_AND_ABORTED_RESTORATION",
+  "repo_id": "Luncy1978/rineya-published-cores",
+  "revision": "33b5f9a46f4c49f22f1a305fdb21373f15401eb8",
+  "private": true,
+  "revision_accessible": true,
+  "api": "huggingface_hub.HfApi.get_paths_info at pinned revision, two exact paths only",
+  "files": [
+    {"skill": "T", "path": "research-records/delta-weight-screens-20260918/_trained_tensors/delta_T_seed17.safetensors", "size": 1258500416, "lfs_sha256": "07156fb5aa4a8c510c63e8af2118a08a8b6bf004549532d497c2e89e2deec24d", "blob_oid": "3102039e93f39d85f3638698dcb8b8b2eb136065", "matches_original_receipt": true},
+    {"skill": "H", "path": "research-records/delta-weight-screens-20260918/_trained_tensors/delta_H_boundary.safetensors", "size": 1258500512, "lfs_sha256": "a1103060591a91ee7d9ceb2ad7450621be352b087cd19188f2c383a0dbbc7b90", "blob_oid": "083ba5af4e634d8ac4ad6d9c2ff4914a8f8478ec", "matches_original_receipt": true}
+  ],
+  "policy_correction": "Objective forbids replacement weights, not necessarily retrieval of identical original endpoints. The initial assumption banning all original vault restoration was too broad. No substitute weights may be used.",
+  "remote_file_body_sha256_locally_verified": false,
+  "reconstruction_from_surviving_local_training_checkpoints": false,
+  "original_restoration_route_currently_accessible": true,
+  "restoration_attempts": 1,
+  "restoration_completed_original_files": 0,
+  "original_T_attempt_status": "ABORTED_HOST_RAM_PRESSURE_OWN_PROCESS_TREE_STOPPED",
+  "original_H_attempt_status": "NOT_ATTEMPTED",
+  "restoration_directory": "C:/Users/clclc/BusinessProject/rineya-efe-func001-records/original-endpoints-20260929-001",
+  "observed_incomplete_file_logical_bytes": 670673638,
+  "actual_network_transferred_bytes": null,
+  "resource_failure_snapshot": {"host_available_bytes": 147001344, "host_admission_bytes": 4939212390, "gpu_free_bytes": 7130316800, "central_lock_present": false, "temp_lock_present": false},
+  "post_abort_os_free_physical_bytes": 4373782528,
+  "paid_services_cost": 0,
+  "replacement_weights_downloaded": false,
+  "native_model_workers": 0,
+  "limits": ["Remote LFS metadata is stronger than an old backup receipt but is not a completed local file hash check.", "The partial payload and cache metadata remain in a new external task directory; no original or sibling file was modified.", "Only the explicitly identified restoration process tree was stopped; no unrelated jobs were killed.", "No restoration retry or model execution follows this refusal. Native data, scorer, parity and budget prerequisites remain unbound."]
+}

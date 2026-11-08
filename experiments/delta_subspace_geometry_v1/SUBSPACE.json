@@ -1,0 +1,5408 @@
+{
+  "experiment": "DELTA-SUBSPACE-GEOMETRY-001",
+  "k": 32,
+  "n_matrices": 140,
+  "seed": 20260922,
+  "interpretation": "collision_* is energy-in-the-other-delta's-top-k-subspace divided by the chance value k/dim. ~1 means isotropic relative to the other delta (elementwise cosine is sufficient); >>1 means the deltas compete for the same subspace despite a near-zero elementwise cosine.",
+  "aggregate": {
+    "dTitan": {
+      "elementwise_cos": {
+        "mean": 0.003281642888214231,
+        "median": 0.0025027383113196567,
+        "min": -0.012541341970932833,
+        "max": 0.020566901983489014
+      },
+      "collision_in": {
+        "mean": 5.457516854830861,
+        "median": 4.605030988034366,
+        "min": 2.169279627686057,
+        "max": 14.66232825814634
+      },
+      "collision_out": {
+        "mean": 2.8232514171422287,
+        "median": 1.6558101898923763,
+        "min": 0.9288045306401044,
+        "max": 11.010586287701287
+      },
+      "mean_cos2_principal_angles_in": {
+        "mean": 0.08813982315893684,
+        "median": 0.0917988009750843,
+        "min": 0.021362392231822014,
+        "max": 0.15267285704612732
+      },
+      "mean_cos2_principal_angles_out": {
+        "mean": 0.059040240550945915,
+        "median": 0.047824591398239136,
+        "min": 0.009844888001680374,
+        "max": 0.1608119159936905
+      },
+      "eff_rank": {
+        "mean": 17.607798406055995,
+        "median": 17.727073669433594,
+        "min": 10.478575706481934,
+        "max": 24.26412582397461
+      }
+    },
+    "dSparse": {
+      "elementwise_cos": {
+        "mean": 0.0026880651605580555,
+        "median": 0.0019268948910017292,
+        "min": -0.011991263456178031,
+        "max": 0.017170418462749564
+      },
+      "collision_in": {
+        "mean": 4.166126156509708,
+        "median": 3.5466208483246593,
+        "min": 1.8607417165305564,
+        "max": 9.676564893800133
+      },
+      "collision_out": {
+        "mean": 2.3297272428928593,
+        "median": 1.4453029598878029,
+        "min": 0.9321177069932265,
+        "max": 9.124494622304157
+      },
+      "mean_cos2_principal_angles_in": {
+        "mean": 0.08558537639411433,
+        "median": 0.08772389218211174,
+        "min": 0.020673295482993126,
+        "max": 0.15161174535751343
+      },
+      "mean_cos2_principal_angles_out": {
+        "mean": 0.05796508175054831,
+        "median": 0.047421468421816826,
+        "min": 0.009641241282224655,
+        "max": 0.16015507280826569
+      },
+      "eff_rank": {
+        "mean": 18.205632495880128,
+        "median": 18.23190689086914,
+        "min": 12.035676002502441,
+        "max": 24.378841400146484
+      }
+    }
+  },
+  "per_tensor": [
+    {
+      "tensor": "model.layers.10.mlp.down_proj.weight",
+      "block": 10,
+      "kind": "mlp.down_proj",
+      "shape": [
+        1024,
+        3072
+      ],
+      "k": 32,
+      "norm_dTitan": 0.08401225507259369,
+      "norm_dSparse": 0.07034566253423691,
+      "norm_dOpallo": 0.1343810111284256,
+      "eff_rank_dOpallo": 16.670764923095703,
+      "dTitan": {
+        "elementwise_cos": 0.003942923353958946,
+        "energy_in_B_rowspace": 0.13796611281040852,
+        "chance_in": 0.010416666666666666,
+        "collision_in": 13.244746829799219,
+        "energy_in_B_colspace": 0.05160702309533763,
+        "chance_out": 0.03125,
+        "collision_out": 1.6514247390508041,
+        "mean_cos2_principal_angles_in": 0.07357470691204071,
+        "mean_cos2_principal_angles_out": 0.05435219779610634,
+        "eff_rank": 17.993818283081055
+      },
+      "dSparse": {
+        "elementwise_cos": 0.0029904950656315966,
+        "energy_in_B_rowspace": 0.09996849616581564,
+        "chance_in": 0.010416666666666666,
+        "collision_in": 9.596975631918303,
+        "energy_in_B_colspace": 0.046179489083444034,
+        "chance_out": 0.03125,
+        "collision_out": 1.477743650670209,
+        "mean_cos2_principal_angles_in": 0.06947927176952362,
+        "mean_cos2_principal_angles_out": 0.05300368368625641,
+        "eff_rank": 18.344327926635742
+      }
+    },
+    {
+      "tensor": "model.layers.10.mlp.gate_proj.weight",
+      "block": 10,
+      "kind": "mlp.gate_proj",
+      "shape": [
+        3072,
+        1024
+      ],
+      "k": 32,
+      "norm_dTitan": 0.08593961596488953,
+      "norm_dSparse": 0.07188275456428528,
+      "norm_dOpallo": 0.13015107810497284,
+      "eff_rank_dOpallo": 19.570392608642578,
+      "dTitan": {
+        "elementwise_cos": 0.002459821591610937,
+        "energy_in_B_rowspace": 0.15638401534619087,
+        "chance_in": 0.03125,
+        "collision_in": 5.004288491078108,
+        "energy_in_B_colspace": 0.011169394289394643,
+        "chance_out": 0.010416666666666666,
+        "collision_out": 1.0722618517818858,
+        "mean_cos2_principal_angles_in": 0.12420902401208878,
+        "mean_cos2_principal_angles_out": 0.011277818121016026,
+        "eff_rank": 20.814756393432617
+      },
+      "dSparse": {
+        "elementwise_cos": 0.0018342055211578033,
+        "energy_in_B_rowspace": 0.12011150452871733,
+        "chance_in": 0.03125,
+        "collision_in": 3.8435681449189545,
+        "energy_in_B_colspace": 0.011142437872287927,
+        "chance_out": 0.010416666666666666,
+        "collision_out": 1.069674035739641,
+        "mean_cos2_principal_angles_in": 0.12055430561304092,
+        "mean_cos2_principal_angles_out": 0.011176057159900665,
+        "eff_rank": 20.627220153808594
+      }
+    },
+    {
+      "tensor": "model.layers.10.mlp.up_proj.weight",
+      "block": 10,
+      "kind": "mlp.up_proj",
+      "shape": [
+        3072,
+        1024
+      ],
+      "k": 32,
+      "norm_dTitan": 0.08504023402929306,
+      "norm_dSparse": 0.0712134912610054,
+      "norm_dOpallo": 0.13347706198692322,
+      "eff_rank_dOpallo": 17.70284652709961,
+      "dTitan": {
+        "elementwise_cos": 0.004943086476116573,
+        "energy_in_B_rowspace": 0.1649231048046737,
+        "chance_in": 0.03125,
+        "collision_in": 5.2775393537495585,
+        "energy_in_B_colspace": 0.028783896284590958,
+        "chance_out": 0.010416666666666666,
+        "collision_out": 2.763254043320732,
+        "mean_cos2_principal_angles_in": 0.11829820275306702,
+        "mean_cos2_principal_angles_out": 0.027973487973213196,
+        "eff_rank": 19.467662811279297
+      },
+      "dSparse": {
+        "elementwise_cos": 0.0038492623951789204,
+        "energy_in_B_rowspace": 0.12524658222088425,
+        "chance_in": 0.03125,
+        "collision_in": 4.007890631068296,
+        "energy_in_B_colspace": 0.02369703414012127,
+        "chance_out": 0.010416666666666666,
+        "collision_out": 2.274915277451642,
+        "mean_cos2_principal_angles_in": 0.11331214755773544,
+        "mean_cos2_principal_angles_out": 0.027622805908322334,
+        "eff_rank": 19.46373748779297
+      }
+    },
+    {
+      "tensor": "model.layers.10.self_attn.k_proj.weight",
+      "block": 10,
+      "kind": "self_attn.k_proj",
+      "shape": [
+        1024,
+        1024
+      ],
+      "k": 32,
+      "norm_dTitan": 0.05227692797780037,
+      "norm_dSparse": 0.043634310364723206,
+      "norm_dOpallo": 0.07483648508787155,
+      "eff_rank_dOpallo": 22.010814666748047,
+      "dTitan": {
+        "elementwise_cos": 0.011295337905473693,
+        "energy_in_B_rowspace": 0.12594430195998557,
+        "chance_in": 0.03125,
+        "collision_in": 4.030217662719538,
+        "energy_in_B_colspace": 0.16314397886479082,
+        "chance_out": 0.03125,
+        "collision_out": 5.220607323673306,
+        "mean_cos2_principal_angles_in": 0.12979616224765778,
+        "mean_cos2_principal_angles_out": 0.15252304077148438,
+        "eff_rank": 22.639347076416016
+      },
+      "dSparse": {
+        "elementwise_cos": 0.008062813418303345,
+        "energy_in_B_rowspace": 0.09587047444651624,
+        "chance_in": 0.03125,
+        "collision_in": 3.0678551822885196,
+        "energy_in_B_colspace": 0.127957264985316,
+        "chance_out": 0.03125,
+        "collision_out": 4.094632479530112,
+        "mean_cos2_principal_angles_in": 0.12055933475494385,
+        "mean_cos2_principal_angles_out": 0.1503675878047943,
+        "eff_rank": 22.49104881286621
+      }
+    },
+    {
+      "tensor": "model.layers.10.self_attn.o_proj.weight",
+      "block": 10,
+      "kind": "self_attn.o_proj",
+      "shape": [
+        1024,
+        2048
+      ],
+      "k": 32,
+      "norm_dTitan": 0.06876767426729202,
+      "norm_dSparse": 0.05760106444358826,
+      "norm_dOpallo": 0.11093614250421524,
+      "eff_rank_dOpallo": 14.079479217529297,
+      "dTitan": {
+        "elementwise_cos": 0.003931113839530697,
+        "energy_in_B_rowspace": 0.19720852262285526,
+        "chance_in": 0.015625,
+        "collision_in": 12.621345447862737,
+        "energy_in_B_colspace": 0.049989759355308076,
+        "chance_out": 0.03125,
+        "collision_out": 1.5996722993698584,
+        "mean_cos2_principal_angles_in": 0.11543785035610199,
+        "mean_cos2_principal_angles_out": 0.04463353008031845,
+        "eff_rank": 15.195737838745117
+      },
+      "dSparse": {
+        "elementwise_cos": 0.0017466192219065641,
+        "energy_in_B_rowspace": 0.14492412971982874,
+        "chance_in": 0.015625,
+        "collision_in": 9.27514430206904,
+        "energy_in_B_colspace": 0.043673335198706864,
+        "chance_out": 0.03125,
+        "collision_out": 1.3975467263586197,
+        "mean_cos2_principal_angles_in": 0.1122305616736412,
+        "mean_cos2_principal_angles_out": 0.04270114004611969,
+        "eff_rank": 15.751483917236328
+      }
+    },
+    {
+      "tensor": "model.layers.10.self_attn.q_proj.weight",
+      "block": 10,
+      "kind": "self_attn.q_proj",
+      "shape": [
+        2048,
+        1024
+      ],
+      "k": 32,
+      "norm_dTitan": 0.07378418743610382,
+      "norm_dSparse": 0.061627693474292755,
+      "norm_dOpallo": 0.1061936616897583,
+      "eff_rank_dOpallo": 21.159666061401367,
+      "dTitan": {
+        "elementwise_cos": 0.008400062757868238,
+        "energy_in_B_rowspace": 0.11473852979381005,
+        "chance_in": 0.03125,
+        "collision_in": 3.6716329534019216,
+        "energy_in_B_colspace": 0.1191106846538653,
+        "chance_out": 0.015625,
+        "collision_out": 7.623083817847379,
+        "mean_cos2_principal_angles_in": 0.10244534909725189,
+        "mean_cos2_principal_angles_out": 0.11944147199392319,
+        "eff_rank": 20.8181209564209
+      },
+      "dSparse": {
+        "elementwise_cos": 0.005788957688888202,
+        "energy_in_B_rowspace": 0.08893893281334252,
+        "chance_in": 0.03125,
+        "collision_in": 2.8460458500269605,
+        "energy_in_B_colspace": 0.08949054085420528,
+        "chance_out": 0.015625,
+        "collision_out": 5.727394614669138,
+        "mean_cos2_principal_angles_in": 0.10162951052188873,
+        "mean_cos2_principal_angles_out": 0.12270250171422958,
+        "eff_rank": 20.77080535888672
+      }
+    },
+    {
+      "tensor": "model.layers.10.self_attn.v_proj.weight",
+      "block": 10,
+      "kind": "self_attn.v_proj",
+      "shape": [
+        1024,
+        1024
+      ],
+      "k": 32,
+      "norm_dTitan": 0.050298284739255905,
+      "norm_dSparse": 0.04211519658565521,
+      "norm_dOpallo": 0.07834275811910629,
+      "eff_rank_dOpallo": 16.07879638671875,
+      "dTitan": {
+        "elementwise_cos": 0.008171282468487574,
+        "energy_in_B_rowspace": 0.2060709018028613,
+        "chance_in": 0.03125,
+        "collision_in": 6.594268857691562,
+        "energy_in_B_colspace": 0.050707069718344745,
+        "chance_out": 0.03125,
+        "collision_out": 1.6226262309870318,
+        "mean_cos2_principal_angles_in": 0.14183151721954346,
+        "mean_cos2_principal_angles_out": 0.0503239668905735,
+        "eff_rank": 17.719402313232422
+      },
+      "dSparse": {
+        "elementwise_cos": 0.004326600711314732,
+        "energy_in_B_rowspace": 0.15710624714881402,
+        "chance_in": 0.03125,
+        "collision_in": 5.027399908762049,
+        "energy_in_B_colspace": 0.044917790641304085,
+        "chance_out": 0.03125,
+        "collision_out": 1.4373693005217307,
+        "mean_cos2_principal_angles_in": 0.13546793162822723,
+        "mean_cos2_principal_angles_out": 0.04934937506914139,
+        "eff_rank": 17.672693252563477
+      }
+    },
+    {
+      "tensor": "model.layers.11.mlp.down_proj.weight",
+      "block": 11,
+      "kind": "mlp.down_proj",
+      "shape": [
+        1024,
+        3072
+      ],
+      "k": 32,
+      "norm_dTitan": 0.08195309340953827,
+      "norm_dSparse": 0.06868597865104675,
+      "norm_dOpallo": 0.13402360677719116,
+      "eff_rank_dOpallo": 19.280874252319336,
+      "dTitan": {
+        "elementwise_cos": 0.004844177801129697,
+        "energy_in_B_rowspace": 0.1135004529926027,
+        "chance_in": 0.010416666666666666,
+        "collision_in": 10.896043487289859,
+        "energy_in_B_colspace": 0.04726128043417917,
+        "chance_out": 0.03125,
+        "collision_out": 1.5123609738937334,
+        "mean_cos2_principal_angles_in": 0.06665045022964478,
+        "mean_cos2_principal_angles_out": 0.05453898757696152,
+        "eff_rank": 18.6895694732666
+      },
+      "dSparse": {
+        "elementwise_cos": 0.003606836865209747,
+        "energy_in_B_rowspace": 0.08092016605626068,
+        "chance_in": 0.010416666666666666,
+        "collision_in": 7.768335941401025,
+        "energy_in_B_colspace": 0.04252575970408031,
+        "chance_out": 0.03125,
+        "collision_out": 1.36082431053057,
+        "mean_cos2_principal_angles_in": 0.06369032710790634,
+        "mean_cos2_principal_angles_out": 0.0515308640897274,
+        "eff_rank": 19.319978713989258
+      }
+    },
+    {
+      "tensor": "model.layers.11.mlp.gate_proj.weight",
+      "block": 11,
+      "kind": "mlp.gate_proj",
+      "shape": [
+        3072,
+        1024
+      ],
+      "k": 32,
+      "norm_dTitan": 0.08448478579521179,
+      "norm_dSparse": 0.07072620093822479,
+      "norm_dOpallo": 0.13138645887374878,
+      "eff_rank_dOpallo": 19.697845458984375,
+      "dTitan": {
+        "elementwise_cos": 0.005552178776373464,
+        "energy_in_B_rowspace": 0.16093027421837242,
+        "chance_in": 0.03125,
+        "collision_in": 5.149768774987917,
+        "energy_in_B_colspace": 0.011282926218872396,
+        "chance_out": 0.010416666666666666,
+        "collision_out": 1.0831609170117502,
+        "mean_cos2_principal_angles_in": 0.14620718359947205,
+        "mean_cos2_principal_angles_out": 0.012014031410217285,
+        "eff_rank": 20.484027862548828
+      },
+      "dSparse": {
+        "elementwise_cos": 0.004587737090270141,
+        "energy_in_B_rowspace": 0.12293020788140674,
+        "chance_in": 0.03125,
+        "collision_in": 3.9337666522050156,
+        "energy_in_B_colspace": 0.011040108822306478,
+        "chance_out": 0.010416666666666666,
+        "collision_out": 1.059850446941422,
+        "mean_cos2_principal_angles_in": 0.1375894546508789,
+        "mean_cos2_principal_angles_out": 0.01212059985846281,
+        "eff_rank": 20.728788375854492
+      }
+    },
+    {
+      "tensor": "model.layers.11.mlp.up_proj.weight",
+      "block": 11,
+      "kind": "mlp.up_proj",
+      "shape": [
+        3072,
+        1024
+      ],
+      "k": 32,
+      "norm_dTitan": 0.08299979567527771,
+      "norm_dSparse": 0.0695495754480362,
+      "norm_dOpallo": 0.13435040414333344,
+      "eff_rank_dOpallo": 18.69589614868164,
+      "dTitan": {
+        "elementwise_cos": 0.009210436374634085,
+        "energy_in_B_rowspace": 0.15983317033856886,
+        "chance_in": 0.03125,
+        "collision_in": 5.114661450834204,
+        "energy_in_B_colspace": 0.03155977914448904,
+        "chance_out": 0.010416666666666666,
+        "collision_out": 3.029738797870948,
+        "mean_cos2_principal_angles_in": 0.13708414137363434,
+        "mean_cos2_principal_angles_out": 0.030151618644595146,
+        "eff_rank": 19.628023147583008
+      },
+      "dSparse": {
+        "elementwise_cos": 0.0071268966357949225,
+        "energy_in_B_rowspace": 0.1211364154660997,
+        "chance_in": 0.03125,
+        "collision_in": 3.8763652949151903,
+        "energy_in_B_colspace": 0.024922477400033265,
+        "chance_out": 0.010416666666666666,
+        "collision_out": 2.392557830403194,
+        "mean_cos2_principal_angles_in": 0.13317519426345825,
+        "mean_cos2_principal_angles_out": 0.029102906584739685,
+        "eff_rank": 20.01179313659668
+      }
+    },
+    {
+      "tensor": "model.layers.11.self_attn.k_proj.weight",
+      "block": 11,
+      "kind": "self_attn.k_proj",
+      "shape": [
+        1024,
+        1024
+      ],
+      "k": 32,
+      "norm_dTitan": 0.049658600240945816,
+      "norm_dSparse": 0.04141036421060562,
+      "norm_dOpallo": 0.07169756293296814,
+      "eff_rank_dOpallo": 21.92418098449707,
+      "dTitan": {
+        "elementwise_cos": 0.0008474848783577252,
+        "energy_in_B_rowspace": 0.12725780831507905,
+        "chance_in": 0.03125,
+        "collision_in": 4.0722498660825295,
+        "energy_in_B_colspace": 0.17855332793412768,
+        "chance_out": 0.03125,
+        "collision_out": 5.713706493892086,
+        "mean_cos2_principal_angles_in": 0.13422268629074097,
+        "mean_cos2_principal_angles_out": 0.1608119159936905,
+        "eff_rank": 22.313730239868164
+      },
+      "dSparse": {
+        "elementwise_cos": 0.0009353299657408018,
+        "energy_in_B_rowspace": 0.09809367709425616,
+        "chance_in": 0.03125,
+        "collision_in": 3.138997667016197,
+        "energy_in_B_colspace": 0.13913843493384503,
+        "chance_out": 0.03125,
+        "collision_out": 4.452429917883041,
+        "mean_cos2_principal_angles_in": 0.1311558485031128,
+        "mean_cos2_principal_angles_out": 0.16015507280826569,
+        "eff_rank": 22.01828384399414
+      }
+    },
+    {
+      "tensor": "model.layers.11.self_attn.o_proj.weight",
+      "block": 11,
+      "kind": "self_attn.o_proj",
+      "shape": [
+        1024,
+        2048
+      ],
+      "k": 32,
+      "norm_dTitan": 0.06701892614364624,
+      "norm_dSparse": 0.05627201870083809,
+      "norm_dOpallo": 0.10805818438529968,
+      "eff_rank_dOpallo": 14.800474166870117,
+      "dTitan": {
+        "elementwise_cos": 0.004843751942923763,
+        "energy_in_B_rowspace": 0.15488599035394626,
+        "chance_in": 0.015625,
+        "collision_in": 9.91270338265256,
+        "energy_in_B_colspace": 0.04681160619965113,
+        "chance_out": 0.03125,
+        "collision_out": 1.497971398388836,
+        "mean_cos2_principal_angles_in": 0.10297359526157379,
+        "mean_cos2_principal_angles_out": 0.04661183804273605,
+        "eff_rank": 16.23308753967285
+      },
+      "dSparse": {
+        "elementwise_cos": 0.004045264458376375,
+        "energy_in_B_rowspace": 0.11407797845467531,
+        "chance_in": 0.015625,
+        "collision_in": 7.30099062109922,
+        "energy_in_B_colspace": 0.04196195852920738,
+        "chance_out": 0.03125,
+        "collision_out": 1.3427826729346362,
+        "mean_cos2_principal_angles_in": 0.10110002756118774,
+        "mean_cos2_principal_angles_out": 0.04580913484096527,
+        "eff_rank": 16.969402313232422
+      }
+    },
+    {
+      "tensor": "model.layers.11.self_attn.q_proj.weight",
+      "block": 11,
+      "kind": "self_attn.q_proj",
+      "shape": [
+        2048,
+        1024
+      ],
+      "k": 32,
+      "norm_dTitan": 0.06910321116447449,
+      "norm_dSparse": 0.05765095353126526,
+      "norm_dOpallo": 0.10242640227079391,
+      "eff_rank_dOpallo": 20.081453323364258,
+      "dTitan": {
+        "elementwise_cos": 0.008011461030768512,
+        "energy_in_B_rowspace": 0.177524325163701,
+        "chance_in": 0.03125,
+        "collision_in": 5.680778405238432,
+        "energy_in_B_colspace": 0.12923783847783846,
+        "chance_out": 0.015625,
+        "collision_out": 8.271221662581661,
+        "mean_cos2_principal_angles_in": 0.1469476819038391,
+        "mean_cos2_principal_angles_out": 0.12881137430667877,
+        "eff_rank": 19.488636016845703
+      },
+      "dSparse": {
+        "elementwise_cos": 0.006532831071872129,
+        "energy_in_B_rowspace": 0.132007579970159,
+        "chance_in": 0.03125,
+        "collision_in": 4.224242559045088,
+        "energy_in_B_colspace": 0.09940723077671215,
+        "chance_out": 0.015625,
+        "collision_out": 6.362062769709578,
+        "mean_cos2_principal_angles_in": 0.1356794238090515,
+        "mean_cos2_principal_angles_out": 0.12987715005874634,
+        "eff_rank": 19.787622451782227
+      }
+    },
+    {
+      "tensor": "model.layers.11.self_attn.v_proj.weight",
+      "block": 11,
+      "kind": "self_attn.v_proj",
+      "shape": [
+        1024,
+        1024
+      ],
+      "k": 32,
+      "norm_dTitan": 0.047860413789749146,
+      "norm_dSparse": 0.04021705687046051,
+      "norm_dOpallo": 0.07663609087467194,
+      "eff_rank_dOpallo": 15.409201622009277,
+      "dTitan": {
+        "elementwise_cos": 0.0007743362584898141,
+        "energy_in_B_rowspace": 0.18093050360250643,
+        "chance_in": 0.03125,
+        "collision_in": 5.789776115280206,
+        "energy_in_B_colspace": 0.04682817676836293,
+        "chance_out": 0.03125,
+        "collision_out": 1.4985016565876137,
+        "mean_cos2_principal_angles_in": 0.13729479908943176,
+        "mean_cos2_principal_angles_out": 0.04782163351774216,
+        "eff_rank": 17.78602409362793
+      },
+      "dSparse": {
+        "elementwise_cos": 0.00025899077388079865,
+        "energy_in_B_rowspace": 0.1382559517381657,
+        "chance_in": 0.03125,
+        "collision_in": 4.424190455621303,
+        "energy_in_B_colspace": 0.04231658467285752,
+        "chance_out": 0.03125,
+        "collision_out": 1.3541307095314405,
+        "mean_cos2_principal_angles_in": 0.1340022087097168,
+        "mean_cos2_principal_angles_out": 0.049301765859127045,
+        "eff_rank": 18.267454147338867
+      }
+    },
+    {
+      "tensor": "model.layers.12.mlp.down_proj.weight",
+      "block": 12,
+      "kind": "mlp.down_proj",
+      "shape": [
+        1024,
+        3072
+      ],
+      "k": 32,
+      "norm_dTitan": 0.08077073097229004,
+      "norm_dSparse": 0.06772889941930771,
+      "norm_dOpallo": 0.13471412658691406,
+      "eff_rank_dOpallo": 20.38482093811035,
+      "dTitan": {
+        "elementwise_cos": 0.001949992514669021,
+        "energy_in_B_rowspace": 0.10983487744962749,
+        "chance_in": 0.010416666666666666,
+        "collision_in": 10.54414823516424,
+        "energy_in_B_colspace": 0.05136537734729632,
+        "chance_out": 0.03125,
+        "collision_out": 1.6436920751134823,
+        "mean_cos2_principal_angles_in": 0.06335540115833282,
+        "mean_cos2_principal_angles_out": 0.051208287477493286,
+        "eff_rank": 18.892532348632812
+      },
+      "dSparse": {
+        "elementwise_cos": 0.002199991345005949,
+        "energy_in_B_rowspace": 0.07783770667329241,
+        "chance_in": 0.010416666666666666,
+        "collision_in": 7.472419840636072,
+        "energy_in_B_colspace": 0.0457385718708041,
+        "chance_out": 0.03125,
+        "collision_out": 1.4636342998657312,
+        "mean_cos2_principal_angles_in": 0.061436645686626434,
+        "mean_cos2_principal_angles_out": 0.051253654062747955,
+        "eff_rank": 19.70970344543457
+      }
+    },
+    {
+      "tensor": "model.layers.12.mlp.gate_proj.weight",
+      "block": 12,
+      "kind": "mlp.gate_proj",
+      "shape": [
+        3072,
+        1024
+      ],
+      "k": 32,
+      "norm_dTitan": 0.08252324163913727,
+      "norm_dSparse": 0.06914061307907104,
+      "norm_dOpallo": 0.13201884925365448,
+      "eff_rank_dOpallo": 19.991539001464844,
+      "dTitan": {
+        "elementwise_cos": 0.002646157252492309,
+        "energy_in_B_rowspace": 0.1726105351535104,
+        "chance_in": 0.03125,
+        "collision_in": 5.523537124912333,
+        "energy_in_B_colspace": 0.011952094220976168,
+        "chance_out": 0.010416666666666666,
+        "collision_out": 1.1474010452137122,
+        "mean_cos2_principal_angles_in": 0.14394037425518036,
+        "mean_cos2_principal_angles_out": 0.012332430109381676,
+        "eff_rank": 19.95254135131836
+      },
+      "dSparse": {
+        "elementwise_cos": 0.0018265321779858189,
+        "energy_in_B_rowspace": 0.13135787783785238,
+        "chance_in": 0.03125,
+        "collision_in": 4.203452090811276,
+        "energy_in_B_colspace": 0.011309214460143048,
+        "chance_out": 0.010416666666666666,
+        "collision_out": 1.0856845881737327,
+        "mean_cos2_principal_angles_in": 0.1406126320362091,
+        "mean_cos2_principal_angles_out": 0.011773565784096718,
+        "eff_rank": 20.439048767089844
+      }
+    },
+    {
+      "tensor": "model.layers.12.mlp.up_proj.weight",
+      "block": 12,
+      "kind": "mlp.up_proj",
+      "shape": [
+        3072,
+        1024
+      ],
+      "k": 32,
+      "norm_dTitan": 0.08116456866264343,
+      "norm_dSparse": 0.06807303428649902,
+      "norm_dOpallo": 0.1351202428340912,
+      "eff_rank_dOpallo": 18.841644287109375,
+      "dTitan": {
+        "elementwise_cos": 0.007764195646593378,
+        "energy_in_B_rowspace": 0.17436895147914347,
+        "chance_in": 0.03125,
+        "collision_in": 5.579806447332591,
+        "energy_in_B_colspace": 0.025037090886521528,
+        "chance_out": 0.010416666666666666,
+        "collision_out": 2.403560725106067,
+        "mean_cos2_principal_angles_in": 0.12826108932495117,
+        "mean_cos2_principal_angles_out": 0.025290831923484802,
+        "eff_rank": 19.050029754638672
+      },
+      "dSparse": {
+        "elementwise_cos": 0.006264575131046032,
+        "energy_in_B_rowspace": 0.13254396872645025,
+        "chance_in": 0.03125,
+        "collision_in": 4.241406999246408,
+        "energy_in_B_colspace": 0.020399403863069276,
+        "chance_out": 0.010416666666666666,
+        "collision_out": 1.9583427708546506,
+        "mean_cos2_principal_angles_in": 0.12578752636909485,
+        "mean_cos2_principal_angles_out": 0.02343144081532955,
+        "eff_rank": 19.63726234436035
+      }
+    },
+    {
+      "tensor": "model.layers.12.self_attn.k_proj.weight",
+      "block": 12,
+      "kind": "self_attn.k_proj",
+      "shape": [
+        1024,
+        1024
+      ],
+      "k": 32,
+      "norm_dTitan": 0.0480441153049469,
+      "norm_dSparse": 0.040383849292993546,
+      "norm_dOpallo": 0.0722707062959671,
+      "eff_rank_dOpallo": 21.10188102722168,
+      "dTitan": {
+        "elementwise_cos": 0.0016334697699205457,
+        "energy_in_B_rowspace": 0.12601902986181227,
+        "chance_in": 0.03125,
+        "collision_in": 4.0326089555779925,
+        "energy_in_B_colspace": 0.12510740582639676,
+        "chance_out": 0.03125,
+        "collision_out": 4.003436986444696,
+        "mean_cos2_principal_angles_in": 0.13037225604057312,
+        "mean_cos2_principal_angles_out": 0.12288723886013031,
+        "eff_rank": 22.86193084716797
+      },
+      "dSparse": {
+        "elementwise_cos": 0.001421567822893424,
+        "energy_in_B_rowspace": 0.09763311447304746,
+        "chance_in": 0.03125,
+        "collision_in": 3.1242596631375186,
+        "energy_in_B_colspace": 0.09874871848467913,
+        "chance_out": 0.03125,
+        "collision_out": 3.159958991509732,
+        "mean_cos2_principal_angles_in": 0.12468890845775604,
+        "mean_cos2_principal_angles_out": 0.12138284742832184,
+        "eff_rank": 23.190153121948242
+      }
+    },
+    {
+      "tensor": "model.layers.12.self_attn.o_proj.weight",
+      "block": 12,
+      "kind": "self_attn.o_proj",
+      "shape": [
+        1024,
+        2048
+      ],
+      "k": 32,
+      "norm_dTitan": 0.06577195227146149,
+      "norm_dSparse": 0.055285245180130005,
+      "norm_dOpallo": 0.10886382311582565,
+      "eff_rank_dOpallo": 14.134639739990234,
+      "dTitan": {
+        "elementwise_cos": 0.004428218154424238,
+        "energy_in_B_rowspace": 0.1730826001324931,
+        "chance_in": 0.015625,
+        "collision_in": 11.077286408479559,
+        "energy_in_B_colspace": 0.04916735677897797,
+        "chance_out": 0.03125,
+        "collision_out": 1.573355416927295,
+        "mean_cos2_principal_angles_in": 0.0944761261343956,
+        "mean_cos2_principal_angles_out": 0.051874738186597824,
+        "eff_rank": 14.081254959106445
+      },
+      "dSparse": {
+        "elementwise_cos": 0.004530638844008812,
+        "energy_in_B_rowspace": 0.12851170558386338,
+        "chance_in": 0.015625,
+        "collision_in": 8.224749157367256,
+        "energy_in_B_colspace": 0.045773807136346045,
+        "chance_out": 0.03125,
+        "collision_out": 1.4647618283630734,
+        "mean_cos2_principal_angles_in": 0.0910361260175705,
+        "mean_cos2_principal_angles_out": 0.05222747474908829,
+        "eff_rank": 14.888700485229492
+      }
+    },
+    {
+      "tensor": "model.layers.12.self_attn.q_proj.weight",
+      "block": 12,
+      "kind": "self_attn.q_proj",
+      "shape": [
+        2048,
+        1024
+      ],
+      "k": 32,
+      "norm_dTitan": 0.067988321185112,
+      "norm_dSparse": 0.0570857934653759,
+      "norm_dOpallo": 0.10404118150472641,
+      "eff_rank_dOpallo": 19.795358657836914,
+      "dTitan": {
+        "elementwise_cos": 0.002656575742562776,
+        "energy_in_B_rowspace": 0.1450703985571001,
+        "chance_in": 0.03125,
+        "collision_in": 4.642252753827203,
+        "energy_in_B_colspace": 0.1024342289708349,
+        "chance_out": 0.015625,
+        "collision_out": 6.555790654133434,
+        "mean_cos2_principal_angles_in": 0.1302844136953354,
+        "mean_cos2_principal_angles_out": 0.10758586972951889,
+        "eff_rank": 21.57520294189453
+      },
+      "dSparse": {
+        "elementwise_cos": 0.0014004213077114561,
+        "energy_in_B_rowspace": 0.11110722890047758,
+        "chance_in": 0.03125,
+        "collision_in": 3.5554313248152827,
+        "energy_in_B_colspace": 0.0779601045228889,
+        "chance_out": 0.015625,
+        "collision_out": 4.98944668946489,
+        "mean_cos2_principal_angles_in": 0.126815065741539,
+        "mean_cos2_principal_angles_out": 0.10395388305187225,
+        "eff_rank": 22.085464477539062
+      }
+    },
+    {
+      "tensor": "model.layers.12.self_attn.v_proj.weight",
+      "block": 12,
+      "kind": "self_attn.v_proj",
+      "shape": [
+        1024,
+        1024
+      ],
+      "k": 32,
+      "norm_dTitan": 0.046284858137369156,
+      "norm_dSparse": 0.03894002363085747,
+      "norm_dOpallo": 0.07653990387916565,
+      "eff_rank_dOpallo": 14.064691543579102,
+      "dTitan": {
+        "elementwise_cos": 0.014418503923768622,
+        "energy_in_B_rowspace": 0.17807145838060429,
+        "chance_in": 0.03125,
+        "collision_in": 5.698286668179337,
+        "energy_in_B_colspace": 0.06940494975487976,
+        "chance_out": 0.03125,
+        "collision_out": 2.2209583921561524,
+        "mean_cos2_principal_angles_in": 0.12824511528015137,
+        "mean_cos2_principal_angles_out": 0.06412126123905182,
+        "eff_rank": 16.172832489013672
+      },
+      "dSparse": {
+        "elementwise_cos": 0.012582612233600828,
+        "energy_in_B_rowspace": 0.13617180064582574,
+        "chance_in": 0.03125,
+        "collision_in": 4.3574976206664235,
+        "energy_in_B_colspace": 0.05758126902715636,
+        "chance_out": 0.03125,
+        "collision_out": 1.8426006088690035,
+        "mean_cos2_principal_angles_in": 0.12480049580335617,
+        "mean_cos2_principal_angles_out": 0.05977113917469978,
+        "eff_rank": 17.127307891845703
+      }
+    },
+    {
+      "tensor": "model.layers.13.mlp.down_proj.weight",
+      "block": 13,
+      "kind": "mlp.down_proj",
+      "shape": [
+        1024,
+        3072
+      ],
+      "k": 32,
+      "norm_dTitan": 0.07954344898462296,
+      "norm_dSparse": 0.06674551963806152,
+      "norm_dOpallo": 0.13532988727092743,
+      "eff_rank_dOpallo": 20.37315559387207,
+      "dTitan": {
+        "elementwise_cos": 0.002962660800396096,
+        "energy_in_B_rowspace": 0.10625353253458626,
+        "chance_in": 0.010416666666666666,
+        "collision_in": 10.200339123320282,
+        "energy_in_B_colspace": 0.04799360664618138,
+        "chance_out": 0.03125,
+        "collision_out": 1.5357954126778042,
+        "mean_cos2_principal_angles_in": 0.060518570244312286,
+        "mean_cos2_principal_angles_out": 0.04938846081495285,
+        "eff_rank": 19.177583694458008
+      },
+      "dSparse": {
+        "elementwise_cos": 0.0022530776396821545,
+        "energy_in_B_rowspace": 0.07425885820092468,
+        "chance_in": 0.010416666666666666,
+        "collision_in": 7.128850387288769,
+        "energy_in_B_colspace": 0.04258544620759194,
+        "chance_out": 0.03125,
+        "collision_out": 1.3627342786429422,
+        "mean_cos2_principal_angles_in": 0.058410629630088806,
+        "mean_cos2_principal_angles_out": 0.04776770994067192,
+        "eff_rank": 20.273393630981445
+      }
+    },
+    {
+      "tensor": "model.layers.13.mlp.gate_proj.weight",
+      "block": 13,
+      "kind": "mlp.gate_proj",
+      "shape": [
+        3072,
+        1024
+      ],
+      "k": 32,
+      "norm_dTitan": 0.08203896135091782,
+      "norm_dSparse": 0.06885029375553131,
+      "norm_dOpallo": 0.13222917914390564,
+      "eff_rank_dOpallo": 19.93435287475586,
+      "dTitan": {
+        "elementwise_cos": 0.0018442161915718709,
+        "energy_in_B_rowspace": 0.16921526139193904,
+        "chance_in": 0.03125,
+        "collision_in": 5.414888364542049,
+        "energy_in_B_colspace": 0.010953624964955578,
+        "chance_out": 0.010416666666666666,
+        "collision_out": 1.0515479966357355,
+        "mean_cos2_principal_angles_in": 0.13989189267158508,
+        "mean_cos2_principal_angles_out": 0.010888622142374516,
+        "eff_rank": 20.1223201751709
+      },
+      "dSparse": {
+        "elementwise_cos": 0.0013720545379240204,
+        "energy_in_B_rowspace": 0.12957849438733757,
+        "chance_in": 0.03125,
+        "collision_in": 4.146511820394802,
+        "energy_in_B_colspace": 0.010358498742051088,
+        "chance_out": 0.010416666666666666,
+        "collision_out": 0.9944158792369044,
+        "mean_cos2_principal_angles_in": 0.13301189243793488,
+        "mean_cos2_principal_angles_out": 0.010579506866633892,
+        "eff_rank": 20.459936141967773
+      }
+    },
+    {
+      "tensor": "model.layers.13.mlp.up_proj.weight",
+      "block": 13,
+      "kind": "mlp.up_proj",
+      "shape": [
+        3072,
+        1024
+      ],
+      "k": 32,
+      "norm_dTitan": 0.08082258701324463,
+      "norm_dSparse": 0.06781168282032013,
+      "norm_dOpallo": 0.13479676842689514,
+      "eff_rank_dOpallo": 19.09104347229004,
+      "dTitan": {
+        "elementwise_cos": 0.004321496957406075,
+        "energy_in_B_rowspace": 0.17874343403637355,
+        "chance_in": 0.03125,
+        "collision_in": 5.719789889163954,
+        "energy_in_B_colspace": 0.023566443084489,
+        "chance_out": 0.010416666666666666,
+        "collision_out": 2.262378536110944,
+        "mean_cos2_principal_angles_in": 0.1304692178964615,
+        "mean_cos2_principal_angles_out": 0.023281186819076538,
+        "eff_rank": 19.109115600585938
+      },
+      "dSparse": {
+        "elementwise_cos": 0.00469357398344966,
+        "energy_in_B_rowspace": 0.13536317765996358,
+        "chance_in": 0.03125,
+        "collision_in": 4.331621685118835,
+        "energy_in_B_colspace": 0.019321961456381567,
+        "chance_out": 0.010416666666666666,
+        "collision_out": 1.8549082998126305,
+        "mean_cos2_principal_angles_in": 0.12850449979305267,
+        "mean_cos2_principal_angles_out": 0.022176072001457214,
+        "eff_rank": 19.615598678588867
+      }
+    },
+    {
+      "tensor": "model.layers.13.self_attn.k_proj.weight",
+      "block": 13,
+      "kind": "self_attn.k_proj",
+      "shape": [
+        1024,
+        1024
+      ],
+      "k": 32,
+      "norm_dTitan": 0.04733166843652725,
+      "norm_dSparse": 0.03976026177406311,
+      "norm_dOpallo": 0.0769740641117096,
+      "eff_rank_dOpallo": 21.711275100708008,
+      "dTitan": {
+        "elementwise_cos": 0.011330442174984369,
+        "energy_in_B_rowspace": 0.13448851374940668,
+        "chance_in": 0.03125,
+        "collision_in": 4.303632439981014,
+        "energy_in_B_colspace": 0.15412834102093673,
+        "chance_out": 0.03125,
+        "collision_out": 4.932106912669975,
+        "mean_cos2_principal_angles_in": 0.13022038340568542,
+        "mean_cos2_principal_angles_out": 0.15696139633655548,
+        "eff_rank": 22.781818389892578
+      },
+      "dSparse": {
+        "elementwise_cos": 0.009396498137107051,
+        "energy_in_B_rowspace": 0.10277220090013924,
+        "chance_in": 0.03125,
+        "collision_in": 3.2887104288044555,
+        "energy_in_B_colspace": 0.11964125179752402,
+        "chance_out": 0.03125,
+        "collision_out": 3.8285200575207687,
+        "mean_cos2_principal_angles_in": 0.12567280232906342,
+        "mean_cos2_principal_angles_out": 0.14918462932109833,
+        "eff_rank": 23.15914535522461
+      }
+    },
+    {
+      "tensor": "model.layers.13.self_attn.o_proj.weight",
+      "block": 13,
+      "kind": "self_attn.o_proj",
+      "shape": [
+        1024,
+        2048
+      ],
+      "k": 32,
+      "norm_dTitan": 0.0639428123831749,
+      "norm_dSparse": 0.053734153509140015,
+      "norm_dOpallo": 0.1113758236169815,
+      "eff_rank_dOpallo": 13.808208465576172,
+      "dTitan": {
+        "elementwise_cos": 0.0069559698908932075,
+        "energy_in_B_rowspace": 0.20370047120893245,
+        "chance_in": 0.015625,
+        "collision_in": 13.036830157371677,
+        "energy_in_B_colspace": 0.0472989963649076,
+        "chance_out": 0.03125,
+        "collision_out": 1.5135678836770432,
+        "mean_cos2_principal_angles_in": 0.12367913126945496,
+        "mean_cos2_principal_angles_out": 0.046793170273303986,
+        "eff_rank": 14.052031517028809
+      },
+      "dSparse": {
+        "elementwise_cos": 0.006776559482501676,
+        "energy_in_B_rowspace": 0.14928429869058849,
+        "chance_in": 0.015625,
+        "collision_in": 9.554195116197663,
+        "energy_in_B_colspace": 0.04219615888008717,
+        "chance_out": 0.03125,
+        "collision_out": 1.3502770841627894,
+        "mean_cos2_principal_angles_in": 0.11853089928627014,
+        "mean_cos2_principal_angles_out": 0.04344187304377556,
+        "eff_rank": 15.187707901000977
+      }
+    },
+    {
+      "tensor": "model.layers.13.self_attn.q_proj.weight",
+      "block": 13,
+      "kind": "self_attn.q_proj",
+      "shape": [
+        2048,
+        1024
+      ],
+      "k": 32,
+      "norm_dTitan": 0.06623686105012894,
+      "norm_dSparse": 0.05570521950721741,
+      "norm_dOpallo": 0.10754358023405075,
+      "eff_rank_dOpallo": 18.67306900024414,
+      "dTitan": {
+        "elementwise_cos": 0.00198628609655709,
+        "energy_in_B_rowspace": 0.1676395476878347,
+        "chance_in": 0.03125,
+        "collision_in": 5.364465526010711,
+        "energy_in_B_colspace": 0.1167085459211451,
+        "chance_out": 0.015625,
+        "collision_out": 7.4693469389532865,
+        "mean_cos2_principal_angles_in": 0.12658819556236267,
+        "mean_cos2_principal_angles_out": 0.12014590948820114,
+        "eff_rank": 20.693437576293945
+      },
+      "dSparse": {
+        "elementwise_cos": 0.00113050786382531,
+        "energy_in_B_rowspace": 0.12702780560293897,
+        "chance_in": 0.03125,
+        "collision_in": 4.064889779294047,
+        "energy_in_B_colspace": 0.08910937972486983,
+        "chance_out": 0.015625,
+        "collision_out": 5.703000302391669,
+        "mean_cos2_principal_angles_in": 0.12195980548858643,
+        "mean_cos2_principal_angles_out": 0.11632576584815979,
+        "eff_rank": 21.265966415405273
+      }
+    },
+    {
+      "tensor": "model.layers.13.self_attn.v_proj.weight",
+      "block": 13,
+      "kind": "self_attn.v_proj",
+      "shape": [
+        1024,
+        1024
+      ],
+      "k": 32,
+      "norm_dTitan": 0.045132461935281754,
+      "norm_dSparse": 0.03799379616975784,
+      "norm_dOpallo": 0.07862890511751175,
+      "eff_rank_dOpallo": 15.294485092163086,
+      "dTitan": {
+        "elementwise_cos": 0.00906297994895434,
+        "energy_in_B_rowspace": 0.18551557303655036,
+        "chance_in": 0.03125,
+        "collision_in": 5.936498337169612,
+        "energy_in_B_colspace": 0.06250102691202838,
+        "chance_out": 0.03125,
+        "collision_out": 2.0000328611849083,
+        "mean_cos2_principal_angles_in": 0.11398211121559143,
+        "mean_cos2_principal_angles_out": 0.05922861024737358,
+        "eff_rank": 16.74458885192871
+      },
+      "dSparse": {
+        "elementwise_cos": 0.007128606528206942,
+        "energy_in_B_rowspace": 0.14135378097631296,
+        "chance_in": 0.03125,
+        "collision_in": 4.523320991242015,
+        "energy_in_B_colspace": 0.0525356657594752,
+        "chance_out": 0.03125,
+        "collision_out": 1.6811413043032064,
+        "mean_cos2_principal_angles_in": 0.11116087436676025,
+        "mean_cos2_principal_angles_out": 0.05534211918711662,
+        "eff_rank": 17.551776885986328
+      }
+    },
+    {
+      "tensor": "model.layers.14.mlp.down_proj.weight",
+      "block": 14,
+      "kind": "mlp.down_proj",
+      "shape": [
+        1024,
+        3072
+      ],
+      "k": 32,
+      "norm_dTitan": 0.08007260411977768,
+      "norm_dSparse": 0.06717699021100998,
+      "norm_dOpallo": 0.1370731145143509,
+      "eff_rank_dOpallo": 20.117206573486328,
+      "dTitan": {
+        "elementwise_cos": 0.008158406851126527,
+        "energy_in_B_rowspace": 0.09778380319362664,
+        "chance_in": 0.010416666666666666,
+        "collision_in": 9.387245106588159,
+        "energy_in_B_colspace": 0.052329349392968044,
+        "chance_out": 0.03125,
+        "collision_out": 1.6745391805749774,
+        "mean_cos2_principal_angles_in": 0.06385650485754013,
+        "mean_cos2_principal_angles_out": 0.04893956333398819,
+        "eff_rank": 19.077272415161133
+      },
+      "dSparse": {
+        "elementwise_cos": 0.006058320190884995,
+        "energy_in_B_rowspace": 0.06931758508519983,
+        "chance_in": 0.010416666666666666,
+        "collision_in": 6.654488168179184,
+        "energy_in_B_colspace": 0.04585784995660215,
+        "chance_out": 0.03125,
+        "collision_out": 1.4674511986112688,
+        "mean_cos2_principal_angles_in": 0.06193793937563896,
+        "mean_cos2_principal_angles_out": 0.047434039413928986,
+        "eff_rank": 20.089027404785156
+      }
+    },
+    {
+      "tensor": "model.layers.14.mlp.gate_proj.weight",
+      "block": 14,
+      "kind": "mlp.gate_proj",
+      "shape": [
+        3072,
+        1024
+      ],
+      "k": 32,
+      "norm_dTitan": 0.08248556405305862,
+      "norm_dSparse": 0.06905188411474228,
+      "norm_dOpallo": 0.13401921093463898,
+      "eff_rank_dOpallo": 19.88235092163086,
+      "dTitan": {
+        "elementwise_cos": 0.005306283946784246,
+        "energy_in_B_rowspace": 0.16074994339232967,
+        "chance_in": 0.03125,
+        "collision_in": 5.14399818855455,
+        "energy_in_B_colspace": 0.012085389374254164,
+        "chance_out": 0.010416666666666666,
+        "collision_out": 1.1601973799283998,
+        "mean_cos2_principal_angles_in": 0.11596091091632843,
+        "mean_cos2_principal_angles_out": 0.011897370219230652,
+        "eff_rank": 17.691486358642578
+      },
+      "dSparse": {
+        "elementwise_cos": 0.0039796249930809146,
+        "energy_in_B_rowspace": 0.12290364851358578,
+        "chance_in": 0.03125,
+        "collision_in": 3.932916752434745,
+        "energy_in_B_colspace": 0.01175272136054021,
+        "chance_out": 0.010416666666666666,
+        "collision_out": 1.1282612506118601,
+        "mean_cos2_principal_angles_in": 0.11350105702877045,
+        "mean_cos2_principal_angles_out": 0.011885328218340874,
+        "eff_rank": 18.223419189453125
+      }
+    },
+    {
+      "tensor": "model.layers.14.mlp.up_proj.weight",
+      "block": 14,
+      "kind": "mlp.up_proj",
+      "shape": [
+        3072,
+        1024
+      ],
+      "k": 32,
+      "norm_dTitan": 0.0807768926024437,
+      "norm_dSparse": 0.06770171225070953,
+      "norm_dOpallo": 0.13616302609443665,
+      "eff_rank_dOpallo": 19.007368087768555,
+      "dTitan": {
+        "elementwise_cos": 0.0039833387661855,
+        "energy_in_B_rowspace": 0.16311409716220937,
+        "chance_in": 0.03125,
+        "collision_in": 5.2196511091907,
+        "energy_in_B_colspace": 0.023307006070332217,
+        "chance_out": 0.010416666666666666,
+        "collision_out": 2.237472582751893,
+        "mean_cos2_principal_angles_in": 0.1125415712594986,
+        "mean_cos2_principal_angles_out": 0.02239624410867691,
+        "eff_rank": 17.857547760009766
+      },
+      "dSparse": {
+        "elementwise_cos": 0.0038933788323532834,
+        "energy_in_B_rowspace": 0.12327784291010953,
+        "chance_in": 0.03125,
+        "collision_in": 3.944890973123505,
+        "energy_in_B_colspace": 0.01936585188837083,
+        "chance_out": 0.010416666666666666,
+        "collision_out": 1.8591217812835998,
+        "mean_cos2_principal_angles_in": 0.10956753045320511,
+        "mean_cos2_principal_angles_out": 0.021925801411271095,
+        "eff_rank": 18.6600341796875
+      }
+    },
+    {
+      "tensor": "model.layers.14.self_attn.k_proj.weight",
+      "block": 14,
+      "kind": "self_attn.k_proj",
+      "shape": [
+        1024,
+        1024
+      ],
+      "k": 32,
+      "norm_dTitan": 0.047401025891304016,
+      "norm_dSparse": 0.03978141397237778,
+      "norm_dOpallo": 0.07448572665452957,
+      "eff_rank_dOpallo": 22.010168075561523,
+      "dTitan": {
+        "elementwise_cos": 0.013982675714549982,
+        "energy_in_B_rowspace": 0.11886809052965097,
+        "chance_in": 0.03125,
+        "collision_in": 3.803778896948831,
+        "energy_in_B_colspace": 0.13565922405443312,
+        "chance_out": 0.03125,
+        "collision_out": 4.34109516974186,
+        "mean_cos2_principal_angles_in": 0.11799261718988419,
+        "mean_cos2_principal_angles_out": 0.1394738405942917,
+        "eff_rank": 21.606340408325195
+      },
+      "dSparse": {
+        "elementwise_cos": 0.011410195198497161,
+        "energy_in_B_rowspace": 0.09598804367018827,
+        "chance_in": 0.03125,
+        "collision_in": 3.071617397446025,
+        "energy_in_B_colspace": 0.1112311180749981,
+        "chance_out": 0.03125,
+        "collision_out": 3.559395778399939,
+        "mean_cos2_principal_angles_in": 0.11312717199325562,
+        "mean_cos2_principal_angles_out": 0.1361512988805771,
+        "eff_rank": 21.598773956298828
+      }
+    },
+    {
+      "tensor": "model.layers.14.self_attn.o_proj.weight",
+      "block": 14,
+      "kind": "self_attn.o_proj",
+      "shape": [
+        1024,
+        2048
+      ],
+      "k": 32,
+      "norm_dTitan": 0.06460756808519363,
+      "norm_dSparse": 0.054292719811201096,
+      "norm_dOpallo": 0.1113518700003624,
+      "eff_rank_dOpallo": 14.531768798828125,
+      "dTitan": {
+        "elementwise_cos": 0.015610587339481377,
+        "energy_in_B_rowspace": 0.1700189510497621,
+        "chance_in": 0.015625,
+        "collision_in": 10.881212867184775,
+        "energy_in_B_colspace": 0.05188111377293588,
+        "chance_out": 0.03125,
+        "collision_out": 1.6601956407339482,
+        "mean_cos2_principal_angles_in": 0.102723628282547,
+        "mean_cos2_principal_angles_out": 0.04567846283316612,
+        "eff_rank": 14.480451583862305
+      },
+      "dSparse": {
+        "elementwise_cos": 0.013699071475200985,
+        "energy_in_B_rowspace": 0.12433046326000384,
+        "chance_in": 0.015625,
+        "collision_in": 7.957149648640246,
+        "energy_in_B_colspace": 0.04723863781154599,
+        "chance_out": 0.03125,
+        "collision_out": 1.5116364099694717,
+        "mean_cos2_principal_angles_in": 0.0973525121808052,
+        "mean_cos2_principal_angles_out": 0.04623043164610863,
+        "eff_rank": 15.655115127563477
+      }
+    },
+    {
+      "tensor": "model.layers.14.self_attn.q_proj.weight",
+      "block": 14,
+      "kind": "self_attn.q_proj",
+      "shape": [
+        2048,
+        1024
+      ],
+      "k": 32,
+      "norm_dTitan": 0.06669175624847412,
+      "norm_dSparse": 0.0561191663146019,
+      "norm_dOpallo": 0.10516670346260071,
+      "eff_rank_dOpallo": 20.720027923583984,
+      "dTitan": {
+        "elementwise_cos": 0.008585844778577528,
+        "energy_in_B_rowspace": 0.1766649360589658,
+        "chance_in": 0.03125,
+        "collision_in": 5.653277953886906,
+        "energy_in_B_colspace": 0.12077413234081585,
+        "chance_out": 0.015625,
+        "collision_out": 7.729544469812215,
+        "mean_cos2_principal_angles_in": 0.11849814653396606,
+        "mean_cos2_principal_angles_out": 0.12237071990966797,
+        "eff_rank": 17.26680564880371
+      },
+      "dSparse": {
+        "elementwise_cos": 0.005942320459051531,
+        "energy_in_B_rowspace": 0.13752096397471228,
+        "chance_in": 0.03125,
+        "collision_in": 4.400670847190793,
+        "energy_in_B_colspace": 0.09635538827311466,
+        "chance_out": 0.015625,
+        "collision_out": 6.166744849479338,
+        "mean_cos2_principal_angles_in": 0.11396047472953796,
+        "mean_cos2_principal_angles_out": 0.11779043078422546,
+        "eff_rank": 17.955900192260742
+      }
+    },
+    {
+      "tensor": "model.layers.14.self_attn.v_proj.weight",
+      "block": 14,
+      "kind": "self_attn.v_proj",
+      "shape": [
+        1024,
+        1024
+      ],
+      "k": 32,
+      "norm_dTitan": 0.04578157886862755,
+      "norm_dSparse": 0.038494475185871124,
+      "norm_dOpallo": 0.07895936071872711,
+      "eff_rank_dOpallo": 15.195306777954102,
+      "dTitan": {
+        "elementwise_cos": 0.012905520648328351,
+        "energy_in_B_rowspace": 0.17956711986348847,
+        "chance_in": 0.03125,
+        "collision_in": 5.746147835631631,
+        "energy_in_B_colspace": 0.0591731068432283,
+        "chance_out": 0.03125,
+        "collision_out": 1.8935394189833057,
+        "mean_cos2_principal_angles_in": 0.12162955105304718,
+        "mean_cos2_principal_angles_out": 0.053885318338871,
+        "eff_rank": 16.791507720947266
+      },
+      "dSparse": {
+        "elementwise_cos": 0.009859196213015009,
+        "energy_in_B_rowspace": 0.1345238456764707,
+        "chance_in": 0.03125,
+        "collision_in": 4.304763061647062,
+        "energy_in_B_colspace": 0.050584018425215864,
+        "chance_out": 0.03125,
+        "collision_out": 1.6186885896069076,
+        "mean_cos2_principal_angles_in": 0.1125127449631691,
+        "mean_cos2_principal_angles_out": 0.05140605941414833,
+        "eff_rank": 17.888399124145508
+      }
+    },
+    {
+      "tensor": "model.layers.15.mlp.down_proj.weight",
+      "block": 15,
+      "kind": "mlp.down_proj",
+      "shape": [
+        1024,
+        3072
+      ],
+      "k": 32,
+      "norm_dTitan": 0.07974633574485779,
+      "norm_dSparse": 0.06690661609172821,
+      "norm_dOpallo": 0.13715633749961853,
+      "eff_rank_dOpallo": 20.30565643310547,
+      "dTitan": {
+        "elementwise_cos": 0.007504859970922566,
+        "energy_in_B_rowspace": 0.09527563622671072,
+        "chance_in": 0.010416666666666666,
+        "collision_in": 9.14646107776423,
+        "energy_in_B_colspace": 0.05151931204269514,
+        "chance_out": 0.03125,
+        "collision_out": 1.6486179853662444,
+        "mean_cos2_principal_angles_in": 0.05713941156864166,
+        "mean_cos2_principal_angles_out": 0.05333235114812851,
+        "eff_rank": 19.36078643798828
+      },
+      "dSparse": {
+        "elementwise_cos": 0.00720791129591278,
+        "energy_in_B_rowspace": 0.06806182257841098,
+        "chance_in": 0.010416666666666666,
+        "collision_in": 6.533934967527454,
+        "energy_in_B_colspace": 0.045264036901615776,
+        "chance_out": 0.03125,
+        "collision_out": 1.4484491808517048,
+        "mean_cos2_principal_angles_in": 0.05485774576663971,
+        "mean_cos2_principal_angles_out": 0.05233399197459221,
+        "eff_rank": 20.359127044677734
+      }
+    },
+    {
+      "tensor": "model.layers.15.mlp.gate_proj.weight",
+      "block": 15,
+      "kind": "mlp.gate_proj",
+      "shape": [
+        3072,
+        1024
+      ],
+      "k": 32,
+      "norm_dTitan": 0.08239860087633133,
+      "norm_dSparse": 0.06901329010725021,
+      "norm_dOpallo": 0.1348714828491211,
+      "eff_rank_dOpallo": 19.55088233947754,
+      "dTitan": {
+        "elementwise_cos": 0.006530846064770161,
+        "energy_in_B_rowspace": 0.14361071600753791,
+        "chance_in": 0.03125,
+        "collision_in": 4.595542912241213,
+        "energy_in_B_colspace": 0.011707248226205318,
+        "chance_out": 0.010416666666666666,
+        "collision_out": 1.1238958297157107,
+        "mean_cos2_principal_angles_in": 0.1077084094285965,
+        "mean_cos2_principal_angles_out": 0.011900335550308228,
+        "eff_rank": 18.211580276489258
+      },
+      "dSparse": {
+        "elementwise_cos": 0.0053896657625242235,
+        "energy_in_B_rowspace": 0.11137785009738893,
+        "chance_in": 0.03125,
+        "collision_in": 3.564091203116446,
+        "energy_in_B_colspace": 0.011447964657294899,
+        "chance_out": 0.010416666666666666,
+        "collision_out": 1.0990046071003103,
+        "mean_cos2_principal_angles_in": 0.1062806025147438,
+        "mean_cos2_principal_angles_out": 0.011894876137375832,
+        "eff_rank": 18.748266220092773
+      }
+    },
+    {
+      "tensor": "model.layers.15.mlp.up_proj.weight",
+      "block": 15,
+      "kind": "mlp.up_proj",
+      "shape": [
+        3072,
+        1024
+      ],
+      "k": 32,
+      "norm_dTitan": 0.08098144084215164,
+      "norm_dSparse": 0.06785907596349716,
+      "norm_dOpallo": 0.13661056756973267,
+      "eff_rank_dOpallo": 19.06020164489746,
+      "dTitan": {
+        "elementwise_cos": 0.0025285666624957513,
+        "energy_in_B_rowspace": 0.14420372074460994,
+        "chance_in": 0.03125,
+        "collision_in": 4.614519063827518,
+        "energy_in_B_colspace": 0.027858587020772176,
+        "chance_out": 0.010416666666666666,
+        "collision_out": 2.6744243539941293,
+        "mean_cos2_principal_angles_in": 0.09722398966550827,
+        "mean_cos2_principal_angles_out": 0.026716703549027443,
+        "eff_rank": 18.027812957763672
+      },
+      "dSparse": {
+        "elementwise_cos": 0.002837971748525676,
+        "energy_in_B_rowspace": 0.11028140470994513,
+        "chance_in": 0.03125,
+        "collision_in": 3.529004950718244,
+        "energy_in_B_colspace": 0.021921445623688803,
+        "chance_out": 0.010416666666666666,
+        "collision_out": 2.1044587798741254,
+        "mean_cos2_principal_angles_in": 0.09896878898143768,
+        "mean_cos2_principal_angles_out": 0.02556118741631508,
+        "eff_rank": 18.919782638549805
+      }
+    },
+    {
+      "tensor": "model.layers.15.self_attn.k_proj.weight",
+      "block": 15,
+      "kind": "self_attn.k_proj",
+      "shape": [
+        1024,
+        1024
+      ],
+      "k": 32,
+      "norm_dTitan": 0.0484556183218956,
+      "norm_dSparse": 0.04049333184957504,
+      "norm_dOpallo": 0.07610389590263367,
+      "eff_rank_dOpallo": 19.620813369750977,
+      "dTitan": {
+        "elementwise_cos": 0.020566901983489014,
+        "energy_in_B_rowspace": 0.13078198474246072,
+        "chance_in": 0.03125,
+        "collision_in": 4.185023511758743,
+        "energy_in_B_colspace": 0.15143399982370984,
+        "chance_out": 0.03125,
+        "collision_out": 4.845887994358715,
+        "mean_cos2_principal_angles_in": 0.11218404769897461,
+        "mean_cos2_principal_angles_out": 0.13887923955917358,
+        "eff_rank": 19.099336624145508
+      },
+      "dSparse": {
+        "elementwise_cos": 0.017170418462749564,
+        "energy_in_B_rowspace": 0.10297731054489306,
+        "chance_in": 0.03125,
+        "collision_in": 3.295273937436578,
+        "energy_in_B_colspace": 0.12267878151946507,
+        "chance_out": 0.03125,
+        "collision_out": 3.925721008622882,
+        "mean_cos2_principal_angles_in": 0.10415389388799667,
+        "mean_cos2_principal_angles_out": 0.13868798315525055,
+        "eff_rank": 19.31709098815918
+      }
+    },
+    {
+      "tensor": "model.layers.15.self_attn.o_proj.weight",
+      "block": 15,
+      "kind": "self_attn.o_proj",
+      "shape": [
+        1024,
+        2048
+      ],
+      "k": 32,
+      "norm_dTitan": 0.06453303247690201,
+      "norm_dSparse": 0.05417155101895332,
+      "norm_dOpallo": 0.11098316311836243,
+      "eff_rank_dOpallo": 15.165031433105469,
+      "dTitan": {
+        "elementwise_cos": 0.0138263372039166,
+        "energy_in_B_rowspace": 0.1589512398675884,
+        "chance_in": 0.015625,
+        "collision_in": 10.172879351525658,
+        "energy_in_B_colspace": 0.048668790261871646,
+        "chance_out": 0.03125,
+        "collision_out": 1.5574012883798927,
+        "mean_cos2_principal_angles_in": 0.09580017626285553,
+        "mean_cos2_principal_angles_out": 0.04471339285373688,
+        "eff_rank": 16.001359939575195
+      },
+      "dSparse": {
+        "elementwise_cos": 0.011632361107265187,
+        "energy_in_B_rowspace": 0.11403662281362498,
+        "chance_in": 0.015625,
+        "collision_in": 7.2983438600719985,
+        "energy_in_B_colspace": 0.04339780066631685,
+        "chance_out": 0.03125,
+        "collision_out": 1.3887296213221392,
+        "mean_cos2_principal_angles_in": 0.09274737536907196,
+        "mean_cos2_principal_angles_out": 0.04440678656101227,
+        "eff_rank": 17.28059196472168
+      }
+    },
+    {
+      "tensor": "model.layers.15.self_attn.q_proj.weight",
+      "block": 15,
+      "kind": "self_attn.q_proj",
+      "shape": [
+        2048,
+        1024
+      ],
+      "k": 32,
+      "norm_dTitan": 0.06720471382141113,
+      "norm_dSparse": 0.05618530884385109,
+      "norm_dOpallo": 0.10631807148456573,
+      "eff_rank_dOpallo": 19.69396209716797,
+      "dTitan": {
+        "elementwise_cos": 0.016228680427478652,
+        "energy_in_B_rowspace": 0.14355862234099148,
+        "chance_in": 0.03125,
+        "collision_in": 4.593875914911727,
+        "energy_in_B_colspace": 0.12978287578074446,
+        "chance_out": 0.015625,
+        "collision_out": 8.306104049967646,
+        "mean_cos2_principal_angles_in": 0.08552169054746628,
+        "mean_cos2_principal_angles_out": 0.13477317988872528,
+        "eff_rank": 16.091697692871094
+      },
+      "dSparse": {
+        "elementwise_cos": 0.014136776683775842,
+        "energy_in_B_rowspace": 0.11018019434166106,
+        "chance_in": 0.03125,
+        "collision_in": 3.525766218933154,
+        "energy_in_B_colspace": 0.09843177995633512,
+        "chance_out": 0.015625,
+        "collision_out": 6.299633917205448,
+        "mean_cos2_principal_angles_in": 0.08168696612119675,
+        "mean_cos2_principal_angles_out": 0.1340905874967575,
+        "eff_rank": 16.907609939575195
+      }
+    },
+    {
+      "tensor": "model.layers.15.self_attn.v_proj.weight",
+      "block": 15,
+      "kind": "self_attn.v_proj",
+      "shape": [
+        1024,
+        1024
+      ],
+      "k": 32,
+      "norm_dTitan": 0.04522915557026863,
+      "norm_dSparse": 0.038011398166418076,
+      "norm_dOpallo": 0.07845979183912277,
+      "eff_rank_dOpallo": 15.419271469116211,
+      "dTitan": {
+        "elementwise_cos": 0.017699471074562764,
+        "energy_in_B_rowspace": 0.17138220341704133,
+        "chance_in": 0.03125,
+        "collision_in": 5.4842305093453225,
+        "energy_in_B_colspace": 0.05774727725354141,
+        "chance_out": 0.03125,
+        "collision_out": 1.8479128721133251,
+        "mean_cos2_principal_angles_in": 0.10332450270652771,
+        "mean_cos2_principal_angles_out": 0.05630213022232056,
+        "eff_rank": 16.878170013427734
+      },
+      "dSparse": {
+        "elementwise_cos": 0.01125110926913509,
+        "energy_in_B_rowspace": 0.12761454341335154,
+        "chance_in": 0.03125,
+        "collision_in": 4.083665389227249,
+        "energy_in_B_colspace": 0.048109781452254384,
+        "chance_out": 0.03125,
+        "collision_out": 1.5395130064721403,
+        "mean_cos2_principal_angles_in": 0.09795651584863663,
+        "mean_cos2_principal_angles_out": 0.054108962416648865,
+        "eff_rank": 18.0306339263916
+      }
+    },
+    {
+      "tensor": "model.layers.16.mlp.down_proj.weight",
+      "block": 16,
+      "kind": "mlp.down_proj",
+      "shape": [
+        1024,
+        3072
+      ],
+      "k": 32,
+      "norm_dTitan": 0.07947037369012833,
+      "norm_dSparse": 0.06662198156118393,
+      "norm_dOpallo": 0.13880108296871185,
+      "eff_rank_dOpallo": 20.290210723876953,
+      "dTitan": {
+        "elementwise_cos": 0.004151903151472296,
+        "energy_in_B_rowspace": 0.08640346119877745,
+        "chance_in": 0.010416666666666666,
+        "collision_in": 8.294732275082636,
+        "energy_in_B_colspace": 0.04758659481885018,
+        "chance_out": 0.03125,
+        "collision_out": 1.5227710342032057,
+        "mean_cos2_principal_angles_in": 0.056526243686676025,
+        "mean_cos2_principal_angles_out": 0.04535980895161629,
+        "eff_rank": 19.319204330444336
+      },
+      "dSparse": {
+        "elementwise_cos": 0.004201527045704129,
+        "energy_in_B_rowspace": 0.061808794651629806,
+        "chance_in": 0.010416666666666666,
+        "collision_in": 5.933644286556461,
+        "energy_in_B_colspace": 0.042343422877672454,
+        "chance_out": 0.03125,
+        "collision_out": 1.3549895320855185,
+        "mean_cos2_principal_angles_in": 0.05488920211791992,
+        "mean_cos2_principal_angles_out": 0.04509585350751877,
+        "eff_rank": 20.336809158325195
+      }
+    },
+    {
+      "tensor": "model.layers.16.mlp.gate_proj.weight",
+      "block": 16,
+      "kind": "mlp.gate_proj",
+      "shape": [
+        3072,
+        1024
+      ],
+      "k": 32,
+      "norm_dTitan": 0.08136526495218277,
+      "norm_dSparse": 0.06814306229352951,
+      "norm_dOpallo": 0.13567756116390228,
+      "eff_rank_dOpallo": 19.079120635986328,
+      "dTitan": {
+        "elementwise_cos": 0.004491186949551026,
+        "energy_in_B_rowspace": 0.13545190252389763,
+        "chance_in": 0.03125,
+        "collision_in": 4.334460880764724,
+        "energy_in_B_colspace": 0.011358331904829832,
+        "chance_out": 0.010416666666666666,
+        "collision_out": 1.090399862863664,
+        "mean_cos2_principal_angles_in": 0.1041727364063263,
+        "mean_cos2_principal_angles_out": 0.011139007285237312,
+        "eff_rank": 18.23785972595215
+      },
+      "dSparse": {
+        "elementwise_cos": 0.004161307336644197,
+        "energy_in_B_rowspace": 0.10576444605311305,
+        "chance_in": 0.03125,
+        "collision_in": 3.3844622736996177,
+        "energy_in_B_colspace": 0.011051935178617201,
+        "chance_out": 0.010416666666666666,
+        "collision_out": 1.0609857771472515,
+        "mean_cos2_principal_angles_in": 0.1052546501159668,
+        "mean_cos2_principal_angles_out": 0.011168328113853931,
+        "eff_rank": 18.84738540649414
+      }
+    },
+    {
+      "tensor": "model.layers.16.mlp.up_proj.weight",
+      "block": 16,
+      "kind": "mlp.up_proj",
+      "shape": [
+        3072,
+        1024
+      ],
+      "k": 32,
+      "norm_dTitan": 0.08012782037258148,
+      "norm_dSparse": 0.06723056733608246,
+      "norm_dOpallo": 0.13852503895759583,
+      "eff_rank_dOpallo": 18.897790908813477,
+      "dTitan": {
+        "elementwise_cos": 0.002807487483109948,
+        "energy_in_B_rowspace": 0.13588501633876604,
+        "chance_in": 0.03125,
+        "collision_in": 4.348320522840513,
+        "energy_in_B_colspace": 0.018063791740387452,
+        "chance_out": 0.010416666666666666,
+        "collision_out": 1.7341240070771955,
+        "mean_cos2_principal_angles_in": 0.10256535559892654,
+        "mean_cos2_principal_angles_out": 0.018242107704281807,
+        "eff_rank": 18.181150436401367
+      },
+      "dSparse": {
+        "elementwise_cos": 0.001965555559238231,
+        "energy_in_B_rowspace": 0.10563591540608042,
+        "chance_in": 0.03125,
+        "collision_in": 3.3803492929945733,
+        "energy_in_B_colspace": 0.01535217303282986,
+        "chance_out": 0.010416666666666666,
+        "collision_out": 1.4738086111516666,
+        "mean_cos2_principal_angles_in": 0.09879453480243683,
+        "mean_cos2_principal_angles_out": 0.017689086496829987,
+        "eff_rank": 18.935136795043945
+      }
+    },
+    {
+      "tensor": "model.layers.16.self_attn.k_proj.weight",
+      "block": 16,
+      "kind": "self_attn.k_proj",
+      "shape": [
+        1024,
+        1024
+      ],
+      "k": 32,
+      "norm_dTitan": 0.047552838921546936,
+      "norm_dSparse": 0.03999743238091469,
+      "norm_dOpallo": 0.0705597996711731,
+      "eff_rank_dOpallo": 19.712322235107422,
+      "dTitan": {
+        "elementwise_cos": -0.0005215520371429222,
+        "energy_in_B_rowspace": 0.10761855761504671,
+        "chance_in": 0.03125,
+        "collision_in": 3.4437938436814948,
+        "energy_in_B_colspace": 0.11623371884997556,
+        "chance_out": 0.03125,
+        "collision_out": 3.719479003199218,
+        "mean_cos2_principal_angles_in": 0.09891384840011597,
+        "mean_cos2_principal_angles_out": 0.11047062277793884,
+        "eff_rank": 22.116722106933594
+      },
+      "dSparse": {
+        "elementwise_cos": -0.0004455677221749442,
+        "energy_in_B_rowspace": 0.0863622205269987,
+        "chance_in": 0.03125,
+        "collision_in": 2.7635910568639583,
+        "energy_in_B_colspace": 0.09213964420023397,
+        "chance_out": 0.03125,
+        "collision_out": 2.948468614407487,
+        "mean_cos2_principal_angles_in": 0.09886645525693893,
+        "mean_cos2_principal_angles_out": 0.10680997371673584,
+        "eff_rank": 22.375751495361328
+      }
+    },
+    {
+      "tensor": "model.layers.16.self_attn.o_proj.weight",
+      "block": 16,
+      "kind": "self_attn.o_proj",
+      "shape": [
+        1024,
+        2048
+      ],
+      "k": 32,
+      "norm_dTitan": 0.06424582004547119,
+      "norm_dSparse": 0.054006729274988174,
+      "norm_dOpallo": 0.11047069728374481,
+      "eff_rank_dOpallo": 14.985349655151367,
+      "dTitan": {
+        "elementwise_cos": 0.008557375842833238,
+        "energy_in_B_rowspace": 0.15740524570802158,
+        "chance_in": 0.015625,
+        "collision_in": 10.073935725313381,
+        "energy_in_B_colspace": 0.04405285031150934,
+        "chance_out": 0.03125,
+        "collision_out": 1.4096912099682988,
+        "mean_cos2_principal_angles_in": 0.09182128310203552,
+        "mean_cos2_principal_angles_out": 0.044761136174201965,
+        "eff_rank": 16.354209899902344
+      },
+      "dSparse": {
+        "elementwise_cos": 0.007992970861357465,
+        "energy_in_B_rowspace": 0.11572647875093697,
+        "chance_in": 0.015625,
+        "collision_in": 7.406494640059966,
+        "energy_in_B_colspace": 0.04057970188412496,
+        "chance_out": 0.03125,
+        "collision_out": 1.2985504602919986,
+        "mean_cos2_principal_angles_in": 0.0900496393442154,
+        "mean_cos2_principal_angles_out": 0.043329302221536636,
+        "eff_rank": 17.581512451171875
+      }
+    },
+    {
+      "tensor": "model.layers.16.self_attn.q_proj.weight",
+      "block": 16,
+      "kind": "self_attn.q_proj",
+      "shape": [
+        2048,
+        1024
+      ],
+      "k": 32,
+      "norm_dTitan": 0.06883244961500168,
+      "norm_dSparse": 0.057577453553676605,
+      "norm_dOpallo": 0.10264678299427032,
+      "eff_rank_dOpallo": 18.707656860351562,
+      "dTitan": {
+        "elementwise_cos": 0.005754028114540705,
+        "energy_in_B_rowspace": 0.11198279767506775,
+        "chance_in": 0.03125,
+        "collision_in": 3.583449525602168,
+        "energy_in_B_colspace": 0.11970265384231679,
+        "chance_out": 0.015625,
+        "collision_out": 7.660969845908275,
+        "mean_cos2_principal_angles_in": 0.07619021087884903,
+        "mean_cos2_principal_angles_out": 0.11873633414506912,
+        "eff_rank": 16.765329360961914
+      },
+      "dSparse": {
+        "elementwise_cos": 0.006811104585932067,
+        "energy_in_B_rowspace": 0.08939376045711292,
+        "chance_in": 0.03125,
+        "collision_in": 2.8606003346276134,
+        "energy_in_B_colspace": 0.09467189675916471,
+        "chance_out": 0.015625,
+        "collision_out": 6.059001392586541,
+        "mean_cos2_principal_angles_in": 0.07454096525907516,
+        "mean_cos2_principal_angles_out": 0.1151994988322258,
+        "eff_rank": 17.72747039794922
+      }
+    },
+    {
+      "tensor": "model.layers.16.self_attn.v_proj.weight",
+      "block": 16,
+      "kind": "self_attn.v_proj",
+      "shape": [
+        1024,
+        1024
+      ],
+      "k": 32,
+      "norm_dTitan": 0.04475310072302818,
+      "norm_dSparse": 0.03778209909796715,
+      "norm_dOpallo": 0.0764993354678154,
+      "eff_rank_dOpallo": 14.880200386047363,
+      "dTitan": {
+        "elementwise_cos": 0.007002464593644077,
+        "energy_in_B_rowspace": 0.14640286905649888,
+        "chance_in": 0.03125,
+        "collision_in": 4.684891809807964,
+        "energy_in_B_colspace": 0.046574116867418275,
+        "chance_out": 0.03125,
+        "collision_out": 1.4903717397573848,
+        "mean_cos2_principal_angles_in": 0.11126754432916641,
+        "mean_cos2_principal_angles_out": 0.04550830274820328,
+        "eff_rank": 18.698991775512695
+      },
+      "dSparse": {
+        "elementwise_cos": 0.0071771324555157424,
+        "energy_in_B_rowspace": 0.11170674472059958,
+        "chance_in": 0.03125,
+        "collision_in": 3.5746158310591865,
+        "energy_in_B_colspace": 0.04070390812836372,
+        "chance_out": 0.03125,
+        "collision_out": 1.302525060107639,
+        "mean_cos2_principal_angles_in": 0.107127845287323,
+        "mean_cos2_principal_angles_out": 0.0421525314450264,
+        "eff_rank": 19.708171844482422
+      }
+    },
+    {
+      "tensor": "model.layers.17.mlp.down_proj.weight",
+      "block": 17,
+      "kind": "mlp.down_proj",
+      "shape": [
+        1024,
+        3072
+      ],
+      "k": 32,
+      "norm_dTitan": 0.07976128906011581,
+      "norm_dSparse": 0.06674234569072723,
+      "norm_dOpallo": 0.1398342400789261,
+      "eff_rank_dOpallo": 20.14991569519043,
+      "dTitan": {
+        "elementwise_cos": 0.001031347860608851,
+        "energy_in_B_rowspace": 0.08669219711094171,
+        "chance_in": 0.010416666666666666,
+        "collision_in": 8.322450922650406,
+        "energy_in_B_colspace": 0.04319001732356427,
+        "chance_out": 0.03125,
+        "collision_out": 1.3820805543540566,
+        "mean_cos2_principal_angles_in": 0.04734305292367935,
+        "mean_cos2_principal_angles_out": 0.04455749690532684,
+        "eff_rank": 16.47480583190918
+      },
+      "dSparse": {
+        "elementwise_cos": 0.0002656533642792242,
+        "energy_in_B_rowspace": 0.06240376499619355,
+        "chance_in": 0.010416666666666666,
+        "collision_in": 5.990761439634581,
+        "energy_in_B_colspace": 0.039251268178148356,
+        "chance_out": 0.03125,
+        "collision_out": 1.2560405817007474,
+        "mean_cos2_principal_angles_in": 0.04650770127773285,
+        "mean_cos2_principal_angles_out": 0.04428144544363022,
+        "eff_rank": 17.791950225830078
+      }
+    },
+    {
+      "tensor": "model.layers.17.mlp.gate_proj.weight",
+      "block": 17,
+      "kind": "mlp.gate_proj",
+      "shape": [
+        3072,
+        1024
+      ],
+      "k": 32,
+      "norm_dTitan": 0.08215376734733582,
+      "norm_dSparse": 0.06852308660745621,
+      "norm_dOpallo": 0.13728366792201996,
+      "eff_rank_dOpallo": 19.29743003845215,
+      "dTitan": {
+        "elementwise_cos": 0.004331644299673923,
+        "energy_in_B_rowspace": 0.13680055236728034,
+        "chance_in": 0.03125,
+        "collision_in": 4.377617675752971,
+        "energy_in_B_colspace": 0.012940174519392148,
+        "chance_out": 0.010416666666666666,
+        "collision_out": 1.2422567538616462,
+        "mean_cos2_principal_angles_in": 0.09398369491100311,
+        "mean_cos2_principal_angles_out": 0.011291341856122017,
+        "eff_rank": 16.403963088989258
+      },
+      "dSparse": {
+        "elementwise_cos": 0.003299057467032962,
+        "energy_in_B_rowspace": 0.10691096013644381,
+        "chance_in": 0.03125,
+        "collision_in": 3.421150724366202,
+        "energy_in_B_colspace": 0.011907302491851004,
+        "chance_out": 0.010416666666666666,
+        "collision_out": 1.1431010392176966,
+        "mean_cos2_principal_angles_in": 0.09358881413936615,
+        "mean_cos2_principal_angles_out": 0.011362125165760517,
+        "eff_rank": 17.237625122070312
+      }
+    },
+    {
+      "tensor": "model.layers.17.mlp.up_proj.weight",
+      "block": 17,
+      "kind": "mlp.up_proj",
+      "shape": [
+        3072,
+        1024
+      ],
+      "k": 32,
+      "norm_dTitan": 0.07983632385730743,
+      "norm_dSparse": 0.06682233512401581,
+      "norm_dOpallo": 0.13946525752544403,
+      "eff_rank_dOpallo": 19.1798152923584,
+      "dTitan": {
+        "elementwise_cos": 0.0038451864794808517,
+        "energy_in_B_rowspace": 0.13103941068523048,
+        "chance_in": 0.03125,
+        "collision_in": 4.193261141927375,
+        "energy_in_B_colspace": 0.01736405310463068,
+        "chance_out": 0.010416666666666666,
+        "collision_out": 1.6669490980445454,
+        "mean_cos2_principal_angles_in": 0.09208595007658005,
+        "mean_cos2_principal_angles_out": 0.016537614166736603,
+        "eff_rank": 16.84872055053711
+      },
+      "dSparse": {
+        "elementwise_cos": 0.003623352347207527,
+        "energy_in_B_rowspace": 0.10013577704023922,
+        "chance_in": 0.03125,
+        "collision_in": 3.204344865287655,
+        "energy_in_B_colspace": 0.0150224660304573,
+        "chance_out": 0.010416666666666666,
+        "collision_out": 1.442156738923901,
+        "mean_cos2_principal_angles_in": 0.09061688929796219,
+        "mean_cos2_principal_angles_out": 0.015799466520547867,
+        "eff_rank": 18.072967529296875
+      }
+    },
+    {
+      "tensor": "model.layers.17.self_attn.k_proj.weight",
+      "block": 17,
+      "kind": "self_attn.k_proj",
+      "shape": [
+        1024,
+        1024
+      ],
+      "k": 32,
+      "norm_dTitan": 0.04776106774806976,
+      "norm_dSparse": 0.04004065319895744,
+      "norm_dOpallo": 0.07245035469532013,
+      "eff_rank_dOpallo": 19.834945678710938,
+      "dTitan": {
+        "elementwise_cos": 0.0029248337216902605,
+        "energy_in_B_rowspace": 0.09677830870626247,
+        "chance_in": 0.03125,
+        "collision_in": 3.096905878600399,
+        "energy_in_B_colspace": 0.12772453364222547,
+        "chance_out": 0.03125,
+        "collision_out": 4.087185076551215,
+        "mean_cos2_principal_angles_in": 0.09594857692718506,
+        "mean_cos2_principal_angles_out": 0.11863575875759125,
+        "eff_rank": 22.35561752319336
+      },
+      "dSparse": {
+        "elementwise_cos": 0.0022208319819265786,
+        "energy_in_B_rowspace": 0.07503644746510657,
+        "chance_in": 0.03125,
+        "collision_in": 2.4011663188834103,
+        "energy_in_B_colspace": 0.1004164644024562,
+        "chance_out": 0.03125,
+        "collision_out": 3.2133268608785985,
+        "mean_cos2_principal_angles_in": 0.08705510944128036,
+        "mean_cos2_principal_angles_out": 0.11604604125022888,
+        "eff_rank": 22.97344207763672
+      }
+    },
+    {
+      "tensor": "model.layers.17.self_attn.o_proj.weight",
+      "block": 17,
+      "kind": "self_attn.o_proj",
+      "shape": [
+        1024,
+        2048
+      ],
+      "k": 32,
+      "norm_dTitan": 0.06521715968847275,
+      "norm_dSparse": 0.05468509718775749,
+      "norm_dOpallo": 0.11118680238723755,
+      "eff_rank_dOpallo": 14.585198402404785,
+      "dTitan": {
+        "elementwise_cos": 0.0057726267615423954,
+        "energy_in_B_rowspace": 0.16339261002207758,
+        "chance_in": 0.015625,
+        "collision_in": 10.457127041412965,
+        "energy_in_B_colspace": 0.04696121095315742,
+        "chance_out": 0.03125,
+        "collision_out": 1.5027587505010374,
+        "mean_cos2_principal_angles_in": 0.09116818010807037,
+        "mean_cos2_principal_angles_out": 0.0434889979660511,
+        "eff_rank": 13.079007148742676
+      },
+      "dSparse": {
+        "elementwise_cos": 0.004882985455597984,
+        "energy_in_B_rowspace": 0.11922712483319056,
+        "chance_in": 0.015625,
+        "collision_in": 7.630535989324196,
+        "energy_in_B_colspace": 0.042870645237080354,
+        "chance_out": 0.03125,
+        "collision_out": 1.3718606475865713,
+        "mean_cos2_principal_angles_in": 0.08611978590488434,
+        "mean_cos2_principal_angles_out": 0.0427294597029686,
+        "eff_rank": 14.593327522277832
+      }
+    },
+    {
+      "tensor": "model.layers.17.self_attn.q_proj.weight",
+      "block": 17,
+      "kind": "self_attn.q_proj",
+      "shape": [
+        2048,
+        1024
+      ],
+      "k": 32,
+      "norm_dTitan": 0.06704484671354294,
+      "norm_dSparse": 0.056217413395643234,
+      "norm_dOpallo": 0.10322438180446625,
+      "eff_rank_dOpallo": 20.04013442993164,
+      "dTitan": {
+        "elementwise_cos": -0.0007653677720443813,
+        "energy_in_B_rowspace": 0.12421968177041978,
+        "chance_in": 0.03125,
+        "collision_in": 3.975029816653433,
+        "energy_in_B_colspace": 0.09366829837995023,
+        "chance_out": 0.015625,
+        "collision_out": 5.994771096316815,
+        "mean_cos2_principal_angles_in": 0.07754144817590714,
+        "mean_cos2_principal_angles_out": 0.11020597070455551,
+        "eff_rank": 14.713090896606445
+      },
+      "dSparse": {
+        "elementwise_cos": -0.00010336720225668319,
+        "energy_in_B_rowspace": 0.10025113322153648,
+        "chance_in": 0.03125,
+        "collision_in": 3.2080362630891672,
+        "energy_in_B_colspace": 0.07042441109981716,
+        "chance_out": 0.015625,
+        "collision_out": 4.507162310388298,
+        "mean_cos2_principal_angles_in": 0.07157361507415771,
+        "mean_cos2_principal_angles_out": 0.10587698221206665,
+        "eff_rank": 15.31816577911377
+      }
+    },
+    {
+      "tensor": "model.layers.17.self_attn.v_proj.weight",
+      "block": 17,
+      "kind": "self_attn.v_proj",
+      "shape": [
+        1024,
+        1024
+      ],
+      "k": 32,
+      "norm_dTitan": 0.04528364911675453,
+      "norm_dSparse": 0.038058098405599594,
+      "norm_dOpallo": 0.07875455915927887,
+      "eff_rank_dOpallo": 15.079776763916016,
+      "dTitan": {
+        "elementwise_cos": 0.007956351661704861,
+        "energy_in_B_rowspace": 0.16578851315728313,
+        "chance_in": 0.03125,
+        "collision_in": 5.30523242103306,
+        "energy_in_B_colspace": 0.05626467993163022,
+        "chance_out": 0.03125,
+        "collision_out": 1.8004697578121671,
+        "mean_cos2_principal_angles_in": 0.1082032322883606,
+        "mean_cos2_principal_angles_out": 0.05302359163761139,
+        "eff_rank": 17.734745025634766
+      },
+      "dSparse": {
+        "elementwise_cos": 0.007815893047617628,
+        "energy_in_B_rowspace": 0.12438525192579736,
+        "chance_in": 0.03125,
+        "collision_in": 3.9803280616255154,
+        "energy_in_B_colspace": 0.049901080025590315,
+        "chance_out": 0.03125,
+        "collision_out": 1.59683456081889,
+        "mean_cos2_principal_angles_in": 0.10491886734962463,
+        "mean_cos2_principal_angles_out": 0.05111902579665184,
+        "eff_rank": 18.904071807861328
+      }
+    },
+    {
+      "tensor": "model.layers.18.mlp.down_proj.weight",
+      "block": 18,
+      "kind": "mlp.down_proj",
+      "shape": [
+        1024,
+        3072
+      ],
+      "k": 32,
+      "norm_dTitan": 0.08122043311595917,
+      "norm_dSparse": 0.06791452318429947,
+      "norm_dOpallo": 0.14206619560718536,
+      "eff_rank_dOpallo": 20.7142391204834,
+      "dTitan": {
+        "elementwise_cos": -0.0001886766525414095,
+        "energy_in_B_rowspace": 0.08131331871425822,
+        "chance_in": 0.010416666666666666,
+        "collision_in": 7.806078596568789,
+        "energy_in_B_colspace": 0.04422987429129632,
+        "chance_out": 0.03125,
+        "collision_out": 1.4153559773214823,
+        "mean_cos2_principal_angles_in": 0.04229920357465744,
+        "mean_cos2_principal_angles_out": 0.04515005275607109,
+        "eff_rank": 15.95642375946045
+      },
+      "dSparse": {
+        "elementwise_cos": 0.00021100781809329686,
+        "energy_in_B_rowspace": 0.059195541028943845,
+        "chance_in": 0.010416666666666666,
+        "collision_in": 5.682771938778609,
+        "energy_in_B_colspace": 0.03965543479263579,
+        "chance_out": 0.03125,
+        "collision_out": 1.2689739133643452,
+        "mean_cos2_principal_angles_in": 0.040717195719480515,
+        "mean_cos2_principal_angles_out": 0.045232851058244705,
+        "eff_rank": 16.912927627563477
+      }
+    },
+    {
+      "tensor": "model.layers.18.mlp.gate_proj.weight",
+      "block": 18,
+      "kind": "mlp.gate_proj",
+      "shape": [
+        3072,
+        1024
+      ],
+      "k": 32,
+      "norm_dTitan": 0.08389382064342499,
+      "norm_dSparse": 0.06990937888622284,
+      "norm_dOpallo": 0.13965930044651031,
+      "eff_rank_dOpallo": 19.58949851989746,
+      "dTitan": {
+        "elementwise_cos": -0.003197369810285045,
+        "energy_in_B_rowspace": 0.11822349681427739,
+        "chance_in": 0.03125,
+        "collision_in": 3.7831518980568766,
+        "energy_in_B_colspace": 0.011094492956775628,
+        "chance_out": 0.010416666666666666,
+        "collision_out": 1.0650713238504603,
+        "mean_cos2_principal_angles_in": 0.0823546051979065,
+        "mean_cos2_principal_angles_out": 0.011237070895731449,
+        "eff_rank": 16.304439544677734
+      },
+      "dSparse": {
+        "elementwise_cos": -0.0031775660503915045,
+        "energy_in_B_rowspace": 0.09538455497195213,
+        "chance_in": 0.03125,
+        "collision_in": 3.052305759102468,
+        "energy_in_B_colspace": 0.010929314702946875,
+        "chance_out": 0.010416666666666666,
+        "collision_out": 1.0492142114829002,
+        "mean_cos2_principal_angles_in": 0.08187492191791534,
+        "mean_cos2_principal_angles_out": 0.011188595555722713,
+        "eff_rank": 16.790546417236328
+      }
+    },
+    {
+      "tensor": "model.layers.18.mlp.up_proj.weight",
+      "block": 18,
+      "kind": "mlp.up_proj",
+      "shape": [
+        3072,
+        1024
+      ],
+      "k": 32,
+      "norm_dTitan": 0.08257894217967987,
+      "norm_dSparse": 0.06905116885900497,
+      "norm_dOpallo": 0.14149904251098633,
+      "eff_rank_dOpallo": 19.638521194458008,
+      "dTitan": {
+        "elementwise_cos": -0.0012522532600300522,
+        "energy_in_B_rowspace": 0.11248117959289193,
+        "chance_in": 0.03125,
+        "collision_in": 3.599397746972542,
+        "energy_in_B_colspace": 0.016273692710633333,
+        "chance_out": 0.010416666666666666,
+        "collision_out": 1.5622745002208,
+        "mean_cos2_principal_angles_in": 0.0807090550661087,
+        "mean_cos2_principal_angles_out": 0.014778796583414078,
+        "eff_rank": 16.20697021484375
+      },
+      "dSparse": {
+        "elementwise_cos": -0.0009419342508398637,
+        "energy_in_B_rowspace": 0.08972597352261476,
+        "chance_in": 0.03125,
+        "collision_in": 2.8712311527236722,
+        "energy_in_B_colspace": 0.014800115907775769,
+        "chance_out": 0.010416666666666666,
+        "collision_out": 1.4208111271464738,
+        "mean_cos2_principal_angles_in": 0.07813157141208649,
+        "mean_cos2_principal_angles_out": 0.014873283915221691,
+        "eff_rank": 16.8829288482666
+      }
+    },
+    {
+      "tensor": "model.layers.18.self_attn.k_proj.weight",
+      "block": 18,
+      "kind": "self_attn.k_proj",
+      "shape": [
+        1024,
+        1024
+      ],
+      "k": 32,
+      "norm_dTitan": 0.04708945006132126,
+      "norm_dSparse": 0.039589572697877884,
+      "norm_dOpallo": 0.07497819513082504,
+      "eff_rank_dOpallo": 18.78882598876953,
+      "dTitan": {
+        "elementwise_cos": -0.008273268958469917,
+        "energy_in_B_rowspace": 0.100134208321942,
+        "chance_in": 0.03125,
+        "collision_in": 3.204294666302144,
+        "energy_in_B_colspace": 0.1368935085442755,
+        "chance_out": 0.03125,
+        "collision_out": 4.380592273416816,
+        "mean_cos2_principal_angles_in": 0.09692218899726868,
+        "mean_cos2_principal_angles_out": 0.12493100762367249,
+        "eff_rank": 19.33379364013672
+      },
+      "dSparse": {
+        "elementwise_cos": -0.007836201673531083,
+        "energy_in_B_rowspace": 0.08309114025639927,
+        "chance_in": 0.03125,
+        "collision_in": 2.6589164882047767,
+        "energy_in_B_colspace": 0.10902590242215394,
+        "chance_out": 0.03125,
+        "collision_out": 3.4888288775089262,
+        "mean_cos2_principal_angles_in": 0.08798114210367203,
+        "mean_cos2_principal_angles_out": 0.12021669000387192,
+        "eff_rank": 19.478300094604492
+      }
+    },
+    {
+      "tensor": "model.layers.18.self_attn.o_proj.weight",
+      "block": 18,
+      "kind": "self_attn.o_proj",
+      "shape": [
+        1024,
+        2048
+      ],
+      "k": 32,
+      "norm_dTitan": 0.06436982750892639,
+      "norm_dSparse": 0.05414654314517975,
+      "norm_dOpallo": 0.11343665421009064,
+      "eff_rank_dOpallo": 15.109798431396484,
+      "dTitan": {
+        "elementwise_cos": 0.0002911859560560794,
+        "energy_in_B_rowspace": 0.1133006971730874,
+        "chance_in": 0.015625,
+        "collision_in": 7.251244619077593,
+        "energy_in_B_colspace": 0.03954291790672655,
+        "chance_out": 0.03125,
+        "collision_out": 1.2653733730152497,
+        "mean_cos2_principal_angles_in": 0.07423919439315796,
+        "mean_cos2_principal_angles_out": 0.040365125983953476,
+        "eff_rank": 14.152764320373535
+      },
+      "dSparse": {
+        "elementwise_cos": 0.0010674630908907156,
+        "energy_in_B_rowspace": 0.08569730181000483,
+        "chance_in": 0.015625,
+        "collision_in": 5.484627315840309,
+        "energy_in_B_colspace": 0.03655604579881543,
+        "chance_out": 0.03125,
+        "collision_out": 1.1697934655620938,
+        "mean_cos2_principal_angles_in": 0.06899935752153397,
+        "mean_cos2_principal_angles_out": 0.039416003972291946,
+        "eff_rank": 15.107464790344238
+      }
+    },
+    {
+      "tensor": "model.layers.18.self_attn.q_proj.weight",
+      "block": 18,
+      "kind": "self_attn.q_proj",
+      "shape": [
+        2048,
+        1024
+      ],
+      "k": 32,
+      "norm_dTitan": 0.06643588095903397,
+      "norm_dSparse": 0.05580158531665802,
+      "norm_dOpallo": 0.10735753178596497,
+      "eff_rank_dOpallo": 19.036781311035156,
+      "dTitan": {
+        "elementwise_cos": 0.0005113782659539003,
+        "energy_in_B_rowspace": 0.08332744762837924,
+        "chance_in": 0.03125,
+        "collision_in": 2.6664783241081356,
+        "energy_in_B_colspace": 0.1267398671440783,
+        "chance_out": 0.015625,
+        "collision_out": 8.111351497221012,
+        "mean_cos2_principal_angles_in": 0.06445638835430145,
+        "mean_cos2_principal_angles_out": 0.11428694427013397,
+        "eff_rank": 17.207780838012695
+      },
+      "dSparse": {
+        "elementwise_cos": 0.0008942735624047346,
+        "energy_in_B_rowspace": 0.06878585563464248,
+        "chance_in": 0.03125,
+        "collision_in": 2.2011473803085595,
+        "energy_in_B_colspace": 0.09911257860397883,
+        "chance_out": 0.015625,
+        "collision_out": 6.343205030654645,
+        "mean_cos2_principal_angles_in": 0.06166917458176613,
+        "mean_cos2_principal_angles_out": 0.11506078392267227,
+        "eff_rank": 18.179100036621094
+      }
+    },
+    {
+      "tensor": "model.layers.18.self_attn.v_proj.weight",
+      "block": 18,
+      "kind": "self_attn.v_proj",
+      "shape": [
+        1024,
+        1024
+      ],
+      "k": 32,
+      "norm_dTitan": 0.04449194297194481,
+      "norm_dSparse": 0.03739466145634651,
+      "norm_dOpallo": 0.0806817039847374,
+      "eff_rank_dOpallo": 14.776337623596191,
+      "dTitan": {
+        "elementwise_cos": 0.002855679717551996,
+        "energy_in_B_rowspace": 0.12912255422186317,
+        "chance_in": 0.03125,
+        "collision_in": 4.131921735099621,
+        "energy_in_B_colspace": 0.050633794029395086,
+        "chance_out": 0.03125,
+        "collision_out": 1.6202814089406428,
+        "mean_cos2_principal_angles_in": 0.10674621909856796,
+        "mean_cos2_principal_angles_out": 0.0468200258910656,
+        "eff_rank": 15.240257263183594
+      },
+      "dSparse": {
+        "elementwise_cos": 0.0021214262566523106,
+        "energy_in_B_rowspace": 0.10236735954832801,
+        "chance_in": 0.03125,
+        "collision_in": 3.2757555055464964,
+        "energy_in_B_colspace": 0.043750899318873264,
+        "chance_out": 0.03125,
+        "collision_out": 1.4000287782039444,
+        "mean_cos2_principal_angles_in": 0.09914472699165344,
+        "mean_cos2_principal_angles_out": 0.045980215072631836,
+        "eff_rank": 16.377695083618164
+      }
+    },
+    {
+      "tensor": "model.layers.19.mlp.down_proj.weight",
+      "block": 19,
+      "kind": "mlp.down_proj",
+      "shape": [
+        1024,
+        3072
+      ],
+      "k": 32,
+      "norm_dTitan": 0.081806480884552,
+      "norm_dSparse": 0.06861996650695801,
+      "norm_dOpallo": 0.141781747341156,
+      "eff_rank_dOpallo": 20.86017417907715,
+      "dTitan": {
+        "elementwise_cos": -0.0006762758408850064,
+        "energy_in_B_rowspace": 0.06276926927139774,
+        "chance_in": 0.010416666666666666,
+        "collision_in": 6.0258498500541835,
+        "energy_in_B_colspace": 0.04463791549514849,
+        "chance_out": 0.03125,
+        "collision_out": 1.4284132958447517,
+        "mean_cos2_principal_angles_in": 0.03797610476613045,
+        "mean_cos2_principal_angles_out": 0.04315831884741783,
+        "eff_rank": 17.967559814453125
+      },
+      "dSparse": {
+        "elementwise_cos": -0.0012002922311630762,
+        "energy_in_B_rowspace": 0.046630665307915785,
+        "chance_in": 0.010416666666666666,
+        "collision_in": 4.476543869559916,
+        "energy_in_B_colspace": 0.039631359089296186,
+        "chance_out": 0.03125,
+        "collision_out": 1.268203490857478,
+        "mean_cos2_principal_angles_in": 0.037075575441122055,
+        "mean_cos2_principal_angles_out": 0.04232971370220184,
+        "eff_rank": 18.62909698486328
+      }
+    },
+    {
+      "tensor": "model.layers.19.mlp.gate_proj.weight",
+      "block": 19,
+      "kind": "mlp.gate_proj",
+      "shape": [
+        3072,
+        1024
+      ],
+      "k": 32,
+      "norm_dTitan": 0.08444051444530487,
+      "norm_dSparse": 0.07047700881958008,
+      "norm_dOpallo": 0.13958163559436798,
+      "eff_rank_dOpallo": 19.86680793762207,
+      "dTitan": {
+        "elementwise_cos": 0.0017240540053947942,
+        "energy_in_B_rowspace": 0.0995293347107793,
+        "chance_in": 0.03125,
+        "collision_in": 3.1849387107449374,
+        "energy_in_B_colspace": 0.010092006295780699,
+        "chance_out": 0.010416666666666666,
+        "collision_out": 0.9688326043949471,
+        "mean_cos2_principal_angles_in": 0.0776665061712265,
+        "mean_cos2_principal_angles_out": 0.011247381567955017,
+        "eff_rank": 17.532588958740234
+      },
+      "dSparse": {
+        "elementwise_cos": 0.0014161747007150902,
+        "energy_in_B_rowspace": 0.08097917292450142,
+        "chance_in": 0.03125,
+        "collision_in": 2.5913335335840455,
+        "energy_in_B_colspace": 0.010311860860011908,
+        "chance_out": 0.010416666666666666,
+        "collision_out": 0.9899386425611432,
+        "mean_cos2_principal_angles_in": 0.07773978263139725,
+        "mean_cos2_principal_angles_out": 0.011368658393621445,
+        "eff_rank": 17.835023880004883
+      }
+    },
+    {
+      "tensor": "model.layers.19.mlp.up_proj.weight",
+      "block": 19,
+      "kind": "mlp.up_proj",
+      "shape": [
+        3072,
+        1024
+      ],
+      "k": 32,
+      "norm_dTitan": 0.08344486355781555,
+      "norm_dSparse": 0.06976344436407089,
+      "norm_dOpallo": 0.1418626755475998,
+      "eff_rank_dOpallo": 19.79542350769043,
+      "dTitan": {
+        "elementwise_cos": 0.0013162142115309453,
+        "energy_in_B_rowspace": 0.0903726206406958,
+        "chance_in": 0.03125,
+        "collision_in": 2.8919238605022657,
+        "energy_in_B_colspace": 0.014212371541998997,
+        "chance_out": 0.010416666666666666,
+        "collision_out": 1.3643876680319038,
+        "mean_cos2_principal_angles_in": 0.07466621696949005,
+        "mean_cos2_principal_angles_out": 0.014255188405513763,
+        "eff_rank": 17.786731719970703
+      },
+      "dSparse": {
+        "elementwise_cos": 0.0015337229265893653,
+        "energy_in_B_rowspace": 0.07259538173366659,
+        "chance_in": 0.03125,
+        "collision_in": 2.3230522154773308,
+        "energy_in_B_colspace": 0.012713972848034735,
+        "chance_out": 0.010416666666666666,
+        "collision_out": 1.2205413934113347,
+        "mean_cos2_principal_angles_in": 0.0731063038110733,
+        "mean_cos2_principal_angles_out": 0.013988124206662178,
+        "eff_rank": 18.483388900756836
+      }
+    },
+    {
+      "tensor": "model.layers.19.self_attn.k_proj.weight",
+      "block": 19,
+      "kind": "self_attn.k_proj",
+      "shape": [
+        1024,
+        1024
+      ],
+      "k": 32,
+      "norm_dTitan": 0.047747835516929626,
+      "norm_dSparse": 0.039513394236564636,
+      "norm_dOpallo": 0.07521647959947586,
+      "eff_rank_dOpallo": 20.611494064331055,
+      "dTitan": {
+        "elementwise_cos": -0.0019125995793531376,
+        "energy_in_B_rowspace": 0.07651858608402246,
+        "chance_in": 0.03125,
+        "collision_in": 2.4485947546887186,
+        "energy_in_B_colspace": 0.11986875550290937,
+        "chance_out": 0.03125,
+        "collision_out": 3.8358001760931,
+        "mean_cos2_principal_angles_in": 0.07306978106498718,
+        "mean_cos2_principal_angles_out": 0.10522785037755966,
+        "eff_rank": 18.45181655883789
+      },
+      "dSparse": {
+        "elementwise_cos": -0.002402244111158127,
+        "energy_in_B_rowspace": 0.06575434697451249,
+        "chance_in": 0.03125,
+        "collision_in": 2.1041391031843997,
+        "energy_in_B_colspace": 0.0969191137658857,
+        "chance_out": 0.03125,
+        "collision_out": 3.1014116405083425,
+        "mean_cos2_principal_angles_in": 0.07326601445674896,
+        "mean_cos2_principal_angles_out": 0.102171391248703,
+        "eff_rank": 18.194528579711914
+      }
+    },
+    {
+      "tensor": "model.layers.19.self_attn.o_proj.weight",
+      "block": 19,
+      "kind": "self_attn.o_proj",
+      "shape": [
+        1024,
+        2048
+      ],
+      "k": 32,
+      "norm_dTitan": 0.06606851518154144,
+      "norm_dSparse": 0.055360134690999985,
+      "norm_dOpallo": 0.11211640387773514,
+      "eff_rank_dOpallo": 15.354902267456055,
+      "dTitan": {
+        "elementwise_cos": 0.00029709600829692115,
+        "energy_in_B_rowspace": 0.10306912942672744,
+        "chance_in": 0.015625,
+        "collision_in": 6.596424283310556,
+        "energy_in_B_colspace": 0.046961270108004424,
+        "chance_out": 0.03125,
+        "collision_out": 1.5027606434561416,
+        "mean_cos2_principal_angles_in": 0.060832541435956955,
+        "mean_cos2_principal_angles_out": 0.04440324753522873,
+        "eff_rank": 14.355406761169434
+      },
+      "dSparse": {
+        "elementwise_cos": -4.5677677453172766e-05,
+        "energy_in_B_rowspace": 0.07795100171074369,
+        "chance_in": 0.015625,
+        "collision_in": 4.988864109487596,
+        "energy_in_B_colspace": 0.04079443408872283,
+        "chance_out": 0.03125,
+        "collision_out": 1.3054218908391306,
+        "mean_cos2_principal_angles_in": 0.058310456573963165,
+        "mean_cos2_principal_angles_out": 0.04296893626451492,
+        "eff_rank": 15.52209186553955
+      }
+    },
+    {
+      "tensor": "model.layers.19.self_attn.q_proj.weight",
+      "block": 19,
+      "kind": "self_attn.q_proj",
+      "shape": [
+        2048,
+        1024
+      ],
+      "k": 32,
+      "norm_dTitan": 0.06737111508846283,
+      "norm_dSparse": 0.056185413151979446,
+      "norm_dOpallo": 0.10812915861606598,
+      "eff_rank_dOpallo": 20.023731231689453,
+      "dTitan": {
+        "elementwise_cos": -0.008345973973631994,
+        "energy_in_B_rowspace": 0.09436290647248795,
+        "chance_in": 0.03125,
+        "collision_in": 3.0196130071196143,
+        "energy_in_B_colspace": 0.1015670194651439,
+        "chance_out": 0.015625,
+        "collision_out": 6.50028924576921,
+        "mean_cos2_principal_angles_in": 0.05951662361621857,
+        "mean_cos2_principal_angles_out": 0.09585987031459808,
+        "eff_rank": 15.649779319763184
+      },
+      "dSparse": {
+        "elementwise_cos": -0.007966685756781345,
+        "energy_in_B_rowspace": 0.07579916308554786,
+        "chance_in": 0.03125,
+        "collision_in": 2.4255732187375316,
+        "energy_in_B_colspace": 0.08191170680761974,
+        "chance_out": 0.015625,
+        "collision_out": 5.242349235687663,
+        "mean_cos2_principal_angles_in": 0.05671669915318489,
+        "mean_cos2_principal_angles_out": 0.09513150155544281,
+        "eff_rank": 16.398540496826172
+      }
+    },
+    {
+      "tensor": "model.layers.19.self_attn.v_proj.weight",
+      "block": 19,
+      "kind": "self_attn.v_proj",
+      "shape": [
+        1024,
+        1024
+      ],
+      "k": 32,
+      "norm_dTitan": 0.047175683081150055,
+      "norm_dSparse": 0.03932423144578934,
+      "norm_dOpallo": 0.08173935115337372,
+      "eff_rank_dOpallo": 14.707833290100098,
+      "dTitan": {
+        "elementwise_cos": 0.0008324140867900233,
+        "energy_in_B_rowspace": 0.12038059113128347,
+        "chance_in": 0.03125,
+        "collision_in": 3.852178916201071,
+        "energy_in_B_colspace": 0.043421352268115235,
+        "chance_out": 0.03125,
+        "collision_out": 1.3894832725796875,
+        "mean_cos2_principal_angles_in": 0.0823180079460144,
+        "mean_cos2_principal_angles_out": 0.03992350772023201,
+        "eff_rank": 14.296525001525879
+      },
+      "dSparse": {
+        "elementwise_cos": 0.0004043574582010533,
+        "energy_in_B_rowspace": 0.09627199787858312,
+        "chance_in": 0.03125,
+        "collision_in": 3.08070393211466,
+        "energy_in_B_colspace": 0.03821576398776931,
+        "chance_out": 0.03125,
+        "collision_out": 1.222904447608618,
+        "mean_cos2_principal_angles_in": 0.0748157873749733,
+        "mean_cos2_principal_angles_out": 0.03833280876278877,
+        "eff_rank": 15.334689140319824
+      }
+    },
+    {
+      "tensor": "model.layers.20.mlp.down_proj.weight",
+      "block": 20,
+      "kind": "mlp.down_proj",
+      "shape": [
+        1024,
+        3072
+      ],
+      "k": 32,
+      "norm_dTitan": 0.08274788409471512,
+      "norm_dSparse": 0.06924986839294434,
+      "norm_dOpallo": 0.1422111541032791,
+      "eff_rank_dOpallo": 20.501867294311523,
+      "dTitan": {
+        "elementwise_cos": 0.0016533641965217373,
+        "energy_in_B_rowspace": 0.04762283367680023,
+        "chance_in": 0.010416666666666666,
+        "collision_in": 4.571792032972822,
+        "energy_in_B_colspace": 0.0571690950288738,
+        "chance_out": 0.03125,
+        "collision_out": 1.8294110409239617,
+        "mean_cos2_principal_angles_in": 0.033030446618795395,
+        "mean_cos2_principal_angles_out": 0.04950062185525894,
+        "eff_rank": 18.789579391479492
+      },
+      "dSparse": {
+        "elementwise_cos": 0.0012176877132302772,
+        "energy_in_B_rowspace": 0.03535445803785807,
+        "chance_in": 0.010416666666666666,
+        "collision_in": 3.3940279716343746,
+        "energy_in_B_colspace": 0.04803740278602701,
+        "chance_out": 0.03125,
+        "collision_out": 1.5371968891528642,
+        "mean_cos2_principal_angles_in": 0.03145911172032356,
+        "mean_cos2_principal_angles_out": 0.04935688525438309,
+        "eff_rank": 19.454837799072266
+      }
+    },
+    {
+      "tensor": "model.layers.20.mlp.gate_proj.weight",
+      "block": 20,
+      "kind": "mlp.gate_proj",
+      "shape": [
+        3072,
+        1024
+      ],
+      "k": 32,
+      "norm_dTitan": 0.08463925868272781,
+      "norm_dSparse": 0.07058867067098618,
+      "norm_dOpallo": 0.13987495005130768,
+      "eff_rank_dOpallo": 20.113431930541992,
+      "dTitan": {
+        "elementwise_cos": 0.0014027941114506655,
+        "energy_in_B_rowspace": 0.0906156885349837,
+        "chance_in": 0.03125,
+        "collision_in": 2.8997020331194783,
+        "energy_in_B_colspace": 0.010005554284720311,
+        "chance_out": 0.010416666666666666,
+        "collision_out": 0.96053321133315,
+        "mean_cos2_principal_angles_in": 0.06618484854698181,
+        "mean_cos2_principal_angles_out": 0.010371891781687737,
+        "eff_rank": 17.334897994995117
+      },
+      "dSparse": {
+        "elementwise_cos": 0.002062192144704095,
+        "energy_in_B_rowspace": 0.07417293898622063,
+        "chance_in": 0.03125,
+        "collision_in": 2.37353404755906,
+        "energy_in_B_colspace": 0.010021631614137312,
+        "chance_out": 0.010416666666666666,
+        "collision_out": 0.962076634957182,
+        "mean_cos2_principal_angles_in": 0.06549904495477676,
+        "mean_cos2_principal_angles_out": 0.00977606512606144,
+        "eff_rank": 17.538148880004883
+      }
+    },
+    {
+      "tensor": "model.layers.20.mlp.up_proj.weight",
+      "block": 20,
+      "kind": "mlp.up_proj",
+      "shape": [
+        3072,
+        1024
+      ],
+      "k": 32,
+      "norm_dTitan": 0.08347097039222717,
+      "norm_dSparse": 0.06974504888057709,
+      "norm_dOpallo": 0.14266064763069153,
+      "eff_rank_dOpallo": 19.807405471801758,
+      "dTitan": {
+        "elementwise_cos": 0.0029909462317454353,
+        "energy_in_B_rowspace": 0.08117289923663606,
+        "chance_in": 0.03125,
+        "collision_in": 2.597532775572354,
+        "energy_in_B_colspace": 0.013556855873217396,
+        "chance_out": 0.010416666666666666,
+        "collision_out": 1.30145816382887,
+        "mean_cos2_principal_angles_in": 0.06779898703098297,
+        "mean_cos2_principal_angles_out": 0.013437053188681602,
+        "eff_rank": 17.816518783569336
+      },
+      "dSparse": {
+        "elementwise_cos": 0.003376033975317327,
+        "energy_in_B_rowspace": 0.06613567939319939,
+        "chance_in": 0.03125,
+        "collision_in": 2.1163417405823806,
+        "energy_in_B_colspace": 0.012936398674852738,
+        "chance_out": 0.010416666666666666,
+        "collision_out": 1.2418942727858628,
+        "mean_cos2_principal_angles_in": 0.06627286225557327,
+        "mean_cos2_principal_angles_out": 0.012839779257774353,
+        "eff_rank": 18.240394592285156
+      }
+    },
+    {
+      "tensor": "model.layers.20.self_attn.k_proj.weight",
+      "block": 20,
+      "kind": "self_attn.k_proj",
+      "shape": [
+        1024,
+        1024
+      ],
+      "k": 32,
+      "norm_dTitan": 0.04963603988289833,
+      "norm_dSparse": 0.041444458067417145,
+      "norm_dOpallo": 0.07654324173927307,
+      "eff_rank_dOpallo": 16.942163467407227,
+      "dTitan": {
+        "elementwise_cos": -0.004195528811605298,
+        "energy_in_B_rowspace": 0.09558013466290174,
+        "chance_in": 0.03125,
+        "collision_in": 3.058564309212856,
+        "energy_in_B_colspace": 0.08928659744976206,
+        "chance_out": 0.03125,
+        "collision_out": 2.857171118392386,
+        "mean_cos2_principal_angles_in": 0.09786443412303925,
+        "mean_cos2_principal_angles_out": 0.08792614191770554,
+        "eff_rank": 20.249710083007812
+      },
+      "dSparse": {
+        "elementwise_cos": -0.0035779036998398427,
+        "energy_in_B_rowspace": 0.07938633484981182,
+        "chance_in": 0.03125,
+        "collision_in": 2.5403627151939783,
+        "energy_in_B_colspace": 0.0746257315658446,
+        "chance_out": 0.03125,
+        "collision_out": 2.388023410107027,
+        "mean_cos2_principal_angles_in": 0.0960385873913765,
+        "mean_cos2_principal_angles_out": 0.0867304876446724,
+        "eff_rank": 20.122751235961914
+      }
+    },
+    {
+      "tensor": "model.layers.20.self_attn.o_proj.weight",
+      "block": 20,
+      "kind": "self_attn.o_proj",
+      "shape": [
+        1024,
+        2048
+      ],
+      "k": 32,
+      "norm_dTitan": 0.06687101721763611,
+      "norm_dSparse": 0.05601155385375023,
+      "norm_dOpallo": 0.11144012957811356,
+      "eff_rank_dOpallo": 16.24427032470703,
+      "dTitan": {
+        "elementwise_cos": 0.0007975010050392193,
+        "energy_in_B_rowspace": 0.06876377712112465,
+        "chance_in": 0.015625,
+        "collision_in": 4.400881735751978,
+        "energy_in_B_colspace": 0.04794348797969501,
+        "chance_out": 0.03125,
+        "collision_out": 1.5341916153502404,
+        "mean_cos2_principal_angles_in": 0.048361100256443024,
+        "mean_cos2_principal_angles_out": 0.047906339168548584,
+        "eff_rank": 17.079341888427734
+      },
+      "dSparse": {
+        "elementwise_cos": 0.000479562229985476,
+        "energy_in_B_rowspace": 0.05424799096657175,
+        "chance_in": 0.015625,
+        "collision_in": 3.471871421860592,
+        "energy_in_B_colspace": 0.04252365877094352,
+        "chance_out": 0.03125,
+        "collision_out": 1.3607570806701927,
+        "mean_cos2_principal_angles_in": 0.04698404297232628,
+        "mean_cos2_principal_angles_out": 0.04773136228322983,
+        "eff_rank": 17.929059982299805
+      }
+    },
+    {
+      "tensor": "model.layers.20.self_attn.q_proj.weight",
+      "block": 20,
+      "kind": "self_attn.q_proj",
+      "shape": [
+        2048,
+        1024
+      ],
+      "k": 32,
+      "norm_dTitan": 0.07109805941581726,
+      "norm_dSparse": 0.05928388237953186,
+      "norm_dOpallo": 0.10816723108291626,
+      "eff_rank_dOpallo": 19.132064819335938,
+      "dTitan": {
+        "elementwise_cos": -0.00879488227792768,
+        "energy_in_B_rowspace": 0.10677734069924864,
+        "chance_in": 0.03125,
+        "collision_in": 3.4168749023759566,
+        "energy_in_B_colspace": 0.08759571123655896,
+        "chance_out": 0.015625,
+        "collision_out": 5.606125519139773,
+        "mean_cos2_principal_angles_in": 0.07061773538589478,
+        "mean_cos2_principal_angles_out": 0.0674489289522171,
+        "eff_rank": 15.434627532958984
+      },
+      "dSparse": {
+        "elementwise_cos": -0.007105899793058612,
+        "energy_in_B_rowspace": 0.08904113561190989,
+        "chance_in": 0.03125,
+        "collision_in": 2.8493163395811165,
+        "energy_in_B_colspace": 0.07406763554229077,
+        "chance_out": 0.015625,
+        "collision_out": 4.74032867470661,
+        "mean_cos2_principal_angles_in": 0.07042930275201797,
+        "mean_cos2_principal_angles_out": 0.07019362598657608,
+        "eff_rank": 15.20827865600586
+      }
+    },
+    {
+      "tensor": "model.layers.20.self_attn.v_proj.weight",
+      "block": 20,
+      "kind": "self_attn.v_proj",
+      "shape": [
+        1024,
+        1024
+      ],
+      "k": 32,
+      "norm_dTitan": 0.04687543585896492,
+      "norm_dSparse": 0.03922048211097717,
+      "norm_dOpallo": 0.07768528163433075,
+      "eff_rank_dOpallo": 15.24778938293457,
+      "dTitan": {
+        "elementwise_cos": -0.0002786262076474734,
+        "energy_in_B_rowspace": 0.1189722480096748,
+        "chance_in": 0.03125,
+        "collision_in": 3.8071119363095938,
+        "energy_in_B_colspace": 0.03892628873844363,
+        "chance_out": 0.03125,
+        "collision_out": 1.2456412396301961,
+        "mean_cos2_principal_angles_in": 0.10113812983036041,
+        "mean_cos2_principal_angles_out": 0.03740176931023598,
+        "eff_rank": 17.14258575439453
+      },
+      "dSparse": {
+        "elementwise_cos": -0.00028313276330202533,
+        "energy_in_B_rowspace": 0.09832471539922133,
+        "chance_in": 0.03125,
+        "collision_in": 3.1463908927750825,
+        "energy_in_B_colspace": 0.03571003610920029,
+        "chance_out": 0.03125,
+        "collision_out": 1.1427211554944092,
+        "mean_cos2_principal_angles_in": 0.10605011880397797,
+        "mean_cos2_principal_angles_out": 0.03537658601999283,
+        "eff_rank": 17.86693572998047
+      }
+    },
+    {
+      "tensor": "model.layers.21.mlp.down_proj.weight",
+      "block": 21,
+      "kind": "mlp.down_proj",
+      "shape": [
+        1024,
+        3072
+      ],
+      "k": 32,
+      "norm_dTitan": 0.08391457051038742,
+      "norm_dSparse": 0.07001528888940811,
+      "norm_dOpallo": 0.14233124256134033,
+      "eff_rank_dOpallo": 20.456092834472656,
+      "dTitan": {
+        "elementwise_cos": 0.003467608904310407,
+        "energy_in_B_rowspace": 0.04307782724005869,
+        "chance_in": 0.010416666666666666,
+        "collision_in": 4.135471415045634,
+        "energy_in_B_colspace": 0.04760218792726047,
+        "chance_out": 0.03125,
+        "collision_out": 1.523270013672335,
+        "mean_cos2_principal_angles_in": 0.02835225686430931,
+        "mean_cos2_principal_angles_out": 0.04190153628587723,
+        "eff_rank": 19.29210090637207
+      },
+      "dSparse": {
+        "elementwise_cos": 0.0026622007582937346,
+        "energy_in_B_rowspace": 0.033184933925607944,
+        "chance_in": 0.010416666666666666,
+        "collision_in": 3.185753656858363,
+        "energy_in_B_colspace": 0.04144939177728595,
+        "chance_out": 0.03125,
+        "collision_out": 1.3263805368731505,
+        "mean_cos2_principal_angles_in": 0.027655363082885742,
+        "mean_cos2_principal_angles_out": 0.04298253357410431,
+        "eff_rank": 19.929222106933594
+      }
+    },
+    {
+      "tensor": "model.layers.21.mlp.gate_proj.weight",
+      "block": 21,
+      "kind": "mlp.gate_proj",
+      "shape": [
+        3072,
+        1024
+      ],
+      "k": 32,
+      "norm_dTitan": 0.08493127673864365,
+      "norm_dSparse": 0.07066034525632858,
+      "norm_dOpallo": 0.1383979767560959,
+      "eff_rank_dOpallo": 19.20952796936035,
+      "dTitan": {
+        "elementwise_cos": 0.002494223408911953,
+        "energy_in_B_rowspace": 0.08187967700646918,
+        "chance_in": 0.03125,
+        "collision_in": 2.620149664207014,
+        "energy_in_B_colspace": 0.01076450366391268,
+        "chance_out": 0.010416666666666666,
+        "collision_out": 1.0333923517356174,
+        "mean_cos2_principal_angles_in": 0.06125093251466751,
+        "mean_cos2_principal_angles_out": 0.009956995025277138,
+        "eff_rank": 18.715009689331055
+      },
+      "dSparse": {
+        "elementwise_cos": 0.0024110692070747237,
+        "energy_in_B_rowspace": 0.0669733110028428,
+        "chance_in": 0.03125,
+        "collision_in": 2.1431459520909697,
+        "energy_in_B_colspace": 0.010905970882949834,
+        "chance_out": 0.010416666666666666,
+        "collision_out": 1.0469732047631841,
+        "mean_cos2_principal_angles_in": 0.061703041195869446,
+        "mean_cos2_principal_angles_out": 0.009720227681100368,
+        "eff_rank": 18.916425704956055
+      }
+    },
+    {
+      "tensor": "model.layers.21.mlp.up_proj.weight",
+      "block": 21,
+      "kind": "mlp.up_proj",
+      "shape": [
+        3072,
+        1024
+      ],
+      "k": 32,
+      "norm_dTitan": 0.08411305397748947,
+      "norm_dSparse": 0.07024828344583511,
+      "norm_dOpallo": 0.14140523970127106,
+      "eff_rank_dOpallo": 19.146028518676758,
+      "dTitan": {
+        "elementwise_cos": 0.0012020311147991842,
+        "energy_in_B_rowspace": 0.07528385547981531,
+        "chance_in": 0.03125,
+        "collision_in": 2.40908337535409,
+        "energy_in_B_colspace": 0.011896270980440478,
+        "chance_out": 0.010416666666666666,
+        "collision_out": 1.142042014122286,
+        "mean_cos2_principal_angles_in": 0.05833421275019646,
+        "mean_cos2_principal_angles_out": 0.012354100123047829,
+        "eff_rank": 18.94645881652832
+      },
+      "dSparse": {
+        "elementwise_cos": 0.0009928122883482943,
+        "energy_in_B_rowspace": 0.061613341321548984,
+        "chance_in": 0.03125,
+        "collision_in": 1.9716269222895675,
+        "energy_in_B_colspace": 0.011534041899932871,
+        "chance_out": 0.010416666666666666,
+        "collision_out": 1.1072680223935558,
+        "mean_cos2_principal_angles_in": 0.05674927309155464,
+        "mean_cos2_principal_angles_out": 0.012180897407233715,
+        "eff_rank": 19.309293746948242
+      }
+    },
+    {
+      "tensor": "model.layers.21.self_attn.k_proj.weight",
+      "block": 21,
+      "kind": "self_attn.k_proj",
+      "shape": [
+        1024,
+        1024
+      ],
+      "k": 32,
+      "norm_dTitan": 0.04774221405386925,
+      "norm_dSparse": 0.03963717818260193,
+      "norm_dOpallo": 0.07274751365184784,
+      "eff_rank_dOpallo": 19.21978187561035,
+      "dTitan": {
+        "elementwise_cos": -0.003704479907924118,
+        "energy_in_B_rowspace": 0.07421234863884035,
+        "chance_in": 0.03125,
+        "collision_in": 2.3747951564428913,
+        "energy_in_B_colspace": 0.07969138835520757,
+        "chance_out": 0.03125,
+        "collision_out": 2.5501244273666424,
+        "mean_cos2_principal_angles_in": 0.09177631884813309,
+        "mean_cos2_principal_angles_out": 0.07964231073856354,
+        "eff_rank": 17.748123168945312
+      },
+      "dSparse": {
+        "elementwise_cos": -0.0011863014599539444,
+        "energy_in_B_rowspace": 0.06271448830846094,
+        "chance_in": 0.03125,
+        "collision_in": 2.00686362587075,
+        "energy_in_B_colspace": 0.06347249786332726,
+        "chance_out": 0.03125,
+        "collision_out": 2.0311199316264723,
+        "mean_cos2_principal_angles_in": 0.08746664226055145,
+        "mean_cos2_principal_angles_out": 0.07829797267913818,
+        "eff_rank": 18.447612762451172
+      }
+    },
+    {
+      "tensor": "model.layers.21.self_attn.o_proj.weight",
+      "block": 21,
+      "kind": "self_attn.o_proj",
+      "shape": [
+        1024,
+        2048
+      ],
+      "k": 32,
+      "norm_dTitan": 0.06756675988435745,
+      "norm_dSparse": 0.05658524110913277,
+      "norm_dOpallo": 0.1132907047867775,
+      "eff_rank_dOpallo": 15.01806354522705,
+      "dTitan": {
+        "elementwise_cos": 0.00499370796009161,
+        "energy_in_B_rowspace": 0.08446293993088914,
+        "chance_in": 0.015625,
+        "collision_in": 5.405628155576905,
+        "energy_in_B_colspace": 0.04659892547178853,
+        "chance_out": 0.03125,
+        "collision_out": 1.491165615097233,
+        "mean_cos2_principal_angles_in": 0.05884361267089844,
+        "mean_cos2_principal_angles_out": 0.04351462051272392,
+        "eff_rank": 17.22844696044922
+      },
+      "dSparse": {
+        "elementwise_cos": 0.003949026304218109,
+        "energy_in_B_rowspace": 0.06490786046406809,
+        "chance_in": 0.015625,
+        "collision_in": 4.154103069700358,
+        "energy_in_B_colspace": 0.0406143799405384,
+        "chance_out": 0.03125,
+        "collision_out": 1.299660158097229,
+        "mean_cos2_principal_angles_in": 0.05899794399738312,
+        "mean_cos2_principal_angles_out": 0.04198569804430008,
+        "eff_rank": 18.074268341064453
+      }
+    },
+    {
+      "tensor": "model.layers.21.self_attn.q_proj.weight",
+      "block": 21,
+      "kind": "self_attn.q_proj",
+      "shape": [
+        2048,
+        1024
+      ],
+      "k": 32,
+      "norm_dTitan": 0.0702393501996994,
+      "norm_dSparse": 0.05837567150592804,
+      "norm_dOpallo": 0.10600261390209198,
+      "eff_rank_dOpallo": 19.45562744140625,
+      "dTitan": {
+        "elementwise_cos": 0.0007684527835746227,
+        "energy_in_B_rowspace": 0.07565810503777257,
+        "chance_in": 0.03125,
+        "collision_in": 2.421059361208722,
+        "energy_in_B_colspace": 0.09636005025324877,
+        "chance_out": 0.015625,
+        "collision_out": 6.167043216207921,
+        "mean_cos2_principal_angles_in": 0.06709932535886765,
+        "mean_cos2_principal_angles_out": 0.09534777700901031,
+        "eff_rank": 18.080888748168945
+      },
+      "dSparse": {
+        "elementwise_cos": 0.0019984686956121427,
+        "energy_in_B_rowspace": 0.06394854601419647,
+        "chance_in": 0.03125,
+        "collision_in": 2.046353472454287,
+        "energy_in_B_colspace": 0.07551269703506158,
+        "chance_out": 0.015625,
+        "collision_out": 4.832812610243941,
+        "mean_cos2_principal_angles_in": 0.06450916081666946,
+        "mean_cos2_principal_angles_out": 0.09208866953849792,
+        "eff_rank": 19.018943786621094
+      }
+    },
+    {
+      "tensor": "model.layers.21.self_attn.v_proj.weight",
+      "block": 21,
+      "kind": "self_attn.v_proj",
+      "shape": [
+        1024,
+        1024
+      ],
+      "k": 32,
+      "norm_dTitan": 0.04711099714040756,
+      "norm_dSparse": 0.03957846015691757,
+      "norm_dOpallo": 0.07981891930103302,
+      "eff_rank_dOpallo": 13.39699935913086,
+      "dTitan": {
+        "elementwise_cos": 0.0034290404893230976,
+        "energy_in_B_rowspace": 0.1129206787091775,
+        "chance_in": 0.03125,
+        "collision_in": 3.61346171869368,
+        "energy_in_B_colspace": 0.041101963154370806,
+        "chance_out": 0.03125,
+        "collision_out": 1.3152628209398658,
+        "mean_cos2_principal_angles_in": 0.10392995178699493,
+        "mean_cos2_principal_angles_out": 0.039468299597501755,
+        "eff_rank": 15.024676322937012
+      },
+      "dSparse": {
+        "elementwise_cos": 0.003176191323914986,
+        "energy_in_B_rowspace": 0.09080855835120964,
+        "chance_in": 0.03125,
+        "collision_in": 2.9058738672387086,
+        "energy_in_B_colspace": 0.03776493802154716,
+        "chance_out": 0.03125,
+        "collision_out": 1.208478016689509,
+        "mean_cos2_principal_angles_in": 0.09914407134056091,
+        "mean_cos2_principal_angles_out": 0.03883511573076248,
+        "eff_rank": 15.80777359008789
+      }
+    },
+    {
+      "tensor": "model.layers.22.mlp.down_proj.weight",
+      "block": 22,
+      "kind": "mlp.down_proj",
+      "shape": [
+        1024,
+        3072
+      ],
+      "k": 32,
+      "norm_dTitan": 0.08317159861326218,
+      "norm_dSparse": 0.069631427526474,
+      "norm_dOpallo": 0.13976994156837463,
+      "eff_rank_dOpallo": 20.945348739624023,
+      "dTitan": {
+        "elementwise_cos": 0.0009896358528474717,
+        "energy_in_B_rowspace": 0.03684613378825171,
+        "chance_in": 0.010416666666666666,
+        "collision_in": 3.5372288436721644,
+        "energy_in_B_colspace": 0.043662028000326494,
+        "chance_out": 0.03125,
+        "collision_out": 1.3971848960104478,
+        "mean_cos2_principal_angles_in": 0.024238718673586845,
+        "mean_cos2_principal_angles_out": 0.046629805117845535,
+        "eff_rank": 21.079669952392578
+      },
+      "dSparse": {
+        "elementwise_cos": 0.0010900842166703631,
+        "energy_in_B_rowspace": 0.028635253715950052,
+        "chance_in": 0.010416666666666666,
+        "collision_in": 2.748984356731205,
+        "energy_in_B_colspace": 0.03898888463338792,
+        "chance_out": 0.03125,
+        "collision_out": 1.2476443082684134,
+        "mean_cos2_principal_angles_in": 0.023714495822787285,
+        "mean_cos2_principal_angles_out": 0.046106528490781784,
+        "eff_rank": 21.51994514465332
+      }
+    },
+    {
+      "tensor": "model.layers.22.mlp.gate_proj.weight",
+      "block": 22,
+      "kind": "mlp.gate_proj",
+      "shape": [
+        3072,
+        1024
+      ],
+      "k": 32,
+      "norm_dTitan": 0.08426510542631149,
+      "norm_dSparse": 0.07022731751203537,
+      "norm_dOpallo": 0.1355368196964264,
+      "eff_rank_dOpallo": 19.26458740234375,
+      "dTitan": {
+        "elementwise_cos": -0.0011566453771910718,
+        "energy_in_B_rowspace": 0.07829847993121804,
+        "chance_in": 0.03125,
+        "collision_in": 2.505551357798977,
+        "energy_in_B_colspace": 0.011751156873217695,
+        "chance_out": 0.010416666666666666,
+        "collision_out": 1.1281110598288988,
+        "mean_cos2_principal_angles_in": 0.05497359856963158,
+        "mean_cos2_principal_angles_out": 0.01077695656567812,
+        "eff_rank": 18.21425437927246
+      },
+      "dSparse": {
+        "elementwise_cos": -0.0015464735444626048,
+        "energy_in_B_rowspace": 0.06598486075410925,
+        "chance_in": 0.03125,
+        "collision_in": 2.111515544131496,
+        "energy_in_B_colspace": 0.01142711895988115,
+        "chance_out": 0.010416666666666666,
+        "collision_out": 1.0970034201485905,
+        "mean_cos2_principal_angles_in": 0.05542963743209839,
+        "mean_cos2_principal_angles_out": 0.010898042470216751,
+        "eff_rank": 18.526824951171875
+      }
+    },
+    {
+      "tensor": "model.layers.22.mlp.up_proj.weight",
+      "block": 22,
+      "kind": "mlp.up_proj",
+      "shape": [
+        3072,
+        1024
+      ],
+      "k": 32,
+      "norm_dTitan": 0.08343169838190079,
+      "norm_dSparse": 0.06977173686027527,
+      "norm_dOpallo": 0.13974566757678986,
+      "eff_rank_dOpallo": 18.424522399902344,
+      "dTitan": {
+        "elementwise_cos": -0.0007003453655135977,
+        "energy_in_B_rowspace": 0.0796931409071404,
+        "chance_in": 0.03125,
+        "collision_in": 2.550180509028493,
+        "energy_in_B_colspace": 0.011394723322920571,
+        "chance_out": 0.010416666666666666,
+        "collision_out": 1.093893439000375,
+        "mean_cos2_principal_angles_in": 0.05736040323972702,
+        "mean_cos2_principal_angles_out": 0.011713783256709576,
+        "eff_rank": 18.538990020751953
+      },
+      "dSparse": {
+        "elementwise_cos": -0.00033733407827336767,
+        "energy_in_B_rowspace": 0.06590747309362731,
+        "chance_in": 0.03125,
+        "collision_in": 2.109039138996074,
+        "energy_in_B_colspace": 0.011069147244150205,
+        "chance_out": 0.010416666666666666,
+        "collision_out": 1.0626381354384198,
+        "mean_cos2_principal_angles_in": 0.057921066880226135,
+        "mean_cos2_principal_angles_out": 0.011373414658010006,
+        "eff_rank": 18.83470916748047
+      }
+    },
+    {
+      "tensor": "model.layers.22.self_attn.k_proj.weight",
+      "block": 22,
+      "kind": "self_attn.k_proj",
+      "shape": [
+        1024,
+        1024
+      ],
+      "k": 32,
+      "norm_dTitan": 0.0476645790040493,
+      "norm_dSparse": 0.039289847016334534,
+      "norm_dOpallo": 0.07684681564569473,
+      "eff_rank_dOpallo": 20.56527328491211,
+      "dTitan": {
+        "elementwise_cos": -0.007192295879309675,
+        "energy_in_B_rowspace": 0.10151600407627165,
+        "chance_in": 0.03125,
+        "collision_in": 3.2485121304406928,
+        "energy_in_B_colspace": 0.10881574499541218,
+        "chance_out": 0.03125,
+        "collision_out": 3.4821038398531896,
+        "mean_cos2_principal_angles_in": 0.08697794377803802,
+        "mean_cos2_principal_angles_out": 0.09631794691085815,
+        "eff_rank": 18.837745666503906
+      },
+      "dSparse": {
+        "elementwise_cos": -0.0034007210351061036,
+        "energy_in_B_rowspace": 0.07835505261921816,
+        "chance_in": 0.03125,
+        "collision_in": 2.507361683814981,
+        "energy_in_B_colspace": 0.08937043306156349,
+        "chance_out": 0.03125,
+        "collision_out": 2.8598538579700317,
+        "mean_cos2_principal_angles_in": 0.08162648975849152,
+        "mean_cos2_principal_angles_out": 0.09291663765907288,
+        "eff_rank": 19.026411056518555
+      }
+    },
+    {
+      "tensor": "model.layers.22.self_attn.o_proj.weight",
+      "block": 22,
+      "kind": "self_attn.o_proj",
+      "shape": [
+        1024,
+        2048
+      ],
+      "k": 32,
+      "norm_dTitan": 0.06602995842695236,
+      "norm_dSparse": 0.055424537509679794,
+      "norm_dOpallo": 0.11711648851633072,
+      "eff_rank_dOpallo": 14.802788734436035,
+      "dTitan": {
+        "elementwise_cos": 0.0033928506533384877,
+        "energy_in_B_rowspace": 0.11202207689239418,
+        "chance_in": 0.015625,
+        "collision_in": 7.169412921113228,
+        "energy_in_B_colspace": 0.039976638561998686,
+        "chance_out": 0.03125,
+        "collision_out": 1.279252433983958,
+        "mean_cos2_principal_angles_in": 0.06606568396091461,
+        "mean_cos2_principal_angles_out": 0.040721699595451355,
+        "eff_rank": 14.582649230957031
+      },
+      "dSparse": {
+        "elementwise_cos": 0.0015246972039793603,
+        "energy_in_B_rowspace": 0.08936634427080725,
+        "chance_in": 0.015625,
+        "collision_in": 5.719446033331664,
+        "energy_in_B_colspace": 0.036820383761020065,
+        "chance_out": 0.03125,
+        "collision_out": 1.178252280352642,
+        "mean_cos2_principal_angles_in": 0.06518801301717758,
+        "mean_cos2_principal_angles_out": 0.03955622762441635,
+        "eff_rank": 15.296152114868164
+      }
+    },
+    {
+      "tensor": "model.layers.22.self_attn.q_proj.weight",
+      "block": 22,
+      "kind": "self_attn.q_proj",
+      "shape": [
+        2048,
+        1024
+      ],
+      "k": 32,
+      "norm_dTitan": 0.06903934478759766,
+      "norm_dSparse": 0.056851208209991455,
+      "norm_dOpallo": 0.10998742282390594,
+      "eff_rank_dOpallo": 19.482074737548828,
+      "dTitan": {
+        "elementwise_cos": -0.003885931683401565,
+        "energy_in_B_rowspace": 0.08717724655902383,
+        "chance_in": 0.03125,
+        "collision_in": 2.7896718898887625,
+        "energy_in_B_colspace": 0.1324414192981369,
+        "chance_out": 0.015625,
+        "collision_out": 8.476250835080762,
+        "mean_cos2_principal_angles_in": 0.06353329122066498,
+        "mean_cos2_principal_angles_out": 0.11310653388500214,
+        "eff_rank": 17.250171661376953
+      },
+      "dSparse": {
+        "elementwise_cos": -0.0006528589779990186,
+        "energy_in_B_rowspace": 0.07187016666899008,
+        "chance_in": 0.03125,
+        "collision_in": 2.2998453334076827,
+        "energy_in_B_colspace": 0.1030317563463352,
+        "chance_out": 0.015625,
+        "collision_out": 6.594032406165453,
+        "mean_cos2_principal_angles_in": 0.06339816749095917,
+        "mean_cos2_principal_angles_out": 0.1162627711892128,
+        "eff_rank": 18.372159957885742
+      }
+    },
+    {
+      "tensor": "model.layers.22.self_attn.v_proj.weight",
+      "block": 22,
+      "kind": "self_attn.v_proj",
+      "shape": [
+        1024,
+        1024
+      ],
+      "k": 32,
+      "norm_dTitan": 0.046712614595890045,
+      "norm_dSparse": 0.03908449783921242,
+      "norm_dOpallo": 0.082628533244133,
+      "eff_rank_dOpallo": 13.808286666870117,
+      "dTitan": {
+        "elementwise_cos": -0.0032292296019486772,
+        "energy_in_B_rowspace": 0.14986182503877712,
+        "chance_in": 0.03125,
+        "collision_in": 4.795578401240868,
+        "energy_in_B_colspace": 0.03602534322283986,
+        "chance_out": 0.03125,
+        "collision_out": 1.1528109831308755,
+        "mean_cos2_principal_angles_in": 0.09523782879114151,
+        "mean_cos2_principal_angles_out": 0.03796117752790451,
+        "eff_rank": 17.034107208251953
+      },
+      "dSparse": {
+        "elementwise_cos": -0.001749018219913942,
+        "energy_in_B_rowspace": 0.12251563566595752,
+        "chance_in": 0.03125,
+        "collision_in": 3.9205003413106407,
+        "energy_in_B_colspace": 0.03494852040586498,
+        "chance_out": 0.03125,
+        "collision_out": 1.1183526529876793,
+        "mean_cos2_principal_angles_in": 0.09480838477611542,
+        "mean_cos2_principal_angles_out": 0.03650182858109474,
+        "eff_rank": 17.745288848876953
+      }
+    },
+    {
+      "tensor": "model.layers.23.mlp.down_proj.weight",
+      "block": 23,
+      "kind": "mlp.down_proj",
+      "shape": [
+        1024,
+        3072
+      ],
+      "k": 32,
+      "norm_dTitan": 0.08261454850435257,
+      "norm_dSparse": 0.06910093128681183,
+      "norm_dOpallo": 0.13797277212142944,
+      "eff_rank_dOpallo": 21.85321807861328,
+      "dTitan": {
+        "elementwise_cos": -0.0011916030915966954,
+        "energy_in_B_rowspace": 0.03383991111480914,
+        "chance_in": 0.010416666666666666,
+        "collision_in": 3.248631467021678,
+        "energy_in_B_colspace": 0.052946489224164214,
+        "chance_out": 0.03125,
+        "collision_out": 1.6942876551732549,
+        "mean_cos2_principal_angles_in": 0.023393291980028152,
+        "mean_cos2_principal_angles_out": 0.04964686185121536,
+        "eff_rank": 22.241771697998047
+      },
+      "dSparse": {
+        "elementwise_cos": -0.0013487127795014679,
+        "energy_in_B_rowspace": 0.026360485956381012,
+        "chance_in": 0.010416666666666666,
+        "collision_in": 2.5306066518125774,
+        "energy_in_B_colspace": 0.04442437906762906,
+        "chance_out": 0.03125,
+        "collision_out": 1.42158013016413,
+        "mean_cos2_principal_angles_in": 0.023584801703691483,
+        "mean_cos2_principal_angles_out": 0.04913434386253357,
+        "eff_rank": 22.866741180419922
+      }
+    },
+    {
+      "tensor": "model.layers.23.mlp.gate_proj.weight",
+      "block": 23,
+      "kind": "mlp.gate_proj",
+      "shape": [
+        3072,
+        1024
+      ],
+      "k": 32,
+      "norm_dTitan": 0.08375423401594162,
+      "norm_dSparse": 0.06984073668718338,
+      "norm_dOpallo": 0.13311375677585602,
+      "eff_rank_dOpallo": 20.008073806762695,
+      "dTitan": {
+        "elementwise_cos": 0.0025112532137273606,
+        "energy_in_B_rowspace": 0.06932213592485276,
+        "chance_in": 0.03125,
+        "collision_in": 2.218308349595288,
+        "energy_in_B_colspace": 0.009929856297594906,
+        "chance_out": 0.010416666666666666,
+        "collision_out": 0.953266204569111,
+        "mean_cos2_principal_angles_in": 0.052919626235961914,
+        "mean_cos2_principal_angles_out": 0.010087443515658379,
+        "eff_rank": 17.950578689575195
+      },
+      "dSparse": {
+        "elementwise_cos": 0.0018882342227652274,
+        "energy_in_B_rowspace": 0.05897838669371,
+        "chance_in": 0.03125,
+        "collision_in": 1.88730837419872,
+        "energy_in_B_colspace": 0.009729815993180407,
+        "chance_out": 0.010416666666666666,
+        "collision_out": 0.9340623353453191,
+        "mean_cos2_principal_angles_in": 0.053032100200653076,
+        "mean_cos2_principal_angles_out": 0.009866943582892418,
+        "eff_rank": 18.243560791015625
+      }
+    },
+    {
+      "tensor": "model.layers.23.mlp.up_proj.weight",
+      "block": 23,
+      "kind": "mlp.up_proj",
+      "shape": [
+        3072,
+        1024
+      ],
+      "k": 32,
+      "norm_dTitan": 0.08281509578227997,
+      "norm_dSparse": 0.0693131759762764,
+      "norm_dOpallo": 0.13783855736255646,
+      "eff_rank_dOpallo": 19.26219940185547,
+      "dTitan": {
+        "elementwise_cos": -0.00011464960583298379,
+        "energy_in_B_rowspace": 0.06892769542375894,
+        "chance_in": 0.03125,
+        "collision_in": 2.205686253560286,
+        "energy_in_B_colspace": 0.011328566084352195,
+        "chance_out": 0.010416666666666666,
+        "collision_out": 1.087542344097811,
+        "mean_cos2_principal_angles_in": 0.053325071930885315,
+        "mean_cos2_principal_angles_out": 0.011404113844037056,
+        "eff_rank": 18.5013427734375
+      },
+      "dSparse": {
+        "elementwise_cos": 0.0001644348596438352,
+        "energy_in_B_rowspace": 0.0586598080012193,
+        "chance_in": 0.03125,
+        "collision_in": 1.8771138560390177,
+        "energy_in_B_colspace": 0.01093503305299224,
+        "chance_out": 0.010416666666666666,
+        "collision_out": 1.049763173087255,
+        "mean_cos2_principal_angles_in": 0.05285779759287834,
+        "mean_cos2_principal_angles_out": 0.01098666712641716,
+        "eff_rank": 18.861492156982422
+      }
+    },
+    {
+      "tensor": "model.layers.23.self_attn.k_proj.weight",
+      "block": 23,
+      "kind": "self_attn.k_proj",
+      "shape": [
+        1024,
+        1024
+      ],
+      "k": 32,
+      "norm_dTitan": 0.04842275008559227,
+      "norm_dSparse": 0.04012986272573471,
+      "norm_dOpallo": 0.07729008793830872,
+      "eff_rank_dOpallo": 18.57295799255371,
+      "dTitan": {
+        "elementwise_cos": -0.007338387690261609,
+        "energy_in_B_rowspace": 0.12739255382173792,
+        "chance_in": 0.03125,
+        "collision_in": 4.076561722295613,
+        "energy_in_B_colspace": 0.11008517980853583,
+        "chance_out": 0.03125,
+        "collision_out": 3.5227257538731465,
+        "mean_cos2_principal_angles_in": 0.08679856359958649,
+        "mean_cos2_principal_angles_out": 0.09168794006109238,
+        "eff_rank": 18.965829849243164
+      },
+      "dSparse": {
+        "elementwise_cos": -0.005546743887546373,
+        "energy_in_B_rowspace": 0.09830601144871716,
+        "chance_in": 0.03125,
+        "collision_in": 3.145792366358949,
+        "energy_in_B_colspace": 0.08498702845816072,
+        "chance_out": 0.03125,
+        "collision_out": 2.719584910661143,
+        "mean_cos2_principal_angles_in": 0.08479129523038864,
+        "mean_cos2_principal_angles_out": 0.09079722315073013,
+        "eff_rank": 19.85491180419922
+      }
+    },
+    {
+      "tensor": "model.layers.23.self_attn.o_proj.weight",
+      "block": 23,
+      "kind": "self_attn.o_proj",
+      "shape": [
+        1024,
+        2048
+      ],
+      "k": 32,
+      "norm_dTitan": 0.06773556023836136,
+      "norm_dSparse": 0.05656497925519943,
+      "norm_dOpallo": 0.117462657392025,
+      "eff_rank_dOpallo": 16.739206314086914,
+      "dTitan": {
+        "elementwise_cos": -0.0042451296021189106,
+        "energy_in_B_rowspace": 0.12216245353537715,
+        "chance_in": 0.015625,
+        "collision_in": 7.818397026264138,
+        "energy_in_B_colspace": 0.05048166011508407,
+        "chance_out": 0.03125,
+        "collision_out": 1.6154131236826903,
+        "mean_cos2_principal_angles_in": 0.062311071902513504,
+        "mean_cos2_principal_angles_out": 0.05102173984050751,
+        "eff_rank": 15.046586036682129
+      },
+      "dSparse": {
+        "elementwise_cos": -0.0030816878237726374,
+        "energy_in_B_rowspace": 0.09118152089020201,
+        "chance_in": 0.015625,
+        "collision_in": 5.835617336972929,
+        "energy_in_B_colspace": 0.04320865730884062,
+        "chance_out": 0.03125,
+        "collision_out": 1.3826770338828998,
+        "mean_cos2_principal_angles_in": 0.06263817846775055,
+        "mean_cos2_principal_angles_out": 0.04816284775733948,
+        "eff_rank": 15.9935941696167
+      }
+    },
+    {
+      "tensor": "model.layers.23.self_attn.q_proj.weight",
+      "block": 23,
+      "kind": "self_attn.q_proj",
+      "shape": [
+        2048,
+        1024
+      ],
+      "k": 32,
+      "norm_dTitan": 0.06805606931447983,
+      "norm_dSparse": 0.05670377239584923,
+      "norm_dOpallo": 0.10896437615156174,
+      "eff_rank_dOpallo": 17.551349639892578,
+      "dTitan": {
+        "elementwise_cos": -0.005583791242610039,
+        "energy_in_B_rowspace": 0.07540650744197336,
+        "chance_in": 0.03125,
+        "collision_in": 2.4130082381431475,
+        "energy_in_B_colspace": 0.10111783782781048,
+        "chance_out": 0.015625,
+        "collision_out": 6.47154162097987,
+        "mean_cos2_principal_angles_in": 0.05994249880313873,
+        "mean_cos2_principal_angles_out": 0.09372157603502274,
+        "eff_rank": 16.949359893798828
+      },
+      "dSparse": {
+        "elementwise_cos": -0.0025864711740353585,
+        "energy_in_B_rowspace": 0.06382048829820663,
+        "chance_in": 0.03125,
+        "collision_in": 2.0422556255426123,
+        "energy_in_B_colspace": 0.0802316423395839,
+        "chance_out": 0.015625,
+        "collision_out": 5.134825109733369,
+        "mean_cos2_principal_angles_in": 0.05842607468366623,
+        "mean_cos2_principal_angles_out": 0.09455697238445282,
+        "eff_rank": 17.093217849731445
+      }
+    },
+    {
+      "tensor": "model.layers.23.self_attn.v_proj.weight",
+      "block": 23,
+      "kind": "self_attn.v_proj",
+      "shape": [
+        1024,
+        1024
+      ],
+      "k": 32,
+      "norm_dTitan": 0.0477762371301651,
+      "norm_dSparse": 0.039847712963819504,
+      "norm_dOpallo": 0.0843203142285347,
+      "eff_rank_dOpallo": 14.741873741149902,
+      "dTitan": {
+        "elementwise_cos": -0.0011614847175600493,
+        "energy_in_B_rowspace": 0.17673656489399206,
+        "chance_in": 0.03125,
+        "collision_in": 5.655570076607746,
+        "energy_in_B_colspace": 0.03574908827318644,
+        "chance_out": 0.03125,
+        "collision_out": 1.143970824741966,
+        "mean_cos2_principal_angles_in": 0.0960024744272232,
+        "mean_cos2_principal_angles_out": 0.03828056901693344,
+        "eff_rank": 16.85017204284668
+      },
+      "dSparse": {
+        "elementwise_cos": -0.0012500383331920512,
+        "energy_in_B_rowspace": 0.13546168683039153,
+        "chance_in": 0.03125,
+        "collision_in": 4.334773978572529,
+        "energy_in_B_colspace": 0.03439918955563166,
+        "chance_out": 0.03125,
+        "collision_out": 1.1007740657802132,
+        "mean_cos2_principal_angles_in": 0.09441626816987991,
+        "mean_cos2_principal_angles_out": 0.03654969483613968,
+        "eff_rank": 17.70814323425293
+      }
+    },
+    {
+      "tensor": "model.layers.24.mlp.down_proj.weight",
+      "block": 24,
+      "kind": "mlp.down_proj",
+      "shape": [
+        1024,
+        3072
+      ],
+      "k": 32,
+      "norm_dTitan": 0.0821479931473732,
+      "norm_dSparse": 0.06878196448087692,
+      "norm_dOpallo": 0.1360461413860321,
+      "eff_rank_dOpallo": 22.468914031982422,
+      "dTitan": {
+        "elementwise_cos": -5.261183582342534e-06,
+        "energy_in_B_rowspace": 0.028660012226123178,
+        "chance_in": 0.010416666666666666,
+        "collision_in": 2.751361173707825,
+        "energy_in_B_colspace": 0.054840812171908,
+        "chance_out": 0.03125,
+        "collision_out": 1.754905989501056,
+        "mean_cos2_principal_angles_in": 0.021362392231822014,
+        "mean_cos2_principal_angles_out": 0.05179932340979576,
+        "eff_rank": 21.228519439697266
+      },
+      "dSparse": {
+        "elementwise_cos": -0.00018724429435093624,
+        "energy_in_B_rowspace": 0.02246377432105248,
+        "chance_in": 0.010416666666666666,
+        "collision_in": 2.1565223348210383,
+        "energy_in_B_colspace": 0.04607929047527276,
+        "chance_out": 0.03125,
+        "collision_out": 1.4745372952087283,
+        "mean_cos2_principal_angles_in": 0.020673295482993126,
+        "mean_cos2_principal_angles_out": 0.05134977772831917,
+        "eff_rank": 21.667526245117188
+      }
+    },
+    {
+      "tensor": "model.layers.24.mlp.gate_proj.weight",
+      "block": 24,
+      "kind": "mlp.gate_proj",
+      "shape": [
+        3072,
+        1024
+      ],
+      "k": 32,
+      "norm_dTitan": 0.08323955535888672,
+      "norm_dSparse": 0.06952963769435883,
+      "norm_dOpallo": 0.13141970336437225,
+      "eff_rank_dOpallo": 19.608444213867188,
+      "dTitan": {
+        "elementwise_cos": -0.001843252400385911,
+        "energy_in_B_rowspace": 0.06778998836518928,
+        "chance_in": 0.03125,
+        "collision_in": 2.169279627686057,
+        "energy_in_B_colspace": 0.009675047194167754,
+        "chance_out": 0.010416666666666666,
+        "collision_out": 0.9288045306401044,
+        "mean_cos2_principal_angles_in": 0.050485387444496155,
+        "mean_cos2_principal_angles_out": 0.010447355918586254,
+        "eff_rank": 17.21111297607422
+      },
+      "dSparse": {
+        "elementwise_cos": -0.0015218887314051143,
+        "energy_in_B_rowspace": 0.05814817864157989,
+        "chance_in": 0.03125,
+        "collision_in": 1.8607417165305564,
+        "energy_in_B_colspace": 0.009709559447846109,
+        "chance_out": 0.010416666666666666,
+        "collision_out": 0.9321177069932265,
+        "mean_cos2_principal_angles_in": 0.05197805166244507,
+        "mean_cos2_principal_angles_out": 0.010458501055836678,
+        "eff_rank": 17.46590232849121
+      }
+    },
+    {
+      "tensor": "model.layers.24.mlp.up_proj.weight",
+      "block": 24,
+      "kind": "mlp.up_proj",
+      "shape": [
+        3072,
+        1024
+      ],
+      "k": 32,
+      "norm_dTitan": 0.08158911764621735,
+      "norm_dSparse": 0.06831382215023041,
+      "norm_dOpallo": 0.13509997725486755,
+      "eff_rank_dOpallo": 19.237674713134766,
+      "dTitan": {
+        "elementwise_cos": 0.0001257034909631497,
+        "energy_in_B_rowspace": 0.07368182831886681,
+        "chance_in": 0.03125,
+        "collision_in": 2.357818506203738,
+        "energy_in_B_colspace": 0.012326604178234687,
+        "chance_out": 0.010416666666666666,
+        "collision_out": 1.1833540011105301,
+        "mean_cos2_principal_angles_in": 0.05409809574484825,
+        "mean_cos2_principal_angles_out": 0.012974589131772518,
+        "eff_rank": 18.036760330200195
+      },
+      "dSparse": {
+        "elementwise_cos": 0.0005070084942095303,
+        "energy_in_B_rowspace": 0.061992194011819206,
+        "chance_in": 0.03125,
+        "collision_in": 1.9837502083782146,
+        "energy_in_B_colspace": 0.011642806823969573,
+        "chance_out": 0.010416666666666666,
+        "collision_out": 1.117709455101079,
+        "mean_cos2_principal_angles_in": 0.05440806224942207,
+        "mean_cos2_principal_angles_out": 0.012746766209602356,
+        "eff_rank": 18.522348403930664
+      }
+    },
+    {
+      "tensor": "model.layers.24.self_attn.k_proj.weight",
+      "block": 24,
+      "kind": "self_attn.k_proj",
+      "shape": [
+        1024,
+        1024
+      ],
+      "k": 32,
+      "norm_dTitan": 0.0492982417345047,
+      "norm_dSparse": 0.04128871113061905,
+      "norm_dOpallo": 0.07786911725997925,
+      "eff_rank_dOpallo": 18.568735122680664,
+      "dTitan": {
+        "elementwise_cos": 0.007771411507801517,
+        "energy_in_B_rowspace": 0.09804074362297692,
+        "chance_in": 0.03125,
+        "collision_in": 3.1373037959352614,
+        "energy_in_B_colspace": 0.10514319195159602,
+        "chance_out": 0.03125,
+        "collision_out": 3.3645821424510727,
+        "mean_cos2_principal_angles_in": 0.09338869154453278,
+        "mean_cos2_principal_angles_out": 0.09153753519058228,
+        "eff_rank": 17.907772064208984
+      },
+      "dSparse": {
+        "elementwise_cos": 0.005948121643087515,
+        "energy_in_B_rowspace": 0.07898658424098276,
+        "chance_in": 0.03125,
+        "collision_in": 2.5275706957114483,
+        "energy_in_B_colspace": 0.09029177526863823,
+        "chance_out": 0.03125,
+        "collision_out": 2.8893368085964233,
+        "mean_cos2_principal_angles_in": 0.09577881544828415,
+        "mean_cos2_principal_angles_out": 0.09104473888874054,
+        "eff_rank": 18.24171257019043
+      }
+    },
+    {
+      "tensor": "model.layers.24.self_attn.o_proj.weight",
+      "block": 24,
+      "kind": "self_attn.o_proj",
+      "shape": [
+        1024,
+        2048
+      ],
+      "k": 32,
+      "norm_dTitan": 0.0680454894900322,
+      "norm_dSparse": 0.056802812963724136,
+      "norm_dOpallo": 0.11416172236204147,
+      "eff_rank_dOpallo": 14.962335586547852,
+      "dTitan": {
+        "elementwise_cos": -0.0015197088958401857,
+        "energy_in_B_rowspace": 0.09360476238298523,
+        "chance_in": 0.015625,
+        "collision_in": 5.990704792511055,
+        "energy_in_B_colspace": 0.045188972365518616,
+        "chance_out": 0.03125,
+        "collision_out": 1.4460471156965957,
+        "mean_cos2_principal_angles_in": 0.058347053825855255,
+        "mean_cos2_principal_angles_out": 0.05029042810201645,
+        "eff_rank": 16.314584732055664
+      },
+      "dSparse": {
+        "elementwise_cos": -0.0014270470002666121,
+        "energy_in_B_rowspace": 0.07136655226581215,
+        "chance_in": 0.015625,
+        "collision_in": 4.567459345011978,
+        "energy_in_B_colspace": 0.03909949452433363,
+        "chance_out": 0.03125,
+        "collision_out": 1.2511838247786762,
+        "mean_cos2_principal_angles_in": 0.05633809044957161,
+        "mean_cos2_principal_angles_out": 0.04789367690682411,
+        "eff_rank": 17.089988708496094
+      }
+    },
+    {
+      "tensor": "model.layers.24.self_attn.q_proj.weight",
+      "block": 24,
+      "kind": "self_attn.q_proj",
+      "shape": [
+        2048,
+        1024
+      ],
+      "k": 32,
+      "norm_dTitan": 0.06847451627254486,
+      "norm_dSparse": 0.05705723166465759,
+      "norm_dOpallo": 0.11026030778884888,
+      "eff_rank_dOpallo": 18.396060943603516,
+      "dTitan": {
+        "elementwise_cos": 0.00102737621192366,
+        "energy_in_B_rowspace": 0.07094054998144989,
+        "chance_in": 0.03125,
+        "collision_in": 2.2700975994063963,
+        "energy_in_B_colspace": 0.09755606711824534,
+        "chance_out": 0.015625,
+        "collision_out": 6.243588295567702,
+        "mean_cos2_principal_angles_in": 0.056328680366277695,
+        "mean_cos2_principal_angles_out": 0.10092076659202576,
+        "eff_rank": 18.375038146972656
+      },
+      "dSparse": {
+        "elementwise_cos": -0.00035668452681145553,
+        "energy_in_B_rowspace": 0.06026559956439963,
+        "chance_in": 0.03125,
+        "collision_in": 1.928499186060788,
+        "energy_in_B_colspace": 0.07593789714360938,
+        "chance_out": 0.015625,
+        "collision_out": 4.860025417191,
+        "mean_cos2_principal_angles_in": 0.05572795122861862,
+        "mean_cos2_principal_angles_out": 0.10244707763195038,
+        "eff_rank": 19.614511489868164
+      }
+    },
+    {
+      "tensor": "model.layers.24.self_attn.v_proj.weight",
+      "block": 24,
+      "kind": "self_attn.v_proj",
+      "shape": [
+        1024,
+        1024
+      ],
+      "k": 32,
+      "norm_dTitan": 0.049129605293273926,
+      "norm_dSparse": 0.04110798239707947,
+      "norm_dOpallo": 0.08370757848024368,
+      "eff_rank_dOpallo": 13.799894332885742,
+      "dTitan": {
+        "elementwise_cos": 0.008141968380588692,
+        "energy_in_B_rowspace": 0.16380400498597653,
+        "chance_in": 0.03125,
+        "collision_in": 5.241728159551249,
+        "energy_in_B_colspace": 0.04176637338633281,
+        "chance_out": 0.03125,
+        "collision_out": 1.3365239483626499,
+        "mean_cos2_principal_angles_in": 0.10700099170207977,
+        "mean_cos2_principal_angles_out": 0.042525485157966614,
+        "eff_rank": 15.043959617614746
+      },
+      "dSparse": {
+        "elementwise_cos": 0.007344780871803412,
+        "energy_in_B_rowspace": 0.1314200172740578,
+        "chance_in": 0.03125,
+        "collision_in": 4.20544055276985,
+        "energy_in_B_colspace": 0.03802983170590221,
+        "chance_out": 0.03125,
+        "collision_out": 1.2169546145888708,
+        "mean_cos2_principal_angles_in": 0.10401593148708344,
+        "mean_cos2_principal_angles_out": 0.041203923523426056,
+        "eff_rank": 15.617446899414062
+      }
+    },
+    {
+      "tensor": "model.layers.25.mlp.down_proj.weight",
+      "block": 25,
+      "kind": "mlp.down_proj",
+      "shape": [
+        1024,
+        3072
+      ],
+      "k": 32,
+      "norm_dTitan": 0.08119669556617737,
+      "norm_dSparse": 0.0679289922118187,
+      "norm_dOpallo": 0.13660186529159546,
+      "eff_rank_dOpallo": 22.270349502563477,
+      "dTitan": {
+        "elementwise_cos": -0.00018981073321289047,
+        "energy_in_B_rowspace": 0.03291603620994175,
+        "chance_in": 0.010416666666666666,
+        "collision_in": 3.159939476154408,
+        "energy_in_B_colspace": 0.05294435498558514,
+        "chance_out": 0.03125,
+        "collision_out": 1.6942193595387245,
+        "mean_cos2_principal_angles_in": 0.022597622126340866,
+        "mean_cos2_principal_angles_out": 0.05309513211250305,
+        "eff_rank": 18.162887573242188
+      },
+      "dSparse": {
+        "elementwise_cos": -0.0001617046628769018,
+        "energy_in_B_rowspace": 0.026318772803088152,
+        "chance_in": 0.010416666666666666,
+        "collision_in": 2.526602189096463,
+        "energy_in_B_colspace": 0.04466061765093637,
+        "chance_out": 0.03125,
+        "collision_out": 1.4291397648299637,
+        "mean_cos2_principal_angles_in": 0.021824289113283157,
+        "mean_cos2_principal_angles_out": 0.05169600248336792,
+        "eff_rank": 18.904508590698242
+      }
+    },
+    {
+      "tensor": "model.layers.25.mlp.gate_proj.weight",
+      "block": 25,
+      "kind": "mlp.gate_proj",
+      "shape": [
+        3072,
+        1024
+      ],
+      "k": 32,
+      "norm_dTitan": 0.0827355682849884,
+      "norm_dSparse": 0.06920376420021057,
+      "norm_dOpallo": 0.13122884929180145,
+      "eff_rank_dOpallo": 19.338491439819336,
+      "dTitan": {
+        "elementwise_cos": -1.1993401850497766e-06,
+        "energy_in_B_rowspace": 0.08155518314173464,
+        "chance_in": 0.03125,
+        "collision_in": 2.6097658605355085,
+        "energy_in_B_colspace": 0.010667736429261278,
+        "chance_out": 0.010416666666666666,
+        "collision_out": 1.0241026972090828,
+        "mean_cos2_principal_angles_in": 0.0645052045583725,
+        "mean_cos2_principal_angles_out": 0.010496396571397781,
+        "eff_rank": 16.48140525817871
+      },
+      "dSparse": {
+        "elementwise_cos": -5.774608946104946e-05,
+        "energy_in_B_rowspace": 0.06850813900169374,
+        "chance_in": 0.03125,
+        "collision_in": 2.1922604480541996,
+        "energy_in_B_colspace": 0.010659770878665173,
+        "chance_out": 0.010416666666666666,
+        "collision_out": 1.0233380043518567,
+        "mean_cos2_principal_angles_in": 0.06430993974208832,
+        "mean_cos2_principal_angles_out": 0.010829735547304153,
+        "eff_rank": 16.722288131713867
+      }
+    },
+    {
+      "tensor": "model.layers.25.mlp.up_proj.weight",
+      "block": 25,
+      "kind": "mlp.up_proj",
+      "shape": [
+        3072,
+        1024
+      ],
+      "k": 32,
+      "norm_dTitan": 0.08039531111717224,
+      "norm_dSparse": 0.06743167340755463,
+      "norm_dOpallo": 0.13390229642391205,
+      "eff_rank_dOpallo": 19.058595657348633,
+      "dTitan": {
+        "elementwise_cos": 0.0011448376456934903,
+        "energy_in_B_rowspace": 0.07577580027303867,
+        "chance_in": 0.03125,
+        "collision_in": 2.4248256087372373,
+        "energy_in_B_colspace": 0.012096056718089752,
+        "chance_out": 0.010416666666666666,
+        "collision_out": 1.1612214449366163,
+        "mean_cos2_principal_angles_in": 0.05407030135393143,
+        "mean_cos2_principal_angles_out": 0.012439964339137077,
+        "eff_rank": 17.1768798828125
+      },
+      "dSparse": {
+        "elementwise_cos": 0.001169877801198057,
+        "energy_in_B_rowspace": 0.06329025604758608,
+        "chance_in": 0.03125,
+        "collision_in": 2.0252881935227545,
+        "energy_in_B_colspace": 0.011580630535161143,
+        "chance_out": 0.010416666666666666,
+        "collision_out": 1.1117405313754698,
+        "mean_cos2_principal_angles_in": 0.05355708673596382,
+        "mean_cos2_principal_angles_out": 0.01243439968675375,
+        "eff_rank": 17.8029727935791
+      }
+    },
+    {
+      "tensor": "model.layers.25.self_attn.k_proj.weight",
+      "block": 25,
+      "kind": "self_attn.k_proj",
+      "shape": [
+        1024,
+        1024
+      ],
+      "k": 32,
+      "norm_dTitan": 0.047272197902202606,
+      "norm_dSparse": 0.03960108757019043,
+      "norm_dOpallo": 0.07648637145757675,
+      "eff_rank_dOpallo": 19.608448028564453,
+      "dTitan": {
+        "elementwise_cos": 0.004816314515185799,
+        "energy_in_B_rowspace": 0.11851108709046944,
+        "chance_in": 0.03125,
+        "collision_in": 3.792354786895022,
+        "energy_in_B_colspace": 0.09091826129915156,
+        "chance_out": 0.03125,
+        "collision_out": 2.90938436157285,
+        "mean_cos2_principal_angles_in": 0.10115599632263184,
+        "mean_cos2_principal_angles_out": 0.0897471010684967,
+        "eff_rank": 16.21854019165039
+      },
+      "dSparse": {
+        "elementwise_cos": 0.00332501417720016,
+        "energy_in_B_rowspace": 0.09167466539843493,
+        "chance_in": 0.03125,
+        "collision_in": 2.9335892927499176,
+        "energy_in_B_colspace": 0.07476956344182166,
+        "chance_out": 0.03125,
+        "collision_out": 2.392626030138293,
+        "mean_cos2_principal_angles_in": 0.09841092675924301,
+        "mean_cos2_principal_angles_out": 0.08364477753639221,
+        "eff_rank": 16.74589729309082
+      }
+    },
+    {
+      "tensor": "model.layers.25.self_attn.o_proj.weight",
+      "block": 25,
+      "kind": "self_attn.o_proj",
+      "shape": [
+        1024,
+        2048
+      ],
+      "k": 32,
+      "norm_dTitan": 0.06600594520568848,
+      "norm_dSparse": 0.055378302931785583,
+      "norm_dOpallo": 0.12034014612436295,
+      "eff_rank_dOpallo": 13.223114967346191,
+      "dTitan": {
+        "elementwise_cos": -0.007847479531403448,
+        "energy_in_B_rowspace": 0.17713438625387165,
+        "chance_in": 0.015625,
+        "collision_in": 11.336600720247786,
+        "energy_in_B_colspace": 0.046640742918523374,
+        "chance_out": 0.03125,
+        "collision_out": 1.492503773392748,
+        "mean_cos2_principal_angles_in": 0.06472885608673096,
+        "mean_cos2_principal_angles_out": 0.04918922856450081,
+        "eff_rank": 12.542756080627441
+      },
+      "dSparse": {
+        "elementwise_cos": -0.005960746764183911,
+        "energy_in_B_rowspace": 0.13910229857593656,
+        "chance_in": 0.015625,
+        "collision_in": 8.90254710885994,
+        "energy_in_B_colspace": 0.04101482697014864,
+        "chance_out": 0.03125,
+        "collision_out": 1.3124744630447565,
+        "mean_cos2_principal_angles_in": 0.065676748752594,
+        "mean_cos2_principal_angles_out": 0.04811204597353935,
+        "eff_rank": 13.614214897155762
+      }
+    },
+    {
+      "tensor": "model.layers.25.self_attn.q_proj.weight",
+      "block": 25,
+      "kind": "self_attn.q_proj",
+      "shape": [
+        2048,
+        1024
+      ],
+      "k": 32,
+      "norm_dTitan": 0.06775198876857758,
+      "norm_dSparse": 0.05654921010136604,
+      "norm_dOpallo": 0.1095750704407692,
+      "eff_rank_dOpallo": 19.342432022094727,
+      "dTitan": {
+        "elementwise_cos": 0.0033656196790203363,
+        "energy_in_B_rowspace": 0.07644357747828204,
+        "chance_in": 0.03125,
+        "collision_in": 2.446194479305025,
+        "energy_in_B_colspace": 0.15871848364721666,
+        "chance_out": 0.015625,
+        "collision_out": 10.157982953421866,
+        "mean_cos2_principal_angles_in": 0.0661608949303627,
+        "mean_cos2_principal_angles_out": 0.14839093387126923,
+        "eff_rank": 15.301634788513184
+      },
+      "dSparse": {
+        "elementwise_cos": 0.0027185654487465547,
+        "energy_in_B_rowspace": 0.06177163200389012,
+        "chance_in": 0.03125,
+        "collision_in": 1.9766922241244838,
+        "energy_in_B_colspace": 0.12386887300706119,
+        "chance_out": 0.015625,
+        "collision_out": 7.927607872451916,
+        "mean_cos2_principal_angles_in": 0.06040843576192856,
+        "mean_cos2_principal_angles_out": 0.14714287221431732,
+        "eff_rank": 16.048776626586914
+      }
+    },
+    {
+      "tensor": "model.layers.25.self_attn.v_proj.weight",
+      "block": 25,
+      "kind": "self_attn.v_proj",
+      "shape": [
+        1024,
+        1024
+      ],
+      "k": 32,
+      "norm_dTitan": 0.04658546671271324,
+      "norm_dSparse": 0.039160192012786865,
+      "norm_dOpallo": 0.08526352792978287,
+      "eff_rank_dOpallo": 13.193544387817383,
+      "dTitan": {
+        "elementwise_cos": -0.005514539179751263,
+        "energy_in_B_rowspace": 0.21002183296415003,
+        "chance_in": 0.03125,
+        "collision_in": 6.720698654852801,
+        "energy_in_B_colspace": 0.03455074698765731,
+        "chance_out": 0.03125,
+        "collision_out": 1.105623903605034,
+        "mean_cos2_principal_angles_in": 0.10743153840303421,
+        "mean_cos2_principal_angles_out": 0.03529399633407593,
+        "eff_rank": 13.436729431152344
+      },
+      "dSparse": {
+        "elementwise_cos": -0.004648723850524074,
+        "energy_in_B_rowspace": 0.17132590895056354,
+        "chance_in": 0.03125,
+        "collision_in": 5.482429086418033,
+        "energy_in_B_colspace": 0.03301889322946066,
+        "chance_out": 0.03125,
+        "collision_out": 1.056604583342741,
+        "mean_cos2_principal_angles_in": 0.10633599758148193,
+        "mean_cos2_principal_angles_out": 0.03471245616674423,
+        "eff_rank": 14.206612586975098
+      }
+    },
+    {
+      "tensor": "model.layers.26.mlp.down_proj.weight",
+      "block": 26,
+      "kind": "mlp.down_proj",
+      "shape": [
+        1024,
+        3072
+      ],
+      "k": 32,
+      "norm_dTitan": 0.07955224812030792,
+      "norm_dSparse": 0.06644794344902039,
+      "norm_dOpallo": 0.13866400718688965,
+      "eff_rank_dOpallo": 20.614116668701172,
+      "dTitan": {
+        "elementwise_cos": -0.0005139954630399119,
+        "energy_in_B_rowspace": 0.0451858288879477,
+        "chance_in": 0.010416666666666666,
+        "collision_in": 4.337839573242979,
+        "energy_in_B_colspace": 0.07150896316497792,
+        "chance_out": 0.03125,
+        "collision_out": 2.2882868212792933,
+        "mean_cos2_principal_angles_in": 0.02365853637456894,
+        "mean_cos2_principal_angles_out": 0.05733799934387207,
+        "eff_rank": 15.467140197753906
+      },
+      "dSparse": {
+        "elementwise_cos": -0.0007047332010727176,
+        "energy_in_B_rowspace": 0.03405726648218653,
+        "chance_in": 0.010416666666666666,
+        "collision_in": 3.269497582289907,
+        "energy_in_B_colspace": 0.056607124234629505,
+        "chance_out": 0.03125,
+        "collision_out": 1.8114279755081442,
+        "mean_cos2_principal_angles_in": 0.02355058118700981,
+        "mean_cos2_principal_angles_out": 0.056140292435884476,
+        "eff_rank": 16.688417434692383
+      }
+    },
+    {
+      "tensor": "model.layers.26.mlp.gate_proj.weight",
+      "block": 26,
+      "kind": "mlp.gate_proj",
+      "shape": [
+        3072,
+        1024
+      ],
+      "k": 32,
+      "norm_dTitan": 0.08147739619016647,
+      "norm_dSparse": 0.06823243200778961,
+      "norm_dOpallo": 0.13190025091171265,
+      "eff_rank_dOpallo": 18.4481258392334,
+      "dTitan": {
+        "elementwise_cos": -0.0008097866780721389,
+        "energy_in_B_rowspace": 0.09967194846845574,
+        "chance_in": 0.03125,
+        "collision_in": 3.1895023509905838,
+        "energy_in_B_colspace": 0.010110087909001305,
+        "chance_out": 0.010416666666666666,
+        "collision_out": 0.9705684392641253,
+        "mean_cos2_principal_angles_in": 0.06677830964326859,
+        "mean_cos2_principal_angles_out": 0.009844888001680374,
+        "eff_rank": 15.02286434173584
+      },
+      "dSparse": {
+        "elementwise_cos": 0.0005036404987125999,
+        "energy_in_B_rowspace": 0.08238551474939215,
+        "chance_in": 0.03125,
+        "collision_in": 2.636336471980549,
+        "energy_in_B_colspace": 0.010211862094590714,
+        "chance_out": 0.010416666666666666,
+        "collision_out": 0.9803387610807086,
+        "mean_cos2_principal_angles_in": 0.06573748588562012,
+        "mean_cos2_principal_angles_out": 0.009641241282224655,
+        "eff_rank": 15.266749382019043
+      }
+    },
+    {
+      "tensor": "model.layers.26.mlp.up_proj.weight",
+      "block": 26,
+      "kind": "mlp.up_proj",
+      "shape": [
+        3072,
+        1024
+      ],
+      "k": 32,
+      "norm_dTitan": 0.07906830310821533,
+      "norm_dSparse": 0.0662437379360199,
+      "norm_dOpallo": 0.1348104178905487,
+      "eff_rank_dOpallo": 18.29100227355957,
+      "dTitan": {
+        "elementwise_cos": -0.00010024775107301084,
+        "energy_in_B_rowspace": 0.09600038648163839,
+        "chance_in": 0.03125,
+        "collision_in": 3.0720123674124284,
+        "energy_in_B_colspace": 0.010995603434778359,
+        "chance_out": 0.010416666666666666,
+        "collision_out": 1.0555779297387224,
+        "mean_cos2_principal_angles_in": 0.060283858329057693,
+        "mean_cos2_principal_angles_out": 0.012584766373038292,
+        "eff_rank": 15.487687110900879
+      },
+      "dSparse": {
+        "elementwise_cos": 0.0005007574927396041,
+        "energy_in_B_rowspace": 0.07833038689905444,
+        "chance_in": 0.03125,
+        "collision_in": 2.506572380769742,
+        "energy_in_B_colspace": 0.010759923187455445,
+        "chance_out": 0.010416666666666666,
+        "collision_out": 1.0329526259957227,
+        "mean_cos2_principal_angles_in": 0.06023535132408142,
+        "mean_cos2_principal_angles_out": 0.012263283133506775,
+        "eff_rank": 16.285572052001953
+      }
+    },
+    {
+      "tensor": "model.layers.26.self_attn.k_proj.weight",
+      "block": 26,
+      "kind": "self_attn.k_proj",
+      "shape": [
+        1024,
+        1024
+      ],
+      "k": 32,
+      "norm_dTitan": 0.04546472057700157,
+      "norm_dSparse": 0.03834337741136551,
+      "norm_dOpallo": 0.07545534521341324,
+      "eff_rank_dOpallo": 15.837839126586914,
+      "dTitan": {
+        "elementwise_cos": -0.012541341970932833,
+        "energy_in_B_rowspace": 0.16477175047536405,
+        "chance_in": 0.03125,
+        "collision_in": 5.2726960152116495,
+        "energy_in_B_colspace": 0.12293794372954711,
+        "chance_out": 0.03125,
+        "collision_out": 3.9340141993455076,
+        "mean_cos2_principal_angles_in": 0.09840241074562073,
+        "mean_cos2_principal_angles_out": 0.10331404209136963,
+        "eff_rank": 15.869996070861816
+      },
+      "dSparse": {
+        "elementwise_cos": -0.01107221047826264,
+        "energy_in_B_rowspace": 0.12958263228159267,
+        "chance_in": 0.03125,
+        "collision_in": 4.146644233010965,
+        "energy_in_B_colspace": 0.09741578343338501,
+        "chance_out": 0.03125,
+        "collision_out": 3.1173050698683205,
+        "mean_cos2_principal_angles_in": 0.09600411355495453,
+        "mean_cos2_principal_angles_out": 0.10046841204166412,
+        "eff_rank": 16.709754943847656
+      }
+    },
+    {
+      "tensor": "model.layers.26.self_attn.o_proj.weight",
+      "block": 26,
+      "kind": "self_attn.o_proj",
+      "shape": [
+        1024,
+        2048
+      ],
+      "k": 32,
+      "norm_dTitan": 0.06715311855077744,
+      "norm_dSparse": 0.056411854922771454,
+      "norm_dOpallo": 0.11768943816423416,
+      "eff_rank_dOpallo": 13.08871841430664,
+      "dTitan": {
+        "elementwise_cos": -0.0012801486880577983,
+        "energy_in_B_rowspace": 0.19199344233312016,
+        "chance_in": 0.015625,
+        "collision_in": 12.28758030931969,
+        "energy_in_B_colspace": 0.04232860348733627,
+        "chance_out": 0.03125,
+        "collision_out": 1.3545153115947606,
+        "mean_cos2_principal_angles_in": 0.06310292333364487,
+        "mean_cos2_principal_angles_out": 0.047827549278736115,
+        "eff_rank": 11.7799072265625
+      },
+      "dSparse": {
+        "elementwise_cos": -0.002538427710853955,
+        "energy_in_B_rowspace": 0.14437615014209376,
+        "chance_in": 0.015625,
+        "collision_in": 9.240073609094,
+        "energy_in_B_colspace": 0.037022595871132415,
+        "chance_out": 0.03125,
+        "collision_out": 1.1847230678762373,
+        "mean_cos2_principal_angles_in": 0.05983751267194748,
+        "mean_cos2_principal_angles_out": 0.04499135911464691,
+        "eff_rank": 13.201132774353027
+      }
+    },
+    {
+      "tensor": "model.layers.26.self_attn.q_proj.weight",
+      "block": 26,
+      "kind": "self_attn.q_proj",
+      "shape": [
+        2048,
+        1024
+      ],
+      "k": 32,
+      "norm_dTitan": 0.06822428107261658,
+      "norm_dSparse": 0.05724345147609711,
+      "norm_dOpallo": 0.10916533321142197,
+      "eff_rank_dOpallo": 16.162151336669922,
+      "dTitan": {
+        "elementwise_cos": -0.004895061884133554,
+        "energy_in_B_rowspace": 0.08313299133539662,
+        "chance_in": 0.03125,
+        "collision_in": 2.6602557227326917,
+        "energy_in_B_colspace": 0.15140137568102535,
+        "chance_out": 0.015625,
+        "collision_out": 9.689688043585623,
+        "mean_cos2_principal_angles_in": 0.04880663752555847,
+        "mean_cos2_principal_angles_out": 0.13311028480529785,
+        "eff_rank": 14.810675621032715
+      },
+      "dSparse": {
+        "elementwise_cos": -0.0030383669107876855,
+        "energy_in_B_rowspace": 0.07067165485280608,
+        "chance_in": 0.03125,
+        "collision_in": 2.2614929552897944,
+        "energy_in_B_colspace": 0.11946261964161975,
+        "chance_out": 0.015625,
+        "collision_out": 7.645607657063664,
+        "mean_cos2_principal_angles_in": 0.04911400377750397,
+        "mean_cos2_principal_angles_out": 0.13417977094650269,
+        "eff_rank": 15.014571189880371
+      }
+    },
+    {
+      "tensor": "model.layers.26.self_attn.v_proj.weight",
+      "block": 26,
+      "kind": "self_attn.v_proj",
+      "shape": [
+        1024,
+        1024
+      ],
+      "k": 32,
+      "norm_dTitan": 0.048356954008340836,
+      "norm_dSparse": 0.04054884612560272,
+      "norm_dOpallo": 0.08387640118598938,
+      "eff_rank_dOpallo": 12.606985092163086,
+      "dTitan": {
+        "elementwise_cos": 0.00841031530778886,
+        "energy_in_B_rowspace": 0.22558267346828387,
+        "chance_in": 0.03125,
+        "collision_in": 7.218645550985084,
+        "energy_in_B_colspace": 0.04657528949301275,
+        "chance_out": 0.03125,
+        "collision_out": 1.490409263776408,
+        "mean_cos2_principal_angles_in": 0.09166289120912552,
+        "mean_cos2_principal_angles_out": 0.04444718360900879,
+        "eff_rank": 11.286040306091309
+      },
+      "dSparse": {
+        "elementwise_cos": 0.005274929010092775,
+        "energy_in_B_rowspace": 0.18314452877121987,
+        "chance_in": 0.03125,
+        "collision_in": 5.860624920679036,
+        "energy_in_B_colspace": 0.04115613072660506,
+        "chance_out": 0.03125,
+        "collision_out": 1.316996183251362,
+        "mean_cos2_principal_angles_in": 0.08872988820075989,
+        "mean_cos2_principal_angles_out": 0.043434057384729385,
+        "eff_rank": 12.035676002502441
+      }
+    },
+    {
+      "tensor": "model.layers.27.mlp.down_proj.weight",
+      "block": 27,
+      "kind": "mlp.down_proj",
+      "shape": [
+        1024,
+        3072
+      ],
+      "k": 32,
+      "norm_dTitan": 0.07960173487663269,
+      "norm_dSparse": 0.06550149619579315,
+      "norm_dOpallo": 0.15316331386566162,
+      "eff_rank_dOpallo": 15.016119956970215,
+      "dTitan": {
+        "elementwise_cos": -0.006067509969268424,
+        "energy_in_B_rowspace": 0.1527325860223577,
+        "chance_in": 0.010416666666666666,
+        "collision_in": 14.66232825814634,
+        "energy_in_B_colspace": 0.11754896492364274,
+        "chance_out": 0.03125,
+        "collision_out": 3.7615668775565676,
+        "mean_cos2_principal_angles_in": 0.029636744409799576,
+        "mean_cos2_principal_angles_out": 0.06328734010457993,
+        "eff_rank": 10.478575706481934
+      },
+      "dSparse": {
+        "elementwise_cos": -0.004595023366675401,
+        "energy_in_B_rowspace": 0.10079755097708472,
+        "chance_in": 0.010416666666666666,
+        "collision_in": 9.676564893800133,
+        "energy_in_B_colspace": 0.0824060122038571,
+        "chance_out": 0.03125,
+        "collision_out": 2.636992390523427,
+        "mean_cos2_principal_angles_in": 0.028759701177477837,
+        "mean_cos2_principal_angles_out": 0.05923778563737869,
+        "eff_rank": 12.466459274291992
+      }
+    },
+    {
+      "tensor": "model.layers.27.mlp.gate_proj.weight",
+      "block": 27,
+      "kind": "mlp.gate_proj",
+      "shape": [
+        3072,
+        1024
+      ],
+      "k": 32,
+      "norm_dTitan": 0.08144482970237732,
+      "norm_dSparse": 0.06788619607686996,
+      "norm_dOpallo": 0.13419395685195923,
+      "eff_rank_dOpallo": 18.172395706176758,
+      "dTitan": {
+        "elementwise_cos": -7.878294088228904e-05,
+        "energy_in_B_rowspace": 0.10477230726161778,
+        "chance_in": 0.03125,
+        "collision_in": 3.352713832371769,
+        "energy_in_B_colspace": 0.011899799112019457,
+        "chance_out": 0.010416666666666666,
+        "collision_out": 1.142380714753868,
+        "mean_cos2_principal_angles_in": 0.04899035766720772,
+        "mean_cos2_principal_angles_out": 0.011993477120995522,
+        "eff_rank": 13.949294090270996
+      },
+      "dSparse": {
+        "elementwise_cos": 0.00032480639323783484,
+        "energy_in_B_rowspace": 0.08554184369130063,
+        "chance_in": 0.03125,
+        "collision_in": 2.7373389981216203,
+        "energy_in_B_colspace": 0.011196668110329318,
+        "chance_out": 0.010416666666666666,
+        "collision_out": 1.0748801385916147,
+        "mean_cos2_principal_angles_in": 0.048309460282325745,
+        "mean_cos2_principal_angles_out": 0.011358421295881271,
+        "eff_rank": 14.401359558105469
+      }
+    },
+    {
+      "tensor": "model.layers.27.mlp.up_proj.weight",
+      "block": 27,
+      "kind": "mlp.up_proj",
+      "shape": [
+        3072,
+        1024
+      ],
+      "k": 32,
+      "norm_dTitan": 0.07975626736879349,
+      "norm_dSparse": 0.06629897654056549,
+      "norm_dOpallo": 0.13877436518669128,
+      "eff_rank_dOpallo": 17.60478401184082,
+      "dTitan": {
+        "elementwise_cos": -0.0009768919882665022,
+        "energy_in_B_rowspace": 0.10039909853620181,
+        "chance_in": 0.03125,
+        "collision_in": 3.212771153158458,
+        "energy_in_B_colspace": 0.012582522615772033,
+        "chance_out": 0.010416666666666666,
+        "collision_out": 1.2079221711141153,
+        "mean_cos2_principal_angles_in": 0.0488925501704216,
+        "mean_cos2_principal_angles_out": 0.014685950241982937,
+        "eff_rank": 13.423124313354492
+      },
+      "dSparse": {
+        "elementwise_cos": 0.00011452941654506556,
+        "energy_in_B_rowspace": 0.08147139587124673,
+        "chance_in": 0.03125,
+        "collision_in": 2.6070846678798953,
+        "energy_in_B_colspace": 0.011466287023846848,
+        "chance_out": 0.010416666666666666,
+        "collision_out": 1.1007635542892975,
+        "mean_cos2_principal_angles_in": 0.04978591948747635,
+        "mean_cos2_principal_angles_out": 0.01394953764975071,
+        "eff_rank": 14.28943157196045
+      }
+    },
+    {
+      "tensor": "model.layers.27.self_attn.k_proj.weight",
+      "block": 27,
+      "kind": "self_attn.k_proj",
+      "shape": [
+        1024,
+        1024
+      ],
+      "k": 32,
+      "norm_dTitan": 0.04651198163628578,
+      "norm_dSparse": 0.03914739936590195,
+      "norm_dOpallo": 0.07938456535339355,
+      "eff_rank_dOpallo": 14.572035789489746,
+      "dTitan": {
+        "elementwise_cos": -0.009753742617139741,
+        "energy_in_B_rowspace": 0.19052043565667504,
+        "chance_in": 0.03125,
+        "collision_in": 6.096653941013601,
+        "energy_in_B_colspace": 0.155719612665206,
+        "chance_out": 0.03125,
+        "collision_out": 4.983027605286592,
+        "mean_cos2_principal_angles_in": 0.12781329452991486,
+        "mean_cos2_principal_angles_out": 0.117961585521698,
+        "eff_rank": 14.099676132202148
+      },
+      "dSparse": {
+        "elementwise_cos": -0.011991263456178031,
+        "energy_in_B_rowspace": 0.14512610590014582,
+        "chance_in": 0.03125,
+        "collision_in": 4.644035388804666,
+        "energy_in_B_colspace": 0.12440616924664478,
+        "chance_out": 0.03125,
+        "collision_out": 3.980997415892633,
+        "mean_cos2_principal_angles_in": 0.11929814517498016,
+        "mean_cos2_principal_angles_out": 0.1182325929403305,
+        "eff_rank": 14.748595237731934
+      }
+    },
+    {
+      "tensor": "model.layers.27.self_attn.o_proj.weight",
+      "block": 27,
+      "kind": "self_attn.o_proj",
+      "shape": [
+        1024,
+        2048
+      ],
+      "k": 32,
+      "norm_dTitan": 0.06540940701961517,
+      "norm_dSparse": 0.054458972066640854,
+      "norm_dOpallo": 0.12187592685222626,
+      "eff_rank_dOpallo": 15.601812362670898,
+      "dTitan": {
+        "elementwise_cos": -0.003453287829232362,
+        "energy_in_B_rowspace": 0.15981552570883065,
+        "chance_in": 0.015625,
+        "collision_in": 10.228193645365161,
+        "energy_in_B_colspace": 0.05211552354329996,
+        "chance_out": 0.03125,
+        "collision_out": 1.6676967533855986,
+        "mean_cos2_principal_angles_in": 0.04944324865937233,
+        "mean_cos2_principal_angles_out": 0.05446813628077507,
+        "eff_rank": 10.973109245300293
+      },
+      "dSparse": {
+        "elementwise_cos": -0.003837634665598748,
+        "energy_in_B_rowspace": 0.11755535385287008,
+        "chance_in": 0.015625,
+        "collision_in": 7.523542646583685,
+        "energy_in_B_colspace": 0.044083548236592766,
+        "chance_out": 0.03125,
+        "collision_out": 1.4106735435709685,
+        "mean_cos2_principal_angles_in": 0.04971002787351608,
+        "mean_cos2_principal_angles_out": 0.04965956136584282,
+        "eff_rank": 12.927717208862305
+      }
+    },
+    {
+      "tensor": "model.layers.27.self_attn.q_proj.weight",
+      "block": 27,
+      "kind": "self_attn.q_proj",
+      "shape": [
+        2048,
+        1024
+      ],
+      "k": 32,
+      "norm_dTitan": 0.06625672429800034,
+      "norm_dSparse": 0.05551426485180855,
+      "norm_dOpallo": 0.10893456637859344,
+      "eff_rank_dOpallo": 17.118677139282227,
+      "dTitan": {
+        "elementwise_cos": -0.0007860584691705087,
+        "energy_in_B_rowspace": 0.09879065647810208,
+        "chance_in": 0.03125,
+        "collision_in": 3.1613010072992664,
+        "energy_in_B_colspace": 0.1692376124188983,
+        "chance_out": 0.015625,
+        "collision_out": 10.83120719480949,
+        "mean_cos2_principal_angles_in": 0.04915905371308327,
+        "mean_cos2_principal_angles_out": 0.14819791913032532,
+        "eff_rank": 13.601795196533203
+      },
+      "dSparse": {
+        "elementwise_cos": -0.001589169401709504,
+        "energy_in_B_rowspace": 0.08158644622790343,
+        "chance_in": 0.03125,
+        "collision_in": 2.6107662792929096,
+        "energy_in_B_colspace": 0.1307899805240652,
+        "chance_out": 0.015625,
+        "collision_out": 8.370558753540173,
+        "mean_cos2_principal_angles_in": 0.049878232181072235,
+        "mean_cos2_principal_angles_out": 0.15662115812301636,
+        "eff_rank": 14.613090515136719
+      }
+    },
+    {
+      "tensor": "model.layers.27.self_attn.v_proj.weight",
+      "block": 27,
+      "kind": "self_attn.v_proj",
+      "shape": [
+        1024,
+        1024
+      ],
+      "k": 32,
+      "norm_dTitan": 0.04533965140581131,
+      "norm_dSparse": 0.03798677399754524,
+      "norm_dOpallo": 0.08576631546020508,
+      "eff_rank_dOpallo": 14.20773983001709,
+      "dTitan": {
+        "elementwise_cos": -0.0022966405898335097,
+        "energy_in_B_rowspace": 0.2495990339555429,
+        "chance_in": 0.03125,
+        "collision_in": 7.987169086577373,
+        "energy_in_B_colspace": 0.03920657278561393,
+        "chance_out": 0.03125,
+        "collision_out": 1.2546103291396458,
+        "mean_cos2_principal_angles_in": 0.09901634603738785,
+        "mean_cos2_principal_angles_out": 0.04411378502845764,
+        "eff_rank": 13.5325927734375
+      },
+      "dSparse": {
+        "elementwise_cos": -0.0017792322950148218,
+        "energy_in_B_rowspace": 0.18773974149549916,
+        "chance_in": 0.03125,
+        "collision_in": 6.007671727855973,
+        "energy_in_B_colspace": 0.03720250913906817,
+        "chance_out": 0.03125,
+        "collision_out": 1.1904802924501814,
+        "mean_cos2_principal_angles_in": 0.0969180017709732,
+        "mean_cos2_principal_angles_out": 0.0432237908244133,
+        "eff_rank": 14.888937950134277
+      }
+    },
+    {
+      "tensor": "model.layers.8.mlp.down_proj.weight",
+      "block": 8,
+      "kind": "mlp.down_proj",
+      "shape": [
+        1024,
+        3072
+      ],
+      "k": 32,
+      "norm_dTitan": 0.08920944482088089,
+      "norm_dSparse": 0.07439440488815308,
+      "norm_dOpallo": 0.13192631304264069,
+      "eff_rank_dOpallo": 19.01640510559082,
+      "dTitan": {
+        "elementwise_cos": 0.011121474756024326,
+        "energy_in_B_rowspace": 0.11834463559820532,
+        "chance_in": 0.010416666666666666,
+        "collision_in": 11.361085017427712,
+        "energy_in_B_colspace": 0.0545895167931735,
+        "chance_out": 0.03125,
+        "collision_out": 1.746864537381552,
+        "mean_cos2_principal_angles_in": 0.08279204368591309,
+        "mean_cos2_principal_angles_out": 0.05891849100589752,
+        "eff_rank": 20.767620086669922
+      },
+      "dSparse": {
+        "elementwise_cos": 0.009102818165281601,
+        "energy_in_B_rowspace": 0.08605859013973387,
+        "chance_in": 0.010416666666666666,
+        "collision_in": 8.261624653414453,
+        "energy_in_B_colspace": 0.047243416322601796,
+        "chance_out": 0.03125,
+        "collision_out": 1.5117893223232575,
+        "mean_cos2_principal_angles_in": 0.08054930716753006,
+        "mean_cos2_principal_angles_out": 0.05687050521373749,
+        "eff_rank": 20.84748077392578
+      }
+    },
+    {
+      "tensor": "model.layers.8.mlp.gate_proj.weight",
+      "block": 8,
+      "kind": "mlp.gate_proj",
+      "shape": [
+        3072,
+        1024
+      ],
+      "k": 32,
+      "norm_dTitan": 0.09089985489845276,
+      "norm_dSparse": 0.07571548968553543,
+      "norm_dOpallo": 0.12810474634170532,
+      "eff_rank_dOpallo": 20.978776931762695,
+      "dTitan": {
+        "elementwise_cos": 0.00908864272488599,
+        "energy_in_B_rowspace": 0.12824097503243778,
+        "chance_in": 0.03125,
+        "collision_in": 4.103711201038009,
+        "energy_in_B_colspace": 0.012780288265377979,
+        "chance_out": 0.010416666666666666,
+        "collision_out": 1.226907673476286,
+        "mean_cos2_principal_angles_in": 0.12202396988868713,
+        "mean_cos2_principal_angles_out": 0.012857005931437016,
+        "eff_rank": 23.266756057739258
+      },
+      "dSparse": {
+        "elementwise_cos": 0.007545527210830481,
+        "energy_in_B_rowspace": 0.10029411369100977,
+        "chance_in": 0.03125,
+        "collision_in": 3.2094116381123126,
+        "energy_in_B_colspace": 0.01201732616969268,
+        "chance_out": 0.010416666666666666,
+        "collision_out": 1.1536633122904973,
+        "mean_cos2_principal_angles_in": 0.11806436628103256,
+        "mean_cos2_principal_angles_out": 0.012406562454998493,
+        "eff_rank": 23.157312393188477
+      }
+    },
+    {
+      "tensor": "model.layers.8.mlp.up_proj.weight",
+      "block": 8,
+      "kind": "mlp.up_proj",
+      "shape": [
+        3072,
+        1024
+      ],
+      "k": 32,
+      "norm_dTitan": 0.09050039947032928,
+      "norm_dSparse": 0.0754571184515953,
+      "norm_dOpallo": 0.13196375966072083,
+      "eff_rank_dOpallo": 18.676633834838867,
+      "dTitan": {
+        "elementwise_cos": 0.014456998592587554,
+        "energy_in_B_rowspace": 0.14688540112430454,
+        "chance_in": 0.03125,
+        "collision_in": 4.700332835977745,
+        "energy_in_B_colspace": 0.03572256152027114,
+        "chance_out": 0.010416666666666666,
+        "collision_out": 3.4293659059460295,
+        "mean_cos2_principal_angles_in": 0.1182841956615448,
+        "mean_cos2_principal_angles_out": 0.0362958088517189,
+        "eff_rank": 20.605995178222656
+      },
+      "dSparse": {
+        "elementwise_cos": 0.011415711963844102,
+        "energy_in_B_rowspace": 0.11324011922416502,
+        "chance_in": 0.03125,
+        "collision_in": 3.6236838151732806,
+        "energy_in_B_colspace": 0.02732449274492664,
+        "chance_out": 0.010416666666666666,
+        "collision_out": 2.6231513035129574,
+        "mean_cos2_principal_angles_in": 0.11795012652873993,
+        "mean_cos2_principal_angles_out": 0.03403482586145401,
+        "eff_rank": 20.57050132751465
+      }
+    },
+    {
+      "tensor": "model.layers.8.self_attn.k_proj.weight",
+      "block": 8,
+      "kind": "self_attn.k_proj",
+      "shape": [
+        1024,
+        1024
+      ],
+      "k": 32,
+      "norm_dTitan": 0.053446974605321884,
+      "norm_dSparse": 0.044566426426172256,
+      "norm_dOpallo": 0.07169418781995773,
+      "eff_rank_dOpallo": 21.178653717041016,
+      "dTitan": {
+        "elementwise_cos": 0.005864789108451657,
+        "energy_in_B_rowspace": 0.1382037325014747,
+        "chance_in": 0.03125,
+        "collision_in": 4.42251944004719,
+        "energy_in_B_colspace": 0.152818185274294,
+        "chance_out": 0.03125,
+        "collision_out": 4.890181928777408,
+        "mean_cos2_principal_angles_in": 0.1263861060142517,
+        "mean_cos2_principal_angles_out": 0.1513218879699707,
+        "eff_rank": 24.2100772857666
+      },
+      "dSparse": {
+        "elementwise_cos": 0.004138321256444446,
+        "energy_in_B_rowspace": 0.10870221322004636,
+        "chance_in": 0.03125,
+        "collision_in": 3.4784708230414836,
+        "energy_in_B_colspace": 0.11970127670022342,
+        "chance_out": 0.03125,
+        "collision_out": 3.8304408544071493,
+        "mean_cos2_principal_angles_in": 0.12378090620040894,
+        "mean_cos2_principal_angles_out": 0.14924919605255127,
+        "eff_rank": 24.30051040649414
+      }
+    },
+    {
+      "tensor": "model.layers.8.self_attn.o_proj.weight",
+      "block": 8,
+      "kind": "self_attn.o_proj",
+      "shape": [
+        1024,
+        2048
+      ],
+      "k": 32,
+      "norm_dTitan": 0.0733959898352623,
+      "norm_dSparse": 0.06120522320270538,
+      "norm_dOpallo": 0.10680989176034927,
+      "eff_rank_dOpallo": 15.290635108947754,
+      "dTitan": {
+        "elementwise_cos": 0.01902995572691531,
+        "energy_in_B_rowspace": 0.17461413251689845,
+        "chance_in": 0.015625,
+        "collision_in": 11.1753044810815,
+        "energy_in_B_colspace": 0.05517234520439732,
+        "chance_out": 0.03125,
+        "collision_out": 1.7655150465407143,
+        "mean_cos2_principal_angles_in": 0.12331520020961761,
+        "mean_cos2_principal_angles_out": 0.05617624148726463,
+        "eff_rank": 14.493038177490234
+      },
+      "dSparse": {
+        "elementwise_cos": 0.016416747520779477,
+        "energy_in_B_rowspace": 0.13204637906541622,
+        "chance_in": 0.015625,
+        "collision_in": 8.450968260186638,
+        "energy_in_B_colspace": 0.048726521371285116,
+        "chance_out": 0.03125,
+        "collision_out": 1.5592486838811237,
+        "mean_cos2_principal_angles_in": 0.1177847757935524,
+        "mean_cos2_principal_angles_out": 0.054063037037849426,
+        "eff_rank": 14.377423286437988
+      }
+    },
+    {
+      "tensor": "model.layers.8.self_attn.q_proj.weight",
+      "block": 8,
+      "kind": "self_attn.q_proj",
+      "shape": [
+        2048,
+        1024
+      ],
+      "k": 32,
+      "norm_dTitan": 0.07537952810525894,
+      "norm_dSparse": 0.06280416250228882,
+      "norm_dOpallo": 0.10314612835645676,
+      "eff_rank_dOpallo": 20.010723114013672,
+      "dTitan": {
+        "elementwise_cos": 0.00167347502108058,
+        "energy_in_B_rowspace": 0.1469466758652906,
+        "chance_in": 0.03125,
+        "collision_in": 4.702293627689299,
+        "energy_in_B_colspace": 0.13148852747599524,
+        "chance_out": 0.015625,
+        "collision_out": 8.415265758463695,
+        "mean_cos2_principal_angles_in": 0.14070159196853638,
+        "mean_cos2_principal_angles_out": 0.13313990831375122,
+        "eff_rank": 22.271072387695312
+      },
+      "dSparse": {
+        "elementwise_cos": 0.0020696296059738934,
+        "energy_in_B_rowspace": 0.11197983915927198,
+        "chance_in": 0.03125,
+        "collision_in": 3.5833548530967034,
+        "energy_in_B_colspace": 0.10153602795227899,
+        "chance_out": 0.015625,
+        "collision_out": 6.4983057889458555,
+        "mean_cos2_principal_angles_in": 0.1353045254945755,
+        "mean_cos2_principal_angles_out": 0.13111908733844757,
+        "eff_rank": 22.343244552612305
+      }
+    },
+    {
+      "tensor": "model.layers.8.self_attn.v_proj.weight",
+      "block": 8,
+      "kind": "self_attn.v_proj",
+      "shape": [
+        1024,
+        1024
+      ],
+      "k": 32,
+      "norm_dTitan": 0.05223476514220238,
+      "norm_dSparse": 0.04356904327869415,
+      "norm_dOpallo": 0.07600538432598114,
+      "eff_rank_dOpallo": 15.812166213989258,
+      "dTitan": {
+        "elementwise_cos": 0.014169809374903536,
+        "energy_in_B_rowspace": 0.17124464463962727,
+        "chance_in": 0.03125,
+        "collision_in": 5.479828628468073,
+        "energy_in_B_colspace": 0.0690233358406472,
+        "chance_out": 0.03125,
+        "collision_out": 2.2087467469007103,
+        "mean_cos2_principal_angles_in": 0.1370578110218048,
+        "mean_cos2_principal_angles_out": 0.06618417799472809,
+        "eff_rank": 16.764169692993164
+      },
+      "dSparse": {
+        "elementwise_cos": 0.011380160733490375,
+        "energy_in_B_rowspace": 0.13451410440062087,
+        "chance_in": 0.03125,
+        "collision_in": 4.304451340819868,
+        "energy_in_B_colspace": 0.05759039982844363,
+        "chance_out": 0.03125,
+        "collision_out": 1.842892794510196,
+        "mean_cos2_principal_angles_in": 0.13437820971012115,
+        "mean_cos2_principal_angles_out": 0.06376537680625916,
+        "eff_rank": 16.976070404052734
+      }
+    },
+    {
+      "tensor": "model.layers.9.mlp.down_proj.weight",
+      "block": 9,
+      "kind": "mlp.down_proj",
+      "shape": [
+        1024,
+        3072
+      ],
+      "k": 32,
+      "norm_dTitan": 0.08754420280456543,
+      "norm_dSparse": 0.07317079603672028,
+      "norm_dOpallo": 0.13407664000988007,
+      "eff_rank_dOpallo": 16.594194412231445,
+      "dTitan": {
+        "elementwise_cos": 0.00829010410779867,
+        "energy_in_B_rowspace": 0.12994434642464045,
+        "chance_in": 0.010416666666666666,
+        "collision_in": 12.474657256765484,
+        "energy_in_B_colspace": 0.05534949465738197,
+        "chance_out": 0.03125,
+        "collision_out": 1.771183829036223,
+        "mean_cos2_principal_angles_in": 0.07549549639225006,
+        "mean_cos2_principal_angles_out": 0.053010884672403336,
+        "eff_rank": 18.8709659576416
+      },
+      "dSparse": {
+        "elementwise_cos": 0.006619557528263842,
+        "energy_in_B_rowspace": 0.09604199643100014,
+        "chance_in": 0.010416666666666666,
+        "collision_in": 9.220031657376014,
+        "energy_in_B_colspace": 0.0481814780196505,
+        "chance_out": 0.03125,
+        "collision_out": 1.541807296628816,
+        "mean_cos2_principal_angles_in": 0.07303643226623535,
+        "mean_cos2_principal_angles_out": 0.05230889841914177,
+        "eff_rank": 18.880216598510742
+      }
+    },
+    {
+      "tensor": "model.layers.9.mlp.gate_proj.weight",
+      "block": 9,
+      "kind": "mlp.gate_proj",
+      "shape": [
+        3072,
+        1024
+      ],
+      "k": 32,
+      "norm_dTitan": 0.08897226303815842,
+      "norm_dSparse": 0.07432544976472855,
+      "norm_dOpallo": 0.12927716970443726,
+      "eff_rank_dOpallo": 20.508670806884766,
+      "dTitan": {
+        "elementwise_cos": 0.0020338634564411764,
+        "energy_in_B_rowspace": 0.142876399326305,
+        "chance_in": 0.03125,
+        "collision_in": 4.57204477844176,
+        "energy_in_B_colspace": 0.012434509751368172,
+        "chance_out": 0.010416666666666666,
+        "collision_out": 1.1937129361313445,
+        "mean_cos2_principal_angles_in": 0.12391360104084015,
+        "mean_cos2_principal_angles_out": 0.012399464845657349,
+        "eff_rank": 21.994951248168945
+      },
+      "dSparse": {
+        "elementwise_cos": 0.0017657822218626995,
+        "energy_in_B_rowspace": 0.11055657411981362,
+        "chance_in": 0.03125,
+        "collision_in": 3.537810371834036,
+        "energy_in_B_colspace": 0.01177496599410215,
+        "chance_out": 0.010416666666666666,
+        "collision_out": 1.1303967354338065,
+        "mean_cos2_principal_angles_in": 0.12103232741355896,
+        "mean_cos2_principal_angles_out": 0.012026596814393997,
+        "eff_rank": 21.750123977661133
+      }
+    },
+    {
+      "tensor": "model.layers.9.mlp.up_proj.weight",
+      "block": 9,
+      "kind": "mlp.up_proj",
+      "shape": [
+        3072,
+        1024
+      ],
+      "k": 32,
+      "norm_dTitan": 0.08817970007658005,
+      "norm_dSparse": 0.07368186861276627,
+      "norm_dOpallo": 0.13323698937892914,
+      "eff_rank_dOpallo": 17.621810913085938,
+      "dTitan": {
+        "elementwise_cos": 0.008786024433278658,
+        "energy_in_B_rowspace": 0.1501053468047475,
+        "chance_in": 0.03125,
+        "collision_in": 4.80337109775192,
+        "energy_in_B_colspace": 0.02983088492781717,
+        "chance_out": 0.010416666666666666,
+        "collision_out": 2.8637649530704485,
+        "mean_cos2_principal_angles_in": 0.11784997582435608,
+        "mean_cos2_principal_angles_out": 0.030393322929739952,
+        "eff_rank": 20.29852294921875
+      },
+      "dSparse": {
+        "elementwise_cos": 0.007220575814270772,
+        "energy_in_B_rowspace": 0.11513944072527073,
+        "chance_in": 0.03125,
+        "collision_in": 3.6844621032086633,
+        "energy_in_B_colspace": 0.023726333006007586,
+        "chance_out": 0.010416666666666666,
+        "collision_out": 2.277727968576728,
+        "mean_cos2_principal_angles_in": 0.11429080367088318,
+        "mean_cos2_principal_angles_out": 0.028033524751663208,
+        "eff_rank": 20.331157684326172
+      }
+    },
+    {
+      "tensor": "model.layers.9.self_attn.k_proj.weight",
+      "block": 9,
+      "kind": "self_attn.k_proj",
+      "shape": [
+        1024,
+        1024
+      ],
+      "k": 32,
+      "norm_dTitan": 0.0525895357131958,
+      "norm_dSparse": 0.043724074959754944,
+      "norm_dOpallo": 0.07166218757629395,
+      "eff_rank_dOpallo": 22.81505584716797,
+      "dTitan": {
+        "elementwise_cos": 0.019464030514954486,
+        "energy_in_B_rowspace": 0.1592039388436719,
+        "chance_in": 0.03125,
+        "collision_in": 5.094526042997501,
+        "energy_in_B_colspace": 0.1514088942165961,
+        "chance_out": 0.03125,
+        "collision_out": 4.845084614931075,
+        "mean_cos2_principal_angles_in": 0.12912671267986298,
+        "mean_cos2_principal_angles_out": 0.15035918354988098,
+        "eff_rank": 24.26412582397461
+      },
+      "dSparse": {
+        "elementwise_cos": 0.016512390515520826,
+        "energy_in_B_rowspace": 0.12391963992412976,
+        "chance_in": 0.03125,
+        "collision_in": 3.965428477572152,
+        "energy_in_B_colspace": 0.11845779181943822,
+        "chance_out": 0.03125,
+        "collision_out": 3.790649338222023,
+        "mean_cos2_principal_angles_in": 0.12661269307136536,
+        "mean_cos2_principal_angles_out": 0.14938679337501526,
+        "eff_rank": 24.378841400146484
+      }
+    },
+    {
+      "tensor": "model.layers.9.self_attn.o_proj.weight",
+      "block": 9,
+      "kind": "self_attn.o_proj",
+      "shape": [
+        1024,
+        2048
+      ],
+      "k": 32,
+      "norm_dTitan": 0.07189904898405075,
+      "norm_dSparse": 0.06002544239163399,
+      "norm_dOpallo": 0.10829085856676102,
+      "eff_rank_dOpallo": 14.874228477478027,
+      "dTitan": {
+        "elementwise_cos": 0.016645142533562123,
+        "energy_in_B_rowspace": 0.1862924817834103,
+        "chance_in": 0.015625,
+        "collision_in": 11.922718834138259,
+        "energy_in_B_colspace": 0.0551911449511118,
+        "chance_out": 0.03125,
+        "collision_out": 1.7661166384355775,
+        "mean_cos2_principal_angles_in": 0.1058555319905281,
+        "mean_cos2_principal_angles_out": 0.05015668272972107,
+        "eff_rank": 15.153130531311035
+      },
+      "dSparse": {
+        "elementwise_cos": 0.012572437710464594,
+        "energy_in_B_rowspace": 0.1380067994592615,
+        "chance_in": 0.015625,
+        "collision_in": 8.832435165392736,
+        "energy_in_B_colspace": 0.04955409485639931,
+        "chance_out": 0.03125,
+        "collision_out": 1.585731035404778,
+        "mean_cos2_principal_angles_in": 0.1018846333026886,
+        "mean_cos2_principal_angles_out": 0.049138378351926804,
+        "eff_rank": 15.640222549438477
+      }
+    },
+    {
+      "tensor": "model.layers.9.self_attn.q_proj.weight",
+      "block": 9,
+      "kind": "self_attn.q_proj",
+      "shape": [
+        2048,
+        1024
+      ],
+      "k": 32,
+      "norm_dTitan": 0.07493709027767181,
+      "norm_dSparse": 0.062441635876894,
+      "norm_dOpallo": 0.10265057533979416,
+      "eff_rank_dOpallo": 21.367355346679688,
+      "dTitan": {
+        "elementwise_cos": 0.01572866092582003,
+        "energy_in_B_rowspace": 0.1609715342610314,
+        "chance_in": 0.03125,
+        "collision_in": 5.1510890963530045,
+        "energy_in_B_colspace": 0.1720404107453326,
+        "chance_out": 0.015625,
+        "collision_out": 11.010586287701287,
+        "mean_cos2_principal_angles_in": 0.12426213920116425,
+        "mean_cos2_principal_angles_out": 0.14747187495231628,
+        "eff_rank": 19.86748504638672
+      },
+      "dSparse": {
+        "elementwise_cos": 0.012462520287158597,
+        "energy_in_B_rowspace": 0.12903952670566016,
+        "chance_in": 0.03125,
+        "collision_in": 4.129264854581125,
+        "energy_in_B_colspace": 0.14257022847350245,
+        "chance_out": 0.015625,
+        "collision_out": 9.124494622304157,
+        "mean_cos2_principal_angles_in": 0.11945000290870667,
+        "mean_cos2_principal_angles_out": 0.1501569300889969,
+        "eff_rank": 18.940893173217773
+      }
+    },
+    {
+      "tensor": "model.layers.9.self_attn.v_proj.weight",
+      "block": 9,
+      "kind": "self_attn.v_proj",
+      "shape": [
+        1024,
+        1024
+      ],
+      "k": 32,
+      "norm_dTitan": 0.052022915333509445,
+      "norm_dSparse": 0.04335161671042442,
+      "norm_dOpallo": 0.07634630054235458,
+      "eff_rank_dOpallo": 16.724393844604492,
+      "dTitan": {
+        "elementwise_cos": 0.015499772333924675,
+        "energy_in_B_rowspace": 0.22689366453374973,
+        "chance_in": 0.03125,
+        "collision_in": 7.2605972650799915,
+        "energy_in_B_colspace": 0.05451439623364242,
+        "chance_out": 0.03125,
+        "collision_out": 1.7444606794765574,
+        "mean_cos2_principal_angles_in": 0.15267285704612732,
+        "mean_cos2_principal_angles_out": 0.04723280668258667,
+        "eff_rank": 17.40903663635254
+      },
+      "dSparse": {
+        "elementwise_cos": 0.01041872027230399,
+        "energy_in_B_rowspace": 0.17500588185266033,
+        "chance_in": 0.03125,
+        "collision_in": 5.600188219285131,
+        "energy_in_B_colspace": 0.047940521574032786,
+        "chance_out": 0.03125,
+        "collision_out": 1.5340966903690492,
+        "mean_cos2_principal_angles_in": 0.15161174535751343,
+        "mean_cos2_principal_angles_out": 0.047408897429704666,
+        "eff_rank": 17.705591201782227
+      }
+    }
+  ],
+  "caveat": "Structural only. No activations, no Sigma, no forward pass. A low collision index bounds the structural risk; it does not prove functional non-interference, and a high one does not prove interference. This does not license any quality, retention or release claim."
+}

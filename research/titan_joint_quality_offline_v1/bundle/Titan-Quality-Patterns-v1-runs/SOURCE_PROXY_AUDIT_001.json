@@ -1,0 +1,90 @@
+{
+  "schema": "SOURCE_PROXY_AUDIT_V1",
+  "status": "SOURCE_AUTHORITY_SENSITIVE_CLAIM_NOT_IDENTIFIED_ON_CURRENT_TRAIN_DRAFT",
+  "audit_script": {
+    "path": "C:/Users/clclc/BusinessProject/Titan-Quality-Patterns-v1-runs/source-proxy-audit-001.py",
+    "sha256": "e769611acdfcbad5818b24e219ea8877a0a0f52f3de5efd82d914e0a4f503202"
+  },
+  "reproduced_output": {
+    "scope": "EXISTING_OPEN_V2_QUERY_AWARE_CONTROLS_AND_IN_MEMORY_AUTHORITY_FALSIFIER",
+    "authority_sourceblind": {
+      "rows": 300,
+      "original_correct": 300,
+      "original_predicted_UNKNOWN": 150,
+      "switched_truth_r_prefix": 300,
+      "switched_sourceblind_correct": 0
+    },
+    "authority_example": {
+      "case_id": "train.grounding.0017.v0",
+      "train_jsonl_line": 1,
+      "query": {
+        "attribute": "status",
+        "entity": "ewzpwfc"
+      },
+      "original_named_authority": "charter",
+      "old_gold": "UNKNOWN",
+      "sourceblind_prediction": "UNKNOWN",
+      "switched_named_authority": "rumor",
+      "proper_switched_truth": "rfrkubh",
+      "queried_facts": [
+        {
+          "attribute": "status",
+          "entity": "ewzpwfc",
+          "source": "rumor",
+          "value": "rfrkubh"
+        }
+      ]
+    },
+    "horn_controls": {
+      "copied_fact_else_UNKNOWN": {
+        "rows": 64,
+        "correct": 49,
+        "false_abstentions": 15,
+        "unsupported_answers": 0
+      },
+      "one_original_fact_round": {
+        "rows": 64,
+        "correct": 56,
+        "false_abstentions": 8,
+        "unsupported_answers": 0
+      }
+    },
+    "input_sha256": {
+      "train.jsonl": "6c82a98a4d66c64d15aa813dc1afa3f20898996c00f2d8590158a8eec8e1b11d",
+      "pilot.prompts.jsonl": "1ba852d8b0bb78d42c543a876e24a38987284095ff17f3ec9887bd7882d46bf8",
+      "pilot.references.jsonl": "51b3b96d8e557ddcf046efbb7a8afc81d1b49bbadd1289fb41023a7936aced2d"
+    },
+    "original_gold_changed": false,
+    "data_or_source_modified": false,
+    "bank_generated": false,
+    "files_written": false,
+    "native_model_calls": 0,
+    "queryblind_bound_scope": "These controls read query; the existing stateless query-blind <=.5 bound does not apply.",
+    "native_admission_frozen": false
+  },
+  "independent_agreement": {
+    "root": true,
+    "packet_review": true,
+    "author_fresh_script": true
+  },
+  "original_gold_correct": true,
+  "original_queryblind_pair_certificate_valid": true,
+  "scope_boundary": "These controls read the actual question. Perfect TRAIN source-blind prediction and Horn copy/shallow floors do not violate the existing deterministic/stateless query-blind<=.5 certificate; they reveal a separate admission/interpretation gap.",
+  "minimal_prospective_remedy": {
+    "status": "PROPOSAL_ONLY_NO_V3_DATA_OR_NATIVE_ARM_CREATED",
+    "values": "Counterbalance value distributions/prefixes across factual sources; value morphology must not identify trust/source.",
+    "authority": "Cross named authoritative_source assignments and same-fact authority switches prospectively.",
+    "missingness": "Include missing authoritative evidence for each possible source, with rumor/decoy evidence present; preserve explicit UNKNOWN semantics.",
+    "preserved": "Do not rewrite current gold, historical results, original numeric gates or existing source/permit bindings.",
+    "claim": "Disclose49/64 copied-fact and56/64 one-round query-aware Horn floors before interpreting rule-depth benefit; no model arm or automatic dispatch is added."
+  },
+  "limits": [
+    "This is deterministic instrument evidence, not a native model capability result.",
+    "Original v2 mathematical truth and query-blind invariance remain intact.",
+    "Source-sensitive and rule-depth learning claims need prospective owner review; no native admission is frozen here."
+  ],
+  "native_model_calls": 0,
+  "new_dataset_generated": false,
+  "source_or_data_modified": false,
+  "instrument_freeze_performed": false
+}

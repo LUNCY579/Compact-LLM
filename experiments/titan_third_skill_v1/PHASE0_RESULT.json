@@ -1,0 +1,276 @@
+{
+ "schema": 1,
+ "experiment": "TRISKILL-001",
+ "phase": 0,
+ "determinism_vs_attempt1": {
+  "units": {
+   "BASE__atomic_A": true,
+   "BASE__atomic_C": true,
+   "BASE__atomic_P": true,
+   "BASE__atomic_R": true,
+   "BASE__atomic_S": true,
+   "SPARSE__atomic_A": true,
+   "SPARSE__atomic_C": true
+  },
+  "all_identical": true
+ },
+ "registered_in": "PHASE0_PREREG.md",
+ "scores_file": "PHASE0_SCORES.json",
+ "population": "96 JSON-contract rows per bank (full, counterfactual, distractor); strict = SIF scorer",
+ "table": {
+  "A": {
+   "BASE": {
+    "strict": 3,
+    "semantic": 3,
+    "format_valid": 52,
+    "by_variant": {
+     "full": 2,
+     "counterfactual": 0,
+     "distractor": 1
+    },
+    "alternate_format_strict_of_32": 0
+   },
+   "SPARSE": {
+    "strict": 2,
+    "semantic": 3,
+    "format_valid": 21,
+    "by_variant": {
+     "full": 2,
+     "counterfactual": 0,
+     "distractor": 0
+    },
+    "alternate_format_strict_of_32": 0
+   },
+   "TT": {
+    "strict": 1,
+    "semantic": 2,
+    "format_valid": 14,
+    "by_variant": {
+     "full": 1,
+     "counterfactual": 0,
+     "distractor": 0
+    },
+    "alternate_format_strict_of_32": 0
+   }
+  },
+  "C": {
+   "BASE": {
+    "strict": 11,
+    "semantic": 15,
+    "format_valid": 47,
+    "by_variant": {
+     "full": 5,
+     "counterfactual": 6,
+     "distractor": 0
+    },
+    "alternate_format_strict_of_32": 2
+   },
+   "SPARSE": {
+    "strict": 1,
+    "semantic": 17,
+    "format_valid": 6,
+    "by_variant": {
+     "full": 1,
+     "counterfactual": 0,
+     "distractor": 0
+    },
+    "alternate_format_strict_of_32": 1
+   },
+   "TT": {
+    "strict": 0,
+    "semantic": 15,
+    "format_valid": 0,
+    "by_variant": {
+     "full": 0,
+     "counterfactual": 0,
+     "distractor": 0
+    },
+    "alternate_format_strict_of_32": 1
+   }
+  },
+  "P": {
+   "BASE": {
+    "strict": 0,
+    "semantic": 0,
+    "format_valid": 23,
+    "by_variant": {
+     "full": 0,
+     "counterfactual": 0,
+     "distractor": 0
+    },
+    "alternate_format_strict_of_32": 3
+   },
+   "SPARSE": {
+    "strict": 5,
+    "semantic": 5,
+    "format_valid": 27,
+    "by_variant": {
+     "full": 1,
+     "counterfactual": 3,
+     "distractor": 1
+    },
+    "alternate_format_strict_of_32": 2
+   },
+   "TT": {
+    "strict": 1,
+    "semantic": 6,
+    "format_valid": 4,
+    "by_variant": {
+     "full": 0,
+     "counterfactual": 1,
+     "distractor": 0
+    },
+    "alternate_format_strict_of_32": 2
+   }
+  },
+  "R": {
+   "BASE": {
+    "strict": 5,
+    "semantic": 6,
+    "format_valid": 32,
+    "by_variant": {
+     "full": 4,
+     "counterfactual": 1,
+     "distractor": 0
+    },
+    "alternate_format_strict_of_32": 7
+   },
+   "SPARSE": {
+    "strict": 0,
+    "semantic": 11,
+    "format_valid": 0,
+    "by_variant": {
+     "full": 0,
+     "counterfactual": 0,
+     "distractor": 0
+    },
+    "alternate_format_strict_of_32": 4
+   },
+   "TT": {
+    "strict": 0,
+    "semantic": 13,
+    "format_valid": 0,
+    "by_variant": {
+     "full": 0,
+     "counterfactual": 0,
+     "distractor": 0
+    },
+    "alternate_format_strict_of_32": 3
+   }
+  },
+  "S": {
+   "BASE": {
+    "strict": 1,
+    "semantic": 6,
+    "format_valid": 2,
+    "by_variant": {
+     "full": 0,
+     "counterfactual": 0,
+     "distractor": 1
+    },
+    "alternate_format_strict_of_32": 3
+   },
+   "SPARSE": {
+    "strict": 0,
+    "semantic": 16,
+    "format_valid": 0,
+    "by_variant": {
+     "full": 0,
+     "counterfactual": 0,
+     "distractor": 0
+    },
+    "alternate_format_strict_of_32": 6
+   },
+   "TT": {
+    "strict": 0,
+    "semantic": 17,
+    "format_valid": 0,
+    "by_variant": {
+     "full": 0,
+     "counterfactual": 0,
+     "distractor": 0
+    },
+    "alternate_format_strict_of_32": 5
+   }
+  }
+ },
+ "contrasts": {
+  "SPARSE-BASE/A": {
+   "net": -1,
+   "gained": 0,
+   "lost": 1,
+   "p_exact_mcnemar": 1.0
+  },
+  "TT-BASE/A": {
+   "net": -2,
+   "gained": 0,
+   "lost": 2,
+   "p_exact_mcnemar": 0.5
+  },
+  "SPARSE-BASE/C": {
+   "net": -10,
+   "gained": 1,
+   "lost": 11,
+   "p_exact_mcnemar": 0.00634765625
+  },
+  "TT-BASE/C": {
+   "net": -11,
+   "gained": 0,
+   "lost": 11,
+   "p_exact_mcnemar": 0.0009765625
+  },
+  "SPARSE-BASE/P": {
+   "net": 5,
+   "gained": 5,
+   "lost": 0,
+   "p_exact_mcnemar": 0.0625
+  },
+  "TT-BASE/P": {
+   "net": 1,
+   "gained": 1,
+   "lost": 0,
+   "p_exact_mcnemar": 1.0
+  },
+  "SPARSE-BASE/R": {
+   "net": -5,
+   "gained": 0,
+   "lost": 5,
+   "p_exact_mcnemar": 0.0625
+  },
+  "TT-BASE/R": {
+   "net": -5,
+   "gained": 0,
+   "lost": 5,
+   "p_exact_mcnemar": 0.0625
+  },
+  "SPARSE-BASE/S": {
+   "net": -1,
+   "gained": 0,
+   "lost": 1,
+   "p_exact_mcnemar": 1.0
+  },
+  "TT-BASE/S": {
+   "net": -1,
+   "gained": 0,
+   "lost": 1,
+   "p_exact_mcnemar": 1.0
+  }
+ },
+ "G0_HEADROOM": {
+  "C": {
+   "base_strict": 11,
+   "floor": 18,
+   "pass": true
+  },
+  "P": {
+   "base_strict": 0,
+   "floor": 22,
+   "pass": true
+  }
+ },
+ "selected_candidate": "C",
+ "stop": false,
+ "partially_present_before_donation_flag": false,
+ "quality_claim": false,
+ "release_permitted": false
+}

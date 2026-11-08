@@ -1,0 +1,46 @@
+{
+  "status": "FROZEN_PLAN_ONLY_NATIVE_BLOCKED",
+  "selected_local_directory": "artifacts/mimo_central/e1_plan_seed101_v2",
+  "receipt": "receipts/E1_PLAN_SEED101_V2_RECEIPT.json",
+  "receipt_sha256": "61a39249e09f30f0664acf828477e2800ccb306b0a82b93eca34e5b8663861cd",
+  "code_commit": "676dcbabcd59247e97617e6eb7ad97fd5aa5af40",
+  "python_version": [
+    3,
+    11,
+    15
+  ],
+  "plan_sha256": "319c780924adb6ea17d3fabd1850f097848c5e11272e65e730c9e791c843b156",
+  "identities": {
+    "config_sha256": "1cbe40eebff71dfdf39b21207fab7952b78af06dd4f89b3047db585e0c94f5a2",
+    "data_sha256": "51b87fe4fd70d2fb23d16f270d1023716172dbbe1c88efd79dff8c3548623d6d",
+    "model_sha256": "b6cac2bc479cce98be73a08c4264bbf44e60ca689e6231e40952d8b9e5bc6ba1",
+    "parent_sha256": "537201676814ade103c4efa63f5ebe758ea309971803c4ad633dbca5b6b531b7",
+    "source_sha256": "62037adfc38a225279ff1941426e29f4ad32dab7520b5dee7843698df25636a6"
+  },
+  "rows": 5120,
+  "steps": 256,
+  "nonpadding_tokens": 680532,
+  "supervised_tokens": 63546,
+  "native_launch_authorized": false,
+  "model_calls": 0,
+  "training_updates": 0,
+  "superseded_plans": [
+    {
+      "path": "artifacts/mimo_central/e1_plan_seed101_v1",
+      "receipt": "receipts/E1_PLAN_SEED101_V1_RECEIPT.json",
+      "reason": "Valid plan under Python3.13.2; runtime binding differs from pinned future native worker3.11.15; preserved unchanged"
+    }
+  ],
+  "limitations": [
+    "No native executor",
+    "Accounting cursors do not restore or qualify checkpoint/optimizer/RNG state",
+    "E0/source enrollment/language grading/long-context runtime remain unqualified",
+    "No CHECK/FINAL payload access"
+  ],
+  "independent_audit": {
+    "receipt": "receipts/E1_PLAN_INDEPENDENT_AUDIT.json",
+    "sha256": "4dd427428a3f174120529e683920e1f80d7d034effad76c7b4ea55cfd759a617",
+    "checks": 68,
+    "findings": 0
+  }
+}

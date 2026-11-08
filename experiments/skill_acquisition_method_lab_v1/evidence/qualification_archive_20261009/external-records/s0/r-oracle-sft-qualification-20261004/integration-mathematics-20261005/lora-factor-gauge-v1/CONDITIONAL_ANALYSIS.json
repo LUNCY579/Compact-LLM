@@ -1,0 +1,211 @@
+{
+  "authorization": "Conditional algebra and static source inspection only; no acquisition, DEV, confirmation, promotion or model execution.",
+  "branch_inspection": {
+    "limits": "Static source inspection only; no PEFT/Transformers runtime, anchor provenance, tensor layout, module variant, scale convention, dtype round-trip or model behavior was validated.",
+    "observed_implementation": "Both branches have matching source hashes for B-only weighted sequential merging and FP32 reconstructed-delta averaging. The inspected code avoids direct A/B averaging."
+  },
+  "checks": [
+    {
+      "evidence": "EXACT_RATIONAL_TOY_ALGEBRA",
+      "name": "reconstructed_delta_mean",
+      "passed": true
+    },
+    {
+      "evidence": "EXACT_RATIONAL_TOY_ALGEBRA",
+      "name": "factor_mean_has_cross_terms",
+      "passed": true
+    },
+    {
+      "evidence": "EXACT_RATIONAL_TOY_ALGEBRA",
+      "name": "factor_mean_squared_frobenius_error",
+      "passed": true
+    },
+    {
+      "evidence": "EXACT_RATIONAL_TOY_ALGEBRA",
+      "name": "rank1_gauge_preserves_delta",
+      "passed": true
+    },
+    {
+      "evidence": "EXACT_RATIONAL_TOY_ALGEBRA",
+      "name": "factor_mean_changes_under_equivalent_gauge",
+      "passed": true
+    },
+    {
+      "evidence": "EXACT_RATIONAL_TOY_ALGEBRA",
+      "name": "same_delta_factor_dot_can_reverse",
+      "passed": true
+    },
+    {
+      "evidence": "EXACT_RATIONAL_TOY_ALGEBRA",
+      "name": "same_delta_reconstructed_dot_is_positive",
+      "passed": true
+    },
+    {
+      "evidence": "EXACT_RATIONAL_TOY_ALGEBRA",
+      "name": "actual_deltas_are_frobenius_orthogonal",
+      "passed": true
+    },
+    {
+      "evidence": "EXACT_RATIONAL_TOY_ALGEBRA",
+      "name": "signed_weighted_concatenation_exact",
+      "passed": true
+    },
+    {
+      "evidence": "EXACT_RATIONAL_TOY_ALGEBRA",
+      "name": "orthogonal_rank1_sum_has_nonzero_determinant",
+      "passed": true
+    },
+    {
+      "evidence": "EXACT_RATIONAL_TOY_ALGEBRA",
+      "name": "mixed_rank_trace_identity",
+      "passed": true
+    },
+    {
+      "evidence": "EXACT_RATIONAL_TOY_ALGEBRA",
+      "name": "trace_identity_self_norm",
+      "passed": true
+    },
+    {
+      "evidence": "EXACT_RATIONAL_TOY_ALGEBRA",
+      "name": "weighted_gram_norm_identity",
+      "passed": true
+    },
+    {
+      "evidence": "EXACT_RATIONAL_TOY_ALGEBRA",
+      "name": "rank_restriction_explicit_error",
+      "passed": true
+    },
+    {
+      "evidence": "EXACT_RATIONAL_TOY_ALGEBRA",
+      "name": "toy_full_update_retention_loss",
+      "passed": true
+    },
+    {
+      "evidence": "EXACT_RATIONAL_TOY_ALGEBRA",
+      "name": "toy_rank1_truncation_retention_loss",
+      "passed": true
+    },
+    {
+      "evidence": "EXACT_RATIONAL_TOY_ALGEBRA",
+      "name": "sequential_fp32_order_AB",
+      "passed": true
+    },
+    {
+      "evidence": "EXACT_RATIONAL_TOY_ALGEBRA",
+      "name": "sequential_fp32_order_BA",
+      "passed": true
+    }
+  ],
+  "derived_results": [
+    {
+      "name": "Gauge invariance",
+      "statement": "D_i=s_i B_i A_i is invariant under B_i -> B_i R_i, A_i -> R_i^-1 A_i for any invertible R_i. Factor inner products and factor averages generally are not."
+    },
+    {
+      "name": "Factor averaging cross terms",
+      "statement": "For barB=sum_i p_i B_i and barA=sum_j q_j A_j, barB barA=sum_ij p_i q_j B_i A_j. This differs from sum_i c_i B_i A_i without further constraints. Even one adapter averaged with itself has squared coefficients unless normalized appropriately."
+    },
+    {
+      "name": "Exact signed concatenation",
+      "statement": "D=sum_i c_i s_i B_i A_i = [c_1 s_1 B_1 | ... | c_k s_k B_k] vertical_stack(A_1,...,A_k). Rank(D)<=sum_i rank_i; equality is possible for independent row and column subspaces. Exact representation may require a larger rank."
+    },
+    {
+      "name": "Reconstructed Gram without dense deltas",
+      "statement": "G_ij=s_i s_j tr((B_i^T B_j)(A_j A_i^T)); for real coefficients ||sum_i c_i D_i||F^2=c^T G c and G is PSD. Zero deltas have undefined cosine and must be flagged. This measures parameter geometry, not retained skill."
+    },
+    {
+      "name": "Conditional compression loss bound",
+      "statement": "For E=Dhat-D, if L has Hessian operator norm <=K on the entire segment from D to Dhat under Frobenius parameter norm, |L(Dhat)-L(D)|<=||gradient L(D)||F ||E||F + K ||E||F^2/2. Without those measured bounds, small factor/delta reconstruction error gives no universal retention guarantee."
+    },
+    {
+      "name": "Floating point permutations",
+      "statement": "Real fixed-delta sums commute; sequentially rounded merges need not be bitwise invariant. The FP32 toy base1e8, da=-1e8, db=1 yields AB=1 and BA=0. This does not measure the branch composer on any model."
+    }
+  ],
+  "examples": {
+    "FP32_AB": 1.0,
+    "FP32_BA": 0.0,
+    "equivalent_gauge_factor_mean": [
+      [
+        "1/4",
+        "-1/4"
+      ],
+      [
+        "-1/4",
+        "1/4"
+      ]
+    ],
+    "factor_error_squared": "1/4",
+    "factor_mean": [
+      [
+        "1/4",
+        "1/4"
+      ],
+      [
+        "1/4",
+        "1/4"
+      ]
+    ],
+    "rank1_compression_loss_increase": "500",
+    "reconstructed_mean": [
+      [
+        "1/2",
+        "0"
+      ],
+      [
+        "0",
+        "1/2"
+      ]
+    ]
+  },
+  "model_loads": 0,
+  "native_qualification_evidence": false,
+  "optimizer_updates": 0,
+  "primary_papers": [
+    {
+      "role": "Low-rank factorization context; algebra below independently derived.",
+      "title": "LoRA: Low-Rank Adaptation of Large Language Models",
+      "url": "https://arxiv.org/abs/2106.09685v2"
+    },
+    {
+      "role": "Parameter-space interference context; no observed skill benefit claimed here.",
+      "title": "TIES-Merging: Resolving Interference When Merging Models",
+      "url": "https://arxiv.org/abs/2306.01708v2"
+    }
+  ],
+  "prospective_study_requirements": [
+    "Keep each delta bound to the same exact anchor, tensor names/shapes and layer convention.",
+    "Record LoRA scale, rank, variant and any non-LoRA saved modules; reconstructed weight formula is not sufficient for arbitrary adapter variants.",
+    "Measure reconstructed-delta Gram plus functional retention; factor cosine cannot substitute for either.",
+    "If rank compression is proposed, register its rank/error policy and separate retention measurements before reading held-out results.",
+    "Record a canonical accumulation order/dtype and verify actual tensor canaries before comparison."
+  ],
+  "schema": "RINEYA-LORA-GAUGE-COMPOSITION-CONDITIONAL-ANALYSIS-1",
+  "scientific_rows_read": 0,
+  "sources": [
+    {
+      "bytes": 4722,
+      "observed_branch_head": "19551ddebc87c93161c303865ce6d0f130de0093",
+      "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-post-training-Mimo\\short-response-model-phase-0-1-2\\scripts\\phase_9_student_distillation\\compose_lora_adapters_v22.py",
+      "sha256": "cfbe6d6ec94b0398fc7d14e347262a35c06f549d50f736a6d2afb27526fcb7ab"
+    },
+    {
+      "bytes": 5823,
+      "observed_branch_head": "19551ddebc87c93161c303865ce6d0f130de0093",
+      "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-post-training-Mimo\\short-response-model-phase-0-1-2\\scripts\\phase_4_model_soups\\merge_delta_soup.py",
+      "sha256": "53c817d5421a8d9fad1ead00b42f06bc4cb0cc052ca5d88c005bbbdbc0d122fb"
+    },
+    {
+      "bytes": 4722,
+      "observed_branch_head": "04fe137574cc38c04824b65beea9374f60c9042c",
+      "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-centralized-reasoning-system-v1\\short-response-model-phase-0-1-2\\scripts\\phase_9_student_distillation\\compose_lora_adapters_v22.py",
+      "sha256": "cfbe6d6ec94b0398fc7d14e347262a35c06f549d50f736a6d2afb27526fcb7ab"
+    },
+    {
+      "bytes": 5823,
+      "observed_branch_head": "04fe137574cc38c04824b65beea9374f60c9042c",
+      "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-centralized-reasoning-system-v1\\short-response-model-phase-0-1-2\\scripts\\phase_4_model_soups\\merge_delta_soup.py",
+      "sha256": "53c817d5421a8d9fad1ead00b42f06bc4cb0cc052ca5d88c005bbbdbc0d122fb"
+    }
+  ]
+}

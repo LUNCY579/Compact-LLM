@@ -1,0 +1,27 @@
+{
+  "status": "BLOCKING_SOURCE_GATE_COUNTEREXAMPLE",
+  "reader_sha256": "d07a99c3a8de65a09b5a405f6bc253f4859574c231f13a057a96790eaf9b45de",
+  "test_sha256": "18698dd0068e393b80960367474c5b49332b6d3188af07110482b939e4c26eaf",
+  "admission_sha256": "cca385584023b45211a2a482885306e3505c59bd0b59b22b5f246282a6fe3b90",
+  "source_evidence": "fresh_analysis.py:129-134",
+  "records": [
+    {
+      "synthetic_only": true,
+      "field": "remaining_forward_seconds",
+      "value": -1.0,
+      "reader_errors": [],
+      "otherwise_valid_fixture": true
+    },
+    {
+      "synthetic_only": true,
+      "field": "remaining_nonforward_seconds",
+      "value": -1.0,
+      "reader_errors": [],
+      "otherwise_valid_fixture": true
+    }
+  ],
+  "model_calls": 0,
+  "GPU_calls": 0,
+  "actual_scientific_outcomes_read": false,
+  "required_fix": "Require finite nonnegative forecast duration components; retain exact scientific caps, timing factors and reserves."
+}

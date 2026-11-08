@@ -1,0 +1,15 @@
+{
+  "schema": "CE8-READONLY-WORKER-PROBE-FAILURE-1",
+  "utc": "2026-10-01T22:37:25.2957080Z",
+  "status": "FAILED",
+  "exit_code": 1,
+  "completed_worker_proof": false,
+  "error_type": "WorkerEvidenceError",
+  "error": "whole OS argv launcher differs from pinned Python launcher",
+  "checker": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\r-oracle-supervision-proposal-20261001\\run_ce_worker_readonly_probe_v2.py",
+  "evidence": "Actual execution ended rc1. The Windows virtual environment redirector rewrites OS argv executable to the separately pinned base process image.",
+  "model_loads": 0,
+  "native_execution_authorized": false,
+  "native_qualified": false,
+  "next_action": "Match observed argv executable to the exact process-image reference; retain launcher provenance separately."
+}

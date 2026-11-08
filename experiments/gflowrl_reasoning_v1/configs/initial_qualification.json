@@ -1,0 +1,29 @@
+{
+  "experiment": "gflowrl_reasoning_v1",
+  "gate": "GFRL-QUAL-001",
+  "arms": {
+    "R0": {
+      "objective": "group-centered reward-maximizing sequence policy gradient",
+      "gflowrl_enabled": false
+    },
+    "R1": {
+      "objective": "GFlowRL Eq. 4-8",
+      "gflowrl_enabled": true
+    }
+  },
+  "group_size": 4,
+  "beta": 1.0,
+  "epsilon_low": 0.2,
+  "epsilon_high": 0.28,
+  "importance_clip": 2.0,
+  "length_normalize": true,
+  "reward_transform": {
+    "name": "identity",
+    "raw_verifier_reward_is_used": true,
+    "overlong_shaping": "not enabled for qualification; paper reports a setting but not an executable formula"
+  },
+  "seed": 20260925,
+  "precision": "float64 for qualification toy calculations; production precision unqualified",
+  "training": false,
+  "sealed_access": "denied"
+}

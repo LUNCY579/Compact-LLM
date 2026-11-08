@@ -1,0 +1,191 @@
+{
+  "evidence_kind": "SYNTHETIC_MECHANICS_ONLY",
+  "interpretation": "No controller is declared a winner. These scores are constructed fixtures only.",
+  "native_qualified": false,
+  "raw_json_sha256": {
+    "paper_control.json": "73e8465f166f6aedb144ad5462443f6ece479a05a3c1d6fc193366ff2ee44930",
+    "prior_id_report.json": "6386a14a0f35c85d351221be6359e75daafc8d44e3e5dbe050749fa9aa127a14",
+    "prior_id_state.json": "51f42cf676079b55cc4e53470a671de7ca988e71f176cc7d57b6cb60337ef43e",
+    "prior_integral_report.json": "c5f5ed729edfd2b24143bfca943497535608c5b81e596e3ca380c0a2c8c08fd7",
+    "prior_integral_state.json": "1e3c43db26ed50360ce35f179657bd1fb937ec0474a27e82746dbcf28f82314c",
+    "prior_none_report.json": "385475df6313bcaf99685cdada08d9e44193f7d83c422c349e64a29c2b4579be",
+    "prior_none_state.json": "08a953e9da19d185ba399218d3190453910525b57ce432b0e532490f461b868d",
+    "prior_sign_report.json": "039c4f0a4480d80c69ffe4e8e3d3ae1156f3af6db53495ab4b2d259ea6a9efbe",
+    "prior_sign_state.json": "b473fcfe458acab8aeba22dd9404bb710e9e0b36add892427433650a1165cacd",
+    "summary.json": "99fbe51bb17420d8f4bb9bca1aeb3c0293ca49d4e6559480e40af02717fbf65f",
+    "tiny_moe.json": "1190c950cf513f088b0e29fa127d6c1e5837359c0e2c3b9d3bbb8b6b79cf5f7b",
+    "uniform_id_report.json": "d8c14e212885c11b0d90e0a3090d00ed60b899c529e0192a8854f7a1262426dc",
+    "uniform_id_state.json": "2ca27cf4b725254e481d6b5a3f0b6f97d92f3944ef7d08366c0b7e70a98ee4c6",
+    "uniform_integral_report.json": "6ed49cb0ff845985f817af143abdc49cbbfb0cf3bb8d2629086a3c7610adac6d",
+    "uniform_integral_state.json": "7f4698495e533631bdde14f088766f6d3364f4444a33a4a8707b1aa5a721096d",
+    "uniform_none_report.json": "b13702ff88b846e936d59f8446b2f09008fdd68d7a228798ac843725b3dc5ba3",
+    "uniform_none_state.json": "da4f6e373b491a4325c0b4fb07b41e41d96b3fb0e78b6aea344ee14d8191935b",
+    "uniform_sign_report.json": "bd05aa4a36bf20c7e5aa54656c4db6c5ea88a9a5d5df1e7ab79d6e939ed19d1d",
+    "uniform_sign_state.json": "415870b046243ab4eb6ad163f33c71077fc3e88fdb5e5b5a965c36b47bd352b8"
+  },
+  "raw_reproduction_command": "python -m idr demo --out runs/NEW_OUTPUT_DIRECTORY",
+  "routing_arms": [
+    {
+      "arm": "uniform_none",
+      "override_fraction": 0.0,
+      "success": 0.7447916666666666
+    },
+    {
+      "arm": "uniform_sign",
+      "override_fraction": 0.08854166666666667,
+      "success": 0.734375
+    },
+    {
+      "arm": "uniform_integral",
+      "override_fraction": 0.046875,
+      "success": 0.734375
+    },
+    {
+      "arm": "uniform_id",
+      "override_fraction": 0.052083333333333336,
+      "success": 0.7395833333333334
+    },
+    {
+      "arm": "prior_none",
+      "override_fraction": 0.0,
+      "success": 0.7447916666666666
+    },
+    {
+      "arm": "prior_sign",
+      "override_fraction": 0.0,
+      "success": 0.7447916666666666
+    },
+    {
+      "arm": "prior_integral",
+      "override_fraction": 0.052083333333333336,
+      "success": 0.7552083333333334
+    },
+    {
+      "arm": "prior_id",
+      "override_fraction": 0.11458333333333333,
+      "success": 0.75
+    }
+  ],
+  "tiny_training": [
+    {
+      "frozen_base_unchanged": true,
+      "initial_fixture_loss": 3.393345594406128,
+      "last_fixture_loss": 0.9713636040687561,
+      "method": "none",
+      "seed": 0,
+      "steps": 20
+    },
+    {
+      "frozen_base_unchanged": true,
+      "initial_fixture_loss": 3.393345594406128,
+      "last_fixture_loss": 1.0178366899490356,
+      "method": "sign",
+      "seed": 0,
+      "steps": 20
+    },
+    {
+      "frozen_base_unchanged": true,
+      "initial_fixture_loss": 3.393345594406128,
+      "last_fixture_loss": 0.9035041332244873,
+      "method": "integral",
+      "seed": 0,
+      "steps": 20
+    },
+    {
+      "frozen_base_unchanged": true,
+      "initial_fixture_loss": 3.393345594406128,
+      "last_fixture_loss": 0.890021026134491,
+      "method": "id",
+      "seed": 0,
+      "steps": 20
+    },
+    {
+      "frozen_base_unchanged": true,
+      "initial_fixture_loss": 3.4139816761016846,
+      "last_fixture_loss": 0.9391735196113586,
+      "method": "auxiliary",
+      "seed": 0,
+      "steps": 20
+    },
+    {
+      "frozen_base_unchanged": true,
+      "initial_fixture_loss": 2.588684558868408,
+      "last_fixture_loss": 0.6283234357833862,
+      "method": "none",
+      "seed": 1,
+      "steps": 20
+    },
+    {
+      "frozen_base_unchanged": true,
+      "initial_fixture_loss": 2.588684558868408,
+      "last_fixture_loss": 0.6767362952232361,
+      "method": "sign",
+      "seed": 1,
+      "steps": 20
+    },
+    {
+      "frozen_base_unchanged": true,
+      "initial_fixture_loss": 2.588684558868408,
+      "last_fixture_loss": 0.6504545211791992,
+      "method": "integral",
+      "seed": 1,
+      "steps": 20
+    },
+    {
+      "frozen_base_unchanged": true,
+      "initial_fixture_loss": 2.588684558868408,
+      "last_fixture_loss": 0.6630807518959045,
+      "method": "id",
+      "seed": 1,
+      "steps": 20
+    },
+    {
+      "frozen_base_unchanged": true,
+      "initial_fixture_loss": 2.608652353286743,
+      "last_fixture_loss": 0.7016085386276245,
+      "method": "auxiliary",
+      "seed": 1,
+      "steps": 20
+    },
+    {
+      "frozen_base_unchanged": true,
+      "initial_fixture_loss": 3.037046194076538,
+      "last_fixture_loss": 0.6621952652931213,
+      "method": "none",
+      "seed": 2,
+      "steps": 20
+    },
+    {
+      "frozen_base_unchanged": true,
+      "initial_fixture_loss": 3.037046194076538,
+      "last_fixture_loss": 0.6874008774757385,
+      "method": "sign",
+      "seed": 2,
+      "steps": 20
+    },
+    {
+      "frozen_base_unchanged": true,
+      "initial_fixture_loss": 3.037046194076538,
+      "last_fixture_loss": 0.682335376739502,
+      "method": "integral",
+      "seed": 2,
+      "steps": 20
+    },
+    {
+      "frozen_base_unchanged": true,
+      "initial_fixture_loss": 3.037046194076538,
+      "last_fixture_loss": 0.6624288558959961,
+      "method": "id",
+      "seed": 2,
+      "steps": 20
+    },
+    {
+      "frozen_base_unchanged": true,
+      "initial_fixture_loss": 3.0573368072509766,
+      "last_fixture_loss": 0.7625536322593689,
+      "method": "auxiliary",
+      "seed": 2,
+      "steps": 20
+    }
+  ]
+}

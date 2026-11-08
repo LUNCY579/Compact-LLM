@@ -1,0 +1,24 @@
+# Stage C babysit stub — only if VRAM allows after Stage B.
+# 16K (and a tiny 32K slice) is an ablation, not the Stage A default.
+stage: c
+seed: 11
+replay_fraction: 0.20
+strata:
+  - 2k
+  - 4k
+  - 8k
+  - 16k
+paths:
+  model_id: Rineya_Published_Cores/Rineya-Halo-1.2.0-devfreeze
+  corpus_root: rineya_long_context_cc0_v1_main
+  short_replay: short-response-model-phase-0-1-2/data/train/train.jsonl
+  output_dir: artifacts/halo_long_context_sft_v1/stage_c
+training:
+  qlora: true
+  gradient_checkpointing: true
+  lora_rank: 16
+  lora_alpha: 32
+  max_sequence_length: 16384
+  save_steps: 25
+  save_total_limit: 3
+note: Optional later DPO uses rineya_long_context_cc0_v1_main/data/dpo/train after the SFT gate.

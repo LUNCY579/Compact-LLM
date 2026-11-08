@@ -1,0 +1,41 @@
+{
+  "code_sha256": "26f1c07bbe354a422b1a6d4ea5988a21b063621f055c9a92155fa5e5e2a738ef",
+  "created_utc": "2026-10-05T19:56:58.256944+00:00",
+  "findings_resolved": [
+    "Corpus review now locks actual fully tokenizer-replayed audit bytes and exact source tokenizer/config.",
+    "Canonical proposal binding hash is distinguished from raw proposal-file checksum.",
+    "Handcrafted registrations cannot weaken native dependency/CUDA/device pins.",
+    "Malformed or missing completed delta-training receipts are rejected before pretrained loading."
+  ],
+  "fixtures": {
+    "capability_evidence": false,
+    "command": "pinned CPU python -B -m pytest -q quality_followup/tests/test_protocol.py -p no:cacheprovider",
+    "gpu_execution": false,
+    "native_model_loaded": false,
+    "protocol_tests_passed": 30,
+    "tiny_random_cpu_512_update_delta_save_reload": true
+  },
+  "limitations": [
+    "No new pretrained native source execution or training was performed.",
+    "Native qualification, actual resource fit and quality remain unmeasured for this proposed pilot.",
+    "Local grants and receipts are operator audit records, not cryptographic authorization proof."
+  ],
+  "native_permission_created": false,
+  "promotion": false,
+  "remaining_blockers": [],
+  "reviewed_subsystems": [
+    "root CLI dispatch and exact comparison paths",
+    "stdlib source/header verification and 17-file Titan identity",
+    "exclusive external outputs and full new implementation inventory",
+    "model-free plan and separate study-native permission boundary",
+    "proposal-owned eleven-command execution order",
+    "fresh standalone acknowledgement and current orchestrator-identity ownership scans",
+    "unchanged SBHM resource guards and guard exception translation",
+    "actual runtime input/label hashes and complete 512-step delta provenance",
+    "fresh variant qualification and raw 672-row measurement artifact chain",
+    "strict/typed source-correct retention gate before either adaptation"
+  ],
+  "reviewer": "/root/quality_native",
+  "schema": "RINEYA-UPDATE-ORDER-QUALITY/v1/independent-code-review",
+  "status": "PASS_OFFLINE_CODE_AND_FIXTURE_REVIEW"
+}

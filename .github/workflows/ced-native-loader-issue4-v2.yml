@@ -1,0 +1,79 @@
+name: RAB-001 issue 4 native loader only
+
+on:
+  push:
+    branches: [research/ced-native-loader-issue4-v2]
+    paths:
+      - experiments/ced_native_loader_issue4_v1/*.py
+      - .github/workflows/ced-native-loader-issue4-v2.yml
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ced-native-loader-issue4-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  native-loader-cpu:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    env:
+      HF_HUB_OFFLINE: '1'
+      TRANSFORMERS_OFFLINE: '1'
+      HF_DATASETS_OFFLINE: '1'
+      HF_HUB_DISABLE_TELEMETRY: '1'
+      CUDA_VISIBLE_DEVICES: ''
+      OMP_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+      OPENBLAS_NUM_THREADS: '1'
+      TOKENIZERS_PARALLELISM: 'false'
+      PYTEST_DISABLE_PLUGIN_AUTOLOAD: '1'
+      PYTHONHASHSEED: '17'
+      EVIDENCE_BASENAME: issue4-native-${{ github.run_id }}-${{ github.run_attempt }}
+    steps:
+      - name: Checkout exact subject commit without weights or credentials
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+          lfs: false
+          submodules: false
+          sparse-checkout: |
+            experiments/architecture_benchmark_001
+            experiments/ced_native_loader_issue4_v1
+            .github/workflows
+      - name: Set up Python
+        uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: '3.11'
+      - name: Install exact native requirements and CPU PyTorch
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --disable-pip-version-check --retries 1 --timeout 30 torch==2.10.0 --index-url https://download.pytorch.org/whl/cpu
+          python -m pip install --disable-pip-version-check --retries 1 --timeout 30 -r experiments/architecture_benchmark_001/requirements-native.txt
+          python -m pip check
+      - name: Check fail-closed supervisor without model execution
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m unittest experiments.ced_native_loader_issue4_v1.test_supervisor -v 2>&1 | tee "$RUNNER_TEMP/issue4-supervisor.log"
+      - name: Run exactly 32 native random-fixture cases and require zero skips
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m experiments.ced_native_loader_issue4_v1.qualify --expected-head "$GITHUB_SHA" --out "$RUNNER_TEMP/$EVIDENCE_BASENAME"
+      - name: Preserve only receipts and logs, never checkpoint fixtures
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: issue4-native-${{ github.sha }}-${{ github.run_attempt }}
+          if-no-files-found: warn
+          retention-days: 14
+          path: |
+            ${{ runner.temp }}/issue4-supervisor.log
+            ${{ runner.temp }}/${{ env.EVIDENCE_BASENAME }}/*.json
+            ${{ runner.temp }}/${{ env.EVIDENCE_BASENAME }}/*.xml
+            ${{ runner.temp }}/${{ env.EVIDENCE_BASENAME }}/*.log

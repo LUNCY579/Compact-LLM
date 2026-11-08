@@ -1,0 +1,21 @@
+{
+  "after_state_sha256": null,
+  "before_state_sha256": "original",
+  "checkpoint_files": null,
+  "checkpoint_index": 1,
+  "counts": {
+    "scientific_physical_rows": 1728
+  },
+  "elapsed_seconds": 0.00033940000139409676,
+  "ended_utc": "2026-10-05T16:50:47.869892+00:00",
+  "error": "RuntimeError: SYNTHETIC_CUDA_FAULT_NO_RECOVERY",
+  "model_forward_calls_added": 0,
+  "parent_elapsed_seconds": 0.0004672999984904891,
+  "phase": "SYNTHETIC_BOUNDARY",
+  "resources": null,
+  "source_sha256": null,
+  "start_event_sequence": 1,
+  "status": "FAIL_MODEL_ASSETS_SOURCE_INTEGRITY",
+  "terminal_event_sequence": 2,
+  "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\bulk_restart_native.py\", line 109, in integrity_checkpoint\n    synchronize()\n  File \"C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\tests\\test_bulk_restart_native.py\", line 36, in sync\n    if sync_failure:raise RuntimeError(\"SYNTHETIC_CUDA_FAULT_NO_RECOVERY\")\n                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nRuntimeError: SYNTHETIC_CUDA_FAULT_NO_RECOVERY\n"
+}

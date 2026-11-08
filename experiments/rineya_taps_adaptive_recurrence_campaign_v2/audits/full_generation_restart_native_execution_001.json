@@ -1,0 +1,508 @@
+{
+  "actual_counts": {
+    "API_cap28436_is_cap_not_actual_calls": true,
+    "DEV_physical_scientific_rows": 2112,
+    "SMOKE_evaluations": 128,
+    "actual_completed_full_forwards": 9197,
+    "actual_full_forward_attempts": 9198,
+    "actual_model_API_attempts": 9200,
+    "cache_rejections": 2,
+    "completed_all_prefix_positions": 1144030,
+    "completed_generation_prefix_positions": 1137961,
+    "expected_partial": 1,
+    "exposed_VAL_physical_scientific_rows": 1056,
+    "generated_token_ids_includingEOS": 9180,
+    "maximum_attempts": 18,
+    "maximum_completed_forwards": 17,
+    "nonphysical_frozen_alias_rows": 96,
+    "nonphysical_oracle_rows": 288,
+    "ordinary_generation_forwards": 9180,
+    "parents": 144,
+    "partial_compute_positions": null,
+    "physical_evaluations": 3296,
+    "scientific_cases": 288,
+    "scientific_evaluations": 3168,
+    "state_adjoints": 0,
+    "total_outcome_rows": 3680
+  },
+  "analysis_handoff": {
+    "available_report_metadata": [
+      {
+        "errors": [
+          "restart required reader/helper/plan binding missing/different:bulk_analysis.py",
+          "restart required reader/helper/plan binding missing/different:analysis.py",
+          "restart required reader/helper/plan binding missing/different:gpu_analysis.py",
+          "restart required reader/helper/plan binding missing/different:open_analysis.py",
+          "restart integrity: original scientific analyzer lineage missing/different"
+        ],
+        "path": "analyses\\bulk-restart-001\\REPORT.json",
+        "primary": null,
+        "sha256": "06b2ae44e56ee894ab4743883798fdb7550b64700178dd931ad2b1635f305357",
+        "status": "INCOMPLETE_NO_PRIMARY_COMPARISON"
+      }
+    ],
+    "native_completion_distinct_from_offline_parser_provenance_refusal": true,
+    "no_new_model_needed_or_authorized_to_correct_reader": true,
+    "old_frozen_parser9c95_helpers_binding_errors_under_offline_review": true,
+    "primary_claimed_by_this_audit": null
+  },
+  "authority_and_failure_treatment": {
+    "all_costs_and_NULL_unmeasured_partial_work_preserved": true,
+    "both_cache_variants_before_compute": true,
+    "exact_2f42_additional_allowance_consumed_once": true,
+    "expected_partial_event": {
+      "attempt": 7,
+      "completed": false,
+      "error": "RuntimeError: EXPECTED_BULK_FORCED_EXCEPTION",
+      "event": "MAXIMUM_FORWARD_FAILED",
+      "forward_seconds": 0.03236480000123265,
+      "parent_elapsed_seconds": 55.43591100000049,
+      "partial_compute": "UNKNOWN",
+      "prefix_tokens": 357,
+      "resources": {
+        "gpu_allocated_bytes": 2434735104,
+        "gpu_free_bytes": 4848615424,
+        "gpu_peak_allocated_bytes": 2465292800,
+        "gpu_peak_reserved_bytes": 2495610880,
+        "gpu_reserved_bytes": 2495610880,
+        "gpu_total_bytes": 8585216000,
+        "host_available_bytes": 15042715648,
+        "rss_bytes": 1681362944
+      },
+      "timestamp_utc": "2026-10-05T18:24:38.994544+00:00"
+    },
+    "grant_sha256": "2f42ce379924f37fa497700cf660af57d8577c14d9a9eda072be6b4481fc817e",
+    "ledger_consumption": [
+      {
+        "event": "native_started",
+        "human_extension_sha256": "2f42ce379924f37fa497700cf660af57d8577c14d9a9eda072be6b4481fc817e",
+        "lane": "GPU_FP32_FULL_GENERATION_RESTART",
+        "reserved_seconds": 16000,
+        "run": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-bulk-restart-001",
+        "timestamp_utc": "2026-10-05T18:23:43.644998+00:00",
+        "worker_pid": 129880
+      },
+      {
+        "command": [
+          "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\.venv\\Scripts\\python.exe",
+          "-B",
+          "-m",
+          "experiments.rineya_taps_adaptive_recurrence_campaign_v2.bulk_restart_entry",
+          "--release",
+          "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-bulk-restart-001\\release.json",
+          "--source",
+          "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\Rineya_Published_Cores\\Rineya-Supa-A1.1-1.1.0-devfreeze",
+          "--out",
+          "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-bulk-restart-001\\result",
+          "--admission",
+          "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\full_generation_restart_admission_v1.json"
+        ],
+        "ended_utc": "2026-10-05T18:36:06.952064+00:00",
+        "event": "native_completed",
+        "exit_code": 0,
+        "gpu_initial_inventory": {
+          "driver_version": "566.07",
+          "free_bytes": 7137656832,
+          "index": 0,
+          "name": "NVIDIA GeForce RTX 4070 Laptop GPU",
+          "total_bytes": 8585740288,
+          "utilization_percent": 8,
+          "uuid": "GPU-bf962d49-2b03-1983-ef14-df4bc7fbb8b9"
+        },
+        "human_extension_sha256": "2f42ce379924f37fa497700cf660af57d8577c14d9a9eda072be6b4481fc817e",
+        "lane": "GPU_FP32_FULL_GENERATION_RESTART",
+        "native_worker_seconds": 743.3900000000012,
+        "peak_rss_bytes": 2898788352,
+        "run": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-bulk-restart-001",
+        "started_utc": "2026-10-05T18:23:38.140145+00:00",
+        "status": "WORKER_TERMINAL",
+        "supervisor_wall_seconds": 748.8119999999999,
+        "worker_pid": 129880
+      }
+    ],
+    "native_lock_absent_after_exit": true,
+    "no_new_retry_or_grant_action_by_auditor": true,
+    "one_native_model_load": 1,
+    "single_owned_model_tree_with_venv_redirector": true
+  },
+  "created_utc": "2026-10-05T18:44:42.105045+00:00",
+  "independent_source_review": false,
+  "journal_reconciliation": {
+    "all_started_terminal_pairs_and_monotonic_parent_clocks_match": true,
+    "block_applications_width2_reconcile": true,
+    "event_counts": {
+      "CACHE_REJECTED": 2,
+      "CACHE_REJECTION_STARTED": 2,
+      "FORWARD_COMPLETED": 9180,
+      "FORWARD_STARTED": 9180,
+      "MAXIMUM_FORWARD_COMPLETED": 17,
+      "MAXIMUM_FORWARD_FAILED": 1,
+      "MAXIMUM_FORWARD_STARTED": 18
+    },
+    "no_score_or_efficacy_analysis_by_auditor": true,
+    "no_unexpected_failed_call_or_safety_stopped_row": true,
+    "ordinary_calls_match_every_physical_row_tokens_and_prefix_positions": true,
+    "unique_all3168_scientific_cells": true
+  },
+  "model_calls_by_auditor": 0,
+  "new_source_tests_ledger_state_edits_by_auditor": false,
+  "qualification_and_proof_boundaries": {
+    "CUDA_TDR_failure_cause_or_stability_resolved": false,
+    "actual_frozen_pool_A5_qualification": {
+      "actual_seed_binding": true,
+      "status": "PASS_FROZEN_BULK_DEV_POOL"
+    },
+    "all_journal_byte_line_SHA_prefixes_and_actual107_sources10assets_grad_flags_verified": true,
+    "checkpoints": [
+      {
+        "PASS_parent_elapsed_seconds": 424.8228104000009,
+        "START_parent_elapsed_seconds": 420.78374769999937,
+        "actual_state_sha256": "b23dec7edc2413189c9a35cc7a2596cdc03cb67b08628a0c443173c305d61551",
+        "counts": {
+          "case_count": 192,
+          "model_forward_calls_added_by_checkpoint": 0,
+          "recorded_physical_evaluations": 1848,
+          "scientific_physical_rows": 1728
+        },
+        "elapsed_seconds": 4.03081259999999,
+        "file": "DEV_DETERMINISTIC_INTEGRITY.json",
+        "journal_prefixes_verified": {
+          "forwards.jsonl": {
+            "bytes": 5343489,
+            "lines": 10674,
+            "sha256": "b26fb289b0c1bfbf1147eb3712949e7dc4bb86f4051b0056b1c6447b542e3c1f"
+          },
+          "outcomes.jsonl": {
+            "bytes": 8196329,
+            "lines": 1848,
+            "sha256": "b33ab7f317e5250a8e3743c9bc4f3f5f244a40a70d10cb1c3053366027f452b3"
+          },
+          "readout_pairs.jsonl": {
+            "bytes": 726792,
+            "lines": 1728,
+            "sha256": "e5b249847d7ffa56906c5682206606040824820e3199f29461804cccd72f0a78"
+          },
+          "trajectories.jsonl": {
+            "bytes": 9842723,
+            "lines": 9848,
+            "sha256": "fc130cef813266d7cd4f58f58bde9529611a711728b7416412811f59f6bd229b"
+          }
+        },
+        "phase": "DEVELOPMENT_DETERMINISTIC_BEFORE_FREEZE",
+        "resources": {
+          "gpu_allocated_bytes": 2545432576,
+          "gpu_free_bytes": 4691329024,
+          "gpu_peak_allocated_bytes": 2564448256,
+          "gpu_peak_reserved_bytes": 2652897280,
+          "gpu_reserved_bytes": 2652897280,
+          "gpu_total_bytes": 8585216000,
+          "host_available_bytes": 14563278848,
+          "rss_bytes": 1692884992
+        },
+        "sha256": "fb835e19fe5899365e05ff9970d055f9ec6492bc21cc5683e3f209b186f36efb"
+      },
+      {
+        "PASS_parent_elapsed_seconds": 510.353866200001,
+        "START_parent_elapsed_seconds": 506.61907650000103,
+        "actual_state_sha256": "b23dec7edc2413189c9a35cc7a2596cdc03cb67b08628a0c443173c305d61551",
+        "counts": {
+          "case_count": 192,
+          "model_forward_calls_added_by_checkpoint": 0,
+          "recorded_physical_evaluations": 2240,
+          "scientific_physical_rows": 2112
+        },
+        "elapsed_seconds": 3.7249278999988746,
+        "file": "DEV_COMPLETE_INTEGRITY.json",
+        "journal_prefixes_verified": {
+          "A5_qualification.json": {
+            "bytes": 79,
+            "lines": 4,
+            "sha256": "564b3faa455cf9841c1f8403efeda7fead0f06e562a2d6eb305575eeb008743a"
+          },
+          "forwards.jsonl": {
+            "bytes": 6424806,
+            "lines": 12832,
+            "sha256": "c66ced36b21bef81aed9731bd5a6af38035e3e9f6e7aa96ad2de1134afee63db"
+          },
+          "frozen_development.json": {
+            "bytes": 32083,
+            "lines": 851,
+            "sha256": "9a7269deeaf116666a45dba329e32adb2be41b0a3f67ad74e3f5ff9714250bf2"
+          },
+          "outcomes.jsonl": {
+            "bytes": 9987962,
+            "lines": 2240,
+            "sha256": "d8b6bb31c6ac998377a3490a4ce89e4c8139222c4c441eb48f4d18609b3a0d91"
+          },
+          "readout_pairs.jsonl": {
+            "bytes": 894097,
+            "lines": 2112,
+            "sha256": "2637e863fdc4ce84b9d325ac6124627bbc66ce6c1237fc9b79ce0906d823eee9"
+          },
+          "trajectories.jsonl": {
+            "bytes": 12059348,
+            "lines": 12004,
+            "sha256": "808c9d3b48e915255013fdeafaf9a0e60a0cf3e4dda7fdc249657a39b048c9a5"
+          }
+        },
+        "phase": "DEVELOPMENT_COMPLETE_BEFORE_VALIDATION",
+        "resources": {
+          "gpu_allocated_bytes": 2545432576,
+          "gpu_free_bytes": 4691329024,
+          "gpu_peak_allocated_bytes": 2586895872,
+          "gpu_peak_reserved_bytes": 2652897280,
+          "gpu_reserved_bytes": 2652897280,
+          "gpu_total_bytes": 8585216000,
+          "host_available_bytes": 14112108544,
+          "rss_bytes": 2280620032
+        },
+        "sha256": "e2075fb439ca62b85630fcc7093eba331c95583273e1bc708663d43a3ef218a7"
+      },
+      {
+        "PASS_parent_elapsed_seconds": 742.1811909999997,
+        "START_parent_elapsed_seconds": 737.8724770000008,
+        "actual_state_sha256": "b23dec7edc2413189c9a35cc7a2596cdc03cb67b08628a0c443173c305d61551",
+        "counts": {
+          "case_count": 288,
+          "model_forward_calls_added_by_checkpoint": 0,
+          "recorded_physical_evaluations": 3296,
+          "scientific_physical_rows": 3168
+        },
+        "elapsed_seconds": 4.298041699999885,
+        "file": "FINAL_INTEGRITY.json",
+        "journal_prefixes_verified": {
+          "A5_qualification.json": {
+            "bytes": 79,
+            "lines": 4,
+            "sha256": "564b3faa455cf9841c1f8403efeda7fead0f06e562a2d6eb305575eeb008743a"
+          },
+          "forwards.jsonl": {
+            "bytes": 9244206,
+            "lines": 18400,
+            "sha256": "55e9219415b7e95d78778b7f9a9ba0bc178430fc38cd6735eb2059a687dfb9d6"
+          },
+          "frozen_development.json": {
+            "bytes": 32083,
+            "lines": 851,
+            "sha256": "9a7269deeaf116666a45dba329e32adb2be41b0a3f67ad74e3f5ff9714250bf2"
+          },
+          "outcomes.jsonl": {
+            "bytes": 16583464,
+            "lines": 3680,
+            "sha256": "858ba6c1b5105b460e600c93872575c78e2c3e43545538847e3d9eba30e01cd8"
+          },
+          "readout_pairs.jsonl": {
+            "bytes": 1345978,
+            "lines": 3168,
+            "sha256": "3018c732c22d45bab977e60aea49c3a800ba5ee6cd8e7ea4b2e37f51a63c4e75"
+          },
+          "trajectories.jsonl": {
+            "bytes": 17461461,
+            "lines": 17339,
+            "sha256": "0b9a1266a33320eb765e9a27a65ddf7d2a49fae45af9ae78bd81b8b86257c0c3"
+          }
+        },
+        "phase": "FINAL_MATRIX_COMPLETE",
+        "resources": {
+          "gpu_allocated_bytes": 2603036672,
+          "gpu_free_bytes": 4622123008,
+          "gpu_peak_allocated_bytes": 2627059200,
+          "gpu_peak_reserved_bytes": 2722103296,
+          "gpu_reserved_bytes": 2722103296,
+          "gpu_total_bytes": 8585216000,
+          "host_available_bytes": 12740665344,
+          "rss_bytes": 2284703744
+        },
+        "sha256": "2e5347e577cc990a1ac7000c47a0c93d2f3e9945983e1283cf8f059d2a2ec5dc"
+      }
+    ],
+    "final_before_after_actual_state_b23": "b23dec7edc2413189c9a35cc7a2596cdc03cb67b08628a0c443173c305d61551",
+    "first_VAL_FORWARD_STARTED_parent_elapsed_seconds": 510.36313940000036,
+    "freeze_payload_and_file_SHA_verified": true,
+    "fresh_initial_qualification": {
+      "L0_L2_one_shot": "ALL_COMPLETED_FORWARDS",
+      "after_state_sha256": "b23dec7edc2413189c9a35cc7a2596cdc03cb67b08628a0c443173c305d61551",
+      "before_state_sha256": "b23dec7edc2413189c9a35cc7a2596cdc03cb67b08628a0c443173c305d61551",
+      "cache_rejections": 2,
+      "forced_exception_restoration": true,
+      "local_timing": "GPU synchronized diagnostic timing; first-pass coreL13 only; includes sync overhead",
+      "mask_positions": "native CUDA arange and same replay conditioning checked by frozen GPU helper",
+      "maximum_attempts": 17,
+      "maximum_prefix_tokens": 357,
+      "noextra_unit_originalA3_identity": true,
+      "resources": {
+        "gpu_allocated_bytes": 2428745728,
+        "gpu_free_bytes": 4842323968,
+        "gpu_peak_allocated_bytes": 2470208512,
+        "gpu_peak_reserved_bytes": 2501902336,
+        "gpu_reserved_bytes": 2501902336,
+        "gpu_total_bytes": 8585216000,
+        "host_available_bytes": 14985113600,
+        "rss_bytes": 1681854464
+      },
+      "source_unchanged": true,
+      "status": "PASS_BULK_NEW_CAP_SAME_OPERATOR",
+      "strict_scorer_parity": "reviewed prompt-only solver/strict scorer; model outputs not solver evidence"
+    },
+    "preVAL_PASS_parent_elapsed_seconds": 510.353866200001,
+    "prefreeze_PASS_then_FREEZE_then_A5_order_verified": true,
+    "zero_extra_model_calls_from_integrity": true
+  },
+  "raw_artifact_sha256": {
+    "runs/native-bulk-restart-001/admission.json": "a6611ea9c493d314fbe47771ec59521440178153e0779be283128c6ae59e723c",
+    "runs/native-bulk-restart-001/release.json": "0e081512ea4d36d0bc517f966c42b367e578cf1741c539adba5c425c7c6da4c0",
+    "runs/native-bulk-restart-001/resources.jsonl": "2eb3914b7fe0f05635c3fffd530950a27f2be0f8bfc5518a35c790b76fdedd7d",
+    "runs/native-bulk-restart-001/result/A5_qualification.json": "564b3faa455cf9841c1f8403efeda7fead0f06e562a2d6eb305575eeb008743a",
+    "runs/native-bulk-restart-001/result/DEV_COMPLETE_INTEGRITY.json": "e2075fb439ca62b85630fcc7093eba331c95583273e1bc708663d43a3ef218a7",
+    "runs/native-bulk-restart-001/result/DEV_DETERMINISTIC_INTEGRITY.json": "fb835e19fe5899365e05ff9970d055f9ec6492bc21cc5683e3f209b186f36efb",
+    "runs/native-bulk-restart-001/result/FINAL_INTEGRITY.json": "2e5347e577cc990a1ac7000c47a0c93d2f3e9945983e1283cf8f059d2a2ec5dc",
+    "runs/native-bulk-restart-001/result/forwards.jsonl": "55e9219415b7e95d78778b7f9a9ba0bc178430fc38cd6735eb2059a687dfb9d6",
+    "runs/native-bulk-restart-001/result/frozen_development.json": "9a7269deeaf116666a45dba329e32adb2be41b0a3f67ad74e3f5ff9714250bf2",
+    "runs/native-bulk-restart-001/result/integrity_journal.jsonl": "e6caa0c310ec5c7bd52477dba29e52aacda5b8156386d6f804982c64c6340d8b",
+    "runs/native-bulk-restart-001/result/matrix_forecast.json": "e8b4f2b1e598c8299670d98965db6653b2de8c0027ae73931b99bf9ae0bb9621",
+    "runs/native-bulk-restart-001/result/outcomes.jsonl": "858ba6c1b5105b460e600c93872575c78e2c3e43545538847e3d9eba30e01cd8",
+    "runs/native-bulk-restart-001/result/qualification.json": "f5dcc3fd73bfba345b2b81fdee82bd66d931dd9fd619636106f50d88d85e955a",
+    "runs/native-bulk-restart-001/result/readout_pairs.jsonl": "3018c732c22d45bab977e60aea49c3a800ba5ee6cd8e7ea4b2e37f51a63c4e75",
+    "runs/native-bulk-restart-001/result/receipt.json": "d9c34a822d9bdaaac39d33820eaacf05d083974cd9191e43559307bd2258ff19",
+    "runs/native-bulk-restart-001/result/registration.json": "223dee72e8e41e2cbefdffe4677616a67cb26906604d4dcbe978c49462cf5588",
+    "runs/native-bulk-restart-001/result/trajectories.jsonl": "0b9a1266a33320eb765e9a27a65ddf7d2a49fae45af9ae78bd81b8b86257c0c3",
+    "runs/native-bulk-restart-001/review.json": "36f65f85fc00c0e1dbbce5f2537c0b7b2d21567542fd2ac5e0d1044c2b9d0113",
+    "runs/native-bulk-restart-001/source_manifest.json": "cdc5a256d09c6d440bf40e69e932d0acc13d00138688e14b379b73b6a0584467",
+    "runs/native-bulk-restart-001/stderr.log": "fb07267d0e5777c46af7c63d0ac41edd15012ba87e8b0bbf085d9465f81d00b9",
+    "runs/native-bulk-restart-001/stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "runs/native-bulk-restart-001/terminal_receipt.json": "dc4d8c7a5895e846aee3c1b1b19b9e4f4909386779b313aa5693599ec9f2ded6"
+  },
+  "resource_costs": {
+    "GPU_peak_allocated_bytes": 2627059200,
+    "charged_native_seconds": 743.3900000000012,
+    "cumulative_native_seconds_used": 3581.233,
+    "forecast": {
+      "admitted": true,
+      "cold_first_forward_seconds": 0.5092358000001695,
+      "elapsed_seconds": 89.72744199999943,
+      "finalization_reserve_seconds": 1800,
+      "forecast_factor": 1.5,
+      "max_observed_warm_forward_seconds": 0.09451099999932921,
+      "parent_deadline_seconds": 16000,
+      "remaining_calls_cap": 25537,
+      "remaining_forecast_seconds": 3620.2911104743052,
+      "timing_shape_status": "fresh max357 and all executed mechanical/SMOKE calls; cold/setup charged in elapsed"
+    },
+    "fresh_full_forecast_seconds": 5510.018552474305,
+    "integrity_wall_seconds_sum": 12.05378219999875,
+    "maximum_recorded_RSS_bytes": 2898788352,
+    "minimum_recorded_Torch_GPU_free_bytes": 4622123008,
+    "minimum_recorded_host_available_bytes": 12181889024,
+    "no_deployable_or_CPU_GPU_speed_claim": true,
+    "no_recorded_original_floor_or_ceiling_violation": true,
+    "parent_GPU_initial_inventory": {
+      "driver_version": "566.07",
+      "free_bytes": 7137656832,
+      "index": 0,
+      "name": "NVIDIA GeForce RTX 4070 Laptop GPU",
+      "total_bytes": 8585740288,
+      "utilization_percent": 8,
+      "uuid": "GPU-bf962d49-2b03-1983-ef14-df4bc7fbb8b9"
+    },
+    "parent_resources_samples": 468,
+    "parent_sampled_peak_RSS_bytes": 2898788352,
+    "remaining_native_seconds": 18018.767,
+    "supervisor_wall_seconds": 748.8119999999999,
+    "worker_parent_clock_seconds": 742.1874141999997
+  },
+  "run": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-bulk-restart-001",
+  "scientific_goal_completion_not_claimed": true,
+  "scope": "Raw counts, chronology, integrity/resource/cost reconciliation by worker author; independent scientific/adversarial review separate.",
+  "source_and_asset_preservation": {
+    "canonical_assets": {
+      "CORE.json": {
+        "actual": "bf640ab323d29c2fc18c306294c7e6f7c53e19cd67364f5df8aa041992075914",
+        "expected": "bf640ab323d29c2fc18c306294c7e6f7c53e19cd67364f5df8aa041992075914"
+      },
+      "FILES.json": {
+        "actual": "4446aef8d1f19f4c968aaa20636200094da0df7d6e518bca6acc4041896b8b6e",
+        "expected": "4446aef8d1f19f4c968aaa20636200094da0df7d6e518bca6acc4041896b8b6e"
+      },
+      "config.json": {
+        "actual": "89c4ae7398449895d044750c858614584b07db8d67130074920ef524c6eb5705",
+        "expected": "89c4ae7398449895d044750c858614584b07db8d67130074920ef524c6eb5705"
+      },
+      "generation_config.json": {
+        "actual": "0a6ef79013177858dd5820698b12270863e03baf60ec36521e5c6a34da63dbdc",
+        "expected": "0a6ef79013177858dd5820698b12270863e03baf60ec36521e5c6a34da63dbdc"
+      },
+      "merges.txt": {
+        "actual": "8831e4f1a044471340f7c0a83d7bd71306a5b867e95fd870f74d0c5308a904d5",
+        "expected": "8831e4f1a044471340f7c0a83d7bd71306a5b867e95fd870f74d0c5308a904d5"
+      },
+      "model.safetensors": {
+        "actual": "a99f079d32212bbcbb703c2e2bad801ea32d43afea52004f38bf94eec5dc4026",
+        "expected": "a99f079d32212bbcbb703c2e2bad801ea32d43afea52004f38bf94eec5dc4026"
+      },
+      "modeling_supa_a11.py": {
+        "actual": "b77b7d709fac3690d86f5978d46de409fd7ad3548c66a9d400188c225d99fa3d",
+        "expected": "b77b7d709fac3690d86f5978d46de409fd7ad3548c66a9d400188c225d99fa3d"
+      },
+      "tokenizer.json": {
+        "actual": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+        "expected": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4"
+      },
+      "tokenizer_config.json": {
+        "actual": "d5d09f07b48c3086c508b30d1c9114bd1189145b74e982a265350c923acd8101",
+        "expected": "d5d09f07b48c3086c508b30d1c9114bd1189145b74e982a265350c923acd8101"
+      },
+      "vocab.json": {
+        "actual": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910",
+        "expected": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910"
+      }
+    },
+    "checkpoint_files_unchanged": true,
+    "current_and_archived107_dispatch_mismatches": [],
+    "loaded_custom_code_sha256": "b77b7d709fac3690d86f5978d46de409fd7ad3548c66a9d400188c225d99fa3d",
+    "no_parameters_or_environment_changed_by_auditor": true,
+    "parameter_gradients": "NONE",
+    "requires_grad_false": true,
+    "same8_scientific24_SMOKE_cap_operator_grid_scorer_RNG": true,
+    "source_unchanged": true,
+    "trainable_parameters": 0
+  },
+  "status": "PASS_COMPLETE_FULL_GENERATION_MECHANICAL_EXECUTION_NOT_EFFICACY",
+  "terminal": {
+    "command": [
+      "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\.venv\\Scripts\\python.exe",
+      "-B",
+      "-m",
+      "experiments.rineya_taps_adaptive_recurrence_campaign_v2.bulk_restart_entry",
+      "--release",
+      "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-bulk-restart-001\\release.json",
+      "--source",
+      "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\Rineya_Published_Cores\\Rineya-Supa-A1.1-1.1.0-devfreeze",
+      "--out",
+      "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-bulk-restart-001\\result",
+      "--admission",
+      "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\full_generation_restart_admission_v1.json"
+    ],
+    "ended_utc": "2026-10-05T18:36:06.952064+00:00",
+    "exit_code": 0,
+    "gpu_initial_inventory": {
+      "driver_version": "566.07",
+      "free_bytes": 7137656832,
+      "index": 0,
+      "name": "NVIDIA GeForce RTX 4070 Laptop GPU",
+      "total_bytes": 8585740288,
+      "utilization_percent": 8,
+      "uuid": "GPU-bf962d49-2b03-1983-ef14-df4bc7fbb8b9"
+    },
+    "human_extension_sha256": "2f42ce379924f37fa497700cf660af57d8577c14d9a9eda072be6b4481fc817e",
+    "lane": "GPU_FP32_FULL_GENERATION_RESTART",
+    "native_worker_seconds": 743.3900000000012,
+    "peak_rss_bytes": 2898788352,
+    "run": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-bulk-restart-001",
+    "started_utc": "2026-10-05T18:23:38.140145+00:00",
+    "status": "WORKER_TERMINAL",
+    "supervisor_wall_seconds": 748.8119999999999,
+    "worker_pid": 129880
+  },
+  "validation_exposed_not_confirmation": true,
+  "worker_author_is_auditor": true
+}

@@ -1,0 +1,168 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rineya.invalid/schemas/retrofit-candidate-ledger.v1.json",
+  "title": "Rineya production retrofit candidate ledger",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "audited_at_utc",
+    "retrofit_branch",
+    "retrofit_commit",
+    "promotion_predicate",
+    "candidates"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "rineya.retrofit-candidate-ledger.v1"
+    },
+    "audited_at_utc": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "retrofit_branch": {
+      "const": "research/tgsa-rineya-pretrained-retrofit"
+    },
+    "retrofit_commit": {
+      "$ref": "#/$defs/commit"
+    },
+    "promotion_predicate": {
+      "type": "array",
+      "minItems": 10,
+      "maxItems": 10,
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "positive_source_evidence",
+          "parent_identity_verified",
+          "conversion_fidelity_pass",
+          "baked_effect_verified",
+          "strict_quality_gain",
+          "no_blocking_regression",
+          "production_budget_pass",
+          "artifact_integrity_pass",
+          "demo_smoke_pass",
+          "provenance_complete"
+        ]
+      }
+    },
+    "candidates": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/candidate"
+      }
+    }
+  },
+  "$defs": {
+    "commit": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{40}$"
+    },
+    "sha256_or_null": {
+      "type": ["string", "null"],
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "number_or_null": {
+      "type": ["number", "null"]
+    },
+    "gate": {
+      "type": ["boolean", "null"]
+    },
+    "candidate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "candidate",
+        "classification",
+        "source_branch",
+        "source_commit",
+        "research_status",
+        "research_evidence",
+        "parent_checkpoint",
+        "parent_hash",
+        "retrofit_configuration",
+        "parent_score",
+        "retrofit_score",
+        "delta",
+        "fidelity_status",
+        "regression_status",
+        "latency_delta",
+        "throughput_delta",
+        "memory_delta",
+        "artifact_hash",
+        "demo_status",
+        "gates",
+        "decision",
+        "reason"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9._-]*$"
+        },
+        "candidate": {"type": "string", "minLength": 1},
+        "classification": {
+          "enum": [
+            "ELIGIBLE",
+            "WAITING_FOR_EVIDENCE",
+            "NEGATIVE",
+            "INCOMPATIBLE",
+            "ALREADY_INTEGRATED"
+          ]
+        },
+        "source_branch": {"type": "string", "minLength": 1},
+        "source_commit": {"$ref": "#/$defs/commit"},
+        "research_status": {"type": "string", "minLength": 1},
+        "research_evidence": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"type": "string", "minLength": 1}
+        },
+        "parent_checkpoint": {"type": ["string", "null"]},
+        "parent_hash": {"$ref": "#/$defs/sha256_or_null"},
+        "retrofit_configuration": {"type": ["object", "null"]},
+        "parent_score": {"$ref": "#/$defs/number_or_null"},
+        "retrofit_score": {"$ref": "#/$defs/number_or_null"},
+        "delta": {"$ref": "#/$defs/number_or_null"},
+        "fidelity_status": {"enum": ["PASS", "FAIL", "NOT_RUN", "NOT_APPLICABLE"]},
+        "regression_status": {"enum": ["PASS", "FAIL", "NOT_RUN", "NOT_APPLICABLE"]},
+        "latency_delta": {"$ref": "#/$defs/number_or_null"},
+        "throughput_delta": {"$ref": "#/$defs/number_or_null"},
+        "memory_delta": {"$ref": "#/$defs/number_or_null"},
+        "artifact_hash": {"$ref": "#/$defs/sha256_or_null"},
+        "demo_status": {"enum": ["PASS", "FAIL", "NOT_RUN", "NOT_APPLICABLE"]},
+        "gates": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "positive_source_evidence",
+            "parent_identity_verified",
+            "conversion_fidelity_pass",
+            "baked_effect_verified",
+            "strict_quality_gain",
+            "no_blocking_regression",
+            "production_budget_pass",
+            "artifact_integrity_pass",
+            "demo_smoke_pass",
+            "provenance_complete"
+          ],
+          "properties": {
+            "positive_source_evidence": {"$ref": "#/$defs/gate"},
+            "parent_identity_verified": {"$ref": "#/$defs/gate"},
+            "conversion_fidelity_pass": {"$ref": "#/$defs/gate"},
+            "baked_effect_verified": {"$ref": "#/$defs/gate"},
+            "strict_quality_gain": {"$ref": "#/$defs/gate"},
+            "no_blocking_regression": {"$ref": "#/$defs/gate"},
+            "production_budget_pass": {"$ref": "#/$defs/gate"},
+            "artifact_integrity_pass": {"$ref": "#/$defs/gate"},
+            "demo_smoke_pass": {"$ref": "#/$defs/gate"},
+            "provenance_complete": {"$ref": "#/$defs/gate"}
+          }
+        },
+        "decision": {"enum": ["PROMOTE", "REJECT", "DEFER", "ALREADY_INTEGRATED"]},
+        "reason": {"type": "string", "minLength": 1}
+      }
+    }
+  }
+}

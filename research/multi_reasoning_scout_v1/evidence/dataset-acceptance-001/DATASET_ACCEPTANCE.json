@@ -1,0 +1,447 @@
+{
+  "schema": "multi_reasoning_scout.p0_acceptance/1",
+  "created_utc": "2026-09-17T03:57:07.072121+00:00",
+  "status": "P0_STOP_NOT_ACCEPTED",
+  "corpus_accepted": false,
+  "P1_training_contract_open": false,
+  "P2_training_authorized": false,
+  "model_calls": 0,
+  "training_runs": 0,
+  "dataset": {
+    "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-ced-native-loader-qualification\\Rineya_LCR_Full_v1_6000",
+    "version": "1.1.0-full-candidate",
+    "intended_rows": 6000,
+    "manifest_sha256": "65995575f13187ef78464e4120d1768696dd9114c7dfd8a379ed3ca6e28b266d",
+    "source_spec_sha256": "041f50d4a35ecf50dc255ade4a725b5f18e23db314dfb0cbf1440c79ceecbf21",
+    "producer_run_binding_sha256": "16c9750fba76f1326a553abb4a5c7e75b18f13613079cb9ad6d3e5e2546d3592",
+    "source_lineage": "User-confirmed delivered directory; producer tokenizer lock cites LUNCY579/ChatBubble@fbec90a0d0653aeb745d5223137ae3cfdd9c48dd experiments/model_quality_gpu_v1/source_lock.json, blob 50dd384c2eac68385634599012bdf068188f04fa. This is tokenizer source lineage, not independent attestation of corpus authorship.",
+    "archive_hash": null,
+    "archive_hash_status": "Directory supplied; no archive opened or identified"
+  },
+  "audit_source": {
+    "worktree": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-multi-reasoning-frozen-scout-v1",
+    "branch": "codex/multi-reasoning-frozen-scout-v1-completion",
+    "parent_commit": "fbec90a0d0653aeb745d5223137ae3cfdd9c48dd",
+    "script": "audit_train_dev.py",
+    "script_sha256": "23fb08454e4b8734f6596d1d6b9e17dc937b9793bd3570bda4453dd8f7e4d4f3",
+    "runtime": {
+      "transformers": "4.57.1",
+      "tokenizers": "0.22.2",
+      "numpy": "2.4.6"
+    },
+    "python": "3.11.15 (main, Jun  2 2026, 22:29:49) [MSC v.1944 64 bit (AMD64)]",
+    "wall_seconds": 46.27174925804138
+  },
+  "access_boundary": {
+    "payload_splits_read": [
+      "train",
+      "dev"
+    ],
+    "rows_read": 5400,
+    "holdout_payload_reads": 0,
+    "holdout_payload_hashes_recomputed": 0,
+    "all_jsonl_read": false,
+    "sealed_or_ANY_READ_payloads_read": 0,
+    "confirmation_sets_consumed": 0,
+    "aggregate_producer_metadata_read": true,
+    "full_package_integrity_verified": false,
+    "reason": "Holdout and all.jsonl deliberately excluded; full-package scripts were not run."
+  },
+  "requirements": {
+    "permitted_file_integrity": {
+      "status": "PASS_SCOPED",
+      "all_manifest_matches": true,
+      "files": 24
+    },
+    "rows_and_format": {
+      "status": "PASS_TRAIN_DEV_ONLY",
+      "train": 4800,
+      "dev": 600,
+      "unique_groups": 5400,
+      "exact_sft_projection": true,
+      "roles": [
+        "system",
+        "user",
+        "assistant"
+      ],
+      "maximum_answer_words": 1,
+      "holdout_rows": {
+        "producer_reported": 600,
+        "freshly_verified": false
+      }
+    },
+    "independent_answer_verification": {
+      "status": "PASS_TRAIN_DEV_ONLY",
+      "rows": 5400,
+      "parsed_facts": 75073,
+      "answer_or_reason_disagreements": 0,
+      "scope": "Separate supplied text parser/solver; shared author and grammar with generator; not independent human certification"
+    },
+    "tokenizer_compatibility": {
+      "status": "PASS_EXACT_FOUR_ASSETS_AND_SMOKE",
+      "transformers": "4.57.1",
+      "tokenizers": "0.22.2",
+      "runtime_class": "Qwen2TokenizerFast",
+      "enable_thinking": false,
+      "trust_remote_code": false,
+      "weights_read": 0
+    },
+    "rendered_window_and_reserve": {
+      "status": "PASS_TRAIN_DEV_ONLY",
+      "rows": 5400,
+      "max_prompt_tokens": 1470,
+      "max_total_tokens": 1476,
+      "prompt_over_1920": 0,
+      "total_over_2048": 0,
+      "truncations": 0,
+      "filtered_rows": 0,
+      "holdout": "UNVERIFIED"
+    },
+    "intended_context_bands": {
+      "status": "FAIL",
+      "violations": 41,
+      "train_violations": 4,
+      "dev_violations": 37,
+      "all_violations_band": "short",
+      "required_short_max": 600,
+      "endpoint_policy": "Literal inclusive ranges; two shared-endpoint rows separately flagged, no endpoint ambiguity can explain the 41 violations.",
+      "case_ids": [
+        "lcr_v1_latest_verified_870ce2ce",
+        "lcr_v1_latest_verified_36188298",
+        "lcr_v1_latest_verified_91826e08",
+        "lcr_v1_latest_verified_0c0996a4",
+        "lcr_v1_rule_exception_c21f38bf",
+        "lcr_v1_rule_exception_291adf8c",
+        "lcr_v1_multi_condition_671e9e4c",
+        "lcr_v1_rule_exception_eb77d610",
+        "lcr_v1_temporal_correlation_05ef56e7",
+        "lcr_v1_latest_verified_e98ff764",
+        "lcr_v1_latest_verified_00fdbf44",
+        "lcr_v1_rule_exception_7ab86509",
+        "lcr_v1_latest_verified_33fd2242",
+        "lcr_v1_temporal_correlation_7dee6d9e",
+        "lcr_v1_count_with_exclusion_d8b63d4b",
+        "lcr_v1_causal_disambiguation_2e9fa831",
+        "lcr_v1_causal_disambiguation_0e986a14",
+        "lcr_v1_causal_disambiguation_288f6b6f",
+        "lcr_v1_causal_disambiguation_aad50b24",
+        "lcr_v1_count_with_exclusion_d2c50797",
+        "lcr_v1_temporal_correlation_3b8a8ee6",
+        "lcr_v1_latest_verified_eb68d87f",
+        "lcr_v1_rule_exception_eed13df7",
+        "lcr_v1_multi_condition_0b6de437",
+        "lcr_v1_rule_exception_9c4453e4",
+        "lcr_v1_rule_exception_c6843a4d",
+        "lcr_v1_temporal_correlation_d417e318",
+        "lcr_v1_multi_condition_a7a48772",
+        "lcr_v1_latest_verified_88b7accf",
+        "lcr_v1_latest_verified_04d3fd28",
+        "lcr_v1_causal_disambiguation_c6be346e",
+        "lcr_v1_rule_exception_86a2d8cb",
+        "lcr_v1_temporal_correlation_98747371",
+        "lcr_v1_count_with_exclusion_b4bcb4a2",
+        "lcr_v1_temporal_correlation_c596c2dc",
+        "lcr_v1_temporal_correlation_ad30cf31",
+        "lcr_v1_rule_exception_535f5611",
+        "lcr_v1_temporal_correlation_568592a4",
+        "lcr_v1_temporal_correlation_c61df80c",
+        "lcr_v1_multi_condition_a1bbffd7",
+        "lcr_v1_rule_exception_266c1008"
+      ]
+    },
+    "train_dev_isolation": {
+      "status": "PASS_FOR_IDS_ENTITIES_WHOLE_TEXT_ONLY",
+      "overlaps": {
+        "ids": 0,
+        "groups": 0,
+        "templates": 0,
+        "context_exact": 0,
+        "context_nfkc": 0,
+        "context_digit_blinded": 0,
+        "question_exact": 0,
+        "question_nfkc": 0,
+        "question_digit_blinded": 0,
+        "entity_names": 0,
+        "name_blind_sentence_forms": 392,
+        "typed_graph_count_signature": 0
+      }
+    },
+    "strict_template_and_structural_isolation": {
+      "status": "NOT_ESTABLISHED",
+      "fresh_shared_name_blind_sentence_forms": 392,
+      "typed_graph_count_signature_intersection": 0,
+      "limitation": "IDs and coarse typed graph-count signatures are not proof of disjoint reduced solution structure."
+    },
+    "answerability": {
+      "status": "MEASURED",
+      "unknown_train": 1440,
+      "unknown_dev": 180,
+      "rate_each_split": 0.3,
+      "reasons_each_train": 360,
+      "reasons_each_dev": 45,
+      "literal_unknown": "UNKNOWN"
+    },
+    "question_only_answerability": {
+      "status": "MEASURED_TRAIN_FIT_DEV_CHECK",
+      "method": "Laplace-smoothed multinomial naive Bayes; unigram question tokens; equal class priors; train fit; dev scored without refit",
+      "balanced_accuracy": {
+        "train": 0.5043650793650793,
+        "dev": 0.47896825396825393
+      },
+      "significance_claim": false
+    },
+    "surface_shortcuts": {
+      "status": "MEASURED_FINITE_FEATURES",
+      "train_selected_feature": "context_words",
+      "balanced_accuracy": {
+        "train": 0.5247519841269841,
+        "dev": 0.49603174603174605
+      },
+      "feature_count": 21,
+      "significance_claim": false
+    },
+    "nontrivial_abstention": {
+      "status": "FAIL_QUALIFICATION_NOT_ESTABLISHED",
+      "cheap_selector_plus_validity_balanced_accuracy": {
+        "train": 0.875,
+        "dev": 0.875
+      },
+      "scope": "Color/location join plus explicit withdrawal/nonissuance checks; no task answer computation needed."
+    },
+    "majority_copy_first_last_heuristics": {
+      "status": "MEASURED_SUBSET",
+      "results": {
+        "train": {
+          "majority": {
+            "overall_accuracy": 0.3,
+            "answerable_accuracy": 0.0
+          },
+          "always_unknown": {
+            "overall_accuracy": 0.3,
+            "answerable_accuracy": 0.0
+          },
+          "first_entity": {
+            "overall_accuracy": 0.0,
+            "answerable_accuracy": 0.0
+          },
+          "last_entity": {
+            "overall_accuracy": 0.0,
+            "answerable_accuracy": 0.0
+          },
+          "copy_most_recent_entity": {
+            "overall_accuracy": 0.0,
+            "answerable_accuracy": 0.0
+          }
+        },
+        "dev": {
+          "majority": {
+            "overall_accuracy": 0.3,
+            "answerable_accuracy": 0.0
+          },
+          "always_unknown": {
+            "overall_accuracy": 0.3,
+            "answerable_accuracy": 0.0
+          },
+          "first_entity": {
+            "overall_accuracy": 0.0,
+            "answerable_accuracy": 0.0
+          },
+          "last_entity": {
+            "overall_accuracy": 0.0,
+            "answerable_accuracy": 0.0
+          },
+          "copy_most_recent_entity": {
+            "overall_accuracy": 0.0,
+            "answerable_accuracy": 0.0
+          }
+        }
+      },
+      "limitations": [
+        "Finite attacks only. Train scores are in-sample. Producer logistic/nearest-neighbor baselines not reexecuted because sklearn absent.",
+        "Cheap semantic screen solves answerability only, not exact answer strings."
+      ]
+    },
+    "six_dimensional_balance": {
+      "status": "MARGINALS_RECOMPUTED_TRAIN_DEV; FULL_CONDITIONAL_GATE_NOT_REEXECUTED",
+      "splits": {
+        "train": {
+          "rows": 4800,
+          "unique_ids": 4800,
+          "unique_groups": 4800,
+          "role_sequence_errors": 0,
+          "sft_projection_exact": true,
+          "world_rows": 4800,
+          "world_ids_match": true,
+          "marginals": {
+            "task_type": {
+              "causal_disambiguation": 800,
+              "alias_resolution": 960,
+              "rule_exception": 800,
+              "temporal_correlation": 560,
+              "count_with_exclusion": 640,
+              "multi_condition": 320,
+              "latest_verified": 320,
+              "object_state_tracking": 400
+            },
+            "variant": {
+              "unanswerable": 1440,
+              "counterfactual": 720,
+              "answerable": 2160,
+              "paraphrase": 480
+            },
+            "difficulty": {
+              "medium": 1920,
+              "hard": 2880
+            },
+            "needle_position": {
+              "middle": 960,
+              "distributed": 960,
+              "early": 1920,
+              "late": 960
+            },
+            "length_band": {
+              "long": 1600,
+              "medium": 1600,
+              "short": 1600
+            }
+          },
+          "unknown_count": 1440,
+          "unanswerability_reasons": {
+            "entity_absent": 360,
+            "attribute_absent": 360,
+            "retracted_or_superseded": 360,
+            "presupposition_contradicted": 360
+          },
+          "max_answer_words": 1
+        },
+        "dev": {
+          "rows": 600,
+          "unique_ids": 600,
+          "unique_groups": 600,
+          "role_sequence_errors": 0,
+          "sft_projection_exact": true,
+          "world_rows": 600,
+          "world_ids_match": true,
+          "marginals": {
+            "task_type": {
+              "count_with_exclusion": 80,
+              "alias_resolution": 120,
+              "temporal_correlation": 70,
+              "rule_exception": 100,
+              "multi_condition": 40,
+              "object_state_tracking": 50,
+              "causal_disambiguation": 100,
+              "latest_verified": 40
+            },
+            "variant": {
+              "answerable": 270,
+              "counterfactual": 90,
+              "unanswerable": 180,
+              "paraphrase": 60
+            },
+            "difficulty": {
+              "medium": 240,
+              "hard": 360
+            },
+            "needle_position": {
+              "early": 240,
+              "distributed": 120,
+              "late": 120,
+              "middle": 120
+            },
+            "length_band": {
+              "long": 200,
+              "short": 200,
+              "medium": 200
+            }
+          },
+          "unknown_count": 180,
+          "unanswerability_reasons": {
+            "entity_absent": 45,
+            "attribute_absent": 45,
+            "retracted_or_superseded": 45,
+            "presupposition_contradicted": 45
+          },
+          "max_answer_words": 1
+        }
+      },
+      "producer_literal_within_band_max_relative_error": 0.05263157894736836,
+      "producer_status": "NOT_MET_UNDER_LITERAL_RELATIVE_INTERPRETATION",
+      "fresh_global_6000_verification": false
+    },
+    "evidence_position_and_difficulty": {
+      "status": "PARTIAL_ONLY",
+      "span_bounds_and_unknown_evidence_contract": "RECOMPUTED_IN_VALIDATE_ROW",
+      "all_deletion_and_near_miss_difficulty_checks": "NOT_REEXECUTED; producer reports scoped passes only"
+    },
+    "external_quarantine_contamination": {
+      "status": "UNVERIFIED",
+      "overlap_count": null,
+      "protected_payload_reads": 0,
+      "required_action": "Authorized independent blind exclusion against protected ID/hash/structure registries, returning aggregate receipts only."
+    },
+    "frozen_scout_nonoverlap": {
+      "status": "UNVERIFIED",
+      "required_action": "Compare candidate registry against final frozen scout IDs/prompt hashes and structural manifest without changing the scout."
+    },
+    "complete_sha256_inventory": {
+      "status": "MANIFEST_PRESENT; PERMITTED_SUBSET_FRESHLY_VERIFIED",
+      "holdout": "Manifest claims retained as unverified producer metadata; no protected hash recomputation."
+    }
+  },
+  "minimum_repair": [
+    "Publish a new immutable dataset revision with native-token-constrained rendering correcting at least the 41 observed short-band violations; do not silently truncate, relabel, filter, or change the registered training window.",
+    "Replace split-shared local template/solution structures where strict structural isolation is binding; demonstrate canonical structural exclusion rather than only disjoint IDs.",
+    "Repair easily separable UNKNOWN mechanisms so the registered nontrivial-abstention requirement is demonstrably met; preserve literal UNKNOWN and balanced answerability.",
+    "Resolve the producer-reported within-band +/-3% failure through a prospective feasible allocation or explicitly authorized rounding convention before regeneration; do not silently weaken the requirement.",
+    "Obtain aggregate, hash-bound independent external quarantine/scout exclusion and authorized holdout integrity/token/split receipts without opening protected payloads to this agent.",
+    "Rerun P0 on the immutable repaired revision. Only after all binding gates pass may P1 freeze a training recipe; no training has been performed."
+  ],
+  "claims": {
+    "software_audit_completed": true,
+    "native_tokenizer_execution_pass": true,
+    "native_model_execution": false,
+    "training_input_accepted": false,
+    "model_quality_improvement": false,
+    "confirmation": false,
+    "release": false
+  },
+  "artifacts": {
+    "audit_train_dev.py": {
+      "bytes": 13812,
+      "sha256": "23fb08454e4b8734f6596d1d6b9e17dc937b9793bd3570bda4453dd8f7e4d4f3"
+    },
+    "native_train_dev_profile.json": {
+      "bytes": 845,
+      "sha256": "8569d38bb0c34c978f75ded9b548eadd7e47ce7aa60c93c8d5b7f55329be5eb6"
+    },
+    "native_train_dev_rows.json": {
+      "bytes": 1704072,
+      "sha256": "41fdf98c7fd5d990fed6df8e50cfb5088dcb700d17c117e340da91522aa63032"
+    },
+    "partial_audit_receipt.json": {
+      "bytes": 11179,
+      "sha256": "690f371cce6b9c3866079b086f1bcfeddd33e4bcd1f97397eac1d4a18a935503"
+    },
+    "tokenizer_preflight.json": {
+      "bytes": 2594,
+      "sha256": "19270012a6a2f5787980e92666b3f0f036c06478c28ee0e3a829644047384f86"
+    },
+    "train_dev_shortcuts.json": {
+      "bytes": 7757,
+      "sha256": "91cd3420027f33d5e9b8426cd8cb7ddaeecb33151568561b7a2c29adeb7a2c36"
+    },
+    "train_dev_structure.json": {
+      "bytes": 3141,
+      "sha256": "e3fbdbaa842ed4b93b439f81cf74e929965d7f01e2229b9b38d881211e3b0a9c"
+    },
+    "train_dev_verification.json": {
+      "bytes": 216,
+      "sha256": "2a020b77c53b74aee8b8706eac78cbae6ae865f85af34ec1576d25396ba20cc7"
+    },
+    "write_acceptance.py": {
+      "bytes": 13606,
+      "sha256": "1e1728be68c1224f52cddd8331d73728cd4712d9c797b52b27e291321cc616a2"
+    }
+  }
+}

@@ -1,0 +1,72 @@
+{
+  "schema": "GD001-READONLY-PRODUCER-AUDIT-ADDENDUM-1",
+  "experiment": "GD-001",
+  "client_date": "2026-10-05",
+  "recorded_utc": "2026-10-05T18:56:45.6575738Z",
+  "audit_ref": {
+    "path": "C:/Users/clclc/BusinessProject/gd001-records/attachment-20261005/producer_audit.json",
+    "sha256": "5f5d77a1a95ee3d9e91b2d3659b43a8af15449baa27eaaf93ff9388bd7a76fe9"
+  },
+  "rdd_owner_chat": "01a10d66-1a34-7be1-913a-8b993d81d95d",
+  "owner_basis": "inbound declaration relayed by root; title not verified; no external message sent",
+  "source_head": "2d7be4b5c2ba8a610b09d17455d519eecaa421e6",
+  "observation": "RDD owner began concurrent offline additions after initial clean source inspection. Producer audit describes delivered source at the initial observation; additive live changes remain prospective and mutable.",
+  "current_offline_source_files": [
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-distillation-dynamics-v1\\experiments\\rineya_distillation_dynamics_v1\\manifests.py",
+      "bytes": 3509,
+      "sha256": "5ff257d674eeac2542b61baa963296d1a34816c0f2f4787660d69bea4e166e08",
+      "last_write_utc": "2026-10-05T18:54:40.7516691Z"
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-distillation-dynamics-v1\\experiments\\rineya_distillation_dynamics_v1\\backend.py",
+      "bytes": 20111,
+      "sha256": "f728b7fbc5398898912f690bed6f2586d089cca551e2f3edc22020875a9c1de2",
+      "last_write_utc": "2026-10-05T18:54:40.7687755Z"
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-distillation-dynamics-v1\\experiments\\rineya_distillation_dynamics_v1\\engine.py",
+      "bytes": 9417,
+      "sha256": "e71370017c3a5bac2c21b865550bf3d17b7d31137211f21aa1a10b3b85684c05",
+      "last_write_utc": "2026-10-05T18:55:26.7498067Z"
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-distillation-dynamics-v1\\experiments\\rineya_distillation_dynamics_v1\\integration.py",
+      "bytes": 2024,
+      "sha256": "e3fb8836ec95d33312ba8a3ef1ef7557bdb54e464e2828204a50cbf40569c2af",
+      "last_write_utc": "2026-10-05T18:37:48.3927710Z"
+    }
+  ],
+  "read_only_status_snapshot": [
+    "M backend.py",
+    "M cli.py",
+    "M contracts.py",
+    "M engine.py",
+    "M host.py",
+    "M metrics.py",
+    "M native.py",
+    "M qualification.py",
+    "M registry.py",
+    "M selection.py",
+    "untracked configs/selected-pilot.json",
+    "untracked manifests.py",
+    "untracked tests/test_preparation_qualification.py",
+    "untracked tests/test_selected_design.py"
+  ],
+  "live_provenance_work_observed": [
+    "New public consumed-prompt events retain public prompt, key/namespace/parent/source/revision/role and per-call purpose/model/step/phase.",
+    "Manifest validator binds event order, event inventory digests and generation/forward counters to meter coverage.",
+    "Rendering event retains rendered_prompt_sha256 digest; actual rendered prompt token IDs/text are not retained by this inspected event implementation.",
+    "No-truncation behavior remains explicit in backend.prompt; complete actual filtering/drop/truncation history still needs producer enrollment evidence."
+  ],
+  "remaining_payload_gap": "For GD enrollment, retain actual rendered prompt text/token IDs for every consumed acquisition/replay event plus actual filtering/truncation history, not only hashes. Preserve original export payloads, tokenizer, base/final references and completion proof.",
+  "source_snapshot_frozen_for_GD": false,
+  "eligible_completed_trajectory_found": false,
+  "status": "PROSPECTIVE_OWNER_WORK_ONLY_NO_NEW_NATIVE_TRAJECTORY",
+  "new_models_loaded_by_audit": 0,
+  "native_forward_calls_by_audit": 0,
+  "sealed_or_confirmation_content_reads": 0,
+  "producer_source_modified_by_audit": false,
+  "external_chat_messages": 0,
+  "permits_model_promotion": false
+}

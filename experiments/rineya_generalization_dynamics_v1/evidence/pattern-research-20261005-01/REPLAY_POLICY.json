@@ -1,0 +1,26 @@
+{
+  "completion": "original stop_reason eos plus exact tokenizer EOS ID as last retained generated token",
+  "confirmation_authorized": false,
+  "evidence_scope": "POSTHOC_EXPLORATORY_SERVING_DIAGNOSTIC_ONLY",
+  "frozen_before_this_replay": true,
+  "new_native_model_calls": 0,
+  "not_frozen_before_original_model_generation": true,
+  "objects": "all existing JSON objects byte-identical; no field renaming or value changes",
+  "profile": {
+    "allow_bare_token": false,
+    "null_only_if_explicit_public_nullable": true,
+    "scalar_stringification": true,
+    "value_type": "string"
+  },
+  "schema": "gd001_public_schema_replay_policy_v1",
+  "schema_source": "explicit final public request text only; never target,rowID,familyID,category or bare_expected flags",
+  "serving_change_authorized": false,
+  "sha256": "5d46e392772e7b9b459c9e9fbaaac81bb1b195e7e6fc3d11182303041548eb7d",
+  "training_authorized": false,
+  "transformation_code": {
+    "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-generalization-dynamics-v1\\experiments\\rineya_generalization_dynamics_v1\\public_schema_repair.py",
+    "sha256": "ad2a86b78857a83995ebbd53f733207590443f8f1bac2a9c9a352ab2710054c5"
+  },
+  "truth_access": "only after transformation, for unchanged original scorer evaluation",
+  "unsupported": "whole-response no-op; never drop a row"
+}

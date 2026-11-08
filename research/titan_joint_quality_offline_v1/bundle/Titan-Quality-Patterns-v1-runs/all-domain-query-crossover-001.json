@@ -1,0 +1,379 @@
+{
+  "status": "ALL_DOMAINS_SELFVALIDATION_PASS",
+  "data_source_sha256": "dd4a39762f805b4d2a99d9c7416cbf454c2d99244ca2f42e4e73faa17d4dba1b",
+  "tests_source_sha256": "266cc366cddddc69b48bb052168aafe399a1d81de2fa915e5f43edaee84f52fe",
+  "reports": {
+    "train": {
+      "rows": 2000,
+      "all_domains": {
+        "reasoning": {
+          "rows": 1000,
+          "parents": 500,
+          "certified_same_world_query_pairs": 500,
+          "deterministic_queryblind_pair_accuracy_upper_bound": 0.5,
+          "structural_control_correct_counts": {
+            "first_valid_query_executor": 500
+          }
+        },
+        "transition": {
+          "rows": 166,
+          "parents": 83,
+          "certified_same_world_query_pairs": 83,
+          "deterministic_queryblind_pair_accuracy_upper_bound": 0.5,
+          "structural_control_correct_counts": {
+            "first_valid_query_executor": 54,
+            "fixed_event13_bin": 57
+          }
+        },
+        "arithmetic": {
+          "rows": 166,
+          "parents": 83,
+          "certified_same_world_query_pairs": 83,
+          "deterministic_queryblind_pair_accuracy_upper_bound": 0.5,
+          "structural_control_correct_counts": {
+            "first_valid_query_executor": 83
+          }
+        },
+        "grounding": {
+          "rows": 300,
+          "parents": 150,
+          "certified_same_world_query_pairs": 150,
+          "deterministic_queryblind_pair_accuracy_upper_bound": 0.5,
+          "structural_control_correct_counts": {
+            "first_valid_query_executor": 70,
+            "unique_nonstatus_authoritative_else_UNKNOWN": 150,
+            "old_factcount7_else_UNKNOWN": 150
+          }
+        },
+        "long_context": {
+          "rows": 168,
+          "parents": 84,
+          "certified_same_world_query_pairs": 84,
+          "deterministic_queryblind_pair_accuracy_upper_bound": 0.5,
+          "structural_control_correct_counts": {
+            "first_valid_query_executor": 34,
+            "fixed_timestamp30_first_value": 0,
+            "global_latest_value": 29
+          }
+        },
+        "format": {
+          "rows": 200,
+          "parents": 100,
+          "certified_same_world_query_pairs": 100,
+          "deterministic_queryblind_pair_accuracy_upper_bound": 0.5,
+          "structural_control_correct_counts": {
+            "first_valid_query_executor": 3
+          }
+        }
+      },
+      "specialized": {
+        "program": {
+          "rows": 1000,
+          "parents": 500,
+          "query_counts": {
+            "x": 500,
+            "y": 500
+          },
+          "unique_most_written_dst_rows": 0,
+          "same_world_different_answer_pairs": 500,
+          "query_blind_pair_accuracy_upper_bound": 0.5,
+          "shortcut_correct_counts": {
+            "most_written_lex_tie": 500,
+            "first_dst": 500,
+            "last_dst": 500,
+            "lex_first_register": 500,
+            "lex_last_register": 500
+          }
+        }
+      },
+      "generation": {
+        "prospective_generation": true,
+        "eligible_only_subsetting": false,
+        "domains": {
+          "reasoning": {
+            "parents": 500,
+            "world_attempts": 500,
+            "degenerate_worlds": 0,
+            "exact_content_rejections": 0,
+            "valid_queries_min_max": [
+              2,
+              2
+            ],
+            "distinct_truths_min_max": [
+              2,
+              2
+            ]
+          },
+          "transition": {
+            "parents": 83,
+            "world_attempts": 83,
+            "degenerate_worlds": 0,
+            "exact_content_rejections": 0,
+            "valid_queries_min_max": [
+              6,
+              6
+            ],
+            "distinct_truths_min_max": [
+              3,
+              3
+            ]
+          },
+          "arithmetic": {
+            "parents": 83,
+            "world_attempts": 85,
+            "degenerate_worlds": 2,
+            "exact_content_rejections": 0,
+            "valid_queries_min_max": [
+              2,
+              2
+            ],
+            "distinct_truths_min_max": [
+              2,
+              2
+            ]
+          },
+          "grounding": {
+            "parents": 150,
+            "world_attempts": 150,
+            "degenerate_worlds": 0,
+            "exact_content_rejections": 0,
+            "valid_queries_min_max": [
+              15,
+              15
+            ],
+            "distinct_truths_min_max": [
+              11,
+              11
+            ]
+          },
+          "long_context": {
+            "parents": 84,
+            "world_attempts": 84,
+            "degenerate_worlds": 0,
+            "exact_content_rejections": 0,
+            "valid_queries_min_max": [
+              6,
+              6
+            ],
+            "distinct_truths_min_max": [
+              6,
+              6
+            ]
+          },
+          "format": {
+            "parents": 100,
+            "world_attempts": 100,
+            "degenerate_worlds": 0,
+            "exact_content_rejections": 0,
+            "valid_queries_min_max": [
+              72,
+              72
+            ],
+            "distinct_truths_min_max": [
+              72,
+              72
+            ]
+          }
+        },
+        "refusal_rule": "stop after 100 degenerate worlds or 100 exact-content retries; never return a partial corpus"
+      }
+    },
+    "pilot": {
+      "rows": 384,
+      "all_domains": {
+        "reasoning": {
+          "rows": 64,
+          "parents": 32,
+          "certified_same_world_query_pairs": 32,
+          "deterministic_queryblind_pair_accuracy_upper_bound": 0.5,
+          "structural_control_correct_counts": {
+            "first_valid_query_executor": 15
+          }
+        },
+        "transition": {
+          "rows": 64,
+          "parents": 32,
+          "certified_same_world_query_pairs": 32,
+          "deterministic_queryblind_pair_accuracy_upper_bound": 0.5,
+          "structural_control_correct_counts": {
+            "first_valid_query_executor": 19,
+            "lone_z_prefix_executor": 0,
+            "complete_input_executor": 19
+          }
+        },
+        "arithmetic": {
+          "rows": 64,
+          "parents": 32,
+          "certified_same_world_query_pairs": 32,
+          "deterministic_queryblind_pair_accuracy_upper_bound": 0.5,
+          "structural_control_correct_counts": {
+            "first_valid_query_executor": 18
+          }
+        },
+        "grounding": {
+          "rows": 64,
+          "parents": 32,
+          "certified_same_world_query_pairs": 32,
+          "deterministic_queryblind_pair_accuracy_upper_bound": 0.5,
+          "structural_control_correct_counts": {
+            "first_valid_query_executor": 32
+          }
+        },
+        "long_context": {
+          "rows": 64,
+          "parents": 32,
+          "certified_same_world_query_pairs": 32,
+          "deterministic_queryblind_pair_accuracy_upper_bound": 0.5,
+          "structural_control_correct_counts": {
+            "first_valid_query_executor": 0,
+            "lone_eight_character_value": 0,
+            "first_record_city": 4
+          }
+        },
+        "format": {
+          "rows": 64,
+          "parents": 32,
+          "certified_same_world_query_pairs": 32,
+          "deterministic_queryblind_pair_accuracy_upper_bound": 0.5,
+          "structural_control_correct_counts": {
+            "first_valid_query_executor": 3,
+            "record7_inferred_query_asc": 4,
+            "record7_inferred_query_desc": 5
+          }
+        }
+      },
+      "specialized": {
+        "horn": {
+          "rows": 64,
+          "parents": 32,
+          "fact_counts": {
+            "2": 64
+          },
+          "rule_counts": {
+            "4": 64
+          },
+          "query_atom_name_lengths": {
+            "7": 64
+          },
+          "same_world_query_pairs": 32,
+          "same_query_support_swap_pairs": 0,
+          "answer_directions": {
+            "changed_answer_query_switch:UNKNOWN->SUPPORTED": 16,
+            "changed_answer_query_switch:SUPPORTED->UNKNOWN": 16
+          },
+          "shortcut_correct_counts": {
+            "fact_count_two": 32,
+            "question_name_hash_parity": 28,
+            "support_atom_lex_before_query": 28
+          },
+          "name_control_limit": "These fixed name controls do not exhaust all lexical heuristics; new instrument review remains required."
+        }
+      },
+      "generation": {
+        "prospective_generation": true,
+        "eligible_only_subsetting": false,
+        "domains": {
+          "reasoning": {
+            "parents": 32,
+            "world_attempts": 32,
+            "degenerate_worlds": 0,
+            "exact_content_rejections": 0,
+            "valid_queries_min_max": [
+              4,
+              4
+            ],
+            "distinct_truths_min_max": [
+              3,
+              4
+            ]
+          },
+          "transition": {
+            "parents": 32,
+            "world_attempts": 32,
+            "degenerate_worlds": 0,
+            "exact_content_rejections": 0,
+            "valid_queries_min_max": [
+              13,
+              13
+            ],
+            "distinct_truths_min_max": [
+              2,
+              4
+            ]
+          },
+          "arithmetic": {
+            "parents": 32,
+            "world_attempts": 32,
+            "degenerate_worlds": 0,
+            "exact_content_rejections": 0,
+            "valid_queries_min_max": [
+              4,
+              4
+            ],
+            "distinct_truths_min_max": [
+              3,
+              4
+            ]
+          },
+          "grounding": {
+            "parents": 32,
+            "world_attempts": 32,
+            "degenerate_worlds": 0,
+            "exact_content_rejections": 0,
+            "valid_queries_min_max": [
+              7,
+              7
+            ],
+            "distinct_truths_min_max": [
+              2,
+              2
+            ]
+          },
+          "long_context": {
+            "parents": 32,
+            "world_attempts": 32,
+            "degenerate_worlds": 0,
+            "exact_content_rejections": 0,
+            "valid_queries_min_max": [
+              100,
+              224
+            ],
+            "distinct_truths_min_max": [
+              100,
+              224
+            ]
+          },
+          "format": {
+            "parents": 32,
+            "world_attempts": 32,
+            "degenerate_worlds": 0,
+            "exact_content_rejections": 0,
+            "valid_queries_min_max": [
+              48,
+              48
+            ],
+            "distinct_truths_min_max": [
+              11,
+              15
+            ]
+          }
+        },
+        "refusal_rule": "stop after 100 degenerate worlds or 100 exact-content retries; never return a partial corpus"
+      }
+    }
+  },
+  "visible_wrapper_poison": "REJECTED",
+  "v1_source_unchanged": true,
+  "bank_artifacts_created": false,
+  "native_calls": 0,
+  "broad_tests_run": false,
+  "actual_token_profile": "ROOT_PENDING",
+  "schema": "TITAN_ALL_DOMAIN_QUERY_CROSSOVER_AUDIT_V1",
+  "scope": "Prospective v2 source repair only; no dataset artifact or native model outcome used.",
+  "limits": [
+    "Fresh v2 bound-tokenizer profile, exposure selection and broad tests are root-owned and pending in this receipt.",
+    "The 50% bound concerns deterministic query-blind policies on matched pairs; it is not a model gain or generalization result.",
+    "Question/name controls are incomplete; independent instrument review remains required.",
+    "Visible-wrapper binding verifies the finite generated instruction prefix, not arbitrary natural-language priority."
+  ]
+}

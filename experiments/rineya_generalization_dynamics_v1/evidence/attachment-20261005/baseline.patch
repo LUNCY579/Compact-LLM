@@ -1,0 +1,260 @@
+diff --git a/experiments/rineya_generalization_dynamics_v1/PROTOCOL.md b/experiments/rineya_generalization_dynamics_v1/PROTOCOL.md
+index 1bd888c9..78919964 100644
+--- a/experiments/rineya_generalization_dynamics_v1/PROTOCOL.md
++++ b/experiments/rineya_generalization_dynamics_v1/PROTOCOL.md
+@@ -137,4 +137,18 @@ source-weight modification, checkpoint averaging or production routing change oc
+ Use the host's existing scheduler too: GD-001 locks coordinate only GD-001 processes;
+ preflight observations cannot prevent an unrelated process starting later.
+ 
++Native evaluation also freezes an aggregate budget before registration: by default
++1,800 seconds and 16,000 actual model forward calls per split. Loading, scoring and
++unloading share the wall budget; all checkpoints and resumed DEV attempts share the
++forward budget. Generation and both candidate-likelihood forwards count. Immutable
++attempt receipts retain spent resources on failures; an interrupted attempt without a
++completion receipt blocks resumption because its consumption is unknown. Completed
++checkpoint receipts are reused without spending additional model forwards.
++
++Time checks are cooperative before loads and model forwards. One in-flight load or
++forward may finish after the deadline; a hung native operation requires a supervisor
++that terminates only its own worker. The forward limit prevents the next counted call
++from starting. Budget exhaustion is a blocked outcome, not permission to enlarge a
++registered budget or discard its receipts. Use a new registration for a changed budget.
++
+ Every outcome retains `permits_model_promotion: false`.
+diff --git a/experiments/rineya_generalization_dynamics_v1/README.md b/experiments/rineya_generalization_dynamics_v1/README.md
+index 93cce47b..7b679b54 100644
+--- a/experiments/rineya_generalization_dynamics_v1/README.md
++++ b/experiments/rineya_generalization_dynamics_v1/README.md
+@@ -68,6 +68,23 @@ an unverified conversion.
+ resource guards still require qualification on the actual host. Real PyTorch tests here
+ exercise tensor arithmetic with a tiny deterministic stub, not a Rineya model.
+ 
++The October 3, 2026 local follow-up found no complete, loadable, admissible trajectory.
++Halo Stage-A retains standard-format steps 200/225/250, but its receipts plan 800 steps
++and lack a completion receipt and complete consumed-prompt inventory. Completed Baya
++Stage-A retains checkpoint metadata at 1150/1175/1200 but lacks their weight payloads.
++Completed single-layer Supa runs use a custom readout that this loader rejects. Titan's
++published Experimental/Sparse/Transition variants are derived models, not successive
++training snapshots. Native preflight also blocked CPU and CUDA on the unchanged memory
++guards; no checkpoint ranking or composition result was measured.
++
++Aggregate native budgets are now frozen at registration and accounted for across all
++checkpoints and resumed attempts: defaults are 1,800 seconds and 16,000 actual forwards
++per split. Interrupted accounting blocks resumption and selection. Wall checks are
++cooperative; an owned-worker supervisor is needed to interrupt a hung operation.
++The original `VALIDATION.json` remains the historical 65-test delivery receipt; this
++follow-up's audit and validation are recorded separately in
++`NATIVE_QUALIFICATION_20261003.json`.
++
+ See [RUNBOOK.md](RUNBOOK.md) for the operator sequence and training-hook example,
+ [PROTOCOL.md](PROTOCOL.md) for frozen selection rules and limitations, and
+ [RECONNAISSANCE.md](RECONNAISSANCE.md) for repository provenance and non-interference.
+diff --git a/experiments/rineya_generalization_dynamics_v1/RUNBOOK.md b/experiments/rineya_generalization_dynamics_v1/RUNBOOK.md
+index 0477052e..1b487179 100644
+--- a/experiments/rineya_generalization_dynamics_v1/RUNBOOK.md
++++ b/experiments/rineya_generalization_dynamics_v1/RUNBOOK.md
+@@ -96,6 +96,21 @@ An `init` failure does not justify switching to a stock model.
+ 
+ ## 5. Evaluate development and freeze the choices
+ 
++Before a native run, register the aggregate `max_native_wall_seconds` and
++`max_native_forward_calls` runtime fields. Defaults are 1,800 seconds and 16,000 actual
++model forwards per split, shared across every checkpoint and resumed DEV attempt.
++At 24 pairs per family, the base plus two saved snapshots has 864 prompts and at most
++15,552 forwards with 16 output tokens (up to 16 generation calls plus two likelihood
++calls per prompt). An eight-pair DEV screen has 288 prompts and at most 5,184 forwards;
++a two-pair loader screen has 72 prompts and at most 1,296, but cannot satisfy the
++eight-reference-solved retention support gate. Choose the screen size before `init`.
++Small screens qualify loading and scoring; ranking tradeoffs need adequate support and
++a reproducible DEV follow-up before confirmation.
++
++Do not reset budget receipts to resume. An unclosed STARTED attempt blocks resumption.
++Wall checks cannot interrupt an in-flight operation: use an owned-worker supervisor
++for a hard process timeout, and preserve the interrupted attempt for audit.
++
+ ```bash
+ python -m experiments.rineya_generalization_dynamics_v1 evaluate-dev \
+   --run /absolute/path/to/research-runs/gd001-native-001 --allow-native
+diff --git a/experiments/rineya_generalization_dynamics_v1/configs/native.example.json b/experiments/rineya_generalization_dynamics_v1/configs/native.example.json
+index 7e26b210..c5067187 100644
+--- a/experiments/rineya_generalization_dynamics_v1/configs/native.example.json
++++ b/experiments/rineya_generalization_dynamics_v1/configs/native.example.json
+@@ -12,6 +12,7 @@
+   "runtime": {
+     "device": "cpu", "dtype": "float32", "cpu_threads": 2,
+     "prompt_format": "plain", "max_input_tokens": 512, "max_new_tokens": 16,
++    "max_native_wall_seconds": 1800, "max_native_forward_calls": 16000,
+     "min_free_ram_gib": 7.4, "min_free_vram_gib": 7.4, "min_free_disk_gib": 1.0
+   }
+ }
+diff --git a/experiments/rineya_generalization_dynamics_v1/native.py b/experiments/rineya_generalization_dynamics_v1/native.py
+index 3afbab33..9f594815 100644
+--- a/experiments/rineya_generalization_dynamics_v1/native.py
++++ b/experiments/rineya_generalization_dynamics_v1/native.py
+@@ -65,13 +65,17 @@ def continuation_logp(model, prompt_ids: list[int], candidate_ids: list[int], de
+ 
+ 
+ class NativeEvaluator:
+-    def __init__(self, registry: dict, config: dict):
++    def __init__(self, registry: dict, config: dict, budget=None):
+         self.registry, self.config = registry, config
+         self.model = self.tokenizer = None
+         self.runtime = None
++        self.budget = budget
++        self._forward_hook = None
+ 
+     def load(self, checkpoint: dict) -> dict:
+         require(self.model is None, "Unload the previous checkpoint first")
++        if self.budget is not None:
++            self.budget.check_time()
+         flight = preflight(self.config, any(c["kind"] == "peft" for c in self.registry["checkpoints"]))
+         require(flight["status"] == "PREFLIGHT_ONLY", "; ".join(flight["reasons"]))
+         os.environ.setdefault("HF_HUB_OFFLINE", "1")
+@@ -108,6 +112,13 @@ class NativeEvaluator:
+         model.requires_grad_(False)
+         self.model = model.to(self.config["device"]).eval()
+         require(self.tokenizer.eos_token_id is not None, "Tokenizer has no EOS token")
++        if self.budget is not None:
++            self.budget.check_time()
++            # PEFT's generate() delegates to the underlying HF causal model.
++            # Hook that model once, so generation and likelihood each count one
++            # top-level forward, without counting internal transformer layers.
++            target = self.model.get_base_model() if checkpoint["kind"] == "peft" else self.model
++            self._forward_hook = target.register_forward_pre_hook(self.budget.before_forward)
+         self.runtime = {"versions": flight["versions"], "python": flight["python"],
+                         "device": self.config["device"], "dtype": self.config["dtype"],
+                         "base_parameters": base_parameters, "parameters_with_adapter": sum(p.numel() for p in model.parameters()),
+@@ -121,6 +132,8 @@ class NativeEvaluator:
+         import torch
+         from transformers import GenerationConfig
+         require(self.model is not None, "No model loaded")
++        if self.budget is not None:
++            self.budget.check_time()
+         cfg, tok = self.config, self.tokenizer
+         if cfg["prompt_format"] == "plain":
+             prompt = tok.encode(row["prompt"], add_special_tokens=False)
+@@ -158,6 +171,9 @@ class NativeEvaluator:
+         return resource
+ 
+     def close(self) -> None:
++        if self._forward_hook is not None:
++            self._forward_hook.remove()
++            self._forward_hook = None
+         self.model = self.tokenizer = None
+         gc.collect()
+         if self.config["device"] == "cuda" and importlib.util.find_spec("torch") is not None:
+diff --git a/experiments/rineya_generalization_dynamics_v1/pipeline.py b/experiments/rineya_generalization_dynamics_v1/pipeline.py
+index 72a64309..a0724df9 100644
+--- a/experiments/rineya_generalization_dynamics_v1/pipeline.py
++++ b/experiments/rineya_generalization_dynamics_v1/pipeline.py
+@@ -12,7 +12,8 @@ DEFAULT_POLICY = {"min_clean_accuracy": .5, "max_retention_damage_fraction": .05
+                   "min_reference_solved": 8, "min_acquisition_delta": 0.0}
+ DEFAULT_NATIVE = {"device": "cpu", "dtype": "float32", "cpu_threads": 2,
+                   "prompt_format": "plain", "max_input_tokens": 512, "max_new_tokens": 16,
+-                  "min_free_ram_gib": 7.4, "min_free_vram_gib": 7.4, "min_free_disk_gib": 1.0}
++                  "min_free_ram_gib": 7.4, "min_free_vram_gib": 7.4, "min_free_disk_gib": 1.0,
++                  "max_native_wall_seconds": 1800.0, "max_native_forward_calls": 16000}
+ 
+ 
+ def validate_config(policy: dict, native: dict) -> None:
+@@ -29,6 +30,11 @@ def validate_config(policy: dict, native: dict) -> None:
+         require(type(native[key]) is int and 0 < native[key] <= limit, "Invalid compute budget")
+     for key in ("min_free_ram_gib", "min_free_vram_gib", "min_free_disk_gib"):
+         require(type(native[key]) in (int, float) and math.isfinite(native[key]) and native[key] >= DEFAULT_NATIVE[key], "Resource guards may not be weakened")
++    require(type(native["max_native_wall_seconds"]) in (int, float)
++            and math.isfinite(native["max_native_wall_seconds"]) and native["max_native_wall_seconds"] > 0,
++            "Invalid aggregate native wall budget")
++    require(type(native["max_native_forward_calls"]) is int and native["max_native_forward_calls"] > 0,
++            "Invalid aggregate native forward budget")
+ 
+ 
+ def initialize(run: Path, spec: dict | None = None, *, mechanical: bool = False,
+@@ -110,8 +116,7 @@ def evaluate(run: Path, manifest: dict, rows: list[dict], split: str,
+     require(not native or allow_native, "Native inference requires --allow-native; no implicit model loads")
+     if native:
+         from .native import NativeEvaluator, device_lock
+-        verify_registry(manifest["registry"])
+-        evaluator = NativeEvaluator(manifest["registry"], manifest["runtime"])
++        from .budget import NativeBudget
+     results = []
+     # The first development reference establishes the runtime contract for confirmation.
+     existing = run / "dev" / (manifest["registry"]["checkpoints"][0]["id"] + ".json")
+@@ -127,8 +132,12 @@ def evaluate(run: Path, manifest: dict, rows: list[dict], split: str,
+                     runtime = evaluator.load(checkpoint)
+                     predictions = [evaluator.predict(r) for r in rows]
+                     resources = evaluator.resources()
++                    budget.check_time()
++                    resources["native_budget"] = budget.snapshot()
+                 finally:
+                     evaluator.close()
++                # Unloading may itself cross the cooperative deadline.
++                budget.check_time()
+             else:
+                 resources = {"measured_native_resources": False}
+                 runtime = {"backend": "gold-aware-mechanical-fixture-NOT-A-MODEL"}
+@@ -147,9 +156,13 @@ def evaluate(run: Path, manifest: dict, rows: list[dict], split: str,
+         results.append(result)
+     if native:
+         with device_lock(manifest["runtime"]):
+-            for checkpoint in checkpoints:
+-                one(checkpoint)
+-        verify_registry(manifest["registry"])
++            with NativeBudget(run, split, manifest) as budget:
++                verify_registry(manifest["registry"])
++                evaluator = NativeEvaluator(manifest["registry"], manifest["runtime"], budget)
++                for checkpoint in checkpoints:
++                    one(checkpoint)
++                verify_registry(manifest["registry"])
++                budget.check_time()
+     else:
+         for checkpoint in checkpoints:
+             one(checkpoint)
+@@ -170,6 +183,10 @@ def select(run: Path) -> dict:
+         require(not (run / "confirmation.STARTED.json").exists(), "Confirmation already spent")
+         checkpoints = manifest["registry"]["checkpoints"]
+         results = [load_result(run, manifest, rows, "dev", c) for c in checkpoints]
++        native_budget_receipt = None
++        if manifest["evidence_kind"] == "native_pilot":
++            from .budget import NativeBudget
++            native_budget_receipt = NativeBudget.inspect_complete(run, "dev", manifest)
+         require(all(invariant_runtime(r["runtime"]) == invariant_runtime(results[0]["runtime"]) for r in results), "Mixed runtime evidence")
+         reference = results[0]["predictions"]
+         summaries = {c["id"]: summarize(rows, r["predictions"], reference) for c, r in zip(checkpoints, results)}
+@@ -183,6 +200,7 @@ def select(run: Path) -> dict:
+         selection = signed({"manifest_sha256": manifest["sha256"], "status": "LOCKED" if admissible else "BLOCKED_NO_ELIGIBLE_CHECKPOINT",
+                             "chosen": chosen, "development_receipts": {r["checkpoint_id"]: r["sha256"] for r in results},
+                             "evidence_kind": manifest["evidence_kind"], "tie_break": "earlier step, then ID",
++                            "native_budget_receipt_sha256": native_budget_receipt["sha256"] if native_budget_receipt else None,
+                             "policy_sha256": digest(manifest["policy"]), "permits_model_promotion": False})
+         write_new(run / "development_report.json", {"evidence_kind": manifest["evidence_kind"], "summaries": summaries,
+                   "gate_failures": gates, "trajectory": trajectory(rows, [r["predictions"] for r in results])})
+@@ -198,6 +216,11 @@ def confirm(run: Path, seed: int, *, allow_confirmation: bool = False, allow_nat
+         selection = verify(read(run / "selection.json"))
+         require(selection["manifest_sha256"] == manifest["sha256"] and selection["policy_sha256"] == digest(manifest["policy"]), "Selection is not bound to this run")
+         require(selection["status"] == "LOCKED", "No admissible checkpoint; confirmation blocked")
++        if manifest["evidence_kind"] == "native_pilot":
++            from .budget import NativeBudget
++            native_budget_receipt = NativeBudget.inspect_complete(run, "dev", manifest)
++            require(native_budget_receipt["sha256"] == selection["native_budget_receipt_sha256"],
++                    "Native budget receipt changed after selection")
+         require(type(seed) is int and seed >= 0 and seed != manifest["dev_seed"], "Supply a distinct independent confirmation seed")
+         checkpoints = manifest["registry"]["checkpoints"]
+         for c in checkpoints:
+diff --git a/experiments/rineya_generalization_dynamics_v1/tests/test_gd001.py b/experiments/rineya_generalization_dynamics_v1/tests/test_gd001.py
+index 3be01062..94b93ac8 100644
+--- a/experiments/rineya_generalization_dynamics_v1/tests/test_gd001.py
++++ b/experiments/rineya_generalization_dynamics_v1/tests/test_gd001.py
+@@ -225,7 +225,12 @@ class RegistryTests(unittest.TestCase):
+     def test_symlinked_asset_rejected(self):
+         path = self.root / "one/model.safetensors"
+         path.unlink()
+-        path.symlink_to(self.root / "base/model.safetensors")
++        try:
++            path.symlink_to(self.root / "base/model.safetensors")
++        except OSError as exc:
++            if getattr(exc, "winerror", None) == 1314:
++                self.skipTest("Windows host does not permit file symlink creation")
++            raise
+         with self.assertRaises(Blocked):
+             r.freeze_registry(self.spec)
+ 

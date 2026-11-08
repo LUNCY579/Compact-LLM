@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "FMA efficacy evaluation record",
+  "type": "object",
+  "required": ["arm", "checkpoint", "data_id", "sealed", "perplexity", "downstream_aggregate", "added_parameters", "gate"],
+  "properties": {
+    "arm": {"enum": ["M0", "M1", "M2"]},
+    "checkpoint": {"type": "string"},
+    "data_id": {"type": "string"},
+    "sealed": {"type": "boolean"},
+    "perplexity": {"type": "number", "exclusiveMinimum": 0},
+    "downstream_aggregate": {"type": "number"},
+    "added_parameters": {"type": "integer", "minimum": 0},
+    "gate": {"type": "number", "minimum": 0, "maximum": 1},
+    "rank": {"type": ["integer", "null"], "minimum": 1},
+    "seed": {"type": "integer"},
+    "notes": {"type": "string"}
+  }
+}

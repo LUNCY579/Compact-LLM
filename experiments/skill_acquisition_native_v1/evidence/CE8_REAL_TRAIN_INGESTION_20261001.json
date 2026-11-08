@@ -1,0 +1,181 @@
+{
+  "schema": "CE8-REAL-TRAIN-METADATA-INGESTION-1",
+  "utc": "2026-10-01T20:46:39.071798+00:00",
+  "classification": "Actual source/teacher verification only; admission mode synthetic_fixture; no native execution permit",
+  "source_sha256": "f13189c82ff68dd564a3a03172883a04eaa9610f4f430d8246af6a39921a05f9",
+  "source_unchanged": true,
+  "arms": {
+    "canonical": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\r-oracle-supervision-proposal-20261001\\CE8_CANONICAL_INGESTION_SOURCES_20261001.json",
+      "file_sha256": "bfb11c5e1b77b4b15c1a9cf40542aebf46a0ad9f0a9f2ecc2f8f988bf9ff8588",
+      "receipt": {
+        "schema": "CE8-INGESTION-SOURCES-1",
+        "classification": "full TRAIN and teacher revalidation only",
+        "tokenizer_rendered": false,
+        "model_loads": 0,
+        "optimizer_steps": 0,
+        "training_authorized": false,
+        "native_qualified": false,
+        "arm": "canonical",
+        "preparation_ref": {
+          "path": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\r-oracle-supervision-proposal-20261001\\PREPARATION.json",
+          "sha256": "260534c1962d50be243ef86bc22f631dfa791185c4936d49fd9f0ab4c0e8de3e"
+        },
+        "plan_ref": {
+          "path": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\r-oracle-supervision-proposal-20261001\\CE8_CANONICAL_PLAN_20261001.json",
+          "sha256": "269a0a26450d878aa6f868aa858b886663a790762bb4bca6f7b49ebe0a4fd2cd"
+        },
+        "plan_sha256": "85616f700a250242764ae5b2b17c9d1cbae8366dbaea0899dda4ff10d9d24e03",
+        "static_recipe_sha256": "a38dc29f4173904ab2e15b26e4855d69e0660ef25b577dcf0e5dd151f89549f8",
+        "source": {
+          "dataset_root": "C:\\Users\\clclc\\BusinessProject\\Rineya-Dataset\\data",
+          "manifest_sha256": "86ac8f0d851f2178752357f62249eab5a23fd3de8fa032e7373614891df4cd44",
+          "files": {
+            "manifests/atomic_R.json": {
+              "bytes": 228112,
+              "sha256": "23e0986d5c4c37162a9f237f27b1774aa4128ab1985e3aaff9ef13084dfc8fbb"
+            },
+            "canonical/train.jsonl": {
+              "bytes": 66156220,
+              "sha256": "0e147b321bc5aed0ebe88c75263d76a4017a422034712a4fb46eff1f244a8886"
+            },
+            "policy/train.jsonl": {
+              "bytes": 41807933,
+              "sha256": "b3c49230f9ec52606def33c9b2390eba0db7702b053a4a8501543ca5c4e97086"
+            }
+          },
+          "selected_ids_sha256": "69e70546eef085c8cebbdbee75d6199cc0d559889fb2a4f35f811dd82e023d3f",
+          "rows": 3000
+        },
+        "teacher": {
+          "bytes": 14033011,
+          "ordered_target_digest": "80506db45de24cdc186c94d42805fdcd7792d2a81c68369849633425286b2dc8",
+          "path": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\r-oracle-supervision-proposal-20261001\\canonical.messages.jsonl",
+          "rows": 3000,
+          "sha256": "f51d8e33dd95d1b2cdf6c379526a0cefbee2f557286b7a210d02d434474fb1c8"
+        },
+        "declared_census": {
+          "eos_id": 151645,
+          "joint_tokenization_equal_rows": 3000,
+          "joint_tokenization_rule": "descriptive: rows whose whole string prompt + target + '<|im_end|>' tokenizes to the same IDs as the registered concatenation",
+          "label_rule": "mechanics.completion_labels(ids, all-true mask, [P], [C], EOS (151645, 151643), ['eos'], 128): labels exactly positions P .. P+C-1 (target + EOS), masks the P prompt positions, and refuses an EOS inside the target; the loss uses the one-shift rule of mechanics.selected_logprobs (hidden states P-1 .. P+C-2 predict tokens P .. P+C-1) through s0_generate.teacher_forced_logprobs(padding_side='none', checkpoint_head=True)",
+          "labelled_tokens": {
+            "max": 29,
+            "min": 16,
+            "total": 64712
+          },
+          "max_sequence_positions": 1287,
+          "max_target_tokens": 128,
+          "prompt_render_sha256": "b8bf511983ea776f82735c153e865c2e2e3c0204b55bd0b2818659f679a1b754",
+          "prompt_tokens": {
+            "max": 1259,
+            "min": 497,
+            "total": 2560912
+          },
+          "render_rule": "prompt = s0_runtime.render_prompt(tokenizer, [system, user]) ids (add_generation_prompt, enable_thinking=False, add_special_tokens=False; ends with the pre-closed think block); target = tokenizer(assistant content, add_special_tokens=False)['input_ids'], decoding back to the content with no special ID; sequence = prompt + target + [151645]; the chat template's rendering of the three messages equals rendered prompt + content + '<|im_end|>\\n'; len(target) + 1 <= 128",
+          "rows_rendered": 3000,
+          "sequence_ids_sha256": "fe6dbf37b09117c78455ef521880c08eca261ad303275a32b29f0bd20ccae600",
+          "tokenizer_receipt_sha256": "6130cea7c36c9466eb51e1365a3740245efce4549c0a7f3fcdac4dba896da30a",
+          "total_prompt_tokens": 2560912,
+          "total_sequence_positions": 2625624,
+          "total_supervised_tokens": 64712
+        },
+        "source_sha256": "f13189c82ff68dd564a3a03172883a04eaa9610f4f430d8246af6a39921a05f9",
+        "receipt_sha256": "5b2e5398d91d71c277dc97b0b1eae6a79f03be646ca9c2ccb53e068933f36891"
+      }
+    },
+    "permuted": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\r-oracle-supervision-proposal-20261001\\CE8_PERMUTED_INGESTION_SOURCES_20261001.json",
+      "file_sha256": "d97b971f00b89158099f4838bea6a37791c27a58e81b2dc6f15fa7e6e9fd8b56",
+      "receipt": {
+        "schema": "CE8-INGESTION-SOURCES-1",
+        "classification": "full TRAIN and teacher revalidation only",
+        "tokenizer_rendered": false,
+        "model_loads": 0,
+        "optimizer_steps": 0,
+        "training_authorized": false,
+        "native_qualified": false,
+        "arm": "permuted",
+        "preparation_ref": {
+          "path": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\r-oracle-supervision-proposal-20261001\\PREPARATION.json",
+          "sha256": "260534c1962d50be243ef86bc22f631dfa791185c4936d49fd9f0ab4c0e8de3e"
+        },
+        "plan_ref": {
+          "path": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\r-oracle-supervision-proposal-20261001\\CE8_PERMUTED_PLAN_20261001.json",
+          "sha256": "2d9b94adf2a507224eeed14e6d11cc9cf6a8e879f3c9751a67756fdf096323b2"
+        },
+        "plan_sha256": "81a6ea023f2d03bba4486fb6d74362814cba6aab78902a81cc71a15393909c9f",
+        "static_recipe_sha256": "a38dc29f4173904ab2e15b26e4855d69e0660ef25b577dcf0e5dd151f89549f8",
+        "source": {
+          "dataset_root": "C:\\Users\\clclc\\BusinessProject\\Rineya-Dataset\\data",
+          "manifest_sha256": "86ac8f0d851f2178752357f62249eab5a23fd3de8fa032e7373614891df4cd44",
+          "files": {
+            "manifests/atomic_R.json": {
+              "bytes": 228112,
+              "sha256": "23e0986d5c4c37162a9f237f27b1774aa4128ab1985e3aaff9ef13084dfc8fbb"
+            },
+            "canonical/train.jsonl": {
+              "bytes": 66156220,
+              "sha256": "0e147b321bc5aed0ebe88c75263d76a4017a422034712a4fb46eff1f244a8886"
+            },
+            "policy/train.jsonl": {
+              "bytes": 41807933,
+              "sha256": "b3c49230f9ec52606def33c9b2390eba0db7702b053a4a8501543ca5c4e97086"
+            }
+          },
+          "selected_ids_sha256": "69e70546eef085c8cebbdbee75d6199cc0d559889fb2a4f35f811dd82e023d3f",
+          "rows": 3000
+        },
+        "teacher": {
+          "bytes": 14033011,
+          "ordered_target_digest": "234f0f9ca73221587538f5d50c09229382e914f1060e097fcd605d8c687f1fa3",
+          "path": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\r-oracle-supervision-proposal-20261001\\permuted.messages.jsonl",
+          "rows": 3000,
+          "sha256": "a986671dbbf10abe55c925b0420b2f0769e77a48d5872a310b42e53f650d1ddc"
+        },
+        "declared_census": {
+          "eos_id": 151645,
+          "joint_tokenization_equal_rows": 3000,
+          "joint_tokenization_rule": "descriptive: rows whose whole string prompt + target + '<|im_end|>' tokenizes to the same IDs as the registered concatenation",
+          "label_rule": "mechanics.completion_labels(ids, all-true mask, [P], [C], EOS (151645, 151643), ['eos'], 128): labels exactly positions P .. P+C-1 (target + EOS), masks the P prompt positions, and refuses an EOS inside the target; the loss uses the one-shift rule of mechanics.selected_logprobs (hidden states P-1 .. P+C-2 predict tokens P .. P+C-1) through s0_generate.teacher_forced_logprobs(padding_side='none', checkpoint_head=True)",
+          "labelled_tokens": {
+            "max": 29,
+            "min": 16,
+            "total": 64712
+          },
+          "max_sequence_positions": 1287,
+          "max_target_tokens": 128,
+          "prompt_render_sha256": "b8bf511983ea776f82735c153e865c2e2e3c0204b55bd0b2818659f679a1b754",
+          "prompt_tokens": {
+            "max": 1259,
+            "min": 497,
+            "total": 2560912
+          },
+          "render_rule": "prompt = s0_runtime.render_prompt(tokenizer, [system, user]) ids (add_generation_prompt, enable_thinking=False, add_special_tokens=False; ends with the pre-closed think block); target = tokenizer(assistant content, add_special_tokens=False)['input_ids'], decoding back to the content with no special ID; sequence = prompt + target + [151645]; the chat template's rendering of the three messages equals rendered prompt + content + '<|im_end|>\\n'; len(target) + 1 <= 128",
+          "rows_rendered": 3000,
+          "sequence_ids_sha256": "342a5fedff78e3a8efbbad2ea57790d7939647e194104126edaf6a6f202dc3b2",
+          "tokenizer_receipt_sha256": "6130cea7c36c9466eb51e1365a3740245efce4549c0a7f3fcdac4dba896da30a",
+          "total_prompt_tokens": 2560912,
+          "total_sequence_positions": 2625624,
+          "total_supervised_tokens": 64712
+        },
+        "source_sha256": "f13189c82ff68dd564a3a03172883a04eaa9610f4f430d8246af6a39921a05f9",
+        "receipt_sha256": "f47a9bba132be6e73bb06c3f9394a37617dcc73ffa39f483827492aa5bde7054"
+      }
+    }
+  },
+  "checked_teacher_rows": 6000,
+  "framework_imports": [],
+  "model_loads": 0,
+  "optimizer_steps": 0,
+  "tokenizer_loads": 0,
+  "heldout_model_outputs_read": false,
+  "native_qualified": false,
+  "training_authorized": false,
+  "elapsed_s": 4.016603600000053,
+  "trace": {
+    "path": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\r-oracle-supervision-proposal-20261001\\CE8_REAL_TRAIN_INGESTION_TRACE_20261001.json",
+    "sha256": "7c71c49746e83ee1fed9317089e19d94ebc8e9d093e42943431fd86148a26d13"
+  },
+  "observed_operation_events": 20
+}

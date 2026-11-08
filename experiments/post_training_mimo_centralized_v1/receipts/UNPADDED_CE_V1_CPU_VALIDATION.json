@@ -1,0 +1,27 @@
+{
+  "status": "PASS_STDLIB_ONLY",
+  "recorded_at_utc": "2026-09-30T06:53:11.962005+00:00",
+  "command": [
+    "C:\\Users\\clclc\\AppData\\Local\\Programs\\Python\\Python313\\python.exe",
+    "-B",
+    "-m",
+    "unittest",
+    "experiments.post_training_mimo_centralized_v1.tests.test_laptop_profile",
+    "experiments.post_training_mimo_centralized_v1.tests.test_e0_accounting",
+    "experiments.post_training_mimo_centralized_v1.tests.test_e1_gates",
+    "-v"
+  ],
+  "process_wall_seconds": 1.7757363000000623,
+  "log": "results\\UNPADDED_CE_V1_STDLIB.log",
+  "log_sha256": "0ee3d8ba188c60defea313d72ac08308a579be0f2ecd7685a815d23bfc8576be",
+  "source_sha256": {
+    "scripts/qualify_native.py": "e41a7957831161fa180160961eb446919768f5c80fc5b1d7ecaa7c454b04c4f2",
+    "scripts/laptop_profile.py": "87727f698c6a1fbfd692780f5061cdfeca5ece80a9a9a0f9dec179ac57ccf4dc",
+    "tests/test_laptop_profile.py": "24e5ca7e8ce1c6a57ce11682d34ef0491baa16f8a8ad4bb5fa1f3b096476c67a",
+    "configs/E0_LAPTOP_STREAM_UNPADDED_CE.json": "94797dfa80a17cba8e59559854a45f48a0b48a3c5ff901000d6c79b467fe3772"
+  },
+  "scope": "Exact unpadded CE registration/input guard and unchanged underlying update/resume source controls; no native qualification",
+  "native_model_calls": 0,
+  "e1_authorized": false,
+  "goal_complete": false
+}

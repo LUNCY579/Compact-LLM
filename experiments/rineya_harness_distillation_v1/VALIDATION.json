@@ -1,0 +1,43 @@
+{
+  "experiment": "RHD-001",
+  "status": "OFFLINE_QUALIFIED_NATIVE_NOT_RUN",
+  "parent_commit": "5517361ec09e02308eae0352b2e53a70853c5245",
+  "python": "3.13.5",
+  "platform": "Linux",
+  "tests": {
+    "command": "python -m unittest discover -s experiments/rineya_harness_distillation_v1/tests -v",
+    "run": 98,
+    "passed": 98,
+    "failed": 0,
+    "skipped": 0
+  },
+  "compileall": "PASS",
+  "runtime_source_sha256": "a3fec2d43c2d43082df482ab56d496578442aed067a2a7154276e3e27d74e493",
+  "parent_schema_git_blob_verified": "110844a75e1c3a82748e7e83569ee8c80ec3c042",
+  "synthetic_full_size_demo": {
+    "tasks_per_arm": 256,
+    "attempts_per_task": 2,
+    "modes": 3,
+    "total_attempted_trajectories": 1536,
+    "review_k_sft_rows": 1024,
+    "review_k_pair_candidates": 512,
+    "all_pairs_preference_eligible": false,
+    "evidence": "SCRIPTED_PROTOCOL_ONLY_NOT_LEARNED"
+  },
+  "native_model_loads": 0,
+  "native_forwards": 0,
+  "optimizer_steps": 0,
+  "paid_api_calls": 0,
+  "mimo_data_downloads": 0,
+  "gpu_runs": 0,
+  "remote_ci": "NOT_OBSERVED_AT_COMMIT_CREATION",
+  "upstream_full_test_suite": "NOT_RUN",
+  "native_runtime": "NOT_QUALIFIED",
+  "limitations": [
+    "No live teacher adapter or native RHD training driver",
+    "No native six-arm factorial execution",
+    "No sealed evaluation access",
+    "No model efficacy or hardware-fit claim",
+    "Source-harness control planned; oracle control disabled"
+  ]
+}

@@ -1,0 +1,84 @@
+{
+  "row_counts": {
+    "experiments\\post_training_mimo_centralized_v1\\datasets\\bridge_v1:TRAIN": 4096,
+    "experiments\\post_training_mimo_centralized_v1\\datasets\\bridge_v1:TRAIN_SELECTION": 256,
+    "experiments\\post_training_mimo_centralized_v1\\datasets\\bridge_v1:DEV": 256,
+    "artifacts\\mimo_central\\retention_v1:TRAIN": 768,
+    "artifacts\\mimo_central\\retention_v1:DEV": 256
+  },
+  "rows_compared": 5632,
+  "known_barred_identifiers": 400,
+  "historical_chat_fingerprints": 32800,
+  "current_parent_units": 5440,
+  "errors": [],
+  "scoped_exact_checks_pass": true,
+  "schema_version": 1,
+  "status": "PASS_SCOPED_EXACT_AUDIT_ONLY",
+  "source_code_sha256": "d3c1b40a25c623f42224e5e077b7a5ee4232d798928879bbc873b5ff603dc6ec",
+  "dataset_bindings": {
+    "experiments\\post_training_mimo_centralized_v1\\datasets\\bridge_v1": {
+      "receipt_sha256": "09cfa63e3825970309e55c6d4788a936387cf97ffdf02e97be8666be7878aa37",
+      "open_files": {
+        "TRAIN.jsonl": {
+          "sha256": "b5f80d693f91057423daca8321aa21c6e61cf19c851b74322fe352fffb683a3d",
+          "bytes": 11736568
+        },
+        "TRAIN_SELECTION.jsonl": {
+          "sha256": "7f7824d5fd2f77b63c31c0f06833a5945f7029ff394d94151745d7f520d40041",
+          "bytes": 736369
+        },
+        "DEV.jsonl": {
+          "sha256": "d05785ef2600c0e1d0b3ed8feb084ab93dfd5c6f9339921a2a0f3a75b5fb40e9",
+          "bytes": 733577
+        }
+      }
+    },
+    "artifacts\\mimo_central\\retention_v1": {
+      "receipt_sha256": "5cfeb3e88aa4f90ea6e19c1d1f2f08ed1f85942a7b290bc32828be7bd171b8ee",
+      "open_files": {
+        "TRAIN.jsonl": {
+          "sha256": "a818822883ef36e682a8f3fc000f46f818f5a588f19c12c7108e30283a99a25f",
+          "bytes": 3545658
+        },
+        "DEV.jsonl": {
+          "sha256": "5d03104f4ec2c187acf8815e5a83ad208d4a7c3374e369b4370b20654163eb70",
+          "bytes": 1209557
+        }
+      }
+    }
+  },
+  "quarantine_file_sha256": "a20fc72bb85871b64900c1e47ef7c6b832f1d9de86f92051d26fde5e2dc2ec66",
+  "quarantine_entries": 18,
+  "protected_paths_preserved": [
+    "short-response-model-phase-0-1-2/data/phase_9_student_distillation/residual_capability_v23/direct_reasoning/splits/fresh_sealed.reviewed.jsonl",
+    "short-response-model-phase-0-1-2/data/phase_9_student_distillation/residual_capability_v23/procedural_rag/splits/fresh_sealed.reviewed.jsonl",
+    "Rineya_Invisible_Limit_Lab_v1/data/test2_answer_key.jsonl"
+  ],
+  "historical_archive_sha256": "79b8171e83388ff0bf406328f90b5d74ab4cb6d94f29d0ba66af559cbd9b75da",
+  "historical_member": "data/diagnostics/v1_exclusion_hashes.json",
+  "historical_member_sha256": "05668db3651b935e68733e8e6964f0a4e8a4e73443077016a8d27e05cac46681",
+  "provenance": {
+    "archive_sha256": "7694ed0f654e8c23316ddc1546f845445eca1dedade2b79024ab64868c700129",
+    "canonical_instances": 32800,
+    "manifest_sha256": "3a7f1a20d15d6c2ce26eeb02ae3c0a6353f771955230b390c35ac6739c241563",
+    "scope": "provided v1 corpus only; no complete historical or semantic exclusion"
+  },
+  "historical_problem_hashes_not_compared": 32800,
+  "not_compared_reason": "Distinct generator schemas have no qualified common semantic fingerprint",
+  "read_scope": [
+    "quarantine metadata",
+    "one hash-only archive member",
+    "manifest-bound TRAIN/TRAIN_SELECTION/DEV"
+  ],
+  "sealed_payloads_read": false,
+  "full_historical_exclusion_qualified": false,
+  "e1_launch_ready": false,
+  "limitations": [
+    "Whole-chat equality does not test user-only equality when system messages differ",
+    "No historical normalized-text inventory was available",
+    "No claim of semantic, all-Titan-ancestry or pretraining exclusion"
+  ],
+  "wall_seconds": 2.876720899999782,
+  "model_calls": 0,
+  "teacher_calls": 0
+}

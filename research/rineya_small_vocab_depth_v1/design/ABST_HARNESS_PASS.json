@@ -1,0 +1,934 @@
+{
+ "schema": 1,
+ "record": "ABST_HARNESS_PASS",
+ "experiment": "ABST-001",
+ "revision": "R1",
+ "utc": "2026-09-26T06:33:17Z",
+ "seconds": 1081.3,
+ "harness_sha256": "a5f9969ba96ebfecaa7764ff46c61858c727153e907cb6fc4cddcd3bfa9b6f15",
+ "run_abst_code_sha256": {
+  "rab001_exploration/hostbudget.py": "9f9dcf351f6c9ebfe00bf4e470296cd48db424585f268c205801bd9b0f38acd1",
+  "rineya_small_vocab_depth_v1/abst_describe.py": "657076b79a91d5b1c1533e2d415a8f10e4bfc2cf464e0026bdb28d5116e49f33",
+  "rineya_small_vocab_depth_v1/abst_measure.py": "ab55e969763ada7bb83bd24249b7abb2e16e8eb9258b6906afa62ff3494a3193",
+  "rineya_small_vocab_depth_v1/abst_verdict.py": "abeb12ea027e99566e9af4fa9ca499ab142a45aa3294ff23d5525383a17ea289",
+  "rineya_small_vocab_depth_v1/gpu_lease.py": "049742734eea9bddd7aaf149d2da824c3d9eec1e2157fab6c6c586d033fda00a",
+  "rineya_small_vocab_depth_v1/hlcc_verdict.py": "baf465b803c25d26d95d70c90dc138e68b774d617bd4e18932e4bb7f90952531",
+  "rineya_small_vocab_depth_v1/layer_ablation.py": "b1a6014fd81596985d05c8b6614a62ba18575df888686c28c835216593aefb1b",
+  "rineya_small_vocab_depth_v1/layer_select.py": "d93040fb75d73530fc26bb789ba6c81f34f825686bb1b0f510607faac3fcff61",
+  "rineya_small_vocab_depth_v1/linear_compensation.py": "a8abc72e6f91167f9711fa9270d9d43f014c6a6a0153d2ec60a59872890a637d",
+  "rineya_small_vocab_depth_v1/param_accounting.py": "dc785cf02ed7124251997587dcb7ea9812c2d368f0abe6cd5c3e30c399206e4d",
+  "rineya_small_vocab_depth_v1/run_abst.py": "3b2ea4db846c9aa39b8eb03c5586362f29e1d2ad784b8512d77fea5beffeff62",
+  "rineya_small_vocab_depth_v1/run_layer_study.py": "99820186ff70d59009de85a9a75dce017071df89f45d2392ab46ff4e92d19591",
+  "rineya_small_vocab_depth_v1/virtual_student.py": "7bacbc04c9816e652ee94987bc19b03cca71709f086f7ae7632465448f8cec49"
+ },
+ "fixtures_sha256": {
+  "dry_20260925T035243Z/lc/LC_ARMS.json": "7d7ac14dd946c762cb45d4238c8aa523797a4384d699ec03e3cf16dcfda087d6",
+  "dry_20260925T035243Z/study/S1_teacher_outputs.json": "7d96caf84c015535817bc026ff7705756cca30f7c2598d9a8d502f7e2674a3b0",
+  "dry_20260925T035243Z/study/S6_vocab_frontier.json": "8a3d337b9a9c05c62cce62c59c4a79d32dc1b4d03a3777f052254bdf898cdeda",
+  "dry_hlcc_for_abst/result/HLCC_RESULT.json": "438ca80be2c2945d331a5e758c9038e466c7748b4c967f1893ca28d73a33ec5d",
+  "dry_vocab_V2/config.json": "09a8abbbef1c6e44ee8da51cc5caebfd80b4a057a3c68bf4b4bc41ab6b0251bc",
+  "dry_vocab_V2/generation_config.json": "56deaaf947e699bfe843814f2a0bd95e238be7c80161047108079039017076b8",
+  "dry_vocab_V2/merges.txt": "eb5a135f13cfa1974aebe0f74e33e939ab75fed803c47546dbf1f06a88f03dcb",
+  "dry_vocab_V2/token_id_map.json": "38b00278c5870311eb0b3145a5e7e9bbc28ee156d5d2331a3c0a644cd3adde1b",
+  "dry_vocab_V2/tokenizer.json": "34bdf20da5a181927f0ce67d86e8544c9e80101a85961820da9bb93814a2637c",
+  "dry_vocab_V2/tokenizer_config.json": "ed81f2a8f1abdd48415c3f4790654be2ecefe698483eec6c9058c07a698fd3df",
+  "dry_vocab_V2/vocab.json": "cdee43f66f1fcfb4ed9dce5de0cb9448a10ecbafd937816a10d6d4deebe2db09",
+  "tiny_teacher/config.json": "8558d2d4d9b1023013926615f4afe8487fcd0314ee71abcbe1b200e2d06e6afc",
+  "tiny_teacher/generation_config.json": "2325da0f15bb848e018c5ae071b7943332e9f871d6b60e2ed22ca97d4cb993d2",
+  "tiny_teacher/merges.txt": "8831e4f1a044471340f7c0a83d7bd71306a5b867e95fd870f74d0c5308a904d5",
+  "tiny_teacher/model.safetensors": "aa1b1171cc3e11216cbab30bbed47ef97eeae98c2552691e6c41473b9529d900",
+  "tiny_teacher/tokenizer.json": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+  "tiny_teacher/tokenizer_config.json": "d5d09f07b48c3086c508b30d1c9114bd1189145b74e982a265350c923acd8101",
+  "tiny_teacher/vocab.json": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910"
+ },
+ "python": "3.11.15",
+ "torch": "2.10.0+cu126",
+ "records_panel_dir_changes": [],
+ "records_panel_dir_touched_by_harness": [],
+ "scenarios": {
+  "G_output_keying": {
+   "pass": true,
+   "checks": {
+    "G1_dry_into_result refused": true,
+    "G1b_dry_new_dir_in_panel_dir refused": true,
+    "G1c_dry_elsewhere_in_records refused": true,
+    "G2_dry_panel_dir refused": true,
+    "G1d_dry_copied_panel_into_real_result refused": true,
+    "G3 refused": true,
+    "G4 refused": true,
+    "nothing under records": true,
+    "nothing next to the copied panel": true
+   },
+   "steps": {
+    "G1_dry_into_result": {
+     "outcome": "SystemExit: --dry-run may never write under the records tree or the panel's directory",
+     "measure_calls": 0
+    },
+    "G1b_dry_new_dir_in_panel_dir": {
+     "outcome": "SystemExit: --dry-run may never write under the records tree or the panel's directory",
+     "measure_calls": 0
+    },
+    "G1c_dry_elsewhere_in_records": {
+     "outcome": "SystemExit: --dry-run may never write under the records tree or the panel's directory",
+     "measure_calls": 0
+    },
+    "G2_dry_panel_dir": {
+     "outcome": "SystemExit: --dry-run may never write under the records tree or the panel's directory",
+     "measure_calls": 0
+    },
+    "G1d_dry_copied_panel_into_real_result": {
+     "outcome": "SystemExit: --dry-run may never write under the records tree or the panel's directory",
+     "measure_calls": 0
+    },
+    "G3_real_other_out": {
+     "outcome": "SystemExit: a real run reads only the registered panel under C:\\Users\\clclc\\BusinessProject\\rineya-dataset-retention-records\\abst001-20260925 and writes only to C:\\Users\\clclc\\BusinessProject\\rineya-dataset-retention-records\\abst001-20260925\\result",
+     "measure_calls": 0
+    },
+    "G4_real_copied_panel": {
+     "outcome": "SystemExit: a real run reads only the registered panel under C:\\Users\\clclc\\BusinessProject\\rineya-dataset-retention-records\\abst001-20260925 and writes only to C:\\Users\\clclc\\BusinessProject\\rineya-dataset-retention-records\\abst001-20260925\\result",
+     "measure_calls": 0
+    }
+   }
+  },
+  "NC_negative_controls": {
+   "pass": true,
+   "checks": {
+    "NC1 refused by R4": true,
+    "NC2 refused by R5": true,
+    "NC3 refused by R4": true,
+    "no marker or output in any": true,
+    "S6 key tampered is the A_plain canary": true
+   },
+   "steps": {
+    "NC1_fit_residual": {
+     "outcome": "SystemExit: R4: FIT CANARY FAILED for S18: recorded [(1, 0.6796665616336401), (3, 0.5105515379276632)] vs now [(1, 0.6796565616336402), (3, 0.5105515379276632)]",
+     "measure_calls": 0
+    },
+    "NC2_recorded_S6_nats": {
+     "outcome": "SystemExit: R5: MEASUREMENT CANARY (tier 1) FAILED for A_plain: max |diff| 1.0000000003174137e-05",
+     "measure_calls": 1
+    },
+    "NC3_wrong_kept_set": {
+     "outcome": "SystemExit: R4: the recorded fits are for different kept sets than --s18-kept/--s20-kept",
+     "measure_calls": 0
+    }
+   }
+  },
+  "E2E_clean_run": {
+   "pass": true,
+   "checks": {
+    "completed": true,
+    "primary equals final steps 1-2": true,
+    "H3 file equals final verdict": true,
+    "24 rows, each with 15 config x input cells read under 3 supports": true,
+    "4 greedy cells per row": true,
+    "descriptive has tracking, cue, digit anchor": true,
+    "tracking is within family": true,
+    "structure check with both controls": true,
+    "module origins recorded": true,
+    "code unchanged at end": true,
+    "no partial dir left": true,
+    "lock released": true
+   },
+   "steps": {
+    "run": {
+     "outcome": "completed",
+     "measure_calls": 20
+    },
+    "state": {
+     "boundary_markers": 1,
+     "attempts": [],
+     "primary": true,
+     "h3": true,
+     "result": true,
+     "lock_left": false,
+     "partial_dirs": []
+    },
+    "cells": [
+     [
+      "S18_lc",
+      "V0"
+     ],
+     [
+      "S18_lc",
+      "V2"
+     ],
+     [
+      "S18_lc",
+      "V4"
+     ],
+     [
+      "S18_plain",
+      "V0"
+     ],
+     [
+      "S18_plain",
+      "V2"
+     ],
+     [
+      "S18_plain",
+      "V4"
+     ],
+     [
+      "S20_lc",
+      "V0"
+     ],
+     [
+      "S20_lc",
+      "V2"
+     ],
+     [
+      "S20_lc",
+      "V4"
+     ],
+     [
+      "S20_plain",
+      "V0"
+     ],
+     [
+      "S20_plain",
+      "V2"
+     ],
+     [
+      "S20_plain",
+      "V4"
+     ],
+     [
+      "T",
+      "V0"
+     ],
+     [
+      "T",
+      "V2"
+     ],
+     [
+      "T",
+      "V4"
+     ]
+    ],
+    "REGISTERED": {
+     "H1": "LC_RAISES_UNKNOWN",
+     "H2": "UNTESTED",
+     "H3": "UNTESTED"
+    }
+   }
+  },
+  "A6_failure_on_first_primary_cell": {
+   "pass": true,
+   "checks": {
+    "failed with the injection": true,
+    "one boundary, one non-infrastructure attempt": true,
+    "attempt carries the launch_id of its marker": true,
+    "in_progress names S20_plain/V4": true,
+    "lock released": true
+   },
+   "steps": {
+    "run": {
+     "outcome": "SystemExit: injected deterministic failure",
+     "measure_calls": 6
+    },
+    "state": {
+     "boundary_markers": 1,
+     "attempts": [
+      {
+       "hint": "deterministic or unknown",
+       "primary_written": false,
+       "exception_type": "SystemExit",
+       "launch_id": "7a289cabdcf242a88e53614355cf6f41"
+      }
+     ],
+     "primary": false,
+     "h3": false,
+     "result": false,
+     "lock_left": false,
+     "partial_dirs": []
+    }
+   }
+  },
+  "A7m_failure_mid_cell": {
+   "pass": true,
+   "checks": {
+    "failed mid-cell": true,
+    "in_progress is S20_lc/V4": true,
+    "exactly one finished row kept": true,
+    "completed cells = S20_plain only": true
+   },
+   "steps": {
+    "run": {
+     "outcome": "SystemExit: injected mid-cell failure",
+     "measure_calls": 7
+    },
+    "state": {
+     "boundary_markers": 1,
+     "attempts": [
+      {
+       "hint": "deterministic or unknown",
+       "primary_written": false,
+       "exception_type": "SystemExit",
+       "launch_id": "216265a3953045b8b1d7ae80b17c2f38"
+      }
+     ],
+     "primary": false,
+     "h3": false,
+     "result": false,
+     "lock_left": false,
+     "partial_dirs": []
+    },
+    "in_progress_rows": 1
+   }
+  },
+  "A9_failure_after_primary": {
+   "pass": true,
+   "checks": {
+    "failed with the injection": true,
+    "primary written, recorded as written": true,
+    "primary holds UNKNOWN and known rows": true,
+    "primary has H1 and H2": true,
+    "partial holds the three primary configs": true,
+    "no H3, no result, no partial dir": true
+   },
+   "steps": {
+    "run": {
+     "outcome": "SystemExit: injected deterministic failure",
+     "measure_calls": 9
+    },
+    "state": {
+     "boundary_markers": 1,
+     "attempts": [
+      {
+       "hint": "deterministic or unknown",
+       "primary_written": true,
+       "exception_type": "SystemExit",
+       "launch_id": "477722b78bf7456d906593f86f91d0f5"
+      }
+     ],
+     "primary": true,
+     "h3": false,
+     "result": false,
+     "lock_left": false,
+     "partial_dirs": []
+    }
+   }
+  },
+  "S1_deterministic_then_rerun": {
+   "pass": true,
+   "checks": {
+    "rerun refused": true,
+    "still one boundary": true
+   },
+   "steps": {
+    "first": {
+     "outcome": "SystemExit: injected deterministic failure",
+     "measure_calls": 6
+    },
+    "rerun": {
+     "outcome": "SystemExit: READ BUDGET SPENT (start-up): an earlier crossing ended in a non-infrastructure failure",
+     "measure_calls": 0
+    }
+   }
+  },
+  "S2_infrastructure_one_rerun": {
+   "pass": true,
+   "checks": {
+    "first is infrastructure": true,
+    "rerun completed": true,
+    "result names the earlier crossing": true,
+    "prior_crossings reads [infrastructure]": true,
+    "third refused (primary exists)": true,
+    "two boundaries": true
+   },
+   "steps": {
+    "first": {
+     "outcome": "LowMemoryAbort: injected stand-down",
+     "measure_calls": 6
+    },
+    "rerun": {
+     "outcome": "completed",
+     "measure_calls": 20
+    },
+    "third": {
+     "outcome": "SystemExit: READ BUDGET SPENT (start-up): a primary already exists at C:\\Users\\clclc\\AppData\\Local\\Temp\\claude\\C--Users-clclc-BusinessProject-ChatBubble-dose-param\\0896c09e-a683-438c-88e0-80305acf12ed\\scratchpad\\abst_harness_r1_work\\s2\\result\\ABST_PRIMARY.json",
+     "measure_calls": 0
+    },
+    "state": {
+     "boundary_markers": 2,
+     "attempts": [
+      {
+       "hint": "infrastructure",
+       "primary_written": false,
+       "exception_type": "LowMemoryAbort",
+       "launch_id": "67cb4a4e99ad43ae86ed8c560e8fcebd"
+      }
+     ],
+     "primary": true,
+     "h3": true,
+     "result": true,
+     "lock_left": false,
+     "partial_dirs": []
+    }
+   }
+  },
+  "S3_clean_then_relaunch": {
+   "pass": true,
+   "checks": {
+    "first completed": true,
+    "same --out refused": true,
+    "sibling --out refused": true
+   },
+   "steps": {
+    "first": {
+     "outcome": "completed",
+     "measure_calls": 20
+    },
+    "same_out": {
+     "outcome": "SystemExit: C:\\Users\\clclc\\AppData\\Local\\Temp\\claude\\C--Users-clclc-BusinessProject-ChatBubble-dose-param\\0896c09e-a683-438c-88e0-80305acf12ed\\scratchpad\\abst_harness_r1_work\\s3\\result exists (create-only)",
+     "measure_calls": 0
+    },
+    "sibling_out": {
+     "outcome": "SystemExit: READ BUDGET SPENT (start-up): a primary already exists at C:\\Users\\clclc\\AppData\\Local\\Temp\\claude\\C--Users-clclc-BusinessProject-ChatBubble-dose-param\\0896c09e-a683-438c-88e0-80305acf12ed\\scratchpad\\abst_harness_r1_work\\s3\\result\\ABST_PRIMARY.json",
+     "measure_calls": 0
+    }
+   }
+  },
+  "S4_two_recorded_failures_then_third": {
+   "pass": true,
+   "checks": {
+    "rerun reached the boundary and failed": true,
+    "two boundaries, two infrastructure attempts": true,
+    "third refused by the recorded-failures rule": true,
+    "no primary": true
+   },
+   "steps": {
+    "first": {
+     "outcome": "LowMemoryAbort: injected stand-down",
+     "measure_calls": 6
+    },
+    "rerun": {
+     "outcome": "LowMemoryAbort: injected stand-down",
+     "measure_calls": 6
+    },
+    "third": {
+     "outcome": "SystemExit: READ BUDGET SPENT (start-up): 2 earlier crossings ended in recorded failures",
+     "measure_calls": 0
+    },
+    "state": {
+     "boundary_markers": 2,
+     "attempts": [
+      {
+       "hint": "infrastructure",
+       "primary_written": false,
+       "exception_type": "LowMemoryAbort",
+       "launch_id": "0172c2745b624a3b8f45b47439ddb164"
+      },
+      {
+       "hint": "infrastructure",
+       "primary_written": false,
+       "exception_type": "LowMemoryAbort",
+       "launch_id": "cf9e0ce9e2ef4edf9735c36752cddbc6"
+      }
+     ],
+     "primary": false,
+     "h3": false,
+     "result": false,
+     "lock_left": false,
+     "partial_dirs": []
+    }
+   }
+  },
+  "S5_infrastructure_after_primary": {
+   "pass": true,
+   "checks": {
+    "primary written, infrastructure attempt": true,
+    "rerun into the same --out refused": true,
+    "rerun into a sibling refused": true,
+    "primary moved deeper still refuses": true,
+    "primary moved out: the attempt record's flag refuses": true,
+    "one boundary": true
+   },
+   "steps": {
+    "first": {
+     "outcome": "LowMemoryAbort: injected stand-down",
+     "measure_calls": 9
+    },
+    "rerun_same": {
+     "outcome": "SystemExit: C:\\Users\\clclc\\AppData\\Local\\Temp\\claude\\C--Users-clclc-BusinessProject-ChatBubble-dose-param\\0896c09e-a683-438c-88e0-80305acf12ed\\scratchpad\\abst_harness_r1_work\\s5\\result exists (create-only)",
+     "measure_calls": 0
+    },
+    "rerun_sibling": {
+     "outcome": "SystemExit: READ BUDGET SPENT (start-up): a primary already exists at C:\\Users\\clclc\\AppData\\Local\\Temp\\claude\\C--Users-clclc-BusinessProject-ChatBubble-dose-param\\0896c09e-a683-438c-88e0-80305acf12ed\\scratchpad\\abst_harness_r1_work\\s5\\result\\ABST_PRIMARY.json",
+     "measure_calls": 0
+    },
+    "moved_deeper": {
+     "outcome": "SystemExit: READ BUDGET SPENT (start-up): a primary already exists at C:\\Users\\clclc\\AppData\\Local\\Temp\\claude\\C--Users-clclc-BusinessProject-ChatBubble-dose-param\\0896c09e-a683-438c-88e0-80305acf12ed\\scratchpad\\abst_harness_r1_work\\s5\\archive\\r1\\result\\ABST_PRIMARY.json",
+     "measure_calls": 0
+    },
+    "moved_out": {
+     "outcome": "SystemExit: READ BUDGET SPENT (start-up): an earlier attempt record says the primary was written",
+     "measure_calls": 0
+    },
+    "state": {
+     "boundary_markers": 1,
+     "attempts": [
+      {
+       "hint": "infrastructure",
+       "primary_written": true,
+       "exception_type": "LowMemoryAbort",
+       "launch_id": "310ad6807e394b04bff7168a60df835e"
+      }
+     ],
+     "primary": true,
+     "h3": false,
+     "result": false,
+     "lock_left": false,
+     "partial_dirs": []
+    }
+   }
+  },
+  "S6_two_hard_kills_then_third": {
+   "pass": true,
+   "checks": {
+    "third completed": true,
+    "stale lock set aside": true,
+    "both earlier crossings listed as hard kills": true,
+    "restart query ran with returncode 0": true,
+    "three boundaries": true
+   },
+   "steps": {
+    "kills": [
+     {
+      "outcome": "LowMemoryAbort: injected stand-down",
+      "measure_calls": 6
+     },
+     {
+      "outcome": "LowMemoryAbort: injected stand-down",
+      "measure_calls": 6
+     }
+    ],
+    "third": {
+     "outcome": "completed",
+     "measure_calls": 20
+    },
+    "state": {
+     "boundary_markers": 3,
+     "attempts": [],
+     "primary": true,
+     "h3": true,
+     "result": true,
+     "lock_left": false,
+     "partial_dirs": []
+    },
+    "prior_crossings": {
+     "crossings": [
+      {
+       "marker": "BOUNDARY_20260926T062118Z_78036.json",
+       "launch_id": "c4fd146fe7da48ea986e919eab7fd098",
+       "pid": 4000000,
+       "epoch": 1790403678.7245202,
+       "attempt_record": "NONE (hard kill: no panel values persisted)"
+      },
+      {
+       "marker": "BOUNDARY_20260926T062145Z_78036.json",
+       "launch_id": "00ebe338a6c94758bcb8e185ddb6a125",
+       "pid": 4000000,
+       "epoch": 1790403705.3948321,
+       "attempt_record": "NONE (hard kill: no panel values persisted)"
+      }
+     ],
+     "restart_events": {
+      "queried": true,
+      "since_utc": "2026-09-26T06:21:18.000Z",
+      "returncode": 0,
+      "events": []
+     }
+    }
+   }
+  },
+  "S7_three_hard_kills_then_fourth": {
+   "pass": true,
+   "checks": {
+    "fourth refused on the cap": true,
+    "no primary": true
+   },
+   "steps": {
+    "kills": [
+     {
+      "outcome": "LowMemoryAbort: injected stand-down",
+      "measure_calls": 6
+     },
+     {
+      "outcome": "LowMemoryAbort: injected stand-down",
+      "measure_calls": 6
+     },
+     {
+      "outcome": "LowMemoryAbort: injected stand-down",
+      "measure_calls": 6
+     }
+    ],
+    "fourth": {
+     "outcome": "SystemExit: READ BUDGET SPENT (start-up): 3 earlier boundary crossings (cap 3)",
+     "measure_calls": 0
+    }
+   }
+  },
+  "S8_recorded_failure_plus_hard_kill": {
+   "pass": true,
+   "checks": {
+    "third completed": true,
+    "prior_crossings reads [infrastructure, NONE]": true
+   },
+   "steps": {
+    "recorded": {
+     "outcome": "LowMemoryAbort: injected stand-down",
+     "measure_calls": 6
+    },
+    "kill": {
+     "outcome": "LowMemoryAbort: injected stand-down",
+     "measure_calls": 6
+    },
+    "third": {
+     "outcome": "completed",
+     "measure_calls": 20
+    },
+    "prior_crossings": [
+     {
+      "marker": "BOUNDARY_20260926T062405Z_78036.json",
+      "launch_id": "a4ec47684c0b43efa60e4ba3aacebc3b",
+      "pid": 78036,
+      "epoch": 1790403845.4775994,
+      "attempt_record": "infrastructure"
+     },
+     {
+      "marker": "BOUNDARY_20260926T062432Z_78036.json",
+      "launch_id": "f337ff661b2543ed951696812a62f4f7",
+      "pid": 4000000,
+      "epoch": 1790403872.0187328,
+      "attempt_record": "NONE (hard kill: no panel values persisted)"
+     }
+    ]
+   }
+  },
+  "L1_live_lock": {
+   "pass": true,
+   "checks": {
+    "refused": true,
+    "lock untouched": true,
+    "no boundary": true
+   },
+   "steps": {
+    "run": {
+     "outcome": "SystemExit: REFUSE: another ABST-001 launch holds C:\\Users\\clclc\\AppData\\Local\\Temp\\claude\\C--Users-clclc-BusinessProject-ChatBubble-dose-param\\0896c09e-a683-438c-88e0-80305acf12ed\\scratchpad\\abst_harness_r1_work\\l1\\attempts\\RUN.lock (pid 78036)",
+     "measure_calls": 0
+    }
+   }
+  },
+  "L2_stale_lock": {
+   "pass": true,
+   "checks": {
+    "completed": true,
+    "stale lock set aside": true,
+    "recorded in refusal_controls": true,
+    "own lock released": true
+   },
+   "steps": {
+    "run": {
+     "outcome": "completed",
+     "measure_calls": 20
+    },
+    "dead_pid": 4000000
+   }
+  },
+  "L3_reused_pid_lock": {
+   "pass": true,
+   "checks": {
+    "a reused pid does not hold the lock": true,
+    "stale lock set aside": true
+   },
+   "steps": {
+    "run": {
+     "outcome": "completed",
+     "measure_calls": 20
+    },
+    "child_pid": 59040
+   }
+  },
+  "P1_earlier_process_alive": {
+   "pass": true,
+   "checks": {
+    "refused while alive": true,
+    "completes once it ends": true
+   },
+   "steps": {
+    "refused_run": {
+     "outcome": "SystemExit: REFUSE (start-up): the process of an earlier crossing (pid 79240) is still alive",
+     "measure_calls": 0
+    },
+    "after_exit": {
+     "outcome": "completed",
+     "measure_calls": 20
+    }
+   }
+  },
+  "P2_pid_reused_after_the_marker": {
+   "pass": true,
+   "checks": {
+    "not mistaken for the recorded process": true
+   },
+   "steps": {
+    "run": {
+     "outcome": "completed",
+     "measure_calls": 20
+    }
+   }
+  },
+  "C1_code_changed": {
+   "pass": true,
+   "checks": {
+    "refused on changed code": true,
+    "completes when it matches": true
+   },
+   "steps": {
+    "refused_run": {
+     "outcome": "SystemExit: REFUSE (start-up): the code changed since an earlier crossing (BOUNDARY_20260926T062831Z_78036.json)",
+     "measure_calls": 0
+    },
+    "restored": {
+     "outcome": "completed",
+     "measure_calls": 20
+    },
+    "altered_key": "rab001_exploration/hostbudget.py"
+   }
+  },
+  "K1_file_changed_before_boundary": {
+   "pass": true,
+   "checks": {
+    "refused before the marker": true,
+    "no boundary": true
+   },
+   "steps": {
+    "run": {
+     "outcome": "SystemExit: REFUSE (just before the boundary): a loaded module's file changed since import",
+     "measure_calls": 5
+    }
+   }
+  },
+  "O1_module_shadowed": {
+   "pass": true,
+   "checks": {
+    "refused at start-up": true,
+    "nothing created": true
+   },
+   "steps": {
+    "run": {
+     "outcome": "SystemExit: REFUSE: a gated module was loaded from the wrong directory: {'hlcc_verdict': 'C:\\\\Users\\\\clclc\\\\BusinessProject\\\\ChatBubble-small-vocab-depth\\\\experiments\\\\rab001_exploration'}",
+     "measure_calls": 0
+    }
+   }
+  },
+  "M3a_primary_appears_before_boundary": {
+   "pass": true,
+   "checks": {
+    "refused just before the boundary": true,
+    "no boundary written": true
+   },
+   "steps": {
+    "run": {
+     "outcome": "SystemExit: READ BUDGET SPENT (just before the boundary): a primary already exists at C:\\Users\\clclc\\AppData\\Local\\Temp\\claude\\C--Users-clclc-BusinessProject-ChatBubble-dose-param\\0896c09e-a683-438c-88e0-80305acf12ed\\scratchpad\\abst_harness_r1_work\\m3a\\other\\ABST_PRIMARY.json",
+     "measure_calls": 5
+    },
+    "state": {
+     "boundary_markers": 0,
+     "attempts": [],
+     "primary": false,
+     "h3": false,
+     "result": false,
+     "lock_left": false,
+     "partial_dirs": []
+    }
+   }
+  },
+  "M3c_deep_primary_appears_before_boundary": {
+   "pass": true,
+   "checks": {
+    "refused just before the boundary (depth 3)": true,
+    "no boundary written": true
+   },
+   "steps": {
+    "run": {
+     "outcome": "SystemExit: READ BUDGET SPENT (just before the boundary): a primary already exists at C:\\Users\\clclc\\AppData\\Local\\Temp\\claude\\C--Users-clclc-BusinessProject-ChatBubble-dose-param\\0896c09e-a683-438c-88e0-80305acf12ed\\scratchpad\\abst_harness_r1_work\\m3c\\a\\b\\c\\ABST_PRIMARY.json",
+     "measure_calls": 5
+    }
+   }
+  },
+  "M3b_concurrent_crossing_before_boundary": {
+   "pass": true,
+   "checks": {
+    "refused just before the boundary": true,
+    "only the planted marker": true,
+    "no attempt record": true
+   },
+   "steps": {
+    "run": {
+     "outcome": "SystemExit: REFUSE (just before the boundary): the process of an earlier crossing (pid 80448) is still alive",
+     "measure_calls": 5
+    },
+    "state": {
+     "boundary_markers": 1,
+     "attempts": [],
+     "primary": false,
+     "h3": false,
+     "result": false,
+     "lock_left": false,
+     "partial_dirs": []
+    }
+   }
+  },
+  "B1_pre_boundary_ram_refusal": {
+   "pass": true,
+   "checks": {
+    "refused at the boundary RAM check": true,
+    "no boundary, no attempt after the refusal": true,
+    "relaunch completes with no earlier crossing": true
+   },
+   "steps": {
+    "refused": {
+     "outcome": "SystemExit: REFUSING TO START ABST-001 boundary: needs 0.5 GiB free physical memory (injected)",
+     "measure_calls": 5
+    },
+    "relaunch": {
+     "outcome": "completed",
+     "measure_calls": 20
+    },
+    "state_after_refusal": {
+     "boundary_markers": 0,
+     "attempts": [],
+     "primary": false,
+     "h3": false,
+     "result": false,
+     "lock_left": false,
+     "partial_dirs": []
+    }
+   }
+  },
+  "T1_truncated_attempt_record": {
+   "pass": true,
+   "checks": {
+    "refused (raised) on the truncated record": true,
+    "no new crossing": true
+   },
+   "steps": {
+    "run": {
+     "outcome": "JSONDecodeError: Unterminated string starting at: line 1 column 197 (char 196)",
+     "measure_calls": 0
+    }
+   }
+  },
+  "W1_dip_waits_and_completes": {
+   "pass": true,
+   "checks": {
+    "completed": true,
+    "waited through 5 low polls": true
+   },
+   "steps": {
+    "run": {
+     "outcome": "completed",
+     "measure_calls": 20
+    },
+    "low_polls": 5,
+    "state": {
+     "boundary_markers": 1,
+     "attempts": [],
+     "primary": true,
+     "h3": true,
+     "result": true,
+     "lock_left": false,
+     "partial_dirs": []
+    }
+   }
+  },
+  "W2_dip_past_the_bound": {
+   "pass": true,
+   "checks": {
+    "aborted after the bound": true,
+    "infrastructure attempt, no primary": true
+   },
+   "steps": {
+    "run": {
+     "outcome": "LowMemoryAbort: ABST S20_plain/V4: free RAM below 0.4 GiB for 0.05 s",
+     "measure_calls": 6
+    },
+    "state": {
+     "boundary_markers": 1,
+     "attempts": [
+      {
+       "hint": "infrastructure",
+       "primary_written": false,
+       "exception_type": "LowMemoryAbort",
+       "launch_id": "7d9e95ab97534c16881d00e23e726031"
+      }
+     ],
+     "primary": false,
+     "h3": false,
+     "result": false,
+     "lock_left": false,
+     "partial_dirs": []
+    }
+   }
+  },
+  "W3_dip_after_last_primary_cell": {
+   "pass": true,
+   "checks": {
+    "aborted in the wait after the primary": true,
+    "primary written first": true,
+    "classified infrastructure": true
+   },
+   "steps": {
+    "run": {
+     "outcome": "LowMemoryAbort: ABST after the primary: free RAM below 0.4 GiB for 0.05 s",
+     "measure_calls": 8
+    },
+    "state": {
+     "boundary_markers": 1,
+     "attempts": [
+      {
+       "hint": "infrastructure",
+       "primary_written": true,
+       "exception_type": "LowMemoryAbort",
+       "launch_id": "50a5e0ca78254d22a5f16166715a0349"
+      }
+     ],
+     "primary": true,
+     "h3": false,
+     "result": false,
+     "lock_left": false,
+     "partial_dirs": []
+    }
+   }
+  },
+  "I_classification": {
+   "pass": true,
+   "checks": {
+    "MemoryError is infrastructure": true,
+    "torch CPU allocator is infrastructure": true,
+    "OutOfMemoryError is infrastructure": true,
+    "TDR is infrastructure": true,
+    "LowMemoryAbort is infrastructure": true,
+    "KeyboardInterrupt is not infrastructure": true,
+    "device-side assert is not infrastructure": true,
+    "SystemExit is not infrastructure": true
+   },
+   "steps": {
+    "classified": {
+     "MemoryError": true,
+     "torch CPU allocator": true,
+     "OutOfMemoryError": true,
+     "TDR": true,
+     "LowMemoryAbort": true,
+     "KeyboardInterrupt": false,
+     "device-side assert": false,
+     "SystemExit": false
+    }
+   }
+  }
+ },
+ "all_pass": true
+}

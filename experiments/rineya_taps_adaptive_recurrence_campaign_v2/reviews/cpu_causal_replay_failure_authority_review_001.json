@@ -1,0 +1,92 @@
+{
+  "schema_version": 1,
+  "reviewer": "independent adversarial_review",
+  "reviewed_utc": "2026-10-05T03:39:48.691207+00:00",
+  "status": "PASS_PREMODEL_FAILURE_AND_RETRY_AUTHORITY_AUDIT",
+  "scope": "Read-only terminal/schema/error/source snapshot/budget/authority audit; no model,weights,tokenizer,GPU,native retry or source edits",
+  "checks": {
+    "terminal_refusal": true,
+    "before_model_loader": true,
+    "precise_allowlist_error": true,
+    "rawDEV_declared_hash_matches": true,
+    "old_worker_snapshot_bound": true,
+    "failed_admission_digest": true,
+    "no_scientific_journals": true,
+    "no_training_or_pool": true,
+    "cost_charged": true
+  },
+  "blocking_findings": [],
+  "failure_classification": "PREMODEL_SOURCE_ALLOWLIST_ADMISSION_DEFECT",
+  "cause_evidence": "Frozen worker61e74 line234 accepts campaign files, v1/ARMR prefixes orLAB/src, but rejects the exact already-authorized rawDEV JSONL included in its90-file dispatch closure. The file hash matches; this is permit-predicate mismatch, not asset drift or numerical/scientific failure.",
+  "reviewer_missed_gate": "Prior reviewer source/hash PASS did not exercise native-worker allowlist validation against every admitted path. This mismatch was missed; final prospective correction must test that exact frozen closure without a model.",
+  "actual": {
+    "worker_seconds": 7.96900000000096,
+    "parent_wall_seconds": 14.46900000000096,
+    "model_load_attempts": 0,
+    "native_model_loads": 0,
+    "model_API_calls": {
+      "known_value": 0,
+      "basis": "Failure point before admitted_source/tokenizer/AutoModel and only receipt emitted; no model object or forward existed.",
+      "instrumented_metric_present": false
+    },
+    "recorded_outcomes": 0,
+    "native_losses": null,
+    "state_adjoints": null,
+    "native_qualification": null,
+    "native_complete_forecast": null,
+    "final_loaded_state": null,
+    "source_declared_rawDEV_sha256": "b75df9368e27cfc7de58e55370090e55bd5bcb4d1bd86aeb079b486555925da0"
+  },
+  "budget": {
+    "cumulative_used_native_seconds": 1382.4059999999972,
+    "remaining_native_seconds": 20217.594000000005,
+    "new_deadline_3600_plus_global1800_fits": true,
+    "budget_fit_is_retry_authority": false
+  },
+  "authority": {
+    "original_scope_remains": "Distinct informative campaign experiments may remain authorized, but repeating this same192/632/scientific config after fixing its admission defect is a retry.",
+    "exact_initial_evidence": {
+      "retry_limit": {
+        "quote": "One retry for an identified infrastructure failure, with a new run directory and unchanged scientific configuration.",
+        "line": 48,
+        "path": "C:\\Users\\clclc\\.codex\\attachments\\6953c229-f698-4a9d-b293-c35ab386f0cb\\pasted-text-1.txt"
+      },
+      "failed_wall_budget": {
+        "quote": "Six hours of cumulative native model-worker wall time, including qualification, diagnostics, failed attempts, retries, and measurement runs.",
+        "line": 46,
+        "path": "C:\\Users\\clclc\\.codex\\attachments\\6953c229-f698-4a9d-b293-c35ab386f0cb\\pasted-text-1.txt"
+      },
+      "run_stop": {
+        "quote": "A safety stop ends that run and creates a terminal receipt with its completed work and costs.",
+        "line": 291,
+        "path": "C:\\Users\\clclc\\.codex\\attachments\\6953c229-f698-4a9d-b293-c35ab386f0cb\\pasted-text-1.txt"
+      }
+    },
+    "original_infrastructure_retry_remaining": false,
+    "runtime_debug_additional_allowance_remaining": false,
+    "same_experiment_restart_requires_human_additional_attempt": true,
+    "can_relabel_as_new_experiment_to_restart": false,
+    "scope_expansion_is_attempt_allowance_not_model_training_or_budget": "Prepare one concrete additional-attempt request for unchanged1925API/635adjoint/max256/CPU3600 scientific matrix, with no further retry; no new optimizer/data/device privileges."
+  },
+  "required_corrective_source_gates": [
+    "Preserve original worker61e74/frozenadmissions/failedrun and all previousreview bytes.",
+    "Permit only exact canonical merdedev_fast DEV dependency (correct spelling mergedev_fast), retaining source byte checks and blocking arbitraryLABdata/SMOKE/TEST/sealed/sibling escapes.",
+    "Model-free validator regression must evaluate every entry of the actual90-file failed closure, then exact positiveDEV path and negative forbidden data variants.",
+    "Independent corrected source/tests/new admission/closure/count/operator/target/analysis/resource review before any human additional-attempt question.",
+    "Parent must enforce exact reviewed human additional-attempt permit before Popen, with scope/hash/one-attempt anti-replay; no process/model work pending permission.",
+    "Newexclusive run, same scientific configuration and unchanged CPU floors/globalnative budget/reserves; fresh root readiness/nativequalification/complete632 forecast remain required after permission."
+  ],
+  "primary_mechanism": null,
+  "semantic_efficacy": null,
+  "goal": "ACTIVE_UNMET; zero-scientific-output refusal does not complete or invalidate earlier CPUH3 seven-target measurements",
+  "evidence_sha256": {
+    "C:\\Users\\clclc\\.codex\\attachments\\6953c229-f698-4a9d-b293-c35ab386f0cb\\pasted-text-1.txt": "18f9b5079c05138a28d783404b7c9f919d62e829c17fe0c7a7334b789dd2fa3d",
+    "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-cpu-causal-replay-001\\terminal_receipt.json": "fe48534f36f72319f8e45f9891f7c5164f1108e282cae9ff9fd82a33a1745e14",
+    "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-cpu-causal-replay-001\\result\\receipt.json": "1991eb56b44e3b6608db1065036e04d9179b5ccc360f5521d3be1f5d96e60438",
+    "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-cpu-causal-replay-001\\admission.json": "b98fcb66c1b1b00eabf2ac1e210c56aabf752b3f9ed82878c128f362c6d790f6",
+    "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-cpu-causal-replay-001\\review.json": "77238613a87ceb0ca40c94934ed419c56a73ba63c7afdde9aca3b2c33b9f5bc4",
+    "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-cpu-causal-replay-001\\source_manifest.json": "e9886de68a9aa584de4ecc24165b370a10e064ee13d2526399ac4835a9b62437",
+    "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-cpu-causal-replay-001\\resources.jsonl": "866f7fc635144292ad79c3964851533a6578ece099e1a078f520a966783cc28c",
+    "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\BUDGET_LEDGER.jsonl": "5e66f159a20171073a93bdbc480c0887c9fd69b6ec018a5407776a7e1c6fe61c"
+  }
+}

@@ -1,0 +1,71 @@
+{
+  "schema": 2,
+  "stage": "G1_WIDTH",
+  "status": "PASS",
+  "evidence_kind": "official_model_qualification",
+  "context": {
+    "context_schema": 2,
+    "experiment_id": "RAB-001",
+    "implementation_sha256": "a329eb7bb06fc003a9220ea41713e721fba575c478008240749c425774b2b58e",
+    "source_audit_digest": "97cd76af0fb2d6064c5cb954906ac493d21e40429cebe55f0bed0000b23d9ef8",
+    "weights_sha256": "962abc5bcd5a83e3b7693bd278ae9215b6d83389a847913da9330b34dd5dd24b",
+    "data_sha256": "8b76a6252838e93d5c7efe89705d3f5c98433c0f57a0e2075cd0130733c98655",
+    "runtime": {
+      "python": "3.11.15",
+      "platform": "Windows-10-10.0.26200-SP0",
+      "torch": "2.10.0",
+      "transformers": "4.51.3",
+      "safetensors": "0.7.0",
+      "numpy": "2.3.5",
+      "tokenizers": "0.21.4",
+      "numerics": {
+        "cpu_threads": 16,
+        "interop_threads": 16,
+        "float32_matmul_precision": "highest",
+        "deterministic_algorithms": false,
+        "cuda_build": null,
+        "cuda_matmul_allow_tf32": false,
+        "cudnn_allow_tf32": true,
+        "cudnn_deterministic": false,
+        "cudnn_benchmark": false
+      }
+    },
+    "device": "cpu",
+    "device_identity": {
+      "device": "cpu"
+    },
+    "precision": "float32",
+    "backend": "eager"
+  },
+  "checks": {
+    "registered_dimensions": true,
+    "all_tensors_accounted": true,
+    "finite_converted_logits": true,
+    "save_reload_exact": true,
+    "source_unchanged": true,
+    "calibration_unchanged": true,
+    "exact_parameter_count": true
+  },
+  "metrics": {
+    "parameters": 597263232,
+    "calibration_rows": 156,
+    "quality_recovery_demonstrated": false
+  },
+  "artifacts": {
+    "lineage.json": "d92f264b4df36a396e4a1b4885352b2b3e879eb77d9cd37656b040a51731a505",
+    "calibration_scores.json": "64fa40d35d766d02d376bd541f0f10d25f504e3ae8f6c806f3cdb2a7dbb3c0f2",
+    "config.json": "895fff1a2bc09047ad000f3932033bf472d94b7befb8f719acd8167bfa9f40a2",
+    "model.safetensors": "f44aacff787f798fadbca4a1cf524f9b96999eb6c4032667578cd5219efcabae"
+  },
+  "parent_receipts": [
+    {
+      "stage": "G1_IDENTITY",
+      "receipt_sha256": "b5335dd05f460bf745b48ff6652fdba672d6d2d4666aaa1d38646de185ea0dae",
+      "path": "../../G1_IDENTITY/attempt-0001/G1_IDENTITY.json"
+    }
+  ],
+  "parent_receipt_sha256": "b5335dd05f460bf745b48ff6652fdba672d6d2d4666aaa1d38646de185ea0dae",
+  "licenses_registered_training": false,
+  "licenses_efficacy_claim": false,
+  "receipt_sha256": "a7926e19780e2542af91e6bca91c3b29e840e928a6606d1c7fe876e092dd5f90"
+}

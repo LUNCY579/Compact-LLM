@@ -1,0 +1,436 @@
+{
+  "schema": "CE8-WINDOWS-PUBLICATION-FIXTURE-1",
+  "utc": "2026-10-01T22:53:58.021984+00:00",
+  "classification": "actual reversible Windows small-file publication; no native execution/qualification",
+  "publication": {
+    "publication_schema": "CE8-COMPLETION-PUBLICATION-1",
+    "status": "UNQUALIFIED_COMPLETION",
+    "native_qualified": false,
+    "receipt_ref": {
+      "path": "C:\\Users\\clclc\\AppData\\Local\\Temp\\publication-pure-sfky4e8f\\published\\QUALIFICATION_COMPLETION.json",
+      "bytes": 11151,
+      "sha256": "10282f665e3cb23dc3aed66ad0d7b2b9902915da038f4f77d38b0b53ad12ac07"
+    },
+    "publication_contract": {
+      "method": "MoveFileExW_WRITE_THROUGH",
+      "flags": 8,
+      "replacement_allowed": false,
+      "same_directory": true,
+      "reference": "https://learn.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-movefileexw"
+    },
+    "charged_bounds": {
+      "identity_hash_attempts_upper": 200034,
+      "identity_hash_bytes_upper": 172095211,
+      "io_read_bytes_upper": 51984,
+      "io_write_bytes_upper": 11151,
+      "metadata_bytes_upper": 11151,
+      "operation_attempts_upper": 33,
+      "wall_seconds_upper": 0.030999999999039574
+    },
+    "prepayment": {
+      "schema": "CE8-BOOTSTRAP-ACCOUNTING-1",
+      "native": false,
+      "ticket_id": "bfbc06f0395d4eef871ef2c92302ccac",
+      "bootstrap_binding_sha256": "c579ba84ff6198b4b9de279c60c72dcdb5bd18595689fda5f98ece6fde05b50d",
+      "reservation_sha256": "3e571e0f1b583e8e0c7d256bade40e5f7683bca4756c4ea69fb7cc46d6b9303c",
+      "owner": {
+        "accounting_spec_sha256": "66ee5ad9dc81a6b3c10c7e608c45f76cf07693bc0dc36e41bdfa403fa555f7bd",
+        "prepared_receipt_sha256": "926a0c265910e4dba12a5132eef2ef4d409873e3381fae4a02432c5ae438fbf2"
+      },
+      "bounds": {
+        "identity_hash_attempts_upper": 1000000000000,
+        "identity_hash_bytes_upper": 1000000000000,
+        "io_read_bytes_upper": 1000000000000,
+        "io_write_bytes_upper": 1000000000000,
+        "metadata_bytes_upper": 1000000000000,
+        "operation_attempts_upper": 1000000000000,
+        "wall_seconds_upper": 1000
+      },
+      "status": "RETURNED"
+    },
+    "partial_retention": "failed temporary/final files are preserved"
+  },
+  "receipt": {
+    "actual_wall_seconds": 0.06199999999989814,
+    "attempts": [
+      {
+        "attempt_id": "fixture/runtime_anchor",
+        "evidence": {
+          "attempt_id": "fixture/runtime_anchor",
+          "raw_refs": [
+            {
+              "bytes": 17,
+              "path": "C:\\Users\\clclc\\AppData\\Local\\Temp\\publication-pure-sfky4e8f\\runtime_anchor.json",
+              "sha256": "218589323cbe80b7ed077e3ee36f1663e7cb5f8f4e4ad02c938ad8a5c2c5a6b9"
+            }
+          ],
+          "stage": "runtime_anchor"
+        },
+        "stage": "runtime_anchor",
+        "status": "RETURNED"
+      },
+      {
+        "attempt_id": "fixture/longest_masks",
+        "evidence": {
+          "attempt_id": "fixture/longest_masks",
+          "raw_refs": [
+            {
+              "bytes": 17,
+              "path": "C:\\Users\\clclc\\AppData\\Local\\Temp\\publication-pure-sfky4e8f\\longest_masks.json",
+              "sha256": "218589323cbe80b7ed077e3ee36f1663e7cb5f8f4e4ad02c938ad8a5c2c5a6b9"
+            }
+          ],
+          "stage": "longest_masks"
+        },
+        "stage": "longest_masks",
+        "status": "RETURNED"
+      },
+      {
+        "attempt_id": "fixture/likelihood_gradient_parity",
+        "evidence": {
+          "attempt_id": "fixture/likelihood_gradient_parity",
+          "raw_refs": [
+            {
+              "bytes": 17,
+              "path": "C:\\Users\\clclc\\AppData\\Local\\Temp\\publication-pure-sfky4e8f\\likelihood_gradient_parity.json",
+              "sha256": "218589323cbe80b7ed077e3ee36f1663e7cb5f8f4e4ad02c938ad8a5c2c5a6b9"
+            }
+          ],
+          "stage": "likelihood_gradient_parity"
+        },
+        "stage": "likelihood_gradient_parity",
+        "status": "RETURNED"
+      },
+      {
+        "attempt_id": "fixture/adam_clipping",
+        "evidence": {
+          "attempt_id": "fixture/adam_clipping",
+          "raw_refs": [
+            {
+              "bytes": 17,
+              "path": "C:\\Users\\clclc\\AppData\\Local\\Temp\\publication-pure-sfky4e8f\\adam_clipping.json",
+              "sha256": "218589323cbe80b7ed077e3ee36f1663e7cb5f8f4e4ad02c938ad8a5c2c5a6b9"
+            }
+          ],
+          "stage": "adam_clipping"
+        },
+        "stage": "adam_clipping",
+        "status": "RETURNED"
+      },
+      {
+        "attempt_id": "fixture/checkpoint_resume",
+        "evidence": {
+          "attempt_id": "fixture/checkpoint_resume",
+          "raw_refs": [
+            {
+              "bytes": 17,
+              "path": "C:\\Users\\clclc\\AppData\\Local\\Temp\\publication-pure-sfky4e8f\\checkpoint_resume.json",
+              "sha256": "218589323cbe80b7ed077e3ee36f1663e7cb5f8f4e4ad02c938ad8a5c2c5a6b9"
+            }
+          ],
+          "stage": "checkpoint_resume"
+        },
+        "stage": "checkpoint_resume",
+        "status": "RETURNED"
+      },
+      {
+        "attempt_id": "fixture/delta_roundtrip",
+        "evidence": {
+          "attempt_id": "fixture/delta_roundtrip",
+          "raw_refs": [
+            {
+              "bytes": 17,
+              "path": "C:\\Users\\clclc\\AppData\\Local\\Temp\\publication-pure-sfky4e8f\\delta_roundtrip.json",
+              "sha256": "218589323cbe80b7ed077e3ee36f1663e7cb5f8f4e4ad02c938ad8a5c2c5a6b9"
+            }
+          ],
+          "stage": "delta_roundtrip"
+        },
+        "stage": "delta_roundtrip",
+        "status": "RETURNED"
+      },
+      {
+        "attempt_id": "fixture/resource_io_measurement",
+        "evidence": {
+          "attempt_id": "fixture/resource_io_measurement",
+          "raw_refs": [
+            {
+              "bytes": 17,
+              "path": "C:\\Users\\clclc\\AppData\\Local\\Temp\\publication-pure-sfky4e8f\\resource_io_measurement.json",
+              "sha256": "218589323cbe80b7ed077e3ee36f1663e7cb5f8f4e4ad02c938ad8a5c2c5a6b9"
+            }
+          ],
+          "stage": "resource_io_measurement"
+        },
+        "stage": "resource_io_measurement",
+        "status": "RETURNED"
+      }
+    ],
+    "binding_sha256": "ec8627f43f66b37450a831fcc9b3fc4653a0034f4fdd1d869ad7a429cf5a7b95",
+    "bootstrap_prepayment": {
+      "bootstrap_binding_sha256": "c579ba84ff6198b4b9de279c60c72dcdb5bd18595689fda5f98ece6fde05b50d",
+      "bounds": {
+        "identity_hash_attempts_upper": 100000,
+        "identity_hash_bytes_upper": 1000000000,
+        "io_read_bytes_upper": 1000000000,
+        "io_write_bytes_upper": 1000000000,
+        "metadata_bytes_upper": 8388608,
+        "operation_attempts_upper": 1,
+        "wall_seconds_upper": 1000
+      },
+      "native": false,
+      "owner": {
+        "accounting_spec_sha256": "ab726a06f103f5ac52cf7dafa986c9b4c8937c2be2dedb4c61e3c2aaab28232b",
+        "prepared_receipt_sha256": "926a0c265910e4dba12a5132eef2ef4d409873e3381fae4a02432c5ae438fbf2"
+      },
+      "reservation_sha256": "0ad38a9914c7208a4b2842e94ef2c806205ad0940384b73b83c37e4947614d06",
+      "schema": "CE8-BOOTSTRAP-ACCOUNTING-1",
+      "status": "RETURNED",
+      "ticket_id": "7029918fc802456689edead348dd6195"
+    },
+    "complete_wall_accounting": true,
+    "completed": true,
+    "cost_scope": "declared callback upper reservations and serialized journal costs; not complete native measured totals",
+    "cumulative": {
+      "identity_hash_attempts_upper": 800036,
+      "identity_hash_bytes_upper": 8000026840,
+      "io_read_bytes_upper": 8000000000,
+      "io_write_bytes_upper": 8000029536,
+      "metadata_bytes_upper": 29536,
+      "operation_attempts_upper": 8,
+      "wall_seconds_upper": 8000.062
+    },
+    "events": 35,
+    "execution_verified": false,
+    "fatal": false,
+    "fixture": true,
+    "last_monotonic": 9474.718,
+    "ledger_head": "0bfe2c6f20ddf646d8add2a3f88fa8dd65a91f8f8b45eb7ecb8c92cc6a234a4b",
+    "ledger_refs": {
+      "header": {
+        "bytes": 13133,
+        "path": "C:\\Users\\clclc\\AppData\\Local\\Temp\\publication-pure-sfky4e8f\\ledger\\QUALIFICATION_BINDINGS.json",
+        "sha256": "03907a7bb830c4cd203981d02a61fd0f0ab1fc22cd4a88477631c554e7c1f9c8"
+      },
+      "journal": {
+        "bytes": 16403,
+        "path": "C:\\Users\\clclc\\AppData\\Local\\Temp\\publication-pure-sfky4e8f\\ledger\\QUALIFICATION_RESERVATIONS.jsonl",
+        "sha256": "ea6e92f0411b2de22e09c8697a7753e0b6614c98ef90aa01dc5eba4ed19d3b4b"
+      }
+    },
+    "native_accounting_status": "FIXTURE_UNQUALIFIED",
+    "native_activation_gaps": {
+      "directory_publication": "File fsync is implemented; platform-specific parent-directory publication durability still needs verified native service evidence.",
+      "outer_setup_reservation": "A registered outer bootstrap ledger must permanently reserve constructor/header/replay work before these files exist."
+    },
+    "native_qualified": false,
+    "pending_operations": [],
+    "progress": {
+      "C": 0,
+      "U": 0,
+      "generation": 0,
+      "history": [],
+      "snapshot": "f29a25dd50c9bac94002367280a4ca2c395198523d9bec59ba482eb7a3179a8f"
+    },
+    "publication_prepayment": {
+      "bootstrap_binding_sha256": "c579ba84ff6198b4b9de279c60c72dcdb5bd18595689fda5f98ece6fde05b50d",
+      "bounds": {
+        "identity_hash_attempts_upper": 1000000000000,
+        "identity_hash_bytes_upper": 1000000000000,
+        "io_read_bytes_upper": 1000000000000,
+        "io_write_bytes_upper": 1000000000000,
+        "metadata_bytes_upper": 1000000000000,
+        "operation_attempts_upper": 1000000000000,
+        "wall_seconds_upper": 1000
+      },
+      "native": false,
+      "owner": {
+        "accounting_spec_sha256": "66ee5ad9dc81a6b3c10c7e608c45f76cf07693bc0dc36e41bdfa403fa555f7bd",
+        "prepared_receipt_sha256": "926a0c265910e4dba12a5132eef2ef4d409873e3381fae4a02432c5ae438fbf2"
+      },
+      "reservation_sha256": "3e571e0f1b583e8e0c7d256bade40e5f7683bca4756c4ea69fb7cc46d6b9303c",
+      "schema": "CE8-BOOTSTRAP-ACCOUNTING-1",
+      "status": "STARTED",
+      "ticket_id": "bfbc06f0395d4eef871ef2c92302ccac"
+    },
+    "publication_schema": "CE8-COMPLETION-PUBLICATION-1",
+    "qualification_verifier_registered": false,
+    "reducer_by_stage": {
+      "adam_clipping": 0,
+      "checkpoint_resume": 0,
+      "delta_roundtrip": 0,
+      "ingestion_tokenizer": 0,
+      "likelihood_gradient_parity": 0,
+      "longest_masks": 0,
+      "resource_io_measurement": 0,
+      "runtime_anchor": 0
+    },
+    "reducer_reserved_bytes": 0,
+    "request_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "reservation_rule": "permanent full upper charges; failed/unknown/restarted work never refunded",
+    "schema": "CE8-QUALIFICATION-ACCOUNTING-1",
+    "scope_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "source_code_sha256": {
+      "synthetic-fixture": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+    },
+    "stage_artifacts": {
+      "adam_clipping": [
+        {
+          "bytes": 17,
+          "path": "C:\\Users\\clclc\\AppData\\Local\\Temp\\publication-pure-sfky4e8f\\adam_clipping.json",
+          "sha256": "218589323cbe80b7ed077e3ee36f1663e7cb5f8f4e4ad02c938ad8a5c2c5a6b9"
+        }
+      ],
+      "checkpoint_resume": [
+        {
+          "bytes": 17,
+          "path": "C:\\Users\\clclc\\AppData\\Local\\Temp\\publication-pure-sfky4e8f\\checkpoint_resume.json",
+          "sha256": "218589323cbe80b7ed077e3ee36f1663e7cb5f8f4e4ad02c938ad8a5c2c5a6b9"
+        }
+      ],
+      "delta_roundtrip": [
+        {
+          "bytes": 17,
+          "path": "C:\\Users\\clclc\\AppData\\Local\\Temp\\publication-pure-sfky4e8f\\delta_roundtrip.json",
+          "sha256": "218589323cbe80b7ed077e3ee36f1663e7cb5f8f4e4ad02c938ad8a5c2c5a6b9"
+        }
+      ],
+      "ingestion_tokenizer": [
+        {
+          "bytes": 17,
+          "path": "C:\\Users\\clclc\\AppData\\Local\\Temp\\publication-pure-sfky4e8f\\ingestion_tokenizer.json",
+          "sha256": "218589323cbe80b7ed077e3ee36f1663e7cb5f8f4e4ad02c938ad8a5c2c5a6b9"
+        }
+      ],
+      "likelihood_gradient_parity": [
+        {
+          "bytes": 17,
+          "path": "C:\\Users\\clclc\\AppData\\Local\\Temp\\publication-pure-sfky4e8f\\likelihood_gradient_parity.json",
+          "sha256": "218589323cbe80b7ed077e3ee36f1663e7cb5f8f4e4ad02c938ad8a5c2c5a6b9"
+        }
+      ],
+      "longest_masks": [
+        {
+          "bytes": 17,
+          "path": "C:\\Users\\clclc\\AppData\\Local\\Temp\\publication-pure-sfky4e8f\\longest_masks.json",
+          "sha256": "218589323cbe80b7ed077e3ee36f1663e7cb5f8f4e4ad02c938ad8a5c2c5a6b9"
+        }
+      ],
+      "resource_io_measurement": [
+        {
+          "bytes": 17,
+          "path": "C:\\Users\\clclc\\AppData\\Local\\Temp\\publication-pure-sfky4e8f\\resource_io_measurement.json",
+          "sha256": "218589323cbe80b7ed077e3ee36f1663e7cb5f8f4e4ad02c938ad8a5c2c5a6b9"
+        }
+      ],
+      "runtime_anchor": [
+        {
+          "bytes": 17,
+          "path": "C:\\Users\\clclc\\AppData\\Local\\Temp\\publication-pure-sfky4e8f\\runtime_anchor.json",
+          "sha256": "218589323cbe80b7ed077e3ee36f1663e7cb5f8f4e4ad02c938ad8a5c2c5a6b9"
+        }
+      ]
+    },
+    "stages": {
+      "adam_clipping": {
+        "identity_hash_attempts_upper": 100005,
+        "identity_hash_bytes_upper": 1000001956,
+        "io_read_bytes_upper": 1000000000,
+        "io_write_bytes_upper": 1000002341,
+        "metadata_bytes_upper": 2341,
+        "operation_attempts_upper": 1,
+        "wall_seconds_upper": 1000.0159999999996
+      },
+      "checkpoint_resume": {
+        "identity_hash_attempts_upper": 100004,
+        "identity_hash_bytes_upper": 1000001515,
+        "io_read_bytes_upper": 1000000000,
+        "io_write_bytes_upper": 1000001823,
+        "metadata_bytes_upper": 1823,
+        "operation_attempts_upper": 1,
+        "wall_seconds_upper": 1000
+      },
+      "delta_roundtrip": {
+        "identity_hash_attempts_upper": 100004,
+        "identity_hash_bytes_upper": 1000001505,
+        "io_read_bytes_upper": 1000000000,
+        "io_write_bytes_upper": 1000001813,
+        "metadata_bytes_upper": 1813,
+        "operation_attempts_upper": 1,
+        "wall_seconds_upper": 1000
+      },
+      "ingestion_tokenizer": {
+        "identity_hash_attempts_upper": 0,
+        "identity_hash_bytes_upper": 0,
+        "io_read_bytes_upper": 0,
+        "io_write_bytes_upper": 0,
+        "metadata_bytes_upper": 0,
+        "operation_attempts_upper": 0,
+        "wall_seconds_upper": 0
+      },
+      "likelihood_gradient_parity": {
+        "identity_hash_attempts_upper": 100004,
+        "identity_hash_bytes_upper": 1000001560,
+        "io_read_bytes_upper": 1000000000,
+        "io_write_bytes_upper": 1000001868,
+        "metadata_bytes_upper": 1868,
+        "operation_attempts_upper": 1,
+        "wall_seconds_upper": 1000
+      },
+      "longest_masks": {
+        "identity_hash_attempts_upper": 100005,
+        "identity_hash_bytes_upper": 1000001953,
+        "io_read_bytes_upper": 1000000000,
+        "io_write_bytes_upper": 1000002338,
+        "metadata_bytes_upper": 2338,
+        "operation_attempts_upper": 1,
+        "wall_seconds_upper": 1000.0159999999996
+      },
+      "resource_io_measurement": {
+        "identity_hash_attempts_upper": 100005,
+        "identity_hash_bytes_upper": 1000002017,
+        "io_read_bytes_upper": 1000000000,
+        "io_write_bytes_upper": 1000002402,
+        "metadata_bytes_upper": 2402,
+        "operation_attempts_upper": 1,
+        "wall_seconds_upper": 1000.0150000000012
+      },
+      "runtime_anchor": {
+        "identity_hash_attempts_upper": 100004,
+        "identity_hash_bytes_upper": 1000001496,
+        "io_read_bytes_upper": 1000000000,
+        "io_write_bytes_upper": 1000001804,
+        "metadata_bytes_upper": 1804,
+        "operation_attempts_upper": 1,
+        "wall_seconds_upper": 1000
+      }
+    },
+    "static_recipe_sha256": "d1fd68a5c5ff84ddcdcc30cf74879c6ada5f876814c109167a67ee17b5d75340",
+    "status": "UNQUALIFIED_COMPLETION",
+    "terminal_worker": {
+      "exit_code": 0,
+      "request_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "scope_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "worker_identity_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+    },
+    "training_authorized": false,
+    "unknown_wall": false,
+    "worker_open": false,
+    "worker_proof": {
+      "boot_identity_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+      "boot_verified": true,
+      "fresh_process": true,
+      "schema": "CE8-QUALIFICATION-WORKER-PROOF-1",
+      "worker_identity_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+    }
+  },
+  "overwrite_refused": true,
+  "source_before": "bc7a6bf7a7f4404e66982ba0a5f3493be435949d34f57eaa3595cde678a5845b",
+  "source_after": "bc7a6bf7a7f4404e66982ba0a5f3493be435949d34f57eaa3595cde678a5845b",
+  "source_unchanged": true,
+  "frameworks": [],
+  "model_loads": 0,
+  "native_qualified": false,
+  "elapsed_s": 0.05435319999924104,
+  "checker_sha256": "35ed6e0f130cee9dd625beeb263a796d6108ad95b2443f7e0d2054033f19a355"
+}

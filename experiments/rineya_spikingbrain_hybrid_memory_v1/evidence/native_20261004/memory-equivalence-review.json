@@ -1,0 +1,169 @@
+{
+  "allocator_policy_review": {
+    "action": "empty_cache releases only unoccupied allocator cache, then physical free VRAM is reread",
+    "guard": "Same1GiB physical-free reserve remains mandatory; failed reclamation still blocks",
+    "live_state": "No parameter, gradient, optimizer, recurrent request state, or autograd tensor is detached/reinitialized/deleted by this change",
+    "measurement_limit": "Cleanup can affect reserved-memory snapshots and instrumented timing; neither implies smaller live tensor graphs or optimized-kernel performance",
+    "other_gates_unchanged": [
+      "7.4GiB admissionRAM",
+      "6GiB runtimeRAM",
+      "4GiB workerRSS",
+      "Explicitcuda:0 with noCPUfallback"
+    ],
+    "trigger": "Runtime physical free VRAM below1GiB and reserved>allocated"
+  },
+  "completed_cpu_evidence": {
+    "arms": [
+      "B",
+      "C",
+      "D"
+    ],
+    "checks": [
+      "Selected logits",
+      "Mean loss",
+      "Every trainable gradient including nonzero LoRA a/b and D forget/mix/scale",
+      "Frozen parameters without gradients",
+      "Clip norm",
+      "One registered AdamW update",
+      "Invalid labels rejected before forward"
+    ],
+    "full_suite_with_allocator_tests": 136,
+    "full_with_cache_output_sha256": "a3c8bcaecf076dead4bb6cd3ac29586b47a48733c7a219556b35e4f8d6be2d0e",
+    "labels": [
+      "answer_and_eos",
+      "discontiguous",
+      "eos_only"
+    ],
+    "older_parity_code_hash": "8f200223d88caab739d30657aed712f830bb7d4c7328f0021c78a5aa4fd02ea5",
+    "older_parity_note": "Targeted recovery test file and pinned library source hashes still match; combined current revision has separate136-pass output and registered current code binding",
+    "qualification_receipt_sha256": "5e66e1a34bf063ab9cb008465f3384bebdbc689a12e6556a72fe4fb966e255e7",
+    "skipped": 0,
+    "targeted_tests": 13
+  },
+  "config_changed_fields": [
+    "grant"
+  ],
+  "created_utc": "2026-10-04T21:08:11.878740+00:00",
+  "current_binding": {
+    "code_sha256": "326d805bde96047ca0553f8c33e5124a6c346fc11caaf3c28b4221277ef82140",
+    "config_sha256": "30b85a8bd3e24043bbbd2983d735eaf64df47e60626dc051792b45f3918d2400",
+    "corpus_sha256": "6f9c858b39c6c45d4fd5cd6bfa29d79b3c2f12773af7f392b44cfa171379105f",
+    "source_sha256": "c169fba225bfa58804c966caba97c147d9239b7dbcd2f3b7be87cdd05e44125a"
+  },
+  "fresh_matrix_completion_established": false,
+  "fresh_matrix_review": {
+    "new_root": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-spikingbrain-hybrid-memory-v1\\experiments\\rineya_spikingbrain_hybrid_memory_v1\\runs\\titan_transition_v2_20261004_memory_efficient",
+    "new_teacher_and_all_arm_delta_qualifications_required": true,
+    "old_run_complete_comparison_present": false,
+    "pool_old_controls": false,
+    "prior_root": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-spikingbrain-hybrid-memory-v1\\experiments\\rineya_spikingbrain_hybrid_memory_v1\\runs\\titan_transition_v2_20261004",
+    "prior_terminal_exit_code": 2,
+    "reason": "All arms must share changed code/config and fresh resource context; mathematical equivalence is not permission to pool old trained trajectories or timing receipts"
+  },
+  "frozen_analysis_script": {
+    "compatible_dynamic_config_run_binding": true,
+    "new_event_fields": "Extra event fields are accepted without changing core metric or receipt-record equality checks",
+    "path": "evidence/native_20261004/analyze_completed_matrix.py",
+    "sha256": "e6d2459c191e611161f25f3b86ef7debf824a4eba159249ca4add97f39f8eb91",
+    "unchanged_by_this_review": true
+  },
+  "input_sha256": {
+    "evidence\\native_20261004\\memory-efficient-rerun-registration.json": "f2242f745c0e99f85224cf0251f7e63d260d3f60c75e17a4c772755db0ab4181",
+    "sbhm\\pipeline.py": "791a9e8176262e5b3f6e773a322640b8ae417956e1584b5de2724d6afa659c60",
+    "sbhm\\protocol.py": "d03690b07ffe7324d3d97d3a80ed3fa58d4c0df1550e985e1a618ca23dc2f7ff",
+    "tests\\test_allocator_pressure.py": "721f261416039861673ac8547eeedb4af013810572645fb29ee8965dc5d7431f",
+    "tests\\test_recovery_memory.py": "176c8cdad667ca89753337cf766c225bb61463c31aac2820868850234bc8e346"
+  },
+  "model_or_gpu_or_training_executed_by_reviewer": false,
+  "native_code_or_config_or_data_modified_by_reviewer": false,
+  "native_training_fit_claim": false,
+  "no_behavioral_claim": true,
+  "receipt_consistency_review": {
+    "failed_stage_limit": "If a later resource exception aborts a stage, the CLI prints failure but does not export accumulated allocator event list into a failed receipt; retain external log/probe evidence",
+    "observed_completed_receipts_only": [
+      {
+        "event_count": 0,
+        "receipt_sha256": "b66809d7ab64043661ea94fc79f00149bde024ec143dc0397ea0d4e057a2b948",
+        "stage_directory": "A-evaluation",
+        "status": "DEV_MEASUREMENT_ONLY"
+      },
+      {
+        "event_count": 0,
+        "receipt_sha256": "12cb266dbc745dee46c614ae21d593d09cd9e449f65b8e8669d5ee281fd6c7a3",
+        "stage_directory": "A-qualification",
+        "status": "PASS_NATIVE_MECHANICS_ONLY"
+      },
+      {
+        "event_count": 0,
+        "receipt_sha256": "a3b233497a66c029e1317da188f960ee6193f139afa3c0167e537e0dadc61aa2",
+        "stage_directory": "B-distill",
+        "status": "TRAINING_COMPLETED_NOT_EFFICACY"
+      },
+      {
+        "event_count": 0,
+        "receipt_sha256": "a3345d412b5816a875b6daca5ba3b3c43d72be38ba1cc5e9de7bce06424283f2",
+        "stage_directory": "B-distilled-qualification",
+        "status": "PASS_NATIVE_MECHANICS_ONLY"
+      },
+      {
+        "event_count": 0,
+        "receipt_sha256": "f6768a5e6bdf895485d4e5ba589ee59ac41488f225283fa426606710a7f3a9b5",
+        "stage_directory": "B-initial-qualification",
+        "status": "PASS_NATIVE_MECHANICS_ONLY"
+      },
+      {
+        "event_count": 0,
+        "receipt_sha256": "04dbe5f8249d6893383226546ba240dc72cf99099af82619e7978925361f779a",
+        "stage_directory": "B-recover",
+        "status": "TRAINING_COMPLETED_NOT_EFFICACY"
+      },
+      {
+        "event_count": 0,
+        "receipt_sha256": "4d942c85ac27d52af364f144248f743e029a505a55ec58751f73ced90188afb0",
+        "stage_directory": "B-recovered-qualification",
+        "status": "PASS_NATIVE_MECHANICS_ONLY"
+      },
+      {
+        "event_count": 0,
+        "receipt_sha256": "409b39965cd7b11e9399b5977d86ce5c8232269db1d585764e23dfd6f682c112",
+        "stage_directory": "teacher",
+        "status": "TEACHER_TARGETS_CAPTURED"
+      }
+    ],
+    "process_scope": "Matrix runs each native stage as a separate process, so the global event list is stage-local in this CLI workflow",
+    "qualify_teacher_evaluate": "Completed receipts export stage-process event lists",
+    "training_snapshot": "Event list copied into training record before native.save_delta; same record is written to delta.json and receipt.json, then embedded in evaluation adaptation_record"
+  },
+  "recovery_objective_review": {
+    "backbone": "Complete input prefix still traverses every source layer; no teacher-forced token is removed",
+    "gradient_scope": "Indexing before the vocabulary head changes materialized logits, not nonzero supervised contributions to backbone/adapter gradients",
+    "indexing": "Select hidden position t-1 for each nonignored label at t; includes last prompt predictor for first answer and last answer predictor for EOS; unused final input predictor is omitted",
+    "numerical_limit": "Changing vocabulary GEMM shape can change CUDA rounding; CPU parity plus same objective does not prove bitwise512-step CUDA trajectory equality",
+    "verdict": "Same mathematical pinned batch-one mean causal cross-entropy"
+  },
+  "source_and_corpus_unchanged": true,
+  "source_locations": {
+    "qualification_event_snapshot": "sbhm/pipeline.py:423",
+    "recovery_loss": "sbhm/pipeline.py:54",
+    "runtime_guard": "sbhm/protocol.py:63",
+    "training_event_snapshot_and_delta_save": "sbhm/pipeline.py:181"
+  },
+  "status": "PASS_READ_ONLY_MEMORY_EQUIVALENCE_AND_RERUN_PROTOCOL_REVIEW",
+  "unchanged_recipe": {
+    "dev_rows": 512,
+    "dtype": "float32",
+    "layer": 14,
+    "learning_rate": 0.0001,
+    "limits": {
+      "max_new_tokens": 32,
+      "max_prompt_tokens": 2048,
+      "max_train_tokens": 512,
+      "prefill_chunk": 64,
+      "steps": 512
+    },
+    "rank": 8,
+    "seed": 17,
+    "train_rows": 256,
+    "window": 128
+  }
+}

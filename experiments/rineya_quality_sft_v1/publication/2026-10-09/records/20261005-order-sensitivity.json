@@ -1,0 +1,393 @@
+{
+  "content": {
+    "actual_owner_bank_certified": false,
+    "admission_granted": false,
+    "cases": {
+      "commuting_multipliers": {
+        "adjacent_position_count": 1,
+        "admission_granted": false,
+        "all_pairs_commute": true,
+        "changed_query_count": 0,
+        "composed_final": 5,
+        "evidence_scope": "MATHEMATICAL_FIXTURE",
+        "independent_algorithms_agree": true,
+        "independent_gold_agrees": true,
+        "independent_query_gold": 5,
+        "input": {
+          "initial": 0,
+          "modulus": 17,
+          "operations": [
+            [
+              2,
+              1
+            ],
+            [
+              3,
+              2
+            ]
+          ]
+        },
+        "input_sha256": "7e25c0bc21180a9133dbee9ed7e68851aa3148a86216f333a37e0afeb45e0a12",
+        "limitations": [
+          "Abstract mathematics only; no real bank or Rineya capability measured.",
+          "Tested mutations are original adjacent swaps; absence of their query changes is not general order invariance unless all pair commutators vanish.",
+          "Conditional and non-affine event semantics are not implemented.",
+          "Rendered prompt/query correspondence and actual owner evidence custody require independent review."
+        ],
+        "mathematical_order_witness": false,
+        "model_calls": 0,
+        "native_permission": false,
+        "noncommuting_pair_count": 0,
+        "operation_count": 2,
+        "original_query_final": 5,
+        "proof_type": "SEQUENTIAL_AND_COMPOSED_FULL_ENDPOINTS_WITH_SUFFIX_COMMUTATOR_CROSSCHECK",
+        "rineya_evidence": "NO_RINEYA_GAIN",
+        "schema": 1,
+        "sequential_final": 5,
+        "status": "ORDER_INSENSITIVE_PAIRWISE_COMMUTATIVE",
+        "swaps": [
+          {
+            "actual_full_query_difference_modulus": 0,
+            "adjacent_indices": [
+              0,
+              1
+            ],
+            "changed_query": false,
+            "composed_variant_final": 5,
+            "local_commutator_modulus": 0,
+            "nontrivial_permutation": true,
+            "original_query_final": 5,
+            "predicted_full_query_difference_modulus": 0,
+            "sequential_variant_final": 5,
+            "suffix_erased_local_difference": false,
+            "suffix_multiplier_modulus": 1,
+            "valid_original": true,
+            "valid_variant": true,
+            "variant_query_final": 5
+          }
+        ],
+        "unchanged_query_count": 1,
+        "valid_nontrivial_adjacent_permutations": 1
+      },
+      "downstream_erasure": {
+        "adjacent_position_count": 2,
+        "admission_granted": false,
+        "all_pairs_commute": false,
+        "changed_query_count": 1,
+        "composed_final": 7,
+        "evidence_scope": "MATHEMATICAL_FIXTURE",
+        "independent_algorithms_agree": true,
+        "independent_gold_agrees": true,
+        "independent_query_gold": 7,
+        "input": {
+          "initial": 0,
+          "modulus": 17,
+          "operations": [
+            [
+              2,
+              1
+            ],
+            [
+              3,
+              1
+            ],
+            [
+              0,
+              7
+            ]
+          ]
+        },
+        "input_sha256": "5cd26b0bf30e3f9a21af6f6d5c95e3c27b9edb71d092fc54faebe67737cdcff2",
+        "limitations": [
+          "Abstract mathematics only; no real bank or Rineya capability measured.",
+          "Tested mutations are original adjacent swaps; absence of their query changes is not general order invariance unless all pair commutators vanish.",
+          "Conditional and non-affine event semantics are not implemented.",
+          "Rendered prompt/query correspondence and actual owner evidence custody require independent review."
+        ],
+        "mathematical_order_witness": true,
+        "model_calls": 0,
+        "native_permission": false,
+        "noncommuting_pair_count": 3,
+        "operation_count": 3,
+        "original_query_final": 7,
+        "proof_type": "SEQUENTIAL_AND_COMPOSED_FULL_ENDPOINTS_WITH_SUFFIX_COMMUTATOR_CROSSCHECK",
+        "rineya_evidence": "NO_RINEYA_GAIN",
+        "schema": 1,
+        "sequential_final": 7,
+        "status": "ORDER_SENSITIVE_WITNESS_FOUND",
+        "swaps": [
+          {
+            "actual_full_query_difference_modulus": 0,
+            "adjacent_indices": [
+              0,
+              1
+            ],
+            "changed_query": false,
+            "composed_variant_final": 7,
+            "local_commutator_modulus": 1,
+            "nontrivial_permutation": true,
+            "original_query_final": 7,
+            "predicted_full_query_difference_modulus": 0,
+            "sequential_variant_final": 7,
+            "suffix_erased_local_difference": true,
+            "suffix_multiplier_modulus": 0,
+            "valid_original": true,
+            "valid_variant": true,
+            "variant_query_final": 7
+          },
+          {
+            "actual_full_query_difference_modulus": 2,
+            "adjacent_indices": [
+              1,
+              2
+            ],
+            "changed_query": true,
+            "composed_variant_final": 5,
+            "local_commutator_modulus": 2,
+            "nontrivial_permutation": true,
+            "original_query_final": 7,
+            "predicted_full_query_difference_modulus": 2,
+            "sequential_variant_final": 5,
+            "suffix_erased_local_difference": false,
+            "suffix_multiplier_modulus": 1,
+            "valid_original": true,
+            "valid_variant": true,
+            "variant_query_final": 5
+          }
+        ],
+        "unchanged_query_count": 1,
+        "valid_nontrivial_adjacent_permutations": 2
+      },
+      "hidden_noncommuting_pair": {
+        "adjacent_position_count": 2,
+        "admission_granted": false,
+        "all_pairs_commute": false,
+        "changed_query_count": 0,
+        "composed_final": 4,
+        "evidence_scope": "MATHEMATICAL_FIXTURE",
+        "independent_algorithms_agree": true,
+        "independent_gold_agrees": true,
+        "independent_query_gold": 4,
+        "input": {
+          "initial": 0,
+          "modulus": 17,
+          "operations": [
+            [
+              2,
+              1
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              3,
+              1
+            ]
+          ]
+        },
+        "input_sha256": "17c0ac3b8dd4d3edcc580111b15f603644fe6983999cf858a6e2baa487076bee",
+        "limitations": [
+          "Abstract mathematics only; no real bank or Rineya capability measured.",
+          "Tested mutations are original adjacent swaps; absence of their query changes is not general order invariance unless all pair commutators vanish.",
+          "Conditional and non-affine event semantics are not implemented.",
+          "Rendered prompt/query correspondence and actual owner evidence custody require independent review."
+        ],
+        "mathematical_order_witness": false,
+        "model_calls": 0,
+        "native_permission": false,
+        "noncommuting_pair_count": 1,
+        "operation_count": 3,
+        "original_query_final": 4,
+        "proof_type": "SEQUENTIAL_AND_COMPOSED_FULL_ENDPOINTS_WITH_SUFFIX_COMMUTATOR_CROSSCHECK",
+        "rineya_evidence": "NO_RINEYA_GAIN",
+        "schema": 1,
+        "sequential_final": 4,
+        "status": "UNVERIFIED_NO_TESTED_ADJACENT_QUERY_CHANGE",
+        "swaps": [
+          {
+            "actual_full_query_difference_modulus": 0,
+            "adjacent_indices": [
+              0,
+              1
+            ],
+            "changed_query": false,
+            "composed_variant_final": 4,
+            "local_commutator_modulus": 0,
+            "nontrivial_permutation": true,
+            "original_query_final": 4,
+            "predicted_full_query_difference_modulus": 0,
+            "sequential_variant_final": 4,
+            "suffix_erased_local_difference": false,
+            "suffix_multiplier_modulus": 3,
+            "valid_original": true,
+            "valid_variant": true,
+            "variant_query_final": 4
+          },
+          {
+            "actual_full_query_difference_modulus": 0,
+            "adjacent_indices": [
+              1,
+              2
+            ],
+            "changed_query": false,
+            "composed_variant_final": 4,
+            "local_commutator_modulus": 0,
+            "nontrivial_permutation": true,
+            "original_query_final": 4,
+            "predicted_full_query_difference_modulus": 0,
+            "sequential_variant_final": 4,
+            "suffix_erased_local_difference": false,
+            "suffix_multiplier_modulus": 1,
+            "valid_original": true,
+            "valid_variant": true,
+            "variant_query_final": 4
+          }
+        ],
+        "unchanged_query_count": 2,
+        "valid_nontrivial_adjacent_permutations": 2
+      },
+      "noncommuting_affine": {
+        "adjacent_position_count": 1,
+        "admission_granted": false,
+        "all_pairs_commute": false,
+        "changed_query_count": 1,
+        "composed_final": 4,
+        "evidence_scope": "MATHEMATICAL_FIXTURE",
+        "independent_algorithms_agree": true,
+        "independent_gold_agrees": true,
+        "independent_query_gold": 4,
+        "input": {
+          "initial": 0,
+          "modulus": 17,
+          "operations": [
+            [
+              2,
+              1
+            ],
+            [
+              3,
+              1
+            ]
+          ]
+        },
+        "input_sha256": "eb2ef30244a96d0bf39e46d1bf1b5261d18477ebd18a4a6efb5960e56e25c3fd",
+        "limitations": [
+          "Abstract mathematics only; no real bank or Rineya capability measured.",
+          "Tested mutations are original adjacent swaps; absence of their query changes is not general order invariance unless all pair commutators vanish.",
+          "Conditional and non-affine event semantics are not implemented.",
+          "Rendered prompt/query correspondence and actual owner evidence custody require independent review."
+        ],
+        "mathematical_order_witness": true,
+        "model_calls": 0,
+        "native_permission": false,
+        "noncommuting_pair_count": 1,
+        "operation_count": 2,
+        "original_query_final": 4,
+        "proof_type": "SEQUENTIAL_AND_COMPOSED_FULL_ENDPOINTS_WITH_SUFFIX_COMMUTATOR_CROSSCHECK",
+        "rineya_evidence": "NO_RINEYA_GAIN",
+        "schema": 1,
+        "sequential_final": 4,
+        "status": "ORDER_SENSITIVE_WITNESS_FOUND",
+        "swaps": [
+          {
+            "actual_full_query_difference_modulus": 1,
+            "adjacent_indices": [
+              0,
+              1
+            ],
+            "changed_query": true,
+            "composed_variant_final": 3,
+            "local_commutator_modulus": 1,
+            "nontrivial_permutation": true,
+            "original_query_final": 4,
+            "predicted_full_query_difference_modulus": 1,
+            "sequential_variant_final": 3,
+            "suffix_erased_local_difference": false,
+            "suffix_multiplier_modulus": 1,
+            "valid_original": true,
+            "valid_variant": true,
+            "variant_query_final": 3
+          }
+        ],
+        "unchanged_query_count": 0,
+        "valid_nontrivial_adjacent_permutations": 1
+      },
+      "pure_additions": {
+        "adjacent_position_count": 1,
+        "admission_granted": false,
+        "all_pairs_commute": true,
+        "changed_query_count": 0,
+        "composed_final": 5,
+        "evidence_scope": "MATHEMATICAL_FIXTURE",
+        "independent_algorithms_agree": true,
+        "independent_gold_agrees": true,
+        "independent_query_gold": 5,
+        "input": {
+          "initial": 0,
+          "modulus": 17,
+          "operations": [
+            [
+              1,
+              2
+            ],
+            [
+              1,
+              3
+            ]
+          ]
+        },
+        "input_sha256": "3c8d24dcb412b8a1c711add474fdd3ed3faad4cbcd2be473519a4a297786cb56",
+        "limitations": [
+          "Abstract mathematics only; no real bank or Rineya capability measured.",
+          "Tested mutations are original adjacent swaps; absence of their query changes is not general order invariance unless all pair commutators vanish.",
+          "Conditional and non-affine event semantics are not implemented.",
+          "Rendered prompt/query correspondence and actual owner evidence custody require independent review."
+        ],
+        "mathematical_order_witness": false,
+        "model_calls": 0,
+        "native_permission": false,
+        "noncommuting_pair_count": 0,
+        "operation_count": 2,
+        "original_query_final": 5,
+        "proof_type": "SEQUENTIAL_AND_COMPOSED_FULL_ENDPOINTS_WITH_SUFFIX_COMMUTATOR_CROSSCHECK",
+        "rineya_evidence": "NO_RINEYA_GAIN",
+        "schema": 1,
+        "sequential_final": 5,
+        "status": "ORDER_INSENSITIVE_PAIRWISE_COMMUTATIVE",
+        "swaps": [
+          {
+            "actual_full_query_difference_modulus": 0,
+            "adjacent_indices": [
+              0,
+              1
+            ],
+            "changed_query": false,
+            "composed_variant_final": 5,
+            "local_commutator_modulus": 0,
+            "nontrivial_permutation": true,
+            "original_query_final": 5,
+            "predicted_full_query_difference_modulus": 0,
+            "sequential_variant_final": 5,
+            "suffix_erased_local_difference": false,
+            "suffix_multiplier_modulus": 1,
+            "valid_original": true,
+            "valid_variant": true,
+            "variant_query_final": 5
+          }
+        ],
+        "unchanged_query_count": 1,
+        "valid_nontrivial_adjacent_permutations": 1
+      }
+    },
+    "first_screen_recipe_changed": false,
+    "model_calls": 0,
+    "scope": "ABSTRACT_MATHEMATICAL_FIXTURES"
+  },
+  "execution_authority": false,
+  "original_bytes": 9339,
+  "original_raw_sha256": "27ef239b63059f75736ae8f6f2e3f28987467d5a3564f5e6ce16fd5793c6efc9",
+  "original_source": "<BusinessProject>/rineya-quality-sft-records/mechanism-research-20261005-002/ORDER_SENSITIVITY_DEMO_V2.json",
+  "publication_policy": "Portable historical evidence only, not an executable packet or admission/qualification permit. Local paths, chat UUIDs and XML hostnames are removed; original raw-file hashes are retained separately from hashes of these exports. No banks, predictions, weights, checkpoints, environments or raw process inventories are exported. Originals remain unchanged outside Git.",
+  "record_type": "PORTABLE_EVIDENCE_EXPORT"
+}

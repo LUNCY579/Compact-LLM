@@ -1,0 +1,149 @@
+{
+  "admission_resources": {
+    "available_ram_bytes": 9622114304,
+    "free_vram_bytes": 7398752256,
+    "rss_bytes": 428449792,
+    "total_vram_bytes": 8585216000
+  },
+  "anchor_gate": {
+    "gate": {
+      "adequate": true,
+      "checks": {
+        "strict_exact_match": true,
+        "typed_value_correct": true
+      },
+      "decision": "ADEQUATE_SYNTHETIC_INSTRUMENT",
+      "minimum_correct_per_metric": 16,
+      "minimum_skills_per_metric": 4,
+      "per_metric": {
+        "strict_exact_match": {
+          "rows": 64,
+          "source_correct": 21,
+          "source_correct_by_skill": {
+            "arithmetic": 4,
+            "boolean": 5,
+            "conditional": 2,
+            "ordering": 5,
+            "short_table": 5,
+            "string_rule": 0,
+            "temporal": 0,
+            "unit_conversion": 0
+          },
+          "source_correct_skill_count": 5
+        },
+        "typed_value_correct": {
+          "rows": 64,
+          "source_correct": 21,
+          "source_correct_by_skill": {
+            "arithmetic": 4,
+            "boolean": 5,
+            "conditional": 2,
+            "ordering": 5,
+            "short_table": 5,
+            "string_rule": 0,
+            "temporal": 0,
+            "unit_conversion": 0
+          },
+          "source_correct_skill_count": 5
+        }
+      }
+    },
+    "receipt": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\proposal\\native_run\\anchor-evaluation\\receipt.json",
+      "sha256": "5e9a1843c2f5f7229d5a073c632078ebfa0174143accac0c72d1b23975e85d37"
+    }
+  },
+  "binding": {
+    "arm": "B",
+    "code_sha256": "26f1c07bbe354a422b1a6d4ea5988a21b063621f055c9a92155fa5e5e2a738ef",
+    "condition": "control",
+    "config_sha256": "56bfbe708b6046faf1bc20178b47894272b79fddc11a1dcf144f8e66bbdb1a89",
+    "corpus_sha256": "ce2c1e1489ab5dc6806a4b1dc6a2de1e51c6623df9779313d81d28115ef36dc3",
+    "delta_manifest_sha256": null,
+    "delta_sha256": null,
+    "environment": {
+      "cuda": "12.4",
+      "device": "NVIDIA GeForce RTX 4070 Laptop GPU",
+      "platform": "Windows-10-10.0.26200-SP0",
+      "python": "3.10.11",
+      "versions": {
+        "accelerate": "1.15.0",
+        "psutil": "7.2.2",
+        "safetensors": "0.7.0",
+        "tokenizers": "0.21.4",
+        "torch": "2.6.0+cu124",
+        "transformers": "4.51.3"
+      }
+    },
+    "ledger_sha256": "af19ce6a7a31fd07ae481e291478d89386855543b23191b6d1ffb6f1442c6678",
+    "schema": "RINEYA-UPDATE-ORDER-QUALITY/v1",
+    "source_sha256": "c169fba225bfa58804c966caba97c147d9239b7dbcd2f3b7be87cdd05e44125a",
+    "study_id": "update-order-v1",
+    "tokenizer_sha256": "c8b302355b0f056818464137097cd078bda7a69c4f52ea99aee36030d6b07cdf"
+  },
+  "created_utc": "2026-10-05T20:20:45.569875+00:00",
+  "grant_ref": {
+    "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\proposal\\native-grant.json",
+    "sha256": "c3979e89a8bd031d98dbf4ee1f7ae2c27f451028b5ed665264b9232d19bc7820"
+  },
+  "operation": {
+    "argv": [
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-spikingbrain-hybrid-memory-v1\\experiments\\rineya_spikingbrain_hybrid_memory_v1\\.venv-cuda\\Scripts\\python.exe",
+      "-B",
+      "-m",
+      "quality_followup",
+      "stage",
+      "--config",
+      "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\proposal\\study.json",
+      "--stage",
+      "train",
+      "--condition",
+      "control",
+      "--output",
+      "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\proposal\\native_run\\control-train",
+      "--allow-model-load",
+      "--allow-training",
+      "--qualification",
+      "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\proposal\\native_run\\control-initial-qualification\\receipt.json"
+    ],
+    "condition": "control",
+    "delta": null,
+    "name": "control-train",
+    "output": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\proposal\\native_run\\control-train",
+    "qualification": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\proposal\\native_run\\control-initial-qualification\\receipt.json",
+    "stage": "train"
+  },
+  "ownership": {
+    "acknowledgement": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\proposal\\ownership-native.json",
+      "sha256": "005c397ed2ba79f78bbab43bac17c309f44bc68af6794f2082696007780c852f"
+    },
+    "acknowledgement_record": {
+      "active_other_owner_chats": [],
+      "approval_is_native_execution_permission": true,
+      "checked_utc": "2026-10-05T20:08:06.946719+00:00",
+      "owner_thread_id": "01a10d69-55cd-7cf1-9eb1-a719d418c5f2",
+      "prior_owner_chat_id": "01a10030-c8f0-70c3-9b61-9a867962af19",
+      "prior_owner_state": "notLoaded; prior turn completed",
+      "process_inspection": "No SBHM/quality native workers observed",
+      "schema": "RINEYA-UPDATE-ORDER-QUALITY/v1/ownership",
+      "study_id": "update-order-v1"
+    },
+    "checked_utc": "2026-10-05T20:20:43.165994+00:00",
+    "other_native_worker_pids": [],
+    "owner_thread_id": "01a10d69-55cd-7cf1-9eb1-a719d418c5f2",
+    "run_lock": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\proposal\\native_run\\run-owner-lock.json",
+      "sha256": "c11ecde6d2855985f81283b16e6ae66f4a7a340bd30debe14481813a21738833"
+    },
+    "schema": "RINEYA-UPDATE-ORDER-QUALITY/v1/ownership-check",
+    "study_id": "update-order-v1",
+    "uninterrupted_orchestrator": true
+  },
+  "proposal_sha256": "91fd07797c777c0c90284842544346cae089407abd763e3c4baefcc0b534fe97",
+  "review_ref": {
+    "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\corpus-review.json",
+    "sha256": "afd52bd19e727b44af83cf9a50250b3ec2b56243f7e5bef0a6484be2af99e2d8"
+  },
+  "stage": "train"
+}

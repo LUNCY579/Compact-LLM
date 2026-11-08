@@ -1,0 +1,72 @@
+{
+  "timestamp_utc": "2026-10-10T03:35:00.883921+00:00",
+  "checks": [
+    {
+      "name": "fresh_entry",
+      "command": [
+        "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\.venv\\Scripts\\python.exe",
+        "-B",
+        "-m",
+        "pytest",
+        "-q",
+        "--tb=short",
+        "-p",
+        "no:cacheprovider",
+        "--basetemp",
+        "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\quality_pattern_v3\\reviews\\publication_isolated_20261009_001\\fresh_entry\\tmp",
+        "--junitxml",
+        "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\quality_pattern_v3\\reviews\\publication_isolated_20261009_001\\fresh_entry\\junit.xml",
+        "experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\quality_pattern_v3\\tests\\test_fresh_entry.py::test_exact_parent_paths_and_owner"
+      ],
+      "exit_code": 0,
+      "reason": "Fresh process and correctly scoped V3 temporary directory"
+    },
+    {
+      "name": "fresh_open_import",
+      "command": [
+        "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\.venv\\Scripts\\python.exe",
+        "-B",
+        "-m",
+        "pytest",
+        "-q",
+        "--tb=short",
+        "-p",
+        "no:cacheprovider",
+        "--basetemp",
+        "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\quality_pattern_v3\\reviews\\publication_isolated_20261009_001\\fresh_open_import\\tmp",
+        "--junitxml",
+        "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\quality_pattern_v3\\reviews\\publication_isolated_20261009_001\\fresh_open_import\\junit.xml",
+        "experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\quality_pattern_v3\\tests\\test_fresh_open_bank.py::FreshOpenBankTests::test_no_old_constructor_import_model_or_tokenizer_dependencies"
+      ],
+      "exit_code": 1,
+      "reason": "Fresh process and correctly scoped V3 temporary directory"
+    },
+    {
+      "name": "probe_import",
+      "command": [
+        "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\.venv\\Scripts\\python.exe",
+        "-B",
+        "-m",
+        "pytest",
+        "-q",
+        "--tb=short",
+        "-p",
+        "no:cacheprovider",
+        "--basetemp",
+        "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\quality_pattern_v3\\reviews\\publication_isolated_20261009_001\\probe_import\\tmp",
+        "--junitxml",
+        "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\quality_pattern_v3\\reviews\\publication_isolated_20261009_001\\probe_import\\junit.xml",
+        "experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\quality_pattern_v3\\tests\\test_probe_analysis.py::ProbeAnalysisTests::test_module_and_tests_import_no_torch"
+      ],
+      "exit_code": 0,
+      "reason": "Fresh process and correctly scoped V3 temporary directory"
+    },
+    {
+      "status": "EXPECTED_REFUSAL_CONFIRMED_CONSUMED_STUDY",
+      "error": "distinct passive study already attempted; no retry",
+      "model_calls": 0
+    }
+  ],
+  "models": 0,
+  "frozen_tests_modified": false
+}

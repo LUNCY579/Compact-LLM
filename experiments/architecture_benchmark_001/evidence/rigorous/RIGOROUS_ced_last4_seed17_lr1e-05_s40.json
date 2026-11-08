@@ -1,0 +1,355 @@
+{
+  "schema": 1,
+  "evidence_kind": "exploratory_multiseed_matched_comparison_only",
+  "note": "Family-disjoint splits; arithmetic_chain held out of TRAIN/DEV so the task set measures retention. Open splits only; not a sealed or DEV evaluation and not an efficacy claim. Outside the experiment package; no receipt, no gate.",
+  "arm": "ced_last4",
+  "seed": 17,
+  "steps": 40,
+  "optimizer": "AdamW lr=1e-05 wd=0 clip=1.0",
+  "seed_controls": "training row order (shuffle of TRAIN); nothing else in the run is stochastic, so this is the only source of between-seed variance",
+  "task_scoring": "normalised-string match OR exact equality of the full number sequence (decimals and clock times included); leading-integer matching was too lenient and is not used",
+  "train_rows_available": 800,
+  "train_rows_seen": 40,
+  "dev_rows": 40,
+  "dev_target_tokens": 4979,
+  "task_rows": 60,
+  "source_dev_ce_nats": 5.5781664337875325,
+  "trainable_parameters": 589759104,
+  "supervised_target_tokens": 5221,
+  "wall_seconds": 560.6044676000001,
+  "checkpoints": [
+    {
+      "step": 0,
+      "tokens": 0,
+      "dev_ce_nats": 6.5339416761335105,
+      "dev_kl_to_source_nats": 1.8417276940591891,
+      "dev_top1_agreement": 0.4286001205061257,
+      "task_numeric_hits": 8,
+      "task_strict_hits": 0,
+      "task_n": 60,
+      "task_numeric_rate": 0.13333333333333333,
+      "task_terminated": 25,
+      "task_distinct": 58
+    },
+    {
+      "step": 20,
+      "tokens": 2789,
+      "dev_ce_nats": 2.909258846873666,
+      "dev_kl_to_source_nats": 2.06718888276072,
+      "dev_top1_agreement": 0.47037557742518576,
+      "task_numeric_hits": 16,
+      "task_strict_hits": 13,
+      "task_n": 60,
+      "task_numeric_rate": 0.26666666666666666,
+      "task_terminated": 59,
+      "task_distinct": 51
+    },
+    {
+      "step": 40,
+      "tokens": 5221,
+      "dev_ce_nats": 2.146584487243885,
+      "dev_kl_to_source_nats": 2.68577656896269,
+      "dev_top1_agreement": 0.4195621610765214,
+      "task_numeric_hits": 18,
+      "task_strict_hits": 16,
+      "task_n": 60,
+      "task_numeric_rate": 0.3,
+      "task_terminated": 60,
+      "task_distinct": 48
+    }
+  ],
+  "trajectory": [
+    {
+      "step": 1,
+      "train_ce": 5.958700180053711,
+      "grad_norm": 81.13388061523438,
+      "tokens": 182
+    },
+    {
+      "step": 2,
+      "train_ce": 5.157084941864014,
+      "grad_norm": 49.88096237182617,
+      "tokens": 355
+    },
+    {
+      "step": 3,
+      "train_ce": 4.737701416015625,
+      "grad_norm": 49.705780029296875,
+      "tokens": 494
+    },
+    {
+      "step": 4,
+      "train_ce": 4.595391750335693,
+      "grad_norm": 42.09345626831055,
+      "tokens": 625
+    },
+    {
+      "step": 5,
+      "train_ce": 4.435295581817627,
+      "grad_norm": 44.542354583740234,
+      "tokens": 721
+    },
+    {
+      "step": 6,
+      "train_ce": 3.2550466060638428,
+      "grad_norm": 29.556062698364258,
+      "tokens": 921
+    },
+    {
+      "step": 7,
+      "train_ce": 3.217237949371338,
+      "grad_norm": 23.18474769592285,
+      "tokens": 1106
+    },
+    {
+      "step": 8,
+      "train_ce": 4.287597179412842,
+      "grad_norm": 36.47500228881836,
+      "tokens": 1215
+    },
+    {
+      "step": 9,
+      "train_ce": 3.5038492679595947,
+      "grad_norm": 35.36927032470703,
+      "tokens": 1333
+    },
+    {
+      "step": 10,
+      "train_ce": 3.2667596340179443,
+      "grad_norm": 30.345510482788086,
+      "tokens": 1468
+    },
+    {
+      "step": 11,
+      "train_ce": 3.4039506912231445,
+      "grad_norm": 26.654300689697266,
+      "tokens": 1591
+    },
+    {
+      "step": 12,
+      "train_ce": 2.9537856578826904,
+      "grad_norm": 26.2335262298584,
+      "tokens": 1743
+    },
+    {
+      "step": 13,
+      "train_ce": 2.8144679069519043,
+      "grad_norm": 24.477947235107422,
+      "tokens": 1886
+    },
+    {
+      "step": 14,
+      "train_ce": 2.6290268898010254,
+      "grad_norm": 23.921371459960938,
+      "tokens": 2033
+    },
+    {
+      "step": 15,
+      "train_ce": 3.0378994941711426,
+      "grad_norm": 26.116147994995117,
+      "tokens": 2152
+    },
+    {
+      "step": 16,
+      "train_ce": 2.6540069580078125,
+      "grad_norm": 23.398794174194336,
+      "tokens": 2364
+    },
+    {
+      "step": 17,
+      "train_ce": 3.4081835746765137,
+      "grad_norm": 34.499900817871094,
+      "tokens": 2462
+    },
+    {
+      "step": 18,
+      "train_ce": 2.54282546043396,
+      "grad_norm": 31.04249382019043,
+      "tokens": 2557
+    },
+    {
+      "step": 19,
+      "train_ce": 2.979647159576416,
+      "grad_norm": 28.80773162841797,
+      "tokens": 2693
+    },
+    {
+      "step": 20,
+      "train_ce": 3.308746576309204,
+      "grad_norm": 32.75210952758789,
+      "tokens": 2789
+    },
+    {
+      "step": 21,
+      "train_ce": 2.6945598125457764,
+      "grad_norm": 24.954132080078125,
+      "tokens": 2957
+    },
+    {
+      "step": 22,
+      "train_ce": 2.221668243408203,
+      "grad_norm": 21.499786376953125,
+      "tokens": 3129
+    },
+    {
+      "step": 23,
+      "train_ce": 2.6718528270721436,
+      "grad_norm": 36.43977355957031,
+      "tokens": 3221
+    },
+    {
+      "step": 24,
+      "train_ce": 2.7804298400878906,
+      "grad_norm": 26.96902084350586,
+      "tokens": 3347
+    },
+    {
+      "step": 25,
+      "train_ce": 2.2635183334350586,
+      "grad_norm": 30.59527015686035,
+      "tokens": 3437
+    },
+    {
+      "step": 26,
+      "train_ce": 2.133928060531616,
+      "grad_norm": 25.112842559814453,
+      "tokens": 3552
+    },
+    {
+      "step": 27,
+      "train_ce": 2.695016384124756,
+      "grad_norm": 25.935976028442383,
+      "tokens": 3732
+    },
+    {
+      "step": 28,
+      "train_ce": 2.2955691814422607,
+      "grad_norm": 26.931604385375977,
+      "tokens": 3860
+    },
+    {
+      "step": 29,
+      "train_ce": 2.7697606086730957,
+      "grad_norm": 36.80906295776367,
+      "tokens": 3944
+    },
+    {
+      "step": 30,
+      "train_ce": 2.3448896408081055,
+      "grad_norm": 34.30665969848633,
+      "tokens": 4039
+    },
+    {
+      "step": 31,
+      "train_ce": 1.9933360815048218,
+      "grad_norm": 25.69487190246582,
+      "tokens": 4171
+    },
+    {
+      "step": 32,
+      "train_ce": 1.9370237588882446,
+      "grad_norm": 24.648738861083984,
+      "tokens": 4301
+    },
+    {
+      "step": 33,
+      "train_ce": 2.0361180305480957,
+      "grad_norm": 26.535015106201172,
+      "tokens": 4425
+    },
+    {
+      "step": 34,
+      "train_ce": 2.0247268676757812,
+      "grad_norm": 44.29662322998047,
+      "tokens": 4530
+    },
+    {
+      "step": 35,
+      "train_ce": 2.641644239425659,
+      "grad_norm": 59.666019439697266,
+      "tokens": 4626
+    },
+    {
+      "step": 36,
+      "train_ce": 2.2997052669525146,
+      "grad_norm": 26.83883285522461,
+      "tokens": 4756
+    },
+    {
+      "step": 37,
+      "train_ce": 2.3938143253326416,
+      "grad_norm": 30.863122940063477,
+      "tokens": 4856
+    },
+    {
+      "step": 38,
+      "train_ce": 1.4245038032531738,
+      "grad_norm": 23.80406379699707,
+      "tokens": 4981
+    },
+    {
+      "step": 39,
+      "train_ce": 3.559246063232422,
+      "grad_norm": 41.363704681396484,
+      "tokens": 5087
+    },
+    {
+      "step": 40,
+      "train_ce": 1.8698163032531738,
+      "grad_norm": 22.842498779296875,
+      "tokens": 5221
+    }
+  ],
+  "final_samples": [
+    {
+      "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s05__01577",
+      "expected": "64.",
+      "got": "60 units.",
+      "numeric_match": false
+    },
+    {
+      "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00515",
+      "expected": "40.",
+      "got": "30 units.",
+      "numeric_match": false
+    },
+    {
+      "id": "rineya_v3_sft__time_duration__reas_time_duration_s08__02677",
+      "expected": "45 minutes.",
+      "got": "45 minutes.",
+      "numeric_match": true
+    },
+    {
+      "id": "rineya_v3_sft__time_duration__reas_time_duration_s03__00982",
+      "expected": "90 minutes.",
+      "got": "1 hour.",
+      "numeric_match": false
+    },
+    {
+      "id": "rineya_v3_sft__time_duration__reas_time_duration_s06__01827",
+      "expected": "10:25 AM.",
+      "got": "1:45 AM.",
+      "numeric_match": false
+    },
+    {
+      "id": "rineya_v3_sft__time_duration__reas_time_duration_s05__01656",
+      "expected": "4:20 PM.",
+      "got": "5:20 PM.",
+      "numeric_match": false
+    },
+    {
+      "id": "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s02__00699",
+      "expected": "54 spare fuses.",
+      "got": "36.",
+      "numeric_match": false
+    },
+    {
+      "id": "rineya_v3_sft__time_duration__reas_time_duration_s09__02781",
+      "expected": "6:55 PM.",
+      "got": "6:10 PM + 45 minutes = 6:55 PM.",
+      "numeric_match": false
+    }
+  ],
+  "licenses_registered_training": false,
+  "licenses_efficacy_claim": false
+}

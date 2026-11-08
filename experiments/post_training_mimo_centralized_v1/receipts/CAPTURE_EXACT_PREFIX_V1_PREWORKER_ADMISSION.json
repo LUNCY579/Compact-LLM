@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "status": "TIMED_OUT_PREWORKER_GPU_BUDGET_NO_FRAMEWORK_OR_MODEL",
+  "producer_commit": "33103ce0038b31315e55e12ac84fce3125e82fe1",
+  "config_sha256": "ca74db0926b1409bcfe432dadf554b282b01f917e4d107422e0fa673ad65d819",
+  "observations": 15,
+  "host_available_GiB_range": [
+    5.993263244628906,
+    6.224819183349609
+  ],
+  "GPU_free_GiB_range": [
+    1.9990234375,
+    1.9990234375
+  ],
+  "disk_free_GiB_min": 37.50635528564453,
+  "last_observed_elapsed_seconds": 29.82800000000043,
+  "required_GPU_free_GiB": 4.0,
+  "required_host_GiB": 3.3125,
+  "files": [
+    {
+      "source": "artifacts/mimo_central/capture_exact_prefix_v1_20261010_controller/ADMISSION_RESULT.json",
+      "copy": "experiments/post_training_mimo_centralized_v1/results/capture_exact_prefix_v1_preworker_window001/ADMISSION_RESULT.json",
+      "sha256": "65e1dc6ed29249f61bfcc4c7cfcd25192bcd975db9659ad04c9fa648d179fb7a",
+      "bytes": 222
+    },
+    {
+      "source": "artifacts/mimo_central/capture_exact_prefix_v1_20261010_controller/ADMISSION_SAMPLES.jsonl",
+      "copy": "experiments/post_training_mimo_centralized_v1/results/capture_exact_prefix_v1_preworker_window001/ADMISSION_SAMPLES.jsonl",
+      "sha256": "f96f21b0f7d3d3f1fb19b9149df6d7ac6cd662e72dc50b6ffb4a73bb3ac72d48",
+      "bytes": 2480
+    }
+  ],
+  "framework_imports": 0,
+  "worker_started": false,
+  "model_calls": 0,
+  "optimizer_steps": 0,
+  "old_bulk_failure_changed": false,
+  "native_qualification": false,
+  "E1_authorized": false,
+  "CHECK_FINAL_access": false,
+  "goal_complete": false
+}

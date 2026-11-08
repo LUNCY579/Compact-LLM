@@ -1,0 +1,132 @@
+{
+  "classification": "actual TRAIN/teacher source revalidation; synthetic admission receipt carries no native grant",
+  "declared_operation_reservations": [
+    {
+      "identity_hash_attempts_upper": 1,
+      "identity_hash_bytes_upper": 5750,
+      "kind": "input_io",
+      "operation_id": "e8282d47d62546c2bad72a4d18078e47",
+      "path": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\r-oracle-supervision-proposal-20261001\\PREPARATION.json",
+      "read_bytes_upper": 5750,
+      "write_bytes_upper": 0
+    },
+    {
+      "identity_hash_attempts_upper": 1,
+      "identity_hash_bytes_upper": 902563,
+      "kind": "input_io",
+      "operation_id": "be3105f5b14347878df363dafddf8336",
+      "path": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\r-oracle-supervision-proposal-20261001\\CE8_CANONICAL_PLAN_20261001.json",
+      "read_bytes_upper": 902563,
+      "write_bytes_upper": 0
+    },
+    {
+      "identity_hash_attempts_lower": 4,
+      "identity_hash_bytes_lower": 108210874,
+      "kind": "input_io",
+      "opaque_source_verification": true,
+      "operation_id": "e518328ce48b41a88ced29dfdf948aad",
+      "path": "C:\\Users\\clclc\\BusinessProject\\Rineya-Dataset\\data",
+      "read_bytes_upper": 108210874,
+      "write_bytes_upper": 0
+    },
+    {
+      "identity_hash_attempts_lower": 1,
+      "identity_hash_bytes_lower": 14033011,
+      "kind": "input_io",
+      "opaque_oracle_verification": true,
+      "operation_id": "79b5c19199b743729ad98b59e5a5e726",
+      "path": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\r-oracle-supervision-proposal-20261001\\canonical.messages.jsonl",
+      "read_bytes_upper": 14033011,
+      "write_bytes_upper": 0
+    },
+    {
+      "identity_hash_attempts_upper": 1,
+      "identity_hash_bytes_upper": 27870,
+      "kind": "input_io",
+      "operation_id": "148a0a9678c1498ebf1169e2cfbb3b5d",
+      "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-comp-rs-s1-dev-20260930\\experiments\\skill_acquisition_native_v1\\ce_ingestion.py",
+      "read_bytes_upper": 27870,
+      "write_bytes_upper": 0
+    }
+  ],
+  "model_loads": 0,
+  "native_execution_authorized": false,
+  "native_qualified": false,
+  "receipt": {
+    "arm": "canonical",
+    "classification": "full TRAIN and teacher revalidation only",
+    "declared_census": {
+      "eos_id": 151645,
+      "joint_tokenization_equal_rows": 3000,
+      "joint_tokenization_rule": "descriptive: rows whose whole string prompt + target + '<|im_end|>' tokenizes to the same IDs as the registered concatenation",
+      "label_rule": "mechanics.completion_labels(ids, all-true mask, [P], [C], EOS (151645, 151643), ['eos'], 128): labels exactly positions P .. P+C-1 (target + EOS), masks the P prompt positions, and refuses an EOS inside the target; the loss uses the one-shift rule of mechanics.selected_logprobs (hidden states P-1 .. P+C-2 predict tokens P .. P+C-1) through s0_generate.teacher_forced_logprobs(padding_side='none', checkpoint_head=True)",
+      "labelled_tokens": {
+        "max": 29,
+        "min": 16,
+        "total": 64712
+      },
+      "max_sequence_positions": 1287,
+      "max_target_tokens": 128,
+      "prompt_render_sha256": "b8bf511983ea776f82735c153e865c2e2e3c0204b55bd0b2818659f679a1b754",
+      "prompt_tokens": {
+        "max": 1259,
+        "min": 497,
+        "total": 2560912
+      },
+      "render_rule": "prompt = s0_runtime.render_prompt(tokenizer, [system, user]) ids (add_generation_prompt, enable_thinking=False, add_special_tokens=False; ends with the pre-closed think block); target = tokenizer(assistant content, add_special_tokens=False)['input_ids'], decoding back to the content with no special ID; sequence = prompt + target + [151645]; the chat template's rendering of the three messages equals rendered prompt + content + '<|im_end|>\\n'; len(target) + 1 <= 128",
+      "rows_rendered": 3000,
+      "sequence_ids_sha256": "fe6dbf37b09117c78455ef521880c08eca261ad303275a32b29f0bd20ccae600",
+      "tokenizer_receipt_sha256": "6130cea7c36c9466eb51e1365a3740245efce4549c0a7f3fcdac4dba896da30a",
+      "total_prompt_tokens": 2560912,
+      "total_sequence_positions": 2625624,
+      "total_supervised_tokens": 64712
+    },
+    "model_loads": 0,
+    "native_qualified": false,
+    "optimizer_steps": 0,
+    "plan_ref": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\r-oracle-supervision-proposal-20261001\\CE8_CANONICAL_PLAN_20261001.json",
+      "sha256": "269a0a26450d878aa6f868aa858b886663a790762bb4bca6f7b49ebe0a4fd2cd"
+    },
+    "plan_sha256": "85616f700a250242764ae5b2b17c9d1cbae8366dbaea0899dda4ff10d9d24e03",
+    "preparation_ref": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\r-oracle-supervision-proposal-20261001\\PREPARATION.json",
+      "sha256": "260534c1962d50be243ef86bc22f631dfa791185c4936d49fd9f0ab4c0e8de3e"
+    },
+    "receipt_sha256": "06b23ce8605f2058562be5224a15d2875e7aa18f69fb4ed3b3e8631d8602ef97",
+    "schema": "CE8-INGESTION-SOURCES-1",
+    "source": {
+      "dataset_root": "C:\\Users\\clclc\\BusinessProject\\Rineya-Dataset\\data",
+      "files": {
+        "canonical/train.jsonl": {
+          "bytes": 66156220,
+          "sha256": "0e147b321bc5aed0ebe88c75263d76a4017a422034712a4fb46eff1f244a8886"
+        },
+        "manifests/atomic_R.json": {
+          "bytes": 228112,
+          "sha256": "23e0986d5c4c37162a9f237f27b1774aa4128ab1985e3aaff9ef13084dfc8fbb"
+        },
+        "policy/train.jsonl": {
+          "bytes": 41807933,
+          "sha256": "b3c49230f9ec52606def33c9b2390eba0db7702b053a4a8501543ca5c4e97086"
+        }
+      },
+      "manifest_sha256": "86ac8f0d851f2178752357f62249eab5a23fd3de8fa032e7373614891df4cd44",
+      "rows": 3000,
+      "selected_ids_sha256": "69e70546eef085c8cebbdbee75d6199cc0d559889fb2a4f35f811dd82e023d3f"
+    },
+    "source_sha256": "600609441c9f598a0e3ab69b224d500d54325aa47d694c276c14998dc5bc9d21",
+    "static_recipe_sha256": "32c9a1e326a6ac58d3ac320fd85a215ffc4b94476b3f23bcc8288f0c32940f40",
+    "teacher": {
+      "bytes": 14033011,
+      "ordered_target_digest": "80506db45de24cdc186c94d42805fdcd7792d2a81c68369849633425286b2dc8",
+      "path": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\r-oracle-supervision-proposal-20261001\\canonical.messages.jsonl",
+      "rows": 3000,
+      "sha256": "f51d8e33dd95d1b2cdf6c379526a0cefbee2f557286b7a210d02d434474fb1c8"
+    },
+    "tokenizer_rendered": false,
+    "training_authorized": false
+  },
+  "schema": "CE8-NONNATIVE-SOURCE-REVALIDATION-1",
+  "tokenizer_recomputed": false
+}

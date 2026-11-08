@@ -1,0 +1,1065 @@
+{
+  "schema": "rineya-taps-prior-findings-v2",
+  "audited_head": "7ece5cead285ba65c7d73ab57c0327fae2dc40bb",
+  "audited_integrated_base": "03db218ceebc61a2bc04f2482cf7e094045e01c1",
+  "audit_owner": "evidence_math",
+  "scope": "Read-only source/receipt audit;mutations confined to this file and audits/evidence_math.md;no dataset files parsed,no model assets loaded,no sibling modifications",
+  "native_worker_wall_seconds": 0,
+  "protected_data_accesses": 0,
+  "new_native_measurements": 0,
+  "findings": [
+    {
+      "id": "PF-001",
+      "claim": "ARMR L12 unit recurrence did not change any of 16 inspected DEV correctness outcomes.",
+      "sources": [
+        {
+          "repository": "LUNCY579/ChatBubble",
+          "commit": "7ece5cead285ba65c7d73ab57c0327fae2dc40bb",
+          "path": "experiments/anchor_routed_middle_recurrence_v1/CPU_BUDGET_V2_REPORT.md",
+          "sha256": "58fca07b2cce419626d2eb3a8085d8a95c37e4c24065ae2775cddb85f8378a6d",
+          "git_blob": "f948fdf75e409c79a1d25e102969bd9a64830569",
+          "git_blob_sha256": "58fca07b2cce419626d2eb3a8085d8a95c37e4c24065ae2775cddb85f8378a6d",
+          "worktree_bytes_equal_git_blob": true
+        },
+        {
+          "repository": "LUNCY579/ChatBubble",
+          "commit": "7ece5cead285ba65c7d73ab57c0327fae2dc40bb",
+          "path": "experiments/anchor_routed_middle_recurrence_v1/preregistrations/fixed_cpu_budget_v2.json",
+          "sha256": "7089d1c047eee70bda93b020bd1e291314ae53c2d2beebc9f0daeeff00a0d838",
+          "git_blob": "69b8114ad29fca32f8abd610743d8057cc6c6a0a",
+          "git_blob_sha256": "7089d1c047eee70bda93b020bd1e291314ae53c2d2beebc9f0daeeff00a0d838",
+          "worktree_bytes_equal_git_blob": true
+        },
+        {
+          "repository": "LUNCY579/ChatBubble",
+          "commit": "7ece5cead285ba65c7d73ab57c0327fae2dc40bb",
+          "path": "experiments/anchor_routed_middle_recurrence_v1/evidence/02c_fixed_cpu_budget_v2/20260905T132743_802018Z/run_manifest.json",
+          "sha256": "daa5bc8e947602a4ed3d7fb19076ec6000e27f7afcc2a1426e544491bff95dfe",
+          "git_blob": "58474fe8ab4bd9d90ade679fa333f4d51dfe8090",
+          "git_blob_sha256": "daa5bc8e947602a4ed3d7fb19076ec6000e27f7afcc2a1426e544491bff95dfe",
+          "worktree_bytes_equal_git_blob": true
+        },
+        {
+          "repository": "LUNCY579/ChatBubble",
+          "commit": "7ece5cead285ba65c7d73ab57c0327fae2dc40bb",
+          "path": "experiments/anchor_routed_middle_recurrence_v1/evidence/02d_cpu_budget_v2_audit/20260905T135230_002601Z/decision.json",
+          "sha256": "9c48d879bc178ab726fb918b440191ef16a834cf00d4a7f3d3ef49f928e82e41",
+          "git_blob": "4f5c0fe1b154f8d32092828048faeb32139e4de1",
+          "git_blob_sha256": "9c48d879bc178ab726fb918b440191ef16a834cf00d4a7f3d3ef49f928e82e41",
+          "worktree_bytes_equal_git_blob": true
+        }
+      ],
+      "original_receipt": "af7c49d432a652c55cbafc5155c378d87497cf24; fixed_cpu_budget_v2 prereg SHA 7089d1c047eee70bda93b020bd1e291314ae53c2d2beebc9f0daeeff00a0d838",
+      "checkpoint": "a99f079d32212bbcbb703c2e2bad801ea32d43afea52004f38bf94eec5dc4026",
+      "runtime": "Python3.11.15/Torch2.12.1+cu126/Transformers5.14.1; CPU FP32 eager,4 threads,full-prefix batch1,no KV",
+      "task_scorer_split": "MERGEDEV-fast; inherited ARMR scorer; DEV16 previously inspected; data SHA b75df9368e27cfc7de58e55370090e55bd5bcb4d1bd86aeb079b486555925da0",
+      "actual_result": "A0 12/16,A1 12/16;0 wins/0 losses;16 EOS each;complete.",
+      "evidence_tier": "HISTORICAL_EXPLORATORY_NATIVE_DEV",
+      "measurement_origin": "SOURCE_ATTRIBUTED_HISTORICAL_NOT_REPRODUCED_IN_CAMPAIGN",
+      "correction_status": "900s registered deadline-only successor resolves 90s censoring.",
+      "transfers": "Narrow fixed recurrence host, exact source/runtime binding.",
+      "does_not_transfer": "No independent efficacy, adaptive scaling, deeper recurrence, or speed claim.",
+      "next_hypothesis": "Does L12\u2013L13 scale matter at exactly one extra block application?"
+    },
+    {
+      "id": "PF-002",
+      "claim": "ARMR L12\u2013L13 unit recurrence supplied one paired correction on the same inspected DEV screen.",
+      "sources": [
+        {
+          "repository": "LUNCY579/ChatBubble",
+          "commit": "7ece5cead285ba65c7d73ab57c0327fae2dc40bb",
+          "path": "experiments/anchor_routed_middle_recurrence_v1/evidence/02c_fixed_cpu_budget_v2/20260905T132743_802018Z/run_manifest.json",
+          "sha256": "daa5bc8e947602a4ed3d7fb19076ec6000e27f7afcc2a1426e544491bff95dfe",
+          "git_blob": "58474fe8ab4bd9d90ade679fa333f4d51dfe8090",
+          "git_blob_sha256": "daa5bc8e947602a4ed3d7fb19076ec6000e27f7afcc2a1426e544491bff95dfe",
+          "worktree_bytes_equal_git_blob": true
+        },
+        {
+          "repository": "LUNCY579/ChatBubble",
+          "commit": "7ece5cead285ba65c7d73ab57c0327fae2dc40bb",
+          "path": "experiments/anchor_routed_middle_recurrence_v1/evidence/02d_cpu_budget_v2_audit/20260905T135230_002601Z/decision.json",
+          "sha256": "9c48d879bc178ab726fb918b440191ef16a834cf00d4a7f3d3ef49f928e82e41",
+          "git_blob": "4f5c0fe1b154f8d32092828048faeb32139e4de1",
+          "git_blob_sha256": "9c48d879bc178ab726fb918b440191ef16a834cf00d4a7f3d3ef49f928e82e41",
+          "worktree_bytes_equal_git_blob": true
+        }
+      ],
+      "original_receipt": "run state SHA before=after b23dec7edc2413189c9a35cc7a2596cdc03cb67b08628a0c443173c305d61551",
+      "checkpoint": "a99f079d32212bbcbb703c2e2bad801ea32d43afea52004f38bf94eec5dc4026",
+      "runtime": "Python3.11.15/Torch2.12.1+cu126/Transformers5.14.1; CPU FP32 eager,4 threads,full-prefix batch1,no KV",
+      "task_scorer_split": "MERGEDEV-fast DEV16, exact ARMR scorer",
+      "actual_result": "A3 13/16 vs A0 12/16;1 gain/0 loss;16 EOS;case mergedev_counterfactual_reasoning_770aaf5dae0c1fb5.",
+      "evidence_tier": "HISTORICAL_EXPLORATORY_NATIVE_DEV",
+      "measurement_origin": "SOURCE_ATTRIBUTED_HISTORICAL_NOT_REPRODUCED_IN_CAMPAIGN",
+      "correction_status": "Complete budget-v2 matrix; one-case gain already inspected in earlier run; audit19/19.",
+      "transfers": "A small operator with expressed native effect.",
+      "does_not_transfer": "No broad reasoning, held-out gain, router value, or deeper host qualification.",
+      "next_hypothesis": "Can globally fixed alpha improve this narrow operator before adapting?"
+    },
+    {
+      "id": "PF-003",
+      "claim": "The TAPS v1 handoff establishes CPU apparatus only.",
+      "sources": [
+        {
+          "repository": "LUNCY579/ChatBubble",
+          "commit": "7ece5cead285ba65c7d73ab57c0327fae2dc40bb",
+          "path": "experiments/rineya_taps_adaptive_recurrence_v1/VALIDATION.md",
+          "sha256": "86477519e5514b0eed1707105f205834ca4415c5a3b864e2ff4165137c8a3c0a",
+          "git_blob": "4b38edf09465a4dcc552bcfd182e9d1150b4ff1c",
+          "git_blob_sha256": "86477519e5514b0eed1707105f205834ca4415c5a3b864e2ff4165137c8a3c0a",
+          "worktree_bytes_equal_git_blob": true
+        },
+        {
+          "repository": "LUNCY579/ChatBubble",
+          "commit": "7ece5cead285ba65c7d73ab57c0327fae2dc40bb",
+          "path": "experiments/rineya_taps_adaptive_recurrence_v1/RESULTS.md",
+          "sha256": "b084e36ed20744b0291ed669ac3694564cd3515f28744d2216ccf2c5709a7a76",
+          "git_blob": "8439743777b54aa17cc6d676b9be3df709d5a64c",
+          "git_blob_sha256": "b084e36ed20744b0291ed669ac3694564cd3515f28744d2216ccf2c5709a7a76",
+          "worktree_bytes_equal_git_blob": true
+        },
+        {
+          "repository": "LUNCY579/ChatBubble",
+          "commit": "7ece5cead285ba65c7d73ab57c0327fae2dc40bb",
+          "path": "experiments/rineya_taps_adaptive_recurrence_v1/results/validation.json",
+          "sha256": "cc5a9dc8321e3d95e60b8eb12d5f3901d502d086b605f4bd273b5ed0111fff9b",
+          "git_blob": "0e771d1c55210fd1e124bd104149ad6e69199961",
+          "git_blob_sha256": "cc5a9dc8321e3d95e60b8eb12d5f3901d502d086b605f4bd273b5ed0111fff9b",
+          "worktree_bytes_equal_git_blob": true
+        },
+        {
+          "repository": "LUNCY579/ChatBubble",
+          "commit": "7ece5cead285ba65c7d73ab57c0327fae2dc40bb",
+          "path": "experiments/rineya_taps_adaptive_recurrence_v1/results/native_preflight_v1/preflight.json",
+          "sha256": "1133493165d53a21355eeb5869a1cbf371427902705a21aaad8ce5f00d7687b2",
+          "git_blob": "81e5eb4f81b3d75736107d14a654fb01fec406ab",
+          "git_blob_sha256": "1133493165d53a21355eeb5869a1cbf371427902705a21aaad8ce5f00d7687b2",
+          "worktree_bytes_equal_git_blob": true
+        }
+      ],
+      "original_receipt": null,
+      "checkpoint": null,
+      "runtime": "Author execution environment, not this host",
+      "task_scorer_split": "62 new CPU apparatus tests;3 isolated inherited assertions; native not executed",
+      "actual_result": "62 passing new tests historically; isolated3 pass;full inherited collection failed;zero checkpoint loads/native runs/training.",
+      "evidence_tier": "HISTORICAL_APPARATUS_AND_BLOCKED_PREFLIGHT",
+      "measurement_origin": "SOURCE_ATTRIBUTED_HISTORICAL_NOT_REPRODUCED_IN_CAMPAIGN",
+      "correction_status": "Full-continuation gold NLL guard added before native execution.",
+      "transfers": "Testable successor baseline and honest qualification boundary.",
+      "does_not_transfer": "Historical test counts are not fresh campaign tests; author RAM/dependencies do not describe this host.",
+      "next_hypothesis": "Can exact local source/runtime pass preflight?"
+    },
+    {
+      "id": "PF-004",
+      "claim": "Fixture TAPS did not beat its best global fixed-scale accuracy.",
+      "sources": [
+        {
+          "repository": "LUNCY579/ChatBubble",
+          "commit": "7ece5cead285ba65c7d73ab57c0327fae2dc40bb",
+          "path": "experiments/rineya_taps_adaptive_recurrence_v1/RESULTS.md",
+          "sha256": "b084e36ed20744b0291ed669ac3694564cd3515f28744d2216ccf2c5709a7a76",
+          "git_blob": "8439743777b54aa17cc6d676b9be3df709d5a64c",
+          "git_blob_sha256": "b084e36ed20744b0291ed669ac3694564cd3515f28744d2216ccf2c5709a7a76",
+          "worktree_bytes_equal_git_blob": true
+        },
+        {
+          "repository": "LUNCY579/ChatBubble",
+          "commit": "7ece5cead285ba65c7d73ab57c0327fae2dc40bb",
+          "path": "experiments/rineya_taps_adaptive_recurrence_v1/results/fixture_v3/headroom.csv",
+          "sha256": "bda08a2f0b0c542f4990c747c20b3b737cd2e863e0827e4b0a9aabdc43d97eb4",
+          "git_blob": "d96a85489e1dff33a0ec5029741419518433ca4f",
+          "git_blob_sha256": "bda08a2f0b0c542f4990c747c20b3b737cd2e863e0827e4b0a9aabdc43d97eb4",
+          "worktree_bytes_equal_git_blob": true
+        }
+      ],
+      "original_receipt": null,
+      "checkpoint": null,
+      "runtime": "Author CPU tensor fixtures",
+      "task_scorer_split": "5 public mathematical systems per split;seeds17/29 technical repeats;finite fixed grid .8,.9,1,1.1,1.2",
+      "actual_result": "DEV extra4 fixed=.4,TAPS=.4,constant oracle=.6,capture0;fixture TEST extra4 fixed=TAPS=oracle=.4;extra1 DEV headroom0.",
+      "evidence_tier": "HISTORICAL_ANALYTIC_FIXTURE_RESULT",
+      "measurement_origin": "SOURCE_ATTRIBUTED_HISTORICAL_NOT_REPRODUCED_IN_CAMPAIGN",
+      "correction_status": "Four-extra step oracle NOT_ENUMERATED;TEST global envelope retrospective.",
+      "transfers": "Require strongest fixed, null capture, and separate finite constant/schedule headroom.",
+      "does_not_transfer": "No model/headroom/quality/speed inference;fixture depths2/4 do not qualify native depth.",
+      "next_hypothesis": "Measure full native fixed grid before controller revision."
+    },
+    {
+      "id": "PF-005",
+      "claim": "Native v1 observes only two whole-block updates per full-prefix call.",
+      "sources": [
+        {
+          "repository": "LUNCY579/ChatBubble",
+          "commit": "7ece5cead285ba65c7d73ab57c0327fae2dc40bb",
+          "path": "experiments/rineya_taps_adaptive_recurrence_v1/integration.py",
+          "sha256": "57445e67903309c903655f1de9537658ccf6f8fe83fbc451d2f5062ce61d4b4a",
+          "git_blob": "c021cc5dbd8d4c2bcbd39eb5b30a9a3927b9ae86",
+          "git_blob_sha256": "57445e67903309c903655f1de9537658ccf6f8fe83fbc451d2f5062ce61d4b4a",
+          "worktree_bytes_equal_git_blob": true
+        },
+        {
+          "repository": "LUNCY579/ChatBubble",
+          "commit": "7ece5cead285ba65c7d73ab57c0327fae2dc40bb",
+          "path": "experiments/rineya_taps_adaptive_recurrence_v1/scheduler.py",
+          "sha256": "eaaa5cd8cab8b390dc932f850f7002dcfc81177c07bef50bcc368bf64ac9d546",
+          "git_blob": "d69ff3f5903ff9e239622cb0fb812c6e055ce568",
+          "git_blob_sha256": "eaaa5cd8cab8b390dc932f850f7002dcfc81177c07bef50bcc368bf64ac9d546",
+          "worktree_bytes_equal_git_blob": true
+        },
+        {
+          "repository": "LUNCY579/ChatBubble",
+          "commit": "7ece5cead285ba65c7d73ab57c0327fae2dc40bb",
+          "path": "experiments/rineya_taps_adaptive_recurrence_v1/configs/inference_v1.json",
+          "sha256": "e090291310494eefa14d8cee46c5561ec14d6b437e93f448fb9fbeac4b24376e",
+          "git_blob": "e294d6ab8b08bac8be58c591d455895fd5391b6e",
+          "git_blob_sha256": "e090291310494eefa14d8cee46c5561ec14d6b437e93f448fb9fbeac4b24376e",
+          "worktree_bytes_equal_git_blob": true
+        },
+        {
+          "repository": "LUNCY579/ChatBubble",
+          "commit": "7ece5cead285ba65c7d73ab57c0327fae2dc40bb",
+          "path": "experiments/rineya_taps_adaptive_recurrence_v1/tests/test_taps.py",
+          "sha256": "13269cb13093143d81edc196948f074e43b3b67e0b1310f49df5a24bf2584e72",
+          "git_blob": "973c9afd9d393243a89728dfda3681780d5cf20f",
+          "git_blob_sha256": "13269cb13093143d81edc196948f074e43b3b67e0b1310f49df5a24bf2584e72",
+          "worktree_bytes_equal_git_blob": true
+        }
+      ],
+      "original_receipt": null,
+      "checkpoint": "a99f079d32212bbcbb703c2e2bad801ea32d43afea52004f38bf94eec5dc4026",
+      "runtime": "Python3.11.15/Torch2.12.1+cu126/Transformers5.14.1; CPU FP32 eager,4 threads,full-prefix batch1,no KV",
+      "task_scorer_split": "Whole L12\u2013L13 first-pass update then one raw extra proposal; per-sequence mean, no padding",
+      "actual_result": "First pass force_unit;ordinary output preserved;EMA seeds whole block;second observation controls one extra update;new scheduler every model.forward.",
+      "evidence_tier": "STATIC_SOURCE_AND_CPU_FIXTURE_CONTRACT",
+      "measurement_origin": "SOURCE_ATTRIBUTED_HISTORICAL_NOT_REPRODUCED_IN_CAMPAIGN",
+      "correction_status": "Exact alpha1 proposal bypass;native bridge unexecuted.",
+      "transfers": "Explicit t1 warmup/t2 control;strong upper-fixed comparator and saturation diagnostics.",
+      "does_not_transfer": "No cross-prefix history, within-prefix long adaptive schedule, or native proof from fake host tests.",
+      "next_hypothesis": "Does t2 alpha vary meaningfully from fixed1.2 on actual prefixes?"
+    },
+    {
+      "id": "PF-006",
+      "claim": "Full-gold teacher forcing is unsafe for sequence-wide adaptive statistics.",
+      "sources": [
+        {
+          "repository": "LUNCY579/ChatBubble",
+          "commit": "7ece5cead285ba65c7d73ab57c0327fae2dc40bb",
+          "path": "experiments/rineya_taps_adaptive_recurrence_v1/diagnostics.py",
+          "sha256": "a697b1ed0c27788a0920d7416ab3821f2dc599cb4af2762fdc9d538e7481ff6b",
+          "git_blob": "516696d88173f884962b79a43da69130cf52a555",
+          "git_blob_sha256": "a697b1ed0c27788a0920d7416ab3821f2dc599cb4af2762fdc9d538e7481ff6b",
+          "worktree_bytes_equal_git_blob": true
+        },
+        {
+          "repository": "LUNCY579/ChatBubble",
+          "commit": "7ece5cead285ba65c7d73ab57c0327fae2dc40bb",
+          "path": "experiments/rineya_taps_adaptive_recurrence_v1/IMPLEMENTATION.md",
+          "sha256": "db823431259d583c7f81b5f0d9e0db04f55cb2290ae02e280a41109581ea63d5",
+          "git_blob": "d299e2ea8dba7f3d80baccd234a909e70cfe3780",
+          "git_blob_sha256": "db823431259d583c7f81b5f0d9e0db04f55cb2290ae02e280a41109581ea63d5",
+          "worktree_bytes_equal_git_blob": true
+        },
+        {
+          "repository": "LUNCY579/ChatBubble",
+          "commit": "7ece5cead285ba65c7d73ab57c0327fae2dc40bb",
+          "path": "experiments/rineya_taps_adaptive_recurrence_v1/tests/test_taps.py",
+          "sha256": "13269cb13093143d81edc196948f074e43b3b67e0b1310f49df5a24bf2584e72",
+          "git_blob": "973c9afd9d393243a89728dfda3681780d5cf20f",
+          "git_blob_sha256": "13269cb13093143d81edc196948f074e43b3b67e0b1310f49df5a24bf2584e72",
+          "worktree_bytes_equal_git_blob": true
+        }
+      ],
+      "original_receipt": null,
+      "checkpoint": "a99f079d32212bbcbb703c2e2bad801ea32d43afea52004f38bf94eec5dc4026",
+      "runtime": "Python3.11.15/Torch2.12.1+cu126/Transformers5.14.1; CPU FP32 eager,4 threads,full-prefix batch1,no KV",
+      "task_scorer_split": "Final next-token generation versus sequence-wide gold-continuation NLL",
+      "actual_result": "generation_only_evaluator preserves generation/scoring bytecode with fresh globals;canonical_answer returns None;gold NLL null;diagnostic gold alphas excluded from A5.",
+      "evidence_tier": "STATIC_CAUSAL_FIREWALL",
+      "measurement_origin": "SOURCE_ATTRIBUTED_HISTORICAL_NOT_REPRODUCED_IN_CAMPAIGN",
+      "correction_status": "V1 final correction prevents future gold affecting earlier logits/random pool.",
+      "transfers": "Causal prefix replay required for future NLL and sensitivity diagnostics.",
+      "does_not_transfer": "Last-logit generation causality is not all-position prefix invariance;guard remains closed.",
+      "next_hypothesis": "Can independently tested prefix diagnostics assess loss sensitivity without online gold inputs?"
+    },
+    {
+      "id": "PF-007",
+      "claim": "Current quality memo reports no overall winner across distinct model families.",
+      "sources": [
+        {
+          "repository": "LUNCY579/ChatBubble",
+          "commit": "7ece5cead285ba65c7d73ab57c0327fae2dc40bb",
+          "path": "MODEL_QUALITY_STATUS.md",
+          "sha256": "0c6e03832b2ed882d2dd3aa20c93d5d13e888a78ad4dae87adec562a209be7d9",
+          "git_blob": "253214f46bbe7778125b978600329e5bb64d9e99",
+          "git_blob_sha256": "0c6e03832b2ed882d2dd3aa20c93d5d13e888a78ad4dae87adec562a209be7d9",
+          "worktree_bytes_equal_git_blob": true
+        },
+        {
+          "repository": "LUNCY579/ChatBubble",
+          "commit": "7ece5cead285ba65c7d73ab57c0327fae2dc40bb",
+          "path": "docs/model-quality/audit-2026-09-15/chatbubble-results-audit.md",
+          "sha256": "da31d30daeda9b8944ecfefb62d67e83879d1930b045a281530e73b05b9041d9",
+          "git_blob": "50824f6c812817ae972e26dfe9169dfc08e63b5e",
+          "git_blob_sha256": "da31d30daeda9b8944ecfefb62d67e83879d1930b045a281530e73b05b9041d9",
+          "worktree_bytes_equal_git_blob": true
+        },
+        {
+          "repository": "LUNCY579/ChatBubble",
+          "commit": "7ece5cead285ba65c7d73ab57c0327fae2dc40bb",
+          "path": "docs/model-quality/audit-2026-09-15/supa-audit.md",
+          "sha256": "fade15fe2ab64919d43ca5df8fa2669a2407192dd34ebb9fdf2f2cfe90c466ac",
+          "git_blob": "ec3f2b22ddbd8db59d85d4b7b6a6117c387888c5",
+          "git_blob_sha256": "fade15fe2ab64919d43ca5df8fa2669a2407192dd34ebb9fdf2f2cfe90c466ac",
+          "worktree_bytes_equal_git_blob": true
+        }
+      ],
+      "original_receipt": null,
+      "checkpoint": {
+        "ARMR_and_FP16_gated_A11": "a99f079d32212bbcbb703c2e2bad801ea32d43afea52004f38bf94eec5dc4026",
+        "ungated_Supa": "962abc5bcd5a83e3b7693bd278ae9215b6d83389a847913da9330b34dd5dd24b",
+        "Opallo": "e726d6bea1139eddfbcdadeb4c8d7b979e7a55e43490d9787ab99a3ab12ee76b"
+      },
+      "runtime": "Separate runtimes/heads/dtypes/prompt contracts",
+      "task_scorer_split": "Distinct arithmetic150,CAPABILITY720,retention256;not one common instrument",
+      "actual_result": "Opallo73/150 and41/47 retained;matchedMLP separate FP16 source and panels;no shared ranking.",
+      "evidence_tier": "SOURCE_ATTRIBUTED_CROSS_REPOSITORY_AUDIT",
+      "measurement_origin": "SOURCE_ATTRIBUTED_HISTORICAL_NOT_REPRODUCED_IN_CAMPAIGN",
+      "correction_status": "Use linked corrections;RRP005 later overrides stale retention interpretation.",
+      "transfers": "Keep model/source identities and scoring populations separate.",
+      "does_not_transfer": "No pooled Rineya score or portability of qualification across a99/962/e726.",
+      "next_hypothesis": "Can exact ARMR source preserve each required family under scaling?"
+    },
+    {
+      "id": "PF-008",
+      "claim": "Opallo arithmetic gains coexisted with retention/abstention regressions.",
+      "sources": [
+        {
+          "repository": "LUNCY579/ChatBubble",
+          "commit": "7ece5cead285ba65c7d73ab57c0327fae2dc40bb",
+          "path": "docs/model-quality/audit-2026-09-15/chatbubble-results-audit.md",
+          "sha256": "da31d30daeda9b8944ecfefb62d67e83879d1930b045a281530e73b05b9041d9",
+          "git_blob": "50824f6c812817ae972e26dfe9169dfc08e63b5e",
+          "git_blob_sha256": "da31d30daeda9b8944ecfefb62d67e83879d1930b045a281530e73b05b9041d9",
+          "worktree_bytes_equal_git_blob": true
+        },
+        {
+          "repository": "LUNCY579/ChatBubble",
+          "commit": "7ece5cead285ba65c7d73ab57c0327fae2dc40bb",
+          "path": "MODEL_QUALITY_STATUS.md",
+          "sha256": "0c6e03832b2ed882d2dd3aa20c93d5d13e888a78ad4dae87adec562a209be7d9",
+          "git_blob": "253214f46bbe7778125b978600329e5bb64d9e99",
+          "git_blob_sha256": "0c6e03832b2ed882d2dd3aa20c93d5d13e888a78ad4dae87adec562a209be7d9",
+          "worktree_bytes_equal_git_blob": true
+        }
+      ],
+      "original_receipt": null,
+      "checkpoint": "e726d6bea1139eddfbcdadeb4c8d7b979e7a55e43490d9787ab99a3ab12ee76b",
+      "runtime": "BF16 storage upcast to FP32 compute;ordinary ungated parent962abc5bcd5a83e3b7693bd278ae9215b6d83389a847913da9330b34dd5dd24b",
+      "task_scorer_split": "Historical arithmetic150 and long-context256 exposed instruments;literal UNKNOWN full response",
+      "actual_result": "73/150 vs source47;41 retained/32 gained/6 lost;strict long-context161->135/256;literal UNKNOWN13->0/64,not13->2.",
+      "evidence_tier": "SOURCE_ATTRIBUTED_HISTORICAL_NATIVE",
+      "measurement_origin": "SOURCE_ATTRIBUTED_HISTORICAL_NOT_REPRODUCED_IN_CAMPAIGN",
+      "correction_status": "UNKNOWN substring counted two UNKNOWN. outputs;17+11 decomposition not disjoint;native BF16 serving unqualified.",
+      "transfers": "Family preservation,literal versus semantic abstention,full-output contract separate.",
+      "does_not_transfer": "No semantic abstention rate,source retrieval equivalence,broad capability or source-a99 effect.",
+      "next_hypothesis": "Do paired scale gains require a preservation loss?"
+    },
+    {
+      "id": "PF-009",
+      "claim": "Frozen exemplar prompting improves some composition endpoints while damaging retrieval and abstention.",
+      "sources": [
+        {
+          "repository": "LUNCY579/ChatBubble",
+          "commit": "7ece5cead285ba65c7d73ab57c0327fae2dc40bb",
+          "path": "docs/model-quality/audit-2026-09-15/supa-audit.md",
+          "sha256": "fade15fe2ab64919d43ca5df8fa2669a2407192dd34ebb9fdf2f2cfe90c466ac",
+          "git_blob": "ec3f2b22ddbd8db59d85d4b7b6a6117c387888c5",
+          "git_blob_sha256": "fade15fe2ab64919d43ca5df8fa2669a2407192dd34ebb9fdf2f2cfe90c466ac",
+          "worktree_bytes_equal_git_blob": true
+        }
+      ],
+      "original_receipt": "SupaExperiment@8e3d467ee02cb5d749ab9fff16f5d999e6035767:evidence/2026-09-14-floor1/score.json,attack.json,loss.json under experiments/nonrecurrent_adaptation_v1; local audit attribution only",
+      "checkpoint": "a99f079d32212bbcbb703c2e2bad801ea32d43afea52004f38bf94eec5dc4026",
+      "runtime": "NRA frozen FP16 checkpoint,bias0;two prompt contracts",
+      "task_scorer_split": "FLOOR1 same symmetric contiguous DEV bank;distinct depth strata and own blind floors",
+      "actual_result": "d2 exemplar217/600 vs blind.2667,d3 181/600 vs.245;retrieval111->8/120;abstention15->0/120;only2/4 jobs complete.",
+      "evidence_tier": "SOURCE_ATTRIBUTED_HISTORICAL_NATIVE_DEV",
+      "measurement_origin": "SOURCE_ATTRIBUTED_HISTORICAL_NOT_REPRODUCED_IN_CAMPAIGN",
+      "correction_status": "E38 withdraws old ADJACENCY1 above-blind claim;E39 withdraws aggregate dominance/equivalence.",
+      "transfers": "Preservation strata and gold-blind structural floors are required.",
+      "does_not_transfer": "No exemplar deployment or recurrence claim;raw remote receipts not opened by this audit.",
+      "next_hypothesis": "Could apparent aggregate scale gain be refusal/retrieval damage?"
+    },
+    {
+      "id": "PF-010",
+      "claim": "A matched stateless MLP can outperform gate-only changes on its own source/task contract.",
+      "sources": [
+        {
+          "repository": "LUNCY579/ChatBubble",
+          "commit": "7ece5cead285ba65c7d73ab57c0327fae2dc40bb",
+          "path": "docs/model-quality/audit-2026-09-15/supa-audit.md",
+          "sha256": "fade15fe2ab64919d43ca5df8fa2669a2407192dd34ebb9fdf2f2cfe90c466ac",
+          "git_blob": "ec3f2b22ddbd8db59d85d4b7b6a6117c387888c5",
+          "git_blob_sha256": "fade15fe2ab64919d43ca5df8fa2669a2407192dd34ebb9fdf2f2cfe90c466ac",
+          "worktree_bytes_equal_git_blob": true
+        }
+      ],
+      "original_receipt": "SupaExperiment@8e3d467ee02cb5d749ab9fff16f5d999e6035767; registered_training.json source digest8c52fc541cc1a5ee01e8dfc55f652a2467dcb42cf85439f4fa93026ad463ca88; local audit attribution only",
+      "checkpoint": "a99f079d32212bbcbb703c2e2bad801ea32d43afea52004f38bf94eec5dc4026",
+      "runtime": "NRA CUDA source FP16;FP32 sharedMLP156225 trainable;one seed;bias0 or canonical5.15625",
+      "task_scorer_split": "CAPABILITY1 and TRANSFER3 DEV;own exact/spans/unanswerable/loss-proxy endpoints",
+      "actual_result": "At bias0 answerable285->339/480,75 gained/21 lost;unanswerable120->231/240;TRANSFER3 canonical matchedMLP+93 answerables,gate-only -34;actual serving bias3.75 unmeasured.",
+      "evidence_tier": "SOURCE_ATTRIBUTED_HISTORICAL_NATIVE_DEV",
+      "measurement_origin": "SOURCE_ATTRIBUTED_HISTORICAL_NOT_REPRODUCED_IN_CAMPAIGN",
+      "correction_status": "E37 T4 did not implement registered served-bias question; +93 not served3.75.",
+      "transfers": "Recurrence is not privileged;ordinary/stateless comparison when changing operator.",
+      "does_not_transfer": "No direct ranking vs ungated Opallo or proof model-general transfer;no training under this campaign.",
+      "next_hypothesis": "After scale-only evidence, is an ordinary comparator cheaper/stronger?"
+    },
+    {
+      "id": "PF-011",
+      "claim": "Historical carry/memory evidence includes negative and inconclusive contrasts.",
+      "sources": [
+        {
+          "repository": "LUNCY579/ChatBubble",
+          "commit": "7ece5cead285ba65c7d73ab57c0327fae2dc40bb",
+          "path": "docs/model-quality/audit-2026-09-15/supa-audit.md",
+          "sha256": "fade15fe2ab64919d43ca5df8fa2669a2407192dd34ebb9fdf2f2cfe90c466ac",
+          "git_blob": "ec3f2b22ddbd8db59d85d4b7b6a6117c387888c5",
+          "git_blob_sha256": "fade15fe2ab64919d43ca5df8fa2669a2407192dd34ebb9fdf2f2cfe90c466ac",
+          "worktree_bytes_equal_git_blob": true
+        }
+      ],
+      "original_receipt": "SupaExperiment local historical b1813444f76f214fed627af4bebe39a9354b721c:registered-summary.json,evaluation-recovery-summary.json,independent-evaluation-audit.json; local audit attribution only",
+      "checkpoint": "a99f079d32212bbcbb703c2e2bad801ea32d43afea52004f38bf94eec5dc4026",
+      "runtime": "Historical hybrid-memory CUDA and matched stateless;distinct resource sets",
+      "task_scorer_split": "Hybrid StageI12 runs across3 training seeds;state/control endpoints",
+      "actual_result": "A4 .958333 vs A3 .956019;delta+.2315pp,CI[-.9259,+1.5046]pp;carry changes4/864 outputs;latency gates fail;negative promotion.",
+      "evidence_tier": "SOURCE_ATTRIBUTED_HISTORICAL_NATIVE",
+      "measurement_origin": "SOURCE_ATTRIBUTED_HISTORICAL_NOT_REPRODUCED_IN_CAMPAIGN",
+      "correction_status": "Recovered OOM outputs appended without reselection;no efficiency inference across mixed resource sets.",
+      "transfers": "Preserve negative controls and measured expression/cost.",
+      "does_not_transfer": "No recurrence-memory benefit or equivalence;not same operator as ARMR.",
+      "next_hypothesis": "Is meaningful update expression necessary before controller hypotheses?"
+    },
+    {
+      "id": "PF-012",
+      "claim": "A near-closed gate can make recurrence manipulation practically absent.",
+      "sources": [
+        {
+          "repository": "LUNCY579/ChatBubble",
+          "commit": "7ece5cead285ba65c7d73ab57c0327fae2dc40bb",
+          "path": "docs/model-quality/audit-2026-09-15/supa-audit.md",
+          "sha256": "fade15fe2ab64919d43ca5df8fa2669a2407192dd34ebb9fdf2f2cfe90c466ac",
+          "git_blob": "ec3f2b22ddbd8db59d85d4b7b6a6117c387888c5",
+          "git_blob_sha256": "fade15fe2ab64919d43ca5df8fa2669a2407192dd34ebb9fdf2f2cfe90c466ac",
+          "worktree_bytes_equal_git_blob": true
+        },
+        {
+          "repository": "LUNCY579/ChatBubble",
+          "commit": "7ece5cead285ba65c7d73ab57c0327fae2dc40bb",
+          "path": "experiments/rineya_taps_adaptive_recurrence_v1/IMPLEMENTATION.md",
+          "sha256": "db823431259d583c7f81b5f0d9e0db04f55cb2290ae02e280a41109581ea63d5",
+          "git_blob": "d299e2ea8dba7f3d80baccd234a909e70cfe3780",
+          "git_blob_sha256": "db823431259d583c7f81b5f0d9e0db04f55cb2290ae02e280a41109581ea63d5",
+          "worktree_bytes_equal_git_blob": true
+        }
+      ],
+      "original_receipt": "SupaExperiment A06@65b19a5599c1d782961c9d380d66f4eca292de9a;local audit attribution only",
+      "checkpoint": "a99f079d32212bbcbb703c2e2bad801ea32d43afea52004f38bf94eec5dc4026",
+      "runtime": "A04/A05 sidecars;distinct from full-residual ARMR",
+      "task_scorer_split": "Frozen amplitude diagnostics and registered carry/stateless contrasts",
+      "actual_result": "A04 gates about1% of max;interaction+.003906 CI[-.011719,+.023438];A06 nativeD1 unexecuted;zero actual update scaling remains zero.",
+      "evidence_tier": "SOURCE_ATTRIBUTED_HISTORICAL_DIAGNOSTIC_AND_IDENTITY",
+      "measurement_origin": "SOURCE_ATTRIBUTED_HISTORICAL_NOT_REPRODUCED_IN_CAMPAIGN",
+      "correction_status": "A05 multiplier recommendation superseded;A06 portability tests do not establish mechanism efficacy.",
+      "transfers": "Log raw versus actual gated updates;avoid double gating.",
+      "does_not_transfer": "Numbers not reexecuted/native calibrated here;full block ARMR can differ.",
+      "next_hypothesis": "Are raw/native update energy and downstream logit movement non-negligible?"
+    },
+    {
+      "id": "PF-013",
+      "claim": "RRP TRAIN microfit is engineering evidence.",
+      "sources": [
+        {
+          "repository": "LUNCY579/ChatBubble",
+          "commit": "7ece5cead285ba65c7d73ab57c0327fae2dc40bb",
+          "path": "research/reasoning_posttraining_v1/RESULTS.md",
+          "sha256": "02d1284de2c325a66a06f33df597fd928b30b0eef5e049c9a0b047687590a020",
+          "git_blob": "0c36286318c0e9bb9f9ad780d230b518b7e89eb2",
+          "git_blob_sha256": "02d1284de2c325a66a06f33df597fd928b30b0eef5e049c9a0b047687590a020",
+          "worktree_bytes_equal_git_blob": true
+        },
+        {
+          "repository": "LUNCY579/ChatBubble",
+          "commit": "7ece5cead285ba65c7d73ab57c0327fae2dc40bb",
+          "path": "research/reasoning_posttraining_v1/STATUS.json",
+          "sha256": "d19cadaf4b8d48c623e0aa999b75d6414321446528ca50442dde19134940f769",
+          "git_blob": "1d0f928cfbe76c48f9cba3d8fd0607c52cf4a7f6",
+          "git_blob_sha256": "d19cadaf4b8d48c623e0aa999b75d6414321446528ca50442dde19134940f769",
+          "worktree_bytes_equal_git_blob": true
+        },
+        {
+          "repository": "LUNCY579/ChatBubble",
+          "commit": "7ece5cead285ba65c7d73ab57c0327fae2dc40bb",
+          "path": "research/reasoning_posttraining_v1/CLAIM_LEDGER.json",
+          "sha256": "a9dcab719047fa64e684ecc868808c74016e37b1be1ef837d06210515f15521b",
+          "git_blob": "4c60d675fbe8efcde90e3af827ba8db35e69c3bc",
+          "git_blob_sha256": "a9dcab719047fa64e684ecc868808c74016e37b1be1ef837d06210515f15521b",
+          "worktree_bytes_equal_git_blob": true
+        },
+        {
+          "repository": "LUNCY579/ChatBubble",
+          "commit": "7ece5cead285ba65c7d73ab57c0327fae2dc40bb",
+          "path": "research/reasoning_posttraining_v1/SOURCE_AUDIT.md",
+          "sha256": "3768bd824bda8a9feb05983e17bd1ac683d031e8111bd75e29b4b814738e404e",
+          "git_blob": "a5f64fd5bd51abea2249fe5b7203c7a43e42a504",
+          "git_blob_sha256": "3768bd824bda8a9feb05983e17bd1ac683d031e8111bd75e29b4b814738e404e",
+          "worktree_bytes_equal_git_blob": true
+        },
+        {
+          "repository": "LUNCY579/ChatBubble",
+          "commit": "7ece5cead285ba65c7d73ab57c0327fae2dc40bb",
+          "path": "research/reasoning_posttraining_v1/CONTINUE.md",
+          "sha256": "a9b6c3683d9409ca12cc61d0c9d2f6beefdbffd1d3262e5dcd7cf99c05e8122d",
+          "git_blob": "d59159ffa02962a7353e714adb81f46811629761",
+          "git_blob_sha256": "a9b6c3683d9409ca12cc61d0c9d2f6beefdbffd1d3262e5dcd7cf99c05e8122d",
+          "worktree_bytes_equal_git_blob": true
+        }
+      ],
+      "original_receipt": null,
+      "checkpoint": "962abc5bcd5a83e3b7693bd278ae9215b6d83389a847913da9330b34dd5dd24b",
+      "runtime": "RRP historical Python3.11.15/Torch2.10.0+cu126/Transformers4.57.1;GPU dense tail8\u201327",
+      "task_scorer_split": "32 TRAIN worlds fitted and evaluated on themselves",
+      "actual_result": "8/32->31/32;105updates;resume bit-identical predictions/parameters;zero generalization evidence from microfit.",
+      "evidence_tier": "SOURCE_ATTRIBUTED_HISTORICAL_NATIVE_ENGINEERING",
+      "measurement_origin": "SOURCE_ATTRIBUTED_HISTORICAL_NOT_REPRODUCED_IN_CAMPAIGN",
+      "correction_status": "CL-044 fixes false prediction-digest mismatch;timing field alone differs;some STATUS/CONTINUE wording stale.",
+      "transfers": "Separate apparatus,qualification,TRAIN fitting,DEV quality.",
+      "does_not_transfer": "No training permission/source portability/native ARMR efficacy or broad reasoner score.",
+      "next_hypothesis": "Qualify frozen mechanics before measuring DEV."
+    },
+    {
+      "id": "PF-014",
+      "claim": "RRP v2 source semantic failure remains after format repair and stronger honest floor.",
+      "sources": [
+        {
+          "repository": "LUNCY579/ChatBubble",
+          "commit": "7ece5cead285ba65c7d73ab57c0327fae2dc40bb",
+          "path": "research/reasoning_posttraining_v1/RESULTS.md",
+          "sha256": "02d1284de2c325a66a06f33df597fd928b30b0eef5e049c9a0b047687590a020",
+          "git_blob": "0c36286318c0e9bb9f9ad780d230b518b7e89eb2",
+          "git_blob_sha256": "02d1284de2c325a66a06f33df597fd928b30b0eef5e049c9a0b047687590a020",
+          "worktree_bytes_equal_git_blob": true
+        },
+        {
+          "repository": "LUNCY579/ChatBubble",
+          "commit": "7ece5cead285ba65c7d73ab57c0327fae2dc40bb",
+          "path": "research/reasoning_posttraining_v1/evidence/inspection-20260915/RRP002_DEV_V2_FLOOR_CORRECTION.json",
+          "sha256": "ecfef1d726251b0a9182371f48de10b07c98a7783816d37e56f6cfedff937c98",
+          "git_blob": "d07578962aaa1e129166c8a7176942dc9f51ce7c",
+          "git_blob_sha256": "ecfef1d726251b0a9182371f48de10b07c98a7783816d37e56f6cfedff937c98",
+          "worktree_bytes_equal_git_blob": true
+        },
+        {
+          "repository": "LUNCY579/ChatBubble",
+          "commit": "7ece5cead285ba65c7d73ab57c0327fae2dc40bb",
+          "path": "research/reasoning_posttraining_v1/CLAIM_LEDGER.json",
+          "sha256": "a9dcab719047fa64e684ecc868808c74016e37b1be1ef837d06210515f15521b",
+          "git_blob": "4c60d675fbe8efcde90e3af827ba8db35e69c3bc",
+          "git_blob_sha256": "a9dcab719047fa64e684ecc868808c74016e37b1be1ef837d06210515f15521b",
+          "worktree_bytes_equal_git_blob": true
+        }
+      ],
+      "original_receipt": null,
+      "checkpoint": "962abc5bcd5a83e3b7693bd278ae9215b6d83389a847913da9330b34dd5dd24b",
+      "runtime": "RRP pinned GPU runtime;4096 inference window",
+      "task_scorer_split": "Forge v2 DEV evaluated subset230; audited rewards.score_response",
+      "actual_result": "source4/230=.0174;honest prompt-copy101/230=.4391;format repair validity139->205 while correctness4->4.",
+      "evidence_tier": "SOURCE_ATTRIBUTED_HISTORICAL_NATIVE_DEV",
+      "measurement_origin": "SOURCE_ATTRIBUTED_HISTORICAL_NOT_REPRODUCED_IN_CAMPAIGN",
+      "correction_status": "CL-040 raw prompt vs json.dumps fixes missed144 sentinel copies;old floor.2870 invalid.",
+      "transfers": "Own-bank shortcuts and format/semantic scores separate.",
+      "does_not_transfer": "No inference about checkpoint-a99;no independent confirmation;protected datasets remain closed.",
+      "next_hypothesis": "Does new scale change verifier-backed answers rather than formatting only?"
+    },
+    {
+      "id": "PF-015",
+      "claim": "RRP004 corrects cluster-bootstrap reliability claims.",
+      "sources": [
+        {
+          "repository": "LUNCY579/ChatBubble",
+          "commit": "7ece5cead285ba65c7d73ab57c0327fae2dc40bb",
+          "path": "research/reasoning_posttraining_v1/rrp004/CONTINUE.md",
+          "sha256": "ddd6696f6be6d0b1ad82ca5e67b5375507ab074d948e0589e122e267d90a0a5c",
+          "git_blob": "91db61936ced93bc209ba1100ec4753cea6cbf45",
+          "git_blob_sha256": "ddd6696f6be6d0b1ad82ca5e67b5375507ab074d948e0589e122e267d90a0a5c",
+          "worktree_bytes_equal_git_blob": true
+        },
+        {
+          "repository": "LUNCY579/ChatBubble",
+          "commit": "7ece5cead285ba65c7d73ab57c0327fae2dc40bb",
+          "path": "research/reasoning_posttraining_v1/rrp005/CONTINUE.md",
+          "sha256": "bb6b68315955a559a691fce55397121fef3b6d0c407489084860572e465c201f",
+          "git_blob": "6b36d943651ec6d33feaf09d989867ee1d640e9c",
+          "git_blob_sha256": "bb6b68315955a559a691fce55397121fef3b6d0c407489084860572e465c201f",
+          "worktree_bytes_equal_git_blob": true
+        }
+      ],
+      "original_receipt": null,
+      "checkpoint": "962abc5bcd5a83e3b7693bd278ae9215b6d83389a847913da9330b34dd5dd24b",
+      "runtime": "CPU statistics apparatus plus historically separate source runtime",
+      "task_scorer_split": "Dependency-aware paired inference;preservation template clusters",
+      "actual_result": "RRP004 records bootstrap defect that yielded spurious zero-width intervals including k32;379/1 latest RRP005 fixture count historical.",
+      "evidence_tier": "SOURCE_ATTRIBUTED_STATISTICAL_CORRECTION",
+      "measurement_origin": "SOURCE_ATTRIBUTED_HISTORICAL_NOT_REPRODUCED_IN_CAMPAIGN",
+      "correction_status": "Later RRP004/RRP005 supersede earlier RESULT/STATUS readiness and cluster-statistics claims.",
+      "transfers": "Audit independent units,bootstrap randomness,design resolution and practical margins.",
+      "does_not_transfer": "Historical pass counts do not certify campaign stats;no new evidence from extra deterministic seeds.",
+      "next_hypothesis": "Can tiny native DEV resolve anything beyond paired diagnostic counts?"
+    },
+    {
+      "id": "PF-016",
+      "claim": "The old 768-row RRP preservation bank is unsuitable as a retention gate.",
+      "sources": [
+        {
+          "repository": "LUNCY579/ChatBubble",
+          "commit": "7ece5cead285ba65c7d73ab57c0327fae2dc40bb",
+          "path": "research/reasoning_posttraining_v1/rrp005/CORRECTION.json",
+          "sha256": "b3ef073a3a41df9d1b89c198b7d62b9cd3502c8cd863c7c8e023dc573e40c3f8",
+          "git_blob": "003662d4ba9d9a4702523aefd58379b3c720d6ce",
+          "git_blob_sha256": "b3ef073a3a41df9d1b89c198b7d62b9cd3502c8cd863c7c8e023dc573e40c3f8",
+          "worktree_bytes_equal_git_blob": true
+        },
+        {
+          "repository": "LUNCY579/ChatBubble",
+          "commit": "7ece5cead285ba65c7d73ab57c0327fae2dc40bb",
+          "path": "research/reasoning_posttraining_v1/rrp005/CONTINUE.md",
+          "sha256": "bb6b68315955a559a691fce55397121fef3b6d0c407489084860572e465c201f",
+          "git_blob": "6b36d943651ec6d33feaf09d989867ee1d640e9c",
+          "git_blob_sha256": "bb6b68315955a559a691fce55397121fef3b6d0c407489084860572e465c201f",
+          "worktree_bytes_equal_git_blob": true
+        },
+        {
+          "repository": "LUNCY579/ChatBubble",
+          "commit": "7ece5cead285ba65c7d73ab57c0327fae2dc40bb",
+          "path": "research/reasoning_posttraining_v1/rrp004/CONTINUE.md",
+          "sha256": "ddd6696f6be6d0b1ad82ca5e67b5375507ab074d948e0589e122e267d90a0a5c",
+          "git_blob": "91db61936ced93bc209ba1100ec4753cea6cbf45",
+          "git_blob_sha256": "ddd6696f6be6d0b1ad82ca5e67b5375507ab074d948e0589e122e267d90a0a5c",
+          "worktree_bytes_equal_git_blob": true
+        }
+      ],
+      "original_receipt": null,
+      "checkpoint": "962abc5bcd5a83e3b7693bd278ae9215b6d83389a847913da9330b34dd5dd24b",
+      "runtime": "Corrected RRP source-only inference protocol;no campaign load",
+      "task_scorer_split": "Old RRP2-PRES-DEV768;corrected main757 and96 evidence-removal negatives;853 unique native requests",
+      "actual_result": "192 procedural inputs omitted rule/evidence;31 conversation histories restored;11 selected inconsistent golds excluded;prior_baseline_reusable=false.",
+      "evidence_tier": "SOURCE_ATTRIBUTED_INPUT_AND_GOLD_CORRECTION",
+      "measurement_origin": "SOURCE_ATTRIBUTED_HISTORICAL_NOT_REPRODUCED_IN_CAMPAIGN",
+      "correction_status": "RRP005 invalidates old bank0dcbec17a5842d94f6157db34d888efda3650b5b73a6aaf1b266cc643b89a975;corrected main907b0bfd6b986a1e058e71e21960bf17d8e8f9319d206d84b735a7e1f28e7583.",
+      "transfers": "Audit rendered native inputs;positive control must independently establish answerability.",
+      "does_not_transfer": "No reuse of changed-input outcomes;nonprocedural targets remain source-reported;no corrected native main-bank score here.",
+      "next_hypothesis": "Can every planned task be solved from exactly the model-visible prompt?"
+    },
+    {
+      "id": "PF-017",
+      "claim": "Zero canonical-phrase sensitivity did not imply zero semantic evidence sensitivity.",
+      "sources": [
+        {
+          "repository": "LUNCY579/ChatBubble",
+          "commit": "7ece5cead285ba65c7d73ab57c0327fae2dc40bb",
+          "path": "research/reasoning_posttraining_v1/rrp005/SEMANTIC_ABSTENTION_CORRECTION.json",
+          "sha256": "fd519cadfd82f88bc9dadc396bf8d17862035b19963ba31e82d550c74a3535a2",
+          "git_blob": "e69bc9473ae3a12764f8ef904102d3c600f813a6",
+          "git_blob_sha256": "fd519cadfd82f88bc9dadc396bf8d17862035b19963ba31e82d550c74a3535a2",
+          "worktree_bytes_equal_git_blob": true
+        },
+        {
+          "repository": "LUNCY579/ChatBubble",
+          "commit": "7ece5cead285ba65c7d73ab57c0327fae2dc40bb",
+          "path": "research/reasoning_posttraining_v1/rrp005/A3_RUNBOOK.md",
+          "sha256": "80e6ce26011273f207349f1b0bf6a47f9019ad0d901550c331a24279c2e20390",
+          "git_blob": "69f4ccabfab8135c068f0292f7ffa0a3c2dbd022",
+          "git_blob_sha256": "80e6ce26011273f207349f1b0bf6a47f9019ad0d901550c331a24279c2e20390",
+          "worktree_bytes_equal_git_blob": true
+        },
+        {
+          "repository": "LUNCY579/ChatBubble",
+          "commit": "7ece5cead285ba65c7d73ab57c0327fae2dc40bb",
+          "path": "research/reasoning_posttraining_v1/CLAIM_LEDGER.json",
+          "sha256": "a9dcab719047fa64e684ecc868808c74016e37b1be1ef837d06210515f15521b",
+          "git_blob": "4c60d675fbe8efcde90e3af827ba8db35e69c3bc",
+          "git_blob_sha256": "a9dcab719047fa64e684ecc868808c74016e37b1be1ef837d06210515f15521b",
+          "worktree_bytes_equal_git_blob": true
+        }
+      ],
+      "original_receipt": null,
+      "checkpoint": "962abc5bcd5a83e3b7693bd278ae9215b6d83389a847913da9330b34dd5dd24b",
+      "runtime": "Exposed historical DEV outputs;agent review",
+      "task_scorer_split": "29 complete answerability pairs;canonical recognizer versus semantic inspection",
+      "actual_result": "9/29 clear natural abstentions on negative half with reference-matching positive answers;CL-053's 'never notices missing fact' refuted.",
+      "evidence_tier": "SOURCE_ATTRIBUTED_AGENT_REVIEW_OF_EXPOSED_DEV",
+      "measurement_origin": "SOURCE_ATTRIBUTED_HISTORICAL_NOT_REPRODUCED_IN_CAMPAIGN",
+      "correction_status": "Registered reference scores unchanged;latest semantic correction controls interpretation.",
+      "transfers": "Separate semantic abstention,false abstention,canonical format.",
+      "does_not_transfer": "Not independent human review;not calibrated unsupported-answer rate;no model improvement.",
+      "next_hypothesis": "Could scale alter response wording without changing reasoning?"
+    },
+    {
+      "id": "PF-018",
+      "claim": "Identity-matched unchanged requests can retain historical outputs without becoming new executions.",
+      "sources": [
+        {
+          "repository": "LUNCY579/ChatBubble",
+          "commit": "7ece5cead285ba65c7d73ab57c0327fae2dc40bb",
+          "path": "research/reasoning_posttraining_v1/rrp005/REUSE_AUDIT.json",
+          "sha256": "3437a471bf7ce4adb86db1b686f74fa1204f1fc9cfce3263d9d0b613d257a83b",
+          "git_blob": "eb937a8bd4c0f3e136b876f9251f28031c6b4132",
+          "git_blob_sha256": "3437a471bf7ce4adb86db1b686f74fa1204f1fc9cfce3263d9d0b613d257a83b",
+          "worktree_bytes_equal_git_blob": true
+        },
+        {
+          "repository": "LUNCY579/ChatBubble",
+          "commit": "7ece5cead285ba65c7d73ab57c0327fae2dc40bb",
+          "path": "research/reasoning_posttraining_v1/rrp005/A3_RUNBOOK.md",
+          "sha256": "80e6ce26011273f207349f1b0bf6a47f9019ad0d901550c331a24279c2e20390",
+          "git_blob": "69f4ccabfab8135c068f0292f7ffa0a3c2dbd022",
+          "git_blob_sha256": "80e6ce26011273f207349f1b0bf6a47f9019ad0d901550c331a24279c2e20390",
+          "worktree_bytes_equal_git_blob": true
+        },
+        {
+          "repository": "LUNCY579/ChatBubble",
+          "commit": "7ece5cead285ba65c7d73ab57c0327fae2dc40bb",
+          "path": "research/reasoning_posttraining_v1/rrp005/CONTINUE.md",
+          "sha256": "bb6b68315955a559a691fce55397121fef3b6d0c407489084860572e465c201f",
+          "git_blob": "6b36d943651ec6d33feaf09d989867ee1d640e9c",
+          "git_blob_sha256": "bb6b68315955a559a691fce55397121fef3b6d0c407489084860572e465c201f",
+          "worktree_bytes_equal_git_blob": true
+        }
+      ],
+      "original_receipt": null,
+      "checkpoint": "962abc5bcd5a83e3b7693bd278ae9215b6d83389a847913da9330b34dd5dd24b",
+      "runtime": "Historical source state6e8d322963ca6c0aaa5e8cad53c699431e9ebbd38940399e07d95d6f28d0ab2c;2048/64 contract",
+      "task_scorer_split": "545 unchanged source requests versus308 changed/new;main and probes distinct",
+      "actual_result": "545 prompt/target/token/mask/source identities checked;301/301 fresh overlap predictions match;new acquisition308;no audit model calls.",
+      "evidence_tier": "SOURCE_ATTRIBUTED_IDENTITY_AUDIT",
+      "measurement_origin": "SOURCE_ATTRIBUTED_HISTORICAL_NOT_REPRODUCED_IN_CAMPAIGN",
+      "correction_status": "Later A3 supersedes launching A2;refutes blanket discarding all unchanged native predictions.",
+      "transfers": "Identity-based reuse with separate origin labels/exhaustive coverage.",
+      "does_not_transfer": "No cost/latency equivalence;no single fresh union-run claim;not campaign task data permission.",
+      "next_hypothesis": "Use source-matched identities for reproduction packet,never correctness filtering."
+    },
+    {
+      "id": "PF-019",
+      "claim": "LoopSpec mechanics do not qualify a native recurrent Rineya backend.",
+      "sources": [
+        {
+          "repository": "LUNCY579/ChatBubble",
+          "commit": "7ece5cead285ba65c7d73ab57c0327fae2dc40bb",
+          "path": "experiments/loopspec_v1/README.md",
+          "sha256": "b1c3ea72037a7b687d901ecb992e9b8f98e80a23c9c4107f01d390ac400bab83",
+          "git_blob": "b8458f062ceb8a19b628aa7603e1ba90b623d673",
+          "git_blob_sha256": "b1c3ea72037a7b687d901ecb992e9b8f98e80a23c9c4107f01d390ac400bab83",
+          "worktree_bytes_equal_git_blob": true
+        },
+        {
+          "repository": "LUNCY579/ChatBubble",
+          "commit": "7ece5cead285ba65c7d73ab57c0327fae2dc40bb",
+          "path": "experiments/loopspec_v1/core.py",
+          "sha256": "05d9bfcf0353b4e5c395cce421006656d1ac1a0a3972e8d67adb86ce5b1a8fac",
+          "git_blob": "b4004991840a8b81429a186fbfd0d9d2b9c85508",
+          "git_blob_sha256": "05d9bfcf0353b4e5c395cce421006656d1ac1a0a3972e8d67adb86ce5b1a8fac",
+          "worktree_bytes_equal_git_blob": true
+        }
+      ],
+      "original_receipt": null,
+      "checkpoint": null,
+      "runtime": "Tiny random CPU looped Transformer;native preflight intentionally BLOCKED",
+      "task_scorer_split": "Speculative proposal/verification/cache-depth apparatus",
+      "actual_result": "Probability-law/greedy/sampling mechanics implemented;zero native Rineya quality/speed evidence;standard Supa28-layer config insufficient.",
+      "evidence_tier": "STATIC_AND_HISTORICAL_APPARATUS",
+      "measurement_origin": "SOURCE_ATTRIBUTED_HISTORICAL_NOT_REPRODUCED_IN_CAMPAIGN",
+      "correction_status": "No native cache backend has been qualified by this package.",
+      "transfers": "Keep scale,depth,and systems scheduling separate.",
+      "does_not_transfer": "No KV/caching/speed claims for TAPS full-prefix host.",
+      "next_hypothesis": "Only consider scheduling after useful recurrent target is qualified."
+    },
+    {
+      "id": "PF-020",
+      "claim": "Dream-RSI local apparatus admits zero real histories.",
+      "sources": [
+        {
+          "repository": "LUNCY579/ChatBubble",
+          "commit": "7ece5cead285ba65c7d73ab57c0327fae2dc40bb",
+          "path": "experiments/dream_rsi_experiment_controller_v1/README.md",
+          "sha256": "506fd2ada8cb4971528c9378f043e9b31c069b6245d257ab9011b562b38d8dbc",
+          "git_blob": "d54b898fea0e36060d06da07ca051c7aecfc486b",
+          "git_blob_sha256": "506fd2ada8cb4971528c9378f043e9b31c069b6245d257ab9011b562b38d8dbc",
+          "worktree_bytes_equal_git_blob": true
+        },
+        {
+          "repository": "LUNCY579/ChatBubble",
+          "commit": "7ece5cead285ba65c7d73ab57c0327fae2dc40bb",
+          "path": "experiments/dream_rsi_experiment_controller_v1/PROTOCOL.md",
+          "sha256": "11d153942098633a246b07fec24cab2475f9f12753a2fdbf2c1e6739414a79ec",
+          "git_blob": "7ad0aea5be68a44dbf8f8a43e2657342eca20334",
+          "git_blob_sha256": "11d153942098633a246b07fec24cab2475f9f12753a2fdbf2c1e6739414a79ec",
+          "worktree_bytes_equal_git_blob": true
+        },
+        {
+          "repository": "LUNCY579/ChatBubble",
+          "commit": "7ece5cead285ba65c7d73ab57c0327fae2dc40bb",
+          "path": "experiments/dream_rsi_experiment_controller_v1/HISTORY_AUDIT.json",
+          "sha256": "9fa7723d8aabd6a157ccf66b7b3c97e9d0a14163bd308986837a6d2a568df063",
+          "git_blob": "dbfec560298d51239a0953839b7675c28057aca7",
+          "git_blob_sha256": "9fa7723d8aabd6a157ccf66b7b3c97e9d0a14163bd308986837a6d2a568df063",
+          "worktree_bytes_equal_git_blob": true
+        },
+        {
+          "repository": "LUNCY579/ChatBubble",
+          "commit": "7ece5cead285ba65c7d73ab57c0327fae2dc40bb",
+          "path": "experiments/dream_rsi_experiment_controller_v1/evidence/QUALIFICATION_RECEIPT.json",
+          "sha256": "aa64ac6de0a80a50db872b783ac914271384ef0be616f0ca74853a4d33b41c03",
+          "git_blob": "ec47e21f649e4f9827448a1f2004406a7e71df31",
+          "git_blob_sha256": "aa64ac6de0a80a50db872b783ac914271384ef0be616f0ca74853a4d33b41c03",
+          "worktree_bytes_equal_git_blob": true
+        }
+      ],
+      "original_receipt": null,
+      "checkpoint": null,
+      "runtime": "Historical Python3.13.5 Linux stdlib fixture replay",
+      "task_scorer_split": "10 synthetic worlds;60 synthetic episodes;fixed/greedy/random/adaptive;cluster bootstrap",
+      "actual_result": "PASS_SYNTHETIC_MECHANICS_ONLY;111tests;21candidates;admitted_historical_worlds0;zero model loads/LLMcalls/training/live dispatch.",
+      "evidence_tier": "HISTORICAL_OFFLINE_APPARATUS_ONLY",
+      "measurement_origin": "SOURCE_ATTRIBUTED_HISTORICAL_NOT_REPRODUCED_IN_CAMPAIGN",
+      "correction_status": "History audit targeted,not exhaustive;monotone development rank is by construction.",
+      "transfers": "Preserve failed/context-bound histories and policy ancestry.",
+      "does_not_transfer": "No native research efficiency,empirical RSI,or Rineya improvement;locked native remains closed.",
+      "next_hypothesis": "Can campaign policy revision improve a predeclared process acceptance check?"
+    },
+    {
+      "id": "PF-021",
+      "claim": "CDE reachable commit contains offline allocation apparatus, not native performance evidence.",
+      "sources": [
+        {
+          "repository": "LUNCY579/ChatBubble",
+          "commit": "7a7f7b60e38c18dbeda7e182daf037e993ca8afd",
+          "path": "experiments/rineya_compute_depth_elasticity_v1/README.md",
+          "sha256": "ddf75d8773431a5d25cac6db2fbbd2444b1ecc6b114923520a0a3dae34185d4e",
+          "git_blob": "ab2bcd160b4034051c7d543e322680f2376d9cc4",
+          "access": "git show;local reachable commit;no checkout",
+          "git_blob_sha256": "ddf75d8773431a5d25cac6db2fbbd2444b1ecc6b114923520a0a3dae34185d4e"
+        }
+      ],
+      "original_receipt": null,
+      "checkpoint": null,
+      "runtime": "Commit7a7f7b60e38c18dbeda7e182daf037e993ca8afd;historical Python3.13.5/CPUtorch2.10.0",
+      "task_scorer_split": "Scripted same-prefix depth/width fixtures;native collector absent",
+      "actual_result": "native-preflight alwaysBLOCKED;no model/training/quality/speed result.",
+      "evidence_tier": "READ_ONLY_COMMIT_SOURCE_AUDIT",
+      "measurement_origin": "SOURCE_ATTRIBUTED_HISTORICAL_NOT_REPRODUCED_IN_CAMPAIGN",
+      "correction_status": "Reference locally reachable;no merge/fetch performed.",
+      "transfers": "Use usefulness-before-allocation and stable-wrong controls.",
+      "does_not_transfer": "No depth qualification or efficacy transfer to initial budget0/1.",
+      "next_hypothesis": "Resolve useful full-residual scale before depth/width."
+    },
+    {
+      "id": "PF-022",
+      "claim": "CED paired-host reachable commit has no native capture.",
+      "sources": [
+        {
+          "repository": "LUNCY579/ChatBubble",
+          "commit": "627253edde9a0e67334034d252e5d9dd9daead9a",
+          "path": "experiments/paired_lf_host_v1/AGENTS.md",
+          "sha256": "6f5e5c6380f2523ee5d13f7af3baecf2047782a0cebaad78b218fcb9da894c17",
+          "git_blob": "9f09304d59c6e64c8b15b88887a40c7ead6bb3b0",
+          "access": "git show;local reachable commit;no checkout",
+          "git_blob_sha256": "6f5e5c6380f2523ee5d13f7af3baecf2047782a0cebaad78b218fcb9da894c17"
+        },
+        {
+          "repository": "LUNCY579/ChatBubble",
+          "commit": "627253edde9a0e67334034d252e5d9dd9daead9a",
+          "path": "experiments/paired_lf_host_v1/README.md",
+          "sha256": "f602aa165e1b4d2230b08b6301188d38856016f74dd3a3c984076784212067ac",
+          "git_blob": "1db8bf867dd3c01209b9f422b9b2ce93bb854e7c",
+          "access": "git show;local reachable commit;no checkout",
+          "git_blob_sha256": "f602aa165e1b4d2230b08b6301188d38856016f74dd3a3c984076784212067ac"
+        },
+        {
+          "repository": "LUNCY579/ChatBubble",
+          "commit": "627253edde9a0e67334034d252e5d9dd9daead9a",
+          "path": "experiments/paired_lf_host_v1/evidence/RESULT.json",
+          "sha256": "af151fbefa612ac8bc051e5b82254f20a6f4f90998293fc0662e89ac0ecd4c98",
+          "git_blob": "a6db28d4a47aa9bb415eb6236c8a57b7b6f568d3",
+          "access": "git show;local reachable commit;no checkout",
+          "git_blob_sha256": "af151fbefa612ac8bc051e5b82254f20a6f4f90998293fc0662e89ac0ecd4c98"
+        }
+      ],
+      "original_receipt": null,
+      "checkpoint": "962abc5bcd5a83e3b7693bd278ae9215b6d83389a847913da9330b34dd5dd24b",
+      "runtime": "Pinned parenta36de96b30eb03265db3a18e464a2e2a23ee67bf;CPUFP32/noKV <=512tokens;Transformers4.51.3 required",
+      "task_scorer_split": "B28 unchanged vs source-initialized E24/D4;restricted A\u2013G readout",
+      "actual_result": "15 host+90 companion fixture tests;0native features/optimizer steps/quality;metadata preflightBLOCKED.",
+      "evidence_tier": "READ_ONLY_COMMIT_SOURCE_AUDIT",
+      "measurement_origin": "SOURCE_ATTRIBUTED_HISTORICAL_NOT_REPRODUCED_IN_CAMPAIGN",
+      "correction_status": "Reference locally reachable; original missing assets/runtime is environment-specific.",
+      "transfers": "Exact host/readout contracts and non-function-preserving conversion needs own baseline.",
+      "does_not_transfer": "No CED/TAPS host qualification, permits,or scores transfer.",
+      "next_hypothesis": "Keep operator fixed until scale question interpretable."
+    },
+    {
+      "id": "PF-023",
+      "claim": "R2 long-context corrections cannot be pooled with Supa results.",
+      "sources": [
+        {
+          "repository": "LUNCY579/ChatBubble",
+          "commit": "7ece5cead285ba65c7d73ab57c0327fae2dc40bb",
+          "path": "docs/model-quality/audit-2026-09-15/architecture-beta-audit.md",
+          "sha256": "60d6c739280e7807841a7c8974622572739c8a8b9d990ebb2a216ecf5fb243c8",
+          "git_blob": "63e8bd030888202e47fb54d8daff3bc892e04bfe",
+          "git_blob_sha256": "60d6c739280e7807841a7c8974622572739c8a8b9d990ebb2a216ecf5fb243c8",
+          "worktree_bytes_equal_git_blob": true
+        }
+      ],
+      "original_receipt": "RineyaBeta@1cc2d8e2f53d937ae74641b3851b1f80b05518cd:experiments/kv_significance/results/blind_adjudication.json and abstain_endpoint_audit.json;local audit attribution only",
+      "checkpoint": "Historical474M R2;exact weight hash not available in this local audit excerpt",
+      "runtime": "Beta historical 4K/16K protocols;not ARMR source",
+      "task_scorer_split": "600-row4K answer-stratum432 and separate abstention/controls",
+      "actual_result": "Blind answer-stratum+2.5463pp,12wins/1loss;pooled abstention gain canned-string artifact;global equivalence/equal-quality65x/129x withdrawn/bounded.",
+      "evidence_tier": "SOURCE_ATTRIBUTED_CROSS_REPOSITORY_HISTORICAL",
+      "measurement_origin": "SOURCE_ATTRIBUTED_HISTORICAL_NOT_REPRODUCED_IN_CAMPAIGN",
+      "correction_status": "Later blind/abstention/power corrections govern;exact local R2 source receipt unavailable.",
+      "transfers": "Answer-stratum and semantic abstention independent;long-context claims need position/shape qualification.",
+      "does_not_transfer": "No Rineya source-a99 score,scale efficacy,speed,or universal memory conclusion.",
+      "next_hypothesis": "Preservation must report actual supported shape and endpoint separately."
+    },
+    {
+      "id": "PF-024",
+      "claim": "Primary paper uses a different host and reports mixed Qwen outcomes.",
+      "sources": [
+        {
+          "url": "https://arxiv.org/html/2609.36653v1",
+          "version": "2609.36653v1",
+          "sections": [
+            "3",
+            "4.2",
+            "5.4",
+            "C.1"
+          ],
+          "retrieval": "web open/read in this campaign",
+          "sha256": null,
+          "hash_status": "Web tool returns primary content but no byte hash;no download performed"
+        }
+      ],
+      "original_receipt": null,
+      "checkpoint": null,
+      "runtime": "PaperQwen3-4B-Instruct,BF16;3stages,layers15\u201318",
+      "task_scorer_split": "PaperTable4,C.1;CommonsenseQA/GPQA/MMLU-Pro;different prompt/scorer contracts",
+      "actual_result": "Full block Euler coefficient eta/3;unitLoop59.22 average,Adam58.71,BB59.37;Adam MMLU61.40->59.70.",
+      "evidence_tier": "PRIMARY_PAPER_REPORTED_NOT_REPRODUCED",
+      "measurement_origin": "SOURCE_ATTRIBUTED_HISTORICAL_NOT_REPRODUCED_IN_CAMPAIGN",
+      "correction_status": "arxiv2609.36653v1 dated2026-09-29;no author code freshly inspected;v1 historical code refs only shortf742461/3712df8/1f1b219,full immutable revisions missing.",
+      "transfers": "Test strongest fixed comparator and proxy alignment;theory conditional on alignment/drift/curvature.",
+      "does_not_transfer": "No defaults/eta1 identity/speed/quality transfer;source paper equations separately distinguished from code.",
+      "next_hypothesis": "Does Rineya two-observation feature predict useful direction beyond fixed scale?"
+    }
+  ],
+  "independently_reproduced_campaign_mathematics": {
+    "kind": "CAMPAIGN_REPRODUCED_PLAIN_ARITHMETIC_FIXTURE",
+    "engine": "functions.exec JavaScript V8; no model, no torch, no native inference",
+    "edge": {
+      "equal": {
+        "P": 2.5,
+        "S": 0,
+        "Scenter": 0,
+        "variance_error": 0,
+        "B": 0.9999999999996,
+        "alpha": 1.2
+      },
+      "opposite": {
+        "P": 0.03086419753086418,
+        "S": 2.4691358024691357,
+        "Scenter": 2.4691358024691357,
+        "variance_error": 0,
+        "B": -0.9834710743799019,
+        "alpha": 0.8
+      },
+      "first_zero": {
+        "P": 0.771604938271605,
+        "S": 0.6172839506172838,
+        "Scenter": 0.6172839506172839,
+        "variance_error": 1.1102230246251565e-16,
+        "B": -0.09090909090903716,
+        "alpha": 0.9750000000000147
+      },
+      "second_zero": {
+        "P": 0.4938271604938272,
+        "S": 0.617283950617284,
+        "Scenter": 0.6172839506172839,
+        "variance_error": 1.1102230246251565e-16,
+        "B": -0.30434782608674216,
+        "alpha": 0.9163043478261459
+      },
+      "both_zero": {
+        "P": 0,
+        "S": 0,
+        "Scenter": 0,
+        "variance_error": 0,
+        "B": 0,
+        "alpha": 1
+      },
+      "tiny_equal": {
+        "P": 2.4999999999999993e-20,
+        "S": 9.027796614315168e-36,
+        "Scenter": 0,
+        "variance_error": 9.027796614315168e-36,
+        "B": 2.4999999374999997e-08,
+        "alpha": 1.000000006875
+      }
+    },
+    "saturation_collinear_positive_c_interval": [
+      0.520870068067806,
+      2.0245844773867394
+    ],
+    "sensitivity": {
+      "fixture": {
+        "h0": [
+          2,
+          -1
+        ],
+        "j": [
+          -0.6,
+          0.85
+        ],
+        "b": [
+          1,
+          -0.2
+        ],
+        "target": [
+          0.5,
+          0.25
+        ],
+        "a": [
+          1,
+          1.1
+        ]
+      },
+      "analytic": [
+        1.3135708125000007,
+        1.0498768750000005
+      ],
+      "central_difference": [
+        1.3135708125666667,
+        1.0498768751032728
+      ],
+      "maximum_absolute_error": 1.0327227961681729e-10
+    }
+  },
+  "missing_or_unverified_references": [
+    "No full author implementation revision freshly obtained;v1 cites only short observed revisions.",
+    "Cross-repository native raw receipts not opened;local audit-document hashes and immutable remote commit/path attributions supplied.",
+    "R2 exact checkpoint hash not recoverable from local excerpt;no pooled checkpoint claim.",
+    "Controlling RRP005 A3 final corrected source-baseline outcomes not established by inspected preparation/reuse receipts."
+  ]
+}

@@ -1,0 +1,197 @@
+..FF.F...F                                                               [100%]
+================================== FAILURES ===================================
+__________ test_job_stops_assigned_worker_and_descendant_only[close] __________
+
+tmp_path = WindowsPath('C:/Users/clclc/BusinessProject/Chat-Bubble-rineya-taps-adaptive-recurrence-v1/experiments/rineya_taps_adaptive_recurrence_campaign_v2/runs/supervision-probe-001/tmp/test_job_stops_assigned_worker0')
+method = 'close'
+
+    @pytest.mark.parametrize("method", ["close", "terminate"])
+    def test_job_stops_assigned_worker_and_descendant_only(tmp_path, method):
+        unrelated = sentinel()
+        job, process, child = WindowsJob(), None, None
+        try:
+>           process, child = start_contained(job, tmp_path / "members.json")
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+experiments\rineya_taps_adaptive_recurrence_campaign_v2\tests\test_supervision.py:171: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+job = <experiments.rineya_taps_adaptive_recurrence_campaign_v2.supervision.WindowsJob object at 0x000001A456AAE110>
+marker = WindowsPath('C:/Users/clclc/BusinessProject/Chat-Bubble-rineya-taps-adaptive-recurrence-v1/experiments/rineya_taps_adaptive_recurrence_campaign_v2/runs/supervision-probe-001/tmp/test_job_stops_assigned_worker0/members.json')
+
+    def start_contained(job, marker):
+        process = subprocess.Popen(
+            [sys.executable, "-B", "-c", WORKER, str(marker)],
+            stdin=subprocess.PIPE, creationflags=NO_WINDOW,
+        )
+        try:
+            job.assign(process)
+            process.stdin.write(b"GO\n")
+            process.stdin.flush()
+            wait_until(marker.is_file)
+            record = json.loads(marker.read_text())
+>           assert record["worker"] == process.pid
+E           AssertionError: assert 577140 == 574516
+E            +  where 574516 = <Popen: returncode: None args: ['C:\\Users\\clclc\\BusinessProject\\Chat-Bub...>.pid
+
+experiments\rineya_taps_adaptive_recurrence_campaign_v2\tests\test_supervision.py:131: AssertionError
+________ test_job_stops_assigned_worker_and_descendant_only[terminate] ________
+
+tmp_path = WindowsPath('C:/Users/clclc/BusinessProject/Chat-Bubble-rineya-taps-adaptive-recurrence-v1/experiments/rineya_taps_adaptive_recurrence_campaign_v2/runs/supervision-probe-001/tmp/test_job_stops_assigned_worker1')
+method = 'terminate'
+
+    @pytest.mark.parametrize("method", ["close", "terminate"])
+    def test_job_stops_assigned_worker_and_descendant_only(tmp_path, method):
+        unrelated = sentinel()
+        job, process, child = WindowsJob(), None, None
+        try:
+>           process, child = start_contained(job, tmp_path / "members.json")
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+experiments\rineya_taps_adaptive_recurrence_campaign_v2\tests\test_supervision.py:171: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+job = <experiments.rineya_taps_adaptive_recurrence_campaign_v2.supervision.WindowsJob object at 0x000001A456A47650>
+marker = WindowsPath('C:/Users/clclc/BusinessProject/Chat-Bubble-rineya-taps-adaptive-recurrence-v1/experiments/rineya_taps_adaptive_recurrence_campaign_v2/runs/supervision-probe-001/tmp/test_job_stops_assigned_worker1/members.json')
+
+    def start_contained(job, marker):
+        process = subprocess.Popen(
+            [sys.executable, "-B", "-c", WORKER, str(marker)],
+            stdin=subprocess.PIPE, creationflags=NO_WINDOW,
+        )
+        try:
+            job.assign(process)
+            process.stdin.write(b"GO\n")
+            process.stdin.flush()
+            wait_until(marker.is_file)
+            record = json.loads(marker.read_text())
+>           assert record["worker"] == process.pid
+E           AssertionError: assert 568124 == 578260
+E            +  where 578260 = <Popen: returncode: None args: ['C:\\Users\\clclc\\BusinessProject\\Chat-Bub...>.pid
+
+experiments\rineya_taps_adaptive_recurrence_campaign_v2\tests\test_supervision.py:131: AssertionError
+____ test_resource_sample_includes_owned_descendants_and_excludes_sentinel ____
+
+tmp_path = WindowsPath('C:/Users/clclc/BusinessProject/Chat-Bubble-rineya-taps-adaptive-recurrence-v1/experiments/rineya_taps_adaptive_recurrence_campaign_v2/runs/supervision-probe-001/tmp/test_resource_sample_includes_0')
+
+    def test_resource_sample_includes_owned_descendants_and_excludes_sentinel(tmp_path):
+        unrelated = sentinel()
+        job, process, child = WindowsJob(), None, None
+        try:
+>           process, child = start_contained(job, tmp_path / "resources_members.json")
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+experiments\rineya_taps_adaptive_recurrence_campaign_v2\tests\test_supervision.py:218: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+job = <experiments.rineya_taps_adaptive_recurrence_campaign_v2.supervision.WindowsJob object at 0x000001A456A2B410>
+marker = WindowsPath('C:/Users/clclc/BusinessProject/Chat-Bubble-rineya-taps-adaptive-recurrence-v1/experiments/rineya_taps_adaptive_recurrence_campaign_v2/runs/supervision-probe-001/tmp/test_resource_sample_includes_0/resources_members.json')
+
+    def start_contained(job, marker):
+        process = subprocess.Popen(
+            [sys.executable, "-B", "-c", WORKER, str(marker)],
+            stdin=subprocess.PIPE, creationflags=NO_WINDOW,
+        )
+        try:
+            job.assign(process)
+            process.stdin.write(b"GO\n")
+            process.stdin.flush()
+            wait_until(marker.is_file)
+            record = json.loads(marker.read_text())
+>           assert record["worker"] == process.pid
+E           AssertionError: assert 581128 == 578156
+E            +  where 578156 = <Popen: returncode: None args: ['C:\\Users\\clclc\\BusinessProject\\Chat-Bub...>.pid
+
+experiments\rineya_taps_adaptive_recurrence_campaign_v2\tests\test_supervision.py:131: AssertionError
+_ test_real_supervisor_assignment_failure_kills_unassigned_worker_before_release _
+
+tmp_path = WindowsPath('C:/Users/clclc/BusinessProject/Chat-Bubble-rineya-taps-adaptive-recurrence-v1/experiments/rineya_taps_adaptive_recurrence_campaign_v2/runs/supervision-probe-001/tmp/test_real_supervisor_assignmen0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x000001A45689CB50>
+
+    def test_real_supervisor_assignment_failure_kills_unassigned_worker_before_release(tmp_path, monkeypatch):
+        """Actual dispatcher cleanup, with fake admission and a no-model child."""
+        package = tmp_path / "CPU_FIXTURE_CAMPAIGN"
+        package.mkdir()
+        source, out = package / "no_weights", package / "fixture_run"
+        admission_path = package / "fixture_admission.json"
+        admission = {
+            "status": "READY_FOR_REFERENCE_DISPATCH", "source": str(source.resolve()),
+            "interpreter": sys.executable, "dispatch_hashes": {},
+            "review_receipt": "fixture_review.json", "hard_deadline_seconds": 10,
+            "kind": "CPU_TEST_FIXTURE_NOT_A_NATIVE_PERMISSION",
+        }
+        admission_path.write_text(json.dumps(admission), encoding="utf-8")
+        review = {
+            "status": "PASS_REFERENCE_DISPATCH",
+            "admission_sha256": hashlib.sha256(admission_path.read_bytes()).hexdigest(),
+            "kind": "FABRICATED_FIXTURE_NOT_INDEPENDENT_REVIEW",
+        }
+        (package / "fixture_review.json").write_text(json.dumps(review))
+        original_popen = subprocess.Popen
+        owned = []
+        reached = package / "must_not_reach_import.txt"
+    
+        def fixture_popen(command, **kwargs):
+            release = command[command.index("--release") + 1]
+            process = original_popen(
+                [sys.executable, "-B", "-c", FILE_BARRIER_WORKER, release, str(reached)],
+                **{**kwargs, "creationflags": NO_WINDOW},
+            )
+            owned.append(process)
+            return process
+    
+        class RefusingJob(WindowsJob):
+            def assign(self, process):
+                raise OSError("deliberate CPU-fixture assignment failure")
+    
+        monkeypatch.setattr(native_supervisor, "PACKAGE", package)
+        monkeypatch.setattr(native_supervisor, "sources", lambda: {"CPU_FIXTURE": "no_model"})
+        monkeypatch.setattr(native_supervisor, "git", lambda *args: "CPU_FIXTURE")
+        monkeypatch.setattr(native_supervisor, "WindowsJob", RefusingJob)
+        monkeypatch.setattr(native_supervisor.psutil, "virtual_memory", lambda: SimpleNamespace(available=9 * 1024**3))
+        monkeypatch.setattr(native_supervisor.shutil, "disk_usage", lambda _: SimpleNamespace(free=100 * 1024**3))
+        monkeypatch.setattr(native_supervisor.subprocess, "Popen", fixture_popen)
+        try:
+            started = time.monotonic()
+            assert native_supervisor.run(source, out, admission_path) == 2
+            assert time.monotonic() - started < 5
+            assert len(owned) == 1 and owned[0].poll() is not None
+            assert not (out / "release.json").exists()
+            assert not reached.exists()
+            assert not (package / "native_worker.lock").exists()
+            receipt = json.loads((out / "terminal_receipt.json").read_text())
+            assert "assignment failure" in receipt["error"]
+>           assert 0 < receipt["native_worker_seconds"] < 5
+E           assert 0 < 0.0
+
+experiments\rineya_taps_adaptive_recurrence_campaign_v2\tests\test_supervision.py:331: AssertionError
+---------------------------- Captured stdout call -----------------------------
+{
+  "status": "FAIL_BEFORE_WORKER",
+  "native_worker_seconds": 0.0,
+  "started_utc": "2026-10-02T04:16:04.392971+00:00",
+  "peak_rss_bytes": null,
+  "run": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\supervision-probe-001\\tmp\\test_real_supervisor_assignmen0\\CPU_FIXTURE_CAMPAIGN\\fixture_run",
+  "command": [
+    "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\.venv\\Scripts\\python.exe",
+    "-B",
+    "-m",
+    "experiments.rineya_taps_adaptive_recurrence_campaign_v2.native_entry",
+    "--release",
+    "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\supervision-probe-001\\tmp\\test_real_supervisor_assignmen0\\CPU_FIXTURE_CAMPAIGN\\fixture_run\\release.json",
+    "--source",
+    "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\supervision-probe-001\\tmp\\test_real_supervisor_assignmen0\\CPU_FIXTURE_CAMPAIGN\\no_weights",
+    "--out",
+    "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\supervision-probe-001\\tmp\\test_real_supervisor_assignmen0\\CPU_FIXTURE_CAMPAIGN\\fixture_run\\result"
+  ],
+  "worker_pid": 578912,
+  "error": "OSError: deliberate CPU-fixture assignment failure",
+  "supervisor_wall_seconds": 0.0,
+  "ended_utc": "2026-10-02T04:16:04.405045+00:00"
+}
+=========================== short test summary info ===========================
+FAILED experiments/rineya_taps_adaptive_recurrence_campaign_v2/tests/test_supervision.py::test_job_stops_assigned_worker_and_descendant_only[close]
+FAILED experiments/rineya_taps_adaptive_recurrence_campaign_v2/tests/test_supervision.py::test_job_stops_assigned_worker_and_descendant_only[terminate]
+FAILED experiments/rineya_taps_adaptive_recurrence_campaign_v2/tests/test_supervision.py::test_resource_sample_includes_owned_descendants_and_excludes_sentinel
+FAILED experiments/rineya_taps_adaptive_recurrence_campaign_v2/tests/test_supervision.py::test_real_supervisor_assignment_failure_kills_unassigned_worker_before_release
+4 failed, 6 passed in 2.72s

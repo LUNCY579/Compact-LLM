@@ -1,0 +1,52 @@
+{
+  "schema": 1,
+  "review_kind": "read_only_static_source_review",
+  "experiment": "RSD-001",
+  "branch": "research/rineya-recursive-self-distillation-v1",
+  "reviewed_head": "2af041fd599951ce4365d67db74f28ae31bc9971",
+  "base": "07703ce5cfc788f4e98f6dbe0f644c700f66f288",
+  "outgoing_rsd_commits": [
+    "b1a887fa7cdb3169c4ea5f78884417e9ee62ce07"
+  ],
+  "status": "ONE_ACTIONABLE_SOURCE_BINDING_FINDING",
+  "findings": [
+    {
+      "priority": "P2",
+      "title": "Bind the recorded parent source map to its historical commit",
+      "path": "experiments/rineya_recursive_self_distillation_v1/parent_qualification.py",
+      "line_start": 132,
+      "line_end": 135,
+      "detail": "The validator checks source-map completeness, hash shape and self-digest (lines 63-73), then accepts source_commit on 40-hex syntax alone. It never resolves that commit or matches its historical producer bytes to identity.sources. A copied or misattributed schema2 parent receipt can therefore pass the claimed source-bound native-parent route with an unrelated or nonexistent commit. The positive historical-source test explicitly accepts arbitrary source hashes and an arbitrary commit. This is an exact metadata binding gap; the documented inability to prove human-review truth does not require it.",
+      "recommendation": "For the supported RSD native schema2 route, resolve source_commit in the producer repository and compare historical source bytes against each recorded source hash, failing closed on unavailable or mismatching history while allowing a genuine older source commit to differ from current HEAD. Adapt synthetic tests to explicit mocked historical-source verification rather than treating arbitrary hashes as provenance."
+    }
+  ],
+  "checked_properties": [
+    "Only one RSD-affecting outgoing commit appears; its complete diff accounts for the current RSD changes.",
+    "E0 schema2 inputs require matching scoped native PASS, original checks, full-prefix sampled likelihood, exact producer dependencies and companion containment receipts; process-only PASS is insufficient.",
+    "Parent route rejects unfinished, wrong-arm and wrong-experiment metadata and requires positive matching optimizer steps, zero-LoRA exact base, registered runtime and review fields.",
+    "Catalog gate binds inputs, source/revision coverage and separate-from-input evidence files; its limitations explicitly preserve attestations as unproved and semantic decontamination false.",
+    "Detached KL/backend, engine, checkpoint and quarantine source files are unchanged from the remote base.",
+    "Native load/training flags, clean source, live admission and per-arm mechanics gates remain present; no inherited execution permit was found.",
+    "Tiny proposal selects seed101, two updates, sft/frozen/evolving, step2 contrasts and defers SRCL."
+  ],
+  "validation_limits": [
+    "Static source and Git metadata inspection only; no imports, AST processing, tests, candidate/runtime/native/framework/model/tokenizer/scoring/solver execution.",
+    "No protected banks, raw prompts, answers, gold, weight/runtime binaries or arbitrary referenced artifact contents were accessed.",
+    "No native E0, parent, treatment, containment, model behavior or capability qualification was performed.",
+    "Catalog review truth, semantic decontamination, model quality and receipt authenticity beyond checked source structure are not established."
+  ],
+  "authority": {
+    "native_execution_authorized": false,
+    "model_load_authorized": false,
+    "optimizer_updates_authorized": false,
+    "e0_authorized": false,
+    "e1_authorized": false,
+    "parent_training_authorized": false,
+    "treatment_training_authorized": false,
+    "capability_qualified": false,
+    "rejected_native_action_retried": false
+  },
+  "tracked_files_edited": false,
+  "committed": false,
+  "pushed": false
+}

@@ -1,0 +1,186 @@
+{
+  "bank_sha256": "fa52fd850e3a0a2e113fd7bdefbdb56427c9632a0ce3137312c82ae4059c369f",
+  "category_counts": {
+    "deduction_composition": 6,
+    "document_reconciliation": 6,
+    "program_state": 6,
+    "signed_arithmetic": 6
+  },
+  "created_utc": "2026-10-02T05:47:21.996331+00:00",
+  "document_statuses": {
+    "answer": 3,
+    "conflict": 2,
+    "missing": 1
+  },
+  "human_review": "NOT_REVIEWED",
+  "independent_CPU_tests": {
+    "failed": 0,
+    "junit_sha256": "4c037ee540b58a733e01d575591509fad84e04435e5eee960fad06d1b8926f67",
+    "passed": 24,
+    "pytest_seconds": 0.88,
+    "skipped": 0
+  },
+  "independent_blind_correct_counts": {
+    "constant_0": 0,
+    "constant_1": 0,
+    "constant_NO": 3,
+    "constant_UNKNOWN": 3,
+    "constant_YES": 3,
+    "copy_first_number": 1,
+    "copy_full_prompt": 0,
+    "copy_last_entity": 0,
+    "copy_last_number": 0,
+    "query_blind_first_entity_solver": 10
+  },
+  "independent_positive_answers": [
+    {
+      "correct": true,
+      "id": "OPEN-TAPS-001:9edd0345dc7f:signed_entries:0",
+      "prediction": "45"
+    },
+    {
+      "correct": true,
+      "id": "OPEN-TAPS-001:9edd0345dc7f:signed_entries:1",
+      "prediction": "-45"
+    },
+    {
+      "correct": true,
+      "id": "OPEN-TAPS-001:9edd0345dc7f:signed_entries:2",
+      "prediction": "52"
+    },
+    {
+      "correct": true,
+      "id": "OPEN-TAPS-001:9edd0345dc7f:signed_entries:3",
+      "prediction": "-41"
+    },
+    {
+      "correct": true,
+      "id": "OPEN-TAPS-001:9edd0345dc7f:credit_debit:0",
+      "prediction": "53"
+    },
+    {
+      "correct": true,
+      "id": "OPEN-TAPS-001:9edd0345dc7f:credit_debit:1",
+      "prediction": "45"
+    },
+    {
+      "correct": true,
+      "id": "OPEN-TAPS-001:9edd0345dc7f:path_derivation:0",
+      "prediction": "YES"
+    },
+    {
+      "correct": true,
+      "id": "OPEN-TAPS-001:9edd0345dc7f:path_derivation:1",
+      "prediction": "NO"
+    },
+    {
+      "correct": true,
+      "id": "OPEN-TAPS-001:9edd0345dc7f:path_derivation:2",
+      "prediction": "YES"
+    },
+    {
+      "correct": true,
+      "id": "OPEN-TAPS-001:9edd0345dc7f:path_derivation:3",
+      "prediction": "NO"
+    },
+    {
+      "correct": true,
+      "id": "OPEN-TAPS-001:9edd0345dc7f:join_derivation:0",
+      "prediction": "YES"
+    },
+    {
+      "correct": true,
+      "id": "OPEN-TAPS-001:9edd0345dc7f:join_derivation:1",
+      "prediction": "NO"
+    },
+    {
+      "correct": true,
+      "id": "OPEN-TAPS-001:9edd0345dc7f:register_copy_add:0",
+      "prediction": "34"
+    },
+    {
+      "correct": true,
+      "id": "OPEN-TAPS-001:9edd0345dc7f:register_copy_add:1",
+      "prediction": "28"
+    },
+    {
+      "correct": true,
+      "id": "OPEN-TAPS-001:9edd0345dc7f:register_copy_add:2",
+      "prediction": "37"
+    },
+    {
+      "correct": true,
+      "id": "OPEN-TAPS-001:9edd0345dc7f:register_copy_add:3",
+      "prediction": "35"
+    },
+    {
+      "correct": true,
+      "id": "OPEN-TAPS-001:9edd0345dc7f:register_mul_reset:0",
+      "prediction": "32"
+    },
+    {
+      "correct": true,
+      "id": "OPEN-TAPS-001:9edd0345dc7f:register_mul_reset:1",
+      "prediction": "54"
+    },
+    {
+      "correct": true,
+      "id": "OPEN-TAPS-001:9edd0345dc7f:approved_consensus:0",
+      "prediction": "53"
+    },
+    {
+      "correct": true,
+      "id": "OPEN-TAPS-001:9edd0345dc7f:approved_consensus:1",
+      "prediction": "UNKNOWN"
+    },
+    {
+      "correct": true,
+      "id": "OPEN-TAPS-001:9edd0345dc7f:approved_consensus:2",
+      "prediction": "81"
+    },
+    {
+      "correct": true,
+      "id": "OPEN-TAPS-001:9edd0345dc7f:approved_consensus:3",
+      "prediction": "UNKNOWN"
+    },
+    {
+      "correct": true,
+      "id": "OPEN-TAPS-001:9edd0345dc7f:latest_consensus:0",
+      "prediction": "82"
+    },
+    {
+      "correct": true,
+      "id": "OPEN-TAPS-001:9edd0345dc7f:latest_consensus:1",
+      "prediction": "UNKNOWN"
+    }
+  ],
+  "limitations": [
+    "Eight named generator variants share four broad code/categories; four variant families per split are too few for broad generator-level inference",
+    "OPEN_VALIDATION is author/source visible and not independent confirmation; later outcome-driven revision makes it selection data",
+    "Query-blind first-entity solver10/24 remains a substantial own-bank floor; several binary/document families have50% constant floors",
+    "Fixed program constants permit template-specific closed-form solution; solving this bank is not general program reasoning",
+    "No ordinary-language/factual preservation endpoint in this bank; preserve/check original-bank behavior separately",
+    "Native tokenizer/shape binding and complete new data/scorer/cap/baseline matrix registration still required"
+  ],
+  "logical_labels": {
+    "NO": 3,
+    "YES": 3
+  },
+  "manifest_sha256": "93e24bbdfdbfc58e71216c97e9e6d2814cdbd1197d12af15354893195df2c560",
+  "named_family_count": 8,
+  "native_model_inference": 0,
+  "native_model_loads": 0,
+  "protected_or_native_TEST_reads": false,
+  "review_kind": "independent agent source/data audit, not independent bank authorship",
+  "reviewer": "/root/adversarial_review",
+  "safe_binding_source_sha256": "177e7549158eaa239b38ce335ddd6311650dbc47c32f18548c3e1d9d4cc05714",
+  "safe_no_model_binding_review": "PASS: exact asset/source/runtime/Qwen guards before local-only trust_remote_codeFalse tokenizer; immutable packet checks;24 IDs; <=350 no truncation; exclusive offline cache",
+  "schema_version": "1.0",
+  "source_sha256": "25db8ad7b8bd4166188eccab4be73c9a430f696610dea5b8c83b380883f9d42a",
+  "split_counts": {
+    "DEVELOPMENT": 16,
+    "OPEN_VALIDATION": 8
+  },
+  "status": "PASS_OPEN_SOURCE_DATA_APPARATUS_NOT_NATIVE_ADMITTED",
+  "unique_parent_worlds": 24
+}

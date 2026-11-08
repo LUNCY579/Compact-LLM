@@ -1,0 +1,74 @@
+{
+  "status": "STARTED",
+  "bindings": {
+    "protocol_sha256": "01a02759eb187c2937c082bde4df34a76a90d8100d944fd32cbc9c7aad0766ff",
+    "package_files_sha256": {
+      ".gitignore": "ccf58e28fccde6c0c37d6abe83e98be8db118e70e1d82214ccaceca4bcac7931",
+      "analyze.py": "ffc1b910923f9584f182278c40a6e2fc4274057f6cacfc56e0a86a9da68bad89",
+      "protocol.json": "01a02759eb187c2937c082bde4df34a76a90d8100d944fd32cbc9c7aad0766ff",
+      "README.md": "4b26583da6c425aedf78afd43086b760efe04c89c41e7eaec92ac152b680a591",
+      "__init__.py": "4bb2c124afc8fe21698b22bed14e01562ed023548ca3765e8427d883bd82e84c",
+      "__main__.py": "a01dff73b732d10094a8a705008f88ab86ab030d65de2061a78e966426f3ca09",
+      "tests\\test_analysis.py": "a104866202f9f1b7ae2971417ec8c13ebe5e08184a6a83d61c07f972a8e2bbb4"
+    },
+    "input_hashes": {
+      "probe": {
+        "path": "experiments/architecture_benchmark_001/data/monitor_probe.jsonl",
+        "bytes": 129415,
+        "sha256": "5f6df1c14aa082eb2f61024a2652809077dbc91a6d7a4e19933d55f7890ae266"
+      },
+      "audit": {
+        "path": "experiments/architecture_benchmark_001/evidence/retention-design-v1/PROBE_LABEL_AUDIT.json",
+        "bytes": 308132,
+        "sha256": "4857cf868202763e76bc610f6e787aebee20b9d18bfa7451f42c603ed871e6d7"
+      },
+      "scorer": {
+        "path": "experiments/architecture_benchmark_001/retention.py",
+        "bytes": 33056,
+        "sha256": "c52b6a48cb811e3c272793a66765e82152fe170e8307eea153c3b1b6c5c58322"
+      },
+      "scoring_contract": {
+        "path": "experiments/architecture_benchmark_001/TYPED_SCORING_CONTRACT.md",
+        "bytes": 9615,
+        "sha256": "871d3bb860be27ff64bb613cccd51349b080412573c6517a64dee181389cedc5"
+      },
+      "last20": {
+        "path": "experiments/architecture_benchmark_001/evidence/retention-design-v1/ARM_DOSE_B28last20_lr1e-05_b5200_seed17_wsd0.2-0.2_b20.95.json",
+        "bytes": 125627,
+        "sha256": "65e7977600d3e74526a2514c12b135fb47e8f3e63d086c947dcdc314e1caa619"
+      },
+      "fullb28": {
+        "path": "experiments/architecture_benchmark_001/evidence/retention-design-v1/ARM_DOSE_B28_lr1e-05_b5200_seed17_wsd0.2-0.2_b20.95.json",
+        "bytes": 149183,
+        "sha256": "ceb1912c1d317c0b4388afc47975708f9c521fdbf69ed0a4c2adb1c0a3dd4d21"
+      },
+      "opallo": {
+        "path": "Rineya_Published_Cores/Rineya-Opallo-1.0.0-devfreeze/PANEL.json",
+        "bytes": 37311,
+        "sha256": "f3913133259ba55fb2b31628715ca8247b679ee976cb67abfb70fd7db8837f6f"
+      },
+      "opallo_core": {
+        "path": "Rineya_Published_Cores/Rineya-Opallo-1.0.0-devfreeze/CORE.json",
+        "bytes": 8010,
+        "sha256": "674d6d0cb5a80b740b8cf72a9ebba2f342541327c342be27839ff23bb09abb51"
+      },
+      "opallo_files": {
+        "path": "Rineya_Published_Cores/Rineya-Opallo-1.0.0-devfreeze/FILES.json",
+        "bytes": 943,
+        "sha256": "3b391f5b25026bd2bced7a396b51d804e15f9634fd73a8fe22a67aec304d6f46"
+      }
+    },
+    "python": "3.11.15 (main, Jun  2 2026, 22:29:49) [MSC v.1944 64 bit (AMD64)]",
+    "platform": "Windows-10-10.0.26200-SP0",
+    "pid": 265092,
+    "started_utc": "2026-09-29T23:31:59.776491+00:00"
+  },
+  "budget": {
+    "lane": "sequential CPU-only offline analysis, one process, Python standard library",
+    "max_process_rss_bytes": 536870912,
+    "max_wall_seconds": 900,
+    "max_output_bytes": 52428800,
+    "monitoring": "Current/peak process RSS and host physical/commit memory at stage boundaries on Windows; root supervisor supplies continuous admission, polling, timeout and limits. No GPU compute."
+  },
+  "scope": "Finite-panel oracle headroom only. Uses known targets to pick correct outputs; not a deployable selector, sampling gain, merged weights, population inference, or current runtime qualification."
+}

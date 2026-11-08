@@ -1,0 +1,153 @@
+{
+  "actual_dev_admission": false,
+  "actual_learning_established": false,
+  "actual_train_admission": false,
+  "authorizes_execution": false,
+  "conditional_chance_certificates": {
+    "context_only": {
+      "bound_scope": "this complete finite fixture population only",
+      "conditional_group_sizes": {
+        "16": 90
+      },
+      "exact_fraction": "1/2",
+      "groups": 90,
+      "information_set": "context_only",
+      "maximum_label_accuracy": 0.5,
+      "maximum_label_correct": 720,
+      "maximum_typed_accuracy": 0.5,
+      "maximum_typed_correct": 720,
+      "total_queries": 1440
+    },
+    "entity_only_with_context": {
+      "bound_scope": "this complete finite fixture population only",
+      "conditional_group_sizes": {
+        "4": 360
+      },
+      "exact_fraction": "1/2",
+      "groups": 360,
+      "information_set": "entity_only_with_context",
+      "maximum_label_accuracy": 0.5,
+      "maximum_label_correct": 720,
+      "maximum_typed_accuracy": 0.5,
+      "maximum_typed_correct": 720,
+      "total_queries": 1440
+    },
+    "field_only_with_context": {
+      "bound_scope": "this complete finite fixture population only",
+      "conditional_group_sizes": {
+        "4": 360
+      },
+      "exact_fraction": "1/2",
+      "groups": 360,
+      "information_set": "field_only_with_context",
+      "maximum_label_accuracy": 0.5,
+      "maximum_label_correct": 720,
+      "maximum_typed_accuracy": 0.5,
+      "maximum_typed_correct": 720,
+      "total_queries": 1440
+    },
+    "old_nuisance_count_shortcut": {
+      "bound_scope": "this complete finite fixture population only",
+      "conditional_group_sizes": {
+        "1440": 1
+      },
+      "exact_fraction": "1/2",
+      "groups": 1,
+      "information_set": "old_nuisance_count_shortcut",
+      "maximum_label_accuracy": 0.5,
+      "maximum_label_correct": 720,
+      "maximum_typed_accuracy": 0.5,
+      "maximum_typed_correct": 720,
+      "total_queries": 1440
+    },
+    "query_only_without_context": {
+      "bound_scope": "this complete finite fixture population only",
+      "conditional_group_sizes": {
+        "90": 16
+      },
+      "exact_fraction": "1/2",
+      "groups": 16,
+      "information_set": "query_only_without_context",
+      "maximum_label_accuracy": 0.5,
+      "maximum_label_correct": 720,
+      "maximum_typed_accuracy": 0.5,
+      "maximum_typed_correct": 720,
+      "total_queries": 1440
+    }
+  },
+  "confirmation_authorized": false,
+  "contexts": 90,
+  "evidence_kind": "finite_mechanical_witness",
+  "family": "all_regular",
+  "matched_nuisance_profile": {
+    "entity_frequencies": {
+      "Q7MX": 2,
+      "R2VA": 2,
+      "S9KP": 2,
+      "T4NZ": 2,
+      "U1BC": 2,
+      "W0YG": 2
+    },
+    "field_frequencies": {
+      "K8DS": 3,
+      "L3FH": 3,
+      "M6JT": 3,
+      "N5WR": 3
+    },
+    "record_count": 12,
+    "value_lengths": [
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4
+    ],
+    "value_multiset": [
+      "A1QZ",
+      "B2RT",
+      "C3SU",
+      "D4TV",
+      "E5UW",
+      "F6VX",
+      "G7WY",
+      "H8XZ",
+      "J9YZ",
+      "K0ZA",
+      "L1AB",
+      "M2BC"
+    ]
+  },
+  "model_quality_claim": false,
+  "native_bank": false,
+  "no_model_quality_claim": true,
+  "operator_invariances": {
+    "irrelevant_value_query_checks": 1440,
+    "record_permutation_query_checks": 2880,
+    "relation_switch_query_checks": 1440,
+    "scope": "oracle properties only; no model invariance established",
+    "selected_value_query_checks": 5760
+  },
+  "oracle_agreement": "exact independent table and brute record scan",
+  "public_null_rule": "closed_world_exact_single_relation_lookup",
+  "queries": 1440,
+  "retention_established": false,
+  "schema": "gd001_query_dependence_witness_v1",
+  "scope": "EXCLUDED_MECHANICAL_FIXTURE",
+  "sha256": "ba1b72ce53042d51395addd60e14afa1d4e806dd99a2b8c610aee1e04a29582a",
+  "status": "PASS_FINITE_MECHANICAL_QUERY_DEPENDENCE_WITNESS",
+  "token_length_invariance_established": false,
+  "warnings": [
+    "Private context/query IDs, oracle answers and grouping metadata must never enter predictor input.",
+    "Presentation order/index, carry-over state and role metadata are potential side channels; no native execution is admitted.",
+    "Repeated queries, permutations and complements are dependent finite witness cases, not independent experimental samples.",
+    "The minimal graphs allow structured pattern recognition; even the 90-graph family is not model-quality evidence."
+  ],
+  "witness_sha256": "814a6ef735131e6af7ab9e7411dbd5e6282e5cd7f4077c011fb072c671e54165"
+}

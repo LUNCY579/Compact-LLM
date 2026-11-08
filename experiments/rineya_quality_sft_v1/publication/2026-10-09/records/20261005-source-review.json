@@ -1,0 +1,43 @@
+{
+  "content": {
+    "bindings": {
+      "PROTOCOL.md": {
+        "LF_normalized_sha256": "58d150164bb634d673119fa548007d814db33724659fd4c9087e2f21da797333",
+        "raw_sha256": "58d150164bb634d673119fa548007d814db33724659fd4c9087e2f21da797333"
+      },
+      "RUNBOOK.md": {
+        "LF_normalized_sha256": "69ab5f6d720101efcd4514b35e478d8f8838b6113ca682f5fe83c1d256351f54",
+        "raw_sha256": "69ab5f6d720101efcd4514b35e478d8f8838b6113ca682f5fe83c1d256351f54"
+      },
+      "bank.py": {
+        "LF_normalized_sha256": "8c1808f0f9612478fe2a2262178cf6cad2c731add0cfd9ce6f82211ad8206597",
+        "raw_sha256": "8c1808f0f9612478fe2a2262178cf6cad2c731add0cfd9ce6f82211ad8206597"
+      },
+      "compiler.py": {
+        "LF_normalized_sha256": "57eedf7873ec23dd3ace38b7f7820157be7348a90c485a1fed7c6fc2e9078651",
+        "raw_sha256": "57eedf7873ec23dd3ace38b7f7820157be7348a90c485a1fed7c6fc2e9078651"
+      }
+    },
+    "findings": "The prior hashing limitation is resolved: prehash, consumed reads and closing manifest hashing use the capped reader. The growth fixture checks a single limit+1 read followed by rejection; metadata tests spy on the actual payload-read boundary. All seven added safeguards are present, including exporter consistency in bundle and native-plan validation.",
+    "limitations": [
+      "Hash-bound declarations cannot authenticate reviewer truth",
+      "Global exclusion coverage, real semantic pairing/passports and actual owner admission remain external gates",
+      "Reported CPU tests were not rerun by this reviewer",
+      "Native qualification, baseline, candidate outcomes and reproducible gains remain unmeasured"
+    ],
+    "native_authority": false,
+    "observation_source": "Direct collaboration agent final response; serialized by root",
+    "owner_admission": false,
+    "quality_gain_established": false,
+    "record_type": "NONAUTHOR_IMPLEMENTATION_SOURCE_REVIEW_OBSERVATION",
+    "reviewer": "/root/closing_admission_review",
+    "scope": "Read-only bank/compiler/admission-test diff and protocol/runbook source. No imports, test execution, model calls, real payload reads, edits or approvals.",
+    "status": "NO_BLOCKING_IMPLEMENTATION_FINDINGS_IN_REVIEWED_DIFF"
+  },
+  "execution_authority": false,
+  "original_bytes": 2048,
+  "original_raw_sha256": "f21d8782cb7d22ee0a775f4998ab0f44fe116c7bc694c487a10028760facd4f3",
+  "original_source": "<BusinessProject>/rineya-quality-sft-records/admission-interface-20261005-003/INDEPENDENT_SOURCE_REVIEW.json",
+  "publication_policy": "Portable historical evidence only, not an executable packet or admission/qualification permit. Local paths, chat UUIDs and XML hostnames are removed; original raw-file hashes are retained separately from hashes of these exports. No banks, predictions, weights, checkpoints, environments or raw process inventories are exported. Originals remain unchanged outside Git.",
+  "record_type": "PORTABLE_EVIDENCE_EXPORT"
+}

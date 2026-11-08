@@ -1,0 +1,19 @@
+{
+  "checkpoint": "/absolute/path/to/exact-rineya-0.6b",
+  "checkpoint_sha256": "REPLACE_WITH_CHECKPOINT_MANIFEST_SHA256",
+  "data": "/absolute/path/to/fresh-admitted-tokenized.jsonl",
+  "data_sha256": "REPLACE_WITH_JSONL_FILE_SHA256",
+  "device": "cuda",
+  "backend": "math",
+  "trainable_names": ["model.layers.12.self_attn.q_proj.weight"],
+  "max_trainable_parameters": 4000000,
+  "max_tokens": 128,
+  "max_steps": 16,
+  "seeds": [17, 29, 43],
+  "learning_rate": 0.00001,
+  "clip_norm": 1.0,
+  "min_free_cuda_gib": 4.0,
+  "audit_relative_tolerance": 0.05,
+  "audit_absolute_tolerance": 0.000001,
+  "capture_call_indices": [1, 8, 16, 28]
+}

@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "status": "PASS_VERSIONED_NESTED_ERROR_CORRECTION_SOURCE_AND_CPU_ONLY",
+  "finding": "V1 outer failure masks original inner attempt-publication OSError while two spans remain pending",
+  "legacy_path": "scripts/e1_training_accounting.py:105",
+  "V2_source": "scripts/e1_training_accounting_v2.py",
+  "new_controls": 4,
+  "legacy_registration_byte_preservation": true,
+  "observed_qualifier_affected": false,
+  "unaffected_basis": "Observed qualifier E1 spans are nonnested; base loader uses separate legacy qualified CallAccounting guard",
+  "new_worker_connected": false,
+  "new_registration_required_for_consumers": true,
+  "source_pins": {
+    "scripts/e1_training_accounting_v2.py": {
+      "sha256": "2f245a7bd66df16aabc87fd6ccccd6da6d0a6497fef8a763e2ed0e8521285c6e",
+      "bytes": 1747
+    },
+    "tests/test_e1_training_accounting_v2.py": {
+      "sha256": "b669f95b968cb1f9f43ed97b9fc1d3b860c7e54207965a02dd354b2c3f121789",
+      "bytes": 4721
+    }
+  },
+  "E1_authorized": false
+}

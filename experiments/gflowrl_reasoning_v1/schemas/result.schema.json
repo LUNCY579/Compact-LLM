@@ -1,0 +1,202 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://luncy579.github.io/ChatBubble/gflowrl_reasoning_v1/result.schema.json",
+  "title": "GFlowRL Rineya arm result",
+  "type": "object",
+  "required": [
+    "experiment",
+    "arm",
+    "base_sha",
+    "head_sha",
+    "model",
+    "tokenizer",
+    "split",
+    "seed",
+    "precision",
+    "objective",
+    "rows",
+    "metrics"
+  ],
+  "properties": {
+    "experiment": {
+      "const": "gflowrl_reasoning_v1"
+    },
+    "arm": {
+      "enum": [
+        "R0",
+        "R1"
+      ]
+    },
+    "base_sha": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{40}$"
+    },
+    "head_sha": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{40}$"
+    },
+    "model": {
+      "type": "object",
+      "required": [
+        "checkpoint",
+        "sha256"
+      ]
+    },
+    "tokenizer": {
+      "type": "object",
+      "required": [
+        "path",
+        "sha256"
+      ]
+    },
+    "split": {
+      "enum": [
+        "train",
+        "dev",
+        "confirmation"
+      ]
+    },
+    "seed": {
+      "type": "integer"
+    },
+    "precision": {
+      "type": "string"
+    },
+    "objective": {
+      "type": "object"
+    },
+    "runtime": {
+      "type": "object"
+    },
+    "rows": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "prompt_id",
+          "rollout_index",
+          "reward",
+          "valid",
+          "response_length",
+          "trajectory",
+          "trajectory_sha256",
+          "eos_seen",
+          "truncated"
+        ],
+        "properties": {
+          "prompt_id": {
+            "type": "string"
+          },
+          "rollout_index": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "reward": {
+            "type": "number"
+          },
+          "valid": {
+            "type": "boolean"
+          },
+          "response_length": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "trajectory": {
+            "type": "string"
+          },
+          "trajectory_sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "strategy_metric_id": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "strategy": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "current_logprob_sum": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "old_logprob_sum": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "reference_logprob_sum": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "eos_seen": {
+            "type": "boolean"
+          },
+          "truncated": {
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    "metrics": {
+      "type": "object",
+      "required": [
+        "pass_at_1",
+        "pass_at_k",
+        "pass_at_k_denominators",
+        "exact_reward_distribution",
+        "correct_solution_diversity",
+        "reasoning_length",
+        "instability_events",
+        "resources"
+      ],
+      "properties": {
+        "pass_at_1": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "pass_at_k": {
+          "type": "object"
+        },
+        "pass_at_k_denominators": {
+          "type": "object"
+        },
+        "exact_reward_distribution": {
+          "type": "object"
+        },
+        "correct_solution_diversity": {
+          "type": "object"
+        },
+        "reasoning_length": {
+          "type": "object"
+        },
+        "kl_policy_drift": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "gradient_norms": {
+          "type": "object"
+        },
+        "instability_events": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "resources": {
+          "type": "object"
+        }
+      }
+    }
+  }
+}

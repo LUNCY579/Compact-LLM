@@ -1,0 +1,70 @@
+{
+  "schema_version": 1,
+  "status": "PROSPECTIVELY_REGISTERED_UNMEASURED_LAPTOP_SUCCESSOR",
+  "amendment": "AMENDMENT_009.md",
+  "primary_weight_sha256": "537201676814ade103c4efa63f5ebe758ea309971803c4ad633dbca5b6b531b7",
+  "resource_profile": "LAPTOP_GPU_RESIDENT_V1",
+  "system_available_RAM_reserve_GiB": 2.0,
+  "worker_process_tree_RSS_ceiling_GiB": 2.5,
+  "post_import_admission": "reserve + max(0, ceiling - current worker RSS)",
+  "VRAM_first": true,
+  "stages": [
+    {
+      "id": "LP0",
+      "action": "Bounded source/config controls and review",
+      "native_work": false
+    },
+    {
+      "id": "LP1",
+      "action": "Exact GPU-resident BF16 load and one256token frozen forward",
+      "config": "configs/E0_LAPTOP_LOAD_FORWARD.json",
+      "maximum_seconds": 600,
+      "optimizer_calls": 0,
+      "generation_tokens": 0,
+      "scope": "Resource-only; not E0 qualification or efficacy"
+    },
+    {
+      "id": "LP2",
+      "depends_on": "LP1",
+      "action": "Full unchanged-math E0 parity/likelihood/masks/gradients/resource/resume qualification",
+      "config": "configs/E0_LAPTOP_BF16.json",
+      "maximum_seconds": 1800,
+      "maximum_optimizer_calls": 5,
+      "scope": "Native mechanics; not capability effect"
+    },
+    {
+      "id": "LP3",
+      "depends_on": "LP2",
+      "action": "Reviewed laptop E0 evidence validator, measured native collection and E1 resource/schedule successor",
+      "status": "PENDING_MEASUREMENTS",
+      "stream_data": true,
+      "microbatch": 1,
+      "accumulation": 20,
+      "adapter_only_checkpoints": true,
+      "frozen_CPU_reference_model": false
+    },
+    {
+      "id": "LP4",
+      "depends_on": "LP3",
+      "action": "Sequential baseline/preservation panels, language calibration and separate long-context qualification",
+      "status": "PENDING_SCIENTIFIC_GATES"
+    },
+    {
+      "id": "LP5",
+      "depends_on": "LP4",
+      "action": "E1seed101 then registered DEV decision",
+      "status": "PENDING",
+      "later_seeds": "211/307 only after DEV gate",
+      "CHECK": "CLOSED",
+      "FINAL": "CLOSED"
+    }
+  ],
+  "fallbacks_if_measured_VRAM_failure": [
+    "Separately register and qualify activation checkpointing",
+    "Separately register shorter qualified context without target truncation"
+  ],
+  "concurrency": "One native GPU worker; no CPU-heavy concurrent preparation until measured headroom supports it",
+  "historical_plans_and_receipts": "Preserved; no historical resource-policy receipts relabeled",
+  "goal_scope": "Original verified capability/retention research on one exact Titan0.6B; revised operational route, no weaker scientific success criterion",
+  "e1_authorized": false
+}

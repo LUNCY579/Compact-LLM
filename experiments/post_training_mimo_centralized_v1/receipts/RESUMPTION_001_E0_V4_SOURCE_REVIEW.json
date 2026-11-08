@@ -1,0 +1,19 @@
+{
+  "status": "CONSISTENT_PRELOAD_FAILURE_NO_NATIVE_QUALIFICATION",
+  "recorded_at_utc": "2026-09-29T05:51:38.453494+00:00",
+  "reviewer": "assistant subagent /root/baseline_enrollment; not the implementer; not human review",
+  "code_sha": "62ad48e2ade0ec4b3023e2aef5736bc34c6022d1",
+  "frozen_config_sha256": "8fcab3ce006c9a698af86975769a4076edc78cf8005f64ad823d9d47bcbe518d",
+  "review_scope": [
+    "worker/supervisor/watchdog hashes match committed source",
+    "four-event runtime/preload/failure order and traceback precede model operations",
+    "all eight accounting-v2 operation classes zero, result/cost/resource/failure snapshots agree",
+    "GPU/disk floors satisfied; host RAM7.378871917724609 below7.4 GiB",
+    "no tokenizer/model/trainable/checkpoint receipts",
+    "worker13.86s,supervisor14.547s,exit2/WORKER_NONZERO_EXIT,peakRSS722923520bytes"
+  ],
+  "findings": [],
+  "review_framework_imports": false,
+  "review_file_edits": false,
+  "resumed_blocked_goal_turn_count": 1
+}

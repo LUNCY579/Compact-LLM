@@ -1,0 +1,294 @@
+{
+  "approved": false,
+  "cap_changes": [
+    {
+      "field": "metadata_bytes_upper",
+      "old": 2080374784,
+      "owner": "global",
+      "proposed": 3221225472
+    },
+    {
+      "field": "wall_seconds_upper",
+      "old": 57600,
+      "owner": "global",
+      "proposed": 262144
+    },
+    {
+      "field": "wall_seconds_upper",
+      "old": 3600,
+      "owner": "adam_clipping",
+      "proposed": 8192
+    },
+    {
+      "field": "wall_seconds_upper",
+      "old": 3600,
+      "owner": "checkpoint_resume",
+      "proposed": 65536
+    },
+    {
+      "field": "identity_hash_bytes_upper",
+      "old": 68719476736,
+      "owner": "delta_roundtrip",
+      "proposed": 137438953472
+    },
+    {
+      "field": "wall_seconds_upper",
+      "old": 1800,
+      "owner": "delta_roundtrip",
+      "proposed": 98304
+    },
+    {
+      "field": "wall_seconds_upper",
+      "old": 3600,
+      "owner": "likelihood_gradient_parity",
+      "proposed": 16384
+    },
+    {
+      "field": "wall_seconds_upper",
+      "old": 1800,
+      "owner": "longest_masks",
+      "proposed": 8192
+    },
+    {
+      "field": "metadata_bytes_upper",
+      "old": 134217728,
+      "owner": "resource_io_measurement",
+      "proposed": 268435456
+    },
+    {
+      "field": "wall_seconds_upper",
+      "old": 1800,
+      "owner": "resource_io_measurement",
+      "proposed": 8192
+    }
+  ],
+  "checkpoint_fingerprint_hash_upper": 8589934592,
+  "client_date": "2026-10-05",
+  "data_roles": [
+    "train"
+  ],
+  "delta_guard_basis": {
+    "donor_chunk_guard_calls_upper": 5167,
+    "full_chunk_calls_upper": 3179,
+    "full_names_upper": 312,
+    "full_slots_bytes": 3006530048,
+    "guard_is_not_a_separate_donor_chunk_operation": true,
+    "selected_bytes": 880932864,
+    "selected_chunk_calls_per_pass_upper": 994,
+    "selected_names": 154,
+    "selected_passes": 2
+  },
+  "dispatch_authorized": false,
+  "evaluation_authorized": false,
+  "global_reserved_wall_cap": 262144,
+  "limitations": [
+    "No native qualification pass.",
+    "Full model/checkpoint/OS unit prices remain unmeasured.",
+    "No acquisition, retention, composition, CE6/sham/CE375 or DEV authorization."
+  ],
+  "native_qualified": false,
+  "physical_deadline_seconds": 19200,
+  "physical_optimizer_updates": 6,
+  "pricing_rule": {
+    "kinds": [
+      "input_io",
+      "qualification_artifact_readback",
+      "qualification_reducer_overhead"
+    ],
+    "meaning": "Positive declared file/reducer extents reserved before work, never discounted on return; opaque/incomplete declarations retain maxima; wall ceilings stay fixed.",
+    "rule": "CE8-QUALIFICATION-EXPLICIT-RESERVATIONS-1"
+  },
+  "profile_changes": {
+    "fingerprint": {
+      "old": {
+        "identity_hash_attempts_upper": 528,
+        "identity_hash_bytes_upper": 4294967296,
+        "read_bytes_upper": 0,
+        "wall_s_upper": 30,
+        "write_bytes_upper": 0
+      },
+      "proposed": {
+        "identity_hash_attempts_upper": 528,
+        "identity_hash_bytes_upper": 8589934592,
+        "read_bytes_upper": 0,
+        "wall_s_upper": 30,
+        "write_bytes_upper": 0
+      }
+    },
+    "module_import": {
+      "old": {
+        "identity_hash_attempts_upper": 217,
+        "identity_hash_bytes_upper": 134217728,
+        "read_bytes_upper": 134217728,
+        "wall_s_upper": 30,
+        "write_bytes_upper": 0
+      },
+      "proposed": {
+        "identity_hash_attempts_upper": 219,
+        "identity_hash_bytes_upper": 134217728,
+        "read_bytes_upper": 134217728,
+        "wall_s_upper": 30,
+        "write_bytes_upper": 0
+      }
+    },
+    "qualification_artifact": {
+      "old": {
+        "identity_hash_attempts_upper": 16,
+        "identity_hash_bytes_upper": 67108864,
+        "read_bytes_upper": 8388610,
+        "reducer_work_bytes_upper": 4194304,
+        "wall_s_upper": 5,
+        "write_bytes_upper": 4194304
+      },
+      "proposed": {
+        "identity_hash_attempts_upper": 16,
+        "identity_hash_bytes_upper": 268435456,
+        "read_bytes_upper": 268435458,
+        "reducer_work_bytes_upper": 134217728,
+        "wall_s_upper": 5,
+        "write_bytes_upper": 134217728
+      }
+    }
+  },
+  "proposed_output": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\r-oracle-sft-qualification-20261004\\canonical-attempt14",
+  "qualification_authorized": false,
+  "refs": {
+    "ANCHORS.json": {
+      "bytes": 882,
+      "path": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\r-oracle-sft-qualification-20261004\\attempt14-review-20261005\\registration-draft\\ANCHORS.json",
+      "sha256": "e8a45eadb63bcda947f02ee9642b229a4e4c6b648148606f954060fb5adf473b"
+    },
+    "ATTEMPT_CAPS.json": {
+      "bytes": 3204,
+      "path": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\r-oracle-sft-qualification-20261004\\attempt14-review-20261005\\registration-draft\\ATTEMPT_CAPS.json",
+      "sha256": "12a02ab89a4cdf02818c877d042f77d78119af50594420c2b6b98408874e61b8"
+    },
+    "EVALUATION_SCOPE.json": {
+      "bytes": 298,
+      "path": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\r-oracle-sft-qualification-20261004\\attempt14-review-20261005\\registration-draft\\EVALUATION_SCOPE.json",
+      "sha256": "9352f85bba0c501040164a4140fef1624f3f12fe2fa057c48562cfecc4113ee3"
+    },
+    "EXPECTED_PREPARED_RECEIPT.json": {
+      "bytes": 2186960,
+      "path": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\r-oracle-sft-qualification-20261004\\attempt14-review-20261005\\registration-draft\\EXPECTED_PREPARED_RECEIPT.json",
+      "sha256": "dc1fc45915ed7d6adcda0b169ef4444b1c43ac2c311c5be1418b66ad3457fdab"
+    },
+    "INGESTION_SPEC.json": {
+      "bytes": 942,
+      "path": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\r-oracle-sft-qualification-20261004\\attempt14-review-20261005\\registration-draft\\INGESTION_SPEC.json",
+      "sha256": "dbd3f4ca349e4c4a6eff48491df8aae286533a833d38ed95223802a4fe238f58"
+    },
+    "PACKET_INDEX.json": {
+      "bytes": 5099,
+      "path": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\r-oracle-sft-qualification-20261004\\attempt14-review-20261005\\registration-draft\\PACKET_INDEX.json",
+      "sha256": "10876b4c69fdc54f1421fcb333e8bb2214066ca34812e3af1179d3e5aa07d160"
+    },
+    "RECIPE.json": {
+      "bytes": 8354,
+      "path": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\r-oracle-sft-qualification-20261004\\attempt14-review-20261005\\registration-draft\\RECIPE.json",
+      "sha256": "8ec3aa992bd00714dbd2c30a7ece461fad24ebe147d5e2f4a8f1b944795d2665"
+    },
+    "REGISTRATION_DRAFT.json": {
+      "bytes": 8646,
+      "path": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\r-oracle-sft-qualification-20261004\\attempt14-review-20261005\\registration-draft\\REGISTRATION_DRAFT.json",
+      "sha256": "a18bfa43fbc7f5b45aaa59de7651460aaae5ee34c3eb42e89040bc7b3d5f5cd4"
+    },
+    "REQUEST.json": {
+      "bytes": 4406,
+      "path": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\r-oracle-sft-qualification-20261004\\attempt14-review-20261005\\registration-draft\\REQUEST.json",
+      "sha256": "e13a195f5f47a3f79eb030a30dc0b50041153979e78c7bc96591f84e119c7513"
+    },
+    "RESOURCES.json": {
+      "bytes": 1244,
+      "path": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\r-oracle-sft-qualification-20261004\\attempt14-review-20261005\\registration-draft\\RESOURCES.json",
+      "sha256": "02d62932690aaa814036f2a557716a9b0aa895c58d76d96ced831a790992edfd"
+    },
+    "RUNTIME.json": {
+      "bytes": 1419,
+      "path": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\r-oracle-sft-qualification-20261004\\attempt14-review-20261005\\registration-draft\\RUNTIME.json",
+      "sha256": "3a2a5092a771d94056e656eba946bdf8c1aec2180f113253d12899c284d3c605"
+    },
+    "SCOPE.json": {
+      "bytes": 376471,
+      "path": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\r-oracle-sft-qualification-20261004\\attempt14-review-20261005\\registration-draft\\SCOPE.json",
+      "sha256": "47e0dfa375d55a7a5f71dbc787aa7b326d4594b3f4c3fbaf4df46270fee7d4db"
+    },
+    "SCOPE_AUTHORIZATION.json": {
+      "bytes": 311,
+      "path": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\r-oracle-sft-qualification-20261004\\attempt14-review-20261005\\registration-draft\\SCOPE_AUTHORIZATION.json",
+      "sha256": "f792c20ea28b778cce81415ef0d2e2f464e90ae3c97a164b920eb5424393cd6f"
+    },
+    "SERVICE_SPEC.json": {
+      "bytes": 42893,
+      "path": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\r-oracle-sft-qualification-20261004\\attempt14-review-20261005\\registration-draft\\SERVICE_SPEC.json",
+      "sha256": "17084c44c976ef29d647d6031e5d40075b92796de977a5ec1405bb09aaec1a27"
+    },
+    "SOURCE_REVALIDATION.json": {
+      "bytes": 6582,
+      "path": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\r-oracle-sft-qualification-20261004\\attempt14-review-20261005\\registration-draft\\SOURCE_REVALIDATION.json",
+      "sha256": "066a1fc090c376d5054df9979873ffa4586359e31755624572928148eea46fe1"
+    },
+    "SOURCE_SNAPSHOT.json": {
+      "bytes": 90133,
+      "path": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\r-oracle-sft-qualification-20261004\\attempt14-review-20261005\\registration-draft\\SOURCE_SNAPSHOT.json",
+      "sha256": "52de76b50fa2215ea712761d16c0a3d4b80774866dd40127a218ac528fea69e2"
+    }
+  },
+  "reservation_guard_counts_upper": {
+    "adam_clipping": 128,
+    "checkpoint_each_child": 512,
+    "checkpoint_parent": 128,
+    "delta_roundtrip": 6144,
+    "likelihood_gradient_parity": 512,
+    "longest_masks": 384,
+    "resource_io_measurement": 32,
+    "runtime_anchor": 32
+  },
+  "resource_json": {
+    "all_samples_and_operations_retained": true,
+    "numeric_json_bytes_unchanged": 4194304,
+    "old_bytes": 4194304,
+    "proposed_bytes": 134217728
+  },
+  "routing_corrections": [
+    "Outer reservations retain original service owner during Q stages.",
+    "Finish-stage hashes use bounded readback accounting for large raw tensors."
+  ],
+  "schema": "CE8-COMPOSED-QUALIFICATION-AMENDMENT-DRAFT-1",
+  "source_checkout": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-comp-rs-s1-dev-20260930",
+  "source_head": "17eac0d4a051270aa4729f3fedac5f9c5c2ef4ff",
+  "sum_stage_wall_caps": 246200,
+  "tests": {
+    "combined_tests_passed": 108,
+    "final_budget_tests_passed": 3,
+    "fixture_evidence_only": true,
+    "framework_imports": [],
+    "native_models": 0,
+    "native_optimizer_updates": 0
+  },
+  "three_checkpoint_file_passes_upper": 8129722368,
+  "training_authorized": false,
+  "transient_host_bytes": {
+    "qualification_artifact": {
+      "old": 67108864,
+      "proposed": 536870912
+    },
+    "resource_io_measurement": {
+      "old": 67108864,
+      "proposed": 536870912
+    }
+  },
+  "unchanged": [
+    "recipe",
+    "base and deployed warm anchor",
+    "launch and ongoing baseline floors",
+    "allocator fraction",
+    "worker memory ceiling",
+    "disk limits",
+    "physical deadline",
+    "six updates",
+    "DEV sealed"
+  ],
+  "wall_cap_meaning": "Overlapping nested reservation ceilings; not ETA. Hard physical deadline unchanged.",
+  "weights": "discarded mechanics only"
+}

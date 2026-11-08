@@ -1,0 +1,53 @@
+{
+  "branch": "research/rineya-id-balancing-skill-routing-v1",
+  "cpu_matrix": {
+    "base_unchanged_in_all_tiny_runs": true,
+    "controller_reference_methods": 5,
+    "matrix_optimizer_steps": 300,
+    "optimizer_steps_per_run": 20,
+    "repeat_json_bytes_identical": true,
+    "repeat_output_files": 19,
+    "routing_arms": 8,
+    "tiny_training_runs": 15,
+    "tiny_training_seeds": [
+      0,
+      1,
+      2
+    ]
+  },
+  "date_utc": "2026-10-09",
+  "environment": {
+    "cuda_available": false,
+    "numpy": "2.3.5",
+    "platform": "Linux",
+    "pytest": "9.0.2",
+    "python": "3.13.5",
+    "torch": "2.10.0+cpu"
+  },
+  "evidence_limit": "Tiny optimization and generators are synthetic mechanics, not LLM or world-model capability evidence.",
+  "experiment": "IDR-001",
+  "native": {
+    "CUDA_training": false,
+    "PEFT_switching_qualified": false,
+    "Rineya_weights_loaded": false,
+    "Windows_host_qualified": false,
+    "executed": false,
+    "qualified": false
+  },
+  "parent_commit": "b0ca54bdc1b69e2b19d7baeca2e3fdde3ff0a7b2",
+  "remaining": [
+    "Local artifact custody and compatible FP32 native loader parity.",
+    "Qualified expert matrix and independently calibrated input-only quality predictions.",
+    "Native matched-budget multi-seed OOD, retention and external-verifier evaluations.",
+    "Actual repeated end-to-end hardware timing and resource-lock integration."
+  ],
+  "repository": "LUNCY579/ChatBubble",
+  "schema": 1,
+  "status": "IMPLEMENTED_CPU_TESTED_NATIVE_UNQUALIFIED",
+  "tests": {
+    "failed": 0,
+    "passed": 158,
+    "scope": "this experiment only",
+    "skipped": 0
+  }
+}

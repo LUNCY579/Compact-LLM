@@ -1,0 +1,1230 @@
+{
+  "availability": {
+    "ordinary": "input-only before extra block; exactK0/unit statistics parity",
+    "postextra": "unit proposal already computed; cannot claim a free pre-extra K decision",
+    "readouts": "actual unchanged full-suffix UNKNOWN/all-other-row head logits; first prefix only"
+  },
+  "bindings": [
+    {
+      "path": "analyses\\prefix-probe-001\\REPORT.json",
+      "sha256": "6bf9dd67f2f6f2b4a5bcaec0738b84058212cd28883ecda237a309532fd930c7"
+    },
+    {
+      "path": "analyses\\prefix-probe-001\\MANIFEST.json",
+      "sha256": "689984805ef8e6b54b8a4de0c8b9c00de36bb361cc5f846e0760ea8326ba0b2a"
+    },
+    {
+      "path": "analyses\\prefix-probe-001\\receipt.json",
+      "sha256": "e36a65fe4291e802d85b47c054db1f29e8cc2aec50203474cd727bc714bc4304"
+    },
+    {
+      "path": "runs\\native-prefix-probe-001\\terminal_receipt.json",
+      "sha256": "ef292863a3c6050175fac115715546cc542343023c430ccaed5ed2699f493f48"
+    },
+    {
+      "path": "runs\\native-prefix-probe-001\\result\\receipt.json",
+      "sha256": "b0d2dede48274ca7f4e7a4e5969aa4ab6bc3f230648f27b3c0c79695a1b78817"
+    },
+    {
+      "path": "probe_analysis.py",
+      "sha256": "2d6c8e598df0a0caab29875ff95cecfb6b7eef1e8eff595efabb3322ebf70a27"
+    },
+    {
+      "path": "PROBE_ANALYSIS_PLAN_001.md",
+      "sha256": "b98df0ca083cdb182f7b807c665450b261fb080267d13d826472a7f0e9742dd8"
+    }
+  ],
+  "controlling_report_sha256": "6bf9dd67f2f6f2b4a5bcaec0738b84058212cd28883ecda237a309532fd930c7",
+  "controls_required": [
+    {
+      "arms": [
+        "always K0 intact",
+        "always K1 unit"
+      ],
+      "name": "Fixed action controls",
+      "purpose": "Quality and retention references; preservation is checked against both, not assumed."
+    },
+    {
+      "arms": [
+        "conventional low-confidence/high-entropy -> recurrence cue",
+        "uninverted magnitude/alignment cue using identical features and capacity",
+        "UNKNOWN-margin-only cue if H4 adds another cue"
+      ],
+      "name": "Matched cue controls",
+      "purpose": "Determine whether opposed orientation adds value beyond familiar confidence or update-size routing; no threshold chosen here."
+    },
+    {
+      "arms": [
+        "seeded input-independent K0/K1 choices with matched empirical action frequency and timing envelope"
+      ],
+      "name": "Matched random routing",
+      "purpose": "Do not attribute action-frequency or pilot overhead effects to feature intelligence. Seeds/frequencies/folds are frozen prospectively; random realizations are averaged within cases."
+    },
+    {
+      "arms": [
+        "strong actual-query evidence/consistency or program/arithmetic comparator, evaluated separately"
+      ],
+      "name": "Ordinary/stateless grounding or execution comparator",
+      "purpose": "Avoid attributing template/source shortcuts or weak-model baseline failures to a recurrent gate."
+    }
+  ],
+  "counterexamples": [
+    {
+      "actual_firstprefix_features": {
+        "K0.UNKNOWN_minus_rival_margin": -7.314949989318848,
+        "K0.entropy_nats": 2.2577357292175293,
+        "K0.top1_probability": 0.22789964079856873,
+        "K0.top2_margin": 0.39731597900390625,
+        "ordinary.delta_over_old_l2": 0.45841277774182204,
+        "ordinary.state_cosine": 0.9287466808594889,
+        "postextra.delta_cosine_previous": 0.6765965833820168,
+        "postextra.delta_over_previous_l2": 0.8976386934114068,
+        "unit.UNKNOWN_minus_rival_margin": -7.3892364501953125,
+        "unit.entropy_nats": 2.203960418701172,
+        "unit.top1_probability": 0.35581475496292114,
+        "unit.top2_margin": 1.102457046508789,
+        "unit_minus_K0.UNKNOWN_margin": -0.07428646087646484
+      },
+      "case_id_for_audit_only": "BULK-TAPS-001:9463250d48f1:program_state:1:v1",
+      "family_for_offline_stratification_only": "program_state",
+      "old_generated_correctness_group": "A0_only",
+      "parent_id_for_audit_only": "BULK-TAPS-001:9463250d48f1:program_state:1",
+      "scope": "Actual new first-prefix telemetry joined to already-measured old generation; no new guarded generation or choice was scored."
+    },
+    {
+      "actual_firstprefix_features": {
+        "K0.UNKNOWN_minus_rival_margin": -4.275455474853516,
+        "K0.entropy_nats": 0.7635784149169922,
+        "K0.top1_probability": 0.5637081265449524,
+        "K0.top2_margin": 0.2848968505859375,
+        "ordinary.delta_over_old_l2": 0.4961323870893667,
+        "ordinary.state_cosine": 0.9196939293387159,
+        "postextra.delta_cosine_previous": 0.6835892087154248,
+        "postextra.delta_over_previous_l2": 0.8113499414681941,
+        "unit.UNKNOWN_minus_rival_margin": -4.455148696899414,
+        "unit.entropy_nats": 0.7247639298439026,
+        "unit.top1_probability": 0.623354971408844,
+        "unit.top2_margin": 0.5306110382080078,
+        "unit_minus_K0.UNKNOWN_margin": -0.17969322204589844
+      },
+      "case_id_for_audit_only": "BULK-TAPS-001:9463250d48f1:deduction_composition:11:v0",
+      "family_for_offline_stratification_only": "deduction_composition",
+      "old_generated_correctness_group": "A0_only",
+      "parent_id_for_audit_only": "BULK-TAPS-001:9463250d48f1:deduction_composition:11",
+      "scope": "Actual new first-prefix telemetry joined to already-measured old generation; no new guarded generation or choice was scored."
+    },
+    {
+      "actual_firstprefix_features": {
+        "K0.UNKNOWN_minus_rival_margin": 10.162712097167969,
+        "K0.entropy_nats": 0.001049728482030332,
+        "K0.top1_probability": 0.999920129776001,
+        "K0.top2_margin": 10.162712097167969,
+        "ordinary.delta_over_old_l2": 0.46562754193840256,
+        "ordinary.state_cosine": 0.9321471107211375,
+        "postextra.delta_cosine_previous": 0.6965590887904004,
+        "postextra.delta_over_previous_l2": 0.8915898912212188,
+        "unit.UNKNOWN_minus_rival_margin": 9.778160095214844,
+        "unit.entropy_nats": 0.0013181694084778428,
+        "unit.top1_probability": 0.9998950958251953,
+        "unit.top2_margin": 9.778160095214844,
+        "unit_minus_K0.UNKNOWN_margin": -0.384552001953125
+      },
+      "case_id_for_audit_only": "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:9:v0",
+      "family_for_offline_stratification_only": "document_retrieval_reconciliation",
+      "old_generated_correctness_group": "both_wrong",
+      "parent_id_for_audit_only": "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:9",
+      "scope": "Actual new first-prefix telemetry joined to already-measured old generation; no new guarded generation or choice was scored."
+    },
+    {
+      "actual_firstprefix_features": {
+        "K0.UNKNOWN_minus_rival_margin": 1.6053695678710938,
+        "K0.entropy_nats": 0.8523309230804443,
+        "K0.top1_probability": 0.7475496530532837,
+        "K0.top2_margin": 1.6053695678710938,
+        "ordinary.delta_over_old_l2": 0.48454332750941465,
+        "ordinary.state_cosine": 0.9263514519239442,
+        "postextra.delta_cosine_previous": 0.695118718459725,
+        "postextra.delta_over_previous_l2": 0.8238433442193066,
+        "unit.UNKNOWN_minus_rival_margin": -2.3674793243408203,
+        "unit.entropy_nats": 1.179240345954895,
+        "unit.top1_probability": 0.4892612397670746,
+        "unit.top2_margin": 0.2466564178466797,
+        "unit_minus_K0.UNKNOWN_margin": -3.972848892211914
+      },
+      "case_id_for_audit_only": "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:7:v1",
+      "family_for_offline_stratification_only": "document_retrieval_reconciliation",
+      "old_generated_correctness_group": "A0_only",
+      "parent_id_for_audit_only": "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:7",
+      "scope": "Actual new first-prefix telemetry joined to already-measured old generation; no new guarded generation or choice was scored."
+    }
+  ],
+  "created_utc": "2026-10-06T01:20:49.682708+00:00",
+  "errors": [],
+  "family_descriptive_fragility": {
+    "answerability_source_conflict": {
+      "cases": 32,
+      "old_groups": {
+        "A0_only": 0,
+        "both_correct": 16,
+        "both_wrong": 15,
+        "unit_only": 1
+      },
+      "parents": 16,
+      "selected_actual_feature_distributions": {
+        "K0.entropy_nats": {
+          "known_records": 32,
+          "max": 0.3635476529598236,
+          "mean": 0.04537518120196182,
+          "min": 0.0010666174348443747,
+          "null_records": 0,
+          "records": 32
+        },
+        "K0.top1_probability": {
+          "known_records": 32,
+          "max": 0.9999182224273682,
+          "mean": 0.9919309765100479,
+          "min": 0.923285961151123,
+          "null_records": 0,
+          "records": 32
+        },
+        "ordinary.delta_over_old_l2": {
+          "known_records": 32,
+          "max": 0.4961591910329729,
+          "mean": 0.4780118046789877,
+          "min": 0.45937286333926863,
+          "null_records": 0,
+          "records": 32
+        },
+        "postextra.delta_cosine_previous": {
+          "known_records": 32,
+          "max": 0.7160112331918503,
+          "mean": 0.6912357075118517,
+          "min": 0.6655460220317019,
+          "null_records": 0,
+          "records": 32
+        },
+        "postextra.delta_over_previous_l2": {
+          "known_records": 32,
+          "max": 0.8871201318052598,
+          "mean": 0.8423904256889904,
+          "min": 0.7825079542211678,
+          "null_records": 0,
+          "records": 32
+        },
+        "unit_minus_K0.UNKNOWN_margin": {
+          "known_records": 32,
+          "max": -0.26197052001953125,
+          "mean": -2.732065439224243,
+          "min": -4.214214324951172,
+          "null_records": 0,
+          "records": 32
+        }
+      }
+    },
+    "deduction_composition": {
+      "cases": 32,
+      "old_groups": {
+        "A0_only": 3,
+        "both_correct": 10,
+        "both_wrong": 12,
+        "unit_only": 7
+      },
+      "parents": 16,
+      "selected_actual_feature_distributions": {
+        "K0.entropy_nats": {
+          "known_records": 32,
+          "max": 0.788573682308197,
+          "mean": 0.7230406859889627,
+          "min": 0.48828503489494324,
+          "null_records": 0,
+          "records": 32
+        },
+        "K0.top1_probability": {
+          "known_records": 32,
+          "max": 0.832084596157074,
+          "mean": 0.6133207436650991,
+          "min": 0.49670863151550293,
+          "null_records": 0,
+          "records": 32
+        },
+        "ordinary.delta_over_old_l2": {
+          "known_records": 32,
+          "max": 0.5402197197115837,
+          "mean": 0.5072109202253133,
+          "min": 0.4790519273697433,
+          "null_records": 0,
+          "records": 32
+        },
+        "postextra.delta_cosine_previous": {
+          "known_records": 32,
+          "max": 0.6913275529573657,
+          "mean": 0.6687751614809635,
+          "min": 0.6247028890687472,
+          "null_records": 0,
+          "records": 32
+        },
+        "postextra.delta_over_previous_l2": {
+          "known_records": 32,
+          "max": 0.8229273694960403,
+          "mean": 0.7965396575138991,
+          "min": 0.7631534140807307,
+          "null_records": 0,
+          "records": 32
+        },
+        "unit_minus_K0.UNKNOWN_margin": {
+          "known_records": 32,
+          "max": 0.24669265747070312,
+          "mean": -0.34514176845550537,
+          "min": -1.6789417266845703,
+          "null_records": 0,
+          "records": 32
+        }
+      }
+    },
+    "dialogue_memory": {
+      "cases": 32,
+      "old_groups": {
+        "A0_only": 0,
+        "both_correct": 16,
+        "both_wrong": 14,
+        "unit_only": 2
+      },
+      "parents": 16,
+      "selected_actual_feature_distributions": {
+        "K0.entropy_nats": {
+          "known_records": 32,
+          "max": 1.4706288576126099,
+          "mean": 0.16619366683880799,
+          "min": 0.008901662193238735,
+          "null_records": 0,
+          "records": 32
+        },
+        "K0.top1_probability": {
+          "known_records": 32,
+          "max": 0.9991928339004517,
+          "mean": 0.9631964433938265,
+          "min": 0.5136930346488953,
+          "null_records": 0,
+          "records": 32
+        },
+        "ordinary.delta_over_old_l2": {
+          "known_records": 32,
+          "max": 0.5403417756055623,
+          "mean": 0.5077454838486434,
+          "min": 0.4785903983186092,
+          "null_records": 0,
+          "records": 32
+        },
+        "postextra.delta_cosine_previous": {
+          "known_records": 32,
+          "max": 0.6370093960682703,
+          "mean": 0.6004122986223054,
+          "min": 0.5705500306588347,
+          "null_records": 0,
+          "records": 32
+        },
+        "postextra.delta_over_previous_l2": {
+          "known_records": 32,
+          "max": 0.7688663787668574,
+          "mean": 0.7189750812206922,
+          "min": 0.6682494522947228,
+          "null_records": 0,
+          "records": 32
+        },
+        "unit_minus_K0.UNKNOWN_margin": {
+          "known_records": 32,
+          "max": 1.4008255004882812,
+          "mean": -2.2492858171463013,
+          "min": -5.293519973754883,
+          "null_records": 0,
+          "records": 32
+        }
+      }
+    },
+    "document_retrieval_reconciliation": {
+      "cases": 32,
+      "old_groups": {
+        "A0_only": 1,
+        "both_correct": 15,
+        "both_wrong": 15,
+        "unit_only": 1
+      },
+      "parents": 16,
+      "selected_actual_feature_distributions": {
+        "K0.entropy_nats": {
+          "known_records": 32,
+          "max": 0.8523309230804443,
+          "mean": 0.07789381442489685,
+          "min": 0.001049728482030332,
+          "null_records": 0,
+          "records": 32
+        },
+        "K0.top1_probability": {
+          "known_records": 32,
+          "max": 0.999920129776001,
+          "mean": 0.9828251674771309,
+          "min": 0.7475496530532837,
+          "null_records": 0,
+          "records": 32
+        },
+        "ordinary.delta_over_old_l2": {
+          "known_records": 32,
+          "max": 0.501111801837524,
+          "mean": 0.47851395876851077,
+          "min": 0.4604327318209452,
+          "null_records": 0,
+          "records": 32
+        },
+        "postextra.delta_cosine_previous": {
+          "known_records": 32,
+          "max": 0.7098550739262968,
+          "mean": 0.6903868284713988,
+          "min": 0.6712332436190814,
+          "null_records": 0,
+          "records": 32
+        },
+        "postextra.delta_over_previous_l2": {
+          "known_records": 32,
+          "max": 0.8915898912212188,
+          "mean": 0.8423062036301757,
+          "min": 0.7947674400906027,
+          "null_records": 0,
+          "records": 32
+        },
+        "unit_minus_K0.UNKNOWN_margin": {
+          "known_records": 32,
+          "max": -0.3703575134277344,
+          "mean": -2.632649064064026,
+          "min": -5.355169296264648,
+          "null_records": 0,
+          "records": 32
+        }
+      }
+    },
+    "program_state": {
+      "cases": 32,
+      "old_groups": {
+        "A0_only": 2,
+        "both_correct": 0,
+        "both_wrong": 29,
+        "unit_only": 1
+      },
+      "parents": 16,
+      "selected_actual_feature_distributions": {
+        "K0.entropy_nats": {
+          "known_records": 32,
+          "max": 2.2577357292175293,
+          "mean": 2.0097155421972275,
+          "min": 1.326377272605896,
+          "null_records": 0,
+          "records": 32
+        },
+        "K0.top1_probability": {
+          "known_records": 32,
+          "max": 0.688352644443512,
+          "mean": 0.3475662861019373,
+          "min": 0.21945828199386597,
+          "null_records": 0,
+          "records": 32
+        },
+        "ordinary.delta_over_old_l2": {
+          "known_records": 32,
+          "max": 0.4995295713987598,
+          "mean": 0.4698128904943637,
+          "min": 0.454399330636889,
+          "null_records": 0,
+          "records": 32
+        },
+        "postextra.delta_cosine_previous": {
+          "known_records": 32,
+          "max": 0.6765965833820168,
+          "mean": 0.6434300364689644,
+          "min": 0.6167826592088058,
+          "null_records": 0,
+          "records": 32
+        },
+        "postextra.delta_over_previous_l2": {
+          "known_records": 32,
+          "max": 0.8976386934114068,
+          "mean": 0.8556440450565392,
+          "min": 0.7971552563956016,
+          "null_records": 0,
+          "records": 32
+        },
+        "unit_minus_K0.UNKNOWN_margin": {
+          "known_records": 32,
+          "max": 0.6847972869873047,
+          "mean": -0.3485976755619049,
+          "min": -1.3230295181274414,
+          "null_records": 0,
+          "records": 32
+        }
+      }
+    },
+    "signed_ledgers": {
+      "cases": 32,
+      "old_groups": {
+        "A0_only": 0,
+        "both_correct": 0,
+        "both_wrong": 32,
+        "unit_only": 0
+      },
+      "parents": 16,
+      "selected_actual_feature_distributions": {
+        "K0.entropy_nats": {
+          "known_records": 32,
+          "max": 2.5521585941314697,
+          "mean": 2.119360029697418,
+          "min": 0.8830981254577637,
+          "null_records": 0,
+          "records": 32
+        },
+        "K0.top1_probability": {
+          "known_records": 32,
+          "max": 0.8441951274871826,
+          "mean": 0.4091625460423529,
+          "min": 0.187927708029747,
+          "null_records": 0,
+          "records": 32
+        },
+        "ordinary.delta_over_old_l2": {
+          "known_records": 32,
+          "max": 0.49294921356010424,
+          "mean": 0.47885279565093936,
+          "min": 0.45548836710580554,
+          "null_records": 0,
+          "records": 32
+        },
+        "postextra.delta_cosine_previous": {
+          "known_records": 32,
+          "max": 0.6832432515641605,
+          "mean": 0.6569987796237335,
+          "min": 0.6300905549240251,
+          "null_records": 0,
+          "records": 32
+        },
+        "postextra.delta_over_previous_l2": {
+          "known_records": 32,
+          "max": 0.8739014004441742,
+          "mean": 0.8031513421783799,
+          "min": 0.7614918377673031,
+          "null_records": 0,
+          "records": 32
+        },
+        "unit_minus_K0.UNKNOWN_margin": {
+          "known_records": 32,
+          "max": 0.6508035659790039,
+          "mean": -0.837925910949707,
+          "min": -2.159547805786133,
+          "null_records": 0,
+          "records": 32
+        }
+      }
+    }
+  },
+  "feature_overlap": {
+    "A0_only_vs_unit_only_ranges_overlap": 38,
+    "inference": "No single scalar monotone zero-error separation of the loss/gain groups is established; multivariate/nonmonotone possibility is not ruled out.",
+    "ordinary_previous_null_fields": 5,
+    "populated_scalar_ranges": 38
+  },
+  "fitting_or_candidate_scoring": false,
+  "five_unmeasured_candidate_families": [
+    {
+      "allowed_feature_family": [
+        "K0.entropy_nats",
+        "K0.top1_probability",
+        "K0.top2_margin"
+      ],
+      "availability_cost": "Requires intact full-suffix head pilot; cannot be computed from ordinary L12-L13 d0 alone. Qualify and charge the pilot/suffix replay/storage and any selected-branch recomputation.",
+      "counterexample_limit": "All ranges overlap; program/ledger templates are inherently high-entropy and mostly wrong in both arms. Confidence.999920 occurs in a both-wrong document case.",
+      "hypothesis": "Protect an uncertain/fragile intact result rather than automatically giving uncertainty more recurrence. Freeze a small low-complexity gate and its orientation before fitting, if fitting is admitted.",
+      "id": "H1",
+      "name": "Opposed baseline-uncertainty protection",
+      "priority": "Head cue worth preregistered test; not certified",
+      "support": "Old unit-loss cases have higher mean K0 entropy1.205 vs0.716 for unit gains, and lower mean p0.536 vs0.677."
+    },
+    {
+      "allowed_feature_family": [
+        "unit.top1_probability minus K0.top1_probability",
+        "unit.entropy_nats minus K0.entropy_nats",
+        "unit.top2_margin minus K0.top2_margin"
+      ],
+      "availability_cost": "Needs both intact and unit full-suffix readouts; proposal and both head pilots are already computed before the comparison. Preserve the actual FP32 probabilities; no reconstruction from separate LSE.",
+      "counterexample_limit": "Probability and top2 rise in4/12 old unit gains too;49/117 both-wrong cases gain confidence. No choice rule is measured or selected here.",
+      "hypothesis": "A unit proposal sharpening its own first-token distribution may be a harmful move; preregister a bounded change-based gate instead of always selecting the more confident arm.",
+      "id": "H2",
+      "name": "Confidence-change veto, opposed to confidence maximization",
+      "priority": "Useful falsifiable control against a common but unsupported heuristic",
+      "support": "First-token probability/top2 margin rise in4/6 old unit losses, with entropy falling in4/6."
+    },
+    {
+      "allowed_feature_family": [
+        "postextra.delta_cosine_previous",
+        "postextra.delta_over_previous_l2",
+        "postextra.delta_over_old_l2"
+      ],
+      "availability_cost": "d1 exists only after an extra whole block was computed. A veto can discard the proposal for quality, but it does not avoid that block cost. Any rollback/selective suffix execution needs its own qualification.",
+      "counterexample_limit": "All192 cosine signs are positive and all192 d1/d0 ratios are below1. Loss/gain ranges overlap; both-wrong ratio mean.817 resembles loss mean.824. Family geometry shifts strongly.",
+      "hypothesis": "Greater d1/d0 alignment or a larger proposal may justify keeping the original state, opposite to interpreting coherent motion as progress. Preregister one small feature set and gate complexity.",
+      "id": "H3",
+      "name": "Inverse proposal-alignment or relative-magnitude gate",
+      "priority": "Mechanistic opposite-direction hypothesis; weaker than a quality certificate",
+      "support": "Mean cosine is.676 for intact-only vs.654 for unit-only; d1/d0 ratio means.824 vs.796."
+    },
+    {
+      "allowed_feature_family": [
+        "K0.UNKNOWN_minus_rival_margin",
+        "unit.UNKNOWN_minus_rival_margin",
+        "unit_minus_K0.UNKNOWN_margin"
+      ],
+      "availability_cost": "Both actual full-suffix head pilots required; include all head rows in the rival set and charge branch/proposal/statistics overhead.",
+      "counterexample_limit": "The same positive-to-negative crossing occurs in1/6 losses,4/12 gains and2/117 both-wrong cases. A blanket crossing veto would oppose useful answer recoveries as well. UNKNOWN margin decreases168/192 across all groups.",
+      "hypothesis": "Use actual fixed-head margins to test whether a proposal crossing away from UNKNOWN should be rejected under an additional preregistered input-only cue. Never read logged answerability/source status.",
+      "id": "H4",
+      "name": "UNKNOWN-margin crossing guard with explicit preservation tradeoff",
+      "priority": "Narrow abstention hypothesis; not a general reasoning gate",
+      "support": "The document-CONFLICT intact-only case has margin+1.605 ->-2.367, an observed sharp suppression of the canonical abstention option."
+    },
+    {
+      "allowed_feature_family": [
+        "ordinary.delta_over_old_l2",
+        "ordinary.state_cosine"
+      ],
+      "availability_cost": "Available before the extra block; observational scalar reductions still cost time. It can gate extra computation without a head pilot only if it uses these pre-extra measurements alone.",
+      "counterexample_limit": "Ranges overlap.46085-.50426; the feature is unsigned and family-dependent, not an observed helpful direction. No zero-error scalar monotone separation is established.",
+      "hypothesis": "Test a small normalized d0 gate with preregistered opposing orientation rather than the original always-positive coherence sign.",
+      "id": "H5",
+      "name": "Cheap ordinary-displacement gate",
+      "priority": "Lower-priority pre-extra cue/ablation",
+      "support": "d0 relative displacement mean.485 for intact-only vs.496 for unit-only, with exact K0/unit ordinary statistics parity."
+    }
+  ],
+  "group_sign_counts": {
+    "A0_only": {
+      "UNKNOWN_positive_to_negative": 1,
+      "cases": 6,
+      "parents": 6,
+      "postextra_delta_cosine_positive": 6,
+      "postextra_delta_ratio_below_one": 6,
+      "unit_UNKNOWN_margin_decreases": 5,
+      "unit_UNKNOWN_margin_increases": 1,
+      "unit_entropy_decreases": 4,
+      "unit_top1_probability_increases": 4,
+      "unit_top2_margin_increases": 4
+    },
+    "both_correct": {
+      "UNKNOWN_positive_to_negative": 0,
+      "cases": 57,
+      "parents": 41,
+      "postextra_delta_cosine_positive": 57,
+      "postextra_delta_ratio_below_one": 57,
+      "unit_UNKNOWN_margin_decreases": 51,
+      "unit_UNKNOWN_margin_increases": 6,
+      "unit_entropy_decreases": 9,
+      "unit_top1_probability_increases": 8,
+      "unit_top2_margin_increases": 8
+    },
+    "both_wrong": {
+      "UNKNOWN_positive_to_negative": 2,
+      "cases": 117,
+      "parents": 71,
+      "postextra_delta_cosine_positive": 117,
+      "postextra_delta_ratio_below_one": 117,
+      "unit_UNKNOWN_margin_decreases": 103,
+      "unit_UNKNOWN_margin_increases": 14,
+      "unit_entropy_decreases": 56,
+      "unit_top1_probability_increases": 49,
+      "unit_top2_margin_increases": 44
+    },
+    "unit_only": {
+      "UNKNOWN_positive_to_negative": 4,
+      "cases": 12,
+      "parents": 11,
+      "postextra_delta_cosine_positive": 12,
+      "postextra_delta_ratio_below_one": 12,
+      "unit_UNKNOWN_margin_decreases": 9,
+      "unit_UNKNOWN_margin_increases": 3,
+      "unit_entropy_decreases": 6,
+      "unit_top1_probability_increases": 4,
+      "unit_top2_margin_increases": 4
+    }
+  },
+  "limitations": [
+    "All counts/ranges/signs use only current declared REPORT tables; no broad history scan or new raw arithmetic/source audit.",
+    "Logging counterexample IDs and families identify evidence; they are forbidden routing inputs.",
+    "Only six old losses constrain preservation, spread across three families; means are vulnerable to family/length/template confounds.",
+    "First-prefix confidence is not full-response correctness or semantic abstention. A high-confidence wrong first-prefix distribution cannot certify task correctness.",
+    "Every scalar range overlaps; positive alignment and proposal shrinkage signs are constant on all192 cases. Telemetry does not fulfill the active deterministic-quality-gain objective."
+  ],
+  "mechanical_counts": {
+    "API_attempts": 451,
+    "completed_forwards": 448,
+    "completed_prefix_positions": 54137,
+    "partial_compute_positions": null,
+    "task_features": 576,
+    "task_readouts": 384
+  },
+  "model_calls_by_author_for_this_analysis": 0,
+  "next_registration_measurement_conditions": [
+    "Goal endpoint is actual guarded generated correctness plus preservation, not telemetry separability. This receipt names five hypothesis families and selects no threshold, fitted model, controller implementation or scored candidate.",
+    "If next-stage offline gate fitting is admitted, freeze features, algorithm/complexity, objective, orientation domain, fitting split, parent-group folds, action-frequency/cost controls and revision accounting first. At most one frozen implementation per family; every extra orientation/parameter change consumes the shared <=6 revision budget. Keep Rineya parameters/readout/operator unchanged.",
+    "Use parent groups as offline split units, never as model inputs; never provide gold, case/parent IDs, family/category/split/answerability/source-status metadata, teacher tokens or local loss/gradient/derivative as online routing features.",
+    "Measure actual own-trajectory generation under each admitted gate and intact/unit controls. Specify whether the input-prefix decision stays fixed through the answer; this probe cannot validate a per-prefix schedule on later generated tokens. Record strict per-case gains/losses, parent retention, UNKNOWN/format/EOS separately and full source/state/cost evidence.",
+    "Qualify and charge a baseline-head pilot, the post-extra proposal, full-suffix readouts/replay/storage, gate/statistics and selected branch. Postextra d1 is not a free pre-extra signal. Matched controls must pay the same pilot overhead or report it separately.",
+    "Use genuinely unexposed approved source/author/generator holdouts with paired worlds kept together and changed query roles, wording, record order, arithmetic/program semantics and evidence conflicts. Internal parent/family holdout on these exposed192 cases is exploratory fragility testing only. Old96 VAL is exposed and cannot provide confirmation for newly chosen rules.",
+    "Report family sensitivity and first-token/full-answer disagreement, retain every failed or harmful case, and keep calibrated/readout comparison precision limits explicit. Cross-kernel probability/LSE discrepancies remain UNVERIFIED; actual observed softmax probabilities may be features, reconstructed equality is not a gate.",
+    "CPU local canonical-target derivative auxiliary join remains deferred. No teacher/loss quantity or scale-direction association is imported into these online proposals. Any future fitting/native generation is a separately registered measurement, not authorization or a gain demonstrated by this probe."
+  ],
+  "parent_charged_native_probe_seconds": 109.01468509999995,
+  "population": "All192 exposedDEV cases/96 relatedparents/six shared authoredfamilies; no new validation measured.",
+  "quality_or_preservation_gain_demonstrated": null,
+  "retrospective_headroom_reference": {
+    "both_wrong_unchanged_by_any_K0_K1_selector": 117,
+    "oldDEV_A0": 63,
+    "oldDEV_K0_K1_gold_selector_ceiling": 75,
+    "oldDEV_unit": 69,
+    "recoverable_unit_losses": 6,
+    "scope": "Old generation labels from the declared report; no candidate selector was evaluated. Constant-grid oracle is a different action set.",
+    "unit_only_gains": 12
+  },
+  "role": "Author of the probe analyzer and fixtures; this is author interpretation of its accepted actual tables, not independent native/source/result acceptance.",
+  "schema": "v3-probe-pattern-findings-001",
+  "selected_actual_ranges": {
+    "K0.UNKNOWN_minus_rival_margin": {
+      "A0_only": {
+        "known_records": 6,
+        "max": 1.6053695678710938,
+        "mean": -4.303061803181966,
+        "min": -7.314949989318848,
+        "null_records": 0,
+        "records": 6
+      },
+      "A0_only_vs_unit_only_overlap": {
+        "available": true,
+        "classification_claim": false,
+        "range_intersection_max": 1.6053695678710938,
+        "range_intersection_min": -4.995811462402344,
+        "ranges_overlap": true
+      },
+      "both_correct": {
+        "known_records": 57,
+        "max": 10.81845474243164,
+        "mean": 4.446626863981548,
+        "min": -5.599399566650391,
+        "null_records": 0,
+        "records": 57
+      },
+      "both_wrong": {
+        "known_records": 117,
+        "max": 10.37852668762207,
+        "mean": -1.4256220678997855,
+        "min": -9.300970077514648,
+        "null_records": 0,
+        "records": 117
+      },
+      "unit_only": {
+        "known_records": 12,
+        "max": 4.137948989868164,
+        "mean": -1.9061563809712727,
+        "min": -4.995811462402344,
+        "null_records": 0,
+        "records": 12
+      }
+    },
+    "K0.entropy_nats": {
+      "A0_only": {
+        "known_records": 6,
+        "max": 2.2577357292175293,
+        "mean": 1.204754630724589,
+        "min": 0.731423556804657,
+        "null_records": 0,
+        "records": 6
+      },
+      "A0_only_vs_unit_only_overlap": {
+        "available": true,
+        "classification_claim": false,
+        "range_intersection_max": 2.1391897201538086,
+        "range_intersection_min": 0.731423556804657,
+        "ranges_overlap": true
+      },
+      "both_correct": {
+        "known_records": 57,
+        "max": 0.7626644372940063,
+        "mean": 0.17611605972623484,
+        "min": 0.001084030605852604,
+        "null_records": 0,
+        "records": 57
+      },
+      "both_wrong": {
+        "known_records": 117,
+        "max": 2.5521585941314697,
+        "mean": 1.18526383908764,
+        "min": 0.001049728482030332,
+        "null_records": 0,
+        "records": 117
+      },
+      "unit_only": {
+        "known_records": 12,
+        "max": 2.1391897201538086,
+        "mean": 0.7156260907649994,
+        "min": 0.2258235514163971,
+        "null_records": 0,
+        "records": 12
+      }
+    },
+    "K0.top1_probability": {
+      "A0_only": {
+        "known_records": 6,
+        "max": 0.7475496530532837,
+        "mean": 0.5359053810437521,
+        "min": 0.22789964079856873,
+        "null_records": 0,
+        "records": 6
+      },
+      "A0_only_vs_unit_only_overlap": {
+        "available": true,
+        "classification_claim": false,
+        "range_intersection_max": 0.7475496530532837,
+        "range_intersection_min": 0.2813451290130615,
+        "ranges_overlap": true
+      },
+      "both_correct": {
+        "known_records": 57,
+        "max": 0.9999182224273682,
+        "mean": 0.9261659404687714,
+        "min": 0.5071608424186707,
+        "null_records": 0,
+        "records": 57
+      },
+      "both_wrong": {
+        "known_records": 117,
+        "max": 0.999920129776001,
+        "mean": 0.6301761214804446,
+        "min": 0.187927708029747,
+        "null_records": 0,
+        "records": 117
+      },
+      "unit_only": {
+        "known_records": 12,
+        "max": 0.9546143412590027,
+        "mean": 0.6765476763248444,
+        "min": 0.2813451290130615,
+        "null_records": 0,
+        "records": 12
+      }
+    },
+    "K0.top2_margin": {
+      "A0_only": {
+        "known_records": 6,
+        "max": 1.6053695678710938,
+        "mean": 0.7192246119181315,
+        "min": 0.2848968505859375,
+        "null_records": 0,
+        "records": 6
+      },
+      "A0_only_vs_unit_only_overlap": {
+        "available": true,
+        "classification_claim": false,
+        "range_intersection_max": 1.6053695678710938,
+        "range_intersection_min": 0.2848968505859375,
+        "ranges_overlap": true
+      },
+      "both_correct": {
+        "known_records": 57,
+        "max": 10.81845474243164,
+        "mean": 5.389310267933628,
+        "min": 0.0498504638671875,
+        "null_records": 0,
+        "records": 57
+      },
+      "both_wrong": {
+        "known_records": 117,
+        "max": 10.37852668762207,
+        "mean": 3.023970416468433,
+        "min": 0.015573501586914062,
+        "null_records": 0,
+        "records": 117
+      },
+      "unit_only": {
+        "known_records": 12,
+        "max": 4.137948989868164,
+        "mean": 1.3175395329793294,
+        "min": 0.007640838623046875,
+        "null_records": 0,
+        "records": 12
+      }
+    },
+    "ordinary.delta_over_old_l2": {
+      "A0_only": {
+        "known_records": 6,
+        "max": 0.5042613528380997,
+        "mean": 0.48519206406643717,
+        "min": 0.45841277774182204,
+        "null_records": 0,
+        "records": 6
+      },
+      "A0_only_vs_unit_only_overlap": {
+        "available": true,
+        "classification_claim": false,
+        "range_intersection_max": 0.5042613528380997,
+        "range_intersection_min": 0.4608467765503081,
+        "ranges_overlap": true
+      },
+      "both_correct": {
+        "known_records": 57,
+        "max": 0.5403417756055623,
+        "mean": 0.49250687439408564,
+        "min": 0.4604327318209452,
+        "null_records": 0,
+        "records": 57
+      },
+      "both_wrong": {
+        "known_records": 117,
+        "max": 0.5402197197115837,
+        "mean": 0.48303047396419047,
+        "min": 0.454399330636889,
+        "null_records": 0,
+        "records": 117
+      },
+      "unit_only": {
+        "known_records": 12,
+        "max": 0.5218625222217114,
+        "mean": 0.49551013655537307,
+        "min": 0.4608467765503081,
+        "null_records": 0,
+        "records": 12
+      }
+    },
+    "ordinary.state_cosine": {
+      "A0_only": {
+        "known_records": 6,
+        "max": 0.9287466808594889,
+        "mean": 0.9228729756982428,
+        "min": 0.9193564830811618,
+        "null_records": 0,
+        "records": 6
+      },
+      "A0_only_vs_unit_only_overlap": {
+        "available": true,
+        "classification_claim": false,
+        "range_intersection_max": 0.9287466808594889,
+        "range_intersection_min": 0.9193564830811618,
+        "ranges_overlap": true
+      },
+      "both_correct": {
+        "known_records": 57,
+        "max": 0.9343173769882142,
+        "mean": 0.9267564617300743,
+        "min": 0.9108631934010171,
+        "null_records": 0,
+        "records": 57
+      },
+      "both_wrong": {
+        "known_records": 117,
+        "max": 0.9344999641565075,
+        "mean": 0.92652250579928,
+        "min": 0.9114242736384418,
+        "null_records": 0,
+        "records": 117
+      },
+      "unit_only": {
+        "known_records": 12,
+        "max": 0.9305577098203803,
+        "mean": 0.9224598762317282,
+        "min": 0.9128842557200111,
+        "null_records": 0,
+        "records": 12
+      }
+    },
+    "postextra.delta_cosine_previous": {
+      "A0_only": {
+        "known_records": 6,
+        "max": 0.695118718459725,
+        "mean": 0.6762603120572337,
+        "min": 0.6325853837254003,
+        "null_records": 0,
+        "records": 6
+      },
+      "A0_only_vs_unit_only_overlap": {
+        "available": true,
+        "classification_claim": false,
+        "range_intersection_max": 0.6937892852810411,
+        "range_intersection_min": 0.6325853837254003,
+        "ranges_overlap": true
+      },
+      "both_correct": {
+        "known_records": 57,
+        "max": 0.7129938769411513,
+        "mean": 0.6596438839741314,
+        "min": 0.5705500306588347,
+        "null_records": 0,
+        "records": 57
+      },
+      "both_wrong": {
+        "known_records": 117,
+        "max": 0.7160112331918503,
+        "mean": 0.6575711399336299,
+        "min": 0.5876709709358121,
+        "null_records": 0,
+        "records": 117
+      },
+      "unit_only": {
+        "known_records": 12,
+        "max": 0.6937892852810411,
+        "mean": 0.6538796132192801,
+        "min": 0.6016274291603474,
+        "null_records": 0,
+        "records": 12
+      }
+    },
+    "postextra.delta_over_previous_l2": {
+      "A0_only": {
+        "known_records": 6,
+        "max": 0.8976386934114068,
+        "mean": 0.8240867676834365,
+        "min": 0.7797551390961902,
+        "null_records": 0,
+        "records": 6
+      },
+      "A0_only_vs_unit_only_overlap": {
+        "available": true,
+        "classification_claim": false,
+        "range_intersection_max": 0.8909948253385629,
+        "range_intersection_min": 0.7797551390961902,
+        "ranges_overlap": true
+      },
+      "both_correct": {
+        "known_records": 57,
+        "max": 0.8858944491422751,
+        "mean": 0.7966508582784317,
+        "min": 0.6786338361303943,
+        "null_records": 0,
+        "records": 57
+      },
+      "both_wrong": {
+        "known_records": 117,
+        "max": 0.8936825327018025,
+        "mean": 0.8169569675170111,
+        "min": 0.6682494522947228,
+        "null_records": 0,
+        "records": 117
+      },
+      "unit_only": {
+        "known_records": 12,
+        "max": 0.8909948253385629,
+        "mean": 0.7958859534813432,
+        "min": 0.7340382904348239,
+        "null_records": 0,
+        "records": 12
+      }
+    },
+    "unit.UNKNOWN_minus_rival_margin": {
+      "A0_only": {
+        "known_records": 6,
+        "max": -2.3674793243408203,
+        "mean": -5.085676511128743,
+        "min": -7.3892364501953125,
+        "null_records": 0,
+        "records": 6
+      },
+      "A0_only_vs_unit_only_overlap": {
+        "available": true,
+        "classification_claim": false,
+        "range_intersection_max": -2.3674793243408203,
+        "range_intersection_min": -5.40317440032959,
+        "ranges_overlap": true
+      },
+      "both_correct": {
+        "known_records": 57,
+        "max": 9.488327026367188,
+        "mean": 2.4617499970553216,
+        "min": -6.172426223754883,
+        "null_records": 0,
+        "records": 57
+      },
+      "both_wrong": {
+        "known_records": 117,
+        "max": 9.778160095214844,
+        "mean": -2.7615586060744066,
+        "min": -10.288236618041992,
+        "null_records": 0,
+        "records": 117
+      },
+      "unit_only": {
+        "known_records": 12,
+        "max": -0.2782783508300781,
+        "mean": -3.449744462966919,
+        "min": -5.40317440032959,
+        "null_records": 0,
+        "records": 12
+      }
+    },
+    "unit.entropy_nats": {
+      "A0_only": {
+        "known_records": 6,
+        "max": 2.203960418701172,
+        "mean": 1.249933660030365,
+        "min": 0.7121078372001648,
+        "null_records": 0,
+        "records": 6
+      },
+      "A0_only_vs_unit_only_overlap": {
+        "available": true,
+        "classification_claim": false,
+        "range_intersection_max": 2.048065662384033,
+        "range_intersection_min": 0.7121078372001648,
+        "ranges_overlap": true
+      },
+      "both_correct": {
+        "known_records": 57,
+        "max": 1.2864822149276733,
+        "mean": 0.35163735893244547,
+        "min": 0.00663794158026576,
+        "null_records": 0,
+        "records": 57
+      },
+      "both_wrong": {
+        "known_records": 117,
+        "max": 2.4907114505767822,
+        "mean": 1.1798004283038421,
+        "min": 0.0013181694084778428,
+        "null_records": 0,
+        "records": 117
+      },
+      "unit_only": {
+        "known_records": 12,
+        "max": 2.048065662384033,
+        "mean": 0.9560940066973368,
+        "min": 0.6217268705368042,
+        "null_records": 0,
+        "records": 12
+      }
+    },
+    "unit.top1_probability": {
+      "A0_only": {
+        "known_records": 6,
+        "max": 0.6445107460021973,
+        "mean": 0.522702028354009,
+        "min": 0.35581475496292114,
+        "null_records": 0,
+        "records": 6
+      },
+      "A0_only_vs_unit_only_overlap": {
+        "available": true,
+        "classification_claim": false,
+        "range_intersection_max": 0.6445107460021973,
+        "range_intersection_min": 0.35581475496292114,
+        "ranges_overlap": true
+      },
+      "both_correct": {
+        "known_records": 57,
+        "max": 0.9994694590568542,
+        "mean": 0.870743595717246,
+        "min": 0.435580849647522,
+        "null_records": 0,
+        "records": 57
+      },
+      "both_wrong": {
+        "known_records": 117,
+        "max": 0.9998950958251953,
+        "mean": 0.6353550680682191,
+        "min": 0.18035151064395905,
+        "null_records": 0,
+        "records": 117
+      },
+      "unit_only": {
+        "known_records": 12,
+        "max": 0.7415522336959839,
+        "mean": 0.5645456065734228,
+        "min": 0.3266831338405609,
+        "null_records": 0,
+        "records": 12
+      }
+    },
+    "unit.top2_margin": {
+      "A0_only": {
+        "known_records": 6,
+        "max": 1.102457046508789,
+        "mean": 0.6463651657104492,
+        "min": 0.2466564178466797,
+        "null_records": 0,
+        "records": 6
+      },
+      "A0_only_vs_unit_only_overlap": {
+        "available": true,
+        "classification_claim": false,
+        "range_intersection_max": 1.102457046508789,
+        "range_intersection_min": 0.2466564178466797,
+        "ranges_overlap": true
+      },
+      "both_correct": {
+        "known_records": 57,
+        "max": 9.488327026367188,
+        "mean": 3.5157908389442847,
+        "min": 0.024972915649414062,
+        "null_records": 0,
+        "records": 57
+      },
+      "both_wrong": {
+        "known_records": 117,
+        "max": 9.778160095214844,
+        "mean": 2.214319147615351,
+        "min": 0.020494461059570312,
+        "null_records": 0,
+        "records": 117
+      },
+      "unit_only": {
+        "known_records": 12,
+        "max": 1.2619514465332031,
+        "mean": 0.5224959055582682,
+        "min": 0.03227043151855469,
+        "null_records": 0,
+        "records": 12
+      }
+    },
+    "unit_minus_K0.UNKNOWN_margin": {
+      "A0_only": {
+        "known_records": 6,
+        "max": 0.07580184936523438,
+        "mean": -0.7826147079467773,
+        "min": -3.972848892211914,
+        "null_records": 0,
+        "records": 6
+      },
+      "A0_only_vs_unit_only_overlap": {
+        "available": true,
+        "classification_claim": false,
+        "range_intersection_max": 0.07580184936523438,
+        "range_intersection_min": -3.972848892211914,
+        "ranges_overlap": true
+      },
+      "both_correct": {
+        "known_records": 57,
+        "max": 1.4008255004882812,
+        "mean": -1.9848768669262267,
+        "min": -5.120149612426758,
+        "null_records": 0,
+        "records": 57
+      },
+      "both_wrong": {
+        "known_records": 117,
+        "max": 0.6847972869873047,
+        "mean": -1.335936538174621,
+        "min": -5.355169296264648,
+        "null_records": 0,
+        "records": 117
+      },
+      "unit_only": {
+        "known_records": 12,
+        "max": 0.24669265747070312,
+        "mean": -1.5435880819956462,
+        "min": -5.293519973754883,
+        "null_records": 0,
+        "records": 12
+      }
+    }
+  },
+  "source_report_or_state_edits": false,
+  "status": "COMPLETE_ACTUAL_DESCRIPTIVE_FINDINGS_NO_GATE_GAIN"
+}

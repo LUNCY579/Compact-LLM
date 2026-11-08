@@ -1,0 +1,54 @@
+{
+  "created_utc": "2026-10-03T05:55:58.649461+00:00",
+  "status": "PASS_FINAL_PINNED_RANDOM_CPU_MIDDLE_SITE_MECHANICS",
+  "python_executable": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-spikingbrain-hybrid-memory-v1\\experiments\\rineya_spikingbrain_hybrid_memory_v1\\.venv-cuda\\Scripts\\python.exe",
+  "versions": {
+    "torch": "2.6.0+cu124",
+    "transformers": "4.51.3",
+    "tokenizers": "0.21.4",
+    "safetensors": "0.7.0",
+    "psutil": "7.2.2",
+    "pytest": "8.4.2",
+    "accelerate": "1.15.0"
+  },
+  "code_sha256": "dbf53274d5c2671d761ea47c192a1a6269efa9d93b2907d72fa3bd825d7516df",
+  "tests_sha256": {
+    "tests\\test_comparison.py": "c589cafd6faf160278cbae4252aa28ee53cca0c43bf4977a0dd9b85bf49084dd",
+    "tests\\test_experiment.py": "a6325f971bdc57a83fcbbde1c2cec33eabbb393917250a9b55393f91afc25ef2",
+    "tests\\test_preflight.py": "05585280d24f34bd7b74ff0ebee0f981f256352613afad34c18ca3b6385c4685",
+    "tests\\test_teacher_budget.py": "b86700a33b7b74870d3b996bf514cd1aee1a491eeb5fe2080665f3bd1021e769"
+  },
+  "targeted_integration_passed": 1,
+  "full_suite_passed": 109,
+  "full_suite_skipped": 0,
+  "tiny_official_qwen3": {
+    "random_initialization": true,
+    "device": "cpu",
+    "dtype": "float32",
+    "layers": 5,
+    "converted_site": 3,
+    "subsequent_standard_layer": 4,
+    "explicit_head_dim": 8,
+    "hidden_size_div_heads": 4,
+    "attention_implementation": "sdpa",
+    "arms": [
+      "A",
+      "B",
+      "C",
+      "D"
+    ]
+  },
+  "checks": [
+    "same-source A/B zero initialization and identity wrapper exact logits",
+    "full/tokenwise/chunked prefix and greedy-token agreement",
+    "fresh request independence",
+    "no full-history KV at converted site",
+    "cache handling with a standard attention layer after converted site",
+    "zero-mix hybrid equals local-only exactly"
+  ],
+  "CUDA_VISIBLE_DEVICES": "-1",
+  "gpu_tensors_allocated": false,
+  "pretrained_weights_loaded": false,
+  "native_fit_or_behavior_result": false,
+  "prior_resource_receipt": "frozen-resource-qualification.json"
+}

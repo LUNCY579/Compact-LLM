@@ -1,0 +1,15 @@
+# Fresh OPEN CPU apparatus: author checks pass; independent review pending
+
+Implemented all12 mechanisms in the assigned generator and separately parsed verifier modules. No old make_world/generate import or oldworld reuse, model, tokenizer, candidate score, protected/nativeTEST, externaldataset download, sibling/environment/asset mutation or realcorpus export. Author of both modules is the same agent; distinct algorithms do not constitute independent authorship or review.
+
+Scientific size is fixed216newparents/432prompts: sixfamilies36parents, two mechanisms18parents each, two variants. Nonce f0216a9d60b74c8e is assignedonce, seed17. The actualcorpus has NOT been generated.14stdlib CPU tests passed withoutfailures/skips using a separate CPU-FIXTURE-ONLY-NOT-REPLICATION nonce; nofixture rows were written asdata.
+
+All432fixture constructor/forwardtext/separateverifier checks agree. All12mechanisms have36cases, easy/hard216each, queryroles18eachperfamily. LogicYES/NO36each; documents/evidence36answer/18missing/18conflict; ledger/program24negative/24zero/24positive.216world commitments and432prompts areunique. Full-response scoring matches the immutable pureoldscorer on edgecases; scientificcap8 staysfixed, withactualtokenizer/gold+EOS limits pendingrootbinding.
+
+The implemented pairs are: mixed-sign journal vs transferconservation; HornDAG vs directedreachability; registerreassignment/branch vs stackexpressiontrace; SET/CLEAR/QUOTE vs OFFER/ACK/REVOKE; approvedconsensus vs namedcurrent snapshots; approvedbundleexchange vs issuerrevocation. Verification uses separate incidence equations/backwardproofs/transitiveclosure/immutableexpressiontrees/backwardeventwitnesses and evidenceconstraint checks. Some consensus abstractions remain shared, expresslydisclosed.
+
+The72DOCUMENTS fixturecases share the existingstrict grammar and abstractconsensus primitive; they are newworld replication, not independentgrammar/source confirmation. The360 othergrammar/mechanism cases are strictlyunrecognized by the currentguard and exercise its frozenfallback contract. No guardselection or neural outcome was scored. Author-role/human-source independence remainslimited.
+
+Predeclared copy/queryblind/header/skeletonfloors passed: highestglobal fixturefloor164/432 (.37963), no perfectfamilycue. Positivecontrol/floor integrity doesnotpredictRineya performance or license favorablecase selection. AttestationIDs are randomized and global liveauthorized counts matchacross interventions; variant/style do not label answerability.
+
+Actualgeneration API requires actualsource-review PASS_FRESH_OPEN_CPU_SOURCE and frozenselectedpolicy/source/nonce receipt with exacthashes. Root later owns realdata/manifest/prompt-only export, tokenizer and oldworld overlap audits, fixedpolicy release, complete newnativequalification/countforecast and the separate24shortresponsepanel. NoCLI or actualbankwriting was executed. Source is ready for independentreview; it is not a native/source-review PASS or gain claim.

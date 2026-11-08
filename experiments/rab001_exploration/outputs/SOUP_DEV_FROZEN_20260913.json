@@ -1,0 +1,1610 @@
+{
+  "schema": 1,
+  "purpose": "freeze first60 DEV before soup candidate scoring",
+  "selection_metric": "terminated normalized exact match",
+  "rows": [
+    {
+      "id": "rineya_v3_sft__time_duration__reas_time_duration_s05__01589",
+      "group_id": "rineya_v3_family__time_duration__0198",
+      "split": "task",
+      "reply_class": "time_duration",
+      "messages": [
+        {
+          "role": "system",
+          "content": "Read the full thread, silently resolve the stated constraints, and answer briefly. If the evidence does not determine the result, give an explicit knowledge boundary."
+        },
+        {
+          "role": "user",
+          "content": "I'm handling parent meeting for Mossbank Library at the practice field."
+        },
+        {
+          "role": "assistant",
+          "content": "Okay\u00e2\u20ac\u201dwhat changed?"
+        },
+        {
+          "role": "user",
+          "content": "In the autumn status sheet, for Mossbank Library's parent meeting at the practice field, in the revised parent meeting notes, Niko wrote: A class runs from 6:40 PM until 7:30 PM. How long is it?"
+        }
+      ],
+      "answer": "50 minutes.",
+      "difficulty": "intermediate",
+      "multi_turn": true
+    },
+    {
+      "id": "rineya_v3_sft__time_duration__reas_time_duration_s05__01572",
+      "group_id": "rineya_v3_family__time_duration__0196",
+      "split": "task",
+      "reply_class": "time_duration",
+      "messages": [
+        {
+          "role": "system",
+          "content": "Use only the facts stated in the conversation. Reason silently and return the compact final answer; when the result is not supported, say so briefly instead of guessing."
+        },
+        {
+          "role": "user",
+          "content": "I'm handling meal-prep shift for Zephyr Civic Desk at the ceramics wing."
+        },
+        {
+          "role": "assistant",
+          "content": "Okay\u00e2\u20ac\u201dwhat changed?"
+        },
+        {
+          "role": "user",
+          "content": "In the windy status sheet, at Zephyr Civic Desk, the meal-prep shift now depends on one point: A bus leaves at 11:40 AM. The ride takes 90 minutes. Arrival time?"
+        }
+      ],
+      "answer": "1:10 PM.",
+      "difficulty": "intermediate",
+      "multi_turn": true
+    },
+    {
+      "id": "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s00__00058",
+      "group_id": "rineya_v3_family__ratio_proportion__0007",
+      "split": "task",
+      "reply_class": "ratio_proportion",
+      "messages": [
+        {
+          "role": "system",
+          "content": "Work out the answer internally, then give only a short conclusion. Follow later corrections, use no outside facts, and state insufficiency when one answer cannot be determined."
+        },
+        {
+          "role": "user",
+          "content": "In the fern memo, for Hazel Street Council's class presentation at the field station, to finish the class presentation, use this exact version: The ratio of practice cones to timing chips is 2:3, with 25 items total. How many are timing chips?"
+        }
+      ],
+      "answer": "15.",
+      "difficulty": "basic",
+      "multi_turn": false
+    },
+    {
+      "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s03__01104",
+      "group_id": "rineya_v3_family__percentage_reasoning__0138",
+      "split": "task",
+      "reply_class": "percentage_reasoning",
+      "messages": [
+        {
+          "role": "system",
+          "content": "Solve from the supplied information without showing the derivation. Return a few words or one compact sentence, and do not fabricate missing details."
+        },
+        {
+          "role": "user",
+          "content": "We are checking one decision for Copper Finch's meal-prep shift."
+        },
+        {
+          "role": "assistant",
+          "content": "What is the current fact?"
+        },
+        {
+          "role": "user",
+          "content": "In the tidal dispatch, one practical check for Copper Finch's meal-prep shift: The seed trays budget is 60 units. It is reduced by 10%. What remains?"
+        }
+      ],
+      "answer": "54.",
+      "difficulty": "intermediate",
+      "multi_turn": true
+    },
+    {
+      "id": "rineya_v3_sft__time_duration__reas_time_duration_s07__02103",
+      "group_id": "rineya_v3_family__time_duration__0262",
+      "split": "task",
+      "reply_class": "time_duration",
+      "messages": [
+        {
+          "role": "system",
+          "content": "Work out the answer internally, then give only a short conclusion. Follow later corrections, use no outside facts, and state insufficiency when one answer cannot be determined."
+        },
+        {
+          "role": "user",
+          "content": "The earlier equipment handoff note for Rosehip Science Camp said: How long is it from 6:50 PM to 6:15 PM?"
+        },
+        {
+          "role": "assistant",
+          "content": "Okay\u00e2\u20ac\u201dthat is the draft state."
+        },
+        {
+          "role": "user",
+          "content": "The gallery storeroom coordinator found a correction."
+        },
+        {
+          "role": "assistant",
+          "content": "What is the corrected version?"
+        },
+        {
+          "role": "user",
+          "content": "Correction\u00e2\u20ac\u201duse this current version instead: In the quiet planning note, for Rosehip Science Camp's equipment handoff at the gallery storeroom, the current message from Corin at the gallery storeroom is: How long is it from 5:50 PM to 6:15 PM?"
+        }
+      ],
+      "answer": "25 minutes.",
+      "difficulty": "compositional",
+      "multi_turn": true
+    },
+    {
+      "id": "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s07__02138",
+      "group_id": "rineya_v3_family__ratio_proportion__0267",
+      "split": "task",
+      "reply_class": "ratio_proportion",
+      "messages": [
+        {
+          "role": "system",
+          "content": "Work out the answer internally, then give only a short conclusion. Follow later corrections, use no outside facts, and state insufficiency when one answer cannot be determined."
+        },
+        {
+          "role": "user",
+          "content": "Earlier note: The ratio of practice cones to timing chips is 1:3, with 25 items total. How many are timing chips?"
+        },
+        {
+          "role": "assistant",
+          "content": "I will wait for the corrected state."
+        },
+        {
+          "role": "user",
+          "content": "Current correction for field sampling run: In the northbound scorebook, for Elm & Current's field sampling run at the west atrium, for the latest access badges record, not the older draft: The ratio of practice cones to timing chips is 2:3, with 25 items total. How many are timing chips?"
+        }
+      ],
+      "answer": "15.",
+      "difficulty": "compositional",
+      "multi_turn": true
+    },
+    {
+      "id": "rineya_v3_sft__time_duration__reas_time_duration_s02__00746",
+      "group_id": "rineya_v3_family__time_duration__0093",
+      "split": "task",
+      "reply_class": "time_duration",
+      "messages": [
+        {
+          "role": "system",
+          "content": "Read the full thread, silently resolve the stated constraints, and answer briefly. If the evidence does not determine the result, give an explicit knowledge boundary."
+        },
+        {
+          "role": "user",
+          "content": "We are checking one decision for Bramble Forge's equipment handoff."
+        },
+        {
+          "role": "assistant",
+          "content": "What is the current fact?"
+        },
+        {
+          "role": "user",
+          "content": "In the dry-season memo, for Bramble Forge's equipment handoff at the gallery storeroom, before the games team proceeds, answer this: The equipment handoff starts at 9:15 AM and lasts 55 minutes. End time?"
+        }
+      ],
+      "answer": "10:10 AM.",
+      "difficulty": "intermediate",
+      "multi_turn": true
+    },
+    {
+      "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s06__01963",
+      "group_id": "rineya_v3_family__percentage_reasoning__0245",
+      "split": "task",
+      "reply_class": "percentage_reasoning",
+      "messages": [
+        {
+          "role": "system",
+          "content": "Use only the facts stated in the conversation. Reason silently and return the compact final answer; when the result is not supported, say so briefly instead of guessing."
+        },
+        {
+          "role": "user",
+          "content": "We are checking one decision for Acorn Civic Lab's studio booking."
+        },
+        {
+          "role": "assistant",
+          "content": "What is the current fact?"
+        },
+        {
+          "role": "user",
+          "content": "In the sunlit register, the team handling repair tickets at the harbor platform asks: The repair tickets budget is 120 units. It is reduced by 50%. What remains?"
+        }
+      ],
+      "answer": "60.",
+      "difficulty": "intermediate",
+      "multi_turn": true
+    },
+    {
+      "id": "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s05__01507",
+      "group_id": "rineya_v3_family__ratio_proportion__0188",
+      "split": "task",
+      "reply_class": "ratio_proportion",
+      "messages": [
+        {
+          "role": "system",
+          "content": "Read the full thread, silently resolve the stated constraints, and answer briefly. If the evidence does not determine the result, give an explicit knowledge boundary."
+        },
+        {
+          "role": "user",
+          "content": "We are checking one decision for Cloudberry Home's parent meeting."
+        },
+        {
+          "role": "assistant",
+          "content": "What is the current fact?"
+        },
+        {
+          "role": "user",
+          "content": "In the granite planning note, for Cloudberry Home's parent meeting at the practice field, the practice field coordinator marked this as the live version: The ratio of practice cones to timing chips is 2:3, with 30 items total. How many are timing chips?"
+        }
+      ],
+      "answer": "18.",
+      "difficulty": "intermediate",
+      "multi_turn": true
+    },
+    {
+      "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s02__00794",
+      "group_id": "rineya_v3_family__percentage_reasoning__0099",
+      "split": "task",
+      "reply_class": "percentage_reasoning",
+      "messages": [
+        {
+          "role": "system",
+          "content": "Work out the answer internally, then give only a short conclusion. Follow later corrections, use no outside facts, and state insufficiency when one answer cannot be determined."
+        },
+        {
+          "role": "user",
+          "content": "We are checking one decision for Alder Creek Crew's transit update."
+        },
+        {
+          "role": "assistant",
+          "content": "What is the current fact?"
+        },
+        {
+          "role": "user",
+          "content": "In the quiet brief, to finish the transit update, use this exact version: The sensor tags budget is 160 units. It is reduced by 25%. What remains?"
+        }
+      ],
+      "answer": "120.",
+      "difficulty": "intermediate",
+      "multi_turn": true
+    },
+    {
+      "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s09__02806",
+      "group_id": "rineya_v3_family__percentage_reasoning__0350",
+      "split": "task",
+      "reply_class": "percentage_reasoning",
+      "messages": [
+        {
+          "role": "system",
+          "content": "Use only the facts stated in the conversation. Reason silently and return the compact final answer; when the result is not supported, say so briefly instead of guessing."
+        },
+        {
+          "role": "user",
+          "content": "The earlier home repair visit note for Holloway Makers said: What is a 17% tip on a $100 bill?"
+        },
+        {
+          "role": "assistant",
+          "content": "Okay\u00e2\u20ac\u201dthat is the draft state."
+        },
+        {
+          "role": "user",
+          "content": "One fact in that version was stale."
+        },
+        {
+          "role": "assistant",
+          "content": "Send the current facts."
+        },
+        {
+          "role": "user",
+          "content": "Correction\u00e2\u20ac\u201duse this current version instead: In the prairie memo, for Holloway Makers's home repair visit at the orchard shed, the orchard shed coordinator marked this as the live version: What is a 15% tip on a $100 bill?"
+        }
+      ],
+      "answer": "$15.",
+      "difficulty": "compositional",
+      "multi_turn": true
+    },
+    {
+      "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s08__02496",
+      "group_id": "rineya_v3_family__percentage_reasoning__0312",
+      "split": "task",
+      "reply_class": "percentage_reasoning",
+      "messages": [
+        {
+          "role": "system",
+          "content": "Use only the facts stated in the conversation. Reason silently and return the compact final answer; when the result is not supported, say so briefly instead of guessing."
+        },
+        {
+          "role": "user",
+          "content": "Earlier note: The plant markers budget is 162 units. It is reduced by 10%. What remains?"
+        },
+        {
+          "role": "assistant",
+          "content": "I will wait for the corrected state."
+        },
+        {
+          "role": "user",
+          "content": "Current correction for class presentation: In the northbound checklist, the field station coordinator marked this as the live version: The plant markers budget is 160 units. It is reduced by 10%. What remains?"
+        }
+      ],
+      "answer": "144.",
+      "difficulty": "compositional",
+      "multi_turn": true
+    },
+    {
+      "id": "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s09__02857",
+      "group_id": "rineya_v3_family__ratio_proportion__0357",
+      "split": "task",
+      "reply_class": "ratio_proportion",
+      "messages": [
+        {
+          "role": "system",
+          "content": "Solve from the supplied information without showing the derivation. Return a few words or one compact sentence, and do not fabricate missing details."
+        },
+        {
+          "role": "user",
+          "content": "Earlier note: The ratio of practice cones to timing chips is 1:3, with 20 items total. How many are timing chips?"
+        },
+        {
+          "role": "assistant",
+          "content": "I will wait for the corrected state."
+        },
+        {
+          "role": "user",
+          "content": "Current correction for field sampling run: In the highland schedule card, at Holloway Makers, the field sampling run now depends on one point: The ratio of practice cones to timing chips is 2:3, with 20 items total. How many are timing chips?"
+        }
+      ],
+      "answer": "12.",
+      "difficulty": "compositional",
+      "multi_turn": true
+    },
+    {
+      "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00508",
+      "group_id": "rineya_v3_family__percentage_reasoning__0063",
+      "split": "task",
+      "reply_class": "percentage_reasoning",
+      "messages": [
+        {
+          "role": "system",
+          "content": "Read the full thread, silently resolve the stated constraints, and answer briefly. If the evidence does not determine the result, give an explicit knowledge boundary."
+        },
+        {
+          "role": "user",
+          "content": "In the quiet worksheet, the folding chairs entry under review at Inkstone Press says: A value of 100 increases by 50%. What is the new value?"
+        }
+      ],
+      "answer": "150.",
+      "difficulty": "basic",
+      "multi_turn": false
+    },
+    {
+      "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s04__01427",
+      "group_id": "rineya_v3_family__percentage_reasoning__0178",
+      "split": "task",
+      "reply_class": "percentage_reasoning",
+      "messages": [
+        {
+          "role": "system",
+          "content": "Work out the answer internally, then give only a short conclusion. Follow later corrections, use no outside facts, and state insufficiency when one answer cannot be determined."
+        },
+        {
+          "role": "user",
+          "content": "We are checking one decision for Saffron Archive's tournament setup."
+        },
+        {
+          "role": "assistant",
+          "content": "What is the current fact?"
+        },
+        {
+          "role": "user",
+          "content": "In the year-end field note, for Saffron Archive's tournament setup at the planetarium lobby, jonas replaced the earlier note with this one: The water filters budget is 120 units. It is reduced by 50%. What remains?"
+        }
+      ],
+      "answer": "60.",
+      "difficulty": "intermediate",
+      "multi_turn": true
+    },
+    {
+      "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s08__02442",
+      "group_id": "rineya_v3_family__percentage_reasoning__0305",
+      "split": "task",
+      "reply_class": "percentage_reasoning",
+      "messages": [
+        {
+          "role": "system",
+          "content": "Read the full thread, silently resolve the stated constraints, and answer briefly. If the evidence does not determine the result, give an explicit knowledge boundary."
+        },
+        {
+          "role": "user",
+          "content": "Earlier note: The drill bits budget is 155 units. It is reduced by 25%. What remains?"
+        },
+        {
+          "role": "assistant",
+          "content": "I will wait for the corrected state."
+        },
+        {
+          "role": "user",
+          "content": "Current correction for studio booking: In the granite checklist, at the harbor platform, the current note for Wildfern Media reads: The drill bits budget is 160 units. It is reduced by 25%. What remains?"
+        }
+      ],
+      "answer": "120.",
+      "difficulty": "compositional",
+      "multi_turn": true
+    },
+    {
+      "id": "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s00__00113",
+      "group_id": "rineya_v3_family__ratio_proportion__0014",
+      "split": "task",
+      "reply_class": "ratio_proportion",
+      "messages": [
+        {
+          "role": "system",
+          "content": "Read the full thread, silently resolve the stated constraints, and answer briefly. If the evidence does not determine the result, give an explicit knowledge boundary."
+        },
+        {
+          "role": "user",
+          "content": "In the meadow memo, during Keystone Pantry's class presentation, Wes asks: The ratio of red to blue plant markers is 3:4, with 42 plant markers total. How many are blue?"
+        }
+      ],
+      "answer": "24.",
+      "difficulty": "basic",
+      "multi_turn": false
+    },
+    {
+      "id": "rineya_v3_sft__time_duration__reas_time_duration_s03__01136",
+      "group_id": "rineya_v3_family__time_duration__0142",
+      "split": "task",
+      "reply_class": "time_duration",
+      "messages": [
+        {
+          "role": "system",
+          "content": "Solve from the supplied information without showing the derivation. Return a few words or one compact sentence, and do not fabricate missing details."
+        },
+        {
+          "role": "user",
+          "content": "We are checking one decision for Dunewatch Survey's sports practice."
+        },
+        {
+          "role": "assistant",
+          "content": "What is the current fact?"
+        },
+        {
+          "role": "user",
+          "content": "In the evening roster, for Dunewatch Survey's sports practice at the bus depot, the charging docks log says: The sports practice starts at 9:15 AM and lasts 25 minutes. End time?"
+        }
+      ],
+      "answer": "9:40 AM.",
+      "difficulty": "intermediate",
+      "multi_turn": true
+    },
+    {
+      "id": "rineya_v3_sft__time_duration__reas_time_duration_s01__00419",
+      "group_id": "rineya_v3_family__time_duration__0052",
+      "split": "task",
+      "reply_class": "time_duration",
+      "messages": [
+        {
+          "role": "system",
+          "content": "Read the full thread, silently resolve the stated constraints, and answer briefly. If the evidence does not determine the result, give an explicit knowledge boundary."
+        },
+        {
+          "role": "user",
+          "content": "In the windy checklist, the bus depot coordinator marked this as the live version: The sports practice starts at 9:15 AM and lasts 70 minutes. End time?"
+        }
+      ],
+      "answer": "10:25 AM.",
+      "difficulty": "basic",
+      "multi_turn": false
+    },
+    {
+      "id": "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s04__01388",
+      "group_id": "rineya_v3_family__ratio_proportion__0173",
+      "split": "task",
+      "reply_class": "ratio_proportion",
+      "messages": [
+        {
+          "role": "system",
+          "content": "Work out the answer internally, then give only a short conclusion. Follow later corrections, use no outside facts, and state insufficiency when one answer cannot be determined."
+        },
+        {
+          "role": "user",
+          "content": "In the dry-season survey page, for Quarry House's coding sprint at the survey camp, to finish the coding sprint, use this exact version: At a constant 50 miles per hour for 3 hours, how far do you travel? Keep the answer usable for Imani."
+        }
+      ],
+      "answer": "150 miles.",
+      "difficulty": "intermediate",
+      "multi_turn": false
+    },
+    {
+      "id": "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s08__02690",
+      "group_id": "rineya_v3_family__ratio_proportion__0336",
+      "split": "task",
+      "reply_class": "ratio_proportion",
+      "messages": [
+        {
+          "role": "system",
+          "content": "Solve from the supplied information without showing the derivation. Return a few words or one compact sentence, and do not fabricate missing details."
+        },
+        {
+          "role": "user",
+          "content": "The earlier release rehearsal note for Inkstone Press said: 13 costume racks cost $18. At the same rate, what do 3 costume racks cost?"
+        },
+        {
+          "role": "assistant",
+          "content": "Noted, but I will wait for the current one."
+        },
+        {
+          "role": "user",
+          "content": "One fact in that version was stale."
+        },
+        {
+          "role": "assistant",
+          "content": "Okay\u00e2\u20ac\u201dwhat should replace it?"
+        },
+        {
+          "role": "user",
+          "content": "Correction\u00e2\u20ac\u201duse this current version instead: In the kindred schedule card, for Inkstone Press's release rehearsal at the observatory deck, in the revised release rehearsal notes, Wes wrote: 3 costume racks cost $18. At the same rate, what do 3 costume racks cost?"
+        }
+      ],
+      "answer": "$18.",
+      "difficulty": "compositional",
+      "multi_turn": true
+    },
+    {
+      "id": "rineya_v3_sft__time_duration__reas_time_duration_s03__01050",
+      "group_id": "rineya_v3_family__time_duration__0131",
+      "split": "task",
+      "reply_class": "time_duration",
+      "messages": [
+        {
+          "role": "system",
+          "content": "Work out the answer internally, then give only a short conclusion. Follow later corrections, use no outside facts, and state insufficiency when one answer cannot be determined."
+        },
+        {
+          "role": "user",
+          "content": "I'm handling release rehearsal for Rosehip Science Camp at the observatory deck."
+        },
+        {
+          "role": "assistant",
+          "content": "What is the current detail?"
+        },
+        {
+          "role": "user",
+          "content": "In the frost route card, for Rosehip Science Camp's release rehearsal at the observatory deck, the current field note from the observatory deck says: A class runs from 8:40 AM until 9:20 AM. How long is it?"
+        }
+      ],
+      "answer": "40 minutes.",
+      "difficulty": "intermediate",
+      "multi_turn": true
+    },
+    {
+      "id": "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s06__02058",
+      "group_id": "rineya_v3_family__ratio_proportion__0257",
+      "split": "task",
+      "reply_class": "ratio_proportion",
+      "messages": [
+        {
+          "role": "system",
+          "content": "Read the full thread, silently resolve the stated constraints, and answer briefly. If the evidence does not determine the result, give an explicit knowledge boundary."
+        },
+        {
+          "role": "user",
+          "content": "Earlier note: The ratio of practice cones to timing chips is 12:3, with 25 items total. How many are timing chips?"
+        },
+        {
+          "role": "assistant",
+          "content": "I will wait for the corrected state."
+        },
+        {
+          "role": "user",
+          "content": "Current correction for sports practice: In the dawn scorebook, for Kestrel Farm's sports practice at the bus depot, the bus depot coordinator marked this as the live version: The ratio of practice cones to timing chips is 2:3, with 25 items total. How many are timing chips?"
+        }
+      ],
+      "answer": "15.",
+      "difficulty": "compositional",
+      "multi_turn": true
+    },
+    {
+      "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s03__00986",
+      "group_id": "rineya_v3_family__percentage_reasoning__0123",
+      "split": "task",
+      "reply_class": "percentage_reasoning",
+      "messages": [
+        {
+          "role": "system",
+          "content": "Work out the answer internally, then give only a short conclusion. Follow later corrections, use no outside facts, and state insufficiency when one answer cannot be determined."
+        },
+        {
+          "role": "user",
+          "content": "I'm handling gallery installation for Junebug Transit at the music hall."
+        },
+        {
+          "role": "assistant",
+          "content": "Send the live version."
+        },
+        {
+          "role": "user",
+          "content": "In the evening dispatch, junebug Transit is updating the sample vials plan; What is 30% of 120?"
+        }
+      ],
+      "answer": "36.",
+      "difficulty": "intermediate",
+      "multi_turn": true
+    },
+    {
+      "id": "rineya_v3_sft__time_duration__reas_time_duration_s00__00033",
+      "group_id": "rineya_v3_family__time_duration__0004",
+      "split": "task",
+      "reply_class": "time_duration",
+      "messages": [
+        {
+          "role": "system",
+          "content": "Work out the answer internally, then give only a short conclusion. Follow later corrections, use no outside facts, and state insufficiency when one answer cannot be determined."
+        },
+        {
+          "role": "user",
+          "content": "In the kindred logbook, the north concourse coordinator marked this as the live version: The weather contingency starts at 9:15 AM and lasts 40 minutes. End time?"
+        }
+      ],
+      "answer": "9:55 AM.",
+      "difficulty": "basic",
+      "multi_turn": false
+    },
+    {
+      "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s00__00181",
+      "group_id": "rineya_v3_family__percentage_reasoning__0022",
+      "split": "task",
+      "reply_class": "percentage_reasoning",
+      "messages": [
+        {
+          "role": "system",
+          "content": "Read the full thread, silently resolve the stated constraints, and answer briefly. If the evidence does not determine the result, give an explicit knowledge boundary."
+        },
+        {
+          "role": "user",
+          "content": "In the linen ledger, one practical check for Driftwood Lab's arts showcase: A quantity of 100 decreases by 50%. What remains?"
+        }
+      ],
+      "answer": "50.",
+      "difficulty": "basic",
+      "multi_turn": false
+    },
+    {
+      "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s00__00168",
+      "group_id": "rineya_v3_family__percentage_reasoning__0021",
+      "split": "task",
+      "reply_class": "percentage_reasoning",
+      "messages": [
+        {
+          "role": "system",
+          "content": "Work out the answer internally, then give only a short conclusion. Follow later corrections, use no outside facts, and state insufficiency when one answer cannot be determined."
+        },
+        {
+          "role": "user",
+          "content": "In the kindred ledger, for Junebug Transit's supply delivery at the repair bench, for the latest transit passes record, not the older draft: A quantity of 40 decreases by 25%. What remains?"
+        }
+      ],
+      "answer": "30.",
+      "difficulty": "basic",
+      "multi_turn": false
+    },
+    {
+      "id": "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__01168",
+      "group_id": "rineya_v3_family__ratio_proportion__0146",
+      "split": "task",
+      "reply_class": "ratio_proportion",
+      "messages": [
+        {
+          "role": "system",
+          "content": "Solve from the supplied information without showing the derivation. Return a few words or one compact sentence, and do not fabricate missing details."
+        },
+        {
+          "role": "user",
+          "content": "We are checking one decision for Hearthline Co-op's club registration."
+        },
+        {
+          "role": "assistant",
+          "content": "What is the current fact?"
+        },
+        {
+          "role": "user",
+          "content": "In the amber survey page, the timing chips entry under review at Hearthline Co-op says: The ratio of practice cones to timing chips is 2:3, with 15 items total. How many are timing chips?"
+        }
+      ],
+      "answer": "9.",
+      "difficulty": "intermediate",
+      "multi_turn": true
+    },
+    {
+      "id": "rineya_v3_sft__time_duration__reas_time_duration_s07__02171",
+      "group_id": "rineya_v3_family__time_duration__0271",
+      "split": "task",
+      "reply_class": "time_duration",
+      "messages": [
+        {
+          "role": "system",
+          "content": "Solve from the supplied information without showing the derivation. Return a few words or one compact sentence, and do not fabricate missing details."
+        },
+        {
+          "role": "user",
+          "content": "The earlier volunteer briefing note for Bluebell Robotics said: How long is it from 20:05 AM to 11:20 AM?"
+        },
+        {
+          "role": "assistant",
+          "content": "I have the earlier version."
+        },
+        {
+          "role": "user",
+          "content": "Yara just checked the display panels record."
+        },
+        {
+          "role": "assistant",
+          "content": "Send the current facts."
+        },
+        {
+          "role": "user",
+          "content": "Correction\u00e2\u20ac\u201duse this current version instead: In the blue-hour planning note, for Bluebell Robotics's volunteer briefing at the community kitchen, the current message from Yara at the community kitchen is: How long is it from 10:05 AM to 11:20 AM?"
+        }
+      ],
+      "answer": "75 minutes.",
+      "difficulty": "compositional",
+      "multi_turn": true
+    },
+    {
+      "id": "rineya_v3_sft__time_duration__reas_time_duration_s03__00908",
+      "group_id": "rineya_v3_family__time_duration__0113",
+      "split": "task",
+      "reply_class": "time_duration",
+      "messages": [
+        {
+          "role": "system",
+          "content": "Work out the answer internally, then give only a short conclusion. Follow later corrections, use no outside facts, and state insufficiency when one answer cannot be determined."
+        },
+        {
+          "role": "user",
+          "content": "In the linen route card, for Driftwood Lab's travel departure at the locker corridor, a last check from the locker corridor: A bus leaves at 2:35 PM. The ride takes 25 minutes. Arrival time? Keep the answer usable for Priya."
+        }
+      ],
+      "answer": "3:00 PM.",
+      "difficulty": "intermediate",
+      "multi_turn": false
+    },
+    {
+      "id": "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s07__02150",
+      "group_id": "rineya_v3_family__ratio_proportion__0268",
+      "split": "task",
+      "reply_class": "ratio_proportion",
+      "messages": [
+        {
+          "role": "system",
+          "content": "Solve from the supplied information without showing the derivation. Return a few words or one compact sentence, and do not fabricate missing details."
+        },
+        {
+          "role": "user",
+          "content": "The earlier supply delivery note for Junebug Transit said: A mix uses water and concentrate in a 1:1 ratio. If the total is 30 cups, how many cups are water?"
+        },
+        {
+          "role": "assistant",
+          "content": "Noted, but I will wait for the current one."
+        },
+        {
+          "role": "user",
+          "content": "One fact in that version was stale."
+        },
+        {
+          "role": "assistant",
+          "content": "Okay\u00e2\u20ac\u201dwhat should replace it?"
+        },
+        {
+          "role": "user",
+          "content": "Correction\u00e2\u20ac\u201duse this current version instead: In the opal scorebook, nadia is checking memory cards during the supply delivery; A mix uses water and concentrate in a 4:1 ratio. If the total is 30 cups, how many cups are water?"
+        }
+      ],
+      "answer": "24 cups.",
+      "difficulty": "compositional",
+      "multi_turn": true
+    },
+    {
+      "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s03__01088",
+      "group_id": "rineya_v3_family__percentage_reasoning__0136",
+      "split": "task",
+      "reply_class": "percentage_reasoning",
+      "messages": [
+        {
+          "role": "system",
+          "content": "Use only the facts stated in the conversation. Reason silently and return the compact final answer; when the result is not supported, say so briefly instead of guessing."
+        },
+        {
+          "role": "user",
+          "content": "We are checking one decision for Stonecrop Finance's safety drill."
+        },
+        {
+          "role": "assistant",
+          "content": "What is the current fact?"
+        },
+        {
+          "role": "user",
+          "content": "In the rainy dispatch, one practical check for Stonecrop Finance's safety drill: The paint tubes budget is 100 units. It is reduced by 10%. What remains?"
+        }
+      ],
+      "answer": "90.",
+      "difficulty": "intermediate",
+      "multi_turn": true
+    },
+    {
+      "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s02__00743",
+      "group_id": "rineya_v3_family__percentage_reasoning__0092",
+      "split": "task",
+      "reply_class": "percentage_reasoning",
+      "messages": [
+        {
+          "role": "system",
+          "content": "Read the full thread, silently resolve the stated constraints, and answer briefly. If the evidence does not determine the result, give an explicit knowledge boundary."
+        },
+        {
+          "role": "user",
+          "content": "In the juniper brief, for Inkstone Press's parent meeting at the practice field, the social crew at the practice field needs this resolved: What is a 25% tip on a $20 bill?"
+        }
+      ],
+      "answer": "$5.",
+      "difficulty": "basic",
+      "multi_turn": false
+    },
+    {
+      "id": "rineya_v3_sft__time_duration__reas_time_duration_s07__02144",
+      "group_id": "rineya_v3_family__time_duration__0268",
+      "split": "task",
+      "reply_class": "time_duration",
+      "messages": [
+        {
+          "role": "system",
+          "content": "Use only the facts stated in the conversation. Reason silently and return the compact final answer; when the result is not supported, say so briefly instead of guessing."
+        },
+        {
+          "role": "user",
+          "content": "Earlier note: The tournament setup starts at 7:15 AM and lasts 25 minutes. End time?"
+        },
+        {
+          "role": "assistant",
+          "content": "I will wait for the corrected state."
+        },
+        {
+          "role": "user",
+          "content": "Current correction for tournament setup: In the windy planning note, at the planetarium lobby, the current note for Frostline Shipping reads: The tournament setup starts at 9:15 AM and lasts 25 minutes. End time?"
+        }
+      ],
+      "answer": "9:40 AM.",
+      "difficulty": "compositional",
+      "multi_turn": true
+    },
+    {
+      "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00530",
+      "group_id": "rineya_v3_family__percentage_reasoning__0066",
+      "split": "task",
+      "reply_class": "percentage_reasoning",
+      "messages": [
+        {
+          "role": "system",
+          "content": "Use only the facts stated in the conversation. Reason silently and return the compact final answer; when the result is not supported, say so briefly instead of guessing."
+        },
+        {
+          "role": "user",
+          "content": "In the tidal worksheet, this came up during the sports practice for Osprey Reading Room: A score rises from 40 to 48. What is the percent increase?"
+        }
+      ],
+      "answer": "20%.",
+      "difficulty": "basic",
+      "multi_turn": false
+    },
+    {
+      "id": "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s00__00016",
+      "group_id": "rineya_v3_family__ratio_proportion__0002",
+      "split": "task",
+      "reply_class": "ratio_proportion",
+      "messages": [
+        {
+          "role": "system",
+          "content": "Solve from the supplied information without showing the derivation. Return a few words or one compact sentence, and do not fabricate missing details."
+        },
+        {
+          "role": "user",
+          "content": "In the amber memo, the costume racks entry under review at Cloudberry Home says: The ratio of practice cones to timing chips is 2:3, with 15 items total. How many are timing chips?"
+        }
+      ],
+      "answer": "9.",
+      "difficulty": "basic",
+      "multi_turn": false
+    },
+    {
+      "id": "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s09__02914",
+      "group_id": "rineya_v3_family__ratio_proportion__0364",
+      "split": "task",
+      "reply_class": "ratio_proportion",
+      "messages": [
+        {
+          "role": "system",
+          "content": "Solve from the supplied information without showing the derivation. Return a few words or one compact sentence, and do not fabricate missing details."
+        },
+        {
+          "role": "user",
+          "content": "Earlier note: The ratio of practice cones to timing chips is 1:3, with 25 items total. How many are timing chips?"
+        },
+        {
+          "role": "assistant",
+          "content": "I will wait for the corrected state."
+        },
+        {
+          "role": "user",
+          "content": "Current correction for transit update: In the cobalt work order, at Oakline School, the transit update now depends on one point: The ratio of practice cones to timing chips is 2:3, with 25 items total. How many are timing chips?"
+        }
+      ],
+      "answer": "15.",
+      "difficulty": "compositional",
+      "multi_turn": true
+    },
+    {
+      "id": "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s00__00198",
+      "group_id": "rineya_v3_family__ratio_proportion__0024",
+      "split": "task",
+      "reply_class": "ratio_proportion",
+      "messages": [
+        {
+          "role": "system",
+          "content": "Solve from the supplied information without showing the derivation. Return a few words or one compact sentence, and do not fabricate missing details."
+        },
+        {
+          "role": "user",
+          "content": "In the windy memo, for Northstar Repair's arts showcase at the climbing gym, the health safety crew at the climbing gym needs this resolved: A printer makes 20 pages in 20 minutes. At the same rate, how many pages in 40 minutes?"
+        }
+      ],
+      "answer": "40 pages.",
+      "difficulty": "basic",
+      "multi_turn": false
+    },
+    {
+      "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02340",
+      "group_id": "rineya_v3_family__percentage_reasoning__0292",
+      "split": "task",
+      "reply_class": "percentage_reasoning",
+      "messages": [
+        {
+          "role": "system",
+          "content": "Use only the facts stated in the conversation. Reason silently and return the compact final answer; when the result is not supported, say so briefly instead of guessing."
+        },
+        {
+          "role": "user",
+          "content": "The earlier inventory count note for Osprey Reading Room said: A value of 202 increases by 20%. What is the new value?"
+        },
+        {
+          "role": "assistant",
+          "content": "Okay\u00e2\u20ac\u201dthat is the draft state."
+        },
+        {
+          "role": "user",
+          "content": "Ansel just checked the practice cones record."
+        },
+        {
+          "role": "assistant",
+          "content": "What is the corrected version?"
+        },
+        {
+          "role": "user",
+          "content": "Correction\u00e2\u20ac\u201duse this current version instead: In the frost logbook, for Osprey Reading Room's inventory count at the reading loft, for the inventory count handoff, rely on this statement: A value of 200 increases by 20%. What is the new value?"
+        }
+      ],
+      "answer": "240.",
+      "difficulty": "compositional",
+      "multi_turn": true
+    },
+    {
+      "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02274",
+      "group_id": "rineya_v3_family__percentage_reasoning__0284",
+      "split": "task",
+      "reply_class": "percentage_reasoning",
+      "messages": [
+        {
+          "role": "system",
+          "content": "Solve from the supplied information without showing the derivation. Return a few words or one compact sentence, and do not fabricate missing details."
+        },
+        {
+          "role": "user",
+          "content": "The earlier coding sprint note for Yarrow Field Team said: What is a 25% tip on a $20 bill?"
+        },
+        {
+          "role": "assistant",
+          "content": "I have the earlier version."
+        },
+        {
+          "role": "user",
+          "content": "The survey camp coordinator found a correction."
+        },
+        {
+          "role": "assistant",
+          "content": "What is the corrected version?"
+        },
+        {
+          "role": "user",
+          "content": "Correction\u00e2\u20ac\u201duse this current version instead: In the vernal logbook, for Yarrow Field Team's coding sprint at the survey camp, the home crew at the survey camp needs this resolved: What is a 15% tip on a $20 bill?"
+        }
+      ],
+      "answer": "$3.",
+      "difficulty": "compositional",
+      "multi_turn": true
+    },
+    {
+      "id": "rineya_v3_sft__time_duration__reas_time_duration_s09__02883",
+      "group_id": "rineya_v3_family__time_duration__0360",
+      "split": "task",
+      "reply_class": "time_duration",
+      "messages": [
+        {
+          "role": "system",
+          "content": "Read the full thread, silently resolve the stated constraints, and answer briefly. If the evidence does not determine the result, give an explicit knowledge boundary."
+        },
+        {
+          "role": "user",
+          "content": "The earlier transit update note for Goldcrest Choir said: Travel begins at 19:15 AM and ends at 10:15 AM. Duration?"
+        },
+        {
+          "role": "assistant",
+          "content": "Noted, but I will wait for the current one."
+        },
+        {
+          "role": "user",
+          "content": "Esme just checked the radio packs record."
+        },
+        {
+          "role": "assistant",
+          "content": "Send the current facts."
+        },
+        {
+          "role": "user",
+          "content": "Correction\u00e2\u20ac\u201duse this current version instead: In the granite supply record, for Goldcrest Choir's transit update at the garden pavilion, the current field note from the garden pavilion says: Travel begins at 9:15 AM and ends at 10:15 AM. Duration?"
+        }
+      ],
+      "answer": "60 minutes.",
+      "difficulty": "compositional",
+      "multi_turn": true
+    },
+    {
+      "id": "rineya_v3_sft__time_duration__reas_time_duration_s06__01913",
+      "group_id": "rineya_v3_family__time_duration__0239",
+      "split": "task",
+      "reply_class": "time_duration",
+      "messages": [
+        {
+          "role": "system",
+          "content": "Use only the facts stated in the conversation. Reason silently and return the compact final answer; when the result is not supported, say so briefly instead of guessing."
+        },
+        {
+          "role": "user",
+          "content": "We are checking one decision for Yellowbrick Arts's research note review."
+        },
+        {
+          "role": "assistant",
+          "content": "What is the current fact?"
+        },
+        {
+          "role": "user",
+          "content": "In the frost survey page, the team handling sample vials at the trailhead shelter asks: The research note review starts at 9:15 AM and lasts 40 minutes. End time?"
+        }
+      ],
+      "answer": "9:55 AM.",
+      "difficulty": "intermediate",
+      "multi_turn": true
+    },
+    {
+      "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s09__02722",
+      "group_id": "rineya_v3_family__percentage_reasoning__0340",
+      "split": "task",
+      "reply_class": "percentage_reasoning",
+      "messages": [
+        {
+          "role": "system",
+          "content": "Solve from the supplied information without showing the derivation. Return a few words or one compact sentence, and do not fabricate missing details."
+        },
+        {
+          "role": "user",
+          "content": "The earlier community workshop note for Poppyseed Market said: A score rises from 10 to 22. What is the percent increase?"
+        },
+        {
+          "role": "assistant",
+          "content": "Noted, but I will wait for the current one."
+        },
+        {
+          "role": "user",
+          "content": "Eamon just checked the transit passes record."
+        },
+        {
+          "role": "assistant",
+          "content": "Send the current facts."
+        },
+        {
+          "role": "user",
+          "content": "Correction\u00e2\u20ac\u201duse this current version instead: In the fern memo, for Poppyseed Market's community workshop at the rooftop court, eamon replaced the earlier note with this one: A score rises from 20 to 22. What is the percent increase?"
+        }
+      ],
+      "answer": "10%.",
+      "difficulty": "compositional",
+      "multi_turn": true
+    },
+    {
+      "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s05__01657",
+      "group_id": "rineya_v3_family__percentage_reasoning__0207",
+      "split": "task",
+      "reply_class": "percentage_reasoning",
+      "messages": [
+        {
+          "role": "system",
+          "content": "Use only the facts stated in the conversation. Reason silently and return the compact final answer; when the result is not supported, say so briefly instead of guessing."
+        },
+        {
+          "role": "user",
+          "content": "We are checking one decision for Junebug Transit's release rehearsal."
+        },
+        {
+          "role": "assistant",
+          "content": "What is the current fact?"
+        },
+        {
+          "role": "user",
+          "content": "In the quiet handoff, during Junebug Transit's release rehearsal, Eamon asks: The plant markers budget is 120 units. It is reduced by 20%. What remains?"
+        }
+      ],
+      "answer": "96.",
+      "difficulty": "intermediate",
+      "multi_turn": true
+    },
+    {
+      "id": "rineya_v3_sft__time_duration__reas_time_duration_s09__02982",
+      "group_id": "rineya_v3_family__time_duration__0372",
+      "split": "task",
+      "reply_class": "time_duration",
+      "messages": [
+        {
+          "role": "system",
+          "content": "Solve from the supplied information without showing the derivation. Return a few words or one compact sentence, and do not fabricate missing details."
+        },
+        {
+          "role": "user",
+          "content": "The earlier coding sprint note for Larkspur Observatory said: A meeting starts at 10:45 AM and lasts 35 minutes. When does it end?"
+        },
+        {
+          "role": "assistant",
+          "content": "Okay\u00e2\u20ac\u201dthat is the draft state."
+        },
+        {
+          "role": "user",
+          "content": "The survey camp coordinator found a correction."
+        },
+        {
+          "role": "assistant",
+          "content": "Send the current facts."
+        },
+        {
+          "role": "user",
+          "content": "Correction\u00e2\u20ac\u201duse this current version instead: In the sunlit supply record, at the survey camp, the current note for Larkspur Observatory reads: A meeting starts at 11:45 AM and lasts 35 minutes. When does it end?"
+        }
+      ],
+      "answer": "12:20 PM.",
+      "difficulty": "compositional",
+      "multi_turn": true
+    },
+    {
+      "id": "rineya_v3_sft__time_duration__reas_time_duration_s06__01859",
+      "group_id": "rineya_v3_family__time_duration__0232",
+      "split": "task",
+      "reply_class": "time_duration",
+      "messages": [
+        {
+          "role": "system",
+          "content": "Read the full thread, silently resolve the stated constraints, and answer briefly. If the evidence does not determine the result, give an explicit knowledge boundary."
+        },
+        {
+          "role": "user",
+          "content": "We are checking one decision for Quarry House's sports practice."
+        },
+        {
+          "role": "assistant",
+          "content": "What is the current fact?"
+        },
+        {
+          "role": "user",
+          "content": "In the windy survey page, for Quarry House's sports practice at the bus depot, before Jasper closes the sports practice, one detail remains: The sports practice starts at 9:15 AM and lasts 70 minutes. End time?"
+        }
+      ],
+      "answer": "10:25 AM.",
+      "difficulty": "intermediate",
+      "multi_turn": true
+    },
+    {
+      "id": "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s07__02237",
+      "group_id": "rineya_v3_family__ratio_proportion__0279",
+      "split": "task",
+      "reply_class": "ratio_proportion",
+      "messages": [
+        {
+          "role": "system",
+          "content": "Use only the facts stated in the conversation. Reason silently and return the compact final answer; when the result is not supported, say so briefly instead of guessing."
+        },
+        {
+          "role": "user",
+          "content": "The earlier transit update note for Junebug Transit said: The ratio of red to blue route cards is 2:4, with 77 route cards total. How many are blue?"
+        },
+        {
+          "role": "assistant",
+          "content": "Noted, but I will wait for the current one."
+        },
+        {
+          "role": "user",
+          "content": "The garden pavilion coordinator found a correction."
+        },
+        {
+          "role": "assistant",
+          "content": "What is the corrected version?"
+        },
+        {
+          "role": "user",
+          "content": "Correction\u00e2\u20ac\u201duse this current version instead: In the blue-hour scorebook, one practical check for Junebug Transit's transit update: The ratio of red to blue route cards is 3:4, with 77 route cards total. How many are blue?"
+        }
+      ],
+      "answer": "44.",
+      "difficulty": "compositional",
+      "multi_turn": true
+    },
+    {
+      "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00394",
+      "group_id": "rineya_v3_family__percentage_reasoning__0049",
+      "split": "task",
+      "reply_class": "percentage_reasoning",
+      "messages": [
+        {
+          "role": "system",
+          "content": "Read the full thread, silently resolve the stated constraints, and answer briefly. If the evidence does not determine the result, give an explicit knowledge boundary."
+        },
+        {
+          "role": "user",
+          "content": "In the cobalt worksheet, for Nettlebrook Parents's studio booking at the harbor platform, to finish the studio booking, use this exact version: What is a 15% tip on a $40 bill?"
+        }
+      ],
+      "answer": "$6.",
+      "difficulty": "basic",
+      "multi_turn": false
+    },
+    {
+      "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s05__01654",
+      "group_id": "rineya_v3_family__percentage_reasoning__0206",
+      "split": "task",
+      "reply_class": "percentage_reasoning",
+      "messages": [
+        {
+          "role": "system",
+          "content": "Use only the facts stated in the conversation. Reason silently and return the compact final answer; when the result is not supported, say so briefly instead of guessing."
+        },
+        {
+          "role": "user",
+          "content": "I'm handling repair intake for Marigold Commons at the parent pickup zone."
+        },
+        {
+          "role": "assistant",
+          "content": "What is the current detail?"
+        },
+        {
+          "role": "user",
+          "content": "In the prairie handoff, during Marigold Commons's repair intake, Ansel asks: A quantity of 100 decreases by 10%. What remains?"
+        }
+      ],
+      "answer": "90.",
+      "difficulty": "intermediate",
+      "multi_turn": true
+    },
+    {
+      "id": "rineya_v3_sft__time_duration__reas_time_duration_s07__02195",
+      "group_id": "rineya_v3_family__time_duration__0274",
+      "split": "task",
+      "reply_class": "time_duration",
+      "messages": [
+        {
+          "role": "system",
+          "content": "Work out the answer internally, then give only a short conclusion. Follow later corrections, use no outside facts, and state insufficiency when one answer cannot be determined."
+        },
+        {
+          "role": "user",
+          "content": "Earlier note: The weather contingency starts at 14:15 AM and lasts 70 minutes. End time?"
+        },
+        {
+          "role": "assistant",
+          "content": "I will wait for the corrected state."
+        },
+        {
+          "role": "user",
+          "content": "Current correction for weather contingency: In the early planning note, the north concourse coordinator marked this as the live version: The weather contingency starts at 9:15 AM and lasts 70 minutes. End time?"
+        }
+      ],
+      "answer": "10:25 AM.",
+      "difficulty": "compositional",
+      "multi_turn": true
+    },
+    {
+      "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s09__02955",
+      "group_id": "rineya_v3_family__percentage_reasoning__0369",
+      "split": "task",
+      "reply_class": "percentage_reasoning",
+      "messages": [
+        {
+          "role": "system",
+          "content": "Use only the facts stated in the conversation. Reason silently and return the compact final answer; when the result is not supported, say so briefly instead of guessing."
+        },
+        {
+          "role": "user",
+          "content": "The earlier meal-prep shift note for Silver Orchard said: A score rises from 82 to 100. What is the percent increase?"
+        },
+        {
+          "role": "assistant",
+          "content": "Okay\u00e2\u20ac\u201dthat is the draft state."
+        },
+        {
+          "role": "user",
+          "content": "One fact in that version was stale."
+        },
+        {
+          "role": "assistant",
+          "content": "Okay\u00e2\u20ac\u201dwhat should replace it?"
+        },
+        {
+          "role": "user",
+          "content": "Correction\u00e2\u20ac\u201duse this current version instead: In the morning memo, for Silver Orchard's meal-prep shift at the ceramics wing, the recipe cards log says: A score rises from 80 to 100. What is the percent increase?"
+        }
+      ],
+      "answer": "25%.",
+      "difficulty": "compositional",
+      "multi_turn": true
+    },
+    {
+      "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02241",
+      "group_id": "rineya_v3_family__percentage_reasoning__0280",
+      "split": "task",
+      "reply_class": "percentage_reasoning",
+      "messages": [
+        {
+          "role": "system",
+          "content": "Work out the answer internally, then give only a short conclusion. Follow later corrections, use no outside facts, and state insufficiency when one answer cannot be determined."
+        },
+        {
+          "role": "user",
+          "content": "The earlier equipment handoff note for Garnet Athletics said: 101 of 160 tasks are complete. What percentage is that?"
+        },
+        {
+          "role": "assistant",
+          "content": "I have the earlier version."
+        },
+        {
+          "role": "user",
+          "content": "One fact in that version was stale."
+        },
+        {
+          "role": "assistant",
+          "content": "Send the current facts."
+        },
+        {
+          "role": "user",
+          "content": "Correction\u00e2\u20ac\u201duse this current version instead: In the rainy logbook, garnet Athletics is updating the seed trays plan; 96 of 160 tasks are complete. What percentage is that?"
+        }
+      ],
+      "answer": "60%.",
+      "difficulty": "compositional",
+      "multi_turn": true
+    },
+    {
+      "id": "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s09__02779",
+      "group_id": "rineya_v3_family__ratio_proportion__0347",
+      "split": "task",
+      "reply_class": "ratio_proportion",
+      "messages": [
+        {
+          "role": "system",
+          "content": "Solve from the supplied information without showing the derivation. Return a few words or one compact sentence, and do not fabricate missing details."
+        },
+        {
+          "role": "user",
+          "content": "Earlier note: The ratio of practice cones to timing chips is 4:3, with 30 items total. How many are timing chips?"
+        },
+        {
+          "role": "assistant",
+          "content": "I will wait for the corrected state."
+        },
+        {
+          "role": "user",
+          "content": "Current correction for sports practice: In the vernal schedule card, corin is checking relay modules during the sports practice; The ratio of practice cones to timing chips is 2:3, with 30 items total. How many are timing chips?"
+        }
+      ],
+      "answer": "18.",
+      "difficulty": "compositional",
+      "multi_turn": true
+    },
+    {
+      "id": "rineya_v3_sft__time_duration__reas_time_duration_s09__02907",
+      "group_id": "rineya_v3_family__time_duration__0363",
+      "split": "task",
+      "reply_class": "time_duration",
+      "messages": [
+        {
+          "role": "system",
+          "content": "Solve from the supplied information without showing the derivation. Return a few words or one compact sentence, and do not fabricate missing details."
+        },
+        {
+          "role": "user",
+          "content": "Earlier note: The equipment handoff starts at 10:15 AM and lasts 70 minutes. End time?"
+        },
+        {
+          "role": "assistant",
+          "content": "I will wait for the corrected state."
+        },
+        {
+          "role": "user",
+          "content": "Current correction for equipment handoff: In the juniper supply record, a last check from the gallery storeroom: The equipment handoff starts at 9:15 AM and lasts 70 minutes. End time?"
+        }
+      ],
+      "answer": "10:25 AM.",
+      "difficulty": "compositional",
+      "multi_turn": true
+    },
+    {
+      "id": "rineya_v3_sft__time_duration__reas_time_duration_s01__00553",
+      "group_id": "rineya_v3_family__time_duration__0069",
+      "split": "task",
+      "reply_class": "time_duration",
+      "messages": [
+        {
+          "role": "system",
+          "content": "Solve from the supplied information without showing the derivation. Return a few words or one compact sentence, and do not fabricate missing details."
+        },
+        {
+          "role": "user",
+          "content": "In the dawn memo, for Dunewatch Survey's field sampling run at the west atrium, for the field sampling run handoff, rely on this statement: A task starts at 11:15 AM and finishes at 11:55 AM. How many minutes?"
+        }
+      ],
+      "answer": "40 minutes.",
+      "difficulty": "basic",
+      "multi_turn": false
+    },
+    {
+      "id": "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s09__02784",
+      "group_id": "rineya_v3_family__ratio_proportion__0348",
+      "split": "task",
+      "reply_class": "ratio_proportion",
+      "messages": [
+        {
+          "role": "system",
+          "content": "Use only the facts stated in the conversation. Reason silently and return the compact final answer; when the result is not supported, say so briefly instead of guessing."
+        },
+        {
+          "role": "user",
+          "content": "The earlier science demonstration note for Yellowbrick Arts said: 10 workers each pack 6 transit passes. At the same individual rate, how many transit passes do 6 workers pack?"
+        },
+        {
+          "role": "assistant",
+          "content": "I have the earlier version."
+        },
+        {
+          "role": "user",
+          "content": "One fact in that version was stale."
+        },
+        {
+          "role": "assistant",
+          "content": "Send the current facts."
+        },
+        {
+          "role": "user",
+          "content": "Correction\u00e2\u20ac\u201duse this current version instead: In the windy schedule card, during Yellowbrick Arts's science demonstration, Adela asks: 5 workers each pack 6 transit passes. At the same individual rate, how many transit passes do 6 workers pack?"
+        }
+      ],
+      "answer": "36 display panels.",
+      "difficulty": "compositional",
+      "multi_turn": true
+    },
+    {
+      "id": "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__00998",
+      "group_id": "rineya_v3_family__ratio_proportion__0124",
+      "split": "task",
+      "reply_class": "ratio_proportion",
+      "messages": [
+        {
+          "role": "system",
+          "content": "Solve from the supplied information without showing the derivation. Return a few words or one compact sentence, and do not fabricate missing details."
+        },
+        {
+          "role": "user",
+          "content": "I'm handling release rehearsal for Emberglass Museum at the observatory deck."
+        },
+        {
+          "role": "assistant",
+          "content": "Send the live version."
+        },
+        {
+          "role": "user",
+          "content": "In the opal status sheet, for Emberglass Museum's release rehearsal at the observatory deck, the current field note from the observatory deck says: The ratio of red to blue safety helmets is 3:5, with 24 safety helmets total. How many are blue?"
+        }
+      ],
+      "answer": "15.",
+      "difficulty": "intermediate",
+      "multi_turn": true
+    },
+    {
+      "id": "rineya_v3_sft__time_duration__reas_time_duration_s04__01259",
+      "group_id": "rineya_v3_family__time_duration__0157",
+      "split": "task",
+      "reply_class": "time_duration",
+      "messages": [
+        {
+          "role": "system",
+          "content": "Use only the facts stated in the conversation. Reason silently and return the compact final answer; when the result is not supported, say so briefly instead of guessing."
+        },
+        {
+          "role": "user",
+          "content": "In the tidal roster, for Larkspur Observatory's safety drill at the civic counter, the paint tubes log says: A meeting starts at 10:25 AM and lasts 35 minutes. When does it end? Keep the answer usable for Lucian."
+        }
+      ],
+      "answer": "11:00 AM.",
+      "difficulty": "intermediate",
+      "multi_turn": false
+    },
+    {
+      "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s02__00834",
+      "group_id": "rineya_v3_family__percentage_reasoning__0104",
+      "split": "task",
+      "reply_class": "percentage_reasoning",
+      "messages": [
+        {
+          "role": "system",
+          "content": "Solve from the supplied information without showing the derivation. Return a few words or one compact sentence, and do not fabricate missing details."
+        },
+        {
+          "role": "user",
+          "content": "We are checking one decision for Firefly Kitchens's repair intake."
+        },
+        {
+          "role": "assistant",
+          "content": "What is the current fact?"
+        },
+        {
+          "role": "user",
+          "content": "In the vernal brief, at the parent pickup zone, the current note for Firefly Kitchens reads: The tool cases budget is 100 units. It is reduced by 25%. What remains?"
+        }
+      ],
+      "answer": "75.",
+      "difficulty": "intermediate",
+      "multi_turn": true
+    },
+    {
+      "id": "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s05__01635",
+      "group_id": "rineya_v3_family__ratio_proportion__0204",
+      "split": "task",
+      "reply_class": "ratio_proportion",
+      "messages": [
+        {
+          "role": "system",
+          "content": "Read the full thread, silently resolve the stated constraints, and answer briefly. If the evidence does not determine the result, give an explicit knowledge boundary."
+        },
+        {
+          "role": "user",
+          "content": "In the windy planning note, for Larkspur Observatory's home repair visit at the orchard shed, before Petra closes the home repair visit, one detail remains: A mix uses water and concentrate in a 3:2 ratio. If the total is 60 cups, how many cups are water? Keep the answer usable for Petra."
+        }
+      ],
+      "answer": "36 cups.",
+      "difficulty": "intermediate",
+      "multi_turn": false
+    }
+  ],
+  "source_files_sha256": {
+    "dev.jsonl": "2a62976507628eef4fca1d6c6c613c040ab3e2fc504eee6c51f1945a2196b58e",
+    "train.jsonl": "7b09a5dcfcd1395b602930b885dbcd9b57cd2fdd92be6c36a16170a6f976ff46",
+    "SPLIT_MANIFEST.json": "0890f85891b7c3c03ab3a2565007098a19d32711c8fd5e22b42f0754451b0bdf"
+  },
+  "selected_rows_sha256": "3e1ec82e4de837526264633921e520551dfb643e94db89cf966f53ed593f3579",
+  "no_candidate_scores_observed": true
+}

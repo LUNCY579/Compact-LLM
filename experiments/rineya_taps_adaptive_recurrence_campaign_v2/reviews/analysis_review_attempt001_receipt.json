@@ -1,0 +1,44 @@
+{
+  "schema_version": "1.0",
+  "reviewer": "/root/adversarial_review",
+  "created_utc": "2026-10-02T04:34:51.5146426Z",
+  "status": "PASS_INDEPENDENT_BLOCKED_ATTEMPT_RECOMPUTATION",
+  "run": "runs/native-reference-001",
+  "native_model_loads": 0,
+  "protected_or_test_reads": false,
+  "source_analyzer_frozen_before_invocation": "reviews/analysis_review_receipt.json",
+  "input_sha256": {
+    "resources": "dd7ffe88e63be0ae4c922c9cc2df8d54b398d36597546f2f047699ea7dfffe11",
+    "worker": "5e204ff2f8501a8456e27c8d55b47bb73d95533d8a6881b449dd0c242e1546ca",
+    "analyzed_report": "dfad12136a5e3f31fae6f1e31b3642def87b51fb9b5c1afcdb380ab67b235930",
+    "preflight": "4fb48b6f551a296556044aa6ee05b073c109e590e86f12189909904be8d2cd55",
+    "budget_snapshot": "32ab02dc10eb20fbdc611180726407348e40b6047949a439f6cc40472264bc17"
+  },
+  "independently_recomputed": {
+    "native_model_inference_runs": 0,
+    "worker_exit_code": 2,
+    "cumulative_native_worker_seconds": 18.73399999999674,
+    "remaining_native_seconds": 21581.266000000003,
+    "required_exact_lane_ram_bytes": 7945689498,
+    "available_ram_bytes": 7895195648,
+    "resource_sample_count": 16,
+    "planned_physical_evaluations": 392,
+    "physical_evaluation_rows": 0,
+    "ram_shortfall_bytes": 50493850,
+    "sampled_worker_tree_peak_rss_bytes": 866652160.0,
+    "primary_metrics_null": true,
+    "worker_seconds": 18.73399999999674,
+    "peak_vram_bytes": null
+  },
+  "interpretation": "BLOCKED_NATIVE_QUALIFICATION before checkpoint load; no efficacy/task/recurrence measurement. Empty outcome-row sums are journal subtotals; worker import/hash costs remain charged.",
+  "retry_scope": {
+    "required_new_run_directory": true,
+    "required_new_source_bound_admission_review": true,
+    "reason": "Pre-import host RAM admission forecast did not reserve dependency-import memory; exact native preflight refused before model/data measurements",
+    "required_parent_prelaunch_floor": "8.4GiB includes unchanged7.4GiB exact lane floor plus1GiB import reserve",
+    "scientific_configuration": "must remain exact frozen original matrix/runtime/operator/data/scorer",
+    "repeated_unchanged_blocker_relaunches": "NOT_PERMITTED",
+    "disposition": "ONE_IDENTIFIED_INFRASTRUCTURE_RETRY_PERMITTED_AFTER_FRESH_REVIEWED_READINESS",
+    "numerical_or_scientific_failure_retry": "NOT_PERMITTED"
+  }
+}

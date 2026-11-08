@@ -1,0 +1,841 @@
+{
+  "assets": {
+    "config.json": {
+      "bytes": 726,
+      "sha256": "660db3b73d788119c04535e48cf9be5f55bc3100841a718637ae695b442f27dd"
+    },
+    "generation_config.json": {
+      "bytes": 239,
+      "sha256": "2325da0f15bb848e018c5ae071b7943332e9f871d6b60e2ed22ca97d4cb993d2"
+    },
+    "merges.txt": {
+      "bytes": 1671853,
+      "sha256": "8831e4f1a044471340f7c0a83d7bd71306a5b867e95fd870f74d0c5308a904d5"
+    },
+    "model.safetensors": {
+      "bytes": 1192135096,
+      "sha256": "e726d6bea1139eddfbcdadeb4c8d7b979e7a55e43490d9787ab99a3ab12ee76b"
+    },
+    "tokenizer.json": {
+      "bytes": 11422654,
+      "sha256": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4"
+    },
+    "tokenizer_config.json": {
+      "bytes": 9732,
+      "sha256": "d5d09f07b48c3086c508b30d1c9114bd1189145b74e982a265350c923acd8101"
+    },
+    "vocab.json": {
+      "bytes": 2776833,
+      "sha256": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910"
+    }
+  },
+  "fixture_canonical_sha256": {
+    "calibration": "57595fdebc4f1ae4ffa17bd309267a00630dd2817d6e2c407bd95a252e3c8a3b",
+    "check": "e5a9fa8d77fee098d88b0c767603725e9efd96dda85f91e8b43cdeefa84b22fb"
+  },
+  "job_prompts_sha256": {
+    "calibrate": {
+      "baseline56": "9313aa4cdb45c0401a8514e9c089c8938ef19905e7bb9c051d4276908620ce66",
+      "formatted64": "f7d8e1daf3395c12f0b41b5f59f257d791368d83d1e3cc53707da6b3325de3f1"
+    },
+    "check": {
+      "baseline128": "9751735bdc0ba3a98ece08147718715927ac1e80007f9565ea8622811bf5e102",
+      "formatted128": "eae757163a3f276e572abb4e8cf38bf3348a70a839a43a53b6fd9b21eb2cd0b1"
+    },
+    "qualify": {
+      "off8": "52962b79ef1febcd244ac36a213e4e9430a3db364dd1a8613bef626ec53f6e3f",
+      "on8": "52962b79ef1febcd244ac36a213e4e9430a3db364dd1a8613bef626ec53f6e3f",
+      "repeat8": "52962b79ef1febcd244ac36a213e4e9430a3db364dd1a8613bef626ec53f6e3f"
+    }
+  },
+  "licenses_efficacy_claim": false,
+  "licenses_release": false,
+  "licenses_retrieval_claim": false,
+  "licenses_training": false,
+  "official_eos_ids": [
+    151645,
+    151643
+  ],
+  "prompt_canonical_sha256": {
+    "calibration_baseline": "22cca7394cfdc523c16a9ba5d71809b8da48d8d5092db726329d3a471d2b4203",
+    "calibration_formatted": "f7d8e1daf3395c12f0b41b5f59f257d791368d83d1e3cc53707da6b3325de3f1",
+    "check_baseline": "9751735bdc0ba3a98ece08147718715927ac1e80007f9565ea8622811bf5e102",
+    "check_formatted": "eae757163a3f276e572abb4e8cf38bf3348a70a839a43a53b6fd9b21eb2cd0b1"
+  },
+  "protocol": "OPALLO-BEH-001",
+  "review_rows": [
+    {
+      "id": "OB1-calibration-00-base",
+      "scenario_id": "OB1-calibration-00"
+    },
+    {
+      "id": "OB1-calibration-00-paraphrase",
+      "scenario_id": "OB1-calibration-00"
+    },
+    {
+      "id": "OB1-calibration-00-counterfactual",
+      "scenario_id": "OB1-calibration-00"
+    },
+    {
+      "id": "OB1-calibration-00-unanswerable",
+      "scenario_id": "OB1-calibration-00"
+    },
+    {
+      "id": "OB1-calibration-01-base",
+      "scenario_id": "OB1-calibration-01"
+    },
+    {
+      "id": "OB1-calibration-01-paraphrase",
+      "scenario_id": "OB1-calibration-01"
+    },
+    {
+      "id": "OB1-calibration-01-counterfactual",
+      "scenario_id": "OB1-calibration-01"
+    },
+    {
+      "id": "OB1-calibration-01-unanswerable",
+      "scenario_id": "OB1-calibration-01"
+    },
+    {
+      "id": "OB1-calibration-02-base",
+      "scenario_id": "OB1-calibration-02"
+    },
+    {
+      "id": "OB1-calibration-02-paraphrase",
+      "scenario_id": "OB1-calibration-02"
+    },
+    {
+      "id": "OB1-calibration-02-counterfactual",
+      "scenario_id": "OB1-calibration-02"
+    },
+    {
+      "id": "OB1-calibration-02-unanswerable",
+      "scenario_id": "OB1-calibration-02"
+    },
+    {
+      "id": "OB1-calibration-03-base",
+      "scenario_id": "OB1-calibration-03"
+    },
+    {
+      "id": "OB1-calibration-03-paraphrase",
+      "scenario_id": "OB1-calibration-03"
+    },
+    {
+      "id": "OB1-calibration-03-counterfactual",
+      "scenario_id": "OB1-calibration-03"
+    },
+    {
+      "id": "OB1-calibration-03-unanswerable",
+      "scenario_id": "OB1-calibration-03"
+    },
+    {
+      "id": "OB1-calibration-04-base",
+      "scenario_id": "OB1-calibration-04"
+    },
+    {
+      "id": "OB1-calibration-04-paraphrase",
+      "scenario_id": "OB1-calibration-04"
+    },
+    {
+      "id": "OB1-calibration-04-counterfactual",
+      "scenario_id": "OB1-calibration-04"
+    },
+    {
+      "id": "OB1-calibration-04-unanswerable",
+      "scenario_id": "OB1-calibration-04"
+    },
+    {
+      "id": "OB1-calibration-05-base",
+      "scenario_id": "OB1-calibration-05"
+    },
+    {
+      "id": "OB1-calibration-05-paraphrase",
+      "scenario_id": "OB1-calibration-05"
+    },
+    {
+      "id": "OB1-calibration-05-counterfactual",
+      "scenario_id": "OB1-calibration-05"
+    },
+    {
+      "id": "OB1-calibration-05-unanswerable",
+      "scenario_id": "OB1-calibration-05"
+    },
+    {
+      "id": "OB1-calibration-06-base",
+      "scenario_id": "OB1-calibration-06"
+    },
+    {
+      "id": "OB1-calibration-06-paraphrase",
+      "scenario_id": "OB1-calibration-06"
+    },
+    {
+      "id": "OB1-calibration-06-counterfactual",
+      "scenario_id": "OB1-calibration-06"
+    },
+    {
+      "id": "OB1-calibration-06-unanswerable",
+      "scenario_id": "OB1-calibration-06"
+    },
+    {
+      "id": "OB1-calibration-07-base",
+      "scenario_id": "OB1-calibration-07"
+    },
+    {
+      "id": "OB1-calibration-07-paraphrase",
+      "scenario_id": "OB1-calibration-07"
+    },
+    {
+      "id": "OB1-calibration-07-counterfactual",
+      "scenario_id": "OB1-calibration-07"
+    },
+    {
+      "id": "OB1-calibration-07-unanswerable",
+      "scenario_id": "OB1-calibration-07"
+    },
+    {
+      "id": "OB1-calibration-08-base",
+      "scenario_id": "OB1-calibration-08"
+    },
+    {
+      "id": "OB1-calibration-08-paraphrase",
+      "scenario_id": "OB1-calibration-08"
+    },
+    {
+      "id": "OB1-calibration-08-counterfactual",
+      "scenario_id": "OB1-calibration-08"
+    },
+    {
+      "id": "OB1-calibration-08-unanswerable",
+      "scenario_id": "OB1-calibration-08"
+    },
+    {
+      "id": "OB1-calibration-09-base",
+      "scenario_id": "OB1-calibration-09"
+    },
+    {
+      "id": "OB1-calibration-09-paraphrase",
+      "scenario_id": "OB1-calibration-09"
+    },
+    {
+      "id": "OB1-calibration-09-counterfactual",
+      "scenario_id": "OB1-calibration-09"
+    },
+    {
+      "id": "OB1-calibration-09-unanswerable",
+      "scenario_id": "OB1-calibration-09"
+    },
+    {
+      "id": "OB1-calibration-10-base",
+      "scenario_id": "OB1-calibration-10"
+    },
+    {
+      "id": "OB1-calibration-10-paraphrase",
+      "scenario_id": "OB1-calibration-10"
+    },
+    {
+      "id": "OB1-calibration-10-counterfactual",
+      "scenario_id": "OB1-calibration-10"
+    },
+    {
+      "id": "OB1-calibration-10-unanswerable",
+      "scenario_id": "OB1-calibration-10"
+    },
+    {
+      "id": "OB1-calibration-11-base",
+      "scenario_id": "OB1-calibration-11"
+    },
+    {
+      "id": "OB1-calibration-11-paraphrase",
+      "scenario_id": "OB1-calibration-11"
+    },
+    {
+      "id": "OB1-calibration-11-counterfactual",
+      "scenario_id": "OB1-calibration-11"
+    },
+    {
+      "id": "OB1-calibration-11-unanswerable",
+      "scenario_id": "OB1-calibration-11"
+    },
+    {
+      "id": "OB1-calibration-12-base",
+      "scenario_id": "OB1-calibration-12"
+    },
+    {
+      "id": "OB1-calibration-12-paraphrase",
+      "scenario_id": "OB1-calibration-12"
+    },
+    {
+      "id": "OB1-calibration-12-counterfactual",
+      "scenario_id": "OB1-calibration-12"
+    },
+    {
+      "id": "OB1-calibration-12-unanswerable",
+      "scenario_id": "OB1-calibration-12"
+    },
+    {
+      "id": "OB1-calibration-13-base",
+      "scenario_id": "OB1-calibration-13"
+    },
+    {
+      "id": "OB1-calibration-13-paraphrase",
+      "scenario_id": "OB1-calibration-13"
+    },
+    {
+      "id": "OB1-calibration-13-counterfactual",
+      "scenario_id": "OB1-calibration-13"
+    },
+    {
+      "id": "OB1-calibration-13-unanswerable",
+      "scenario_id": "OB1-calibration-13"
+    },
+    {
+      "id": "OB1-calibration-14-base",
+      "scenario_id": "OB1-calibration-14"
+    },
+    {
+      "id": "OB1-calibration-14-paraphrase",
+      "scenario_id": "OB1-calibration-14"
+    },
+    {
+      "id": "OB1-calibration-14-counterfactual",
+      "scenario_id": "OB1-calibration-14"
+    },
+    {
+      "id": "OB1-calibration-14-unanswerable",
+      "scenario_id": "OB1-calibration-14"
+    },
+    {
+      "id": "OB1-calibration-15-base",
+      "scenario_id": "OB1-calibration-15"
+    },
+    {
+      "id": "OB1-calibration-15-paraphrase",
+      "scenario_id": "OB1-calibration-15"
+    },
+    {
+      "id": "OB1-calibration-15-counterfactual",
+      "scenario_id": "OB1-calibration-15"
+    },
+    {
+      "id": "OB1-calibration-15-unanswerable",
+      "scenario_id": "OB1-calibration-15"
+    },
+    {
+      "id": "OB1-check-00-base",
+      "scenario_id": "OB1-check-00"
+    },
+    {
+      "id": "OB1-check-00-paraphrase",
+      "scenario_id": "OB1-check-00"
+    },
+    {
+      "id": "OB1-check-00-counterfactual",
+      "scenario_id": "OB1-check-00"
+    },
+    {
+      "id": "OB1-check-00-unanswerable",
+      "scenario_id": "OB1-check-00"
+    },
+    {
+      "id": "OB1-check-01-base",
+      "scenario_id": "OB1-check-01"
+    },
+    {
+      "id": "OB1-check-01-paraphrase",
+      "scenario_id": "OB1-check-01"
+    },
+    {
+      "id": "OB1-check-01-counterfactual",
+      "scenario_id": "OB1-check-01"
+    },
+    {
+      "id": "OB1-check-01-unanswerable",
+      "scenario_id": "OB1-check-01"
+    },
+    {
+      "id": "OB1-check-02-base",
+      "scenario_id": "OB1-check-02"
+    },
+    {
+      "id": "OB1-check-02-paraphrase",
+      "scenario_id": "OB1-check-02"
+    },
+    {
+      "id": "OB1-check-02-counterfactual",
+      "scenario_id": "OB1-check-02"
+    },
+    {
+      "id": "OB1-check-02-unanswerable",
+      "scenario_id": "OB1-check-02"
+    },
+    {
+      "id": "OB1-check-03-base",
+      "scenario_id": "OB1-check-03"
+    },
+    {
+      "id": "OB1-check-03-paraphrase",
+      "scenario_id": "OB1-check-03"
+    },
+    {
+      "id": "OB1-check-03-counterfactual",
+      "scenario_id": "OB1-check-03"
+    },
+    {
+      "id": "OB1-check-03-unanswerable",
+      "scenario_id": "OB1-check-03"
+    },
+    {
+      "id": "OB1-check-04-base",
+      "scenario_id": "OB1-check-04"
+    },
+    {
+      "id": "OB1-check-04-paraphrase",
+      "scenario_id": "OB1-check-04"
+    },
+    {
+      "id": "OB1-check-04-counterfactual",
+      "scenario_id": "OB1-check-04"
+    },
+    {
+      "id": "OB1-check-04-unanswerable",
+      "scenario_id": "OB1-check-04"
+    },
+    {
+      "id": "OB1-check-05-base",
+      "scenario_id": "OB1-check-05"
+    },
+    {
+      "id": "OB1-check-05-paraphrase",
+      "scenario_id": "OB1-check-05"
+    },
+    {
+      "id": "OB1-check-05-counterfactual",
+      "scenario_id": "OB1-check-05"
+    },
+    {
+      "id": "OB1-check-05-unanswerable",
+      "scenario_id": "OB1-check-05"
+    },
+    {
+      "id": "OB1-check-06-base",
+      "scenario_id": "OB1-check-06"
+    },
+    {
+      "id": "OB1-check-06-paraphrase",
+      "scenario_id": "OB1-check-06"
+    },
+    {
+      "id": "OB1-check-06-counterfactual",
+      "scenario_id": "OB1-check-06"
+    },
+    {
+      "id": "OB1-check-06-unanswerable",
+      "scenario_id": "OB1-check-06"
+    },
+    {
+      "id": "OB1-check-07-base",
+      "scenario_id": "OB1-check-07"
+    },
+    {
+      "id": "OB1-check-07-paraphrase",
+      "scenario_id": "OB1-check-07"
+    },
+    {
+      "id": "OB1-check-07-counterfactual",
+      "scenario_id": "OB1-check-07"
+    },
+    {
+      "id": "OB1-check-07-unanswerable",
+      "scenario_id": "OB1-check-07"
+    },
+    {
+      "id": "OB1-check-08-base",
+      "scenario_id": "OB1-check-08"
+    },
+    {
+      "id": "OB1-check-08-paraphrase",
+      "scenario_id": "OB1-check-08"
+    },
+    {
+      "id": "OB1-check-08-counterfactual",
+      "scenario_id": "OB1-check-08"
+    },
+    {
+      "id": "OB1-check-08-unanswerable",
+      "scenario_id": "OB1-check-08"
+    },
+    {
+      "id": "OB1-check-09-base",
+      "scenario_id": "OB1-check-09"
+    },
+    {
+      "id": "OB1-check-09-paraphrase",
+      "scenario_id": "OB1-check-09"
+    },
+    {
+      "id": "OB1-check-09-counterfactual",
+      "scenario_id": "OB1-check-09"
+    },
+    {
+      "id": "OB1-check-09-unanswerable",
+      "scenario_id": "OB1-check-09"
+    },
+    {
+      "id": "OB1-check-10-base",
+      "scenario_id": "OB1-check-10"
+    },
+    {
+      "id": "OB1-check-10-paraphrase",
+      "scenario_id": "OB1-check-10"
+    },
+    {
+      "id": "OB1-check-10-counterfactual",
+      "scenario_id": "OB1-check-10"
+    },
+    {
+      "id": "OB1-check-10-unanswerable",
+      "scenario_id": "OB1-check-10"
+    },
+    {
+      "id": "OB1-check-11-base",
+      "scenario_id": "OB1-check-11"
+    },
+    {
+      "id": "OB1-check-11-paraphrase",
+      "scenario_id": "OB1-check-11"
+    },
+    {
+      "id": "OB1-check-11-counterfactual",
+      "scenario_id": "OB1-check-11"
+    },
+    {
+      "id": "OB1-check-11-unanswerable",
+      "scenario_id": "OB1-check-11"
+    },
+    {
+      "id": "OB1-check-12-base",
+      "scenario_id": "OB1-check-12"
+    },
+    {
+      "id": "OB1-check-12-paraphrase",
+      "scenario_id": "OB1-check-12"
+    },
+    {
+      "id": "OB1-check-12-counterfactual",
+      "scenario_id": "OB1-check-12"
+    },
+    {
+      "id": "OB1-check-12-unanswerable",
+      "scenario_id": "OB1-check-12"
+    },
+    {
+      "id": "OB1-check-13-base",
+      "scenario_id": "OB1-check-13"
+    },
+    {
+      "id": "OB1-check-13-paraphrase",
+      "scenario_id": "OB1-check-13"
+    },
+    {
+      "id": "OB1-check-13-counterfactual",
+      "scenario_id": "OB1-check-13"
+    },
+    {
+      "id": "OB1-check-13-unanswerable",
+      "scenario_id": "OB1-check-13"
+    },
+    {
+      "id": "OB1-check-14-base",
+      "scenario_id": "OB1-check-14"
+    },
+    {
+      "id": "OB1-check-14-paraphrase",
+      "scenario_id": "OB1-check-14"
+    },
+    {
+      "id": "OB1-check-14-counterfactual",
+      "scenario_id": "OB1-check-14"
+    },
+    {
+      "id": "OB1-check-14-unanswerable",
+      "scenario_id": "OB1-check-14"
+    },
+    {
+      "id": "OB1-check-15-base",
+      "scenario_id": "OB1-check-15"
+    },
+    {
+      "id": "OB1-check-15-paraphrase",
+      "scenario_id": "OB1-check-15"
+    },
+    {
+      "id": "OB1-check-15-counterfactual",
+      "scenario_id": "OB1-check-15"
+    },
+    {
+      "id": "OB1-check-15-unanswerable",
+      "scenario_id": "OB1-check-15"
+    },
+    {
+      "id": "OB1-check-16-base",
+      "scenario_id": "OB1-check-16"
+    },
+    {
+      "id": "OB1-check-16-paraphrase",
+      "scenario_id": "OB1-check-16"
+    },
+    {
+      "id": "OB1-check-16-counterfactual",
+      "scenario_id": "OB1-check-16"
+    },
+    {
+      "id": "OB1-check-16-unanswerable",
+      "scenario_id": "OB1-check-16"
+    },
+    {
+      "id": "OB1-check-17-base",
+      "scenario_id": "OB1-check-17"
+    },
+    {
+      "id": "OB1-check-17-paraphrase",
+      "scenario_id": "OB1-check-17"
+    },
+    {
+      "id": "OB1-check-17-counterfactual",
+      "scenario_id": "OB1-check-17"
+    },
+    {
+      "id": "OB1-check-17-unanswerable",
+      "scenario_id": "OB1-check-17"
+    },
+    {
+      "id": "OB1-check-18-base",
+      "scenario_id": "OB1-check-18"
+    },
+    {
+      "id": "OB1-check-18-paraphrase",
+      "scenario_id": "OB1-check-18"
+    },
+    {
+      "id": "OB1-check-18-counterfactual",
+      "scenario_id": "OB1-check-18"
+    },
+    {
+      "id": "OB1-check-18-unanswerable",
+      "scenario_id": "OB1-check-18"
+    },
+    {
+      "id": "OB1-check-19-base",
+      "scenario_id": "OB1-check-19"
+    },
+    {
+      "id": "OB1-check-19-paraphrase",
+      "scenario_id": "OB1-check-19"
+    },
+    {
+      "id": "OB1-check-19-counterfactual",
+      "scenario_id": "OB1-check-19"
+    },
+    {
+      "id": "OB1-check-19-unanswerable",
+      "scenario_id": "OB1-check-19"
+    },
+    {
+      "id": "OB1-check-20-base",
+      "scenario_id": "OB1-check-20"
+    },
+    {
+      "id": "OB1-check-20-paraphrase",
+      "scenario_id": "OB1-check-20"
+    },
+    {
+      "id": "OB1-check-20-counterfactual",
+      "scenario_id": "OB1-check-20"
+    },
+    {
+      "id": "OB1-check-20-unanswerable",
+      "scenario_id": "OB1-check-20"
+    },
+    {
+      "id": "OB1-check-21-base",
+      "scenario_id": "OB1-check-21"
+    },
+    {
+      "id": "OB1-check-21-paraphrase",
+      "scenario_id": "OB1-check-21"
+    },
+    {
+      "id": "OB1-check-21-counterfactual",
+      "scenario_id": "OB1-check-21"
+    },
+    {
+      "id": "OB1-check-21-unanswerable",
+      "scenario_id": "OB1-check-21"
+    },
+    {
+      "id": "OB1-check-22-base",
+      "scenario_id": "OB1-check-22"
+    },
+    {
+      "id": "OB1-check-22-paraphrase",
+      "scenario_id": "OB1-check-22"
+    },
+    {
+      "id": "OB1-check-22-counterfactual",
+      "scenario_id": "OB1-check-22"
+    },
+    {
+      "id": "OB1-check-22-unanswerable",
+      "scenario_id": "OB1-check-22"
+    },
+    {
+      "id": "OB1-check-23-base",
+      "scenario_id": "OB1-check-23"
+    },
+    {
+      "id": "OB1-check-23-paraphrase",
+      "scenario_id": "OB1-check-23"
+    },
+    {
+      "id": "OB1-check-23-counterfactual",
+      "scenario_id": "OB1-check-23"
+    },
+    {
+      "id": "OB1-check-23-unanswerable",
+      "scenario_id": "OB1-check-23"
+    },
+    {
+      "id": "OB1-check-24-base",
+      "scenario_id": "OB1-check-24"
+    },
+    {
+      "id": "OB1-check-24-paraphrase",
+      "scenario_id": "OB1-check-24"
+    },
+    {
+      "id": "OB1-check-24-counterfactual",
+      "scenario_id": "OB1-check-24"
+    },
+    {
+      "id": "OB1-check-24-unanswerable",
+      "scenario_id": "OB1-check-24"
+    },
+    {
+      "id": "OB1-check-25-base",
+      "scenario_id": "OB1-check-25"
+    },
+    {
+      "id": "OB1-check-25-paraphrase",
+      "scenario_id": "OB1-check-25"
+    },
+    {
+      "id": "OB1-check-25-counterfactual",
+      "scenario_id": "OB1-check-25"
+    },
+    {
+      "id": "OB1-check-25-unanswerable",
+      "scenario_id": "OB1-check-25"
+    },
+    {
+      "id": "OB1-check-26-base",
+      "scenario_id": "OB1-check-26"
+    },
+    {
+      "id": "OB1-check-26-paraphrase",
+      "scenario_id": "OB1-check-26"
+    },
+    {
+      "id": "OB1-check-26-counterfactual",
+      "scenario_id": "OB1-check-26"
+    },
+    {
+      "id": "OB1-check-26-unanswerable",
+      "scenario_id": "OB1-check-26"
+    },
+    {
+      "id": "OB1-check-27-base",
+      "scenario_id": "OB1-check-27"
+    },
+    {
+      "id": "OB1-check-27-paraphrase",
+      "scenario_id": "OB1-check-27"
+    },
+    {
+      "id": "OB1-check-27-counterfactual",
+      "scenario_id": "OB1-check-27"
+    },
+    {
+      "id": "OB1-check-27-unanswerable",
+      "scenario_id": "OB1-check-27"
+    },
+    {
+      "id": "OB1-check-28-base",
+      "scenario_id": "OB1-check-28"
+    },
+    {
+      "id": "OB1-check-28-paraphrase",
+      "scenario_id": "OB1-check-28"
+    },
+    {
+      "id": "OB1-check-28-counterfactual",
+      "scenario_id": "OB1-check-28"
+    },
+    {
+      "id": "OB1-check-28-unanswerable",
+      "scenario_id": "OB1-check-28"
+    },
+    {
+      "id": "OB1-check-29-base",
+      "scenario_id": "OB1-check-29"
+    },
+    {
+      "id": "OB1-check-29-paraphrase",
+      "scenario_id": "OB1-check-29"
+    },
+    {
+      "id": "OB1-check-29-counterfactual",
+      "scenario_id": "OB1-check-29"
+    },
+    {
+      "id": "OB1-check-29-unanswerable",
+      "scenario_id": "OB1-check-29"
+    },
+    {
+      "id": "OB1-check-30-base",
+      "scenario_id": "OB1-check-30"
+    },
+    {
+      "id": "OB1-check-30-paraphrase",
+      "scenario_id": "OB1-check-30"
+    },
+    {
+      "id": "OB1-check-30-counterfactual",
+      "scenario_id": "OB1-check-30"
+    },
+    {
+      "id": "OB1-check-30-unanswerable",
+      "scenario_id": "OB1-check-30"
+    },
+    {
+      "id": "OB1-check-31-base",
+      "scenario_id": "OB1-check-31"
+    },
+    {
+      "id": "OB1-check-31-paraphrase",
+      "scenario_id": "OB1-check-31"
+    },
+    {
+      "id": "OB1-check-31-counterfactual",
+      "scenario_id": "OB1-check-31"
+    },
+    {
+      "id": "OB1-check-31-unanswerable",
+      "scenario_id": "OB1-check-31"
+    }
+  ],
+  "source_sha256": {
+    "screen.py": "088e649d632d6528fb659cd127b830d43f6be9e5b3249402fe77f31f375f9e66",
+    "tests/test_screen.py": "23597ffbbf7134d0d4a61934a265abd35f48f7ff088f4b0639bbb8b3be49a712"
+  },
+  "subject_commit": "d59729433fae8632d0e2bbe6bf99e185fb4c2694"
+}

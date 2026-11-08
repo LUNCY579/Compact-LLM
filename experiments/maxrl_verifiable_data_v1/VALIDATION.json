@@ -1,0 +1,56 @@
+{
+  "code_commit": "fbb0480e45d5b43a192fe456f729b0f0609ad2f6",
+  "experiment": "MAXRL-DATA-001",
+  "full_audit": {
+    "checks": {
+      "challenge": 2400,
+      "dev": 2400,
+      "negative_checks": 360800,
+      "positive_checks": 66822,
+      "rows": 32800,
+      "test": 2400,
+      "train": 24000,
+      "warmstart": 1600
+    },
+    "duplicates": 0,
+    "independent_visible_resolve": true,
+    "manifest_sha256": "3a7f1a20d15d6c2ce26eeb02ae3c0a6353f771955230b390c35ac6739c241563",
+    "policy_oracle_leaks": 0,
+    "scope": "included instances, exact canonical identities, public rendering and reference certificates only; NOT native model qualification",
+    "split_violations": 0,
+    "status": "PASS"
+  },
+  "historical_scored_instruments_read": 0,
+  "native_tokenizer_loads": 0,
+  "native_training_runs": 0,
+  "parquet": {
+    "exit_code": 2,
+    "produced_files": 0,
+    "reason": "pyarrow unavailable; network package installation failed",
+    "status": "BLOCKED"
+  },
+  "pretrained_loads": 0,
+  "pytest": "9.0.2",
+  "python": "3.13.5",
+  "registration_commit": "63f73080c009cb0fabece6a84b47f141292c2fb9",
+  "remote_ci_claimed": false,
+  "remote_source_blobs_match_local": true,
+  "source_sha256": {
+    "__init__.py": "5f57f5df31e7bd70ccac234db736ca79629387fab576fc4270200da19021d1b3",
+    "corpus.py": "76d45fa9e79dd3c91d6869e41c98220b4fb8fb406ed4557bf763a81c0ade4ee9",
+    "export.py": "4c1f3932784da0dc11093a7a389cec5545751f8427d479235d6e5282dc19ed34",
+    "generators.py": "48dec4edb385f48ed5842c491610523538e98ddbac6e907f6ce9e4e269478acf",
+    "maxrl.py": "b32900b3ca56dd2796a64b4b984ae86e4e4b5fe03020284c87fa1a072e1aba24",
+    "oracle.py": "a2fc59f01cd191f65a3f5109c6cf91262f775f93538867136d65a498b7f78ab7",
+    "specs.py": "b6e1f96a9fd534af6f4d14c0627e8371fed9d2858d993255717e3a468ea21a1b",
+    "tests/__init__.py": "edb22d43c140dd52d3b326115c14312417be71c31fb22d6ed7af84233744b007",
+    "tests/test_contracts.py": "2ea59c15bb0be7a160304cc9015b5eb767e0f2dab108c44e574e90694fd79a7d",
+    "verifier.py": "b20550c1a923ecf97bed3d49dbcfe8e5506a956499fb141be6473bcaf544616a"
+  },
+  "status": "DATA_AND_CPU_MECHANICS_PASS_NATIVE_UNQUALIFIED",
+  "tests": {
+    "failed": 0,
+    "passed": 177,
+    "receipt": "evidence/pytest.txt"
+  }
+}

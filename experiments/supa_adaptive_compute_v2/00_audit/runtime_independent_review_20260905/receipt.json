@@ -1,0 +1,158 @@
+{
+  "audit_utc": "2026-09-05T21:54:15.922880+00:00",
+  "checks_run": 206,
+  "failed_checks": [],
+  "head": "cdeb1e63297d51af6857753b92494e76c3f6f9ea",
+  "scope": {
+    "broad_tests_run": 0,
+    "checkpoint_bytes_read": 0,
+    "efficacy_analysis": false,
+    "gpu_jobs": 0,
+    "models_loaded": 0,
+    "reads": "qualification evidence, registered source, calibration and manifest only; no sealed data"
+  },
+  "tracks": {
+    "cross_scale": {
+      "calibration_sha256": "1e88c4d23d92e6770959ac64d83d6c4705f323aa276d6672aa4eeac640dc1e00",
+      "comparison_count": 656,
+      "comparison_groups": {
+        "gradient": 16,
+        "projected_delta": 256,
+        "state": 384
+      },
+      "config_canonical_sha256": "80c82912f2c2ff0bf9261f0658c6c18dede6bf4a174f2a239cd4a8e7f5517f74",
+      "config_file_sha256": "ee74c43cd53108e8b1be0562628e5274af69aa943feae3f56b0cf55bad97d720",
+      "dataset_manifest_sha256": "bf025f9b34c74fee4b6b0b16fe6aea6752293e62eda032234b75abdd0b6a7659",
+      "directory": "experiments/supa_adaptive_compute_v2/cross_scale/evidence/00_runtime_qualification/20260905T193023_051203Z_29be300a",
+      "empty_special_strata": 0,
+      "execution_commit": "c7cc6200164bb7d401b3413b489c32cb0da94d08",
+      "failed_comparisons_by_group": {
+        "projected_delta": 45,
+        "state": 116
+      },
+      "failed_gates": {
+        "absolute": 161
+      },
+      "flag_mismatches": [],
+      "maximum_absolute_error": 0.021484375,
+      "maximum_relative_l2": 0.00018050146893744775,
+      "minimum_mean_token_cosine": 0.9999999763539311,
+      "preexecution_commit_mismatches": [],
+      "preexecution_committed_files_checked": 38,
+      "qualification_pass": false,
+      "raw_tensor_artifacts": 0,
+      "registered_sources_checked": 139,
+      "registration_file_sha256": "e250dacff787cf961996ae172153fca88322048be3212de79630bf6996be672b",
+      "registration_sha256": "beec1869aad324d29191cd21e5f300bd6da3bdc0a52d8c5f11839ac4b98f5b7c",
+      "report_sha256": "b037205c9ff8eca37017fa0575bb34ed87103f2eaec0cb97d7cc27df5bc456fb",
+      "run_manifest_sha256": "f8e6660ce38f925832febfb5facb79775a29d4c37d8e1adaa82169a20293fde4",
+      "runtime_identity": {
+        "attention": "eager",
+        "compute_capability": [
+          8,
+          9
+        ],
+        "cublas_workspace_config": ":4096:8",
+        "cuda_runtime": "12.6",
+        "deterministic_algorithms": true,
+        "device": "cuda:0",
+        "device_name": "NVIDIA GeForce RTX 4070 Laptop GPU",
+        "device_uuid": "bf962d49-2b03-1983-ef14-df4bc7fbb8b9",
+        "driver_version": "610.62",
+        "dtype": "float32",
+        "matmul_precision": "highest",
+        "seed": 1702,
+        "tf32_cudnn": false,
+        "tf32_matmul": false,
+        "threads": 4,
+        "torch": "2.12.1+cu126",
+        "total_vram_bytes": 8585216000,
+        "transformers": "5.14.1",
+        "use_cache": false
+      },
+      "source_hash_mismatches": [],
+      "status": "FAILED",
+      "thresholds": {
+        "bridge_gradient_objectives": [
+          "B2",
+          "B3"
+        ],
+        "fixture_count": 8,
+        "fixture_rule": "first_sorted_per_family_alternating_fit_holdout",
+        "gradient_supa_layer": 8,
+        "maximum_absolute_error": 0.002,
+        "maximum_relative_l2": 0.0002,
+        "minimum_mean_token_cosine": 0.999999,
+        "same_gpu_bridge_gradient_repeat_exact": true,
+        "same_gpu_donor_delta_repeat_exact": true,
+        "same_gpu_streamed_capture_repeat_exact": true
+      }
+    },
+    "native_armr": {
+      "am_state_sha256": "eedbc0ca788ee8a1193b455f7cf2c94cd1b5eeab288f1f2df448fa9ae208584c",
+      "artifact_bytes": 48745680,
+      "artifacts_checked": 80,
+      "calibration_sha256": "fc326f86683f1faea5e8a3c8f281f05fe1d455f819c4a01a7087002e8c34e6ec",
+      "canonical_state_sha256": "b23dec7edc2413189c9a35cc7a2596cdc03cb67b08628a0c443173c305d61551",
+      "comparison_count": 40,
+      "config_canonical_sha256": "cd01ccbf01fe285d46f74891559589ee6bce62d945f5fc5fa351b48f5194f70f",
+      "config_file_sha256": "4dbdb7c8b80c14cdedb1c9eb0d69a3c5ca6091f397a9e62ab018b08bab84d81d",
+      "dataset_manifest_sha256": "a6245d8667715460b2845d5fcbbd1b38e9d54e33a6d4eda12cf7ce2c19c9054b",
+      "directory": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_runtime_qualification/20260905T191958_868458Z_82f1162e",
+      "execution_commit": "e905e419c34bc3e1d0efb4f0082d0033b4f0b115",
+      "flag_mismatches": [],
+      "maximum_hidden_relative_l2": 7.856709228698431e-05,
+      "maximum_logit_absolute_error": 4.1961669921875e-05,
+      "maximum_logit_relative_l2": 2.5817917451696963e-06,
+      "maximum_nll_absolute_error": 4.553794860839844e-05,
+      "minimum_hidden_cosine": 0.9999999969140225,
+      "minimum_logit_cosine": 0.9999999999966989,
+      "preexecution_commit_mismatches": [],
+      "preexecution_committed_files_checked": 37,
+      "qualification_pass": true,
+      "recomputed_failures": 0,
+      "registered_sources_checked": 136,
+      "registration_file_sha256": "17f907463f5dd495c3f0ad889d2ef0f0a734f9edd99f68f5542c0b36f3b20e62",
+      "registration_sha256": "7c99dac8b3e72ad44ec2c1eeaaa67ac897fabe6d3209d362c1f78e01c3a7cca5",
+      "report_sha256": "31f1759311ff4a70432def3bb55f52386b2ba7d801b3d9298e3c06bf7ced73c2",
+      "run_manifest_sha256": "52fe3ed8ccf9263c169ab06c85e2a30517b8eb13ad297581188d564f7fa1fc5c",
+      "runtime_identity": {
+        "attention": "eager",
+        "compute_capability": [
+          8,
+          9
+        ],
+        "cublas_workspace_config": ":4096:8",
+        "cuda_runtime": "12.6",
+        "deterministic_algorithms": true,
+        "device": "cuda:0",
+        "device_name": "NVIDIA GeForce RTX 4070 Laptop GPU",
+        "device_uuid": "bf962d49-2b03-1983-ef14-df4bc7fbb8b9",
+        "driver_version": "610.62",
+        "dtype": "float32",
+        "matmul_precision": "highest",
+        "seed": 17,
+        "tf32_cudnn": false,
+        "tf32_matmul": false,
+        "threads": 4,
+        "torch": "2.12.1+cu126",
+        "total_vram_bytes": 8585216000,
+        "transformers": "5.14.1",
+        "use_cache": false
+      },
+      "source_hash_mismatches": [],
+      "status": "COMPLETE",
+      "thresholds": {
+        "examples_per_family": 1,
+        "max_abs_logit_error": 0.002,
+        "max_abs_nll_error": 0.002,
+        "max_relative_hidden_l2": 0.0002,
+        "max_relative_logit_l2": 0.0002,
+        "minimum_hidden_cosine": 0.999999,
+        "minimum_logit_cosine": 0.999999,
+        "require_gpu_repeat_identity": true,
+        "require_greedy_identity": true
+      }
+    }
+  }
+}

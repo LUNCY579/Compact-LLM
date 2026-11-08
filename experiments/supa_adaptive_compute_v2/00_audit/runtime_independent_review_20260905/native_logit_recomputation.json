@@ -1,0 +1,2161 @@
+{
+  "all_recomputed_logit_gates_pass": true,
+  "all_recorded_metric_triples_reproduced": true,
+  "architecture_accuracy_inspected": false,
+  "artifacts_hashed_and_decoded": 80,
+  "checkpoint_access": false,
+  "comparison_count": 40,
+  "comparison_rule": "abs(recomputed-recorded) <= atol + rtol*abs(recorded)",
+  "comparison_tolerances_fixed_before_execution": {
+    "cosine": {
+      "atol": 5e-14,
+      "rtol": 0.0
+    },
+    "max_abs": {
+      "atol": 0.0,
+      "rtol": 0.0
+    },
+    "relative_l2": {
+      "atol": 1e-18,
+      "rtol": 1e-12
+    }
+  },
+  "comparisons": [
+    {
+      "absolute_metric_differences": {
+        "cosine": 3.164135620181696e-14,
+        "max_abs": 0.0,
+        "relative_l2": 2.879912020664621e-20
+      },
+      "arm": "A0",
+      "artifacts": [
+        {
+          "bytes": 609321,
+          "hash_matches_report": true,
+          "path": "logits/cpu_A0_608d8054bb57f447c95a23b362023a9ff499e4e663f996f3a21691469cf81859.pt",
+          "sha256": "f4b98cf346d2c17aa2b2ca4a6d617484abbca7eae8421938cdcfec486e16c794",
+          "shape": [
+            151936
+          ],
+          "stored_dtype": "float32"
+        },
+        {
+          "bytes": 609321,
+          "hash_matches_report": true,
+          "path": "logits/cuda_0_A0_608d8054bb57f447c95a23b362023a9ff499e4e663f996f3a21691469cf81859.pt",
+          "sha256": "196e3594b23d4532edc700b4b8c51dbd8b807712bb5c45f065532f2a83a44ea8",
+          "shape": [
+            151936
+          ],
+          "stored_dtype": "float32"
+        }
+      ],
+      "example_id": "native_armr_calibration_compositional_00ef13b90b3e_0006_original",
+      "metric_matches_recorded_within_tolerance": {
+        "cosine": true,
+        "max_abs": true,
+        "relative_l2": true
+      },
+      "pass": true,
+      "recomputed_numpy_float64": {
+        "cosine": 0.9999999999987029,
+        "max_abs": 2.574920654296875e-05,
+        "relative_l2": 1.7312684412941998e-06
+      },
+      "recorded": {
+        "cosine": 0.9999999999986713,
+        "max_abs": 2.574920654296875e-05,
+        "relative_l2": 1.731268441294171e-06
+      },
+      "registered_logit_gates": {
+        "absolute": true,
+        "cosine": true,
+        "relative": true
+      }
+    },
+    {
+      "absolute_metric_differences": {
+        "cosine": 3.297362383136715e-14,
+        "max_abs": 0.0,
+        "relative_l2": 2.9010878443459787e-20
+      },
+      "arm": "A0",
+      "artifacts": [
+        {
+          "bytes": 609321,
+          "hash_matches_report": true,
+          "path": "logits/cpu_A0_4cf7d2ac8bf759a44004783cc412594d3c8b22d3545b54a43b37de7d4d70ece4.pt",
+          "sha256": "93a4a533427ef29f44542eee4bdd34a6e4ad74c540ba8418fd28bda479abdf6b",
+          "shape": [
+            151936
+          ],
+          "stored_dtype": "float32"
+        },
+        {
+          "bytes": 609321,
+          "hash_matches_report": true,
+          "path": "logits/cuda_0_A0_4cf7d2ac8bf759a44004783cc412594d3c8b22d3545b54a43b37de7d4d70ece4.pt",
+          "sha256": "56fe6b7e6a482c1eef18a266ccf18ca68da3d172901c540e3f4edbd56c4da2ff",
+          "shape": [
+            151936
+          ],
+          "stored_dtype": "float32"
+        }
+      ],
+      "example_id": "native_armr_calibration_counterfactual_0043d6875912_0013_original",
+      "metric_matches_recorded_within_tolerance": {
+        "cosine": true,
+        "max_abs": true,
+        "relative_l2": true
+      },
+      "pass": true,
+      "recomputed_numpy_float64": {
+        "cosine": 0.9999999999984239,
+        "max_abs": 2.09808349609375e-05,
+        "relative_l2": 1.7729416327953299e-06
+      },
+      "recorded": {
+        "cosine": 0.999999999998391,
+        "max_abs": 2.09808349609375e-05,
+        "relative_l2": 1.7729416327953009e-06
+      },
+      "registered_logit_gates": {
+        "absolute": true,
+        "cosine": true,
+        "relative": true
+      }
+    },
+    {
+      "absolute_metric_differences": {
+        "cosine": 3.952393967665557e-14,
+        "max_abs": 0.0,
+        "relative_l2": 3.9387032047324966e-20
+      },
+      "arm": "A0",
+      "artifacts": [
+        {
+          "bytes": 609321,
+          "hash_matches_report": true,
+          "path": "logits/cpu_A0_b677206b038e84fee8cd203337eacaf004fc0815ef0cf61b465c4a61afe2c69e.pt",
+          "sha256": "c0fccb5227c4b4df37a23f833f0c7210c439623750441e65a0f408e11c3551c5",
+          "shape": [
+            151936
+          ],
+          "stored_dtype": "float32"
+        },
+        {
+          "bytes": 609321,
+          "hash_matches_report": true,
+          "path": "logits/cuda_0_A0_b677206b038e84fee8cd203337eacaf004fc0815ef0cf61b465c4a61afe2c69e.pt",
+          "sha256": "a9813a590624939800360f29bca6d6128036414c25e27b65cefeb1a871bc91e7",
+          "shape": [
+            151936
+          ],
+          "stored_dtype": "float32"
+        }
+      ],
+      "example_id": "native_armr_calibration_instruction_evidence_303ea820e58e_0007_original",
+      "metric_matches_recorded_within_tolerance": {
+        "cosine": true,
+        "max_abs": true,
+        "relative_l2": true
+      },
+      "pass": true,
+      "recomputed_numpy_float64": {
+        "cosine": 0.9999999999981365,
+        "max_abs": 2.2411346435546875e-05,
+        "relative_l2": 1.928879764904186e-06
+      },
+      "recorded": {
+        "cosine": 0.999999999998097,
+        "max_abs": 2.2411346435546875e-05,
+        "relative_l2": 1.9288797649041464e-06
+      },
+      "registered_logit_gates": {
+        "absolute": true,
+        "cosine": true,
+        "relative": true
+      }
+    },
+    {
+      "absolute_metric_differences": {
+        "cosine": 3.241851231905457e-14,
+        "max_abs": 0.0,
+        "relative_l2": 2.752857078576476e-20
+      },
+      "arm": "A0",
+      "artifacts": [
+        {
+          "bytes": 609321,
+          "hash_matches_report": true,
+          "path": "logits/cpu_A0_838a51d208b8b14c8cf7f0b8e55bd34da83f6763e49b71ae0d9752c8365e7f9b.pt",
+          "sha256": "f788ffcb3f5c50731896c39f292ceb7e8c477716fc482f314c47599b886ad8b4",
+          "shape": [
+            151936
+          ],
+          "stored_dtype": "float32"
+        },
+        {
+          "bytes": 609321,
+          "hash_matches_report": true,
+          "path": "logits/cuda_0_A0_838a51d208b8b14c8cf7f0b8e55bd34da83f6763e49b71ae0d9752c8365e7f9b.pt",
+          "sha256": "8ac7dbd6e0d104d7a4cba2e52b340bc802f97c5c8b8814a7381fc2f43b8abbf0",
+          "shape": [
+            151936
+          ],
+          "stored_dtype": "float32"
+        }
+      ],
+      "example_id": "native_armr_calibration_mathematical_1365ba73067d_0004_original",
+      "metric_matches_recorded_within_tolerance": {
+        "cosine": true,
+        "max_abs": true,
+        "relative_l2": true
+      },
+      "pass": true,
+      "recomputed_numpy_float64": {
+        "cosine": 0.9999999999986172,
+        "max_abs": 2.193450927734375e-05,
+        "relative_l2": 1.66095173556233e-06
+      },
+      "recorded": {
+        "cosine": 0.9999999999985848,
+        "max_abs": 2.193450927734375e-05,
+        "relative_l2": 1.6609517355623024e-06
+      },
+      "registered_logit_gates": {
+        "absolute": true,
+        "cosine": true,
+        "relative": true
+      }
+    },
+    {
+      "absolute_metric_differences": {
+        "cosine": 3.3639757646142243e-14,
+        "max_abs": 0.0,
+        "relative_l2": 4.573977915173222e-20
+      },
+      "arm": "A0",
+      "artifacts": [
+        {
+          "bytes": 609321,
+          "hash_matches_report": true,
+          "path": "logits/cpu_A0_84d837f9799f757ca8dd761f9131a2420a267d33a86b0e4a2a79065d1d33d045.pt",
+          "sha256": "400a4914824b26ff1b0e3bda1dd457c8bd786264ecc99eac0ae883740bd95eec",
+          "shape": [
+            151936
+          ],
+          "stored_dtype": "float32"
+        },
+        {
+          "bytes": 609321,
+          "hash_matches_report": true,
+          "path": "logits/cuda_0_A0_84d837f9799f757ca8dd761f9131a2420a267d33a86b0e4a2a79065d1d33d045.pt",
+          "sha256": "33b3d61722284546cfd520632f89a964740d09ac58de9cbe7e1ddd726d9e6865",
+          "shape": [
+            151936
+          ],
+          "stored_dtype": "float32"
+        }
+      ],
+      "example_id": "native_armr_calibration_ordinary_qa_preservation_011ecf034ea6_0009_original",
+      "metric_matches_recorded_within_tolerance": {
+        "cosine": true,
+        "max_abs": true,
+        "relative_l2": true
+      },
+      "pass": true,
+      "recomputed_numpy_float64": {
+        "cosine": 0.9999999999973015,
+        "max_abs": 3.0517578125e-05,
+        "relative_l2": 2.3722986252876635e-06
+      },
+      "recorded": {
+        "cosine": 0.9999999999972679,
+        "max_abs": 3.0517578125e-05,
+        "relative_l2": 2.372298625287618e-06
+      },
+      "registered_logit_gates": {
+        "absolute": true,
+        "cosine": true,
+        "relative": true
+      }
+    },
+    {
+      "absolute_metric_differences": {
+        "cosine": 3.519406988061746e-14,
+        "max_abs": 0.0,
+        "relative_l2": 3.366955965335844e-20
+      },
+      "arm": "A0",
+      "artifacts": [
+        {
+          "bytes": 609321,
+          "hash_matches_report": true,
+          "path": "logits/cpu_A0_e966938934f84058e517cf8c1fc7eeb88b2292a61b7dccbb92c44f920601c6b0.pt",
+          "sha256": "e487e033405ec377ee1d944c506e3fc3900ee6c273ff042a523bac3a80c1279d",
+          "shape": [
+            151936
+          ],
+          "stored_dtype": "float32"
+        },
+        {
+          "bytes": 609321,
+          "hash_matches_report": true,
+          "path": "logits/cuda_0_A0_e966938934f84058e517cf8c1fc7eeb88b2292a61b7dccbb92c44f920601c6b0.pt",
+          "sha256": "020d1ea9c919016318f15187514f4579bef2d49ce21d4d7a1cd513d8e94b013d",
+          "shape": [
+            151936
+          ],
+          "stored_dtype": "float32"
+        }
+      ],
+      "example_id": "native_armr_calibration_relational_005e5c8ce93b_0004_original",
+      "metric_matches_recorded_within_tolerance": {
+        "cosine": true,
+        "max_abs": true,
+        "relative_l2": true
+      },
+      "pass": true,
+      "recomputed_numpy_float64": {
+        "cosine": 0.9999999999987479,
+        "max_abs": 1.8231570720672607e-05,
+        "relative_l2": 1.5841250080736015e-06
+      },
+      "recorded": {
+        "cosine": 0.9999999999987127,
+        "max_abs": 1.8231570720672607e-05,
+        "relative_l2": 1.5841250080735679e-06
+      },
+      "registered_logit_gates": {
+        "absolute": true,
+        "cosine": true,
+        "relative": true
+      }
+    },
+    {
+      "absolute_metric_differences": {
+        "cosine": 4.474198789239381e-14,
+        "max_abs": 0.0,
+        "relative_l2": 3.748120791600279e-20
+      },
+      "arm": "A0",
+      "artifacts": [
+        {
+          "bytes": 609321,
+          "hash_matches_report": true,
+          "path": "logits/cpu_A0_52a29a0a09c5bea906d8c74a8c4b300259334aa4e9247ee5f811d1574130853f.pt",
+          "sha256": "b85aa15771a96873342b09c685d8949924e0f4ce10c0cfbfc41f379a05945f95",
+          "shape": [
+            151936
+          ],
+          "stored_dtype": "float32"
+        },
+        {
+          "bytes": 609321,
+          "hash_matches_report": true,
+          "path": "logits/cuda_0_A0_52a29a0a09c5bea906d8c74a8c4b300259334aa4e9247ee5f811d1574130853f.pt",
+          "sha256": "ee8452c40b289e136c41f77a0f494a9f9de9543c1ad27aecba985f3ff7d3a8b5",
+          "shape": [
+            151936
+          ],
+          "stored_dtype": "float32"
+        }
+      ],
+      "example_id": "native_armr_calibration_retrieval_multihop_0353fdc140b8_0005_original",
+      "metric_matches_recorded_within_tolerance": {
+        "cosine": true,
+        "max_abs": true,
+        "relative_l2": true
+      },
+      "pass": true,
+      "recomputed_numpy_float64": {
+        "cosine": 0.9999999999988338,
+        "max_abs": 1.609325408935547e-05,
+        "relative_l2": 1.5397007120310979e-06
+      },
+      "recorded": {
+        "cosine": 0.9999999999987891,
+        "max_abs": 1.609325408935547e-05,
+        "relative_l2": 1.5397007120310604e-06
+      },
+      "registered_logit_gates": {
+        "absolute": true,
+        "cosine": true,
+        "relative": true
+      }
+    },
+    {
+      "absolute_metric_differences": {
+        "cosine": 2.7422508708241367e-14,
+        "max_abs": 0.0,
+        "relative_l2": 3.049318610115481e-20
+      },
+      "arm": "A0",
+      "artifacts": [
+        {
+          "bytes": 609321,
+          "hash_matches_report": true,
+          "path": "logits/cpu_A0_295235956af40605496e8b4666b76e25985ca057cbc7f973cf785d8b07aabf0e.pt",
+          "sha256": "fd1c6fa9973c9cf9790e769f8f1100b6c22b50b1fe2e5f1af4aecdb072234e64",
+          "shape": [
+            151936
+          ],
+          "stored_dtype": "float32"
+        },
+        {
+          "bytes": 609321,
+          "hash_matches_report": true,
+          "path": "logits/cuda_0_A0_295235956af40605496e8b4666b76e25985ca057cbc7f973cf785d8b07aabf0e.pt",
+          "sha256": "3733e880059161f27715518756fb9ca65980141d8e6ab1817555fe8f54082021",
+          "shape": [
+            151936
+          ],
+          "stored_dtype": "float32"
+        }
+      ],
+      "example_id": "native_armr_calibration_symbolic_logic_05a1ea50559e_0013_original",
+      "metric_matches_recorded_within_tolerance": {
+        "cosine": true,
+        "max_abs": true,
+        "relative_l2": true
+      },
+      "pass": true,
+      "recomputed_numpy_float64": {
+        "cosine": 0.9999999999981432,
+        "max_abs": 2.574920654296875e-05,
+        "relative_l2": 1.970963944744072e-06
+      },
+      "recorded": {
+        "cosine": 0.9999999999981157,
+        "max_abs": 2.574920654296875e-05,
+        "relative_l2": 1.9709639447440417e-06
+      },
+      "registered_logit_gates": {
+        "absolute": true,
+        "cosine": true,
+        "relative": true
+      }
+    },
+    {
+      "absolute_metric_differences": {
+        "cosine": 3.552713678800501e-14,
+        "max_abs": 0.0,
+        "relative_l2": 4.0657581468206416e-20
+      },
+      "arm": "A1",
+      "artifacts": [
+        {
+          "bytes": 609321,
+          "hash_matches_report": true,
+          "path": "logits/cpu_A1_608d8054bb57f447c95a23b362023a9ff499e4e663f996f3a21691469cf81859.pt",
+          "sha256": "a667694b3a66b443a671cb627b5afc55b4bbe529ac2b82a36f7c676cd1e2a26f",
+          "shape": [
+            151936
+          ],
+          "stored_dtype": "float32"
+        },
+        {
+          "bytes": 609321,
+          "hash_matches_report": true,
+          "path": "logits/cuda_0_A1_608d8054bb57f447c95a23b362023a9ff499e4e663f996f3a21691469cf81859.pt",
+          "sha256": "64a688405c4f77f53e14bc0ee5dfa436188875230daa0fa51ba2e6cd0f2da2ac",
+          "shape": [
+            151936
+          ],
+          "stored_dtype": "float32"
+        }
+      ],
+      "example_id": "native_armr_calibration_compositional_00ef13b90b3e_0006_original",
+      "metric_matches_recorded_within_tolerance": {
+        "cosine": true,
+        "max_abs": true,
+        "relative_l2": true
+      },
+      "pass": true,
+      "recomputed_numpy_float64": {
+        "cosine": 0.9999999999976288,
+        "max_abs": 2.1219253540039062e-05,
+        "relative_l2": 2.1987755102001186e-06
+      },
+      "recorded": {
+        "cosine": 0.9999999999975933,
+        "max_abs": 2.1219253540039062e-05,
+        "relative_l2": 2.198775510200078e-06
+      },
+      "registered_logit_gates": {
+        "absolute": true,
+        "cosine": true,
+        "relative": true
+      }
+    },
+    {
+      "absolute_metric_differences": {
+        "cosine": 3.708144902248023e-14,
+        "max_abs": 0.0,
+        "relative_l2": 4.0657581468206416e-20
+      },
+      "arm": "A1",
+      "artifacts": [
+        {
+          "bytes": 609321,
+          "hash_matches_report": true,
+          "path": "logits/cpu_A1_4cf7d2ac8bf759a44004783cc412594d3c8b22d3545b54a43b37de7d4d70ece4.pt",
+          "sha256": "42a7925ec4dd019fe60ceefd0c98aeaf3babaa6a1856e718b1608c2b7c0751f1",
+          "shape": [
+            151936
+          ],
+          "stored_dtype": "float32"
+        },
+        {
+          "bytes": 609321,
+          "hash_matches_report": true,
+          "path": "logits/cuda_0_A1_4cf7d2ac8bf759a44004783cc412594d3c8b22d3545b54a43b37de7d4d70ece4.pt",
+          "sha256": "d2bad299345fda477872dc66a471b790767530dca8fe07549addd7b4339a63c3",
+          "shape": [
+            151936
+          ],
+          "stored_dtype": "float32"
+        }
+      ],
+      "example_id": "native_armr_calibration_counterfactual_0043d6875912_0013_original",
+      "metric_matches_recorded_within_tolerance": {
+        "cosine": true,
+        "max_abs": true,
+        "relative_l2": true
+      },
+      "pass": true,
+      "recomputed_numpy_float64": {
+        "cosine": 0.999999999998122,
+        "max_abs": 2.1457672119140625e-05,
+        "relative_l2": 1.9828333844389882e-06
+      },
+      "recorded": {
+        "cosine": 0.9999999999980849,
+        "max_abs": 2.1457672119140625e-05,
+        "relative_l2": 1.9828333844389476e-06
+      },
+      "registered_logit_gates": {
+        "absolute": true,
+        "cosine": true,
+        "relative": true
+      }
+    },
+    {
+      "absolute_metric_differences": {
+        "cosine": 3.708144902248023e-14,
+        "max_abs": 0.0,
+        "relative_l2": 3.9387032047324966e-20
+      },
+      "arm": "A1",
+      "artifacts": [
+        {
+          "bytes": 609321,
+          "hash_matches_report": true,
+          "path": "logits/cpu_A1_b677206b038e84fee8cd203337eacaf004fc0815ef0cf61b465c4a61afe2c69e.pt",
+          "sha256": "b794245cc7f55365de79977a316117b64359bfe9fa3fd3208ccf51b0c60c3460",
+          "shape": [
+            151936
+          ],
+          "stored_dtype": "float32"
+        },
+        {
+          "bytes": 609321,
+          "hash_matches_report": true,
+          "path": "logits/cuda_0_A1_b677206b038e84fee8cd203337eacaf004fc0815ef0cf61b465c4a61afe2c69e.pt",
+          "sha256": "9472596d484051f25f2f99d5f40537084c80fc494113a29c4d47c8499ae00967",
+          "shape": [
+            151936
+          ],
+          "stored_dtype": "float32"
+        }
+      ],
+      "example_id": "native_armr_calibration_instruction_evidence_303ea820e58e_0007_original",
+      "metric_matches_recorded_within_tolerance": {
+        "cosine": true,
+        "max_abs": true,
+        "relative_l2": true
+      },
+      "pass": true,
+      "recomputed_numpy_float64": {
+        "cosine": 0.999999999997736,
+        "max_abs": 2.6702880859375e-05,
+        "relative_l2": 2.134676402825054e-06
+      },
+      "recorded": {
+        "cosine": 0.999999999997699,
+        "max_abs": 2.6702880859375e-05,
+        "relative_l2": 2.1346764028250146e-06
+      },
+      "registered_logit_gates": {
+        "absolute": true,
+        "cosine": true,
+        "relative": true
+      }
+    },
+    {
+      "absolute_metric_differences": {
+        "cosine": 3.019806626980426e-14,
+        "max_abs": 0.0,
+        "relative_l2": 2.371692252312041e-20
+      },
+      "arm": "A1",
+      "artifacts": [
+        {
+          "bytes": 609321,
+          "hash_matches_report": true,
+          "path": "logits/cpu_A1_838a51d208b8b14c8cf7f0b8e55bd34da83f6763e49b71ae0d9752c8365e7f9b.pt",
+          "sha256": "7dfb83ae3310ab28609728154ebc67836a2a4220df617201951cbd147282a58d",
+          "shape": [
+            151936
+          ],
+          "stored_dtype": "float32"
+        },
+        {
+          "bytes": 609321,
+          "hash_matches_report": true,
+          "path": "logits/cuda_0_A1_838a51d208b8b14c8cf7f0b8e55bd34da83f6763e49b71ae0d9752c8365e7f9b.pt",
+          "sha256": "cbef26de94b02d074dec1608dfce24f21670f943046ce7f39acf4525e553a074",
+          "shape": [
+            151936
+          ],
+          "stored_dtype": "float32"
+        }
+      ],
+      "example_id": "native_armr_calibration_mathematical_1365ba73067d_0004_original",
+      "metric_matches_recorded_within_tolerance": {
+        "cosine": true,
+        "max_abs": true,
+        "relative_l2": true
+      },
+      "pass": true,
+      "recomputed_numpy_float64": {
+        "cosine": 0.9999999999988404,
+        "max_abs": 1.895427703857422e-05,
+        "relative_l2": 1.5190281512940726e-06
+      },
+      "recorded": {
+        "cosine": 0.9999999999988102,
+        "max_abs": 1.895427703857422e-05,
+        "relative_l2": 1.519028151294049e-06
+      },
+      "registered_logit_gates": {
+        "absolute": true,
+        "cosine": true,
+        "relative": true
+      }
+    },
+    {
+      "absolute_metric_differences": {
+        "cosine": 3.3084646133829665e-14,
+        "max_abs": 0.0,
+        "relative_l2": 3.8963515573697816e-20
+      },
+      "arm": "A1",
+      "artifacts": [
+        {
+          "bytes": 609321,
+          "hash_matches_report": true,
+          "path": "logits/cpu_A1_84d837f9799f757ca8dd761f9131a2420a267d33a86b0e4a2a79065d1d33d045.pt",
+          "sha256": "a9cf9e1962f73599bd8c5178c20655e581a97d67714f5183d1a4fc58f4408bff",
+          "shape": [
+            151936
+          ],
+          "stored_dtype": "float32"
+        },
+        {
+          "bytes": 609321,
+          "hash_matches_report": true,
+          "path": "logits/cuda_0_A1_84d837f9799f757ca8dd761f9131a2420a267d33a86b0e4a2a79065d1d33d045.pt",
+          "sha256": "bc31cdb92151f459f30e5d90c173de48250a8dc2e5d35a4e9169b36ce5b0dd72",
+          "shape": [
+            151936
+          ],
+          "stored_dtype": "float32"
+        }
+      ],
+      "example_id": "native_armr_calibration_ordinary_qa_preservation_011ecf034ea6_0009_original",
+      "metric_matches_recorded_within_tolerance": {
+        "cosine": true,
+        "max_abs": true,
+        "relative_l2": true
+      },
+      "pass": true,
+      "recomputed_numpy_float64": {
+        "cosine": 0.9999999999975309,
+        "max_abs": 3.62396240234375e-05,
+        "relative_l2": 2.2831127635538346e-06
+      },
+      "recorded": {
+        "cosine": 0.9999999999974978,
+        "max_abs": 3.62396240234375e-05,
+        "relative_l2": 2.2831127635537957e-06
+      },
+      "registered_logit_gates": {
+        "absolute": true,
+        "cosine": true,
+        "relative": true
+      }
+    },
+    {
+      "absolute_metric_differences": {
+        "cosine": 3.83026943495679e-14,
+        "max_abs": 0.0,
+        "relative_l2": 3.3457801416544863e-20
+      },
+      "arm": "A1",
+      "artifacts": [
+        {
+          "bytes": 609321,
+          "hash_matches_report": true,
+          "path": "logits/cpu_A1_e966938934f84058e517cf8c1fc7eeb88b2292a61b7dccbb92c44f920601c6b0.pt",
+          "sha256": "6815581d892405952dd0b9d046b22957a9d1b5f87bc93594c672f2217f08fafc",
+          "shape": [
+            151936
+          ],
+          "stored_dtype": "float32"
+        },
+        {
+          "bytes": 609321,
+          "hash_matches_report": true,
+          "path": "logits/cuda_0_A1_e966938934f84058e517cf8c1fc7eeb88b2292a61b7dccbb92c44f920601c6b0.pt",
+          "sha256": "e528dfcf7e923d04306fa61145973815d71db831771c8ad97c81418398a85835",
+          "shape": [
+            151936
+          ],
+          "stored_dtype": "float32"
+        }
+      ],
+      "example_id": "native_armr_calibration_relational_005e5c8ce93b_0004_original",
+      "metric_matches_recorded_within_tolerance": {
+        "cosine": true,
+        "max_abs": true,
+        "relative_l2": true
+      },
+      "pass": true,
+      "recomputed_numpy_float64": {
+        "cosine": 0.9999999999987906,
+        "max_abs": 1.8715858459472656e-05,
+        "relative_l2": 1.5717848767711404e-06
+      },
+      "recorded": {
+        "cosine": 0.9999999999987523,
+        "max_abs": 1.8715858459472656e-05,
+        "relative_l2": 1.571784876771107e-06
+      },
+      "registered_logit_gates": {
+        "absolute": true,
+        "cosine": true,
+        "relative": true
+      }
+    },
+    {
+      "absolute_metric_differences": {
+        "cosine": 4.3853809472693683e-14,
+        "max_abs": 0.0,
+        "relative_l2": 3.8963515573697816e-20
+      },
+      "arm": "A1",
+      "artifacts": [
+        {
+          "bytes": 609321,
+          "hash_matches_report": true,
+          "path": "logits/cpu_A1_52a29a0a09c5bea906d8c74a8c4b300259334aa4e9247ee5f811d1574130853f.pt",
+          "sha256": "66bcbc978064afe7abf350279459ae71e71f47093a3d097e9af0df5e3e18e9e8",
+          "shape": [
+            151936
+          ],
+          "stored_dtype": "float32"
+        },
+        {
+          "bytes": 609321,
+          "hash_matches_report": true,
+          "path": "logits/cuda_0_A1_52a29a0a09c5bea906d8c74a8c4b300259334aa4e9247ee5f811d1574130853f.pt",
+          "sha256": "3083cd081215fff6bbed8f8d067c6541287be090c783638c8caa9d5321d66622",
+          "shape": [
+            151936
+          ],
+          "stored_dtype": "float32"
+        }
+      ],
+      "example_id": "native_armr_calibration_retrieval_multihop_0353fdc140b8_0005_original",
+      "metric_matches_recorded_within_tolerance": {
+        "cosine": true,
+        "max_abs": true,
+        "relative_l2": true
+      },
+      "pass": true,
+      "recomputed_numpy_float64": {
+        "cosine": 0.9999999999986402,
+        "max_abs": 1.7404556274414062e-05,
+        "relative_l2": 1.6460249669261582e-06
+      },
+      "recorded": {
+        "cosine": 0.9999999999985963,
+        "max_abs": 1.7404556274414062e-05,
+        "relative_l2": 1.6460249669261193e-06
+      },
+      "registered_logit_gates": {
+        "absolute": true,
+        "cosine": true,
+        "relative": true
+      }
+    },
+    {
+      "absolute_metric_differences": {
+        "cosine": 3.064215547965432e-14,
+        "max_abs": 0.0,
+        "relative_l2": 3.9810548520952116e-20
+      },
+      "arm": "A1",
+      "artifacts": [
+        {
+          "bytes": 609321,
+          "hash_matches_report": true,
+          "path": "logits/cpu_A1_295235956af40605496e8b4666b76e25985ca057cbc7f973cf785d8b07aabf0e.pt",
+          "sha256": "bc177cf324e1098b7a8599532d6cd4bca349fe158817b3f135a8cafd6e41ab1d",
+          "shape": [
+            151936
+          ],
+          "stored_dtype": "float32"
+        },
+        {
+          "bytes": 609321,
+          "hash_matches_report": true,
+          "path": "logits/cuda_0_A1_295235956af40605496e8b4666b76e25985ca057cbc7f973cf785d8b07aabf0e.pt",
+          "sha256": "14b83eb5c374653ad3fe45723da5f22d19f26883167f93a99982df8f9a88d921",
+          "shape": [
+            151936
+          ],
+          "stored_dtype": "float32"
+        }
+      ],
+      "example_id": "native_armr_calibration_symbolic_logic_05a1ea50559e_0013_original",
+      "metric_matches_recorded_within_tolerance": {
+        "cosine": true,
+        "max_abs": true,
+        "relative_l2": true
+      },
+      "pass": true,
+      "recomputed_numpy_float64": {
+        "cosine": 0.9999999999979317,
+        "max_abs": 2.5272369384765625e-05,
+        "relative_l2": 2.254280896919232e-06
+      },
+      "recorded": {
+        "cosine": 0.999999999997901,
+        "max_abs": 2.5272369384765625e-05,
+        "relative_l2": 2.254280896919192e-06
+      },
+      "registered_logit_gates": {
+        "absolute": true,
+        "cosine": true,
+        "relative": true
+      }
+    },
+    {
+      "absolute_metric_differences": {
+        "cosine": 3.086420008457935e-14,
+        "max_abs": 0.0,
+        "relative_l2": 2.625802136488331e-20
+      },
+      "arm": "A3",
+      "artifacts": [
+        {
+          "bytes": 609321,
+          "hash_matches_report": true,
+          "path": "logits/cpu_A3_608d8054bb57f447c95a23b362023a9ff499e4e663f996f3a21691469cf81859.pt",
+          "sha256": "253ff7c87de25902fa532d07c5b460fcfd82c1ffcda3c14c08cf6665d36b6788",
+          "shape": [
+            151936
+          ],
+          "stored_dtype": "float32"
+        },
+        {
+          "bytes": 609321,
+          "hash_matches_report": true,
+          "path": "logits/cuda_0_A3_608d8054bb57f447c95a23b362023a9ff499e4e663f996f3a21691469cf81859.pt",
+          "sha256": "6dbf855b03a8cc0ec01071b85246668e83d21e6b1df72173ce037928b93409e7",
+          "shape": [
+            151936
+          ],
+          "stored_dtype": "float32"
+        }
+      ],
+      "example_id": "native_armr_calibration_compositional_00ef13b90b3e_0006_original",
+      "metric_matches_recorded_within_tolerance": {
+        "cosine": true,
+        "max_abs": true,
+        "relative_l2": true
+      },
+      "pass": true,
+      "recomputed_numpy_float64": {
+        "cosine": 0.9999999999985236,
+        "max_abs": 2.2411346435546875e-05,
+        "relative_l2": 1.748312841617648e-06
+      },
+      "recorded": {
+        "cosine": 0.9999999999984928,
+        "max_abs": 2.2411346435546875e-05,
+        "relative_l2": 1.7483128416176216e-06
+      },
+      "registered_logit_gates": {
+        "absolute": true,
+        "cosine": true,
+        "relative": true
+      }
+    },
+    {
+      "absolute_metric_differences": {
+        "cosine": 3.68594044175552e-14,
+        "max_abs": 0.0,
+        "relative_l2": 4.1928130889087867e-20
+      },
+      "arm": "A3",
+      "artifacts": [
+        {
+          "bytes": 609321,
+          "hash_matches_report": true,
+          "path": "logits/cpu_A3_4cf7d2ac8bf759a44004783cc412594d3c8b22d3545b54a43b37de7d4d70ece4.pt",
+          "sha256": "7082606a6f5005cf6f693599da918148268cbae1a9c2a2ccd0085a0564151705",
+          "shape": [
+            151936
+          ],
+          "stored_dtype": "float32"
+        },
+        {
+          "bytes": 609321,
+          "hash_matches_report": true,
+          "path": "logits/cuda_0_A3_4cf7d2ac8bf759a44004783cc412594d3c8b22d3545b54a43b37de7d4d70ece4.pt",
+          "sha256": "8da0ce641c6a07ac3d132c81b8796cf1c9ad2f8e9ccd935b6022b906479a2a72",
+          "shape": [
+            151936
+          ],
+          "stored_dtype": "float32"
+        }
+      ],
+      "example_id": "native_armr_calibration_counterfactual_0043d6875912_0013_original",
+      "metric_matches_recorded_within_tolerance": {
+        "cosine": true,
+        "max_abs": true,
+        "relative_l2": true
+      },
+      "pass": true,
+      "recomputed_numpy_float64": {
+        "cosine": 0.9999999999978646,
+        "max_abs": 2.2649765014648438e-05,
+        "relative_l2": 2.0808928637220447e-06
+      },
+      "recorded": {
+        "cosine": 0.9999999999978277,
+        "max_abs": 2.2649765014648438e-05,
+        "relative_l2": 2.0808928637220027e-06
+      },
+      "registered_logit_gates": {
+        "absolute": true,
+        "cosine": true,
+        "relative": true
+      }
+    },
+    {
+      "absolute_metric_differences": {
+        "cosine": 4.463096558993129e-14,
+        "max_abs": 0.0,
+        "relative_l2": 4.573977915173222e-20
+      },
+      "arm": "A3",
+      "artifacts": [
+        {
+          "bytes": 609321,
+          "hash_matches_report": true,
+          "path": "logits/cpu_A3_b677206b038e84fee8cd203337eacaf004fc0815ef0cf61b465c4a61afe2c69e.pt",
+          "sha256": "b5480f86173ed20c88977ebfa8d96f52314d1ca4fd0106352198be78c7e24828",
+          "shape": [
+            151936
+          ],
+          "stored_dtype": "float32"
+        },
+        {
+          "bytes": 609321,
+          "hash_matches_report": true,
+          "path": "logits/cuda_0_A3_b677206b038e84fee8cd203337eacaf004fc0815ef0cf61b465c4a61afe2c69e.pt",
+          "sha256": "cf6788ebc32c4cafc14280da91e77fa2dfc81e7b4d953d3ef49befbacd7e09a8",
+          "shape": [
+            151936
+          ],
+          "stored_dtype": "float32"
+        }
+      ],
+      "example_id": "native_armr_calibration_instruction_evidence_303ea820e58e_0007_original",
+      "metric_matches_recorded_within_tolerance": {
+        "cosine": true,
+        "max_abs": true,
+        "relative_l2": true
+      },
+      "pass": true,
+      "recomputed_numpy_float64": {
+        "cosine": 0.9999999999980288,
+        "max_abs": 2.1457672119140625e-05,
+        "relative_l2": 1.9859580759782225e-06
+      },
+      "recorded": {
+        "cosine": 0.9999999999979842,
+        "max_abs": 2.1457672119140625e-05,
+        "relative_l2": 1.9859580759781767e-06
+      },
+      "registered_logit_gates": {
+        "absolute": true,
+        "cosine": true,
+        "relative": true
+      }
+    },
+    {
+      "absolute_metric_differences": {
+        "cosine": 3.175237850427948e-14,
+        "max_abs": 0.0,
+        "relative_l2": 3.091670257478196e-20
+      },
+      "arm": "A3",
+      "artifacts": [
+        {
+          "bytes": 609321,
+          "hash_matches_report": true,
+          "path": "logits/cpu_A3_838a51d208b8b14c8cf7f0b8e55bd34da83f6763e49b71ae0d9752c8365e7f9b.pt",
+          "sha256": "e9261a2df11a1884d5ee978cc749c9342aa1bee3589ee2c7015c5a3bb9c5d5e4",
+          "shape": [
+            151936
+          ],
+          "stored_dtype": "float32"
+        },
+        {
+          "bytes": 609321,
+          "hash_matches_report": true,
+          "path": "logits/cuda_0_A3_838a51d208b8b14c8cf7f0b8e55bd34da83f6763e49b71ae0d9752c8365e7f9b.pt",
+          "sha256": "fbc9b1a1a08920066d993b8b14ece15db0a5646f17c4de3af2458db92ecf59ca",
+          "shape": [
+            151936
+          ],
+          "stored_dtype": "float32"
+        }
+      ],
+      "example_id": "native_armr_calibration_mathematical_1365ba73067d_0004_original",
+      "metric_matches_recorded_within_tolerance": {
+        "cosine": true,
+        "max_abs": true,
+        "relative_l2": true
+      },
+      "pass": true,
+      "recomputed_numpy_float64": {
+        "cosine": 0.9999999999981262,
+        "max_abs": 2.2411346435546875e-05,
+        "relative_l2": 2.0247613700705277e-06
+      },
+      "recorded": {
+        "cosine": 0.9999999999980944,
+        "max_abs": 2.2411346435546875e-05,
+        "relative_l2": 2.0247613700704968e-06
+      },
+      "registered_logit_gates": {
+        "absolute": true,
+        "cosine": true,
+        "relative": true
+      }
+    },
+    {
+      "absolute_metric_differences": {
+        "cosine": 2.9531932455029164e-14,
+        "max_abs": 0.0,
+        "relative_l2": 3.9387032047324966e-20
+      },
+      "arm": "A3",
+      "artifacts": [
+        {
+          "bytes": 609321,
+          "hash_matches_report": true,
+          "path": "logits/cpu_A3_84d837f9799f757ca8dd761f9131a2420a267d33a86b0e4a2a79065d1d33d045.pt",
+          "sha256": "c6aab830e6f8929b3e9524fe8a69f5f34ce2bd038de16206a93637b8c30ca940",
+          "shape": [
+            151936
+          ],
+          "stored_dtype": "float32"
+        },
+        {
+          "bytes": 609321,
+          "hash_matches_report": true,
+          "path": "logits/cuda_0_A3_84d837f9799f757ca8dd761f9131a2420a267d33a86b0e4a2a79065d1d33d045.pt",
+          "sha256": "62697853ad303827f78f3453fa8c6c558b9c3d20ccb42b3eecbde7a242ed5672",
+          "shape": [
+            151936
+          ],
+          "stored_dtype": "float32"
+        }
+      ],
+      "example_id": "native_armr_calibration_ordinary_qa_preservation_011ecf034ea6_0009_original",
+      "metric_matches_recorded_within_tolerance": {
+        "cosine": true,
+        "max_abs": true,
+        "relative_l2": true
+      },
+      "pass": true,
+      "recomputed_numpy_float64": {
+        "cosine": 0.9999999999973643,
+        "max_abs": 2.6226043701171875e-05,
+        "relative_l2": 2.3261341675148965e-06
+      },
+      "recorded": {
+        "cosine": 0.9999999999973348,
+        "max_abs": 2.6226043701171875e-05,
+        "relative_l2": 2.326134167514857e-06
+      },
+      "registered_logit_gates": {
+        "absolute": true,
+        "cosine": true,
+        "relative": true
+      }
+    },
+    {
+      "absolute_metric_differences": {
+        "cosine": 3.26405569239796e-14,
+        "max_abs": 0.0,
+        "relative_l2": 4.531626267810507e-20
+      },
+      "arm": "A3",
+      "artifacts": [
+        {
+          "bytes": 609321,
+          "hash_matches_report": true,
+          "path": "logits/cpu_A3_e966938934f84058e517cf8c1fc7eeb88b2292a61b7dccbb92c44f920601c6b0.pt",
+          "sha256": "9d5c2f5262df2c9ccd650785ba7913419d10fc8b241b5b369b32a47b211bfc8c",
+          "shape": [
+            151936
+          ],
+          "stored_dtype": "float32"
+        },
+        {
+          "bytes": 609321,
+          "hash_matches_report": true,
+          "path": "logits/cuda_0_A3_e966938934f84058e517cf8c1fc7eeb88b2292a61b7dccbb92c44f920601c6b0.pt",
+          "sha256": "6523403599bd920255944f1a7e0355a003c4922a5640141072f262e0323b41a8",
+          "shape": [
+            151936
+          ],
+          "stored_dtype": "float32"
+        }
+      ],
+      "example_id": "native_armr_calibration_relational_005e5c8ce93b_0004_original",
+      "metric_matches_recorded_within_tolerance": {
+        "cosine": true,
+        "max_abs": true,
+        "relative_l2": true
+      },
+      "pass": true,
+      "recomputed_numpy_float64": {
+        "cosine": 0.9999999999969049,
+        "max_abs": 2.574920654296875e-05,
+        "relative_l2": 2.490055806825606e-06
+      },
+      "recorded": {
+        "cosine": 0.9999999999968723,
+        "max_abs": 2.574920654296875e-05,
+        "relative_l2": 2.4900558068255607e-06
+      },
+      "registered_logit_gates": {
+        "absolute": true,
+        "cosine": true,
+        "relative": true
+      }
+    },
+    {
+      "absolute_metric_differences": {
+        "cosine": 4.2299497238218464e-14,
+        "max_abs": 0.0,
+        "relative_l2": 4.0234064994579266e-20
+      },
+      "arm": "A3",
+      "artifacts": [
+        {
+          "bytes": 609321,
+          "hash_matches_report": true,
+          "path": "logits/cpu_A3_52a29a0a09c5bea906d8c74a8c4b300259334aa4e9247ee5f811d1574130853f.pt",
+          "sha256": "d29489bcf74e809cfb361daadc0dda8152100461173f80f0fcf8441b7b0ed095",
+          "shape": [
+            151936
+          ],
+          "stored_dtype": "float32"
+        },
+        {
+          "bytes": 609321,
+          "hash_matches_report": true,
+          "path": "logits/cuda_0_A3_52a29a0a09c5bea906d8c74a8c4b300259334aa4e9247ee5f811d1574130853f.pt",
+          "sha256": "336ce83910ce4537b9494026012aec8d675782967750d55d516ed60b1be8df3f",
+          "shape": [
+            151936
+          ],
+          "stored_dtype": "float32"
+        }
+      ],
+      "example_id": "native_armr_calibration_retrieval_multihop_0353fdc140b8_0005_original",
+      "metric_matches_recorded_within_tolerance": {
+        "cosine": true,
+        "max_abs": true,
+        "relative_l2": true
+      },
+      "pass": true,
+      "recomputed_numpy_float64": {
+        "cosine": 0.9999999999987708,
+        "max_abs": 1.5974044799804688e-05,
+        "relative_l2": 1.5792258212500151e-06
+      },
+      "recorded": {
+        "cosine": 0.9999999999987285,
+        "max_abs": 1.5974044799804688e-05,
+        "relative_l2": 1.579225821249975e-06
+      },
+      "registered_logit_gates": {
+        "absolute": true,
+        "cosine": true,
+        "relative": true
+      }
+    },
+    {
+      "absolute_metric_differences": {
+        "cosine": 3.697042672001771e-14,
+        "max_abs": 0.0,
+        "relative_l2": 3.6845933205562065e-20
+      },
+      "arm": "A3",
+      "artifacts": [
+        {
+          "bytes": 609321,
+          "hash_matches_report": true,
+          "path": "logits/cpu_A3_295235956af40605496e8b4666b76e25985ca057cbc7f973cf785d8b07aabf0e.pt",
+          "sha256": "f2d77273b408ef4f17efd2430ccc409850b04643b5557ef7e8f9edae7851e314",
+          "shape": [
+            151936
+          ],
+          "stored_dtype": "float32"
+        },
+        {
+          "bytes": 609321,
+          "hash_matches_report": true,
+          "path": "logits/cuda_0_A3_295235956af40605496e8b4666b76e25985ca057cbc7f973cf785d8b07aabf0e.pt",
+          "sha256": "fdf43f9e65b46442109452420c8d0b83bda4fc33a65cab3cf1768d33d1a7dce3",
+          "shape": [
+            151936
+          ],
+          "stored_dtype": "float32"
+        }
+      ],
+      "example_id": "native_armr_calibration_symbolic_logic_05a1ea50559e_0013_original",
+      "metric_matches_recorded_within_tolerance": {
+        "cosine": true,
+        "max_abs": true,
+        "relative_l2": true
+      },
+      "pass": true,
+      "recomputed_numpy_float64": {
+        "cosine": 0.9999999999980187,
+        "max_abs": 2.2172927856445312e-05,
+        "relative_l2": 1.989778553389019e-06
+      },
+      "recorded": {
+        "cosine": 0.9999999999979817,
+        "max_abs": 2.2172927856445312e-05,
+        "relative_l2": 1.989778553388982e-06
+      },
+      "registered_logit_gates": {
+        "absolute": true,
+        "cosine": true,
+        "relative": true
+      }
+    },
+    {
+      "absolute_metric_differences": {
+        "cosine": 3.5083047578154947e-14,
+        "max_abs": 0.0,
+        "relative_l2": 4.404571325722362e-20
+      },
+      "arm": "A16",
+      "artifacts": [
+        {
+          "bytes": 609321,
+          "hash_matches_report": true,
+          "path": "logits/cpu_A16_608d8054bb57f447c95a23b362023a9ff499e4e663f996f3a21691469cf81859.pt",
+          "sha256": "ccba0691506351f662af9198e51cd8614b9ab9b1afd412eb70016e9cf5a1175f",
+          "shape": [
+            151936
+          ],
+          "stored_dtype": "float32"
+        },
+        {
+          "bytes": 609321,
+          "hash_matches_report": true,
+          "path": "logits/cuda_0_A16_608d8054bb57f447c95a23b362023a9ff499e4e663f996f3a21691469cf81859.pt",
+          "sha256": "f50563dcbd4467e3e5ecf0e12459849399cc291c670c1a6d2c1f80a49167e238",
+          "shape": [
+            151936
+          ],
+          "stored_dtype": "float32"
+        }
+      ],
+      "example_id": "native_armr_calibration_compositional_00ef13b90b3e_0006_original",
+      "metric_matches_recorded_within_tolerance": {
+        "cosine": true,
+        "max_abs": true,
+        "relative_l2": true
+      },
+      "pass": true,
+      "recomputed_numpy_float64": {
+        "cosine": 0.9999999999975934,
+        "max_abs": 2.4318695068359375e-05,
+        "relative_l2": 2.20636940226123e-06
+      },
+      "recorded": {
+        "cosine": 0.9999999999975583,
+        "max_abs": 2.4318695068359375e-05,
+        "relative_l2": 2.206369402261186e-06
+      },
+      "registered_logit_gates": {
+        "absolute": true,
+        "cosine": true,
+        "relative": true
+      }
+    },
+    {
+      "absolute_metric_differences": {
+        "cosine": 4.0523140398818214e-14,
+        "max_abs": 0.0,
+        "relative_l2": 3.3034284942917713e-20
+      },
+      "arm": "A16",
+      "artifacts": [
+        {
+          "bytes": 609321,
+          "hash_matches_report": true,
+          "path": "logits/cpu_A16_4cf7d2ac8bf759a44004783cc412594d3c8b22d3545b54a43b37de7d4d70ece4.pt",
+          "sha256": "95d406ea10e1993eba775c547eb5a269e7db5d0242d9a9ae89cb0a88108968aa",
+          "shape": [
+            151936
+          ],
+          "stored_dtype": "float32"
+        },
+        {
+          "bytes": 609321,
+          "hash_matches_report": true,
+          "path": "logits/cuda_0_A16_4cf7d2ac8bf759a44004783cc412594d3c8b22d3545b54a43b37de7d4d70ece4.pt",
+          "sha256": "7824df416f34db5d2d18db28ffb252d667329d1ed634f2eccbd9861b5585fc4a",
+          "shape": [
+            151936
+          ],
+          "stored_dtype": "float32"
+        }
+      ],
+      "example_id": "native_armr_calibration_counterfactual_0043d6875912_0013_original",
+      "metric_matches_recorded_within_tolerance": {
+        "cosine": true,
+        "max_abs": true,
+        "relative_l2": true
+      },
+      "pass": true,
+      "recomputed_numpy_float64": {
+        "cosine": 0.999999999998631,
+        "max_abs": 1.8477439880371094e-05,
+        "relative_l2": 1.6693454683088314e-06
+      },
+      "recorded": {
+        "cosine": 0.9999999999985905,
+        "max_abs": 1.8477439880371094e-05,
+        "relative_l2": 1.6693454683087984e-06
+      },
+      "registered_logit_gates": {
+        "absolute": true,
+        "cosine": true,
+        "relative": true
+      }
+    },
+    {
+      "absolute_metric_differences": {
+        "cosine": 3.3639757646142243e-14,
+        "max_abs": 0.0,
+        "relative_l2": 4.277516383634217e-20
+      },
+      "arm": "A16",
+      "artifacts": [
+        {
+          "bytes": 609321,
+          "hash_matches_report": true,
+          "path": "logits/cpu_A16_b677206b038e84fee8cd203337eacaf004fc0815ef0cf61b465c4a61afe2c69e.pt",
+          "sha256": "7b256d0733bed8977e5b9500afc5a8b55e26f4cb2173ccd8fc1d468fb3608eee",
+          "shape": [
+            151936
+          ],
+          "stored_dtype": "float32"
+        },
+        {
+          "bytes": 609321,
+          "hash_matches_report": true,
+          "path": "logits/cuda_0_A16_b677206b038e84fee8cd203337eacaf004fc0815ef0cf61b465c4a61afe2c69e.pt",
+          "sha256": "9baebdc9448f6f6a0e38aaea014f02adf87a84e8906b498fd1085bfb82a32a76",
+          "shape": [
+            151936
+          ],
+          "stored_dtype": "float32"
+        }
+      ],
+      "example_id": "native_armr_calibration_instruction_evidence_303ea820e58e_0007_original",
+      "metric_matches_recorded_within_tolerance": {
+        "cosine": true,
+        "max_abs": true,
+        "relative_l2": true
+      },
+      "pass": true,
+      "recomputed_numpy_float64": {
+        "cosine": 0.9999999999974579,
+        "max_abs": 4.1961669921875e-05,
+        "relative_l2": 2.357494676416393e-06
+      },
+      "recorded": {
+        "cosine": 0.9999999999974243,
+        "max_abs": 4.1961669921875e-05,
+        "relative_l2": 2.35749467641635e-06
+      },
+      "registered_logit_gates": {
+        "absolute": true,
+        "cosine": true,
+        "relative": true
+      }
+    },
+    {
+      "absolute_metric_differences": {
+        "cosine": 3.097522238704187e-14,
+        "max_abs": 0.0,
+        "relative_l2": 2.1811098391798234e-20
+      },
+      "arm": "A16",
+      "artifacts": [
+        {
+          "bytes": 609321,
+          "hash_matches_report": true,
+          "path": "logits/cpu_A16_838a51d208b8b14c8cf7f0b8e55bd34da83f6763e49b71ae0d9752c8365e7f9b.pt",
+          "sha256": "68f80283379cfdca9f9112452a2b53f07aa31319fe92dac0071f19eddf9e3132",
+          "shape": [
+            151936
+          ],
+          "stored_dtype": "float32"
+        },
+        {
+          "bytes": 609321,
+          "hash_matches_report": true,
+          "path": "logits/cuda_0_A16_838a51d208b8b14c8cf7f0b8e55bd34da83f6763e49b71ae0d9752c8365e7f9b.pt",
+          "sha256": "60ea24faa184156d7b1b65cf668b60eadcdb0b906a256d2d4e795120bd3aa918",
+          "shape": [
+            151936
+          ],
+          "stored_dtype": "float32"
+        }
+      ],
+      "example_id": "native_armr_calibration_mathematical_1365ba73067d_0004_original",
+      "metric_matches_recorded_within_tolerance": {
+        "cosine": true,
+        "max_abs": true,
+        "relative_l2": true
+      },
+      "pass": true,
+      "recomputed_numpy_float64": {
+        "cosine": 0.9999999999991697,
+        "max_abs": 1.71661376953125e-05,
+        "relative_l2": 1.3057303068182782e-06
+      },
+      "recorded": {
+        "cosine": 0.9999999999991387,
+        "max_abs": 1.71661376953125e-05,
+        "relative_l2": 1.3057303068182564e-06
+      },
+      "registered_logit_gates": {
+        "absolute": true,
+        "cosine": true,
+        "relative": true
+      }
+    },
+    {
+      "absolute_metric_differences": {
+        "cosine": 3.808064974464287e-14,
+        "max_abs": 0.0,
+        "relative_l2": 3.6845933205562065e-20
+      },
+      "arm": "A16",
+      "artifacts": [
+        {
+          "bytes": 609321,
+          "hash_matches_report": true,
+          "path": "logits/cpu_A16_84d837f9799f757ca8dd761f9131a2420a267d33a86b0e4a2a79065d1d33d045.pt",
+          "sha256": "99c8c4d1fb2f58848fc6b75a023ed4a8e4c3474cfa30fa56795a645be3cd9895",
+          "shape": [
+            151936
+          ],
+          "stored_dtype": "float32"
+        },
+        {
+          "bytes": 609321,
+          "hash_matches_report": true,
+          "path": "logits/cuda_0_A16_84d837f9799f757ca8dd761f9131a2420a267d33a86b0e4a2a79065d1d33d045.pt",
+          "sha256": "41d5c3e63c5167f1a2771dba3c5fd13dd3a3dd51ab786a82d3061bd501f13335",
+          "shape": [
+            151936
+          ],
+          "stored_dtype": "float32"
+        }
+      ],
+      "example_id": "native_armr_calibration_ordinary_qa_preservation_011ecf034ea6_0009_original",
+      "metric_matches_recorded_within_tolerance": {
+        "cosine": true,
+        "max_abs": true,
+        "relative_l2": true
+      },
+      "pass": true,
+      "recomputed_numpy_float64": {
+        "cosine": 0.9999999999981793,
+        "max_abs": 2.574920654296875e-05,
+        "relative_l2": 2.0140317363203094e-06
+      },
+      "recorded": {
+        "cosine": 0.9999999999981413,
+        "max_abs": 2.574920654296875e-05,
+        "relative_l2": 2.0140317363202725e-06
+      },
+      "registered_logit_gates": {
+        "absolute": true,
+        "cosine": true,
+        "relative": true
+      }
+    },
+    {
+      "absolute_metric_differences": {
+        "cosine": 3.552713678800501e-14,
+        "max_abs": 0.0,
+        "relative_l2": 3.3034284942917713e-20
+      },
+      "arm": "A16",
+      "artifacts": [
+        {
+          "bytes": 609321,
+          "hash_matches_report": true,
+          "path": "logits/cpu_A16_e966938934f84058e517cf8c1fc7eeb88b2292a61b7dccbb92c44f920601c6b0.pt",
+          "sha256": "a22e4dd4bcd6bb52930a94daa09b7aaa9df7a9ad28fc2a4c9c6c1874ce82f3aa",
+          "shape": [
+            151936
+          ],
+          "stored_dtype": "float32"
+        },
+        {
+          "bytes": 609321,
+          "hash_matches_report": true,
+          "path": "logits/cuda_0_A16_e966938934f84058e517cf8c1fc7eeb88b2292a61b7dccbb92c44f920601c6b0.pt",
+          "sha256": "0d2d815ce1dd023a2b522c8842a51784e339fcbb0111083e3f5d5e71811f0054",
+          "shape": [
+            151936
+          ],
+          "stored_dtype": "float32"
+        }
+      ],
+      "example_id": "native_armr_calibration_relational_005e5c8ce93b_0004_original",
+      "metric_matches_recorded_within_tolerance": {
+        "cosine": true,
+        "max_abs": true,
+        "relative_l2": true
+      },
+      "pass": true,
+      "recomputed_numpy_float64": {
+        "cosine": 0.9999999999984988,
+        "max_abs": 2.0325183868408203e-05,
+        "relative_l2": 1.7379262021882324e-06
+      },
+      "recorded": {
+        "cosine": 0.9999999999984632,
+        "max_abs": 2.0325183868408203e-05,
+        "relative_l2": 1.7379262021881994e-06
+      },
+      "registered_logit_gates": {
+        "absolute": true,
+        "cosine": true,
+        "relative": true
+      }
+    },
+    {
+      "absolute_metric_differences": {
+        "cosine": 4.296563105299356e-14,
+        "max_abs": 0.0,
+        "relative_l2": 3.6845933205562065e-20
+      },
+      "arm": "A16",
+      "artifacts": [
+        {
+          "bytes": 609321,
+          "hash_matches_report": true,
+          "path": "logits/cpu_A16_52a29a0a09c5bea906d8c74a8c4b300259334aa4e9247ee5f811d1574130853f.pt",
+          "sha256": "706ede0523d38734a407ca7236d2e3995b99ece6eac9705c66d835fb0fee611c",
+          "shape": [
+            151936
+          ],
+          "stored_dtype": "float32"
+        },
+        {
+          "bytes": 609321,
+          "hash_matches_report": true,
+          "path": "logits/cuda_0_A16_52a29a0a09c5bea906d8c74a8c4b300259334aa4e9247ee5f811d1574130853f.pt",
+          "sha256": "30835ed2033a745bf8b502b641844b14a1b70c4e0eb6bbbd1b6b55ff52ab9019",
+          "shape": [
+            151936
+          ],
+          "stored_dtype": "float32"
+        }
+      ],
+      "example_id": "native_armr_calibration_retrieval_multihop_0353fdc140b8_0005_original",
+      "metric_matches_recorded_within_tolerance": {
+        "cosine": true,
+        "max_abs": true,
+        "relative_l2": true
+      },
+      "pass": true,
+      "recomputed_numpy_float64": {
+        "cosine": 0.9999999999987638,
+        "max_abs": 1.3828277587890625e-05,
+        "relative_l2": 1.5790873636885214e-06
+      },
+      "recorded": {
+        "cosine": 0.9999999999987208,
+        "max_abs": 1.3828277587890625e-05,
+        "relative_l2": 1.5790873636884845e-06
+      },
+      "registered_logit_gates": {
+        "absolute": true,
+        "cosine": true,
+        "relative": true
+      }
+    },
+    {
+      "absolute_metric_differences": {
+        "cosine": 2.631228568361621e-14,
+        "max_abs": 0.0,
+        "relative_l2": 3.3034284942917713e-20
+      },
+      "arm": "A16",
+      "artifacts": [
+        {
+          "bytes": 609321,
+          "hash_matches_report": true,
+          "path": "logits/cpu_A16_295235956af40605496e8b4666b76e25985ca057cbc7f973cf785d8b07aabf0e.pt",
+          "sha256": "3ef350ac80af4ff959a6f10933b75dbfd3be13188e80c40ea3af8dcf5ae673c3",
+          "shape": [
+            151936
+          ],
+          "stored_dtype": "float32"
+        },
+        {
+          "bytes": 609321,
+          "hash_matches_report": true,
+          "path": "logits/cuda_0_A16_295235956af40605496e8b4666b76e25985ca057cbc7f973cf785d8b07aabf0e.pt",
+          "sha256": "2be50e48526b6b5c1f193b1c896b7880e0ecb103b870014beae5790950f2cb2b",
+          "shape": [
+            151936
+          ],
+          "stored_dtype": "float32"
+        }
+      ],
+      "example_id": "native_armr_calibration_symbolic_logic_05a1ea50559e_0013_original",
+      "metric_matches_recorded_within_tolerance": {
+        "cosine": true,
+        "max_abs": true,
+        "relative_l2": true
+      },
+      "pass": true,
+      "recomputed_numpy_float64": {
+        "cosine": 0.9999999999972388,
+        "max_abs": 2.6404857635498047e-05,
+        "relative_l2": 2.3789138936065485e-06
+      },
+      "recorded": {
+        "cosine": 0.9999999999972125,
+        "max_abs": 2.6404857635498047e-05,
+        "relative_l2": 2.3789138936065155e-06
+      },
+      "registered_logit_gates": {
+        "absolute": true,
+        "cosine": true,
+        "relative": true
+      }
+    },
+    {
+      "absolute_metric_differences": {
+        "cosine": 3.3084646133829665e-14,
+        "max_abs": 0.0,
+        "relative_l2": 3.4728350837426314e-20
+      },
+      "arm": "AM",
+      "artifacts": [
+        {
+          "bytes": 609321,
+          "hash_matches_report": true,
+          "path": "logits/cpu_AM_608d8054bb57f447c95a23b362023a9ff499e4e663f996f3a21691469cf81859.pt",
+          "sha256": "092b167ee0a07b579e7eeb1987ce5f8e0dc9aa04020ef862d37e51d988e9f72d",
+          "shape": [
+            151936
+          ],
+          "stored_dtype": "float32"
+        },
+        {
+          "bytes": 609321,
+          "hash_matches_report": true,
+          "path": "logits/cuda_0_AM_608d8054bb57f447c95a23b362023a9ff499e4e663f996f3a21691469cf81859.pt",
+          "sha256": "a94c119db22e228288d10e0e3250894d49139f17a1ccf185a007808bfadb6b62",
+          "shape": [
+            151936
+          ],
+          "stored_dtype": "float32"
+        }
+      ],
+      "example_id": "native_armr_calibration_compositional_00ef13b90b3e_0006_original",
+      "metric_matches_recorded_within_tolerance": {
+        "cosine": true,
+        "max_abs": true,
+        "relative_l2": true
+      },
+      "pass": true,
+      "recomputed_numpy_float64": {
+        "cosine": 0.9999999999981446,
+        "max_abs": 2.193450927734375e-05,
+        "relative_l2": 1.932132780376149e-06
+      },
+      "recorded": {
+        "cosine": 0.9999999999981115,
+        "max_abs": 2.193450927734375e-05,
+        "relative_l2": 1.9321327803761144e-06
+      },
+      "registered_logit_gates": {
+        "absolute": true,
+        "cosine": true,
+        "relative": true
+      }
+    },
+    {
+      "absolute_metric_differences": {
+        "cosine": 3.8413716652030416e-14,
+        "max_abs": 0.0,
+        "relative_l2": 4.955142741437657e-20
+      },
+      "arm": "AM",
+      "artifacts": [
+        {
+          "bytes": 609321,
+          "hash_matches_report": true,
+          "path": "logits/cpu_AM_4cf7d2ac8bf759a44004783cc412594d3c8b22d3545b54a43b37de7d4d70ece4.pt",
+          "sha256": "836b077eb567e050a6fb7d0ec2dcb900089885690c61a50d0b2580ce0f789cdd",
+          "shape": [
+            151936
+          ],
+          "stored_dtype": "float32"
+        },
+        {
+          "bytes": 609321,
+          "hash_matches_report": true,
+          "path": "logits/cuda_0_AM_4cf7d2ac8bf759a44004783cc412594d3c8b22d3545b54a43b37de7d4d70ece4.pt",
+          "sha256": "c3e489649688ce2cb29adc2a6927c59e7523c2a691e0dc5e9b975ad8f359f0f5",
+          "shape": [
+            151936
+          ],
+          "stored_dtype": "float32"
+        }
+      ],
+      "example_id": "native_armr_calibration_counterfactual_0043d6875912_0013_original",
+      "metric_matches_recorded_within_tolerance": {
+        "cosine": true,
+        "max_abs": true,
+        "relative_l2": true
+      },
+      "pass": true,
+      "recomputed_numpy_float64": {
+        "cosine": 0.9999999999967373,
+        "max_abs": 2.6226043701171875e-05,
+        "relative_l2": 2.581791745169746e-06
+      },
+      "recorded": {
+        "cosine": 0.9999999999966989,
+        "max_abs": 2.6226043701171875e-05,
+        "relative_l2": 2.5817917451696963e-06
+      },
+      "registered_logit_gates": {
+        "absolute": true,
+        "cosine": true,
+        "relative": true
+      }
+    },
+    {
+      "absolute_metric_differences": {
+        "cosine": 3.530509218307998e-14,
+        "max_abs": 0.0,
+        "relative_l2": 3.5998900258307764e-20
+      },
+      "arm": "AM",
+      "artifacts": [
+        {
+          "bytes": 609321,
+          "hash_matches_report": true,
+          "path": "logits/cpu_AM_b677206b038e84fee8cd203337eacaf004fc0815ef0cf61b465c4a61afe2c69e.pt",
+          "sha256": "63ac1ceac960ed80e0903d03a83cd33f8993438b90cdbf241310f257b3817c79",
+          "shape": [
+            151936
+          ],
+          "stored_dtype": "float32"
+        },
+        {
+          "bytes": 609321,
+          "hash_matches_report": true,
+          "path": "logits/cuda_0_AM_b677206b038e84fee8cd203337eacaf004fc0815ef0cf61b465c4a61afe2c69e.pt",
+          "sha256": "9a410cdf55cb74ff0f8da44d3781e9e734cb3c2773243de17a46d3b35e472735",
+          "shape": [
+            151936
+          ],
+          "stored_dtype": "float32"
+        }
+      ],
+      "example_id": "native_armr_calibration_instruction_evidence_303ea820e58e_0007_original",
+      "metric_matches_recorded_within_tolerance": {
+        "cosine": true,
+        "max_abs": true,
+        "relative_l2": true
+      },
+      "pass": true,
+      "recomputed_numpy_float64": {
+        "cosine": 0.9999999999980236,
+        "max_abs": 2.574920654296875e-05,
+        "relative_l2": 1.987219341206104e-06
+      },
+      "recorded": {
+        "cosine": 0.9999999999979883,
+        "max_abs": 2.574920654296875e-05,
+        "relative_l2": 1.987219341206068e-06
+      },
+      "registered_logit_gates": {
+        "absolute": true,
+        "cosine": true,
+        "relative": true
+      }
+    },
+    {
+      "absolute_metric_differences": {
+        "cosine": 3.2529534621517087e-14,
+        "max_abs": 0.0,
+        "relative_l2": 4.0657581468206416e-20
+      },
+      "arm": "AM",
+      "artifacts": [
+        {
+          "bytes": 609321,
+          "hash_matches_report": true,
+          "path": "logits/cpu_AM_838a51d208b8b14c8cf7f0b8e55bd34da83f6763e49b71ae0d9752c8365e7f9b.pt",
+          "sha256": "678dca5cb19b57b9135e43fd20565608604f39caf486fa7b6a56fef5622562c0",
+          "shape": [
+            151936
+          ],
+          "stored_dtype": "float32"
+        },
+        {
+          "bytes": 609321,
+          "hash_matches_report": true,
+          "path": "logits/cuda_0_AM_838a51d208b8b14c8cf7f0b8e55bd34da83f6763e49b71ae0d9752c8365e7f9b.pt",
+          "sha256": "63e3f1a15d3a7129ca633edffb0778d982837b620a3fdbcf8e80c6e8fc2c77bc",
+          "shape": [
+            151936
+          ],
+          "stored_dtype": "float32"
+        }
+      ],
+      "example_id": "native_armr_calibration_mathematical_1365ba73067d_0004_original",
+      "metric_matches_recorded_within_tolerance": {
+        "cosine": true,
+        "max_abs": true,
+        "relative_l2": true
+      },
+      "pass": true,
+      "recomputed_numpy_float64": {
+        "cosine": 0.9999999999970787,
+        "max_abs": 2.765655517578125e-05,
+        "relative_l2": 2.4858523124156878e-06
+      },
+      "recorded": {
+        "cosine": 0.9999999999970461,
+        "max_abs": 2.765655517578125e-05,
+        "relative_l2": 2.485852312415647e-06
+      },
+      "registered_logit_gates": {
+        "absolute": true,
+        "cosine": true,
+        "relative": true
+      }
+    },
+    {
+      "absolute_metric_differences": {
+        "cosine": 3.26405569239796e-14,
+        "max_abs": 0.0,
+        "relative_l2": 4.362219678359647e-20
+      },
+      "arm": "AM",
+      "artifacts": [
+        {
+          "bytes": 609321,
+          "hash_matches_report": true,
+          "path": "logits/cpu_AM_84d837f9799f757ca8dd761f9131a2420a267d33a86b0e4a2a79065d1d33d045.pt",
+          "sha256": "2f8e3c7f4e23e2d056ebc7f42ebcafe5fc0c53d05ff2ef9663559e29ab859c02",
+          "shape": [
+            151936
+          ],
+          "stored_dtype": "float32"
+        },
+        {
+          "bytes": 609321,
+          "hash_matches_report": true,
+          "path": "logits/cuda_0_AM_84d837f9799f757ca8dd761f9131a2420a267d33a86b0e4a2a79065d1d33d045.pt",
+          "sha256": "c4a03307af92189797dd9e0fa51bd9beaf69aab875553056d08ba93a47fab146",
+          "shape": [
+            151936
+          ],
+          "stored_dtype": "float32"
+        }
+      ],
+      "example_id": "native_armr_calibration_ordinary_qa_preservation_011ecf034ea6_0009_original",
+      "metric_matches_recorded_within_tolerance": {
+        "cosine": true,
+        "max_abs": true,
+        "relative_l2": true
+      },
+      "pass": true,
+      "recomputed_numpy_float64": {
+        "cosine": 0.999999999997285,
+        "max_abs": 2.6226043701171875e-05,
+        "relative_l2": 2.3577843872403256e-06
+      },
+      "recorded": {
+        "cosine": 0.9999999999972523,
+        "max_abs": 2.6226043701171875e-05,
+        "relative_l2": 2.357784387240282e-06
+      },
+      "registered_logit_gates": {
+        "absolute": true,
+        "cosine": true,
+        "relative": true
+      }
+    },
+    {
+      "absolute_metric_differences": {
+        "cosine": 3.3639757646142243e-14,
+        "max_abs": 0.0,
+        "relative_l2": 3.155197728522269e-20
+      },
+      "arm": "AM",
+      "artifacts": [
+        {
+          "bytes": 609321,
+          "hash_matches_report": true,
+          "path": "logits/cpu_AM_e966938934f84058e517cf8c1fc7eeb88b2292a61b7dccbb92c44f920601c6b0.pt",
+          "sha256": "e1c4252b29f51a80510cb932507642c46127b32184ba0a248db1cb6ddbc00ce4",
+          "shape": [
+            151936
+          ],
+          "stored_dtype": "float32"
+        },
+        {
+          "bytes": 609321,
+          "hash_matches_report": true,
+          "path": "logits/cuda_0_AM_e966938934f84058e517cf8c1fc7eeb88b2292a61b7dccbb92c44f920601c6b0.pt",
+          "sha256": "6cbe2f0628529dd52ecca233394849336637a1c856bc650c57ea5a44135df950",
+          "shape": [
+            151936
+          ],
+          "stored_dtype": "float32"
+        }
+      ],
+      "example_id": "native_armr_calibration_relational_005e5c8ce93b_0004_original",
+      "metric_matches_recorded_within_tolerance": {
+        "cosine": true,
+        "max_abs": true,
+        "relative_l2": true
+      },
+      "pass": true,
+      "recomputed_numpy_float64": {
+        "cosine": 0.9999999999987035,
+        "max_abs": 2.0742416381835938e-05,
+        "relative_l2": 1.6232498272713493e-06
+      },
+      "recorded": {
+        "cosine": 0.9999999999986698,
+        "max_abs": 2.0742416381835938e-05,
+        "relative_l2": 1.6232498272713178e-06
+      },
+      "registered_logit_gates": {
+        "absolute": true,
+        "cosine": true,
+        "relative": true
+      }
+    },
+    {
+      "absolute_metric_differences": {
+        "cosine": 4.207745263329343e-14,
+        "max_abs": 0.0,
+        "relative_l2": 4.573977915173222e-20
+      },
+      "arm": "AM",
+      "artifacts": [
+        {
+          "bytes": 609321,
+          "hash_matches_report": true,
+          "path": "logits/cpu_AM_52a29a0a09c5bea906d8c74a8c4b300259334aa4e9247ee5f811d1574130853f.pt",
+          "sha256": "8ac06d3c00ae40b94c2ac3975474f38186d3511ca08dffcfd8f2423d7b46d1e2",
+          "shape": [
+            151936
+          ],
+          "stored_dtype": "float32"
+        },
+        {
+          "bytes": 609321,
+          "hash_matches_report": true,
+          "path": "logits/cuda_0_AM_52a29a0a09c5bea906d8c74a8c4b300259334aa4e9247ee5f811d1574130853f.pt",
+          "sha256": "7371f6452cc412dafcf906de21d1e8d5c316527e75d9e8b768550dc711b0ad31",
+          "shape": [
+            151936
+          ],
+          "stored_dtype": "float32"
+        }
+      ],
+      "example_id": "native_armr_calibration_retrieval_multihop_0353fdc140b8_0005_original",
+      "metric_matches_recorded_within_tolerance": {
+        "cosine": true,
+        "max_abs": true,
+        "relative_l2": true
+      },
+      "pass": true,
+      "recomputed_numpy_float64": {
+        "cosine": 0.9999999999979777,
+        "max_abs": 1.9669532775878906e-05,
+        "relative_l2": 2.014666827427388e-06
+      },
+      "recorded": {
+        "cosine": 0.9999999999979357,
+        "max_abs": 1.9669532775878906e-05,
+        "relative_l2": 2.014666827427342e-06
+      },
+      "registered_logit_gates": {
+        "absolute": true,
+        "cosine": true,
+        "relative": true
+      }
+    },
+    {
+      "absolute_metric_differences": {
+        "cosine": 3.008704396734174e-14,
+        "max_abs": 0.0,
+        "relative_l2": 4.404571325722362e-20
+      },
+      "arm": "AM",
+      "artifacts": [
+        {
+          "bytes": 609321,
+          "hash_matches_report": true,
+          "path": "logits/cpu_AM_295235956af40605496e8b4666b76e25985ca057cbc7f973cf785d8b07aabf0e.pt",
+          "sha256": "f3f9b6e185c165a25c66828f9155453fe685098bad95841a51b662a8b6def6df",
+          "shape": [
+            151936
+          ],
+          "stored_dtype": "float32"
+        },
+        {
+          "bytes": 609321,
+          "hash_matches_report": true,
+          "path": "logits/cuda_0_AM_295235956af40605496e8b4666b76e25985ca057cbc7f973cf785d8b07aabf0e.pt",
+          "sha256": "06423b751bd6ecbc16329396f04cfa285ac28136c0db34e5ef6b6004e6a120ab",
+          "shape": [
+            151936
+          ],
+          "stored_dtype": "float32"
+        }
+      ],
+      "example_id": "native_armr_calibration_symbolic_logic_05a1ea50559e_0013_original",
+      "metric_matches_recorded_within_tolerance": {
+        "cosine": true,
+        "max_abs": true,
+        "relative_l2": true
+      },
+      "pass": true,
+      "recomputed_numpy_float64": {
+        "cosine": 0.9999999999973265,
+        "max_abs": 2.753734588623047e-05,
+        "relative_l2": 2.3522098875809554e-06
+      },
+      "recorded": {
+        "cosine": 0.9999999999972964,
+        "max_abs": 2.753734588623047e-05,
+        "relative_l2": 2.3522098875809114e-06
+      },
+      "registered_logit_gates": {
+        "absolute": true,
+        "cosine": true,
+        "relative": true
+      }
+    }
+  ],
+  "cpu_thread_limit": 1,
+  "earlier_audit_preserved": {
+    "audit.md": true,
+    "receipt.json": true
+  },
+  "earlier_audit_sha256": {
+    "audit.md": "0acd40a7986945652066d04e9b62f717b563febec9e7f029ed73b4bb6aa9bbbb",
+    "receipt.json": "f591f011eebe716261714d4b823e9d077bbcc55505b7b17c9fb81e11eee15b89"
+  },
+  "end_utc": "2026-09-05T21:59:22.804878+00:00",
+  "evidence_directory": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-cross-scale\\experiments\\supa_adaptive_compute_v2\\native_armr\\evidence\\00_runtime_qualification\\20260905T191958_868458Z_82f1162e",
+  "frozen_logit_gates": {
+    "max_abs_logit_error": 0.002,
+    "max_relative_logit_l2": 0.0002,
+    "minimum_logit_cosine": 0.999999
+  },
+  "gpu_execution": false,
+  "maximum_absolute_metric_disagreement": {
+    "cosine": 4.474198789239381e-14,
+    "max_abs": 0.0,
+    "relative_l2": 4.955142741437657e-20
+  },
+  "method": "Read each saved FP32 tensor storage with zipfile and restricted metadata parser; convert to NumPy float64; compute maximum absolute difference, error L2/reference L2, dot/(reference L2 * actual L2); retain one CPU/GPU pair at a time.",
+  "models_loaded": 0,
+  "numpy": "2.4.6",
+  "programme_comparison_helpers_imported": false,
+  "python": "3.11.15",
+  "report_sha256": "31f1759311ff4a70432def3bb55f52386b2ba7d801b3d9298e3c06bf7ced73c2",
+  "run_manifest_sha256": "52fe3ed8ccf9263c169ab06c85e2a30517b8eb13ad297581188d564f7fa1fc5c",
+  "schema": "native_first_token_logit_independent_recomputation_v1",
+  "script_sha256": "28c7c921ac44a320da2a0cec885b24f33575b43e53006a50a068160cbaef4309",
+  "start_utc": "2026-09-05T21:59:22.545685+00:00",
+  "status": "PASS",
+  "thread_environment": {
+    "BLIS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "NUMEXPR_NUM_THREADS": "1",
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "VECLIB_MAXIMUM_THREADS": "1"
+  },
+  "threadpool_verification": "threadpoolctl verified all loaded pools use one thread",
+  "threadpools": [
+    {
+      "architecture": "SkylakeX",
+      "filepath": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\.venv\\Lib\\site-packages\\numpy.libs\\libscipy_openblas64_-63c857e738469261263c764a36be9436.dll",
+      "internal_api": "openblas",
+      "num_threads": 1,
+      "prefix": "libscipy_openblas",
+      "threading_layer": "pthreads",
+      "user_api": "blas",
+      "version": "0.3.31.188.0"
+    }
+  ],
+  "tolerance_rationale": "Maximum absolute difference must be exact; relative norms permit FP64 reduction rounding, and cosine allows a 5e-14 absolute roundoff margin. Frozen scientific gates are applied without this matching tolerance.",
+  "torch_imported": false
+}

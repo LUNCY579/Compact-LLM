@@ -1,0 +1,8 @@
+arm=C28 steps=120 lr=0.0001 | held-out rows=8 tokens=1001 source CE=5.6679
+  step   0 | held CE= 12.2003 KL= 8.9176 top1=0.021 | hits=0/6 term=0 distinct=6
+  step  20 | held CE=  2.5368 KL= 3.5077 top1=0.297 | hits=0/6 term=6 distinct=1 | train_ce= 2.6281 tok=2585 1366s
+        pilot-d1-v0    expected='3'    got='The current version is 19:15 AM AM, but I will wait for the '
+        pilot-d1-v1    expected='5'    got='The current version is 19:15 AM AM, but I will wait for the '
+  step  40 | held CE=  2.2796 KL= 5.1657 top1=0.287 | hits=0/6 term=6 distinct=4 | train_ce= 1.5546 tok=4968 2865s
+        pilot-d1-v0    expected='3'    got='The current task is to finish the coding sprint.'
+        pilot-d1-v1    expected='5'    got='The result is the result, not the result.'

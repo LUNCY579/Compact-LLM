@@ -1,0 +1,7 @@
+# Fresh analysis author checks 003
+
+Held forecast-sign correction and V2 consumer for independent review; no model attempt or actual fresh label/outcome read. Prior d07a99c3/18698dd0/checks002 are preserved byte-for-byte under `versions/fresh_analysis_pre_negative_forecast_fix_001/`. Root preserves the unused V1 admission; this prospective correction is not a native retry or candidate revision.
+
+Every forecast duration/cost component must be finite and nonnegative, with positive warm forward time. Registered33744calls×1.5×warmmax,4104rows×nonforwardbound and their total are reconciled; negative forward/nonforward/total/elapsed/warm/per-row values cannot discount the full run. The registered factor/reserves/deadline are unchanged. Reader binds exact fresh_admission_v2.json and reviews/fresh_dispatch_review_002.json, still requiring copied receipt hash, admission SHA and PASS status.
+
+Eight affected forecast/full-synthetic-matrix tests passed in5.08 seconds; one exact consumer-path test passed in1.01 seconds. All use Python `-B`, disabled cache and explicit new V3 reviews basetemp. Source tests total17. Negative components, NaN/zero, factor/reserve/sum substitutions and prior/generic/outside review paths refuse; a valid complete synthetic matrix still passes. No native, Torch, actual corpus labels, model outputs, GPU or tokenizer was accessed. Science, counts, primary/bootstrap/preservation/statistical and policy rules remain unchanged. This is an author check, not independent packet validation.

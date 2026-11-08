@@ -1,0 +1,903 @@
+{
+  "record": "RRP002_SHORTCUT_FLOOR_AND_POSITIVE_CONTROL",
+  "bank": {
+    "name": "RRP2-DEV-V1",
+    "rows": 384,
+    "source": "forge_v1 data/validation + metadata/validation",
+    "families": [
+      "deduction",
+      "dialogue_memory",
+      "document_reconciliation",
+      "program_trace",
+      "relational_join",
+      "signed_ledger",
+      "source_boundaries",
+      "story_state"
+    ],
+    "per_family": 48,
+    "selection": "stable digest of (RRP-002-bank, seed 17, id); no answer or model outcome consulted",
+    "excluded_microfit_ids": 32,
+    "overlap_with_microfit": 0,
+    "distinct_case_sha256": 384,
+    "strata": {
+      "ANSWER": 328,
+      "UNKNOWN": 56
+    },
+    "prior_exposure": "forge_v1 validation is declared development_only by the release and had never been opened by this programme",
+    "token_window_caveat": "v1 validation p50 is 1,164 native tokens with 522 of 800 fitting 2048+128; a 2048-window evaluation of this bank is a SHORT-CONTEXT evaluation, not the release distribution",
+    "file": "RRP2_DEV_V1_BANK.jsonl",
+    "sha256": "26206606a2b9be1ac0b404fd8aa3dcf84d7878b7bf9e010942560dfaea60dfe9"
+  },
+  "positive_control": {
+    "record": "RRP002_POSITIVE_CONTROL_EXACT_SOLVER",
+    "solver": "forge_v1 scripts/verify.py solve_prompt (visible text only)",
+    "rows": 384,
+    "solved": 384,
+    "failed": 0,
+    "per_family_solved": {
+      "deduction": 48,
+      "dialogue_memory": 48,
+      "document_reconciliation": 48,
+      "program_trace": 48,
+      "relational_join": 48,
+      "signed_ledger": 48,
+      "source_boundaries": 48,
+      "story_state": 48
+    },
+    "status": "PASS",
+    "failures": [],
+    "meaning": "A bank the exact solver cannot solve is broken. A broken instrument is not a model failure.",
+    "model_calls": 0
+  },
+  "train_majority": {
+    "answer": "UNKNOWN",
+    "count": 566,
+    "of": 4000,
+    "fitted_on": "TRAIN only"
+  },
+  "baselines": {
+    "constant_unknown": {
+      "summary": {
+        "rows": 384,
+        "strict_correct": 56,
+        "strict_accuracy": 0.14583333333333334,
+        "tolerant_correct": 56,
+        "presentation_only_gain": 0,
+        "false_abstention_on_answerable": 328,
+        "unsupported_answer_on_unanswerable": 0,
+        "per_stratum": {
+          "ANSWER": {
+            "n": 328,
+            "strict": 0,
+            "tolerant": 0
+          },
+          "UNKNOWN": {
+            "n": 56,
+            "strict": 56,
+            "tolerant": 56
+          }
+        },
+        "per_family": {
+          "deduction": {
+            "n": 48,
+            "strict": 12
+          },
+          "dialogue_memory": {
+            "n": 48,
+            "strict": 0
+          },
+          "document_reconciliation": {
+            "n": 48,
+            "strict": 11
+          },
+          "program_trace": {
+            "n": 48,
+            "strict": 0
+          },
+          "relational_join": {
+            "n": 48,
+            "strict": 10
+          },
+          "signed_ledger": {
+            "n": 48,
+            "strict": 7
+          },
+          "source_boundaries": {
+            "n": 48,
+            "strict": 9
+          },
+          "story_state": {
+            "n": 48,
+            "strict": 7
+          }
+        },
+        "cluster_unit": "family (paired variants share group_id)",
+        "quality_claim": false
+      },
+      "sibling_collision": {
+        "errors": 328,
+        "specific_sibling_collisions": 0,
+        "collision_rate": 0.0,
+        "sentinel_collisions_excluded": 232,
+        "sentinel_collision_rate": 0.7073170731707317,
+        "examples": [],
+        "why_sentinels_are_excluded": "A constant-UNKNOWN predictor otherwise scores a 0.707 collision rate on this bank purely because UNKNOWN is also a sibling gold in most families. That is abstention, not interference.",
+        "baseline_required": "Compare against this same statistic computed on the answer-agnostic shortcut predictors. A model rate at or below the shortcut rate refutes the B-1 interference reading.",
+        "no_analytic_chance_level": "Intentionally omitted: it would depend on the predictor's output distribution and any formula would be arbitrary."
+      }
+    },
+    "constant_train_majority": {
+      "summary": {
+        "rows": 384,
+        "strict_correct": 56,
+        "strict_accuracy": 0.14583333333333334,
+        "tolerant_correct": 56,
+        "presentation_only_gain": 0,
+        "false_abstention_on_answerable": 328,
+        "unsupported_answer_on_unanswerable": 0,
+        "per_stratum": {
+          "ANSWER": {
+            "n": 328,
+            "strict": 0,
+            "tolerant": 0
+          },
+          "UNKNOWN": {
+            "n": 56,
+            "strict": 56,
+            "tolerant": 56
+          }
+        },
+        "per_family": {
+          "deduction": {
+            "n": 48,
+            "strict": 12
+          },
+          "dialogue_memory": {
+            "n": 48,
+            "strict": 0
+          },
+          "document_reconciliation": {
+            "n": 48,
+            "strict": 11
+          },
+          "program_trace": {
+            "n": 48,
+            "strict": 0
+          },
+          "relational_join": {
+            "n": 48,
+            "strict": 10
+          },
+          "signed_ledger": {
+            "n": 48,
+            "strict": 7
+          },
+          "source_boundaries": {
+            "n": 48,
+            "strict": 9
+          },
+          "story_state": {
+            "n": 48,
+            "strict": 7
+          }
+        },
+        "cluster_unit": "family (paired variants share group_id)",
+        "quality_claim": false
+      },
+      "sibling_collision": {
+        "errors": 328,
+        "specific_sibling_collisions": 0,
+        "collision_rate": 0.0,
+        "sentinel_collisions_excluded": 232,
+        "sentinel_collision_rate": 0.7073170731707317,
+        "examples": [],
+        "why_sentinels_are_excluded": "A constant-UNKNOWN predictor otherwise scores a 0.707 collision rate on this bank purely because UNKNOWN is also a sibling gold in most families. That is abstention, not interference.",
+        "baseline_required": "Compare against this same statistic computed on the answer-agnostic shortcut predictors. A model rate at or below the shortcut rate refutes the B-1 interference reading.",
+        "no_analytic_chance_level": "Intentionally omitted: it would depend on the predictor's output distribution and any formula would be arbitrary."
+      }
+    },
+    "last_mentioned": {
+      "summary": {
+        "rows": 384,
+        "strict_correct": 10,
+        "strict_accuracy": 0.026041666666666668,
+        "tolerant_correct": 10,
+        "presentation_only_gain": 0,
+        "false_abstention_on_answerable": 0,
+        "unsupported_answer_on_unanswerable": 56,
+        "per_stratum": {
+          "ANSWER": {
+            "n": 328,
+            "strict": 10,
+            "tolerant": 10
+          },
+          "UNKNOWN": {
+            "n": 56,
+            "strict": 0,
+            "tolerant": 0
+          }
+        },
+        "per_family": {
+          "deduction": {
+            "n": 48,
+            "strict": 0
+          },
+          "dialogue_memory": {
+            "n": 48,
+            "strict": 0
+          },
+          "document_reconciliation": {
+            "n": 48,
+            "strict": 1
+          },
+          "program_trace": {
+            "n": 48,
+            "strict": 0
+          },
+          "relational_join": {
+            "n": 48,
+            "strict": 3
+          },
+          "signed_ledger": {
+            "n": 48,
+            "strict": 0
+          },
+          "source_boundaries": {
+            "n": 48,
+            "strict": 5
+          },
+          "story_state": {
+            "n": 48,
+            "strict": 1
+          }
+        },
+        "cluster_unit": "family (paired variants share group_id)",
+        "quality_claim": false
+      },
+      "sibling_collision": {
+        "errors": 374,
+        "specific_sibling_collisions": 12,
+        "collision_rate": 0.03208556149732621,
+        "sentinel_collisions_excluded": 0,
+        "sentinel_collision_rate": 0.0,
+        "examples": [
+          {
+            "id": "RRF1-b528d32eb83d8a3111a8",
+            "family": "story_state",
+            "predicted": "BoatHouse",
+            "own_gold": "ReadingRoom"
+          },
+          {
+            "id": "RRF1-5fd8311cb7377dd95d7b",
+            "family": "story_state",
+            "predicted": "LanternHall",
+            "own_gold": "StorageRoom"
+          },
+          {
+            "id": "RRF1-2ff7cd4231ac945a3e02",
+            "family": "story_state",
+            "predicted": "TeaRoom",
+            "own_gold": "UNKNOWN"
+          },
+          {
+            "id": "RRF1-1121a505b115e2ec17db",
+            "family": "story_state",
+            "predicted": "BoatHouse",
+            "own_gold": "ReadingRoom"
+          },
+          {
+            "id": "RRF1-a4affed063c26210d384",
+            "family": "story_state",
+            "predicted": "LanternHall",
+            "own_gold": "UNKNOWN"
+          },
+          {
+            "id": "RRF1-6a34bc522ead99ac6730",
+            "family": "story_state",
+            "predicted": "LanternHall",
+            "own_gold": "MusicRoom"
+          },
+          {
+            "id": "RRF1-a35ce1ad700899c8404f",
+            "family": "story_state",
+            "predicted": "StorageRoom",
+            "own_gold": "UNKNOWN"
+          },
+          {
+            "id": "RRF1-96ef74a84e35e357e0f8",
+            "family": "story_state",
+            "predicted": "MusicRoom",
+            "own_gold": "LanternHall"
+          },
+          {
+            "id": "RRF1-9a3f823f42fdcfb45dff",
+            "family": "story_state",
+            "predicted": "StorageRoom",
+            "own_gold": "TeaRoom"
+          },
+          {
+            "id": "RRF1-2560decfd651095d2023",
+            "family": "story_state",
+            "predicted": "ReadingRoom",
+            "own_gold": "StorageRoom"
+          }
+        ],
+        "why_sentinels_are_excluded": "A constant-UNKNOWN predictor otherwise scores a 0.707 collision rate on this bank purely because UNKNOWN is also a sibling gold in most families. That is abstention, not interference.",
+        "baseline_required": "Compare against this same statistic computed on the answer-agnostic shortcut predictors. A model rate at or below the shortcut rate refutes the B-1 interference reading.",
+        "no_analytic_chance_level": "Intentionally omitted: it would depend on the predictor's output distribution and any formula would be arbitrary."
+      }
+    },
+    "first_mentioned": {
+      "summary": {
+        "rows": 384,
+        "strict_correct": 0,
+        "strict_accuracy": 0.0,
+        "tolerant_correct": 0,
+        "presentation_only_gain": 0,
+        "false_abstention_on_answerable": 0,
+        "unsupported_answer_on_unanswerable": 56,
+        "per_stratum": {
+          "ANSWER": {
+            "n": 328,
+            "strict": 0,
+            "tolerant": 0
+          },
+          "UNKNOWN": {
+            "n": 56,
+            "strict": 0,
+            "tolerant": 0
+          }
+        },
+        "per_family": {
+          "deduction": {
+            "n": 48,
+            "strict": 0
+          },
+          "dialogue_memory": {
+            "n": 48,
+            "strict": 0
+          },
+          "document_reconciliation": {
+            "n": 48,
+            "strict": 0
+          },
+          "program_trace": {
+            "n": 48,
+            "strict": 0
+          },
+          "relational_join": {
+            "n": 48,
+            "strict": 0
+          },
+          "signed_ledger": {
+            "n": 48,
+            "strict": 0
+          },
+          "source_boundaries": {
+            "n": 48,
+            "strict": 0
+          },
+          "story_state": {
+            "n": 48,
+            "strict": 0
+          }
+        },
+        "cluster_unit": "family (paired variants share group_id)",
+        "quality_claim": false
+      },
+      "sibling_collision": {
+        "errors": 384,
+        "specific_sibling_collisions": 0,
+        "collision_rate": 0.0,
+        "sentinel_collisions_excluded": 0,
+        "sentinel_collision_rate": 0.0,
+        "examples": [],
+        "why_sentinels_are_excluded": "A constant-UNKNOWN predictor otherwise scores a 0.707 collision rate on this bank purely because UNKNOWN is also a sibling gold in most families. That is abstention, not interference.",
+        "baseline_required": "Compare against this same statistic computed on the answer-agnostic shortcut predictors. A model rate at or below the shortcut rate refutes the B-1 interference reading.",
+        "no_analytic_chance_level": "Intentionally omitted: it would depend on the predictor's output distribution and any formula would be arbitrary."
+      }
+    },
+    "last_number": {
+      "summary": {
+        "rows": 384,
+        "strict_correct": 2,
+        "strict_accuracy": 0.005208333333333333,
+        "tolerant_correct": 2,
+        "presentation_only_gain": 0,
+        "false_abstention_on_answerable": 0,
+        "unsupported_answer_on_unanswerable": 56,
+        "per_stratum": {
+          "ANSWER": {
+            "n": 328,
+            "strict": 2,
+            "tolerant": 2
+          },
+          "UNKNOWN": {
+            "n": 56,
+            "strict": 0,
+            "tolerant": 0
+          }
+        },
+        "per_family": {
+          "deduction": {
+            "n": 48,
+            "strict": 0
+          },
+          "dialogue_memory": {
+            "n": 48,
+            "strict": 0
+          },
+          "document_reconciliation": {
+            "n": 48,
+            "strict": 0
+          },
+          "program_trace": {
+            "n": 48,
+            "strict": 2
+          },
+          "relational_join": {
+            "n": 48,
+            "strict": 0
+          },
+          "signed_ledger": {
+            "n": 48,
+            "strict": 0
+          },
+          "source_boundaries": {
+            "n": 48,
+            "strict": 0
+          },
+          "story_state": {
+            "n": 48,
+            "strict": 0
+          }
+        },
+        "cluster_unit": "family (paired variants share group_id)",
+        "quality_claim": false
+      },
+      "sibling_collision": {
+        "errors": 382,
+        "specific_sibling_collisions": 21,
+        "collision_rate": 0.0549738219895288,
+        "sentinel_collisions_excluded": 0,
+        "sentinel_collision_rate": 0.0,
+        "examples": [
+          {
+            "id": "RRF1-528c72e7a9177d75c641",
+            "family": "program_trace",
+            "predicted": "4",
+            "own_gold": "0"
+          },
+          {
+            "id": "RRF1-896b859f6eee76b4e8d2",
+            "family": "program_trace",
+            "predicted": "-3",
+            "own_gold": "2"
+          },
+          {
+            "id": "RRF1-5e3203e586c85a942091",
+            "family": "program_trace",
+            "predicted": "4",
+            "own_gold": "5"
+          },
+          {
+            "id": "RRF1-55d0b1295cc38b3f5cdc",
+            "family": "program_trace",
+            "predicted": "3",
+            "own_gold": "5"
+          },
+          {
+            "id": "RRF1-69398e0d200d7960f9be",
+            "family": "program_trace",
+            "predicted": "-1",
+            "own_gold": "4"
+          },
+          {
+            "id": "RRF1-af3042279e0c347bf09b",
+            "family": "program_trace",
+            "predicted": "-3",
+            "own_gold": "4"
+          },
+          {
+            "id": "RRF1-d991c7ee2a123b49f2eb",
+            "family": "program_trace",
+            "predicted": "5",
+            "own_gold": "-3"
+          },
+          {
+            "id": "RRF1-56c282c6cf5c6562dc6b",
+            "family": "program_trace",
+            "predicted": "1",
+            "own_gold": "0"
+          },
+          {
+            "id": "RRF1-3a375297f9c361623b6e",
+            "family": "program_trace",
+            "predicted": "-1",
+            "own_gold": "4"
+          },
+          {
+            "id": "RRF1-1261170809e288c54c68",
+            "family": "program_trace",
+            "predicted": "-2",
+            "own_gold": "-4"
+          }
+        ],
+        "why_sentinels_are_excluded": "A constant-UNKNOWN predictor otherwise scores a 0.707 collision rate on this bank purely because UNKNOWN is also a sibling gold in most families. That is abstention, not interference.",
+        "baseline_required": "Compare against this same statistic computed on the answer-agnostic shortcut predictors. A model rate at or below the shortcut rate refutes the B-1 interference reading.",
+        "no_analytic_chance_level": "Intentionally omitted: it would depend on the predictor's output distribution and any formula would be arbitrary."
+      }
+    },
+    "cue_copy": {
+      "summary": {
+        "rows": 384,
+        "strict_correct": 0,
+        "strict_accuracy": 0.0,
+        "tolerant_correct": 0,
+        "presentation_only_gain": 0,
+        "false_abstention_on_answerable": 0,
+        "unsupported_answer_on_unanswerable": 56,
+        "per_stratum": {
+          "ANSWER": {
+            "n": 328,
+            "strict": 0,
+            "tolerant": 0
+          },
+          "UNKNOWN": {
+            "n": 56,
+            "strict": 0,
+            "tolerant": 0
+          }
+        },
+        "per_family": {
+          "deduction": {
+            "n": 48,
+            "strict": 0
+          },
+          "dialogue_memory": {
+            "n": 48,
+            "strict": 0
+          },
+          "document_reconciliation": {
+            "n": 48,
+            "strict": 0
+          },
+          "program_trace": {
+            "n": 48,
+            "strict": 0
+          },
+          "relational_join": {
+            "n": 48,
+            "strict": 0
+          },
+          "signed_ledger": {
+            "n": 48,
+            "strict": 0
+          },
+          "source_boundaries": {
+            "n": 48,
+            "strict": 0
+          },
+          "story_state": {
+            "n": 48,
+            "strict": 0
+          }
+        },
+        "cluster_unit": "family (paired variants share group_id)",
+        "quality_claim": false
+      },
+      "sibling_collision": {
+        "errors": 384,
+        "specific_sibling_collisions": 1,
+        "collision_rate": 0.0026041666666666665,
+        "sentinel_collisions_excluded": 0,
+        "sentinel_collision_rate": 0.0,
+        "examples": [
+          {
+            "id": "RRF1-030ba24b6564560226fd",
+            "family": "relational_join",
+            "predicted": "VeraVale",
+            "own_gold": "YaraRowan"
+          }
+        ],
+        "why_sentinels_are_excluded": "A constant-UNKNOWN predictor otherwise scores a 0.707 collision rate on this bank purely because UNKNOWN is also a sibling gold in most families. That is abstention, not interference.",
+        "baseline_required": "Compare against this same statistic computed on the answer-agnostic shortcut predictors. A model rate at or below the shortcut rate refutes the B-1 interference reading.",
+        "no_analytic_chance_level": "Intentionally omitted: it would depend on the predictor's output distribution and any formula would be arbitrary."
+      }
+    },
+    "copy_question_sentinel": {
+      "summary": {
+        "rows": 384,
+        "strict_correct": 56,
+        "strict_accuracy": 0.14583333333333334,
+        "tolerant_correct": 56,
+        "presentation_only_gain": 0,
+        "false_abstention_on_answerable": 232,
+        "unsupported_answer_on_unanswerable": 0,
+        "per_stratum": {
+          "ANSWER": {
+            "n": 328,
+            "strict": 0,
+            "tolerant": 0
+          },
+          "UNKNOWN": {
+            "n": 56,
+            "strict": 56,
+            "tolerant": 56
+          }
+        },
+        "per_family": {
+          "deduction": {
+            "n": 48,
+            "strict": 12
+          },
+          "dialogue_memory": {
+            "n": 48,
+            "strict": 0
+          },
+          "document_reconciliation": {
+            "n": 48,
+            "strict": 11
+          },
+          "program_trace": {
+            "n": 48,
+            "strict": 0
+          },
+          "relational_join": {
+            "n": 48,
+            "strict": 10
+          },
+          "signed_ledger": {
+            "n": 48,
+            "strict": 7
+          },
+          "source_boundaries": {
+            "n": 48,
+            "strict": 9
+          },
+          "story_state": {
+            "n": 48,
+            "strict": 7
+          }
+        },
+        "cluster_unit": "family (paired variants share group_id)",
+        "quality_claim": false
+      },
+      "sibling_collision": {
+        "errors": 328,
+        "specific_sibling_collisions": 0,
+        "collision_rate": 0.0,
+        "sentinel_collisions_excluded": 232,
+        "sentinel_collision_rate": 0.7073170731707317,
+        "examples": [],
+        "why_sentinels_are_excluded": "A constant-UNKNOWN predictor otherwise scores a 0.707 collision rate on this bank purely because UNKNOWN is also a sibling gold in most families. That is abstention, not interference.",
+        "baseline_required": "Compare against this same statistic computed on the answer-agnostic shortcut predictors. A model rate at or below the shortcut rate refutes the B-1 interference reading.",
+        "no_analytic_chance_level": "Intentionally omitted: it would depend on the predictor's output distribution and any formula would be arbitrary."
+      }
+    },
+    "last_delta_only": {
+      "summary": {
+        "rows": 384,
+        "strict_correct": 7,
+        "strict_accuracy": 0.018229166666666668,
+        "tolerant_correct": 7,
+        "presentation_only_gain": 0,
+        "false_abstention_on_answerable": 0,
+        "unsupported_answer_on_unanswerable": 49,
+        "per_stratum": {
+          "ANSWER": {
+            "n": 328,
+            "strict": 0,
+            "tolerant": 0
+          },
+          "UNKNOWN": {
+            "n": 56,
+            "strict": 7,
+            "tolerant": 7
+          }
+        },
+        "per_family": {
+          "deduction": {
+            "n": 48,
+            "strict": 0
+          },
+          "dialogue_memory": {
+            "n": 48,
+            "strict": 0
+          },
+          "document_reconciliation": {
+            "n": 48,
+            "strict": 0
+          },
+          "program_trace": {
+            "n": 48,
+            "strict": 0
+          },
+          "relational_join": {
+            "n": 48,
+            "strict": 0
+          },
+          "signed_ledger": {
+            "n": 48,
+            "strict": 7
+          },
+          "source_boundaries": {
+            "n": 48,
+            "strict": 0
+          },
+          "story_state": {
+            "n": 48,
+            "strict": 0
+          }
+        },
+        "cluster_unit": "family (paired variants share group_id)",
+        "quality_claim": false
+      },
+      "sibling_collision": {
+        "errors": 377,
+        "specific_sibling_collisions": 11,
+        "collision_rate": 0.029177718832891247,
+        "sentinel_collisions_excluded": 0,
+        "sentinel_collision_rate": 0.0,
+        "examples": [
+          {
+            "id": "RRF1-3584226f444d78ff1069",
+            "family": "signed_ledger",
+            "predicted": "148",
+            "own_gold": "240"
+          },
+          {
+            "id": "RRF1-8d8c4eb4aa85fb205044",
+            "family": "signed_ledger",
+            "predicted": "178",
+            "own_gold": "189"
+          },
+          {
+            "id": "RRF1-efeb5d1ae96b79dee86b",
+            "family": "signed_ledger",
+            "predicted": "87",
+            "own_gold": "93"
+          },
+          {
+            "id": "RRF1-b852f73a51f1410e1b72",
+            "family": "signed_ledger",
+            "predicted": "133",
+            "own_gold": "210"
+          },
+          {
+            "id": "RRF1-888e31fba0c9d96abcf0",
+            "family": "signed_ledger",
+            "predicted": "88",
+            "own_gold": "31"
+          },
+          {
+            "id": "RRF1-415e2e0f0cad07810088",
+            "family": "signed_ledger",
+            "predicted": "165",
+            "own_gold": "156"
+          },
+          {
+            "id": "RRF1-de6d28612c82630b2ece",
+            "family": "signed_ledger",
+            "predicted": "240",
+            "own_gold": "231"
+          },
+          {
+            "id": "RRF1-d030b6912531cfa400d1",
+            "family": "signed_ledger",
+            "predicted": "150",
+            "own_gold": "96"
+          },
+          {
+            "id": "RRF1-9c174a89ab767dfe0bb7",
+            "family": "signed_ledger",
+            "predicted": "87",
+            "own_gold": "96"
+          },
+          {
+            "id": "RRF1-3a73ec2f8a4e9db9186a",
+            "family": "signed_ledger",
+            "predicted": "231",
+            "own_gold": "165"
+          }
+        ],
+        "why_sentinels_are_excluded": "A constant-UNKNOWN predictor otherwise scores a 0.707 collision rate on this bank purely because UNKNOWN is also a sibling gold in most families. That is abstention, not interference.",
+        "baseline_required": "Compare against this same statistic computed on the answer-agnostic shortcut predictors. A model rate at or below the shortcut rate refutes the B-1 interference reading.",
+        "no_analytic_chance_level": "Intentionally omitted: it would depend on the predictor's output distribution and any formula would be arbitrary."
+      }
+    },
+    "positive_control_exact_solver": {
+      "summary": {
+        "rows": 384,
+        "strict_correct": 384,
+        "strict_accuracy": 1.0,
+        "tolerant_correct": 384,
+        "presentation_only_gain": 0,
+        "false_abstention_on_answerable": 0,
+        "unsupported_answer_on_unanswerable": 0,
+        "per_stratum": {
+          "ANSWER": {
+            "n": 328,
+            "strict": 328,
+            "tolerant": 328
+          },
+          "UNKNOWN": {
+            "n": 56,
+            "strict": 56,
+            "tolerant": 56
+          }
+        },
+        "per_family": {
+          "deduction": {
+            "n": 48,
+            "strict": 48
+          },
+          "dialogue_memory": {
+            "n": 48,
+            "strict": 48
+          },
+          "document_reconciliation": {
+            "n": 48,
+            "strict": 48
+          },
+          "program_trace": {
+            "n": 48,
+            "strict": 48
+          },
+          "relational_join": {
+            "n": 48,
+            "strict": 48
+          },
+          "signed_ledger": {
+            "n": 48,
+            "strict": 48
+          },
+          "source_boundaries": {
+            "n": 48,
+            "strict": 48
+          },
+          "story_state": {
+            "n": 48,
+            "strict": 48
+          }
+        },
+        "cluster_unit": "family (paired variants share group_id)",
+        "quality_claim": false
+      },
+      "sibling_collision": {
+        "errors": 0,
+        "specific_sibling_collisions": 0,
+        "collision_rate": null,
+        "sentinel_collisions_excluded": 0,
+        "sentinel_collision_rate": null,
+        "examples": [],
+        "why_sentinels_are_excluded": "A constant-UNKNOWN predictor otherwise scores a 0.707 collision rate on this bank purely because UNKNOWN is also a sibling gold in most families. That is abstention, not interference.",
+        "baseline_required": "Compare against this same statistic computed on the answer-agnostic shortcut predictors. A model rate at or below the shortcut rate refutes the B-1 interference reading.",
+        "no_analytic_chance_level": "Intentionally omitted: it would depend on the predictor's output distribution and any formula would be arbitrary."
+      }
+    }
+  },
+  "model_calls": 0,
+  "optimizer_steps": 0,
+  "quality_claim": false,
+  "shortcut_floor": {
+    "strict_accuracy": 0.14583333333333334,
+    "achieved_by": [
+      "constant_train_majority",
+      "constant_unknown",
+      "copy_question_sentinel"
+    ],
+    "meaning": "Any model accuracy at or below this is not evidence of reasoning: a trivial answer-agnostic strategy already reaches it.",
+    "surface_leak": "Every v1 question ends with wording like 'Return the value only or UNKNOWN.', so the sentinel is always a copyable token in the prompt. copy_question_sentinel exploits exactly that and reaches the floor, which is why cue_copy excludes sentinel tokens."
+  },
+  "b1_collision_baselines": {
+    "constant_unknown": 0.0,
+    "constant_train_majority": 0.0,
+    "last_mentioned": 0.03208556149732621,
+    "first_mentioned": 0.0,
+    "last_number": 0.0549738219895288,
+    "cue_copy": 0.0026041666666666665,
+    "copy_question_sentinel": 0.0,
+    "last_delta_only": 0.029177718832891247
+  }
+}

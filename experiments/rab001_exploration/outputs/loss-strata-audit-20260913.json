@@ -1,0 +1,965 @@
+{
+  "schema": 1,
+  "evidence_kind": "exploratory_saved_output_loss_strata_audit",
+  "registered_bare_policy": "permissive",
+  "reference_digest": "a329eb7bb06fc003a9220ea41713e721fba575c478008240749c425774b2b58e",
+  "reference_sha256": "ec3fca1e8b1eb418a6b848dadfea06235cf7c4317ddf6930061c84147afa9a8f",
+  "headroom_sha256": "5aaf15059cb2caf442209dfcfe82d7e2e00a33776b0a01d1bb195996304ccb5a",
+  "failure_classifier_sha256": "52e58a5c1a593a61787dec2771d492d229eed22531f9fee13fe5e78cdcd4c04c",
+  "note": "Retrospective scoring of saved endpoints only. The same failure classifier exactly reproduced both saved frozen-source headroom partitions. No model or tokenizer run; no checkpoint loaded; no torch imported. Losses classified using candidate outputs, not the source headroom category.",
+  "arms": {
+    "B28last12_lr1e-05_b5200_seed17": {
+      "artifact_path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-ced-native-loader-qualification\\experiments\\architecture_benchmark_001\\evidence\\retention-design-v1\\ARM_DOSE_B28last12_lr1e-05_b5200_seed17.json",
+      "artifact_sha256": "044ecf32e948f924779a5109e870d18c857e386980b71c82f7bfee3e93d5461a",
+      "correct_total": 52,
+      "retained_total": 44,
+      "lost_total": 3,
+      "lost_by_stratum": {
+        "wrong_answer": 2,
+        "format_only": 1,
+        "runaway": 0
+      },
+      "gained_by_stratum": {
+        "wrong_answer": 8,
+        "format_only": 0,
+        "runaway": 0
+      },
+      "loss_records": [
+        {
+          "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s00__00270",
+          "reply_class": "percentage_reasoning",
+          "text": "$112.80.",
+          "terminated": true,
+          "scorer_reason": "value mismatch",
+          "stratum": "wrong_answer"
+        },
+        {
+          "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00381",
+          "reply_class": "percentage_reasoning",
+          "text": "10% increase.",
+          "terminated": true,
+          "scorer_reason": "'% increase' is not a percent unit",
+          "stratum": "format_only"
+        },
+        {
+          "id": "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s08__02552",
+          "reply_class": "ratio_proportion",
+          "text": "12.",
+          "terminated": true,
+          "scorer_reason": "value mismatch",
+          "stratum": "wrong_answer"
+        }
+      ],
+      "loss_strata_status": "COMPLETE"
+    },
+    "B28last16_lr1e-05_b5200_seed17": {
+      "artifact_path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-ced-native-loader-qualification\\experiments\\architecture_benchmark_001\\evidence\\retention-design-v1\\ARM_DOSE_B28last16_lr1e-05_b5200_seed17.json",
+      "artifact_sha256": "aa949a81a81c4f7762e3239892f4ded2c51add6296b2765691f483882fb71309",
+      "correct_total": 55,
+      "retained_total": 40,
+      "lost_total": 7,
+      "lost_by_stratum": {
+        "wrong_answer": 7,
+        "format_only": 0,
+        "runaway": 0
+      },
+      "gained_by_stratum": {
+        "wrong_answer": 9,
+        "format_only": 6,
+        "runaway": 0
+      },
+      "loss_records": [
+        {
+          "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s00__00270",
+          "reply_class": "percentage_reasoning",
+          "text": "$112.80.",
+          "terminated": true,
+          "scorer_reason": "value mismatch",
+          "stratum": "wrong_answer"
+        },
+        {
+          "id": "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s08__02552",
+          "reply_class": "ratio_proportion",
+          "text": "12.",
+          "terminated": true,
+          "scorer_reason": "value mismatch",
+          "stratum": "wrong_answer"
+        },
+        {
+          "id": "rineya_v3_sft__time_duration__reas_time_duration_s03__01033",
+          "reply_class": "time_duration",
+          "text": "10:55 AM.",
+          "terminated": true,
+          "scorer_reason": "value mismatch",
+          "stratum": "wrong_answer"
+        },
+        {
+          "id": "rineya_v3_sft__time_duration__reas_time_duration_s04__01408",
+          "reply_class": "time_duration",
+          "text": "10:10 AM.",
+          "terminated": true,
+          "scorer_reason": "value mismatch",
+          "stratum": "wrong_answer"
+        },
+        {
+          "id": "rineya_v3_sft__time_duration__reas_time_duration_s07__02257",
+          "reply_class": "time_duration",
+          "text": "16:05 PM.",
+          "terminated": true,
+          "scorer_reason": "12-hour clock out of range",
+          "stratum": "wrong_answer"
+        },
+        {
+          "id": "rineya_v3_sft__time_duration__reas_time_duration_s07__02345",
+          "reply_class": "time_duration",
+          "text": "10:40 AM.",
+          "terminated": true,
+          "scorer_reason": "value mismatch",
+          "stratum": "wrong_answer"
+        },
+        {
+          "id": "rineya_v3_sft__time_duration__reas_time_duration_s08__02681",
+          "reply_class": "time_duration",
+          "text": "10:55 AM.",
+          "terminated": true,
+          "scorer_reason": "value mismatch",
+          "stratum": "wrong_answer"
+        }
+      ],
+      "loss_strata_status": "COMPLETE"
+    },
+    "B28last8_lr1e-05_b5200_seed17": {
+      "artifact_path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-ced-native-loader-qualification\\experiments\\architecture_benchmark_001\\evidence\\retention-design-v1\\ARM_DOSE_B28last8_lr1e-05_b5200_seed17.json",
+      "artifact_sha256": "36722d3c6789c8f6fd37b28ff6f35eb1f7275714235e2bcdd6f7827add8b08ef",
+      "correct_total": 47,
+      "retained_total": 46,
+      "lost_total": 1,
+      "lost_by_stratum": {
+        "wrong_answer": 1,
+        "format_only": 0,
+        "runaway": 0
+      },
+      "gained_by_stratum": {
+        "wrong_answer": 1,
+        "format_only": 0,
+        "runaway": 0
+      },
+      "loss_records": [
+        {
+          "id": "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s08__02552",
+          "reply_class": "ratio_proportion",
+          "text": "15",
+          "terminated": true,
+          "scorer_reason": "value mismatch",
+          "stratum": "wrong_answer"
+        }
+      ],
+      "loss_strata_status": "COMPLETE"
+    },
+    "H_lr1e-05_b5200_seed17": {
+      "artifact_path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-ced-native-loader-qualification\\experiments\\architecture_benchmark_001\\evidence\\retention-design-v1\\ARM_DOSE_H_lr1e-05_b5200_seed17.json",
+      "artifact_sha256": "99c652f8888a4fb400c993aaea7f756addc936cce454c39470913eaf9a9579bf",
+      "correct_total": 16,
+      "retained_total": 11,
+      "lost_total": 36,
+      "lost_by_stratum": {
+        "wrong_answer": 27,
+        "format_only": 9,
+        "runaway": 0
+      },
+      "gained_by_stratum": {
+        "wrong_answer": 4,
+        "format_only": 1,
+        "runaway": 0
+      },
+      "loss_records": [
+        {
+          "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+          "reply_class": "percentage_reasoning",
+          "text": "90%.",
+          "terminated": true,
+          "scorer_reason": "unconsumed text '%'",
+          "stratum": "wrong_answer"
+        },
+        {
+          "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00324",
+          "reply_class": "percentage_reasoning",
+          "text": "A 20% tip on a $20 bill is $4.",
+          "terminated": true,
+          "scorer_reason": "no leading number in 'a 20% tip on a $20 bill is $4'",
+          "stratum": "format_only"
+        },
+        {
+          "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00564",
+          "reply_class": "percentage_reasoning",
+          "text": "15.",
+          "terminated": true,
+          "scorer_reason": "value mismatch",
+          "stratum": "wrong_answer"
+        },
+        {
+          "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00574",
+          "reply_class": "percentage_reasoning",
+          "text": "100.",
+          "terminated": true,
+          "scorer_reason": "value mismatch",
+          "stratum": "wrong_answer"
+        },
+        {
+          "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s02__00751",
+          "reply_class": "percentage_reasoning",
+          "text": "Silas: 20% of 20 is 4.",
+          "terminated": true,
+          "scorer_reason": "no leading number in 'silas: 20% of 20 is 4'",
+          "stratum": "format_only"
+        },
+        {
+          "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s02__00777",
+          "reply_class": "percentage_reasoning",
+          "text": "150.",
+          "terminated": true,
+          "scorer_reason": "value mismatch",
+          "stratum": "wrong_answer"
+        },
+        {
+          "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s03__00947",
+          "reply_class": "percentage_reasoning",
+          "text": "$80.",
+          "terminated": true,
+          "scorer_reason": "value mismatch",
+          "stratum": "wrong_answer"
+        },
+        {
+          "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s03__00974",
+          "reply_class": "percentage_reasoning",
+          "text": "A 20% tip on a $20 bill is $4.",
+          "terminated": true,
+          "scorer_reason": "no leading number in 'a 20% tip on a $20 bill is $4'",
+          "stratum": "format_only"
+        },
+        {
+          "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s03__01035",
+          "reply_class": "percentage_reasoning",
+          "text": "$15.",
+          "terminated": true,
+          "scorer_reason": "value mismatch",
+          "stratum": "wrong_answer"
+        },
+        {
+          "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s05__01533",
+          "reply_class": "percentage_reasoning",
+          "text": "A 20% tip on a $40 bill is $8.",
+          "terminated": true,
+          "scorer_reason": "no leading number in 'a 20% tip on a $40 bill is $8'",
+          "stratum": "format_only"
+        },
+        {
+          "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349",
+          "reply_class": "percentage_reasoning",
+          "text": "25%.",
+          "terminated": true,
+          "scorer_reason": "unconsumed text '%'",
+          "stratum": "format_only"
+        },
+        {
+          "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s08__02574",
+          "reply_class": "percentage_reasoning",
+          "text": "90.",
+          "terminated": true,
+          "scorer_reason": "value mismatch",
+          "stratum": "wrong_answer"
+        },
+        {
+          "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s08__02622",
+          "reply_class": "percentage_reasoning",
+          "text": "20.",
+          "terminated": true,
+          "scorer_reason": "value mismatch",
+          "stratum": "wrong_answer"
+        },
+        {
+          "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s08__02683",
+          "reply_class": "percentage_reasoning",
+          "text": "50%.",
+          "terminated": true,
+          "scorer_reason": "unit '%' does not match 'unit'",
+          "stratum": "format_only"
+        },
+        {
+          "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s09__02832",
+          "reply_class": "percentage_reasoning",
+          "text": "75%.",
+          "terminated": true,
+          "scorer_reason": "value mismatch",
+          "stratum": "wrong_answer"
+        },
+        {
+          "id": "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s00__00035",
+          "reply_class": "ratio_proportion",
+          "text": "11 cm = 44 km.",
+          "terminated": true,
+          "scorer_reason": "'cm = 44 km' is not a declared distance unit",
+          "stratum": "format_only"
+        },
+        {
+          "id": "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s00__00094",
+          "reply_class": "ratio_proportion",
+          "text": "15 cm = 60 km.",
+          "terminated": true,
+          "scorer_reason": "'cm = 60 km' is not a declared distance unit",
+          "stratum": "format_only"
+        },
+        {
+          "id": "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s01__00538",
+          "reply_class": "ratio_proportion",
+          "text": "12.",
+          "terminated": true,
+          "scorer_reason": "value mismatch",
+          "stratum": "wrong_answer"
+        },
+        {
+          "id": "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__01017",
+          "reply_class": "ratio_proportion",
+          "text": "12 blue chairs.",
+          "terminated": true,
+          "scorer_reason": "value mismatch",
+          "stratum": "wrong_answer"
+        },
+        {
+          "id": "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__01181",
+          "reply_class": "ratio_proportion",
+          "text": "1.2 km.",
+          "terminated": true,
+          "scorer_reason": "value mismatch",
+          "stratum": "wrong_answer"
+        },
+        {
+          "id": "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s05__01698",
+          "reply_class": "ratio_proportion",
+          "text": "12.",
+          "terminated": true,
+          "scorer_reason": "value mismatch",
+          "stratum": "wrong_answer"
+        },
+        {
+          "id": "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s07__02281",
+          "reply_class": "ratio_proportion",
+          "text": "6 cups.",
+          "terminated": true,
+          "scorer_reason": "value mismatch",
+          "stratum": "wrong_answer"
+        },
+        {
+          "id": "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s08__02552",
+          "reply_class": "ratio_proportion",
+          "text": "12.",
+          "terminated": true,
+          "scorer_reason": "value mismatch",
+          "stratum": "wrong_answer"
+        },
+        {
+          "id": "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s08__02658",
+          "reply_class": "ratio_proportion",
+          "text": "12.",
+          "terminated": true,
+          "scorer_reason": "value mismatch",
+          "stratum": "wrong_answer"
+        },
+        {
+          "id": "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s09__02752",
+          "reply_class": "ratio_proportion",
+          "text": "11 cm \u00d7 5 km/cm = 55 km.",
+          "terminated": true,
+          "scorer_reason": "'cm \u00d7 5 km/cm = 55 km' is not a declared distance unit",
+          "stratum": "format_only"
+        },
+        {
+          "id": "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s09__02970",
+          "reply_class": "ratio_proportion",
+          "text": "12.",
+          "terminated": true,
+          "scorer_reason": "value mismatch",
+          "stratum": "wrong_answer"
+        },
+        {
+          "id": "rineya_v3_sft__time_duration__reas_time_duration_s00__00242",
+          "reply_class": "time_duration",
+          "text": "9:15 AM.",
+          "terminated": true,
+          "scorer_reason": "value mismatch",
+          "stratum": "wrong_answer"
+        },
+        {
+          "id": "rineya_v3_sft__time_duration__reas_time_duration_s03__01033",
+          "reply_class": "time_duration",
+          "text": "9:15 AM.",
+          "terminated": true,
+          "scorer_reason": "value mismatch",
+          "stratum": "wrong_answer"
+        },
+        {
+          "id": "rineya_v3_sft__time_duration__reas_time_duration_s04__01221",
+          "reply_class": "time_duration",
+          "text": "15 minutes.",
+          "terminated": true,
+          "scorer_reason": "value mismatch",
+          "stratum": "wrong_answer"
+        },
+        {
+          "id": "rineya_v3_sft__time_duration__reas_time_duration_s04__01408",
+          "reply_class": "time_duration",
+          "text": "20 minutes from departure.",
+          "terminated": true,
+          "scorer_reason": "not a clock time: '20 minutes from departure'",
+          "stratum": "wrong_answer"
+        },
+        {
+          "id": "rineya_v3_sft__time_duration__reas_time_duration_s05__01656",
+          "reply_class": "time_duration",
+          "text": "4:00 PM.",
+          "terminated": true,
+          "scorer_reason": "value mismatch",
+          "stratum": "wrong_answer"
+        },
+        {
+          "id": "rineya_v3_sft__time_duration__reas_time_duration_s07__02257",
+          "reply_class": "time_duration",
+          "text": "16:05 PM.",
+          "terminated": true,
+          "scorer_reason": "12-hour clock out of range",
+          "stratum": "wrong_answer"
+        },
+        {
+          "id": "rineya_v3_sft__time_duration__reas_time_duration_s07__02318",
+          "reply_class": "time_duration",
+          "text": "1 hour.",
+          "terminated": true,
+          "scorer_reason": "value mismatch",
+          "stratum": "wrong_answer"
+        },
+        {
+          "id": "rineya_v3_sft__time_duration__reas_time_duration_s07__02345",
+          "reply_class": "time_duration",
+          "text": "7:05 AM.",
+          "terminated": true,
+          "scorer_reason": "value mismatch",
+          "stratum": "wrong_answer"
+        },
+        {
+          "id": "rineya_v3_sft__time_duration__reas_time_duration_s08__02681",
+          "reply_class": "time_duration",
+          "text": "9:15 AM.",
+          "terminated": true,
+          "scorer_reason": "value mismatch",
+          "stratum": "wrong_answer"
+        },
+        {
+          "id": "rineya_v3_sft__time_duration__reas_time_duration_s09__02996",
+          "reply_class": "time_duration",
+          "text": "1 hour.",
+          "terminated": true,
+          "scorer_reason": "value mismatch",
+          "stratum": "wrong_answer"
+        }
+      ],
+      "loss_strata_status": "COMPLETE"
+    },
+    "H_lr1e-05_b5200_seed17_wsd0.2-0.2_b20.95": {
+      "artifact_path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-ced-native-loader-qualification\\experiments\\architecture_benchmark_001\\evidence\\retention-design-v1\\ARM_DOSE_H_lr1e-05_b5200_seed17_wsd0.2-0.2_b20.95.json",
+      "artifact_sha256": "58c7b7b0c49382b4daf0139c37aa397ce7fee6c145ad0309bcaa89a24730398a",
+      "correct_total": 37,
+      "retained_total": 23,
+      "lost_total": 24,
+      "lost_by_stratum": {
+        "wrong_answer": 23,
+        "format_only": 1,
+        "runaway": 0
+      },
+      "gained_by_stratum": {
+        "wrong_answer": 9,
+        "format_only": 5,
+        "runaway": 0
+      },
+      "loss_records": [
+        {
+          "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00381",
+          "reply_class": "percentage_reasoning",
+          "text": "10.9%.",
+          "terminated": true,
+          "scorer_reason": "value mismatch",
+          "stratum": "wrong_answer"
+        },
+        {
+          "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00564",
+          "reply_class": "percentage_reasoning",
+          "text": "15 units.",
+          "terminated": true,
+          "scorer_reason": "value mismatch",
+          "stratum": "wrong_answer"
+        },
+        {
+          "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s02__00617",
+          "reply_class": "percentage_reasoning",
+          "text": "55%.",
+          "terminated": true,
+          "scorer_reason": "value mismatch",
+          "stratum": "wrong_answer"
+        },
+        {
+          "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s02__00751",
+          "reply_class": "percentage_reasoning",
+          "text": "40%.",
+          "terminated": true,
+          "scorer_reason": "unconsumed text '%'",
+          "stratum": "wrong_answer"
+        },
+        {
+          "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s02__00777",
+          "reply_class": "percentage_reasoning",
+          "text": "150 units.",
+          "terminated": true,
+          "scorer_reason": "value mismatch",
+          "stratum": "wrong_answer"
+        },
+        {
+          "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s03__01035",
+          "reply_class": "percentage_reasoning",
+          "text": "$4.5.",
+          "terminated": true,
+          "scorer_reason": "value mismatch",
+          "stratum": "wrong_answer"
+        },
+        {
+          "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s08__02574",
+          "reply_class": "percentage_reasoning",
+          "text": "90.",
+          "terminated": true,
+          "scorer_reason": "value mismatch",
+          "stratum": "wrong_answer"
+        },
+        {
+          "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s08__02622",
+          "reply_class": "percentage_reasoning",
+          "text": "40.",
+          "terminated": true,
+          "scorer_reason": "value mismatch",
+          "stratum": "wrong_answer"
+        },
+        {
+          "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s08__02683",
+          "reply_class": "percentage_reasoning",
+          "text": "40 units.",
+          "terminated": true,
+          "scorer_reason": "value mismatch",
+          "stratum": "wrong_answer"
+        },
+        {
+          "id": "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s02__00720",
+          "reply_class": "ratio_proportion",
+          "text": "16 cups.",
+          "terminated": true,
+          "scorer_reason": "value mismatch",
+          "stratum": "wrong_answer"
+        },
+        {
+          "id": "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__01007",
+          "reply_class": "ratio_proportion",
+          "text": "$90.",
+          "terminated": true,
+          "scorer_reason": "value mismatch",
+          "stratum": "wrong_answer"
+        },
+        {
+          "id": "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s07__02281",
+          "reply_class": "ratio_proportion",
+          "text": "6 cups.",
+          "terminated": true,
+          "scorer_reason": "value mismatch",
+          "stratum": "wrong_answer"
+        },
+        {
+          "id": "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s08__02552",
+          "reply_class": "ratio_proportion",
+          "text": "6.",
+          "terminated": true,
+          "scorer_reason": "value mismatch",
+          "stratum": "wrong_answer"
+        },
+        {
+          "id": "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s09__02752",
+          "reply_class": "ratio_proportion",
+          "text": "5.5 km.",
+          "terminated": true,
+          "scorer_reason": "value mismatch",
+          "stratum": "wrong_answer"
+        },
+        {
+          "id": "rineya_v3_sft__time_duration__reas_time_duration_s00__00242",
+          "reply_class": "time_duration",
+          "text": "9:15 AM + 55 minutes = 10:40 AM.",
+          "terminated": true,
+          "scorer_reason": "not a clock time: '9:15 am + 55 minutes = 10:40'",
+          "stratum": "wrong_answer"
+        },
+        {
+          "id": "rineya_v3_sft__time_duration__reas_time_duration_s03__01033",
+          "reply_class": "time_duration",
+          "text": "10:55 AM.",
+          "terminated": true,
+          "scorer_reason": "value mismatch",
+          "stratum": "wrong_answer"
+        },
+        {
+          "id": "rineya_v3_sft__time_duration__reas_time_duration_s04__01221",
+          "reply_class": "time_duration",
+          "text": "15 minutes.",
+          "terminated": true,
+          "scorer_reason": "value mismatch",
+          "stratum": "wrong_answer"
+        },
+        {
+          "id": "rineya_v3_sft__time_duration__reas_time_duration_s04__01408",
+          "reply_class": "time_duration",
+          "text": "10:20 AM.",
+          "terminated": true,
+          "scorer_reason": "value mismatch",
+          "stratum": "wrong_answer"
+        },
+        {
+          "id": "rineya_v3_sft__time_duration__reas_time_duration_s05__01656",
+          "reply_class": "time_duration",
+          "text": "4:00 PM + 20 minutes = 4:20 PM.",
+          "terminated": true,
+          "scorer_reason": "not a clock time: '4:00 pm + 20 minutes = 4:20'",
+          "stratum": "format_only"
+        },
+        {
+          "id": "rineya_v3_sft__time_duration__reas_time_duration_s07__02257",
+          "reply_class": "time_duration",
+          "text": "16:05 PM.",
+          "terminated": true,
+          "scorer_reason": "12-hour clock out of range",
+          "stratum": "wrong_answer"
+        },
+        {
+          "id": "rineya_v3_sft__time_duration__reas_time_duration_s07__02318",
+          "reply_class": "time_duration",
+          "text": "10 minutes.",
+          "terminated": true,
+          "scorer_reason": "value mismatch",
+          "stratum": "wrong_answer"
+        },
+        {
+          "id": "rineya_v3_sft__time_duration__reas_time_duration_s07__02345",
+          "reply_class": "time_duration",
+          "text": "10:30 AM.",
+          "terminated": true,
+          "scorer_reason": "value mismatch",
+          "stratum": "wrong_answer"
+        },
+        {
+          "id": "rineya_v3_sft__time_duration__reas_time_duration_s08__02681",
+          "reply_class": "time_duration",
+          "text": "10:55 AM.",
+          "terminated": true,
+          "scorer_reason": "value mismatch",
+          "stratum": "wrong_answer"
+        },
+        {
+          "id": "rineya_v3_sft__time_duration__reas_time_duration_s09__02996",
+          "reply_class": "time_duration",
+          "text": "1:30 minutes.",
+          "terminated": true,
+          "scorer_reason": "duration is not number/unit pairs: '1:30 minutes'",
+          "stratum": "wrong_answer"
+        }
+      ],
+      "loss_strata_status": "COMPLETE"
+    },
+    "Hlast4_lr1e-05_b5200_seed17_wsd0.2-0.2_b20.95": {
+      "artifact_path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-ced-native-loader-qualification\\experiments\\architecture_benchmark_001\\evidence\\retention-design-v1\\ARM_DOSE_Hlast4_lr1e-05_b5200_seed17_wsd0.2-0.2_b20.95.json",
+      "artifact_sha256": "aa9fc9f843697e0601be8361792cef121788a13b6175dafc6e0fd224194d71cd",
+      "correct_total": 49,
+      "retained_total": 47,
+      "lost_total": 0,
+      "lost_by_stratum": {
+        "wrong_answer": 0,
+        "format_only": 0,
+        "runaway": 0
+      },
+      "gained_by_stratum": {
+        "wrong_answer": 1,
+        "format_only": 1,
+        "runaway": 0
+      },
+      "loss_records": [],
+      "loss_strata_status": "COMPLETE"
+    },
+    "P_lr1e-05_b5200_seed17": {
+      "artifact_path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-ced-native-loader-qualification\\experiments\\architecture_benchmark_001\\evidence\\retention-design-v1\\ARM_DOSE_P_lr1e-05_b5200_seed17.json",
+      "artifact_sha256": "87f5a5d7d73ce4ef69f4e15e25e512763b830049e1202a795899d02baf03883b",
+      "correct_total": 48,
+      "retained_total": 34,
+      "lost_total": 13,
+      "lost_by_stratum": {
+        "wrong_answer": 13,
+        "format_only": 0,
+        "runaway": 0
+      },
+      "gained_by_stratum": {
+        "wrong_answer": 7,
+        "format_only": 7,
+        "runaway": 0
+      },
+      "loss_records": [
+        {
+          "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s00__00270",
+          "reply_class": "percentage_reasoning",
+          "text": "$112.",
+          "terminated": true,
+          "scorer_reason": "value mismatch",
+          "stratum": "wrong_answer"
+        },
+        {
+          "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s02__00777",
+          "reply_class": "percentage_reasoning",
+          "text": "100.",
+          "terminated": true,
+          "scorer_reason": "value mismatch",
+          "stratum": "wrong_answer"
+        },
+        {
+          "id": "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s00__00094",
+          "reply_class": "ratio_proportion",
+          "text": "55 km.",
+          "terminated": true,
+          "scorer_reason": "value mismatch",
+          "stratum": "wrong_answer"
+        },
+        {
+          "id": "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s00__00233",
+          "reply_class": "ratio_proportion",
+          "text": "10.",
+          "terminated": true,
+          "scorer_reason": "value mismatch",
+          "stratum": "wrong_answer"
+        },
+        {
+          "id": "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__01007",
+          "reply_class": "ratio_proportion",
+          "text": "$10.",
+          "terminated": true,
+          "scorer_reason": "value mismatch",
+          "stratum": "wrong_answer"
+        },
+        {
+          "id": "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s08__02552",
+          "reply_class": "ratio_proportion",
+          "text": "15.",
+          "terminated": true,
+          "scorer_reason": "value mismatch",
+          "stratum": "wrong_answer"
+        },
+        {
+          "id": "rineya_v3_sft__time_duration__reas_time_duration_s00__00242",
+          "reply_class": "time_duration",
+          "text": "10:40 AM.",
+          "terminated": true,
+          "scorer_reason": "value mismatch",
+          "stratum": "wrong_answer"
+        },
+        {
+          "id": "rineya_v3_sft__time_duration__reas_time_duration_s03__01033",
+          "reply_class": "time_duration",
+          "text": "10:55 AM.",
+          "terminated": true,
+          "scorer_reason": "value mismatch",
+          "stratum": "wrong_answer"
+        },
+        {
+          "id": "rineya_v3_sft__time_duration__reas_time_duration_s04__01221",
+          "reply_class": "time_duration",
+          "text": "10.",
+          "terminated": true,
+          "scorer_reason": "value mismatch",
+          "stratum": "wrong_answer"
+        },
+        {
+          "id": "rineya_v3_sft__time_duration__reas_time_duration_s04__01408",
+          "reply_class": "time_duration",
+          "text": "10:10 AM.",
+          "terminated": true,
+          "scorer_reason": "value mismatch",
+          "stratum": "wrong_answer"
+        },
+        {
+          "id": "rineya_v3_sft__time_duration__reas_time_duration_s07__02257",
+          "reply_class": "time_duration",
+          "text": "16:30 PM.",
+          "terminated": true,
+          "scorer_reason": "12-hour clock out of range",
+          "stratum": "wrong_answer"
+        },
+        {
+          "id": "rineya_v3_sft__time_duration__reas_time_duration_s07__02345",
+          "reply_class": "time_duration",
+          "text": "8:40 AM.",
+          "terminated": true,
+          "scorer_reason": "value mismatch",
+          "stratum": "wrong_answer"
+        },
+        {
+          "id": "rineya_v3_sft__time_duration__reas_time_duration_s08__02681",
+          "reply_class": "time_duration",
+          "text": "10:55 AM.",
+          "terminated": true,
+          "scorer_reason": "value mismatch",
+          "stratum": "wrong_answer"
+        }
+      ],
+      "loss_strata_status": "COMPLETE"
+    },
+    "P_lr1e-05_b5200_seed17_wsd0.2-0.2_b20.95": {
+      "artifact_path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-ced-native-loader-qualification\\experiments\\architecture_benchmark_001\\evidence\\retention-design-v1\\ARM_DOSE_P_lr1e-05_b5200_seed17_wsd0.2-0.2_b20.95.json",
+      "artifact_sha256": "924f302431e4ed34252205afa6cf51aecd6a6e491ba21dde3a370f596763f6f8",
+      "correct_total": 52,
+      "retained_total": 32,
+      "lost_total": 15,
+      "lost_by_stratum": {
+        "wrong_answer": 15,
+        "format_only": 0,
+        "runaway": 0
+      },
+      "gained_by_stratum": {
+        "wrong_answer": 12,
+        "format_only": 8,
+        "runaway": 0
+      },
+      "loss_records": [
+        {
+          "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s00__00270",
+          "reply_class": "percentage_reasoning",
+          "text": "100.",
+          "terminated": true,
+          "scorer_reason": "value mismatch",
+          "stratum": "wrong_answer"
+        },
+        {
+          "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s03__00947",
+          "reply_class": "percentage_reasoning",
+          "text": "$80.",
+          "terminated": true,
+          "scorer_reason": "value mismatch",
+          "stratum": "wrong_answer"
+        },
+        {
+          "id": "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s00__00094",
+          "reply_class": "ratio_proportion",
+          "text": "55 km.",
+          "terminated": true,
+          "scorer_reason": "value mismatch",
+          "stratum": "wrong_answer"
+        },
+        {
+          "id": "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__01007",
+          "reply_class": "ratio_proportion",
+          "text": "$10.",
+          "terminated": true,
+          "scorer_reason": "value mismatch",
+          "stratum": "wrong_answer"
+        },
+        {
+          "id": "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s07__02281",
+          "reply_class": "ratio_proportion",
+          "text": "12 cups.",
+          "terminated": true,
+          "scorer_reason": "value mismatch",
+          "stratum": "wrong_answer"
+        },
+        {
+          "id": "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s08__02552",
+          "reply_class": "ratio_proportion",
+          "text": "5.",
+          "terminated": true,
+          "scorer_reason": "value mismatch",
+          "stratum": "wrong_answer"
+        },
+        {
+          "id": "rineya_v3_sft__time_duration__reas_time_duration_s00__00242",
+          "reply_class": "time_duration",
+          "text": "10:40 AM.",
+          "terminated": true,
+          "scorer_reason": "value mismatch",
+          "stratum": "wrong_answer"
+        },
+        {
+          "id": "rineya_v3_sft__time_duration__reas_time_duration_s03__01033",
+          "reply_class": "time_duration",
+          "text": "10:55 AM.",
+          "terminated": true,
+          "scorer_reason": "value mismatch",
+          "stratum": "wrong_answer"
+        },
+        {
+          "id": "rineya_v3_sft__time_duration__reas_time_duration_s04__01221",
+          "reply_class": "time_duration",
+          "text": "10 minutes.",
+          "terminated": true,
+          "scorer_reason": "value mismatch",
+          "stratum": "wrong_answer"
+        },
+        {
+          "id": "rineya_v3_sft__time_duration__reas_time_duration_s04__01408",
+          "reply_class": "time_duration",
+          "text": "10:10 AM.",
+          "terminated": true,
+          "scorer_reason": "value mismatch",
+          "stratum": "wrong_answer"
+        },
+        {
+          "id": "rineya_v3_sft__time_duration__reas_time_duration_s05__01656",
+          "reply_class": "time_duration",
+          "text": "5:20 PM.",
+          "terminated": true,
+          "scorer_reason": "value mismatch",
+          "stratum": "wrong_answer"
+        },
+        {
+          "id": "rineya_v3_sft__time_duration__reas_time_duration_s07__02257",
+          "reply_class": "time_duration",
+          "text": "10:30 PM.",
+          "terminated": true,
+          "scorer_reason": "value mismatch",
+          "stratum": "wrong_answer"
+        },
+        {
+          "id": "rineya_v3_sft__time_duration__reas_time_duration_s07__02318",
+          "reply_class": "time_duration",
+          "text": "100 minutes.",
+          "terminated": true,
+          "scorer_reason": "value mismatch",
+          "stratum": "wrong_answer"
+        },
+        {
+          "id": "rineya_v3_sft__time_duration__reas_time_duration_s07__02345",
+          "reply_class": "time_duration",
+          "text": "9:30 AM.",
+          "terminated": true,
+          "scorer_reason": "value mismatch",
+          "stratum": "wrong_answer"
+        },
+        {
+          "id": "rineya_v3_sft__time_duration__reas_time_duration_s08__02681",
+          "reply_class": "time_duration",
+          "text": "10:55 AM.",
+          "terminated": true,
+          "scorer_reason": "value mismatch",
+          "stratum": "wrong_answer"
+        }
+      ],
+      "loss_strata_status": "COMPLETE"
+    }
+  },
+  "licenses_efficacy_claim": false,
+  "licenses_release": false
+}

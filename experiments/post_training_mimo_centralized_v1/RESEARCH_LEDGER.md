@@ -1,0 +1,830 @@
+# Research ledger
+
+## 2026-09-28: scope recovery, identity and initial registration
+
+Question: which single locally available 0.6B Titan supplies an auditable primary?
+Hypothesis: original dense BF16 Titan permits the simplest isolated q/v LoRA test.
+Changed: superseded the old draft's 344M target under the current explicit brief.
+Fixed: report's staged learning, evidence, held-out and preservation principles.
+
+MEASURED / REPRODUCED: remote parent SHA verified; requested execution branch pushed
+at identical head; 310 BF16 tensors with 596,049,920 serialized parameters; exact
+weight/config/tokenizer/template hashes recorded. VERIFIED SOURCE: 68 method entries
+audited, including separate GRPO, MaxRL estimator, NGU sampler and preservation
+evaluation. Historical receipts remain RECORDED FROM PRIOR WORK.
+
+Uncertainty: no native E0, data token counts, fresh retention panels, acquisition or
+retention effect measured at this registration. No E1/native efficacy claimed.
+Failure risk: inherited RAM floor is close to available memory; qualification uses
+an external process-tree watchdog and cannot weaken it. Stock BF16 Qwen3 arithmetic
+differs from historical FP32 DenseReference; historical scores cannot transfer.
+
+Cost: static streamed hashes, code/source audit and CPU synthetic controls; zero
+teacher calls and no new native optimizer updates at this entry. Static wall time
+was not continuously metered and remains UNMEASURED rather than fabricated.
+Ruled out: automatic 344M fallback, raw MiMo rows as verified trajectories, and
+merged/synthetic code as current native efficacy.
+Next: E0 mechanics/resource qualification alongside frozen original bridge data.
+
+## E0 attempt 1: pre-load implementation failure
+
+Measured wall185.313s, zero pretrained loads, zero optimizer steps, zero training/generation tokens. Runtime imports and CUDA device discovery completed. psutil.disk_usage rejected WindowsPath before the first resource snapshot. This is a host API plumbing failure, not model capability or memory fit evidence. Failure and supervisor receipts are preserved in results/e0_titan_v1*. Fix only string conversion, add import progress events, and retry the identical registered numerical/resource envelope. No tolerances or guards changed.
+
+## E0 attempt 2: resource admission block
+
+Question: does the corrected resource probe admit unchanged Titan BF16 qualification? Same model, code fixture, numerical thresholds and resource floors. MEASURED: runtime import66.391s; preload host available6.911331GiB, required7.4GiB; GPU free6.890625GiB, required4.0GiB; worker RSS0.668579GiB. Native admission blocked before pretrained load. Zero model loads, updates, training tokens, generation tokens and teacher calls. This is a host-resource result, not evidence that Titan itself cannot fit, cannot learn or regresses. No frozen forward/backward fit, acquisition or retention measured. Stop native lane; do not lower guards, change model scale, quantize or rent hardware without a registered reason. Continue tokenization, analysis and preservation design. Next native attempt needs measured sufficient host headroom plus6GiB throughout; no automatic identical retry.
+
+## Open-role tokenization and analysis controls
+
+Token-only stock HF profiling completed on pinned Transformers4.57.1 in111.268s. No PyTorch imported, no model loaded/called. All4608 open rows fit; max total157 and completion38inclEOS. TRAIN414554 nonpadding/49272 supervised tokens. No truncation; CHECK/FINAL unopened. Wrong-runtime attempt1 is retained with bounded/unmeasured exact duration and corrected progress wording. Parent-level DEV analyzer and trivial TRAIN-mode answer control qualify mechanics only. Replay, historical exclusions, native E0 and broad preservation remain unresolved; no recipe promotion.
+
+Final validation:80 aggregate CPU tests passed in25.732s (imports excluded). A wrong-runtime negative-control test initially saw the preexisting-torch guard because another test imports torch; its mocked sys namespace was isolated, with no production tokenizer changes. Failed and passing logs retained. Native E0 remains blocked and E1 remains unlaunched.
+
+## Continuation 002: retention data and language source qualification
+
+Previous turn classification: PROGRESS (source, data, E0 receipts and pushes).
+The same native host-RAM blocker remains at the second consecutive goal turn:
+7.1833 GiB available before imports, below the 7.4 GiB post-import admission floor.
+No native retry, model load or training occurred. Independent FAST work remained
+available, so this is not an overall goal-impasse declaration.
+
+Question: can the proposed 1024-row replay dose be built from auditable, usable
+sources without consuming evaluation banks? AMENDMENT_002 froze fixed original
+retrieval/instruction/answerability banks; no baseline-outcome selection/replacement.
+MEASURED: 768 TRAIN rows/640 parents and 256 DEV rows/192 parents; all 1024 positives
+and wrong-answer controls passed in14.495s. Tokenizer-only profiling took69.459s;
+max401 total tokens, max21 completion. Deterministic TRAIN243336 nonpadding/11814
+supervised tokens. CHECK384 parent hashes only; FINAL closed. This qualifies data
+mechanics, not preserved Titan behavior.
+
+The actual 14000-row language source hash matches. Exact original TRAIN membership
+revealed4000 V1 rows mislabeledV2. Source bytes were preserved and origin recovered
+from original file/row hashes. Twelve source-quality flags removed unsupported
+references and conflicting wrappers; 4644 V2 candidates in298 conservative template
+clusters remained. No statistical independence was inferred from those clusters.
+
+Frozen class quotas selected256 primaries plus768 bounded alternatives in21.131s.
+Two assistant reviewers read every selected conversation:250 acceptable references,
+6 flags. AMENDMENT_003 resolved five with reviewed same-cluster alternatives and one
+with the next fixed-hash same-class cluster, after the original alternative budget
+was exhausted. No original text was rewritten and no teacher targets were authored.
+This is assistant source review, not human approval or calibrated native grading.
+Original failed candidates and review receipts remain permanent evidence.
+
+Curated language256 rows:22642 nonpadding/2460 supervised tokens; max122 total,
+max20 completion; no truncation and no Torch/model load during profiling. The full
+candidate sequence epoch is5120 rows,680532 nonpadding and63546 supervised tokens.
+This is a candidate data-dose receipt, not the post-E0 launch manifest.
+
+Scoped exact exclusions compared5632 open acquisition/deterministic-retention rows
+against32800 historical whole-chat fingerprints and current normalized prompts,
+with no collisions. The audit did not compare user-only historical text, cross-schema
+semantic specifications, all Titan ancestry or pretraining. Protected payloads were
+not read. Full historical exclusion remains explicitly unproved.
+
+Validation:129 aggregate CPU tests passed in54.989s;5 additional resolver controls
+passed in0.004s. A tokenizer-test isolation failure was retained and fixed only in
+the test's local sys namespace, preserving production no-Torch guards. No native
+acquisition/retention effect measured. Current best remains unchanged Titan.
+
+Ruled out: trusting preservation_source_version as origin; silently admitting six
+flagged references; calling5120 rows5120 independent parents; equating short retrieval
+with long-context preservation; expecting an unused ML dependency bundle to solve
+RAM admission (the actual runtime has no sklearn/scipy/pandas/audio/vision extras).
+Next: sufficient native headroom for E0, then current-source enrollment; independently
+qualify fresh language DEV/grader calibration and2048/4096 sentinels. No CHECK/FINAL
+opening or E1 launch is earned yet.
+
+## Continuation 003: exact long-context DEV bank
+
+The previous turn was PROGRESS. The same native RAM blocker recurred a third time
+(7036512KiB free, about6.711GiB, before imports; no Python workers). The overall
+blocked audit failed: long-context bank construction was still a meaningful FAST
+action, so only the native lane remained stopped. No E0 retry or guard relaxation.
+
+AMENDMENT_004 froze tokenizer-only construction:32DEV worlds across2mechanisms
+and4placements,8paired rows each, exact2024/4072-token full prompts;64CHECK hashes,
+FINALclosed. Source review found and fixed position-based answer shortcuts,
+authority-frequency/timeline inference and winner-dependent decoy keys before
+production. The latest catalog has4entries/2perwriter and independent authority;
+all3required record blocks are necessary under independent visible parsing. Three
+adversarial provenance modes occur in every adversarial row. No claim of3atomic
+facts or32independent reasoning mechanisms is made.
+
+MEASURED: tokenizer-only production at75e71793922a03e9dbc24588bf673fd8cbf202ab
+finished in139.455s without Torch/model/GPU calls.256DEV rows (128each length),
+780288total prompt tokens; native support spans remain in frozen bands; all factor
+pairings preserved; no truncation or PAD/EOS filler. CHECKpayloads remain unopened.
+An independent artifact audit found0discrepancies in15044consistency checks,
+including640ablation tests,64causal interventions and288decoy controls. It checked
+stored native mappings internally rather than rerunning the tokenizer; mapping
+itself remains the bound production measurement. Full CPU suite:172tests passed
+in144.592s. Native resource fit, source correctness and preservation remain unmeasured.
+
+Next-action audit found another real preparation gap: no standalone central E1
+SFT driver or current-source enrollment adapter exists. The immediate FAST task is
+a stdlib E1 plan/preflight binding exactdatahashes and256steps of16acquisition+
+4replay rows, fixed LR rounding/cadence/resume cursor/cost accounting, seed101-only,
+and fail-closed E0/enrollment/language/long-context gates. A paired enrollment adapter
+must aggregate twins/eight-row worlds before parent-level statistics. This is not
+permission to launch native training; don't import preparation modules that set
+USE_TORCH=0 into a native worker. The goal remains active, not complete or at a
+verified overall impasse.
+
+## Continuation 004: frozen E1 inputs and schedule; diagnostic enrollment
+
+Previous turn classification: PROGRESS. Native host RAM remained below admission
+on the fourth consecutive goal turn (initial OS-only6770644KiB free, before imports).
+No E0 retry or resource-floor change. Independent FAST work remained, so this is
+not an overall goal-impasse declaration.
+
+AMENDMENT_005 prospectively froze exact sequence order,13-update warmup/finalLR0,
+256 optimizer calls,16acquisition+4replay per step,final-only checkpoint selection
+and accounting cursor semantics. The language stream previously stored token hashes
+without arrays. The committed materializer regenerated all256rows in34.716s and
+matched prior per-row token hashes/counts:22642nonpadding/2460supervised tokens,
+completion-only labels including EOS and prior assistant turns masked. No Torch call.
+
+Implemented standard-library TRAIN binding, schedule/cursor validation, E0 evidence
+consistency inspection and structural response import. Review found and fixed lax
+config scalar/loss/resource checks, stale source/config publication races, resolved
+path scope checks, incomplete E0 cost/helper bindings and callback promotion risk.
+All89 new focused controls passed in70.474s; the old172-test baseline is retained
+separately, not represented as a combined new run. Source/config committed at
+676dcbabcd59247e97617e6eb7ad97fd5aa5af40 before plan publication.
+
+MEASURED: planv1 under Python3.13.2 took17.406s; its exact runtime-bound validation
+would reject the future Python3.11.15 worker. Preservev1 and regeneratev2 under the
+pinned3.11 interpreter, using unchanged source/config/data. Selectedv2 took17.272s,
+5120TRAIN rows/256steps/680532nonpadding/63546supervised tokens. No actual model calls,
+updates, training tokens, generated model tokens or teacher calls in either plan.
+An input/schedule artifact is not evidence that its planned token dose was consumed.
+Independent pinned3.11 standard-library audit passed68checks without invoking the
+binder or scheduler validators. Actual TRAIN bytes/masks, hashes, offsets, exact
+coverage, LR/prefix math and cursor match. Both plans have identical rows/steps;
+only Python-version metadata and derived hashes differ. No findings or native claim.
+
+The gate report remains E0_NOT_PASSED/HOST_RAM_GUARD and denies native launch.
+Even claimed E0 success does not provide downstream native qualification. Enrollment
+imports preserve raw failed attempts and parent-linked twins/eight-row worlds; every
+import remains structural or diagnostic, and language grading is explicitly blocked.
+No actual native responses were imported and no source-correct membership was frozen.
+Cursors establish prospective data/step accounting, not restored native optimizer,
+checkpoint tensors or RNG. No native E1 executor has been implemented.
+
+Next decisive native work is unchanged E0 only after actual resource-state change.
+Independent scope review found a finite remaining FAST task: fresh language64DEV/
+16CAL candidate worlds,96 intended control texts and blinded review packets under
+a new data-only amendment. Intended labels remain unqualified author annotations;
+qualified independent reference labels and grader calibration still require real
+reviewer evidence. Goal stays active. No recipe promotion or CHECK/FINAL opening.
+
+## Continuation 005: original language DEV/CAL inputs and unassigned packets
+
+Previous goal turn: PROGRESS. The current turn's initial OS observation was
+6184748 KiB free (about 5.898 GiB), below native admission before imports, with no
+Python workers. The same native RAM condition has recurred on five consecutive
+goal turns. No blind E0 retry or floor reduction. Independent data work remained.
+
+AMENDMENT_006 and LANGUAGE_AUTHORING_REGISTRATION accepted source preparation only.
+Root and cross-author assistant reviews examined all 80 world specifications.
+Review added explicit box/lid/car fit and changed a CAL notebook choice graph too
+close to a DEV constraint-conjunction case. The original B spec was preserved.
+Freeze 5c2542b17613ed520de739dcc9e68b868a98143b preceded rendered conversations and
+responses. Eight strata contain 64 DEV worlds (32 single/32 multi-turn) and 16 CAL
+worlds (8 single/8 multi-turn). CHECK has 128 count reservations only; FINAL is closed.
+
+Authors rendered 80 conversations, 64 illustrative DEV replies and 96 CAL candidate
+controls: two intended acceptable responses and four primary defects per CAL world.
+Cross-author assistants read every conversation, contract, exemplar and control.
+One unsupported 'naming vote' became 'naming decision'; original bytes and review
+were preserved. No qualified score vectors or human approval exist. Defect dimensions
+can interact; source review does not calibrate a scorer. The 41 prior assistant turns
+are authored context, not Titan outputs. Script receipts do not meter authorship or
+assistant review cost and do not assert that this work is free.
+
+Source/code committed at c6d64603 before production. Export took 21.378 s, producing
+64 DEV/16 CAL rows and two unassigned JSON CAL templates of 112 items each (96 unique
+controls plus 16 hidden repeats). Coordinator mappings remain separate; this is not
+cryptographic blinding. Rating imports require fresh source rows and exact packet
+reconstruction. Rehashed altered responses or context cannot pass on self-consistency
+alone. Missing/unjudgeable items remain explicit, and every qualification flag stays
+false. There are no actual rating records or native student responses.
+
+Tokenizer-only measurement took 34.202 s in the pinned Python 3.11.15 environment:
+80 prompts total 8680 tokens, max 166; 160 exemplar/control completions total 5603,
+max 63 including EOS. No truncation, Torch or model calls. The 43 new focused CPU
+tests passed in 40.998 s; two additional historical-fingerprint controls passed in
+0.002 s. Prior 172+89 test baselines remain separate. An audit with separately written
+checks by the exporter author passed 214 checks; this is byte/topology evidence,
+not independent human review, scorer calibration or native model qualification.
+
+Comparison with 42000 rows from two pinned original TRAIN corpora found no exact,
+system-stripped or normalized conversation/user-sequence matches, and no within-bank
+matches. Assistant review read all 240 retrieved neighbor contexts (232 distinct
+TRAIN rows), finding no clear direct reuse within those pairs. Shared functions and
+topics remain; this does not establish semantic independence. A separate hash-only
+comparison with 32800 historical whole-chat fingerprints found no matches. Comparison
+walls were 63.491 s and 1.215 s. No protected scored payload was read. Complete Titan
+ancestry, semantic exclusion and unknown-pretraining exclusion remain unqualified.
+The neighbor review's initial oversized shell write failed before process creation
+with Windows error206; a file tool saved the receipt, which records that failure.
+
+The next-action audit found a concrete missing adapter: short acquisition/retention
+DEV token files include reference completions, whereas long-context/language arrays
+contain prompt-only inputs. Bind actual source/token rows, slice only short-bank
+prompt positions, keep targets separate, connect pure deterministic verifiers and
+preserve parent variants. Runtime identity, run budgets, native capture, qualified
+language grading, the 2048/4096 runtime extension and native E1 executor still need
+actual evidence. The goal remains active, current best remains unchanged Titan,
+and no preparation result opens CHECK/FINAL or earns behavioral promotion.
+
+## Continuations 006-007: concrete DEV binding and blocked audit
+
+Both goal turns made progress. Continuation 006 froze AMENDMENT_007 and produced
+DEV binder/scorer code; all 832 actual source rows passed an integration check.
+A delegated publisher agent then reported a usage limit before creating its files.
+Continuation 007 inspected the current worktree, found no partial publisher, and
+completed the publisher locally. No alternative account, paid provider or native
+runtime was introduced. The full research objective was not reduced.
+
+The native host-RAM condition persisted: initial OS observations 5647876KiB and
+5770976KiB were below admission, and the later 14:24 UTC observation 6277916KiB
+(5.987 GiB) also remained below 7.4 GiB before imports, with no Python workers.
+No native retry, guard change or unrelated-process termination occurred.
+
+AMENDMENT_007 freezes strict JSON/type/shape distinctions for malformed responses.
+Well-shaped wrong values remain semantic errors; false abstention is not automatically
+malformed. Long-context scoring retains its strict symbol/UNKNOWN parser. Language
+scoring remains blocked. The callback hard-pins its three pure verifier dependencies
+before import and at every call; the importer separately binds the callback file.
+Host data/lineage errors raise rather than becoming model failure observations.
+
+Forty focused binder/scorer/publisher tests passed in 87.582 s. They include source/token
+joins, reference separation, complete parent variants, strict scorer behavior,
+dependency drift, publication snapshot/HEAD changes and write-once output. Earlier
+test runs remain separate. Source/config committed at
+ead560f3ed0fcc879e2b26f77003b9053d37553d before actual publication.
+
+Production took 107.513 s under pinned Python 3.11.15, with a clean overall checkout
+snapshot and no imported model/tokenizer frameworks. It bound 256 acquisition,
+256 deterministic-retention, 256 long-context and 64 language DEV rows: 832 rows and
+544 parent groups. Prompt-token sums 22914/80773/780288/6899 total 890874. The language
+sum excludes CAL. Policy records contain only row routing ID, messages, prompt IDs,
+mask, count and hash; row IDs do not enter model messages. Evaluator semantics and
+labels remain separate. 6883 short-task reference-token positions were excluded.
+
+The publication validates 768 deterministic data references plus 64 language source
+identities, not student outputs. No response records, native loads, optimizer calls,
+generated model tokens or source-correct membership were produced. Runtime identity,
+decoding, seeds and collection budgets remain null rather than invented permits.
+A separate stdlib audit compared all 832 policy rows with actual stored prompt arrays,
+checked 34 file identities and complete parent closures, and found no discrepancies
+in 11.749 s. The root authored both publisher and audit; this is not independent human
+review. Stored-token mapping checks are not fresh tokenization or native fit.
+
+The blocked audit verified eight completed preparation tasks and no remaining
+eligible independent FAST task on the current critical path. The same native
+admission blocker has persisted for seven goal turns. Exact native E0, source
+capture, qualified language grading, longer-context runtime, the native executor,
+E1 results and all later dependency-gated experiments remain incomplete. Drafting
+more speculative execution scaffolding without measured runtime/budget decisions
+would not resolve the next empirical gate. Record the goal as BLOCKED after final
+artifact publication; never COMPLETE. Resume unchanged E0 after a real host-resource
+change, keeping the original objective and all scientific gates intact.
+
+
+## Resumption 001: renewed E0 preload block and accounting repair
+
+29 September 2026. Question: does the improved host resource state now admit the
+same exact Titan qualification? OS available RAM rose to 8020856 KiB (7.649284 GiB)
+before imports. Clean committed source5e5fe36ebc6c2725c61c4c4cf78d3f85344cba80
+and the unchanged registered config produced immutable attempt e0_titan_v3.
+At preload, after runtime imports and CUDA probes, available RAM was6.936687469482422
+GiB versus7.4 required. Worker RSS0.669048 GiB; GPU free6.890625 GiB;
+peak process-tree RSS722874368bytes. Worker/supervisor walls25.219/25.891s.
+The traceback and source ordering prove no checkpoint hashing, tokenizer creation,
+model construction, weight load, forward, update or generated model token occurred.
+The floor and containment worked; post-admission fit and all efficacy remain unknown.
+
+This is blocked observation1 in the resumed audit, not observation8. The goal
+remains active and incomplete. Prior seven-turn blocked receipts stay historical.
+No guard reduction, unrelated-process termination, protected payload access or
+same-state native retry followed. The v3 worker and supervisor files are preserved
+byte-exact under results, with RESUMPTION_001_E0_AUDIT.json as the concise index.
+
+A separate source review exposed a concrete FAST task: later E0 failures could
+underreport attempted work and discard completed resource profiles. AMENDMENT_008
+prospectively registered version2 accounting before the repair. Implemented at
+748fcc2da74e6f490e889a32f88a0ce475888269, selected operations now have durable
+attempt/returned/failed events and explicit pending calls. Python return is not
+GPU completion or finite numerical success. Forward positions include padding;
+training-forward positions and completed-update tokens are distinct. Only310initial
+serialized base-checkpoint copies are individually counted. Checkpoint reload is
+composite; restore_initial housekeeping is not a separate tensor-copy census.
+
+The existing five optimizer attempts are enforced before dispatch. Returned update
+counts advance before subsequent finite-state checks. Completed profiles remain in
+results and events even if a later stage fails. Gate code independently validates
+full order, closure, workload totals, resource/profile events and cost agreement.
+Historical failed receipts are not rewritten. Source review by a non-author assistant
+found no numerical, RNG, input, mask, dtype, sampler, context or resource-gate change.
+Review is not independent human approval. Added telemetry overhead must be measured
+in the next resource-admitted native run.
+
+52 stdlib controls passed0.681s (1.1190241s process wall);12 existing tiny random CPU
+controls passed1.459s (6.6929375s process wall). Logs, exact source hashes and commands
+are in E0_ACCOUNTING_V2_CPU_VALIDATION.json; the separate source review is retained.
+These tests exercise failure accounting and unchanged CPU helper mechanics, not
+pretrained learning. No native model loads/updates/generation or teacher calls.
+
+The repair rules out the covered bookkeeping failures under these CPU controls;
+it does not rule out native numerical or memory failures. Old E1 plans bind the
+prior gate-checker source and remain historical, not current launch manifests.
+Rebind before native E1 against qualified current source/runtime; preserve data dose,
+row order and optimizer schedule. DEV binding is unaffected by this dependency change.
+The next highest-information experiment remains E0 under unchanged scientific settings
+after another meaningful headroom change. Heavy training is not justified beforehand.
+
+
+### Later same-turn v4 attempt after another measured resource change
+
+OS available RAM rose to8.251488 GiB at05:46 UTC and remained8.156063 GiB at
+05:47 UTC before launch, with no Python workers, GPU free7365 MiB and disk116.254 GiB.
+After committing and pushing62ad48e2ade0ec4b3023e2aef5736bc34c6022d1 with a clean
+checkout, the same config and contained supervisor ran e0_titan_v4. Post-import
+preload RAM7.378871917724609 GiB remained below7.4, so HOST_RAM_GUARD stopped it
+before model construction. Worker/supervisor13.860/14.547s; peak process-tree RSS
+722923520bytes. This is no post-admission memory-fit or model-quality evidence.
+
+The version2 journal, result and cost snapshots reconcile with zero attempted,
+returned, failed or pending calls in all8selected model operations. The trace and
+source ordering independently confirm that only imports/probes preceded the guard.
+The new worker's preload-failure accounting path was exercised; no forward/backward,
+checkpoint load or optimizer path was natively qualified. No profiles exist because
+no model work began. All14worker/supervisor files remain byte-exact. The audit is
+RESUMPTION_001_E0_V4_AUDIT.json. Bothv3 andv4 occurred in the first resumed goal turn;
+two attempts do not mean two consecutive blocked goal turns. The goal remainsactive.
+No further retry on unchanged headroom and no threshold relaxation is justified.
+
+
+## Resumption 002: repeated host-resource block, no new native work
+
+The previous turn made concrete progress through accounting repair, tests and
+preserved E0v3/v4 admission results. On this continuation, the clean checkout at
+6e1e455489077cf192ca5d85817e97b9fd995763 and live OS observation were rechecked.
+At05:52:13 UTC available RAM7641004KiB (7.287029 GiB) was already below the7.4 GiB
+post-import admission floor. No Python workers existed; no live native process can
+be waited on. GPU free7320MiB does not resolve the host-RAM blocker. No launch,
+model import, checkpoint load, optimizer step, model generation or new test occurred.
+
+Read-only process aggregation found no abandoned Python worker to reclaim; the
+largest application group was ChatGPT at1885.7MiB working set across12processes.
+These sums are not promised reclaimable memory. No applications, services or shared
+helpers were terminated. Existing9completed FAST-task receipts were read and hashed.
+Remaining work depends on native measurements or qualified external grading. Repeating
+preparation, drafting speculative wrappers or lowering admission would not establish
+those facts. Current turn is an audit-only no-progress turn on the empirical gate,
+not a verified wait or successful experiment. This is resumed blocked turn2; the
+old seven-turn audit is not carried forward. Goal staysactive until the required
+fresh audit threshold is met or resource state enables genuine progress.
+
+
+## Resumption 003: fresh blocked threshold met
+
+The prior continuation was an audit-only no-progress turn, not a live-job wait.
+Current clean HEAD164b5027c8e677e2663a695a9bab0361fc0f831c and OS state were rechecked.
+At05:54:17 UTC available physical memory8173644KiB (7.794994 GiB) and zero Python
+workers were observed. This is below the8.156063 GiB pre-import state of the latest
+v4 attempt, which failed at7.378872 GiB post-import against7.4 required. No new
+post-import value was measured. The decision not to retry is an inference from
+lack of meaningful improvement over that failed admission state, not an assertion
+that the raw OS number itself failed the post-import guard.
+
+All9completed FAST-task receipt identities were reverified. Native E0, actual
+source enrollment, calibrated language grading, the2048/4096 runtime extension,
+E1 execution and later registered science remain incomplete. No model work or
+new tests occurred, no process was killed and no guard changed. The fresh resumed
+blocker now spans3consecutive goal turns; the first made real accounting/measurement
+progress, and the next2confirmed the same external resource dependency. Historical
+seven-turn records are not used to meet this threshold. No eligible independent
+FAST work or live native job remains. Record goal BLOCKED after final publication,
+never COMPLETE. Resume only after meaningful resource-state change; retain the
+full original research objective and all scientific gates.
+
+
+## User-authorized laptop replan, 29-30 September 2026
+
+The user explicitly permitted RAM/plan changes for16GB hardware and prioritized
+VRAM-heavy work. Audit traced7.4/6GiB toPRLC project defaults with aCPUreference,
+not measuredTitan demand. AMEND009 registered dynamicadmission with2GiBreserve
+and2.5GiB RSScap. Probe at79ad1a61 loaded exact596M BF16 Titan and ran one256token
+forward in10.406s; supervisor11.219s andpeakRSS1.927891GiB. GPUallocpeak1.400038GiB.
+FullE0 atsame source passed32zero-adapter cases max0, then failed firstleft-padding
+likelihood at15.656s; supervisor16.546s,RSSpeak1.951038GiB. No backward/updates/gen.
+Two non-author assistant source/receipt reviews confirmed scoped evidence; no human
+approval or efficacy follows. The actualpaddingerror magnitude was not retained.
+
+AMEND010 added failure-only finite-safe error telemetry without changing tolerance,
+and separated resource/backward/resume measurement. That partialstage retains the
+original5disposable updatecalls and3contexts but explicitly omits unresolvedpadding/
+sampling checks and sampler RNGdraws. It never qualifiesfullE0/E1. The instrumented
+fullv2 stopped atpreload afterexternalRAMpressure, beforemodelwork (7.891/8.719s).
+
+AMEND011 registers fixed2MiB directCPUbuffer-toGPU loading, strictBF16header/payload
+coverage and310compositecopyspans; source/GPUhashidentity remainsstrict. Namedprofile
+LAPTOP_STREAMED_V1 reserve1.25GiB,RSScap1.75GiB, budgetswholegrowth3GiB beforelaunch.
+71stdlib controls and9actualCPUloader controls passed. Defaultloaderunitrun skipped
+its opt-inTorch test; explicit opt-inrun passed9tests, andbothlogs are retained.
+A firstsource-binding testfailedbecause a newlyintroducedhelper didnot exist in the
+oldhistoricalcommit; fixture now verifiesactualolddependencies and rejects invented
+history. Production source binding strengthened; originalfailedreceipt preserved.
+
+Streamedloadv1 at4526d705 stopped atpreload (5.078/5.875s), no weightaccess. Itisnot
+proof thenewGPUloader fits. CurrentOSRAM later1.037GiB with noPythonworker, already
+belowthereserve. No guardautoraise or further same-state retry. Anapp-independent
+boundedPowerShelllauncher was prepared/audited towait<=600s for>=3.0625GiB andrunone
+registered<=1800s mechanicsphase. It preserves source/config/admission/completion
+receipts andfailure evidence; noE1 launch. Desktop working set~2GiB isnot a guarantee
+of reclaimableRAM. No userprocess was terminated.
+
+Currentprimary unchanged, nativeverifiedloads2,optimizersteps0,training/gen/teacher0;
+acquisition/retentionunmeasured. The nextinformationgain is resource/backward/resume
+fit andpaddingerror diagnosis under unchangedtolerances. The operatingroute changed,
+not modelscale/data/retention criteria or thescientific definitionofsuccess. Thefull
+originalresearchgoal remains incomplete. No closedpayload opened or recipe promoted.
+
+
+## Scoped CE preparation after verified headless wait
+
+The corrected detached controllerPID216792 was verifiedlive and then terminal.
+Its601.063second admission window had256RAMobservations, min0.581242/max0.954651GiB,
+below3.0625required. It neverinvokedanative supervisor. RawPLAN/FAILURE/bootstraplogs
+are preservedbyteexact inheadless_admission_window_v2. This was averifiedwait,
+not a model run, memoryfit result or silent retry. LaterOS1.396980GiB and0Pythonworkers
+still didnotearnnativeadmission. No new model/optimizer/generation/teacherwork.
+
+Read-only review identifiedactualE1CE inputs: microbatch1,zero padding,allone masks.
+AMEND012 prospectively bindsUNPADDED_SINGLE_SEQUENCE_CE_V1 with hardinput boundaries,
+mandatory independentunpaddedcausality andrealallones-vs-omittedlikelihood checks at
+unchangedtolerances. It preservesoriginalEOSlabels,causalCE,3contextgradientprofiles,
+5disposableupdatecalls,resume,basehashandresourcebounds. Oldfullpaddingfailure remains;
+probabilityRL,packing,padding/cache/batchedinference/evaluationremainunqualified.
+
+76stdlibcontrols passed1.336s (process1.648372s). Independentnon-author assistantreview
+foundnoblocking sourceissue; it isnotnativeorhumanapproval. Semanticrow eligibility
+needsactualrow/token/labelbinding. LauncherWindowsAuditOnly succeededforthe newstage.
+No nativepassorscopedE1validator/currentruntimeplanexists. Goal remainsincomplete.
+The currentdefault trialis unpadded_ce onceheadroomchanges; no newbackgroundjob
+wasstartedatthesameinadequateresource state. Currentbestandclosedbanks unchanged.
+
+
+## Scoped evidence checker and first streamed unpadded native trial
+
+The exact scoped consistency checker passed95stdlib controls in4.106s
+(process4.471799s), including timing contradiction controls and rejection of
+old failed/resource-only bundles. Independent assistant source review found no
+remaining blocker; this is not human approval or a native execution proof.
+
+Actual OS headroom changed to5.220612GiB with0Python workers. The committed
+controller admitted two readings5.117710/5.121353GiB and launched one trial from
+a4454e17009c9d3aadd87e2b9b633c2969f5be00. Fixed2MiB streamed copying loaded310tensors
+exactly. Thirty-two zero-adapter cases matchedbitwise; unpadded causality and
+allones equivalence passed with0max/mean error.256/512profiles completed two
+disposable updates.1024forward/backward returned, then the0.5GiBVRAMfloor
+stopped the trial at0.161270GiBfree. CUDAallocatedpeak6.254207GiB and reserved
+6.638672GiB; process-tree RSSpeak1.740429GiB and minimum sampled host headroom
+3.031586GiB. Worker32.000s/supervisor33.172s. No checkpoint save/reload or full
+scoped PASS. Legacy train768 positions after completed steps; actual training
+forwards1792 positions across3contexts. These are mechanics, not learned-capability
+evidence. Native campaign loads now3, disposable updates2, generation/teacher0.
+All raw failure artifacts preserved byteexact. The checker rejects this BLOCKED
+result before asset access. Register activation checkpointing prospectively for
+1024; do not lower GPU/RAM floors. Original goal and best recipe remain unchanged.
+
+
+## Prospective512 CE successor after measured1024 VRAM stop
+
+AMEND013 registers<=512 CE retaining allpreparedTRAIN sequences(max398)
+withouttruncation. Model/math/tolerances/RAM/GPU/diskfloors unchanged; contexts
+256/512 andfourdisposable updatecalls, within-stagebitwise512resume. Original
+1024scope/failure preserved.107stdlibcontrols passed6.107s(process6.538167s),
+including old/new scope separation, input513/1024 rejection andordered timing
+checks. WindowsPowerShellAuditOnly succeeded; no model work. Independentassistant
+source review derived393calls,26608positions,1792trainingpositions and865events.
+The native fixture remains pending after OSheadroomfellto0.814198GiB at08:31UTC,
+with0Pythonworkers. No model was started belowadmission. Scopedchecker always
+E1false; capture/preservation/language/longcontext/currentE1bindings remainopen.
+
+
+## Verified512 admission window and delivery
+
+Controller234112 was verifiedlive, then terminal after62.551952s;27OSsamples
+1.440952-1.852760GiB below3.0625budget. Native supervisor neverinvoked;noPython
+modelworker remains. RawPLAN/FAILURE copiesbyteexact. Independentchecker review
+foundnoblockers; it remains source-only evidence andalwaysE1false. Reportupdated
+with1actual native trial thisturn(1load,2disposablesteps) and107CPUcontrols,
+plus thisverifiedwait. Originalresearchobjective remainsactive/incomplete;
+currentbest and CHECK/FINAL unchanged. No repeatedmodelretry atsameheadroom.
+
+
+## Complete512 native CE qualification after changedheadroom
+
+RAMchangedto4.302673GiB with0Pythonworkers andcleancheckout. Data-validator
+edits werepaused. Controlleradmitted4.274826/4.278355GiB andranonescopefixture
+from15901919825dc1855020212edcaf6830ee7caef1. All8checks passed;393calls returned
+(71forward,4back/steps,save/reload),26608positions/1792trainingpositions,75guards
+and865events. Bitwiseresume andfinalbase/sourcehashespassed. Worker32.297s,
+supervisor33.360s/controller37.247960s. Observedprocess-treeRSS1.748646GiB leaves
+only1.386719MiBbelowcap; sustainedE1overhead remainsunmeasured. Hostminimum
+2.498425GiB, GPUfree>=3.326172GiB, peakallocated3.098094GiB.
+
+Stdlib byte/source/journalchecker passedactualcompletebundle in2.207372s,37file
+bindings; actualweightsreadasbytes only, resume binaryopaque. Independentagent
+metadata/sourceaudit foundnocontradiction. Allrawfiles copiedbyteexact under
+originalbasename; resumebinary localignored. Nativecampaignloads4,disposablesteps6;
+generation/teacher0 andnoeffectclaim. Oldfullpaddingfailure/1024VRAMfailure preserved.
+
+The unchanged oldE1data binder provesarraydose but onlysyntaxchecks sourcehashes.
+A newsource-joinedCE512datacontract isfrozenandunderimplementation tobindactual
+TRAINsources,semantics/token/labelbodies andconsumerkwargs withoutrewritingdata or
+tokenizing. EveryE1/nativegrant remainsfalse; capture/language/longcontext/preservation
+remainmissing. Originalgoal andbestrecipe unchanged.
+
+
+## ActualTRAINsource joins with lowRAM reader
+
+Frozen28-filegraph andproducer e717d87a59263e84db7b555dd902f48a7b928eac bound
+all5120actualsource/array pairs, canonicalsemanticparents/targets andCE512consumer
+kwargs. Full680532inputs/63546supervised positions/max398;81priorassistantturns
+remainmasked. HistoricaldataSHA51b87fe4fd70d2fb23d16f270d1023716172dbbe1c88efd79dff8c3548623d6d
+unchanged; joinSHA555776a347ea7a82e7a111b90ab041f5947bb0e54bd32c8b306e9064fbd5fc68.
+Rootproductionbody3.329284s/process3.800993s, peakreaderworking-set40898560bytes
+(39.003906MiB).18newstdlibcontrols passed0.270s; earlier107run remainsseparate.
+Actualreceipt copiedbyteexact, pluslogs. No newtokenization/framework/model/weight
+access, datasetrewrite or nativegrant.
+
+Independentreview foundaninitialproductionprovenanceblocker: lateHEAD/selfhash
+couldclaima producercommit lackingtheproducer. Upfrontcurrent==committedsnapshot
+andfinalHEAD/self/manifest/budgetrechecks fixedit; nonauthorreviewfoundnofurther
+blocker. CPUbounds arecooperative/highwater, nothardcontainment. Earlierindependent
+arrayobserver hadHANDLEargtypefailure beforedatareads, thenrecovered; preserveits
+limitedreportednote separatelyfromtheactualsourcejoin. Languageorigin/quality
+review is inheritedfromfrozenpriorprovenance; notnewhumanapproval or wholepretraining
+exclusion. Native512scope remainsqualified; sourcecapture/gradedpreservation/long
+context/sustainedE1fit andcurrentnativeexecutor remainopen. Goal staysactive.
+
+
+## Frozen shortgreedy capture pilot andnumericalstop
+
+AMEND014/configcab513 andindependentworker/checker reviews/44CPUcontrols(1.130s)
+were committedbeforeonecontainednativepilot from3ed5777167817edd7032f8ed3125afd2e6daa3ad.
+Exactload;318selectedcallsreturned(310copies,6forwards)/1286positions;3newIDs
+[16,22,151645] visible17, naturalEOS; noanswercorrectnessfilter.128fixture
+completeduntilfailedNLLcheck;384unattempted. Onlinevsbulkerrors.0414324105,
+.0373841524,.0000814913, mean.0262993514 exceedunchanged.03125/.01.
+Worker25.437s/supervisor26.640s. InternalRSSmax1.404602GiB;external100mspeak
+1492574208bytes maymiss instantaneouspeak. Hostminimum2.554611GiB/GPUfree5.400391,
+GPUallocationpeak1.400038GiB; resourcesheld. No finalbase/sourcecheck, noqualification.
+
+Actualfailure/result/cost/journal/stdoutcopies byteexact. Earlyfailure receipt
+accounting isstale0; finalresult/cost/journal318is authoritative. Bothretained,
+no reinterpretationaszerowork. Purecheckerblockedbeforeweights. NewAMEND015
+fixesfailedprompt+IDs for2x2held-hiddenorigin×LMheadrows diagnosticplusGPUFP32
+head-only comparators, all0generation/training/grants; no causesclaimedwithout
+measurement andnooriginalproducer/config/pins changed. Fullgoal/best unchanged.
+Languagegradingstillneedsindependentqualifiedlabels/provider/cost/blinding;
+userpreferencequestionpending whiledeterministic work proceeds. No gradercalls.
+
+
+## 2026-09-30: actual capture geometry diagnostic
+
+The fixed failed trace completed from committed source 0b48e3cd322399827b30766caf122d829b93269b. All 320 logical model calls, eight forwards and sixteen separately journaled direct head projections returned; 1036 input positions, zero generation, training updates or teacher calls. Worker time was 20.344 seconds and supervisor time 21.266 seconds. External process-tree RSS peaked at 1512910848 bytes; GPU allocation peaked at 1.737812 GiB, with 2.249592 GiB minimum sampled available host RAM. Final base and source hashes remained unchanged.
+
+Original online/bulk likelihood values and their failure reproduced exactly. BF16 endpoint parity was exact. Holding hidden values fixed while changing head row count produced zero logit/logprob error. Prefix/full hidden states differed by maximum 1.25 and mean 0.055434; either BF16 head layout reproduced the original selected-logprob gap. The FP32 head comparator still exceeded maximum 0.03125 and mean 0.01 limits. This establishes an upstream hidden-state difference for the tested trace, without identifying its mechanism. All byte-exact raw records are preserved. No capture, enrollment, language, long-context, E1 or CHECK/FINAL grant follows. The next step must preserve the bulk failure and register its own scope before execution.
+
+
+## 2026-09-30: fixed-shape causality source complete, admission stopped
+
+AMENDMENT_016 and the byte-frozen D2 config register four length-131 forwards and 524 positions, with actual mask, rotary position and final-four-hidden-row witnesses. Root completed the standalone producer after the builder encountered a model-capacity failure. Fourteen stdlib controls passed; source review found one missing exposed FP16 split-K flag, now recorded without mutation. The final fourteen-control run passed in 0.014 seconds (process 0.2088003 seconds). Final source was committed at 39add8a9d9ea7df69ac838860c3dcab15639e43d. No language/provider or paid calls occurred.
+
+The initial two host observations were 2.833652 and 3.498203 GiB, so the pair did not admit. A subsequent bounded observation window remained within the same dispatch, without invoking a native supervisor. Twelve observations over 30.897 seconds ranged from 3.228485 down to 0.221680 GiB, failing the unchanged 3.3125 GiB admission budget. Both raw receipts are preserved byte-exactly. The controller is terminal, no native D2 result exists, and all counts are zero. Wait for a real resource-state change before another admitted trial; do not label CPU controls or the geometry result as a causal pass. Original likelihood limits and full research objective remain intact.
+
+
+## 2026-09-30: service interruption recovered; actual scheduled reader passed
+
+The automatic turn 01a0f291-236a-7953-a72c-cd96a0a660fa failed with "Selected model is at capacity. Please try a different model." The app goal flag was blocked. This service interruption is distinct from available laptop RAM and the numerical capture gate. The user's status message resumed work in the chat; no GPU worker was running or lost. Original scope and unchanged best remain intact.
+
+Recovered and committed reader, independent E1 journal and accumulation engine components. The initial reader control run had21 pass/1 fail: same-size restored-mtime edit was rejected at selected-line hash rather than the earlier Windows file-change check. Added NTFS ChangeTime detection and strict typed metadata controls. The observed initial failure is preserved, with original streams/prior source hash explicitly unavailable. Final combined53 stdlib controls passed in6.525 seconds (process7.1201912 seconds). Separate source reviews found no remaining blocker within component scope. Native backend, physical accumulation/RNG/cross-process resume and launch validators remain unqualified.
+
+AMENDMENT_017 freezes exact historical plan/data pins and current CE512 reader interface without changing earlier config or data bytes. From producer c2fd2619, pinned Python3.11.15 completed all5120 actual scheduled lookups:4096 acquisition,768 deterministic and256 language replay;680532 input positions/63546 supervised positions;maximum398;81 prior assistant replies masked. Byte-exact trace/result/source/config copies retained. Reader time141.094 seconds, OS process high-water53264384 bytes (50.797 MiB); retained token rows0. Selected line and finalwholefile hashes plus source/HEAD checks passed. Resource enforcement is cooperative128MiB/600seconds with32-row high-water sampling, not hard containment. All model/update/generation/teacher counts0 and every native/E1 grant false. No capability or retention effect is claimed.
+
+
+## 2026-09-30: resumed admission passed, D2 import-stage guard stopped
+
+Fresh resumed goal is active. Earlier2.10 GiB host observation showed a real resource-state change. One bounded30-second admission window observed eight samples, ranging0.275936 to3.801788 GiB; final3.797119/3.801788 readings admitted. SourceHEAD dd48234e remained clean and byte-pinned. The owned D2 worker imported the pinned runtime, then found1.986759 GiB available versus dynamic2.581776 GiB. WorkerRSS0.668224 GiB, GPU allocations0, and all model/load/copy/forward/update/generation counters0. Worker and supervisor were terminal after24.437/25.360 seconds; raw receipts and admitted-window observation are preserved byte-exactly. This is not a new model-fit or causality result.
+
+The measured difference motivates a separately registered bounded wait after imports, retaining workerRSS2.0 GiB/systemreserve1.25 GiB and all GPU/disk/numerical limits. Waiting before any model call can observe recovering ambient headroom without repeating imports; no model retry or limit reduction is authorized by the observation alone.
+
+
+Correction: the preceding D2 preload note worker-wall24.437s was a transcription typo. Actual raw result/CSV/receipt worker time is24.422s; supervisor25.360s. Raw files unchanged.
+
+
+## 2026-09-30: post-import wait successor source reviewed, preworker window stopped
+
+AMENDMENT_018 source/config committed at fadef896. Initial26 CPU controls passed, but independent review reproduced a slow-journal deadline defect: a second observation could admit after60 seconds. Preserved that initial observation and source pins, then sampled time again after journal/measurement and at return. Added slow-journal and final-clock controls. Final28 controls passed in0.015 seconds (process0.2196053 seconds), and finalsource review found no blocking issue. Original D2/capture/geometry configs, code and raw failures remain unchanged.
+
+The successor retains workerRSS2.0 GiB/systemreserve1.25 GiB/GPU4-0.5/disk4/whole600-second bounds, with atmost60seconds afterimports,2secondpolls andtwo currentconsecutive dynamic admission observations. Source/HEAD/runtimefloors remain checked beforeanymodelcall. One preworker window from this newregistration ended terminal at30.1977343seconds,12samples2.061134-2.100109 GiB below3.3125. No native supervisor was invoked; the newpostimportwait has not yet run natively. Allmodel/update/teacher counters0. No unchanged-state model retry is warranted. Scientific capture/preservation/E1 gates remain false and the full objective open.
+
+
+## 2026-09-30: native-backend contract component installed, no model work
+
+AMENDMENT_019 freezes pure metadata/byte contracts for the missing future backend. Exact112adapter/310base-name inventories, sharedparameters/optimizer/RNG artifact references, frozen source/data/plan/weight bindings and owned32MiB path/hash bounds are checked. A Windows enhancement exposed path-stat/fstatctime differences; initial18pass and laterfailed19-control runs remainseparate in the CPU validation history. Cachedsamehandle CreationTime/ChangeTime plus opened/reopened identities now reject same-size/mtime-restored mutation afterhashing. Canonicalpackage21controls passed on pinnedPython3.11.15 in0.254seconds (process0.5278106seconds). No framework/model/checkpoint deserialization/RNGrestore or physicalTensor evidence occurred. Future restore mustverify/loadsameboundedbytes orhandle. Nativebackend connection/publication/physicalqualification/scientificgates remain missing; allgrantsfalse.
+
+
+## 2026-09-30: internal real-operation backend and publication engine committed
+
+Freshresource observations atturnstart were1.32 GiB available, later1.38, withnoPythonworkers; no unchangedmodelretry orframeworkimport wasattempted. The previousgoalturn isPROGRESS(source/postimport admission andcheckpointcontracts), notan efficacyresult. Thisturnimplemented the missinginternalTorchbackend throughdependencyinjection andversionedengineV2, preserving alloldqualified code/configs.
+
+Backendsource validatesexact310BF16base/112FP32adapter inventories andbasehashes/tie, keepsq/v/eager/eval/cacheoff CE512 math, exactAdamWdefaults andequal-sequence1/20 accumulation. It savesonlybounded adapter/optimizer/Python+TorchCPU+CUDA0RNG artifacts andreturnsreferences. Sameprocessrestore requiresdurablypublishedmanifest anddeserializes theSAME verifiedboundedBytesIO, validatingphysicalschema beforeGPUcopies. PublicationtypedV2cursor/POSTsave costs mustbe durablebefore exposingboundary; explicitplannedcomponent replacesrowIDguessing.
+
+SeparateimmediateTorchprimitive counters preserve actualreturnedwork iflaterbackendmodule checksorjournalpublication fail. Constructorfactory retainsdetached primitive costs ontheORIGINAL raisedexception; futureownedworker mustusecreate andpublishtwo scopeledgers. Costsarenotreset byrestore. Crossprocessreconstruction/rollbackremainunsupported andunqualified. Rootsource review foundandfixed unboundedartifact/manifest reads, componentguessing,envelopekind andconstructorfailurevisibility gaps beforeregistration. Initial8fakecontrols5pass/3fixtureerrors are recordedseparately, withoutinventingmissingrawstreams. InitialV2discovery included14importedlegacytests, not21newtests; fixedimports andadded routing/primitivecontrols. Final35combinedcontrols(21backendfake+14V2synthetic) passed5.629seconds, process5.9181814seconds, withpreservedstreams. No actualframework/model/GPU/update/generation/teacher workoccurred. Sourcecommittedc4b67c72; nativephysics,ownedworker,currentlaunchvalidators,capture/language/longcontext/sustainedfit remainpending, allgrantsfalse/fullobjectiveopen.
+
+
+## 2026-09-30: owned two-update backend qualifier prepared
+
+The preceding goal turn was a status check, not experimental progress. This turn
+registered AMENDMENT_021 and built an owned, bounded native mechanics worker for
+the exact Titan and first 40 frozen seed-101 TRAIN rows. Independent actual-data
+binding passed all selected source/input/label checks: 5,248 inputs, 463 targets,
+15 distinct completion lengths, 2.032 seconds and 53,714,944-byte process high-water.
+An initial audit code assumption about a stored label digest failed; the corrected
+audit hashes the actual labels independently. No framework or model was imported.
+
+The worker uses the qualified streamed CUDA loader, reader, backend and owned
+Windows watchdog. It checks two real 20-sequence accumulations, reference gradients,
+zero-adapter parity and adapter-only publication/restoration. Deliberate adapter,
+moment and three-RNG faults must be repaired against an independent pre-save
+snapshot; both updates must change adapters. Restore precedes reference/step-2
+work. Reference passes must preserve parameters, moments, RNG and live gradients.
+Native, reference, loader/parity and fault costs are distinct; restoration's extra
+reset remains counted. Prospective dose is 62 forwards, 8,326 inputs and 736
+supervised forward positions. No E1 or evaluation-bank grant follows.
+
+Independent review corrected the inherited global no-grad description, late RNG
+shape capture, a missing reference-gradient mutation witness, nontrivial restore
+and update witnesses, diagnostic preservation and stale post-journal admission.
+Initial registration bytes are preserved; numerical/resource/fixture limits stayed
+unchanged. The final 17 CPU controls passed in 0.016 seconds (process 0.2778302
+seconds), with raw stdout/stderr saved. Source review passed at the recorded worker,
+test and config hashes. These checks cannot prove actual Torch/CUDA physics.
+
+Available RAM rose from about 0.80-1.08 to 2.87-2.97 GiB, then 3.265 GiB, without
+intervention; GPU free was 6,980 MiB. This is a genuine resource-state change, so a
+bounded owned admission attempt is justified after source commit. Keep 3.3125 GiB
+pre-worker admission, 2 GiB worker RSS, 1.25 GiB reserve and all other original
+guards. Physical result, acquisition and retention remain unmeasured. The full
+one-Titan capability/retention objective remains open and current best unchanged.
+
+
+## 2026-09-30: owned qualifier admission stopped before any framework
+
+Reviewed source was committed and pushed as 5cb79fe7dbbc244d3efb109e86dd029b49e312bb.
+The subsequent bounded admission process is terminal. All 15 samples stayed at
+2.207958-2.244862 GiB below 3.3125; the last recorded observation was 29.469 seconds.
+No worker/supervisor artifact directory was created, and no Python worker remains.
+No framework was imported and all model/update counts are zero. This does not
+measure native Tensor math, model fit, acquisition or retention.
+
+The two raw admission files were copied byte-for-byte into tracked results and
+indexed by hash. After verifying terminal zero-model status and absence of any
+begun worker/supervisor, the owned controller directory was moved to the named
+window001 archive, keeping all bytes and a path-mapping receipt. This reversible
+archive leaves the fixed controller path usable after a real resource change;
+it grants no model retry, changes no source/runtime/limit and overwrites nothing.
+The full goal remains active, with physical and scientific gates unproven.
+
+
+## 2026-09-30: lower-RAM route evidence reviewed without a model run
+
+The previous turn made progress: owned worker/CPU controls, actual prefix binding
+and terminal admission evidence were committed. This turn found the checkout
+clean at d1f6f848 and no Python worker. Available RAM was 2.048271 GiB, later
+1.970875 GiB, with 6,576 MiB GPU free. No unchanged admission retry was attempted.
+
+Primary upstream source review pinned llama.cpp commit
+f872b591121761ac7b2af18283bd99bdc092a63a and hashes of its training README/example.
+That example's experimental FP32/all-parameter scope does not establish an
+adapter-only BF16 replacement. The illustrative full-Adam four-FP32-buffer
+arithmetic is 8.881836 GiB for this base; it is an inference, not a measurement or
+claim about every backend layout. No build, conversion, download of model weights
+or training was performed. This rejects an unearned frontend shortcut.
+
+Independent local source review supports considering a stricter 1.5 GiB cap for
+bare D2 only. D1 external peak was 1.409008 GiB, giving 93.176 MiB margin. D2 keeps
+constructor/2 MiB loader/imports, halves forwards and removes head projections;
+explicit extra host payload estimates are under 1 MiB. Removing the FP32 head
+saves VRAM, not that amount of RAM. Framework variation remains unmeasured. The
+prospective full budget would be 2.8125 GiB, still above current memory. Record
+this as proposed evidence, not qualified fit; no new source scaffolding is built
+until the smaller scope could actually be admitted. Current reserve, numerical
+tolerances, adapter training profile, closed banks and full goal remain unchanged.
+
+
+## 2026-10-09: publication review recovered two completed native runs
+
+Review found previously unindexed native outputs on source19551dde. The owned
+40-row/two-update qualifier passed112reference-gradient comparisons and bitwise
+parity, repaired state1/RNG and copied-gradient Adam continuation. It consumed
+62forwards/8326input/736supervised forward positions, with2native and1reference
+optimizer updates separately counted. Worker/supervisor wall31.438/32.188seconds,
+externalRSS1.672089GiB and CUDAallocation2.531833GiB. Its Oct1 observation is an
+inference from retained source file mtimes; nominal folder remainsSep30.
+
+The causal wait diagnostic completedSep30 four131-token forwards/524positions;
+all6protected hidden/logit comparisons were bitwise equal. Base/assets remained
+unchanged; two post-import observations admitted the run. Worker/supervisor wall
+33.719/34.579seconds, externalRSS1.350418GiB and CUDApeak1.400038GiB. These controls
+do not prove prefix/full shape invariance or resolve the original likelihood gap.
+
+Two new receipts index35byte-exact metadata/log copies and47verified source/runtime
+pins; local adapter binaries are represented by hash/size only. No further terminal
+native evidence was found after19551dde. Historical timeout/blocked receipts remain
+unchanged, including the original zero-model controller archive. Current overview,
+queue/registry/plan and report now reflect observed scoped passes. The app goal's
+blocked control state is separate; this review does not resume experiments.
+
+Source review found V1 nested-attempt journal failure masking. A separate V2 helper
+retains the original error/pending spans and4newCPU controls pass. Old byte-pinned
+source/config/worker remain unchanged; the observed qualifier's E1 spans are
+nonnested and its loader uses a different guarded journal. No new worker uses V2
+without a fresh registration. Broad review validated688distinctCPU controls:
+combined667had2process-contamination/RSS failures, both resolved in an isolated
+18-control scope run; another21tiny numerical/loaderCPUcontrols passed withCUDA
+hidden. Initial failures and final streams are all retained.
+
+Four untracked dossier-v10 records are preserved with an explicit incomplete,
+unrun archive note: all38declared source members are missing from that localbundle.
+No patch was applied or runtime claim made. Local Windows cacheDBs under literal
+%SystemDrive% are ignored, not published or deleted. Full E1, capture, preservation,
+capability gain and long-context qualification remain open; CHECK/FINAL stayclosed.
+
+
+## Exact-prefix capture qualification registered after publication review
+
+The preceding goal turn made progress by publishing two completed native scopes
+and the versioned E1 journal correction. This turn registered AMENDMENT_022 with
+independent repeated-prefix teacher forcing, without rewriting the failed bulk
+comparison or its fixed tolerances. Every target uses prompt+previous generated
+IDs; raw BF16logit hashes must match bitwise and selectedmodelLP maximum/mean
+must pass the prospective1e-4 gate. EOS/argmax/rendering rules stay fixed.
+
+All16384 completedlength pairs independently satisfy maxima514forwards,
+826logicalcalls/164352positions. The frozen128fixture matches its observed hash;
+256/384/512extensions are stdlibderived and must be reconstructed by the pinned
+tokenizer before model construction. Oldsource/config/failure and D2PASS stay bound.
+
+The owned worker and focused20CPU controls passed source review. Root final tests
+passed0.065seconds/process0.437seconds with retained stdout/stderr. Review moved
+logits extraction after the recorded model return, so a later attribute failure
+cannot erase a physicalforward return. Online/replay partial costs, raw token
+witnesses and journal failures remain distinct and retained. No framework/model
+or GPU execution occurred. HostRAM was7.033GiB but GPUfree2347MiB, later2047MiB,
+below unchanged4GiB admission. Other applications were untouched. Native capture,
+DEV/preservation, sustainedE1 and all efficacy claims remain unqualified.
+
+
+The owned exact-prefix admission controller on source33103ce003 completed its
+30-second window with15observations. Hostavailable5.993263-6.224819GiB and disk
+minimum37.506GiB passed; GPUfree1.999023GiB failed the4GiB floor in every sample.
+Last observation was29.828seconds. No supervisor, framework or model worker
+started. The two raw files are copied byteexact and hash-indexed. After confirmed
+terminalno-worker status, its controller directory was archived within the owned
+artifact root to preserve records and leave the fixed path ready only after a
+verified real resource change. No original source/config/limit or other process
+was changed. The full objective and all scientific gates remain open.
+
+
+## 2026-10-10: resumed goal blocked audit, insufficient free VRAM
+
+The previous goal turn made no progress and had no live experiment. This third
+consecutive goal turn revalidated the same GPU admission blocker: the retained
+21:08:43 UTC probe found 1,913 MiB free versus the registered 4,096 MiB floor.
+Available host RAM was 6.601994 GiB, above the 3.3125 GiB preworker requirement.
+No matching exact-prefix/backend worker was found, and the fixed worker/controller
+paths were absent. Previous owned sessions were terminal; no new experiment was
+launched. The reviewed source/config hashes remain unchanged at clean source
+8ad6b846; its remote branch was verified at the same commit before this audit.
+
+Independent review found no meaningful independent FAST action remaining.
+Native exact-prefix measurements are needed next; other open prerequisites
+need native preservation results or qualified language labels/grading input.
+Further unchanged CPU tests, dormant profiles or repeated admission windows
+would not advance that decision. The audit recommends marking the goal blocked
+after this three-turn recurrence; individual resource polls were not counted
+as separate goal turns. No model/framework run, paid compute, application
+termination or guard/tolerance change occurred. Best remains unchanged Titan,
+verified capability gain is unknown, production E1 is incomplete, and CHECK/
+FINAL remain closed. Resume requires sufficient resource availability or a
+newly authorized and prospectively qualified alternative. Evidence is in
+receipts/GOAL_BLOCKED_AUDIT_20261010_VRAM_V1.json and its retained resource probe.

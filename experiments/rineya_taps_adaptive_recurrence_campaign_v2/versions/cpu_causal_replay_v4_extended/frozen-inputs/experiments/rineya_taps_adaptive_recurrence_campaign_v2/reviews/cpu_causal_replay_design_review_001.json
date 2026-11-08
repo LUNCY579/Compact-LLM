@@ -1,0 +1,104 @@
+{
+  "schema_version": 1,
+  "reviewer": "independent adversarial_review",
+  "reviewed_utc": "2026-10-05T02:50:37.722712+00:00",
+  "status": "PASS_PROSPECTIVE_CPU_CAUSAL_REPLAY_DESIGN_METADATA_ONLY",
+  "scope": "Design002 and DEV-only stored metadata arithmetic/causal construction/scientific scope; no model, weights, tokenizer calls, validation outcome reads, tests or native dispatch",
+  "design_sha256": "f8b962447f403105a564ec071bbfa89fd3e40843fcfef6800b7ec72a22412492",
+  "metadata_sha256": "021ea720f4b644d0e0fff0b975ab460d80e6c02cb401400fd0be58a0ba4cb359",
+  "checks": {
+    "exact_design002_and_metadata": true,
+    "all192_DEV_bound_unique": true,
+    "96_parents_two_variants_equal_categories": true,
+    "DEV_export_hashes_and_no_validation": true,
+    "every_causal_target_exact_past_only_and_IDbounds": true,
+    "440answer192EOS_and_shapes": true,
+    "full_counts1925_635_252696": true,
+    "forecast_arithmetic_and_budget_room": true,
+    "clarified_prefix_likelihood_uncertain_and_no_advancement": true
+  },
+  "blocking_findings": [],
+  "reproduced": {
+    "DEV_cases": 192,
+    "world_parents": 96,
+    "answer_positions": 440,
+    "EOS_positions": 192,
+    "canonical_lengths": {
+      "3": 84,
+      "4": 26,
+      "1": 80,
+      "2": 2
+    },
+    "category_target_counts": {
+      "signed_ledgers": 108,
+      "deduction_composition": 32,
+      "program_state": 94,
+      "dialogue_memory": 78,
+      "document_retrieval_reconciliation": 64,
+      "answerability_source_conflict": 64
+    },
+    "answer_prefix_positions_per_alpha": 57596,
+    "EOS_prefix_positions_per_alpha": 25048,
+    "max_answer_prefix": 235,
+    "max_EOS_prefix": 236,
+    "total_task_full_forwards": 1896,
+    "qualification_API": 29,
+    "total_API": 1925,
+    "expected_completed_full_forwards": 1922,
+    "expected_partial": 1,
+    "cache_attempts": 2,
+    "total_state_adjoints": 635,
+    "completed_prefix_positions": 252696,
+    "per_target_estimated_seconds": 4.787923349993434,
+    "task_estimated_seconds": 3025.9675571958505,
+    "worker_estimate_including120setup180internal": 3385.994873245714,
+    "worker_plus1800_global_estimate": 5185.994873245714,
+    "deadline_reservation_plus_global": 5400,
+    "targets_with_equal_token_value_already_in_context": 342
+  },
+  "resolved_review_findings": [
+    {
+      "id": "CRD01",
+      "issue": "Answer-only NLL wording could imply terminated full-response probability",
+      "disposition": "Design002 explicitly labels canonical answer PREFIX likelihood and longer-wrong-response/alias limits; EOS remains secondary."
+    },
+    {
+      "id": "CRD02",
+      "issue": "Mean adjoint/FD opposite signs nearneutral could pass tolerance but contaminate direction counts",
+      "disposition": "Design002 marks NUMERICALLY_UNCERTAIN including zeroFD, reports all192 and separate reliable denominator; no failed-gate exception or changed threshold."
+    },
+    {
+      "id": "CRD03",
+      "issue": "Survive strata phrase could invite outcome-dependent advancement",
+      "disposition": "Design002 explicitly descriptive checks only and no automatic fit/advancement; task headroom/preservation still needed."
+    }
+  ],
+  "science_limits": {
+    "conditional_units": 96,
+    "primary_family_weights": "six equally weighted categories;16DEV parents/category,2 variants/parent; mean token CE within case, variant average within parent",
+    "inference": "Descriptive/exploratory counts, paired strata and tied-rank association only; no confirmatory population inference or claim of practical semantic benefit.",
+    "prefix_likelihood_limit": "Answer-only product is canonical PREFIX probability; longer wrong extensions, scorer-equivalent forms and actual generation remain unresolved. EOS-mass stays separate secondary.",
+    "teacher_context_limit": "Past gold is allowed for offline next-token likelihood; predictors must remain frozen original-input-only and cannot contain losses/gradients, later teacher features, fitting labels or A5 data."
+  },
+  "fresh_gates_still_required": [
+    "Resulting worker/parent/source/tests and exact final admission independent review",
+    "Explicit new scalar and acceptedEOS-mass loss with real native suffix/head/state-only autograd and fresh per-target/meanFD checks",
+    "Fresh representative/max256 scalar/EOS gradient memory/CPU timing/parity/cache/exception/masks/positions/L0-L2/state/assets qualification",
+    "Fresh complete632-target forecast including actual setup/qual/proof export/instrumentation plus180internal under3600 and1800global reserve",
+    "No dropped cases/targets/EOS after seeing results; any required failure makes primary mechanismNULL",
+    "Old fullgold guard stays closed; no VAL/TEST/pool/online labels/training/devicefallback/retry authority"
+  ],
+  "decision_value": "A bounded remedy for first-token discrimination and a check of initial trajectory features versus full canonical-prefix local loss direction. It does not fill missing validation or imply useful adaptive semantic headroom.",
+  "native_ready": false,
+  "additional_job_authorized_by_this_review": false,
+  "evidence_sha256": {
+    "CPU_CAUSAL_REPLAY_DESIGN_DRAFT_002.md": "f8b962447f403105a564ec071bbfa89fd3e40843fcfef6800b7ec72a22412492",
+    "CPU_CAUSAL_REPLAY_DESIGN_DRAFT_001.md": "739b4ae134aa6e5c88edd17cfc61f44ce0cd77d0cada95d72f790f6d171ba855",
+    "CPU_CAUSAL_REPLAY_FEASIBILITY_DRAFT_001.json": "021ea720f4b644d0e0fff0b975ab460d80e6c02cb401400fd0be58a0ba4cb359",
+    "runs\\causal-replay-DEV-export-001\\DEVELOPMENT_BANK.json": "566e6d6e64f258ff4deaa28a9909841a451fb96cf939ca44533726c59b2a7ff0",
+    "runs\\causal-replay-DEV-export-001\\DEVELOPMENT_TOKEN_BINDING.json": "6529b48b26264123fafc9f81d67cb6cc5a957fe30a0ab4853440790c56bfdd53",
+    "runs\\causal-replay-DEV-export-001\\MANIFEST.json": "278242ad25488a5f7896957aab4e9269dfdf96babe21abf64bc8167838514302",
+    "CPU_CAUSAL_REPLAY_NATIVE_REGISTRATION_001.md": "eb331f809d6ddd5fa44cb743933eae82fc0015ac84f4741abbd56c886b529c04",
+    "causal_replay_metadata.py": "7071f731c503e5bc7af01c4e6983ee75b46cd3bfed5672a4d13849601cbc2c6b"
+  }
+}

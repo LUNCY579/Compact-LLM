@@ -1,0 +1,213 @@
+{
+  "schema": 2,
+  "experiment_id": "RAB-001",
+  "title": "First architecture benchmark: depth/width allocation and causal shared memory",
+  "branch": "research/benchmark-001-architecture-ced40-v1",
+  "foundation_tag": "benchmark-001-architecture-ced40-foundation-v1",
+  "status": "HOTFIX_001_REQUALIFICATION_REQUIRED",
+  "primary_arms": {
+    "B28": "B28_1024_official_shape",
+    "D40": "D40_896_near_baseline_budget",
+    "C28": "C28_1024_near_baseline_budget",
+    "C40": "C40_896_near_baseline_budget"
+  },
+  "parameter_relative_tolerance": 0.005,
+  "diagnostics": [
+    "D40_1024_expansion_diagnostic",
+    "W28_896_width_only_diagnostic",
+    "D40_896_proportional",
+    "C40_896_proportional"
+  ],
+  "source": "Supa_Core_1.7.0_ungated_only",
+  "native_transformers_version": "4.51.3",
+  "baseline_precision": "float32",
+  "attention_backend": "eager",
+  "decoding": {
+    "seed": 17,
+    "max_new_tokens": 24,
+    "max_context": 512,
+    "do_sample": false,
+    "thinking": false,
+    "truncation": "forbidden"
+  },
+  "G0": {
+    "min_rows": 24,
+    "min_parse_rate": 0.8,
+    "min_termination_rate": 0.8,
+    "require_correct_and_incorrect": true,
+    "native_reference_atol": 0.0001,
+    "native_reference_rtol": 0.0001
+  },
+  "G1": {
+    "identity_expansion_atol": 0.0,
+    "identity_expansion_rtol": 0.0,
+    "retain_all_28_original_layers": true,
+    "head_dim": 128,
+    "memory_donor_policy": "first_decoder_layer_of_plain_donor",
+    "ffn_growth_policy": "cyclic_gate_up_donors_zero_down_columns",
+    "parity_policy": {
+      "name": "elementwise_atol_plus_rtol_expected_v2",
+      "atol": 0.0001,
+      "rtol": 0.0001,
+      "rows": 8,
+      "chunk_sizes": [
+        1,
+        7,
+        16
+      ],
+      "require_argmax_exact": true,
+      "scaled_tolerance_is_diagnostic_only": true,
+      "prefix_causality_required": true,
+      "memory_accumulation_diagnostic": {
+        "name": "ced_shared_memory_read_high_precision_v1",
+        "default": "inherit",
+        "options": [
+          "inherit",
+          "float64"
+        ],
+        "scope": "ReadBlock attention over the shared encoder-final K/V bank only; SelfBlock unchanged",
+        "qualification_precision_unchanged": true,
+        "diagnostic_only_cannot_qualify_a_gate": true
+      }
+    }
+  },
+  "G2": {
+    "steps": 25,
+    "purpose": "optimizer_engineering_only",
+    "licenses_registered_training": false,
+    "cached_teacher_engineering": {
+      "enabled": true,
+      "arms": [
+        "B28",
+        "D40",
+        "C28",
+        "C40"
+      ],
+      "steps": 25,
+      "learning_rate": 1e-05,
+      "optimizer": "SGD_no_momentum",
+      "alpha": 0.5,
+      "temperature": 1.0,
+      "head_chunk_tokens": 8,
+      "gradient_checkpointing": true,
+      "seed": 17,
+      "requires_strict_current_arm_qualification": true,
+      "C28_requires_matched_B28_engineering_control": true,
+      "C40_requires_matched_D40_engineering_control": true,
+      "licenses_recovery": false
+    }
+  },
+  "G3_G5": {
+    "execution_enabled": false,
+    "reason": "Freeze data group splits, recovery/token/search budgets, endpoints, margins and resource envelopes after informative G0 and before training. No results-based choices.",
+    "training_seeds": [
+      17,
+      29,
+      43
+    ],
+    "primary_endpoint": "compositional_reasoning_exact_or_executable_verification",
+    "resampling_unit": "template_or_document_family",
+    "minimum_effect": null,
+    "noninferiority_margin": null,
+    "regression_band": null,
+    "recovery_tokens_per_arm": null,
+    "search_trials_per_arm": null,
+    "max_device_memory_bytes": null,
+    "max_decode_latency_ratio": null,
+    "sealed_test_manifest_sha256": null
+  },
+  "mandatory_controls": [
+    "unmodified_B28",
+    "matched_B28_continuation",
+    "matched_D40_continuation_for_C40",
+    "same_shape_topology_diagnostic"
+  ],
+  "cost_ledger": [
+    "student_training_tokens",
+    "teacher_forward_tokens",
+    "calibration_tokens",
+    "failed_tuning_runs",
+    "wall_seconds",
+    "peak_memory",
+    "generation_tokens"
+  ],
+  "forbidden_first_experiment": [
+    "stock_Qwen_fallback",
+    "R2_substitution",
+    "abstention_readout",
+    "quantization_changes",
+    "new_tokenizer",
+    "MoE",
+    "recurrent_weight_sharing",
+    "decoder_local_attention",
+    "sparse_compression",
+    "sealed_test_tuning",
+    "best_seed_only_reporting"
+  ],
+  "amendments": [
+    "amendments/HOTFIX_001.md",
+    "amendments/HOTFIX_002.md",
+    "amendments/HOTFIX_003.md",
+    "amendments/HOTFIX_004.md",
+    "amendments/HOTFIX_005.md"
+  ],
+  "G1_QUALITY": {
+    "purpose": "output_quality_and_nondegeneracy_of_a_constructed_arm",
+    "rationale": "Every other stage is satisfied by a model that emits token salad: they check tensor accounting, save/reload, parameter counts and cache-order parity, all of which are plumbing or self-consistency properties. This stage compares an arm to the frozen source on already-open splits.",
+    "threshold_provenance": "Chosen on principle, not tuned to any measured arm. CE and KL bound divergence from the frozen teacher at roughly half a nat and one nat; the top-1 floor is chance-vs-majority; termination reuses the existing G0 min_termination_rate of 0.8; the nondegeneracy rule requires a quarter of prompts to produce distinct answers. HOTFIX-004 corrects an overstatement in HOTFIX-003: D40 sits at 0.5032 against the 0.5000 top-1 floor, so that individual check IS threshold-sensitive. Its overall verdict is not, because KL and termination both fail it independently. The top-1 floor was deliberately NOT moved after seeing that number: tuning a threshold on a measured outcome is forbidden.",
+    "scored_split": "calibration",
+    "generation_split": "pilot",
+    "max_ce_increase_nats": 0.5,
+    "max_kl_to_source_nats": 1.0,
+    "min_top1_agreement": 0.5,
+    "min_termination_rate": 0.8,
+    "min_distinct_outputs": 2,
+    "forbidden": [
+      "sealed_test_access",
+      "dev_access",
+      "threshold_tuning_on_student_outcomes"
+    ],
+    "licenses_registered_training": false,
+    "licenses_efficacy_claim": false,
+    "min_distinct_output_ratio": 0.25,
+    "nondegeneracy_rule": "distinct >= max(min_distinct_outputs, ceil(ratio * generation_rows))"
+  },
+  "G1_RETENTION": {
+    "purpose": "capability_retention_of_a_constructed_or_trained_arm_against_the_frozen_source",
+    "rationale": "G1_QUALITY closed the token-salad hole at initialization, but every check it applies is likelihood- or teacher-agreement-shaped, and those are now measured to decouple from capability. At a token-matched 500,099-target dose a CED arm reached held-out CE 0.4727 against the frozen source's 5.5782 -- 5.1055 nats BETTER than its own teacher -- while answering 2 of 60 held-out questions the source answers 20 of 60, with disjoint 95% intervals. Of the eight non-task signals the run records, seven admit no separating threshold and four invert; the eighth, top-1 agreement with the source, separates by only 0.0038 (0.32798 vs 0.32416) against a registered G1_QUALITY floor of 0.5 that both arms fail, and it is still closing. So none supports a defensible registered threshold. This stage scores answers instead. Corrected after SIGNAL_SEPARATION.json falsified the stronger claim originally written here, which was that no likelihood-shaped quantity separates the two models at all -- the same shape of overstatement HOTFIX-004 had to retract from HOTFIX-003.",
+    "threshold_provenance": "Transcribed unchanged from RETENTION_GATE_DESIGN.md, committed at f7bc290 before this code existed and before any arm was scored under the typed grammar. The rules are policy tolerances, not values fitted to an arm. max_correct_to_incorrect_per_class is 0 because a gate that permits any forgetting has to justify the permitted amount, and no measurement here supports a number; min_termination_rate_per_class REUSES the existing G0.min_termination_rate of 0.8 rather than inventing a value; min_source_correct_terminated_per_class is 1, the weakest statement that rules out the arithmetic_chain failure where the teacher scores 0 and the probe measures nothing. Historical arm scores under the LEGACY number-sequence scorer were already known when these rules were written, so applying them to an already-measured arm is retrospective demonstration, never preregistered validation. Source scores under this grammar were not known.",
+    "scored_split": "monitor_probe",
+    "probe_classes": [
+      "percentage_reasoning",
+      "ratio_proportion",
+      "time_duration"
+    ],
+    "excluded_probe_class": "arithmetic_chain",
+    "excluded_probe_class_reason": "the frozen source scores 0/20, so every arm would read 0/N before and after and the probe would measure nothing",
+    "reference_rule": "union_of_frozen_source_correct_and_arm_initialization_correct",
+    "max_correct_to_incorrect_per_class": 0,
+    "min_source_correct_terminated_per_class": 1,
+    "confirmation_min_retention_is_inert": "The separately designed confirmation certificate pairs an exact binomial bound of 0.10 with a 9/10 retention floor. The floor can never bind: for alpha=1/180 the Clopper-Pearson upper limit always exceeds k/m, so bound<=0.10 already implies retention>0.9 (verified exhaustively for m<=600). Worse, at the registered minimum m=50 only ZERO losses clear the bound -- one loss does not clear it until m=70 -- so the certificate demands 100% retention at its own minimum panel size, not 90%. Recorded, not silently repaired: the confirmation lane is not implemented or licensed.",
+    "min_termination_rate_per_class": 0.8,
+    "gains_offset_losses": false,
+    "bare_policy": "permissive",
+    "bare_policy_sensitivity_reported": true,
+    "bare_policy_review_status": "pending",
+    "declared_calibration_family_overlap": 2,
+    "declared_calibration_family_overlap_note": "Two of the 150 probe families also appear in the open calibration split, which G1_WIDTH uses for activation statistics. Disclosed rather than gated: the count is a fixed property of committed data, known before any arm was scored, and the receipt fails if the observed overlap stops matching it. The probe is fully family-disjoint and id-disjoint from the training splits, which is the exposure that would matter during training.",
+    "grammar_contract_sha256": "871d3bb860be27ff64bb613cccd51349b080412573c6517a64dee181389cedc5",
+    "label_audit_sha256": "4857cf868202763e76bc610f6e787aebee20b9d18bfa7451f42c603ed871e6d7",
+    "policy_proposal_sha256": "4d6cc21aecec3ce2d9010c7af431dff77b2ea0976fea336d8c5fa2feee58f37a",
+    "label_human_review_status": "pending",
+    "forbidden": [
+      "sealed_test_access",
+      "dev_access",
+      "threshold_tuning_on_student_outcomes",
+      "reference_reset_after_training",
+      "candidate_informed_alias_or_panel_changes"
+    ],
+    "licenses_registered_training": false,
+    "licenses_efficacy_claim": false,
+    "licenses_confirmation_certificate": false
+  }
+}

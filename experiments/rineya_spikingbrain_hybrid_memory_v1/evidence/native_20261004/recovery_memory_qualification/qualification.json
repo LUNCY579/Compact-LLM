@@ -1,0 +1,100 @@
+{
+  "created_utc": "2026-10-04T20:51:44.110727+00:00",
+  "status": "PASS_PINNED_RANDOM_CPU_SUPERVISED_POSITION_LOSS_GRADIENT_UPDATE_PARITY",
+  "python_executable": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-spikingbrain-hybrid-memory-v1\\experiments\\rineya_spikingbrain_hybrid_memory_v1\\.venv-cuda\\Scripts\\python.exe",
+  "versions": {
+    "torch": "2.6.0+cu124",
+    "transformers": "4.51.3",
+    "tokenizers": "0.21.4",
+    "safetensors": "0.7.0",
+    "psutil": "7.2.2",
+    "pytest": "8.4.2",
+    "accelerate": "1.15.0"
+  },
+  "code_sha256": "8f200223d88caab739d30657aed712f830bb7d4c7328f0021c78a5aa4fd02ea5",
+  "tests_sha256": {
+    "tests\\test_comparison.py": "c589cafd6faf160278cbae4252aa28ee53cca0c43bf4977a0dd9b85bf49084dd",
+    "tests\\test_experiment.py": "828fba7db7a4cc036e220d3ac3e7c212f1906ed7e75666a4c0dcc368b38e57c4",
+    "tests\\test_preflight.py": "05585280d24f34bd7b74ff0ebee0f981f256352613afad34c18ca3b6385c4685",
+    "tests\\test_recovery_memory.py": "176c8cdad667ca89753337cf766c225bb61463c31aac2820868850234bc8e346",
+    "tests\\test_teacher_budget.py": "b86700a33b7b74870d3b996bf514cd1aee1a491eeb5fe2080665f3bd1021e769"
+  },
+  "pinned_library_source_sha256": {
+    "models/qwen3/modeling_qwen3.py": "704c914530530a1acb0b443add1f520404e3ac2c28c0ab7e16f80f86cfe8ccb2",
+    "loss/loss_utils.py": "faee001febffaae1e07c3662f76f39b417970436821cdd1f5ba4ba1579463145"
+  },
+  "targeted_parity_tests_passed": 13,
+  "full_suite_passed": 122,
+  "full_suite_skipped": 0,
+  "compileall_passed": true,
+  "pip_check_passed": true,
+  "tiny_official_model": {
+    "initialization": "random",
+    "device": "cpu",
+    "dtype": "float32",
+    "layers": 5,
+    "selected_site": 3,
+    "hidden_size": 16,
+    "head_dim": 8,
+    "query_heads": 4,
+    "kv_heads": 2,
+    "vocab_size": 67,
+    "attention_implementation": "sdpa"
+  },
+  "arms": [
+    "B",
+    "C",
+    "D"
+  ],
+  "label_masks": [
+    "answer_and_eos",
+    "discontiguous",
+    "eos_only"
+  ],
+  "checks": [
+    "projection materializes exactly the supervised next-token positions",
+    "selected logits equal corresponding full-head logits",
+    "mean causal cross-entropy equals pinned full-logit labels path",
+    "all trainable gradients match, with nonzero LoRA b factors",
+    "D forget/mix/memory_scale receive finite nonzero matching gradients",
+    "frozen parameters have no gradients",
+    "clipped gradient norms and one AdamW update match the registered recipe",
+    "multibatch, mismatched/rank-one labels and no-supervision block before forward"
+  ],
+  "tolerances": {
+    "logits_loss_norm": {
+      "atol": 1e-06,
+      "rtol": 1e-06
+    },
+    "gradients": {
+      "atol": 2e-06,
+      "rtol": 2e-05
+    },
+    "one_adamw_update": {
+      "atol": 2e-07,
+      "rtol": 2e-06
+    }
+  },
+  "equivalence_scope": "Same mathematical objective and gradient; ordinary FP32 rounding permitted. This is not bitwise CUDA parity or a native memory-fit result.",
+  "unchanged_contract": [
+    "full teacher-forced input sequence/backbone",
+    "answer and EOS labels",
+    "dtype",
+    "resource guards",
+    "source",
+    "corpus",
+    "steps",
+    "optimizer"
+  ],
+  "native_shape_one_vocab_buffer_estimate": {
+    "full_259_tokens_bytes": 157405696,
+    "selected_max_14_labels_bytes": 8508416,
+    "bytes_saved": 148897280,
+    "actual_peak_vram_savings_measured": false
+  },
+  "CUDA_VISIBLE_DEVICES": "-1",
+  "gpu_tensors_allocated": false,
+  "pretrained_weights_loaded": false,
+  "native_training_or_fit_qualified": false,
+  "requires_new_native_source_arm_delta_qualification_and_grant": true
+}

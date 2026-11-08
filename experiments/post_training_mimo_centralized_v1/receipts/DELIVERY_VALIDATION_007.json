@@ -1,0 +1,33 @@
+{
+  "status": "PASS_V3_EVIDENCE_AND_CPU_ACCOUNTING_ONLY",
+  "recorded_at_utc": "2026-09-29T05:47:17.828993+00:00",
+  "native_source_commit": "748fcc2da74e6f490e889a32f88a0ce475888269",
+  "report_markdown_sha256": "14486715a380f397fe7fd39be279a69a0a79eccff50a738c3f31cf5102ddac3c",
+  "report_pdf_sha256": "517f4282ac60c6454c1c0abd7650c3a488780fffd577acacc94e188a31df8b63",
+  "report_pages": 6,
+  "visual_QA": "All six final page PNGs reviewed; no clipping, overlap or missing glyphs",
+  "validation_receipt": "receipts/E0_ACCOUNTING_V2_CPU_VALIDATION.json",
+  "test_runs": [
+    {
+      "count": 52,
+      "seconds": 0.681,
+      "scope": "stdlib accounting and gate suite"
+    },
+    {
+      "count": 12,
+      "seconds": 1.459,
+      "scope": "existing tiny random CPU numerical helpers"
+    }
+  ],
+  "test_scope": "Two focused runs; no aggregate historical-suite or native-efficacy claim",
+  "v3_raw_artifacts_byte_identical": 14,
+  "append_only_ledgers_preserved": true,
+  "native_pretrained_model_loads": 0,
+  "native_optimizer_steps": 0,
+  "native_generated_tokens": 0,
+  "teacher_calls": 0,
+  "goal_complete": false,
+  "goal_status": "active after resumption",
+  "resumed_blocked_observation_count": 1,
+  "next_native_experiment": "E0 accounting-v2 under unchanged scientific settings only after meaningful resource-state change"
+}

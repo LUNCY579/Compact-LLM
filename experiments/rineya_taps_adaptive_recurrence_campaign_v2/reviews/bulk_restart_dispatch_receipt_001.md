@@ -1,0 +1,7 @@
+The exact restart admission a6611ea9 passes conditional source review. All107 hashes match, preserving original84 plus23 new files; ten canonical assets match and the actual worker path predicate accepts107/107. Source899d/parser9c95/template2f42 and allthree independent reviews are bound. CPUfixtures and the prospective grant-IO correction passed; no model or GPUinventory was invoked by reviewer.
+
+Science is unchanged:288 cases/144 parents,3296 physical cells,28436API cap,0adjoints,8scientific/24SMOKE tokens, max357, fixedgrid/data/scorer/pool/seeds17/29/margin/floors. Call and prefix-position caps independently recompute. Required integrity proves1728 deterministicDEV beforefreeze,2112completeDEV beforevalidation, and final3168scientific/3296physical rows; proof work adds no model calls but remains wall-time charged.
+
+Cumulative2837.843 leaves18762.157seconds;16000+1800globalreserve fits by962.157. Actual fullgeneration grant is absent and the production helper refuses NO_DISPATCH. Another direct human full-restart approval, fresh current resources, exact identity/source, contained-job qualification and complete fresh forecast are required. This receipt grants no launch authority.
+
+Copied GPUinventory/timing fields are historical original-admission metadata, not live readiness. TDR cause remains unknown; fresh process/checkpoints do not prove stability. Exposed/shared-generator validation is exploratory. Failure or missing final/complete proof keeps primarynull; no automatic retry, fitting, training or broader intervention is authorized.

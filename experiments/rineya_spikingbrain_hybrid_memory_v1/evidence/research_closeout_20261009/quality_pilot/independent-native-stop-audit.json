@@ -1,0 +1,1509 @@
+{
+  "anchor_gate": {
+    "adequate": true,
+    "checks": {
+      "strict_exact_match": true,
+      "typed_value_correct": true
+    },
+    "decision": "ADEQUATE_SYNTHETIC_INSTRUMENT",
+    "minimum_correct_per_metric": 16,
+    "minimum_skills_per_metric": 4,
+    "per_metric": {
+      "strict_exact_match": {
+        "rows": 64,
+        "source_correct": 21,
+        "source_correct_by_skill": {
+          "arithmetic": 4,
+          "boolean": 5,
+          "conditional": 2,
+          "ordering": 5,
+          "short_table": 5,
+          "string_rule": 0,
+          "temporal": 0,
+          "unit_conversion": 0
+        },
+        "source_correct_skill_count": 5
+      },
+      "typed_value_correct": {
+        "rows": 64,
+        "source_correct": 21,
+        "source_correct_by_skill": {
+          "arithmetic": 4,
+          "boolean": 5,
+          "conditional": 2,
+          "ordering": 5,
+          "short_table": 5,
+          "string_rule": 0,
+          "temporal": 0,
+          "unit_conversion": 0
+        },
+        "source_correct_skill_count": 5
+      }
+    }
+  },
+  "anchor_receipt": {
+    "bytes": 999761,
+    "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\proposal\\native_run\\anchor-evaluation\\receipt.json",
+    "sha256": "5e9a1843c2f5f7229d5a073c632078ebfa0174143accac0c72d1b23975e85d37"
+  },
+  "anchor_summary": {
+    "bare_expected_value_diagnostics": 316,
+    "first_record_copy_errors": 0,
+    "formatting_only_mismatches": 0,
+    "limitations": [
+      "synthetic DEV",
+      "one model seed",
+      "counterfactual, position, and permutation rows grouped by dependent world",
+      "literal JSON contracts are not broad semantic capability"
+    ],
+    "missing_evidence": {
+      "correct_abstention": {
+        "json_contract_compliance": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 32
+        },
+        "json_valid": {
+          "accuracy": 1.0,
+          "correct": 32,
+          "total": 32
+        },
+        "normalized_exact_match": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 32
+        },
+        "rows": 32,
+        "strict_exact_match": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 32
+        },
+        "typed_value_correct": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 32
+        }
+      },
+      "present_fact": {
+        "json_contract_compliance": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 32
+        },
+        "json_valid": {
+          "accuracy": 1.0,
+          "correct": 32,
+          "total": 32
+        },
+        "normalized_exact_match": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 32
+        },
+        "rows": 32,
+        "strict_exact_match": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 32
+        },
+        "typed_value_correct": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 32
+        }
+      }
+    },
+    "overall": {
+      "json_contract_compliance": {
+        "accuracy": 0.16071428571428573,
+        "correct": 108,
+        "total": 672
+      },
+      "json_valid": {
+        "accuracy": 0.9404761904761905,
+        "correct": 632,
+        "total": 672
+      },
+      "normalized_exact_match": {
+        "accuracy": 0.08482142857142858,
+        "correct": 57,
+        "total": 672
+      },
+      "rows": 672,
+      "strict_exact_match": {
+        "accuracy": 0.0818452380952381,
+        "correct": 55,
+        "total": 672
+      },
+      "typed_value_correct": {
+        "accuracy": 0.0818452380952381,
+        "correct": 55,
+        "total": 672
+      }
+    },
+    "per_update_world": {
+      "uo1-dev-update-world-000": {
+        "json_contract_compliance": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 24
+        },
+        "json_valid": {
+          "accuracy": 1.0,
+          "correct": 24,
+          "total": 24
+        },
+        "normalized_exact_match": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 24
+        },
+        "rows": 24,
+        "strict_exact_match": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 24
+        },
+        "typed_value_correct": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 24
+        }
+      },
+      "uo1-dev-update-world-001": {
+        "json_contract_compliance": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 24
+        },
+        "json_valid": {
+          "accuracy": 1.0,
+          "correct": 24,
+          "total": 24
+        },
+        "normalized_exact_match": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 24
+        },
+        "rows": 24,
+        "strict_exact_match": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 24
+        },
+        "typed_value_correct": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 24
+        }
+      },
+      "uo1-dev-update-world-002": {
+        "json_contract_compliance": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 24
+        },
+        "json_valid": {
+          "accuracy": 1.0,
+          "correct": 24,
+          "total": 24
+        },
+        "normalized_exact_match": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 24
+        },
+        "rows": 24,
+        "strict_exact_match": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 24
+        },
+        "typed_value_correct": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 24
+        }
+      },
+      "uo1-dev-update-world-003": {
+        "json_contract_compliance": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 24
+        },
+        "json_valid": {
+          "accuracy": 1.0,
+          "correct": 24,
+          "total": 24
+        },
+        "normalized_exact_match": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 24
+        },
+        "rows": 24,
+        "strict_exact_match": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 24
+        },
+        "typed_value_correct": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 24
+        }
+      },
+      "uo1-dev-update-world-004": {
+        "json_contract_compliance": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 24
+        },
+        "json_valid": {
+          "accuracy": 1.0,
+          "correct": 24,
+          "total": 24
+        },
+        "normalized_exact_match": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 24
+        },
+        "rows": 24,
+        "strict_exact_match": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 24
+        },
+        "typed_value_correct": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 24
+        }
+      },
+      "uo1-dev-update-world-005": {
+        "json_contract_compliance": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 24
+        },
+        "json_valid": {
+          "accuracy": 1.0,
+          "correct": 24,
+          "total": 24
+        },
+        "normalized_exact_match": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 24
+        },
+        "rows": 24,
+        "strict_exact_match": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 24
+        },
+        "typed_value_correct": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 24
+        }
+      },
+      "uo1-dev-update-world-006": {
+        "json_contract_compliance": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 24
+        },
+        "json_valid": {
+          "accuracy": 1.0,
+          "correct": 24,
+          "total": 24
+        },
+        "normalized_exact_match": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 24
+        },
+        "rows": 24,
+        "strict_exact_match": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 24
+        },
+        "typed_value_correct": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 24
+        }
+      },
+      "uo1-dev-update-world-007": {
+        "json_contract_compliance": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 24
+        },
+        "json_valid": {
+          "accuracy": 1.0,
+          "correct": 24,
+          "total": 24
+        },
+        "normalized_exact_match": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 24
+        },
+        "rows": 24,
+        "strict_exact_match": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 24
+        },
+        "typed_value_correct": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 24
+        }
+      },
+      "uo1-dev-update-world-008": {
+        "json_contract_compliance": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 24
+        },
+        "json_valid": {
+          "accuracy": 1.0,
+          "correct": 24,
+          "total": 24
+        },
+        "normalized_exact_match": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 24
+        },
+        "rows": 24,
+        "strict_exact_match": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 24
+        },
+        "typed_value_correct": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 24
+        }
+      },
+      "uo1-dev-update-world-009": {
+        "json_contract_compliance": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 24
+        },
+        "json_valid": {
+          "accuracy": 1.0,
+          "correct": 24,
+          "total": 24
+        },
+        "normalized_exact_match": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 24
+        },
+        "rows": 24,
+        "strict_exact_match": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 24
+        },
+        "typed_value_correct": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 24
+        }
+      },
+      "uo1-dev-update-world-010": {
+        "json_contract_compliance": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 24
+        },
+        "json_valid": {
+          "accuracy": 1.0,
+          "correct": 24,
+          "total": 24
+        },
+        "normalized_exact_match": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 24
+        },
+        "rows": 24,
+        "strict_exact_match": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 24
+        },
+        "typed_value_correct": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 24
+        }
+      },
+      "uo1-dev-update-world-011": {
+        "json_contract_compliance": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 24
+        },
+        "json_valid": {
+          "accuracy": 1.0,
+          "correct": 24,
+          "total": 24
+        },
+        "normalized_exact_match": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 24
+        },
+        "rows": 24,
+        "strict_exact_match": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 24
+        },
+        "typed_value_correct": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 24
+        }
+      },
+      "uo1-dev-update-world-012": {
+        "json_contract_compliance": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 24
+        },
+        "json_valid": {
+          "accuracy": 1.0,
+          "correct": 24,
+          "total": 24
+        },
+        "normalized_exact_match": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 24
+        },
+        "rows": 24,
+        "strict_exact_match": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 24
+        },
+        "typed_value_correct": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 24
+        }
+      },
+      "uo1-dev-update-world-013": {
+        "json_contract_compliance": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 24
+        },
+        "json_valid": {
+          "accuracy": 1.0,
+          "correct": 24,
+          "total": 24
+        },
+        "normalized_exact_match": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 24
+        },
+        "rows": 24,
+        "strict_exact_match": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 24
+        },
+        "typed_value_correct": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 24
+        }
+      },
+      "uo1-dev-update-world-014": {
+        "json_contract_compliance": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 24
+        },
+        "json_valid": {
+          "accuracy": 1.0,
+          "correct": 24,
+          "total": 24
+        },
+        "normalized_exact_match": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 24
+        },
+        "rows": 24,
+        "strict_exact_match": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 24
+        },
+        "typed_value_correct": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 24
+        }
+      },
+      "uo1-dev-update-world-015": {
+        "json_contract_compliance": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 24
+        },
+        "json_valid": {
+          "accuracy": 1.0,
+          "correct": 24,
+          "total": 24
+        },
+        "normalized_exact_match": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 24
+        },
+        "rows": 24,
+        "strict_exact_match": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 24
+        },
+        "typed_value_correct": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 24
+        }
+      }
+    },
+    "retention_instrument": {
+      "strict_exact_match": {
+        "rows": 64,
+        "source_correct": 21,
+        "source_correct_by_skill": {
+          "arithmetic": 4,
+          "boolean": 5,
+          "conditional": 2,
+          "ordering": 5,
+          "short_table": 5,
+          "string_rule": 0,
+          "temporal": 0,
+          "unit_conversion": 0
+        },
+        "source_correct_skill_count": 5
+      },
+      "typed_value_correct": {
+        "rows": 64,
+        "source_correct": 21,
+        "source_correct_by_skill": {
+          "arithmetic": 4,
+          "boolean": 5,
+          "conditional": 2,
+          "ordering": 5,
+          "short_table": 5,
+          "string_rule": 0,
+          "temporal": 0,
+          "unit_conversion": 0
+        },
+        "source_correct_skill_count": 5
+      }
+    },
+    "six_order_groups": [
+      {
+        "counterfactual_id": 0,
+        "role": "distant_heldout",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-000"
+      },
+      {
+        "counterfactual_id": 0,
+        "role": "near_control",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-000"
+      },
+      {
+        "counterfactual_id": 1,
+        "role": "distant_heldout",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-000"
+      },
+      {
+        "counterfactual_id": 1,
+        "role": "near_control",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-000"
+      },
+      {
+        "counterfactual_id": 0,
+        "role": "distant_heldout",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-001"
+      },
+      {
+        "counterfactual_id": 0,
+        "role": "near_control",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-001"
+      },
+      {
+        "counterfactual_id": 1,
+        "role": "distant_heldout",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-001"
+      },
+      {
+        "counterfactual_id": 1,
+        "role": "near_control",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-001"
+      },
+      {
+        "counterfactual_id": 0,
+        "role": "distant_heldout",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-002"
+      },
+      {
+        "counterfactual_id": 0,
+        "role": "near_control",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-002"
+      },
+      {
+        "counterfactual_id": 1,
+        "role": "distant_heldout",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-002"
+      },
+      {
+        "counterfactual_id": 1,
+        "role": "near_control",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-002"
+      },
+      {
+        "counterfactual_id": 0,
+        "role": "distant_heldout",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-003"
+      },
+      {
+        "counterfactual_id": 0,
+        "role": "near_control",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-003"
+      },
+      {
+        "counterfactual_id": 1,
+        "role": "distant_heldout",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-003"
+      },
+      {
+        "counterfactual_id": 1,
+        "role": "near_control",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-003"
+      },
+      {
+        "counterfactual_id": 0,
+        "role": "distant_heldout",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-004"
+      },
+      {
+        "counterfactual_id": 0,
+        "role": "near_control",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-004"
+      },
+      {
+        "counterfactual_id": 1,
+        "role": "distant_heldout",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-004"
+      },
+      {
+        "counterfactual_id": 1,
+        "role": "near_control",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-004"
+      },
+      {
+        "counterfactual_id": 0,
+        "role": "distant_heldout",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-005"
+      },
+      {
+        "counterfactual_id": 0,
+        "role": "near_control",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-005"
+      },
+      {
+        "counterfactual_id": 1,
+        "role": "distant_heldout",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-005"
+      },
+      {
+        "counterfactual_id": 1,
+        "role": "near_control",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-005"
+      },
+      {
+        "counterfactual_id": 0,
+        "role": "distant_heldout",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-006"
+      },
+      {
+        "counterfactual_id": 0,
+        "role": "near_control",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-006"
+      },
+      {
+        "counterfactual_id": 1,
+        "role": "distant_heldout",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-006"
+      },
+      {
+        "counterfactual_id": 1,
+        "role": "near_control",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-006"
+      },
+      {
+        "counterfactual_id": 0,
+        "role": "distant_heldout",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-007"
+      },
+      {
+        "counterfactual_id": 0,
+        "role": "near_control",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-007"
+      },
+      {
+        "counterfactual_id": 1,
+        "role": "distant_heldout",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-007"
+      },
+      {
+        "counterfactual_id": 1,
+        "role": "near_control",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-007"
+      },
+      {
+        "counterfactual_id": 0,
+        "role": "distant_heldout",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-008"
+      },
+      {
+        "counterfactual_id": 0,
+        "role": "near_control",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-008"
+      },
+      {
+        "counterfactual_id": 1,
+        "role": "distant_heldout",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-008"
+      },
+      {
+        "counterfactual_id": 1,
+        "role": "near_control",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-008"
+      },
+      {
+        "counterfactual_id": 0,
+        "role": "distant_heldout",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-009"
+      },
+      {
+        "counterfactual_id": 0,
+        "role": "near_control",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-009"
+      },
+      {
+        "counterfactual_id": 1,
+        "role": "distant_heldout",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-009"
+      },
+      {
+        "counterfactual_id": 1,
+        "role": "near_control",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-009"
+      },
+      {
+        "counterfactual_id": 0,
+        "role": "distant_heldout",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-010"
+      },
+      {
+        "counterfactual_id": 0,
+        "role": "near_control",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-010"
+      },
+      {
+        "counterfactual_id": 1,
+        "role": "distant_heldout",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-010"
+      },
+      {
+        "counterfactual_id": 1,
+        "role": "near_control",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-010"
+      },
+      {
+        "counterfactual_id": 0,
+        "role": "distant_heldout",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-011"
+      },
+      {
+        "counterfactual_id": 0,
+        "role": "near_control",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-011"
+      },
+      {
+        "counterfactual_id": 1,
+        "role": "distant_heldout",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-011"
+      },
+      {
+        "counterfactual_id": 1,
+        "role": "near_control",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-011"
+      },
+      {
+        "counterfactual_id": 0,
+        "role": "distant_heldout",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-012"
+      },
+      {
+        "counterfactual_id": 0,
+        "role": "near_control",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-012"
+      },
+      {
+        "counterfactual_id": 1,
+        "role": "distant_heldout",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-012"
+      },
+      {
+        "counterfactual_id": 1,
+        "role": "near_control",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-012"
+      },
+      {
+        "counterfactual_id": 0,
+        "role": "distant_heldout",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-013"
+      },
+      {
+        "counterfactual_id": 0,
+        "role": "near_control",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-013"
+      },
+      {
+        "counterfactual_id": 1,
+        "role": "distant_heldout",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-013"
+      },
+      {
+        "counterfactual_id": 1,
+        "role": "near_control",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-013"
+      },
+      {
+        "counterfactual_id": 0,
+        "role": "distant_heldout",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-014"
+      },
+      {
+        "counterfactual_id": 0,
+        "role": "near_control",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-014"
+      },
+      {
+        "counterfactual_id": 1,
+        "role": "distant_heldout",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-014"
+      },
+      {
+        "counterfactual_id": 1,
+        "role": "near_control",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-014"
+      },
+      {
+        "counterfactual_id": 0,
+        "role": "distant_heldout",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-015"
+      },
+      {
+        "counterfactual_id": 0,
+        "role": "near_control",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-015"
+      },
+      {
+        "counterfactual_id": 1,
+        "role": "distant_heldout",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-015"
+      },
+      {
+        "counterfactual_id": 1,
+        "role": "near_control",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-015"
+      }
+    ],
+    "typed_all_six_correct_groups": 0,
+    "update_position_and_distance": {
+      "0:distant_heldout": {
+        "json_contract_compliance": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 64
+        },
+        "json_valid": {
+          "accuracy": 1.0,
+          "correct": 64,
+          "total": 64
+        },
+        "normalized_exact_match": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 64
+        },
+        "rows": 64,
+        "strict_exact_match": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 64
+        },
+        "typed_value_correct": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 64
+        }
+      },
+      "0:near_control": {
+        "json_contract_compliance": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 64
+        },
+        "json_valid": {
+          "accuracy": 1.0,
+          "correct": 64,
+          "total": 64
+        },
+        "normalized_exact_match": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 64
+        },
+        "rows": 64,
+        "strict_exact_match": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 64
+        },
+        "typed_value_correct": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 64
+        }
+      },
+      "1:distant_heldout": {
+        "json_contract_compliance": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 64
+        },
+        "json_valid": {
+          "accuracy": 1.0,
+          "correct": 64,
+          "total": 64
+        },
+        "normalized_exact_match": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 64
+        },
+        "rows": 64,
+        "strict_exact_match": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 64
+        },
+        "typed_value_correct": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 64
+        }
+      },
+      "1:near_control": {
+        "json_contract_compliance": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 64
+        },
+        "json_valid": {
+          "accuracy": 1.0,
+          "correct": 64,
+          "total": 64
+        },
+        "normalized_exact_match": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 64
+        },
+        "rows": 64,
+        "strict_exact_match": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 64
+        },
+        "typed_value_correct": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 64
+        }
+      },
+      "2:distant_heldout": {
+        "json_contract_compliance": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 64
+        },
+        "json_valid": {
+          "accuracy": 1.0,
+          "correct": 64,
+          "total": 64
+        },
+        "normalized_exact_match": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 64
+        },
+        "rows": 64,
+        "strict_exact_match": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 64
+        },
+        "typed_value_correct": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 64
+        }
+      },
+      "2:near_control": {
+        "json_contract_compliance": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 64
+        },
+        "json_valid": {
+          "accuracy": 1.0,
+          "correct": 64,
+          "total": 64
+        },
+        "normalized_exact_match": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 64
+        },
+        "rows": 64,
+        "strict_exact_match": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 64
+        },
+        "typed_value_correct": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 64
+        }
+      }
+    },
+    "update_world_count": 16,
+    "updates": {
+      "json_contract_compliance": {
+        "accuracy": 0.0,
+        "correct": 0,
+        "total": 384
+      },
+      "json_valid": {
+        "accuracy": 1.0,
+        "correct": 384,
+        "total": 384
+      },
+      "normalized_exact_match": {
+        "accuracy": 0.0,
+        "correct": 0,
+        "total": 384
+      },
+      "rows": 384,
+      "strict_exact_match": {
+        "accuracy": 0.0,
+        "correct": 0,
+        "total": 384
+      },
+      "typed_value_correct": {
+        "accuracy": 0.0,
+        "correct": 0,
+        "total": 384
+      }
+    }
+  },
+  "anchor_wrapper_diagnostics": {
+    "declared_first_record_copy_errors": 0,
+    "interpretation": "Bare correct literals are wrapper diagnostics only; they do not qualify typed correctness or broad semantic skill.",
+    "missing_absent_bare_expected_value_diagnostic": 0,
+    "missing_present_bare_expected_value_diagnostic": 31,
+    "update_bare_expected_value_diagnostic": 198,
+    "update_rows": 384,
+    "update_typed_correct": 0
+  },
+  "auditor_imported_torch": false,
+  "auditor_loaded_pretrained_model": false,
+  "claims": {
+    "model_promotion": false,
+    "ordering_improvement_tested": false,
+    "recurrence_benefit_claim": false,
+    "retention_after_adaptation_tested": false,
+    "trained_quality_winner": false
+  },
+  "completed": {
+    "anchor_dev_measurements": 1,
+    "anchor_dev_rows": 672,
+    "comparisons": 0,
+    "completed_training_receipts": 0,
+    "native_qualifications": 3,
+    "trained_delta_receipts": 0,
+    "trained_dev_measurements": 0
+  },
+  "created_utc": "2026-10-05T20:25:14.534861+00:00",
+  "execution_exit_record": {
+    "bytes": 3,
+    "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\native-execution-exit-code.txt",
+    "sha256": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04"
+  },
+  "execution_log": {
+    "bytes": 1036063,
+    "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\native-execution-log.txt",
+    "sha256": "df8b0df336b5f9598f841fe70232397c74963e8de6ca01acdefb0bd745778bfc"
+  },
+  "files_confirmed_absent": [
+    "control-train/receipt.json",
+    "control-train/delta.json",
+    "control-train/delta.safetensors",
+    "control-trained-qualification/receipt.json",
+    "control-evaluation/receipt.json",
+    "candidate-train/receipt.json",
+    "candidate-train/delta.json",
+    "candidate-train/delta.safetensors",
+    "candidate-trained-qualification/receipt.json",
+    "candidate-evaluation/receipt.json",
+    "comparison.json"
+  ],
+  "frozen_code_sha256": "26f1c07bbe354a422b1a6d4ea5988a21b063621f055c9a92155fa5e5e2a738ef",
+  "frozen_corpus_sha256": "ce2c1e1489ab5dc6806a4b1dc6a2de1e51c6623df9779313d81d28115ef36dc3",
+  "frozen_ledger_sha256": "af19ce6a7a31fd07ae481e291478d89386855543b23191b6d1ffb6f1442c6678",
+  "limitations": [
+    "Native inference mechanics and a frozen-anchor synthetic DEV panel only; no paired adaptation result.",
+    "Strict and typed source-correct retention are each21of64 across five skills; source-incorrect cases cannot be called retained.",
+    "The 16 update worlds are dependent units; no confidence interval or broad-quality conclusion.",
+    "Instrumented costs include guard overhead and exclude model loading/tokenization; sampled RSS is not a true transient peak.",
+    "Historical SBHM negative recurrence result is unchanged."
+  ],
+  "next_decision": "Hold. Any later scheduling attempt requires a separately reviewed new run root and fresh exact authorization; keep the fixed hypothesis, data, guards and budget. No retry or expanded budget is proposed.",
+  "preserved_evidence_inventory": {
+    "anchor-evaluation\\receipt.json": {
+      "bytes": 999761,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\proposal\\native_run\\anchor-evaluation\\receipt.json",
+      "sha256": "5e9a1843c2f5f7229d5a073c632078ebfa0174143accac0c72d1b23975e85d37"
+    },
+    "anchor-evaluation\\request.json": {
+      "bytes": 4796,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\proposal\\native_run\\anchor-evaluation\\request.json",
+      "sha256": "7881c61fcc719c91214545e3e2e13000541dd64727683bb6fb2fc767867f763e"
+    },
+    "anchor-evaluation\\stage-costs.json": {
+      "bytes": 1472,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\proposal\\native_run\\anchor-evaluation\\stage-costs.json",
+      "sha256": "304e8d1523e361711be54c6d48e0c185ad0224eb0a825a6a8e4d4a7387a6cc04"
+    },
+    "anchor-qualification\\receipt.json": {
+      "bytes": 1723,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\proposal\\native_run\\anchor-qualification\\receipt.json",
+      "sha256": "af259dc4f1887b7439c2c518306d60582fb293ec3678880abdb1b05f475b5b0a"
+    },
+    "anchor-qualification\\request.json": {
+      "bytes": 4437,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\proposal\\native_run\\anchor-qualification\\request.json",
+      "sha256": "cce612266bef12e9c1046f1cbb014af5a367b365a217ed9c61d43ebfa45edad3"
+    },
+    "anchor-qualification\\stage-costs.json": {
+      "bytes": 1473,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\proposal\\native_run\\anchor-qualification\\stage-costs.json",
+      "sha256": "852577c60581a71760fed4aa79627abb154bbb216c0b963fde8e8766adf677f6"
+    },
+    "candidate-initial-qualification\\receipt.json": {
+      "bytes": 1730,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\proposal\\native_run\\candidate-initial-qualification\\receipt.json",
+      "sha256": "2d05a4b2359c7cc888d001bf7d4531a3c9f6b3bcb725b26223ede5b5b5482a08"
+    },
+    "candidate-initial-qualification\\request.json": {
+      "bytes": 4479,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\proposal\\native_run\\candidate-initial-qualification\\request.json",
+      "sha256": "70f7c7f85a122b4abb394c26b64b0fdc48f51b1f988d9f919a6c3de20062ba35"
+    },
+    "candidate-initial-qualification\\stage-costs.json": {
+      "bytes": 1475,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\proposal\\native_run\\candidate-initial-qualification\\stage-costs.json",
+      "sha256": "069b95d00c102c186d3b6d5b7346fc80b09705907fe61d9d9e862cdb8bc751b1"
+    },
+    "control-initial-qualification\\receipt.json": {
+      "bytes": 1728,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\proposal\\native_run\\control-initial-qualification\\receipt.json",
+      "sha256": "3217beced18d63c197029696a2116e0be9aa1c53e28d45db4d28cffff2d7f70c"
+    },
+    "control-initial-qualification\\request.json": {
+      "bytes": 4467,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\proposal\\native_run\\control-initial-qualification\\request.json",
+      "sha256": "f0ca7936cb332dc0b06cf9e8bc4a6c91a5b36fa22365acfc6b40cfae7df9127e"
+    },
+    "control-initial-qualification\\stage-costs.json": {
+      "bytes": 1473,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\proposal\\native_run\\control-initial-qualification\\stage-costs.json",
+      "sha256": "ff6a5ce58e26763c5bcb5c4460c2f1f9bf35dcc919e89894b4ea1613b3b6716a"
+    },
+    "control-train\\request.json": {
+      "bytes": 6259,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\proposal\\native_run\\control-train\\request.json",
+      "sha256": "6716c3108c8dda150ec67ca614e3dd3d3ee718bcd1dba7938c2de159371ac766"
+    },
+    "execution-request.json": {
+      "bytes": 26159,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\proposal\\native_run\\execution-request.json",
+      "sha256": "5f54a8c46f75d8526f7efd861adcfe461a81a7889118033551d857e3d13578f5"
+    },
+    "run-owner-lock.json": {
+      "bytes": 530,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\proposal\\native_run\\run-owner-lock.json",
+      "sha256": "c11ecde6d2855985f81283b16e6ae66f4a7a340bd30debe14481813a21738833"
+    }
+  },
+  "proposal_sha256": "91fd07797c777c0c90284842544346cae089407abd763e3c4baefcc0b534fe97",
+  "qualification_receipts": [
+    {
+      "capability_claim": false,
+      "condition": "anchor",
+      "max_prompt_tokens_checked": 2048,
+      "native_training_qualified": false,
+      "parity": {
+        "1:17": {
+          "cache_storage_bytes": 3899392,
+          "max_abs_logit_error": 1.6033649444580078e-05
+        },
+        "64:2048": {
+          "cache_storage_bytes": 469762048,
+          "max_abs_logit_error": 2.2649765014648438e-05
+        }
+      },
+      "receipt": {
+        "bytes": 1723,
+        "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\proposal\\native_run\\anchor-qualification\\receipt.json",
+        "sha256": "af259dc4f1887b7439c2c518306d60582fb293ec3678880abdb1b05f475b5b0a"
+      },
+      "stage": "anchor-qualification",
+      "status": "PASS_NATIVE_MECHANICS_ONLY"
+    },
+    {
+      "capability_claim": false,
+      "condition": "control",
+      "max_prompt_tokens_checked": 2048,
+      "native_training_qualified": false,
+      "parity": {
+        "1:17": {
+          "cache_storage_bytes": 3899392,
+          "max_abs_logit_error": 1.6033649444580078e-05
+        },
+        "64:2048": {
+          "cache_storage_bytes": 469762048,
+          "max_abs_logit_error": 2.2649765014648438e-05
+        }
+      },
+      "receipt": {
+        "bytes": 1728,
+        "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\proposal\\native_run\\control-initial-qualification\\receipt.json",
+        "sha256": "3217beced18d63c197029696a2116e0be9aa1c53e28d45db4d28cffff2d7f70c"
+      },
+      "stage": "control-initial-qualification",
+      "status": "PASS_NATIVE_MECHANICS_ONLY"
+    },
+    {
+      "capability_claim": false,
+      "condition": "candidate",
+      "max_prompt_tokens_checked": 2048,
+      "native_training_qualified": false,
+      "parity": {
+        "1:17": {
+          "cache_storage_bytes": 3899392,
+          "max_abs_logit_error": 1.6033649444580078e-05
+        },
+        "64:2048": {
+          "cache_storage_bytes": 469762048,
+          "max_abs_logit_error": 2.2649765014648438e-05
+        }
+      },
+      "receipt": {
+        "bytes": 1730,
+        "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\proposal\\native_run\\candidate-initial-qualification\\receipt.json",
+        "sha256": "2d05a4b2359c7cc888d001bf7d4531a3c9f6b3bcb725b26223ede5b5b5482a08"
+      },
+      "stage": "candidate-initial-qualification",
+      "status": "PASS_NATIVE_MECHANICS_ONLY"
+    }
+  ],
+  "reviewer": "quality_metrics independent read-only agent",
+  "schema": "RINEYA-UPDATE-ORDER-QUALITY/v1/independent-stop-audit",
+  "status": "HOLD_RESOURCE_GUARD_STOP_UNTESTED_ORDERING_HYPOTHESIS",
+  "stop": {
+    "child_exit_code": 2,
+    "completed_optimizer_steps": null,
+    "control_train_directory_files": [
+      "request.json"
+    ],
+    "model_load_phase_at_failure": null,
+    "parent_exit_code": 1,
+    "phase_limit": "The saved request and generic runtime guard failure do not establish the optimizer-step count or exact allocation/compute phase.",
+    "reason": "free RAM below 6.0 GiB guard",
+    "request": {
+      "bytes": 6259,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\proposal\\native_run\\control-train\\request.json",
+      "sha256": "6716c3108c8dda150ec67ca614e3dd3d3ee718bcd1dba7938c2de159371ac766"
+    },
+    "stage": "control-train"
+  }
+}

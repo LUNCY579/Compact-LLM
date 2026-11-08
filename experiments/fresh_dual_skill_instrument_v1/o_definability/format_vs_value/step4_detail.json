@@ -1,0 +1,975 @@
+{
+ "prompt_echo_positive_control": {
+  "rows_with_prompt_values": 131,
+  "constructed_targets": 229,
+  "fired": 229,
+  "rows_whose_OWN_target_is_in_prompt": [
+   "perc_01554",
+   "rati_00812",
+   "perc_00311",
+   "rati_00350",
+   "rati_01086",
+   "perc_02349",
+   "rati_01007",
+   "perc_02683",
+   "perc_00487"
+  ]
+ },
+ "value_accuracy|opallo_bf16|permissive": {
+  "supa_value_present": 65,
+  "opallo_value_present": 74,
+  "opallo_only": 22,
+  "supa_only": 13,
+  "net": 9,
+  "sign_test_p_two_sided": 0.1755,
+  "scorer_opallo_only": 32,
+  "scorer_supa_only": 6,
+  "scorer_sign_test_p_two_sided": 2.4e-05,
+  "supa_only_rows": [
+   "perc_00270",
+   "perc_02729",
+   "rati_01007",
+   "rati_02552",
+   "time_00840",
+   "time_01408",
+   "time_02345",
+   "time_02401",
+   "time_02422",
+   "time_02562",
+   "time_02681",
+   "time_02720",
+   "time_02781"
+  ],
+  "by_class": {
+   "percentage_reasoning": {
+    "supa_vp": 27,
+    "opallo_vp": 28,
+    "supa_scorer": 21,
+    "opallo_scorer": 28
+   },
+   "ratio_proportion": {
+    "supa_vp": 16,
+    "opallo_vp": 21,
+    "supa_scorer": 16,
+    "opallo_scorer": 21
+   },
+   "time_duration": {
+    "supa_vp": 22,
+    "opallo_vp": 25,
+    "supa_scorer": 10,
+    "opallo_scorer": 24
+   }
+  }
+ },
+ "value_accuracy|opallo_fp32|permissive": {
+  "supa_value_present": 65,
+  "opallo_value_present": 75,
+  "opallo_only": 23,
+  "supa_only": 13,
+  "net": 10,
+  "sign_test_p_two_sided": 0.1325,
+  "scorer_opallo_only": 33,
+  "scorer_supa_only": 6,
+  "scorer_sign_test_p_two_sided": 1.4e-05,
+  "supa_only_rows": [
+   "perc_00270",
+   "perc_02729",
+   "rati_01007",
+   "rati_02552",
+   "time_00840",
+   "time_01408",
+   "time_02345",
+   "time_02401",
+   "time_02422",
+   "time_02562",
+   "time_02681",
+   "time_02720",
+   "time_02781"
+  ],
+  "by_class": {
+   "percentage_reasoning": {
+    "supa_vp": 27,
+    "opallo_vp": 29,
+    "supa_scorer": 21,
+    "opallo_scorer": 29
+   },
+   "ratio_proportion": {
+    "supa_vp": 16,
+    "opallo_vp": 21,
+    "supa_scorer": 16,
+    "opallo_scorer": 21
+   },
+   "time_duration": {
+    "supa_vp": 22,
+    "opallo_vp": 25,
+    "supa_scorer": 10,
+    "opallo_scorer": 24
+   }
+  }
+ },
+ "value_accuracy|opallo_bf16|strict": {
+  "supa_value_present": 65,
+  "opallo_value_present": 74,
+  "opallo_only": 22,
+  "supa_only": 13,
+  "net": 9,
+  "sign_test_p_two_sided": 0.1755,
+  "scorer_opallo_only": 27,
+  "scorer_supa_only": 9,
+  "scorer_sign_test_p_two_sided": 0.003933,
+  "supa_only_rows": [
+   "perc_00270",
+   "perc_02729",
+   "rati_01007",
+   "rati_02552",
+   "time_00840",
+   "time_01408",
+   "time_02345",
+   "time_02401",
+   "time_02422",
+   "time_02562",
+   "time_02681",
+   "time_02720",
+   "time_02781"
+  ],
+  "by_class": {
+   "percentage_reasoning": {
+    "supa_vp": 27,
+    "opallo_vp": 28,
+    "supa_scorer": 21,
+    "opallo_scorer": 26
+   },
+   "ratio_proportion": {
+    "supa_vp": 16,
+    "opallo_vp": 21,
+    "supa_scorer": 10,
+    "opallo_scorer": 9
+   },
+   "time_duration": {
+    "supa_vp": 22,
+    "opallo_vp": 25,
+    "supa_scorer": 10,
+    "opallo_scorer": 24
+   }
+  }
+ },
+ "value_accuracy|opallo_fp32|strict": {
+  "supa_value_present": 65,
+  "opallo_value_present": 75,
+  "opallo_only": 23,
+  "supa_only": 13,
+  "net": 10,
+  "sign_test_p_two_sided": 0.1325,
+  "scorer_opallo_only": 27,
+  "scorer_supa_only": 9,
+  "scorer_sign_test_p_two_sided": 0.003933,
+  "supa_only_rows": [
+   "perc_00270",
+   "perc_02729",
+   "rati_01007",
+   "rati_02552",
+   "time_00840",
+   "time_01408",
+   "time_02345",
+   "time_02401",
+   "time_02422",
+   "time_02562",
+   "time_02681",
+   "time_02720",
+   "time_02781"
+  ],
+  "by_class": {
+   "percentage_reasoning": {
+    "supa_vp": 27,
+    "opallo_vp": 29,
+    "supa_scorer": 21,
+    "opallo_scorer": 27
+   },
+   "ratio_proportion": {
+    "supa_vp": 16,
+    "opallo_vp": 21,
+    "supa_scorer": 10,
+    "opallo_scorer": 8
+   },
+   "time_duration": {
+    "supa_vp": 22,
+    "opallo_vp": 25,
+    "supa_scorer": 10,
+    "opallo_scorer": 24
+   }
+  }
+ },
+ "gained_ids|permissive": {
+  "bf16_by_cat": {
+   "FORMAT": [
+    "time_02677",
+    "time_02628",
+    "perc_01139",
+    "time_00828",
+    "perc_02515",
+    "time_01594",
+    "perc_02025",
+    "time_01801",
+    "perc_02298"
+   ],
+   "VALUE": [
+    "time_00982",
+    "rati_00699",
+    "rati_00812",
+    "time_02213",
+    "time_00681",
+    "time_02229",
+    "perc_01208",
+    "perc_02825",
+    "rati_01863",
+    "rati_00933",
+    "time_00538",
+    "time_00849",
+    "time_01339",
+    "time_02961",
+    "time_01696",
+    "time_00626",
+    "rati_02944",
+    "perc_00526",
+    "rati_01368",
+    "time_01539",
+    "rati_00969",
+    "time_02842"
+   ],
+   "NONTERM": [
+    "perc_00280"
+   ]
+  },
+  "fp32_only_gains": [
+   "perc_00223"
+  ],
+  "bf16_only_gains": [],
+  "lost_bf16": {
+   "rati_02552": "VALUE",
+   "perc_00270": "VALUE",
+   "time_02345": "VALUE",
+   "time_02681": "VALUE",
+   "rati_01007": "VALUE",
+   "time_01408": "VALUE"
+  },
+  "lost_fp32": {
+   "rati_02552": "VALUE",
+   "perc_00270": "VALUE",
+   "time_02345": "VALUE",
+   "time_02681": "VALUE",
+   "rati_01007": "VALUE",
+   "time_01408": "VALUE"
+  }
+ },
+ "examples_gained_permissive": {
+  "FORMAT": [
+   {
+    "row": "time_02677",
+    "class": "time_duration",
+    "target": "duration:2700 (45 minute)",
+    "prompt_tail": "a closes the research note review, one detail remains: Travel begins at 8:30 AM and ends at 9:15 AM. Duration?",
+    "supa": "9:15 AM - 8:30 AM = 45 minutes",
+    "supa_terminated": true,
+    "supa_reason": "duration is not number/unit pairs: '9:15 am - 8:30 am = 45 minutes'",
+    "opallo_bf16": "45 minutes.",
+    "opallo_fp32": "45 minutes."
+   },
+   {
+    "row": "time_02628",
+    "class": "time_duration",
+    "target": "clock:740 (12:20 PM)",
+    "prompt_tail": "ooking team proceeds, answer this: A timer begins at 11:30 AM and runs for 50 minutes. What time does it stop?",
+    "supa": "11:30 AM + 50 minutes = 12:20 PM",
+    "supa_terminated": true,
+    "supa_reason": "not a clock time: '11:30 am + 50 minutes = 12:20'",
+    "opallo_bf16": "12:20 PM.",
+    "opallo_fp32": "12:20 PM."
+   },
+   {
+    "row": "perc_01139",
+    "class": "percentage_reasoning",
+    "target": "percent:10 (10 percent)",
+    "prompt_tail": "hop mezzanine is: A score rises from 50 to 55. What is the percent increase? Keep the answer usable for Damon.",
+    "supa": "The percent increase is 10%.",
+    "supa_terminated": true,
+    "supa_reason": "no leading number in 'the percent increase is 10%'",
+    "opallo_bf16": "10%.",
+    "opallo_fp32": "10%."
+   },
+   {
+    "row": "time_00828",
+    "class": "time_duration",
+    "target": "clock:860 (2:20 PM)",
+    "prompt_tail": "message from Reina at the greenhouse bay is: A study session starts at 1:50 PM and lasts 30 minutes. End time?",
+    "supa": "1:50 PM to 2:20 PM",
+    "supa_terminated": true,
+    "supa_reason": "not a clock time: '1:50 pm to 2:20'",
+    "opallo_bf16": "2:20 PM.",
+    "opallo_fp32": "2:20 PM."
+   },
+   {
+    "row": "perc_02515",
+    "class": "percentage_reasoning",
+    "target": "money:9 (9 dollar)",
+    "prompt_tail": "riverfront annex, for the latest shipping labels record, not the older draft: What is a 15% tip on a $60 bill?",
+    "supa": "A 15% tip on a $60 bill is $9.",
+    "supa_terminated": true,
+    "supa_reason": "no leading number in 'a 15% tip on a $60 bill is $9'",
+    "opallo_bf16": "$9.",
+    "opallo_fp32": "$9."
+   },
+   {
+    "row": "time_01594",
+    "class": "time_duration",
+    "target": "clock:1055 (5:35 PM)",
+    "prompt_tail": "r Foxglove Studio's studio booking: A timer begins at 4:50 PM and runs for 45 minutes. What time does it stop?",
+    "supa": "4:50 PM + 45 minutes = 5:35 PM",
+    "supa_terminated": true,
+    "supa_reason": "not a clock time: '4:50 pm + 45 minutes = 5:35'",
+    "opallo_bf16": "5:35 PM.",
+    "opallo_fp32": "5:35 PM."
+   },
+   {
+    "row": "perc_02025",
+    "class": "percentage_reasoning",
+    "target": "quantity:60 (60 unit)",
+    "prompt_tail": " the parenting logistics team proceeds, answer this: A 120-unit capacity is 50% full. How many units are used?",
+    "supa": "50% of 120 units = 60 units.",
+    "supa_terminated": true,
+    "supa_reason": "unit '% of 120 units = 60 units' does not match 'unit'",
+    "opallo_bf16": "60.",
+    "opallo_fp32": "60."
+   },
+   {
+    "row": "time_01801",
+    "class": "time_duration",
+    "target": "clock:615 (10:15 AM)",
+    "prompt_tail": "ersion: A meeting starts at 9:50 AM and lasts 25 minutes. When does it end? Keep the answer usable for Kellan.",
+    "supa": "It ends at 10:15 AM.",
+    "supa_terminated": true,
+    "supa_reason": "not a clock time: 'it ends at 10:15'",
+    "opallo_bf16": "10:15 AM.",
+    "opallo_fp32": "10:15 AM."
+   },
+   {
+    "row": "perc_02298",
+    "class": "percentage_reasoning",
+    "target": "money:4 (4 dollar)",
+    "prompt_tail": " gallery storeroom, for the latest water filters record, not the older draft: What is a 10% tip on a $40 bill?",
+    "supa": "10% tip on a $40 bill is $4.",
+    "supa_terminated": true,
+    "supa_reason": "'% tip on a $40 bill is $4' is not a declared money unit",
+    "opallo_bf16": "$4.00.",
+    "opallo_fp32": "$4.00."
+   }
+  ],
+  "VALUE": [
+   {
+    "row": "time_00982",
+    "class": "time_duration",
+    "target": "duration:5400 (90 minute)",
+    "prompt_tail": "s the live version: Travel begins at 1:15 PM and ends at 2:45 PM. Duration? Keep the answer usable for Emmett.",
+    "supa": "2 hours",
+    "supa_terminated": true,
+    "supa_reason": "value mismatch",
+    "opallo_bf16": "1 hour and 30 minutes.",
+    "opallo_fp32": "1 hour and 30 minutes."
+   },
+   {
+    "row": "rati_00699",
+    "class": "ratio_proportion",
+    "target": "count:54 (54 sensor tags)",
+    "prompt_tail": "rsion: 3 workers each pack 9 sensor tags. At the same individual rate, how many sensor tags do 6 workers pack?",
+    "supa": "36 sensor tags.",
+    "supa_terminated": true,
+    "supa_reason": "value mismatch",
+    "opallo_bf16": "54.",
+    "opallo_fp32": "54."
+   },
+   {
+    "row": "rati_00812",
+    "class": "ratio_proportion",
+    "target": "volume_cups:8 (8 cup)",
+    "prompt_tail": "A recipe uses 4 cups for 4 servings. How many cups are needed for 8 servings? Keep the answer usable for Esme.",
+    "supa": "16 cups",
+    "supa_terminated": true,
+    "supa_reason": "value mismatch",
+    "opallo_bf16": "8 cups.",
+    "opallo_fp32": "8 cups."
+   },
+   {
+    "row": "time_02213",
+    "class": "time_duration",
+    "target": "duration:3000 (50 minute)",
+    "prompt_tail": "ezzanine, the current note for Goldcrest Choir reads: A class runs from 2:20 PM until 3:10 PM. How long is it?",
+    "supa": "It runs from 2:20 PM to 3:10 PM.",
+    "supa_terminated": true,
+    "supa_reason": "no leading number in 'it runs from 2:20 pm to 3:10 pm'",
+    "opallo_bf16": "50 minutes.",
+    "opallo_fp32": "50 minutes."
+   },
+   {
+    "row": "time_00681",
+    "class": "time_duration",
+    "target": "clock:595 (9:55 AM)",
+    "prompt_tail": "ronwood Coding Club's travel departure: The travel departure starts at 9:15 AM and lasts 40 minutes. End time?",
+    "supa": "11:55 AM",
+    "supa_terminated": true,
+    "supa_reason": "value mismatch",
+    "opallo_bf16": "9:55 AM.",
+    "opallo_fp32": "9:55 AM."
+   },
+   {
+    "row": "time_02229",
+    "class": "time_duration",
+    "target": "duration:7200 (120 minute)",
+    "prompt_tail": "survey flags during the equipment handoff; A task starts at 4:45 PM and finishes at 6:45 PM. How many minutes?",
+    "supa": "2 hours 15 minutes",
+    "supa_terminated": true,
+    "supa_reason": "value mismatch",
+    "opallo_bf16": "2 hours.",
+    "opallo_fp32": "2 hours."
+   },
+   {
+    "row": "perc_01208",
+    "class": "percentage_reasoning",
+    "target": "percent:25 (25 percent)",
+    "prompt_tail": "nine, the current note for Peregrine Works reads: A score rises from 100 to 125. What is the percent increase?",
+    "supa": "12.5%",
+    "supa_terminated": true,
+    "supa_reason": "value mismatch",
+    "opallo_bf16": "25%.",
+    "opallo_fp32": "25%."
+   },
+   {
+    "row": "perc_02825",
+    "class": "percentage_reasoning",
+    "target": "quantity:32 (32 unit)",
+    "prompt_tail": "ilters at the riverfront annex asks: The water filters budget is 40 units. It is reduced by 20%. What remains?",
+    "supa": "24 units.",
+    "supa_terminated": true,
+    "supa_reason": "value mismatch",
+    "opallo_bf16": "32 units.",
+    "opallo_fp32": "32 units."
+   },
+   {
+    "row": "rati_01863",
+    "class": "ratio_proportion",
+    "target": "count:32 (32 drill bits)",
+    "prompt_tail": "l bits. At the same individual rate, how many drill bits do 8 workers pack? Keep the answer usable for Selene.",
+    "supa": "16 drill bits.",
+    "supa_terminated": true,
+    "supa_reason": "value mismatch",
+    "opallo_bf16": "32.",
+    "opallo_fp32": "32."
+   },
+   {
+    "row": "rati_00933",
+    "class": "ratio_proportion",
+    "target": "count:24 (24 access badges)",
+    "prompt_tail": "adges. At the same individual rate, how many access badges do 8 workers pack? Keep the answer usable for Wren.",
+    "supa": "16 access badges.",
+    "supa_terminated": true,
+    "supa_reason": "value mismatch",
+    "opallo_bf16": "24 access badges.",
+    "opallo_fp32": "24."
+   },
+   {
+    "row": "time_00538",
+    "class": "time_duration",
+    "target": "duration:3000 (50 minute)",
+    "prompt_tail": "ing crew at the riverfront annex needs this resolved: A class runs from 4:45 PM until 5:35 PM. How long is it?",
+    "supa": "100 minutes",
+    "supa_terminated": true,
+    "supa_reason": "value mismatch",
+    "opallo_bf16": "50 minutes.",
+    "opallo_fp32": "50 minutes."
+   },
+   {
+    "row": "time_00849",
+    "class": "time_duration",
+    "target": "duration:1500 (25 minute)",
+    "prompt_tail": " note with this one: Travel begins at 7:10 PM and ends at 7:35 PM. Duration? Keep the answer usable for Leona.",
+    "supa": "1 hour and 25 minutes",
+    "supa_terminated": true,
+    "supa_reason": "value mismatch",
+    "opallo_bf16": "25 minutes.",
+    "opallo_fp32": "25 minutes."
+   },
+   {
+    "row": "time_01339",
+    "class": "time_duration",
+    "target": "duration:1500 (25 minute)",
+    "prompt_tail": "r the latest score sheets record, not the older draft: Travel begins at 7:35 PM and ends at 8:00 PM. Duration?",
+    "supa": "8 hours 25 minutes",
+    "supa_terminated": true,
+    "supa_reason": "value mismatch",
+    "opallo_bf16": "25 minutes.",
+    "opallo_fp32": "25 minutes."
+   },
+   {
+    "row": "time_02961",
+    "class": "time_duration",
+    "target": "duration:1800 (30 minute)",
+    "prompt_tail": "uring Rivermint Clinic's equipment handoff, Niko asks: Travel begins at 7:40 AM and ends at 8:10 AM. Duration?",
+    "supa": "1 hour 30 minutes",
+    "supa_terminated": true,
+    "supa_reason": "value mismatch",
+    "opallo_bf16": "30 minutes.",
+    "opallo_fp32": "30 minutes."
+   },
+   {
+    "row": "time_01696",
+    "class": "time_duration",
+    "target": "clock:580 (9:40 AM)",
+    "prompt_tail": "e cooking team proceeds, answer this: The field sampling run starts at 9:15 AM and lasts 25 minutes. End time?",
+    "supa": "10:30 AM",
+    "supa_terminated": true,
+    "supa_reason": "value mismatch",
+    "opallo_bf16": "9:40 AM.",
+    "opallo_fp32": "9:40 AM."
+   },
+   {
+    "row": "time_00626",
+    "class": "time_duration",
+    "target": "duration:2700 (45 minute)",
+    "prompt_tail": "s checking radio packs during the weather contingency; Travel begins at 1:35 PM and ends at 2:20 PM. Duration?",
+    "supa": "55 minutes",
+    "supa_terminated": true,
+    "supa_reason": "value mismatch",
+    "opallo_bf16": "45 minutes.",
+    "opallo_fp32": "45 minutes."
+   },
+   {
+    "row": "rati_02944",
+    "class": "ratio_proportion",
+    "target": "count:9 (9 timing chips)",
+    "prompt_tail": " Una asks: The ratio of practice cones to timing chips is 2:3, with 15 items total. How many are timing chips?",
+    "supa": "15",
+    "supa_terminated": true,
+    "supa_reason": "value mismatch",
+    "opallo_bf16": "9.",
+    "opallo_fp32": "9."
+   },
+   {
+    "row": "perc_00526",
+    "class": "percentage_reasoning",
+    "target": "number:20 (20)",
+    "prompt_tail": "x, the arts crew at the riverfront annex needs this resolved: A quantity of 40 decreases by 50%. What remains?",
+    "supa": "30",
+    "supa_terminated": true,
+    "supa_reason": "value mismatch",
+    "opallo_bf16": "20.",
+    "opallo_fp32": "20."
+   },
+   {
+    "row": "rati_01368",
+    "class": "ratio_proportion",
+    "target": "count:80 (80 timing chips)",
+    "prompt_tail": " chips. At the same individual rate, how many timing chips do 8 workers pack? Keep the answer usable for Juno.",
+    "supa": "160 timing chips.",
+    "supa_terminated": true,
+    "supa_reason": "value mismatch",
+    "opallo_bf16": "80.",
+    "opallo_fp32": "80."
+   },
+   {
+    "row": "time_01539",
+    "class": "time_duration",
+    "target": "duration:2700 (45 minute)",
+    "prompt_tail": "ly delivery, use this exact version: How long is it from 2:25 PM to 3:10 PM? Keep the answer usable for Pavel.",
+    "supa": "1 hour 45 minutes",
+    "supa_terminated": true,
+    "supa_reason": "value mismatch",
+    "opallo_bf16": "45 minutes.",
+    "opallo_fp32": "45 minutes."
+   },
+   {
+    "row": "rati_00969",
+    "class": "ratio_proportion",
+    "target": "volume_cups:2 (2 cup)",
+    "prompt_tail": " recipe uses 1 cup for 4 servings. How many cups are needed for 8 servings? Keep the answer usable for Emmett.",
+    "supa": "16 cups",
+    "supa_terminated": true,
+    "supa_reason": "value mismatch",
+    "opallo_bf16": "2 cups.",
+    "opallo_fp32": "2 cups."
+   },
+   {
+    "row": "time_02842",
+    "class": "time_duration",
+    "target": "clock:610 (10:10 AM)",
+    "prompt_tail": "cker corridor, the drill bits log says: The travel departure starts at 9:15 AM and lasts 55 minutes. End time?",
+    "supa": "9:15 AM + 55 minutes = 9:70 AM",
+    "supa_terminated": true,
+    "supa_reason": "not a clock time: '9:15 am + 55 minutes = 9:70'",
+    "opallo_bf16": "10:10 AM.",
+    "opallo_fp32": "10:10 AM."
+   }
+  ],
+  "NONTERM": [
+   {
+    "row": "perc_00280",
+    "class": "percentage_reasoning",
+    "target": "percent:25 (25 percent)",
+    "prompt_tail": "rent message from Bryn at the harbor platform is: A score rises from 100 to 125. What is the percent increase?",
+    "supa": "125 - 100 = 25. 25 / 100 = 2",
+    "supa_terminated": false,
+    "supa_reason": "did not terminate",
+    "opallo_bf16": "25%.",
+    "opallo_fp32": "25%."
+   }
+  ]
+ },
+ "examples_supa_format_to_opallo_value": [
+  {
+   "row": "time_02781",
+   "class": "time_duration",
+   "target": "clock:1135 (6:55 PM)",
+   "prompt_tail": "tion, a last check from the field station: A meeting starts at 6:10 PM and lasts 45 minutes. When does it end?",
+   "supa": "It ends at 6:55 PM.",
+   "supa_terminated": true,
+   "supa_reason": "not a clock time: 'it ends at 6:55'",
+   "opallo_bf16": "7:55 PM.",
+   "opallo_fp32": "7:55 PM."
+  },
+  {
+   "row": "time_02401",
+   "class": "time_duration",
+   "target": "clock:595 (9:55 AM)",
+   "prompt_tail": "a replaced the earlier note with this one: The coding sprint starts at 9:15 AM and lasts 40 minutes. End time?",
+   "supa": "The coding sprint ends at 9:55 AM.",
+   "supa_terminated": true,
+   "supa_reason": "not a clock time: 'the coding sprint ends at 9:55'",
+   "opallo_bf16": "10:55 AM.",
+   "opallo_fp32": "10:55 AM."
+  },
+  {
+   "row": "time_00840",
+   "class": "time_duration",
+   "target": "clock:580 (9:40 AM)",
+   "prompt_tail": "ordinator marked this as the live version: The permit review starts at 9:15 AM and lasts 25 minutes. End time?",
+   "supa": "End time: 9:40 AM",
+   "supa_terminated": true,
+   "supa_reason": "not a clock time: 'end time: 9:40'",
+   "opallo_bf16": "10:30 AM.",
+   "opallo_fp32": "10:30 AM."
+  },
+  {
+   "row": "perc_02729",
+   "class": "percentage_reasoning",
+   "target": "number:150 (150)",
+   "prompt_tail": "roductivity crew at the north concourse needs this resolved: A quantity of 200 decreases by 25%. What remains?",
+   "supa": "200 decreases by 25% is 150.",
+   "supa_terminated": true,
+   "supa_reason": "unconsumed text 'decreases by 25% is 150'",
+   "opallo_bf16": "175.",
+   "opallo_fp32": "175."
+  },
+  {
+   "row": "time_02422",
+   "class": "time_duration",
+   "target": "clock:630 (10:30 AM)",
+   "prompt_tail": "eekend rehearsal now depends on one point: A meeting starts at 9:30 AM and lasts 60 minutes. When does it end?",
+   "supa": "It ends at 10:30 AM.",
+   "supa_terminated": true,
+   "supa_reason": "not a clock time: 'it ends at 10:30'",
+   "opallo_bf16": "159 minutes.",
+   "opallo_fp32": "159 minutes."
+  },
+  {
+   "row": "time_02720",
+   "class": "time_duration",
+   "target": "clock:580 (9:40 AM)",
+   "prompt_tail": "note from the community kitchen says: The volunteer briefing starts at 9:15 AM and lasts 25 minutes. End time?",
+   "supa": "9:15 AM + 25 minutes = 9:40 AM",
+   "supa_terminated": true,
+   "supa_reason": "not a clock time: '9:15 am + 25 minutes = 9:40'",
+   "opallo_bf16": "10:40 AM.",
+   "opallo_fp32": "10:40 AM."
+  },
+  {
+   "row": "time_02562",
+   "class": "time_duration",
+   "target": "clock:610 (10:10 AM)",
+   "prompt_tail": "e from Tessa at the equipment cage is: The weekend rehearsal starts at 9:15 AM and lasts 55 minutes. End time?",
+   "supa": "9:15 AM + 55 minutes = 10:10 AM",
+   "supa_terminated": true,
+   "supa_reason": "not a clock time: '9:15 am + 55 minutes = 10:10'",
+   "opallo_bf16": "10:70 AM.",
+   "opallo_fp32": "10:70 AM."
+  }
+ ],
+ "examples_supa_format_to_opallo_format": [
+  {
+   "row": "time_02114",
+   "class": "time_duration",
+   "target": "clock:970 (4:10 PM)",
+   "prompt_tail": "k replaced the earlier note with this one: A meeting starts at 3:50 PM and lasts 20 minutes. When does it end?",
+   "supa": "It ends at 4:10 PM.",
+   "supa_terminated": true,
+   "supa_reason": "not a clock time: 'it ends at 4:10'",
+   "opallo_bf16": "It ends at 4:10 PM.",
+   "opallo_fp32": "It ends at 4:10 PM."
+  }
+ ],
+ "examples_lost_permissive_bf16": [
+  {
+   "row": "rati_02552",
+   "class": "ratio_proportion",
+   "target": "count:9 (9 timing chips)",
+   "prompt_tail": "l remains: The ratio of practice cones to timing chips is 2:3, with 15 items total. How many are timing chips?",
+   "supa": "9",
+   "supa_terminated": true,
+   "supa_reason": null,
+   "opallo_bf16": "6.",
+   "opallo_fp32": "6."
+  },
+  {
+   "row": "perc_00270",
+   "class": "percentage_reasoning",
+   "target": "money:108 (108 dollar)",
+   "prompt_tail": " latest transit passes record, not the older draft: An item costs $120 and is 10% off. What is the sale price?",
+   "supa": "$108",
+   "supa_terminated": true,
+   "supa_reason": null,
+   "opallo_bf16": "$112.",
+   "opallo_fp32": "$112."
+  },
+  {
+   "row": "time_02345",
+   "class": "time_duration",
+   "target": "clock:460 (7:40 AM)",
+   "prompt_tail": "Bluebell Robotics's safety drill, Zara asks: A study session starts at 7:05 AM and lasts 35 minutes. End time?",
+   "supa": "7:40 AM",
+   "supa_terminated": true,
+   "supa_reason": null,
+   "opallo_bf16": "8:40 AM.",
+   "opallo_fp32": "8:40 AM."
+  },
+  {
+   "row": "time_02681",
+   "class": "time_duration",
+   "target": "clock:595 (9:55 AM)",
+   "prompt_tail": "e studio booking, use this exact version: The studio booking starts at 9:15 AM and lasts 40 minutes. End time?",
+   "supa": "9:55 AM",
+   "supa_terminated": true,
+   "supa_reason": null,
+   "opallo_bf16": "10:55 AM.",
+   "opallo_fp32": "10:55 AM."
+  },
+  {
+   "row": "rati_01007",
+   "class": "ratio_proportion",
+   "target": "money:30 (30 dollar)",
+   "prompt_tail": "ent: 3 survey flags cost $30. At the same rate, what do 3 survey flags cost? Keep the answer usable for Malik.",
+   "supa": "$30",
+   "supa_terminated": true,
+   "supa_reason": null,
+   "opallo_bf16": "$90.",
+   "opallo_fp32": "$90."
+  },
+  {
+   "row": "time_01408",
+   "class": "time_duration",
+   "target": "clock:600 (10:00 AM)",
+   "prompt_tail": " resolved: A bus leaves at 9:40 AM. The ride takes 20 minutes. Arrival time? Keep the answer usable for Mateo.",
+   "supa": "10:00 AM",
+   "supa_terminated": true,
+   "supa_reason": null,
+   "opallo_bf16": "11:00 AM.",
+   "opallo_fp32": "10:10 AM."
+  }
+ ],
+ "examples_value_gains_with_sensitivity_flag": [
+  {
+   "row": "time_02229",
+   "class": "time_duration",
+   "target": "duration:7200 (120 minute)",
+   "prompt_tail": "survey flags during the equipment handoff; A task starts at 4:45 PM and finishes at 6:45 PM. How many minutes?",
+   "supa": "2 hours 15 minutes",
+   "supa_terminated": true,
+   "supa_reason": "value mismatch",
+   "opallo_bf16": "2 hours.",
+   "opallo_fp32": "2 hours.",
+   "subrun": true,
+   "carry": false
+  },
+  {
+   "row": "time_00849",
+   "class": "time_duration",
+   "target": "duration:1500 (25 minute)",
+   "prompt_tail": " note with this one: Travel begins at 7:10 PM and ends at 7:35 PM. Duration? Keep the answer usable for Leona.",
+   "supa": "1 hour and 25 minutes",
+   "supa_terminated": true,
+   "supa_reason": "value mismatch",
+   "opallo_bf16": "25 minutes.",
+   "opallo_fp32": "25 minutes.",
+   "subrun": true,
+   "carry": false
+  },
+  {
+   "row": "time_01339",
+   "class": "time_duration",
+   "target": "duration:1500 (25 minute)",
+   "prompt_tail": "r the latest score sheets record, not the older draft: Travel begins at 7:35 PM and ends at 8:00 PM. Duration?",
+   "supa": "8 hours 25 minutes",
+   "supa_terminated": true,
+   "supa_reason": "value mismatch",
+   "opallo_bf16": "25 minutes.",
+   "opallo_fp32": "25 minutes.",
+   "subrun": true,
+   "carry": false
+  },
+  {
+   "row": "time_02961",
+   "class": "time_duration",
+   "target": "duration:1800 (30 minute)",
+   "prompt_tail": "uring Rivermint Clinic's equipment handoff, Niko asks: Travel begins at 7:40 AM and ends at 8:10 AM. Duration?",
+   "supa": "1 hour 30 minutes",
+   "supa_terminated": true,
+   "supa_reason": "value mismatch",
+   "opallo_bf16": "30 minutes.",
+   "opallo_fp32": "30 minutes.",
+   "subrun": true,
+   "carry": false
+  },
+  {
+   "row": "time_01539",
+   "class": "time_duration",
+   "target": "duration:2700 (45 minute)",
+   "prompt_tail": "ly delivery, use this exact version: How long is it from 2:25 PM to 3:10 PM? Keep the answer usable for Pavel.",
+   "supa": "1 hour 45 minutes",
+   "supa_terminated": true,
+   "supa_reason": "value mismatch",
+   "opallo_bf16": "45 minutes.",
+   "opallo_fp32": "45 minutes.",
+   "subrun": true,
+   "carry": false
+  },
+  {
+   "row": "time_02842",
+   "class": "time_duration",
+   "target": "clock:610 (10:10 AM)",
+   "prompt_tail": "cker corridor, the drill bits log says: The travel departure starts at 9:15 AM and lasts 55 minutes. End time?",
+   "supa": "9:15 AM + 55 minutes = 9:70 AM",
+   "supa_terminated": true,
+   "supa_reason": "not a clock time: '9:15 am + 55 minutes = 9:70'",
+   "opallo_bf16": "10:10 AM.",
+   "opallo_fp32": "10:10 AM.",
+   "subrun": false,
+   "carry": true
+  }
+ ],
+ "gained_ids|strict": {
+  "bf16_by_cat": {
+   "FORMAT": [
+    "time_02677",
+    "time_02628",
+    "perc_01139",
+    "time_00828",
+    "perc_02515",
+    "time_01594",
+    "time_01801",
+    "perc_02298"
+   ],
+   "VALUE": [
+    "time_00982",
+    "rati_00812",
+    "time_02213",
+    "time_00681",
+    "time_02229",
+    "perc_01208",
+    "perc_02825",
+    "rati_00933",
+    "time_00538",
+    "time_00849",
+    "time_01339",
+    "time_02961",
+    "time_01696",
+    "time_00626",
+    "perc_00526",
+    "time_01539",
+    "rati_00969",
+    "time_02842"
+   ],
+   "NONTERM": [
+    "perc_00280"
+   ]
+  },
+  "fp32_only_gains": [
+   "perc_00223"
+  ],
+  "bf16_only_gains": [
+   "rati_00933"
+  ],
+  "lost_bf16": {
+   "perc_00777": "FORMAT",
+   "perc_00270": "VALUE",
+   "time_02345": "VALUE",
+   "rati_02281": "FORMAT",
+   "rati_01698": "FORMAT",
+   "time_02681": "VALUE",
+   "rati_01007": "VALUE",
+   "rati_00233": "FORMAT",
+   "time_01408": "VALUE"
+  },
+  "lost_fp32": {
+   "perc_00777": "FORMAT",
+   "perc_00270": "VALUE",
+   "time_02345": "VALUE",
+   "rati_02281": "FORMAT",
+   "rati_01698": "FORMAT",
+   "time_02681": "VALUE",
+   "rati_01007": "VALUE",
+   "rati_00233": "FORMAT",
+   "time_01408": "VALUE"
+  }
+ },
+ "examples_strict_format_losses_bf16": [
+  {
+   "row": "perc_00777",
+   "class": "percentage_reasoning",
+   "target": "quantity:50 (50 unit)",
+   "prompt_tail": "ceeds, answer this: A 200-unit capacity is 25% full. How many units are used? Keep the answer usable for Orin.",
+   "supa": "50 units.",
+   "supa_terminated": true,
+   "supa_reason": null,
+   "opallo_bf16": "50.",
+   "opallo_fp32": "50."
+  },
+  {
+   "row": "rati_02281",
+   "class": "ratio_proportion",
+   "target": "volume_cups:18 (18 cup)",
+   "prompt_tail": "cision, use only the following: A recipe uses 3 cups for 2 servings. How many cups are needed for 12 servings?",
+   "supa": "18 cups",
+   "supa_terminated": true,
+   "supa_reason": null,
+   "opallo_bf16": "18.",
+   "opallo_fp32": "18."
+  },
+  {
+   "row": "rati_01698",
+   "class": "ratio_proportion",
+   "target": "count:15 (15 timing chips)",
+   "prompt_tail": "rks reads: The ratio of practice cones to timing chips is 2:3, with 25 items total. How many are timing chips?",
+   "supa": "15 timing chips",
+   "supa_terminated": true,
+   "supa_reason": null,
+   "opallo_bf16": "15.",
+   "opallo_fp32": "15."
+  },
+  {
+   "row": "rati_00233",
+   "class": "ratio_proportion",
+   "target": "count:12 (12 timing chips)",
+   "prompt_tail": "ntingency: The ratio of practice cones to timing chips is 2:3, with 20 items total. How many are timing chips?",
+   "supa": "12 chips",
+   "supa_terminated": true,
+   "supa_reason": null,
+   "opallo_bf16": "12.",
+   "opallo_fp32": "12."
+  }
+ ]
+}

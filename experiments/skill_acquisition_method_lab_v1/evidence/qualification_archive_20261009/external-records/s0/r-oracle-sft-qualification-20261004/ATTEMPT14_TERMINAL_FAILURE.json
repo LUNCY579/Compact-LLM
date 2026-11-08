@@ -1,0 +1,67 @@
+{
+  "schema": "CE8-EXACT-ATTEMPT14-TERMINAL-FAILURE-1",
+  "utc": "2026-10-05T18:58:09.3966197Z",
+  "attempt": 14,
+  "source_head": "17eac0d4a051270aa4729f3fedac5f9c5c2ef4ff",
+  "review_packet_sha256": "e66c3dcf7e7ce0e13dd2d597e5a99af15b340de74f0f0e11dc0d87ec47246733",
+  "grant_packet_sha256": "a27bf1e65d90d74bb38b82588d1ec1d33487b888edbde305df45b3ccbe56552f",
+  "configuration_sha256": "eb56f44f1fe0877aa3447f56d686438bf5e0244a75f41e2649135f0fdf60576d",
+  "actual_supervisor_returncode": 1,
+  "failed_phase": "ingestion_tokenizer",
+  "failed_operation": "supervisor_lease",
+  "lease_action": "check_parent_use",
+  "reserved_wall_seconds": 5,
+  "error": "bootstrap actual work exceeds reserved profile: wall_s",
+  "exact_rejected_return_wall_not_journalled": true,
+  "completed_tokenizations": 1119,
+  "model_loads": 0,
+  "actual_optimizer_updates": 0,
+  "native_qualified": false,
+  "owned_processes_verified_absent": [
+    47240,
+    158788,
+    159052,
+    158976,
+    159284,
+    159120
+  ],
+  "gpu_lease_absent": true,
+  "successful_accounting_closure": false,
+  "qualification_receipt_exists": false,
+  "failed_partial_records_preserved": true,
+  "additional_attempt_launched": false,
+  "training_authorized": false,
+  "evaluation_authorized": false,
+  "refs": [
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\r-oracle-sft-qualification-20261004\\attempt14\\LAUNCH_STARTED.json",
+      "sha256": "b68c864065ef51976144c5d3ce2b5d849b230a5d808b7ba65f3e2df60ca2f863",
+      "bytes": 525
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\r-oracle-sft-qualification-20261004\\attempt14\\LAUNCH_ENDED.json",
+      "sha256": "f6251cd6fc27b323f689c3a99fd3aa232d8d2f78abe2fb844250e6de9ebd9a52",
+      "bytes": 331
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\r-oracle-sft-qualification-20261004\\attempt14\\supervisor.stderr.log",
+      "sha256": "325d7bdb5e4e6e2cf22ff9bc2ffacd8fac5f319a50e8263564430c75312187ea",
+      "bytes": 11534
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\r-oracle-sft-qualification-20261004\\canonical-attempt14\\service-bootstrap\\SERVICE_BOOTSTRAP_HEADER.json",
+      "sha256": "4d65919ebd0403f5afee1d78f7f0de3cf1bcde6b1c893acb988de70a75f3fa03",
+      "bytes": 7647
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\r-oracle-sft-qualification-20261004\\canonical-attempt14\\service-bootstrap\\SERVICE_BOOTSTRAP.jsonl",
+      "sha256": "9e41eab67c4a72f6a6f740f8f2487dde01868704674efa392986d272f192ea5e",
+      "bytes": 26950544
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\r-oracle-sft-qualification-20261004\\canonical-attempt14\\supervisor-service-bootstrap\\SERVICE_BOOTSTRAP.jsonl",
+      "sha256": "1dd7d563537c9ac7a439ba856ba644e32f82a50bd739bb287f87f751eac173b8",
+      "bytes": 1277437
+    }
+  ]
+}

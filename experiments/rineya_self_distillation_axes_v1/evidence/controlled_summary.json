@@ -1,0 +1,57 @@
+{
+  "status": "CONTROLLED_MODEL_ONLY",
+  "native_rineya_executed": false,
+  "run_count": 144,
+  "updates_per_run": 200,
+  "total_updates": 28800,
+  "seeds": [
+    16,
+    17
+  ],
+  "geometry": {
+    "concentration": 2.5,
+    "context_strength": 0.6,
+    "depth": 4,
+    "feature_overlap": 0.5,
+    "readout_compatibility": 0.0,
+    "vocabulary": 8,
+    "width": 64
+  },
+  "rates": [
+    0.0,
+    0.000625,
+    0.0008838834764831845,
+    0.00125,
+    0.001767766952966369,
+    0.0025,
+    0.003535533905932738,
+    0.005,
+    0.007071067811865476,
+    0.01,
+    0.014142135623730952,
+    0.02,
+    0.028284271247461905,
+    0.04,
+    0.05656854249492381,
+    0.08,
+    0.11313708498984762,
+    0.16
+  ],
+  "raw_report_sha256": "ccafac34e815585fc04adadd7690eb6d94d9d0de1d221722ca047477edaf37c9",
+  "max_initial_calibration_error": 2.3869795029440866e-15,
+  "acquisition_pp_range": [
+    -14.392692375899275,
+    34.603529761974855
+  ],
+  "retention_pp_range": [
+    -40.914530903098424,
+    -21.68138885502363
+  ],
+  "limitations": [
+    "Two task seeds, not the paper 96-seed cohort",
+    "Independent implementation and RNG; not bitwise upstream reproduction",
+    "Distributional controlled-model metrics, not LLM accuracy",
+    "No paper-wide trend or Rineya benefit is established",
+    "One tool wait timed out; complete 144-cell JSON verified afterward"
+  ]
+}

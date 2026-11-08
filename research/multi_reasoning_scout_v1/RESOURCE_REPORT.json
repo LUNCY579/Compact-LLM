@@ -1,0 +1,69 @@
+{
+ "attempts": [
+  {
+   "attempt": "native-supa-001",
+   "error": "RESOURCE_GUARD: host_available_bytes: 2.099 GiB < 6.000 GiB",
+   "model_imported": false,
+   "model_loads": 0,
+   "raw_generation_files": 0,
+   "supervisor_wall_seconds": 0.6090000000003783,
+   "type": "RuntimeError"
+  },
+  {
+   "attempt": "native-d1-001",
+   "error": "RESOURCE_GUARD: host_available_bytes: 2.265 GiB < 6.000 GiB",
+   "model_imported": false,
+   "model_loads": 0,
+   "raw_generation_files": 0,
+   "supervisor_wall_seconds": 0.5159999999996217,
+   "type": "RuntimeError"
+  },
+  {
+   "attempt": "native-supa-002",
+   "error": "schema smoke failed; no prompt repair or CHECK evaluation",
+   "generation_calls": 90,
+   "model_imported": true,
+   "model_loads": 1,
+   "peak_gpu_allocated_bytes": 3114824192,
+   "peak_host_rss_bytes_sampled": 2594693120,
+   "raw_generation_files": 96,
+   "reserved_generated_tokens": 7712,
+   "supervisor_wall_seconds": 34.1869999999999,
+   "type": "RuntimeError",
+   "wall_seconds": 32.233999999999924
+  },
+  {
+   "attempt": "native-d1-002",
+   "error": "schema smoke failed; no prompt repair or CHECK evaluation",
+   "generation_calls": 90,
+   "model_imported": true,
+   "model_loads": 1,
+   "peak_gpu_allocated_bytes": 3114824192,
+   "peak_host_rss_bytes_sampled": 2630647808,
+   "raw_generation_files": 96,
+   "reserved_generated_tokens": 7712,
+   "supervisor_wall_seconds": 54.827999999999975,
+   "type": "RuntimeError",
+   "wall_seconds": 52.84400000000005
+  }
+ ],
+ "experiment": "MRS-1",
+ "limits_not_weakened": true,
+ "measurement_note": "Attempts 001 refused before importing torch and measure CPU setup only. Attempts 002 are real native measurements: one model load each, 90 generation calls each, 2.90 GiB peak GPU allocation on both. No scored case was produced, so cost per recovered case stays null rather than being given a finite value.",
+ "note": "Superseded update: the blocking event is the frozen SCHEMA_SMOKE gate, not the preload resource guard. The 001 refusal receipts are retained unchanged.",
+ "retries": 0,
+ "status": "SCHEMA_SMOKE_FAILURE_AFTER_NATIVE_LOAD",
+ "supersedes": "PRELOAD_RESOURCE_REFUSAL",
+ "totals": {
+  "cost_per_recovered_case": null,
+  "generation_calls": 180,
+  "model_loads": 2,
+  "peak_gpu_allocated_bytes_max": 3114824192,
+  "reserved_generated_tokens": 15424,
+  "scored_cases": 0,
+  "supervised_attempts": 4,
+  "supervisor_wall_seconds": 90.14,
+  "training_steps": 0,
+  "worker_wall_seconds": 85.078
+ }
+}

@@ -1,0 +1,14 @@
+{
+  "action": "Preserve v1 unreviewed; replace with independently audited v2 corpus using independent distractor/identity RNG and counterfactual/position controls.",
+  "affected_answerable_distant_rows": {
+    "dev": 36,
+    "train": 24
+  },
+  "created_utc": "2026-10-03T05:31:33.797884+00:00",
+  "manifest_sha256": "a4a6ee1584f3dfc48906b754f90ef71feacbc473829230ea90ae8567d7671b66",
+  "native_exposure": false,
+  "reason": "Recent distractor values encode distant answers via (last_value - 13 * last_log_index) modulo 997; entity indices encode repeated answer mapping. Missingness fixed by family.",
+  "reviewed_for_sbhm": false,
+  "shortcut_exact_match_rate": 1.0,
+  "status": "REJECTED_UNADMITTED_PROPOSAL"
+}

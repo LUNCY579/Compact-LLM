@@ -1,0 +1,94 @@
+{
+  "acceptance_evidence": {
+    "all_EOS_ordering_status": "UNVERIFIED_FINITE_PRECISION",
+    "all_pre_correction_archive_files_and_raw_run_hashes_match": true,
+    "archive_files_verified": 32,
+    "changed_AST_definitions": [
+      "_triplet",
+      "analyze_bundle",
+      "main"
+    ],
+    "existing_independent_changed_fixture_evidence": {
+      "endpoints_equal_on_old_checker_accepted_fixture": true,
+      "failures_errors": 0,
+      "negative_gates": "bad FD, EOS IDs, nonfinite/missing EOT, source and count proofs refuse",
+      "pytest_seconds": 1.57,
+      "shift_fixture_scope": "Representable FP32 rounded-operand counterexample challenges a universal1e-5 bound; no assertion of actual native case cause or error envelope.",
+      "source_before_after_stable": true,
+      "tests": 10
+    },
+    "implemented_new_analyzer_sha256": "5a62452a6991b60fbf1562d9554b1cb780432e194bd95c14c7191872384e74a1",
+    "implemented_test_sha256": "6b33b5e9be529fc2ca94653c2cb6150b163f5aae8a5eb76a4797274200f9f023",
+    "math_recomputation_receipt_sha256": "7eb188ce6062df7eac7327bb4960f3f9deca4539ceff61059a489881884fb254",
+    "old_analyzer_tests_plan_and_failed_report_preserved": true,
+    "original_1e_minus5_exceedance_markers_retained": 3,
+    "protected_constant_contracts_identical": [
+      "LANE",
+      "STATE",
+      "CUSTOM",
+      "QWEN",
+      "EOS",
+      "ALPHAS",
+      "GIB",
+      "DESIGN",
+      "DESIGN_4500",
+      "DEADLINE_CONTRACTS",
+      "PACKET",
+      "EXPECTED_EVENTS",
+      "EXPECTED_COUNTS",
+      "FEATURE_KEYS"
+    ],
+    "raw_values_and_gaps_unchanged_as_recomputed_by_math_and_adversarial_receipts": true,
+    "retained192_EOS_rows": 192,
+    "unchanged_other_definitions": 19
+  },
+  "accepted_requirements": [
+    "A numerical consistency proof gate needs actual operations/dtype, needed operands and a justified finite-precision envelope before acceptance.",
+    "Operation-specific invariance/counterexample fixtures are apparatus evidence, not attribution to an unlogged native case.",
+    "The unsupported auxiliary cross-expression relation remains UNVERIFIED on all rows, with every raw gap and original1e-5 marker exposed; no enlarged threshold, clipping, repaired values, dropped cases or changed endpoint.",
+    "Separate immutable postrun analyzer/source/output lineage and independent changed-function review precede interpretation.",
+    "Registered native, FD, finite, source, EOS-ID, chronology, count, selection, caps and resource gates stay fixed. UNVERIFIED cannot waive a failure of those gates.",
+    "Prospective EOS operand instrumentation would require its own reviewed qualification/count/resource/authority contract; this policy grants no model call, retry or training."
+  ],
+  "authority_and_claim_limits": {
+    "actual_EOS_ordering_accuracy_or_rounding_cause_proven": false,
+    "efficiency_or_Codex_self_improvement_claim_supported": false,
+    "future_EOS_instrument_run_authorized": false,
+    "new_controller_or_fit_authorized": false,
+    "new_native_call_authorized": false,
+    "semantic_efficacy_or_goal_completion_claimed": false,
+    "training_or_scope_expansion_authorized": false
+  },
+  "created_utc": "2026-10-05T15:39:12.301735+00:00",
+  "findings": [],
+  "independence": {
+    "not_independent_native_worker_source_review": true,
+    "policy_and_new_analyzer_other_authors": true,
+    "review_scope": "Independent policy review against implemented correction and other reviewers' existing evidence; no new tests or model calls.",
+    "reviewer_authored_native_worker": true
+  },
+  "model_calls_by_this_reviewer": 0,
+  "new_tests_by_this_reviewer": 0,
+  "policy_author": "root",
+  "policy_sha256": "a3423abb1a58cb9eb7eec53e5ea3edf8a4293565cef432bb79a9bddf727cdc2e",
+  "reviewer": "native_engineer",
+  "scope": "Research policy10 source-bound numerical-consistency procedure only",
+  "source_ledger_state_changes_by_this_reviewer": false,
+  "source_sha256": {
+    "CPU_CAUSAL_REPLAY_ANALYSIS_PLAN_001.md": "6282ac717afc6575587d6c5615518441038d7c8db2f54fca7eb562f980cb6a11",
+    "CPU_CAUSAL_REPLAY_ANALYZER_FP32_CORRECTION_001.md": "dea6d23530c08ac826a8f4c6e456e43b0b673e617360e4160ddc32130237df71",
+    "RESEARCH_POLICY_V10.md": "a3423abb1a58cb9eb7eec53e5ea3edf8a4293565cef432bb79a9bddf727cdc2e",
+    "analyses/cpu-causal-replay-003-fp32-reviewed-001/REPORT.json": "ae15d0c9d425938d13ea981db4406269ae2ada5a6444d778e1a8fe0f84671911",
+    "analyses/cpu-causal-replay-003/REPORT.json": "9c4eb72f81359d7f2f5f33af41d1c55e216aacef6f36411ce84c282533fb5437",
+    "audits/cpu_causal_replay_execution_math_003.json": "7eb188ce6062df7eac7327bb4960f3f9deca4539ceff61059a489881884fb254",
+    "cpu_causal_replay_analysis.py": "bfe6a0405d0acb4a9217438da04ece00db8a53604c2a6e8573fbc46c29d43253",
+    "cpu_causal_replay_analysis_fp32.py": "5a62452a6991b60fbf1562d9554b1cb780432e194bd95c14c7191872384e74a1",
+    "reviews/cpu_causal_replay_execution_review_003.json": "94071d3a9fc1576786119564e78745dcea3382be1bad4889d5d13c6d686c66fe",
+    "reviews/fp32-correction-tests-001/COMMAND.json": "4bdfc856574911a2a399f83243588c20aad7045e610d65ae1ca836a9722ca595",
+    "reviews/fp32-correction-tests-001/junit.xml": "30bb6640c7b5ad8d374fbec81a9089806e7ca7d589096b8667af1d1fa2ade08d",
+    "tests/test_cpu_causal_replay_analysis.py": "ae15b60e3550fa2b36e5d45e3f3491ed13aeac70185033ee9faf9d8b7dc38a10",
+    "tests/test_cpu_causal_replay_analysis_fp32.py": "6b33b5e9be529fc2ca94653c2cb6150b163f5aae8a5eb76a4797274200f9f023",
+    "versions/cpu_causal_replay_analysis_before_fp32_ordering_003/MANIFEST.json": "a80b7538b86c52f6cf0d3da2fc42333386f48e818bf78cb29908c136924254a2"
+  },
+  "status": "ACCEPTED"
+}

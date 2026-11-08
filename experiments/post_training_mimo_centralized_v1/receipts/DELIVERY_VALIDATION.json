@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "status": "PASS_EXACT_PREFIX_SOURCE_CPU_20_CONTROLS_PREWORKER_GPU_BLOCKED_NO_NATIVE",
+  "report": {
+    "path": "CENTRALIZED_EXPERIMENT_REPORT.pdf",
+    "sha256": "4329a7d558c6cea2a0f8cb6716f8424bb25fcbacbc2a062072eaeefa5a31546c",
+    "bytes": 33775,
+    "pages": 9,
+    "visual_QA": "Changedpages8/9inspected; unchangedhistoricalcontent1-7retained; tableheaderrepeats, no clippingorblankpage."
+  },
+  "amendment": "AMENDMENT_021.md",
+  "worker_source_review": {
+    "scripts/qualify_native_backend.py": {
+      "sha256": "f775b9df35a498886fc37b5a6d84076f82eea61f92b758afc6421dcd6b41809a",
+      "bytes": 41487
+    },
+    "tests/test_qualify_native_backend.py": {
+      "sha256": "7fe8f421e1d183907b06c831e510f970369258da5a3902f67955207c6790051a",
+      "bytes": 12172
+    },
+    "configs/NATIVE_BACKEND_QUALIFICATION_V1.json": {
+      "sha256": "5c48a50b32cb8824d0c01a164b69375c1244a53ea60838abe466b45d882735ae",
+      "bytes": 36949
+    }
+  },
+  "CPU_validation": "receipts/PUBLICATION_REVIEW_20261009_CPU_VALIDATION.json",
+  "actual_prefix_audit": "receipts/NATIVE_BACKEND_QUAL_V1_PREFIX_AUDIT.json",
+  "physics_result": "results/native_backend_qual_v1_20261001_observed/QUALIFICATION_RESULT.json",
+  "native_math_qualified": false,
+  "native_resume_qualified": false,
+  "E1_authorized": false,
+  "CHECK_FINAL_access": false,
+  "goal_complete": false,
+  "source_producer_commit": "19551ddebc87c93161c303865ce6d0f130de0093",
+  "preworker_admission": "receipts/NATIVE_BACKEND_QUAL_V1_PREWORKER_ADMISSION.json",
+  "preworker_archive": "receipts/NATIVE_BACKEND_QUAL_V1_ADMISSION_ARCHIVE.json",
+  "publication_review": "receipts/PUBLICATION_REVIEW_20261009.json",
+  "latest_native_mechanics": "receipts/NATIVE_BACKEND_QUAL_V1_NATIVE_RESULT_20261001.json",
+  "latest_causal_diagnostic": "receipts/CAPTURE_CAUSAL_WAIT_V2_NATIVE_RESULT_20260930.json",
+  "same_process_mechanics_observed": true,
+  "fixed_shape_causal_controls_observed": true,
+  "current_goal_control_status": "active",
+  "current_exact_prefix_registration": "configs/CAPTURE_EXACT_PREFIX_QUAL_V1.json",
+  "exact_prefix_source_review": "receipts/CAPTURE_EXACT_PREFIX_V1_SOURCE_REVIEW.json",
+  "exact_prefix_CPU_validation": "receipts/CAPTURE_EXACT_PREFIX_V1_CPU_VALIDATION.json",
+  "exact_prefix_admission": "receipts/CAPTURE_EXACT_PREFIX_V1_PREWORKER_ADMISSION.json",
+  "exact_prefix_archive": "receipts/CAPTURE_EXACT_PREFIX_V1_ADMISSION_ARCHIVE.json",
+  "exact_prefix_native_qualified": false
+}

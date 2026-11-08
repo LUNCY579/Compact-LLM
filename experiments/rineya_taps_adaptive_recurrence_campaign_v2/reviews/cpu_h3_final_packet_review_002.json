@@ -1,0 +1,103 @@
+{
+  "schema_version": 1,
+  "reviewer": "independent adversarial_review",
+  "reviewed_utc": "2026-10-05T02:20:47.435266+00:00",
+  "status": "FINDINGS_SUCCESSOR_PACKET",
+  "scope": "Successor v10 declared hash union, current CPU report/budget/NULL/no-fit/prospective status only. No models, tests, broader science audit or old artifact edits.",
+  "supersedes": {
+    "receipt": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\reviews\\cpu_h3_final_packet_review_001.json",
+    "sha256": "1e9767346388dcef4e73e6a5ab17d2117f652b0f978d72cba1303da6624ed323",
+    "prior_status": "FINDINGS_CURRENT_PACKET",
+    "preserved": true,
+    "resolved_finding": "v9 omitted direct CPU test-source bindings; v10 includes CPU worker/parent/analyzer and fixture helper sources and refreshes current_tests.",
+    "clarification": "Prior001 note implying those CPU sources were already in grouped entries was inaccurate; its blocking check correctly identified their omission. They were indirectly bound by the existing83-file admission. This successor verifies the direct union."
+  },
+  "checks": {
+    "all_v10_group_current_source_test_hashes": false,
+    "required_CPU_test_and_fixture_sources_in_union": true,
+    "STATE_current_index10": true,
+    "native_budget_exact_rounding": true,
+    "CPU_counts_and_primary_null_unchanged": true,
+    "no_fitted_controller_or_completed_global_goal": true,
+    "no_worker_or_budget_reservation_or_retry": true,
+    "prospective_replay_NOT_NATIVE_READY": false,
+    "canonical201_example_current_report_correct": true,
+    "policy8_exact_hashes_and_scope": true
+  },
+  "blocking_findings": [
+    "all_v10_group_current_source_test_hashes",
+    "prospective_replay_NOT_NATIVE_READY"
+  ],
+  "index": {
+    "epoch": "2026-10-05T02:19:21.331261+00:00",
+    "declared_hash_entries_verified": 299,
+    "grouped_entries": 227,
+    "current_sources": 50,
+    "current_tests": 22,
+    "missing": [
+      "test_analysis.py",
+      "test_bulk_analysis.py",
+      "test_bulk_bank.py",
+      "test_bulk_native.py",
+      "test_bulk_supervision.py",
+      "test_control.py",
+      "test_cpu_h3_analysis.py",
+      "test_cpu_h3_native.py",
+      "test_cpu_h3_supervision.py",
+      "test_diagnostic_native.py",
+      "test_diagnostic_supervision.py",
+      "test_gpu_analysis.py",
+      "test_gpu_semantics.py",
+      "test_gpu_supervision.py",
+      "test_open_analysis.py",
+      "test_open_bank.py",
+      "test_open_native.py",
+      "test_open_supervision.py",
+      "test_runtime_debug.py",
+      "test_runtime_debug_supervision.py",
+      "test_sensitivity.py",
+      "test_supervision.py"
+    ],
+    "mismatches": [
+      "CPU_CAUSAL_REPLAY_DESIGN_DRAFT_001.md"
+    ],
+    "prospective_entries_explicit_NOT_NATIVE_READY": [
+      "CPU_CAUSAL_REPLAY_DESIGN_DRAFT_001.md",
+      "CPU_CAUSAL_REPLAY_FEASIBILITY_DRAFT_001.json",
+      "CPU_CAUSAL_REPLAY_FEASIBILITY_DRAFT_001.md",
+      "runs/causal-replay-DEV-export-001/DEVELOPMENT_BANK.json",
+      "runs/causal-replay-DEV-export-001/DEVELOPMENT_TOKEN_BINDING.json",
+      "runs/causal-replay-DEV-export-001/MANIFEST.json"
+    ],
+    "future_design_after_epoch": "Prospective files arriving later are not indexed/frozen/native-admitted by this snapshot; no new design review performed."
+  },
+  "current_budget": {
+    "used_seconds": 1374.4369999999963,
+    "remaining_seconds": 20225.563000000002,
+    "active_worker": false,
+    "new_native_reservation_seconds": 0
+  },
+  "correction_to_preserved_execution_review": {
+    "source": "reviews/cpu_h3_execution_review_001.json",
+    "incorrect_previous_example": "wrong21/correct247",
+    "correct": "Canonical target201; both archived21 and247 are wrong and share target201 initial digit2.",
+    "source_rows_unchanged": true,
+    "counts_FD_statistics_and_scientific_scope_unchanged": true,
+    "old_review_bytes_preserved": true
+  },
+  "scientific_status": "Completed exposed CPU surrogate mechanics; larger bulk primaryNULL, no fitted controller, scientific goalACTIVE_UNMET; next replay metadataNOT_NATIVE_READY",
+  "artifact_sha256": {
+    "REPRODUCIBILITY_INDEX_v10.json": "df5b158c9ea122832ebbb5c9f25f386a1e7d2c063935b4e68f2fec43db10d81e",
+    "STATE.json": "4c09fb0c1ed4b33c53fec257eea967ba7150a9fba70835fc405a37c0eb52e468",
+    "RESEARCH_REPORT.md": "76100be51e08dc0624d5341b6faefeaa2f491831cbf02724d92badddd4ad39fc",
+    "CONTINUE.md": "ba56679aef6388857ce8d7fcf8514dadae1c83ec6c0edf461cbdfd8466fbf778",
+    "CAMPAIGN.md": "ce3dbc9fc4ea6a996e3c9e3967803b600b2b4c8eddf9fe2dd29d96bec328fa09",
+    "MODEL_BINDING.json": "c5681cd76faa411e94753467c86d81536eec4334194b67b8705e05bf133b6283",
+    "ENVIRONMENT.json": "59ae54d5e3c04f2674616a2cd5e73db6e3c7b0526eacb289eb13e66b326380d2",
+    "RESEARCH_POLICY.jsonl": "656c57fe6f4fffb7e2d98d9ed1ba194f1018eabe25b8178925882d487200d1a7",
+    "CLAIM_LEDGER.jsonl": "d3f451db2f84928ea849d1a2aec6a1e1ff2e8091b1a7663b9ffdff6fe3ca41fb",
+    "BUDGET_LEDGER.jsonl": "dfb434d56bbbcdfa378ce4766d3b9bcf7066aeee8e84b95a54db58e37c3ec7dc",
+    "reviews\\cpu_h3_final_packet_review_001.json": "1e9767346388dcef4e73e6a5ab17d2117f652b0f978d72cba1303da6624ed323",
+    "build_cpu_reproducibility_index.py": "8f39ec71b76afe92c3dc44c9c3ac2900916fecc6ee38a063cbfef1b9a0ba6336"
+  }
+}

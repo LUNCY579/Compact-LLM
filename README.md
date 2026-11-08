@@ -2,7 +2,7 @@
 
 **Experimental research on useful capabilities, efficient adaptation, and reliable evaluation in compact language models.** The Rineya family primarily builds on Qwen3-0.6B (approximately 596 million parameters), with 19-layer and 28-layer derivatives, adapters, task-vector combinations, single-pass mechanisms, and routed systems.
 
-> **Repository status (8 November 2026):** `main` is a preserved historical baseline. The broader, actively consolidated research history lives on [`research/post-training-mimo-centralized-v1`](https://github.com/LUNCY579/Compact-LLM/tree/research/post-training-mimo-centralized-v1). Research results below come from recorded experiments, not a claim of production readiness or generalized superiority. The project contains both positive and negative findings.
+> **Repository status (8 November 2026):** `main` now contains the **integrated research history** formerly concentrated on `research/post-training-mimo-centralized-v1`; a pre-consolidation snapshot is retained at `archive/main-preconsolidation-20261108`. Distinct unresolved experiment branches and blocked PRs remain separate. Research results below come from recorded experiments, not a claim of production readiness or generalized superiority. The project contains both positive and negative findings.
 
 ## Selected measured findings
 
@@ -19,9 +19,13 @@ The results are intentionally presented with their limitations. In particular, t
 **Primary evidence:**
 - [Common-protocol family comparisons](comparison.md) and [model lineage](lineage.md).
 - [Published long-context family search report](Rineya_Long_Context_Weight_Geometry_Lab_v1/PUBLISHED_FAMILY_SEARCH_REPORT.md).
-- [Current model-quality decision memo](https://github.com/LUNCY579/Compact-LLM/blob/research/post-training-mimo-centralized-v1/MODEL_QUALITY_STATUS.md) — source-backed limitations, corrections, and remaining qualification gaps.
-- [State-transition and retention continuation](https://github.com/LUNCY579/Compact-LLM/blob/research/post-training-mimo-centralized-v1/CONTINUATION.md) — acquisition, dose, rehearsal, and independent retention failures.
-- [Multi-reasoning frozen-scout evidence](https://github.com/LUNCY579/Compact-LLM/blob/research/post-training-mimo-centralized-v1/research/multi_reasoning_scout_v1/CURRENT_CANDIDATE_RESULTS.md) — an instructive schema-smoke failure, not a positive benchmark claim.
+- [Current model-quality decision memo](MODEL_QUALITY_STATUS.md) — source-backed limitations, corrections, and remaining qualification gaps.
+- [State-transition and retention continuation](CONTINUATION.md) — acquisition, dose, rehearsal, and independent retention failures.
+- [Multi-reasoning frozen-scout evidence](research/multi_reasoning_scout_v1/CURRENT_CANDIDATE_RESULTS.md) — an instructive schema-smoke failure, not a positive benchmark claim.
+
+## November 2026 additive research imports
+
+The [bulk import source manifest](docs/repository-consolidation/2026-11-08/BULK_IMPORT.md) records 14 exact non-overlapping experiment/research subtrees that were missing from this branch. They include the Fast-Weight Attention lab, TGSA and retrofit programmes, adaptive-compute experiments, Halo/positional experiments, and the MRS-2 reasoning successor. This is a **structural preservation import**, not fresh model qualification, and does **not** resolve outstanding shared-path branch conflicts or blocked scientific gates.
 
 ## Research directions
 
@@ -39,6 +43,7 @@ The results are intentionally presented with their limitations. In particular, t
 | [`lineage.md`](lineage.md) | Weight ancestry, donors, adapter recipes, and names |
 | [`announcement.md`](announcement.md) | Historical limits on public claims |
 | [Integrated research branch](https://github.com/LUNCY579/Compact-LLM/tree/research/post-training-mimo-centralized-v1) | Consolidated later experiments and evidence |
+| [2026-11-08 branch-tip audit](docs/repository-consolidation/2026-11-08/README.md) | Live-branch ancestry, safe-merge boundaries, and remaining work |
 | [Consolidation record](https://github.com/LUNCY579/Compact-LLM/tree/research/post-training-mimo-centralized-v1/docs/repository-consolidation/2026-10-22) | Preserved source histories, blockers, and manual branch-pruning safeguards |
 
 This is a collection of **independent experimental packages**, not a single turnkey training command. Read an experiment's protocol, environment pins, data permissions, and test instructions before running it; a passing synthetic or CPU test does not validate native-GPU model quality.

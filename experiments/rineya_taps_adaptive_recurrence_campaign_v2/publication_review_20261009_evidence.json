@@ -1,0 +1,129 @@
+{
+  "schema": "bounded_independent_publication_evidence_review_v1",
+  "review_date_client": "2026-10-09",
+  "status": "SCIENTIFIC_EVIDENCE_CONSISTENT_METADATA_CORRECTIONS_REQUIRED",
+  "reviewer_role": "Independent read-only evidence reviewer; no campaign source, data, ledger or runtime mutation",
+  "scope": {
+    "models_loaded": 0,
+    "native_calls": 0,
+    "tokenizer_calls": 0,
+    "new_apparatus_tests": 0,
+    "model_asset_rehashes": 0,
+    "protected_data_access": false,
+    "git_mutations": false,
+    "review_outputs_only": true,
+    "limits": "Finite key-report/raw-journal/ledger/admission inspection; not a fresh whole-mission or source-code qualification"
+  },
+  "authoritative_checks": {
+    "full_generation_report": {
+      "path": "analyses/bulk-restart-manifest-reviewed-001/REPORT.json",
+      "sha256": "67c7d5d9fc128b148afc6d056cb26f9ecef4e05dde78a7405358125250cb9d21",
+      "status": "COMPLETE_EXPLORATORY_BULK",
+      "complete": true,
+      "errors": [],
+      "raw_outcome_rows": 3680,
+      "physical_rows": 3296,
+      "nonphysical_alias_or_oracle_rows": 384,
+      "scientific_physical_rows": 3168,
+      "SMOKE_physical_rows": 128,
+      "raw_DEV": {"A0": 63, "A1": 69, "A3": 67, "A5_two_seeds_averaged_within_item": 67},
+      "raw_OPEN_VALIDATION": {"A0": 33, "A1": 34, "A3": 34, "A5_two_seeds_averaged_within_item": 34},
+      "raw_forward_journal_events": {"FORWARD_STARTED": 9180, "FORWARD_COMPLETED": 9180, "MAXIMUM_FORWARD_STARTED": 18, "MAXIMUM_FORWARD_COMPLETED": 17, "MAXIMUM_FORWARD_FAILED": 1, "CACHE_REJECTION_STARTED": 2, "CACHE_REJECTED": 2},
+      "final_integrity_journal_commitments_checked": 6,
+      "commitment_hash_byte_and_line_mismatches": [],
+      "recorded_before_after_loaded_state": "b23dec7edc2413189c9a35cc7a2596cdc03cb67b08628a0c443173c305d61551",
+      "independent_review": "reviews/bulk_restart_execution_review_001.json",
+      "independent_review_sha256": "74a4aaa46a537bfbe798ea76c97b52c11f4c5d1b1ced55a8cae61ad19e465ad0",
+      "interpretation": "Restricted negative for original TAPS on this operator/bank; exploratory exposed surfaces, not broad/source-independent confirmation"
+    },
+    "passive_probe": {
+      "report": "quality_pattern_v3/analyses/prefix-probe-001/REPORT.json",
+      "report_sha256": "6bf9dd67f2f6f2b4a5bcaec0738b84058212cd28883ecda237a309532fd930c7",
+      "raw_forward_journal_events": {"FORWARD_STARTED": 449, "FORWARD_COMPLETED": 448, "FORWARD_FAILED": 1, "CACHE_REJECTION_STARTED": 2, "CACHE_REJECTED": 2},
+      "interpretation": "Exposed DEV descriptive features only; helpful/harmful scalar overlap does not certify a useful controller"
+    },
+    "opposed_replay": {
+      "report": "quality_pattern_v3/analyses/opposed-policy-replay-001/REPORT.json",
+      "report_sha256": "9a68c9a6b930c26625940301353971f39c643ef076fbbdc0dad23704f0626df5",
+      "status": "COMPLETE_EXPOSED_DEV_POLICY_REPLAY",
+      "independent_review": "quality_pattern_v3/reviews/opposed_replay_execution_review_001.json",
+      "independent_review_sha256": "419684d0142f51d3b308fd0318737af5323c69ce17aa616842b412a71a648b2e",
+      "native_model_calls": 0,
+      "guard_correct_of_192": 70,
+      "unit_correct_of_192": 69,
+      "guard_gains_losses_vs_unit": [1, 0],
+      "guard_intact_correct_losses": 5,
+      "interpretation": "0.5208 percentage-point exposed replay improvement; below five-point target with failed intact preservation; nomination is not efficacy"
+    },
+    "fresh_packet": {
+      "admission": "quality_pattern_v3/fresh_admission_v2.json",
+      "admission_sha256": "e0de045b5d2544acb09b860fdbcae59cbbae0c98fb0e0f6fe504114f4d12878a",
+      "independent_dispatch_review": "quality_pattern_v3/reviews/fresh_dispatch_review_002.json",
+      "independent_dispatch_review_sha256": "00c40d8e6f50040d5f25b24dda844cb0bbfe01235be0144c64d0ce1032393e9b",
+      "actual_dispatch_members_rehashed": 133,
+      "dispatch_mismatches": [],
+      "fresh_run_directory_exists": false,
+      "fresh_native_budget_events": 0,
+      "scientific_cases": 432,
+      "parent_units": 216,
+      "preservation_panel_cases": 24,
+      "status": "PREPARED_NOT_RUN",
+      "interpretation": "Reviewed apparatus/data packet; no fresh native qualification, scores, preservation result or efficacy"
+    },
+    "budget": {
+      "native_terminal_events": 11,
+      "sum_terminal_native_worker_seconds": 3690.2476850999988,
+      "published_rounded_current_total": 3690.2476851,
+      "remaining_native_seconds": 17909.7523149,
+      "original_completed_campaign_total_seconds": 3581.233,
+      "ledger_sha256_at_review": "cbd820016a473bb424a89f1d20667153ba725311f33bf786ca9ba42fced566ea"
+    }
+  },
+  "findings": [
+    {
+      "id": "PUB-E01",
+      "severity": "required_metadata_correction",
+      "files": ["quality_pattern_v3/STATE.json", "quality_pattern_v3/CONTINUE.md"],
+      "observation": "STATE says BLOCKED_HOST_RAM_THIRD_TURN_AUDIT_PASSED/count3 while persistent_goal_status says active; CONTINUE still mixes first and second blocker turn and active-goal instructions. Third-turn refusal audit records4.8997GiB<7GiB and no meaningful preparation remaining.",
+      "fix": "Reconcile current unheld metadata with the actual current goal-tool state and dated third-turn refusal. Preserve historical snapshots/receipts; do not infer today's RAM availability from October5 client-date measurements.",
+      "do_not_edit": "Hash-held ACTIVE_GOAL_SNAPSHOT_002.json, source/data/tests/plans/admission/reviews"
+    },
+    {
+      "id": "PUB-E02",
+      "severity": "required_publication_context",
+      "files": ["CONTINUE.md", "RESEARCH_REPORT.md", "quality_pattern_v3/PRE_NATIVE_FINDINGS_001.md"],
+      "observation": "Original-campaign documents describe the original completed negative goal and3,581.233-second epoch; V3 positive-gain objective remains unmet and adds109.0146851seconds. A reader can misread original 'no material requirement remains' as current research completion.",
+      "fix": "Add a publication entrypoint/status addendum distinguishing completed original campaign from unfinished V3. Keep original scientific reports and receipt-bound findings intact; report combined budget3,690.2476851seconds separately.",
+      "no_positive_gain_established": true
+    },
+    {
+      "id": "PUB-E03",
+      "severity": "required_ledger_addendum",
+      "files": ["CLAIM_LEDGER.jsonl"],
+      "observation": "Last opposed-replay claim retains RAW_REVIEW_PENDING although independent419684d0 review accepted the descriptive replay.",
+      "fix": "Append the accepted exposed-DEV descriptive-review disposition referencing report9a68c9a6 and review419684d0. Do not rewrite historical pending row or claim fresh native efficacy. Include PREPARED_NOT_RUN fresh-corpus status in publication summary."
+    },
+    {
+      "id": "PUB-E04",
+      "severity": "required_authority_context",
+      "files": ["AUTHORITY.txt", "CONTINUE.md", "quality_pattern_v3/CONTINUE.md"],
+      "observation": "Initial authority and old continuation explicitly disallow remote publication absent later instruction. User now explicitly requested review/commit/push on October9.",
+      "fix": "Preserve immutable initial authority; add a later publication-authorization record and current publication instructions. No merge, deployment, training or extra model run is implied."
+    },
+    {
+      "id": "PUB-E05",
+      "severity": "reproducibility_requirement",
+      "files": ["fresh_admission_v2.json", "source/data/raw journals and snapshot archives"],
+      "observation": "Scientific receipts enforce exact raw bytes; native dependencies use local Windows interpreter/model locations and a nonpublished canonical checkpoint. Commit/filter/line-ending conversion can break byte-bound reproducibility.",
+      "fix": "Preserve exact admitted source and evidence bytes in Git, retain failed/null reports and historical source snapshots, publish essential raw journals plus lineage files, and describe canonical assets/runtime prerequisites. Avoid automatic native execution as a publication check."
+    }
+  ],
+  "inspected_metadata_epoch": {
+    "quality_pattern_v3/STATE.json_sha256": "095b2c6f723a2eeb377dc92154332eefe34e760ced53a774e78f0f68dc0a1a69",
+    "quality_pattern_v3/CONTINUE.md_sha256": "f1024cbad4e0650192cb1608a0513c5a16602ad0b6a2f571765b3ff6a67a2872",
+    "quality_pattern_v3/PRE_NATIVE_FINDINGS_001.md_sha256": "163c3cbd3038c2e626a1c938cbbfe3a3df2b09a7a62df22845fe6a3b527bf032",
+    "CLAIM_LEDGER.jsonl_sha256": "6384fb7f14a6d372d18458e6800eb24d9a4c90abe1c0665eb7dfd065cda587c0",
+    "note": "These bind inspected bytes before coordinator publication metadata corrections; they do not assert those files must stay current."
+  },
+  "scientific_publication_disposition": "No efficacy overclaim found in controlling scientific reports. Publish useful negative/descriptive results and prepared-but-unrun follow-up with the metadata corrections above. Do not mark positive-gain objective achieved."
+}

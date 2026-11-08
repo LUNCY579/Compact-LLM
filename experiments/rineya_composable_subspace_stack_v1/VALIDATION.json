@@ -1,0 +1,42 @@
+{
+  "experiment": "CSS-001",
+  "date": "2026-09-27",
+  "status": "CPU_AND_SYNTHETIC_MECHANICS_PASSED",
+  "parent_sha": "816a1e8f4d1ab1c9d1ab847697d962a141521bac",
+  "source_sha256": "acb31319316fe5bf4139b8e355b74cf0dad4dd6ad7cd6dc08dd1aa2382f118b6",
+  "tests": {
+    "command": "python -m pytest -q experiments/rineya_composable_subspace_stack_v1/tests --disable-warnings",
+    "passed": 150,
+    "warnings": 18,
+    "warning_note": "PyTorch internal torch.jit.script deprecation warnings; no test failures",
+    "duration_seconds": 3.77
+  },
+  "compileall_passed": true,
+  "runtime": {
+    "python": "3.13.5",
+    "numpy": "2.3.5",
+    "torch": "2.10.0+cpu",
+    "safetensors": "0.7.0",
+    "psutil": "7.2.2",
+    "pytest": "9.0.2"
+  },
+  "demo": {
+    "status": "SYNTHETIC_MECHANICS_ONLY",
+    "seed": 1729,
+    "method_arms": 11,
+    "endpoint_and_dose_controls": 8,
+    "frozen_selection_and_check_exercised": true,
+    "toy_optimizer_steps": 8
+  },
+  "native": {
+    "rineya_checkpoints_loaded": 0,
+    "model_forwards": 0,
+    "optimizer_steps": 0,
+    "inherited_real_endpoint_preflight": "NOT_RUN",
+    "windows_cuda_qualification": "NOT_RUN",
+    "qwen3_jvp_qualification": "NOT_RUN",
+    "quality_gain_claimed": false,
+    "release_permitted": false
+  },
+  "remote_ci": "NOT_RUN"
+}

@@ -1,0 +1,2212 @@
+{
+  "schema": "rineya-taps-completion-audit-v2",
+  "mission_status": "ACTIVE_UNMET_FULL_18_SECTION_AUTHORITY",
+  "no_goal_transition_by_auditor": true,
+  "audit_scope": "CPU/stdlibrary source/receipt audit; only these two new audit artifacts written; no model, tokenizer, optimizer, protected input or source mutation",
+  "native_model_calls_by_auditor": 0,
+  "optimizer_steps_by_auditor": 0,
+  "budget": {
+    "native_used_seconds": 1330.375,
+    "native_remaining_seconds": 20269.625,
+    "infrastructure_retry_available": false,
+    "infrastructure_retries_used": 1,
+    "controller_revisions": 0,
+    "optimizer_steps": 0,
+    "cloud_spend": 0,
+    "runtime_debug_extra_allowance": "CONSUMED_ONE_WORKER_NOT_FULL_MATRIX_RETRY",
+    "distinct_H3_authority": "ORIGINAL_SCOPE_SUBJECT_TO_FRESH_GATES",
+    "independently_recomputed_used_seconds": 1330.3749999999945,
+    "independently_recomputed_remaining_seconds": 20269.625000000007
+  },
+  "evidence_tiers": {
+    "reference": "QUALIFIED_COMPLETE_RESTRICTED_EXPOSED_DEV",
+    "bulk": "COMPLETE_PREDECLARED_DEV_ONLY_PROVISIONAL;VALIDATION_FAILED;POSTFAULT_GPU_STATE_UNVERIFIED;PRIMARY_NULL",
+    "runtime_debug": "SHORT_AUTHORIZED_DIAGNOSTIC_COMPLETE;FAULT_NOT_REPRODUCED_TRIGGER_UNKNOWN",
+    "H3": "NEVER_NATIVE_QUALIFIED_OR_RUN",
+    "historical": "SOURCE_ATTRIBUTED_CHECKPOINT_SPECIFIC;NOT_POOLED"
+  },
+  "sections": [
+    {
+      "number": 1,
+      "title": "Local workspace and authority",
+      "status": "proved",
+      "proof": "Workspace/HEAD/branch unchanged at 7ece5ce on codex/rineya-taps-adaptation-loop; Git status campaign-only additions; authority preserved.",
+      "limits": "No exhaustive sibling/process audit; scoped preservation receipts support only their own claims.",
+      "paths": [
+        "AUTHORITY.txt",
+        "AUTHORITY_EXTENSION_001.md",
+        "OWNERSHIP.json",
+        "CAMPAIGN.md"
+      ],
+      "evidence": [
+        {
+          "path": "AUTHORITY.txt",
+          "sha256": "18f9b5079c05138a28d783404b7c9f919d62e829c17fe0c7a7334b789dd2fa3d"
+        },
+        {
+          "path": "AUTHORITY_EXTENSION_001.md",
+          "sha256": "9303b9922f0059f2966f2662114149324b95708016d39c0ec9283e28247a84a0"
+        },
+        {
+          "path": "OWNERSHIP.json",
+          "sha256": "fd13abef92621b2fcf339c11da77665392903cb1854a494aa16ffe52e1d6af2f"
+        },
+        {
+          "path": "CAMPAIGN.md",
+          "sha256": "337a47a7d059cd30c4affec38adfbca33cdb43a0c68cb17c947a5138ec342fd2"
+        }
+      ]
+    },
+    {
+      "number": 2,
+      "title": "Persistence and resource contract",
+      "status": "incomplete",
+      "proof": "Five native charges total 1330.375 seconds, 20269.625 remaining; no worker lock; STATE active/unmet; no revisions/training/cloud.",
+      "remaining": "Fresh complete forecast/resources/reserves/locks for every distinct experiment. Runtime-debug permission consumed; no bulk/debug retry. Root owns goal lifecycle.",
+      "paths": [
+        "STATE.json",
+        "BUDGET_LEDGER.jsonl",
+        "HUMAN_RUNTIME_DEBUG_ALLOWANCE_001.json",
+        "audits/post_debug_authority_audit_001.json"
+      ],
+      "evidence": [
+        {
+          "path": "STATE.json",
+          "sha256": "9a79c413ab106f285860d3b6dc0ae1ba694be3918c5f21398812a919a018109e"
+        },
+        {
+          "path": "BUDGET_LEDGER.jsonl",
+          "sha256": "d6d14c6813e49c348ba795cce8932af4298ead845d342897c7c38324fa13956e"
+        },
+        {
+          "path": "HUMAN_RUNTIME_DEBUG_ALLOWANCE_001.json",
+          "sha256": "b96a8a0c950c241b4fa3fc3bb53ebdb82e6457fbcb46a36cfed55acc3be0457c"
+        },
+        {
+          "path": "audits/post_debug_authority_audit_001.json",
+          "sha256": "5d2f6f1b66598033bef7be6b67434ceadce7c425c4753b63100874a9e1114782"
+        }
+      ]
+    },
+    {
+      "number": 3,
+      "title": "Starting evidence",
+      "status": "proved",
+      "proof": "Historical v1 absence of native evidence and fixture nulls preserved; campaign reproduced 62 v1 CPU tests and 65 complete ARMR tests.",
+      "limits": "Historical computer observations are not this host; no whole ChatBubble test-suite claim.",
+      "paths": [
+        "PRIOR_FINDINGS.json",
+        "audits/evidence_math.md",
+        "runs/cpu-v1-001/junit.xml",
+        "runs/cpu-armr-001/junit.xml",
+        "runs/fixture-reference-001/result/headroom.csv"
+      ],
+      "evidence": [
+        {
+          "path": "PRIOR_FINDINGS.json",
+          "sha256": "2b8365d0978dea7bf70c612729527ba8facb3cced0eccb31ce0e443f2e2c1718"
+        },
+        {
+          "path": "audits/evidence_math.md",
+          "sha256": "802ce8af376f13b0ef39dd26c34bc6ae5dd1dcf997d04925e2e1128d0bce6dd5"
+        },
+        {
+          "path": "runs/cpu-v1-001/junit.xml",
+          "sha256": "d4c0b6b255e65a55e0d91e2c6b92ddc54c5e23b6331db7d9fbe8ccad0f159aca"
+        },
+        {
+          "path": "runs/cpu-armr-001/junit.xml",
+          "sha256": "72bdd8bc110a94b274e58329c0782f38f4855614457403d12014fdbe3e86218a"
+        },
+        {
+          "path": "runs/fixture-reference-001/result/headroom.csv",
+          "sha256": "bda08a2f0b0c542f4990c747c20b3b737cd2e863e0827e4b0a9aabdc43d97eb4"
+        }
+      ]
+    },
+    {
+      "number": 4,
+      "title": "Evidence map and primary paper",
+      "status": "proved",
+      "proof": "Checkpoint/source/correction-specific historical claims and primary arXiv v1 mathematics/mixed Qwen results retained.",
+      "limits": "Historical model programs/paper are not campaign reproductions. Full immutable author-code revision and HTML byte archival explicitly unverified.",
+      "paths": [
+        "PRIOR_FINDINGS.json",
+        "audits/evidence_math.md"
+      ],
+      "evidence": [
+        {
+          "path": "PRIOR_FINDINGS.json",
+          "sha256": "2b8365d0978dea7bf70c612729527ba8facb3cced0eccb31ce0e443f2e2c1718"
+        },
+        {
+          "path": "audits/evidence_math.md",
+          "sha256": "802ce8af376f13b0ef39dd26c34bc6ae5dd1dcf997d04925e2e1128d0bce6dd5"
+        }
+      ]
+    },
+    {
+      "number": 5,
+      "title": "Multi-agent supervision and review",
+      "status": "proved",
+      "proof": "Ownership/sole coordinator launch authority and independent source/result/failure reviews retained.",
+      "remaining": "Every substantive affected source/protocol change needs independent review and requalification; PASS grants neither efficacy nor human-only expansion.",
+      "paths": [
+        "OWNERSHIP.json",
+        "DISPOSITIONS.json",
+        "reviews/gpu_retry_dispatch_receipt.json",
+        "reviews/bulk_result_failure_review_001.json",
+        "reviews/runtime_debug_DEV_diagnostic_review_001.json",
+        "reviews/runtime_debug_execution_review_001.json"
+      ],
+      "evidence": [
+        {
+          "path": "OWNERSHIP.json",
+          "sha256": "fd13abef92621b2fcf339c11da77665392903cb1854a494aa16ffe52e1d6af2f"
+        },
+        {
+          "path": "DISPOSITIONS.json",
+          "sha256": "77f5e161e1ad8a373847b59fdcbd566e3189bf5592a58f29faab09d28ee6b78c"
+        },
+        {
+          "path": "reviews/gpu_retry_dispatch_receipt.json",
+          "sha256": "5f26e69e96794d2c5dacc7c881bdcf927ae9bd2b8624064e1ca3be2bc05ac15d"
+        },
+        {
+          "path": "reviews/bulk_result_failure_review_001.json",
+          "sha256": "78f86efec7c713bb135549ae280eda969645001d1127db44bf66264435e0431b"
+        },
+        {
+          "path": "reviews/runtime_debug_DEV_diagnostic_review_001.json",
+          "sha256": "5241eb3d1e7e2dbf4532e8a2d9ff6cdd89f2133378d28cb5a83bf05f21e133e6"
+        },
+        {
+          "path": "reviews/runtime_debug_execution_review_001.json",
+          "sha256": "630ae52931dca870398fde62a277bd898ba2f9d87af1aabdc73952a55c2b4c5f"
+        }
+      ]
+    },
+    {
+      "number": 6,
+      "title": "Host/model identity and supervision",
+      "status": "proved",
+      "proof": "Historical CPU no-load refusal and separate FP32 CUDA successor qualified checkpoint a99f/state b23/head b77. Bulk before-DEV and independent short-debug identities pass their own contracts.",
+      "remaining": "Original bulk postfault GPU state remains UNVERIFIED. Fresh H3 gradient/max256 contract absent. Reference model/environment snapshots need explicit epoch scope.",
+      "paths": [
+        "MODEL_BINDING.json",
+        "ENVIRONMENT.json",
+        "runs/native-reference-001/terminal_receipt.json",
+        "runs/native-gpu-reference-002/result/qualification.json",
+        "runs/native-bulk-001/result/qualification.json",
+        "runs/native-bulk-001/result/receipt.json",
+        "runs/native-runtime-debug-001/result/receipt.json"
+      ],
+      "evidence": [
+        {
+          "path": "MODEL_BINDING.json",
+          "sha256": "3f5ad6c7dbb4bdf39ab6c0ee53efb7d08fccf12329e60aa259a326c7e2b3a503"
+        },
+        {
+          "path": "ENVIRONMENT.json",
+          "sha256": "06624a50b5697266a0a0145f0f7ffc079ef6704978ed856d14170cf99fc3f4e2"
+        },
+        {
+          "path": "runs/native-reference-001/terminal_receipt.json",
+          "sha256": "5e204ff2f8501a8456e27c8d55b47bb73d95533d8a6881b449dd0c242e1546ca"
+        },
+        {
+          "path": "runs/native-gpu-reference-002/result/qualification.json",
+          "sha256": "776e98ef714b50c2abac18998eb423f97fe6c123c68985fae9c04dae23963001"
+        },
+        {
+          "path": "runs/native-bulk-001/result/qualification.json",
+          "sha256": "8e8609504174412523d7379ec0a49c241367ecc98590eba402d7c48b6cbd5f84"
+        },
+        {
+          "path": "runs/native-bulk-001/result/receipt.json",
+          "sha256": "bb41317d634ac9ff8e3492bb9d5645aeb5967633c8ba26b5f28de4017894cdc5"
+        },
+        {
+          "path": "runs/native-runtime-debug-001/result/receipt.json",
+          "sha256": "9a203cbebd1551b733ea2b9f990a24822e94566b68bdd990f7a1c7209a6b207c"
+        }
+      ]
+    },
+    {
+      "number": 7,
+      "title": "Preregistered H1-H6",
+      "status": "incomplete",
+      "proof": "Restricted reference H1/H2/H4 complete; bulk six-constant controls and DEV freeze completed before validation.",
+      "remaining": "H3 native signed surrogate sensitivity absent; H5 preservation fails provisionally and benefit replication is untriggered; H6 useful matched-quality timing absent/conditional.",
+      "paths": [
+        "PREREGISTRATION.md",
+        "BULK_ANALYSIS_PLAN_001.md",
+        "BULK_NATIVE_REGISTRATION_001.md",
+        "DIAGNOSTIC_NATIVE_REGISTRATION.md",
+        "analyses/gpu-reference-002/REPORT.json",
+        "analyses/bulk-001/DEV_DIAGNOSTIC.json"
+      ],
+      "evidence": [
+        {
+          "path": "PREREGISTRATION.md",
+          "sha256": "3b944d5dc89309795c0c784fb69709ca42023d970a70c8656bfa2f299c1e251b"
+        },
+        {
+          "path": "BULK_ANALYSIS_PLAN_001.md",
+          "sha256": "d3f91618fc97c390588561b9fa274e11a8b3330d5807830c826f782b23e97b61"
+        },
+        {
+          "path": "BULK_NATIVE_REGISTRATION_001.md",
+          "sha256": "1ce533aa4f34000a7b4faea73d7cee6089d6e979ec74ce9cde1d9346e83e8302"
+        },
+        {
+          "path": "DIAGNOSTIC_NATIVE_REGISTRATION.md",
+          "sha256": "e2f9e11ef2f1d2464612958e29d10f2f344bb41b90ae93ea05ad63378510639a"
+        },
+        {
+          "path": "analyses/gpu-reference-002/REPORT.json",
+          "sha256": "7f6ceeb57c7666034d1049406232e6b21da801f93253db91ceea6f79f3f3f988"
+        },
+        {
+          "path": "analyses/bulk-001/DEV_DIAGNOSTIC.json",
+          "sha256": "3ac840fda044cc3f82042d116f48658d82b2d741c630acf35240350150927774"
+        }
+      ]
+    },
+    {
+      "number": 8,
+      "title": "Mathematical controller contract",
+      "status": "proved",
+      "proof": "Raw whole-block FP32 moment/variance/limiting/clipping/reset/unit identities and analytic sensitivity tests; native reference varies without saturation.",
+      "limits": "Coherence is not signed task progress; global/adaptive stability unproved; closed-form diagnostic rounding differs potentially from incremental v1.",
+      "paths": [
+        "audits/evidence_math.md",
+        "control.py",
+        "sensitivity.py",
+        "tests/test_control.py",
+        "tests/test_sensitivity.py",
+        "analyses/gpu-reference-002/REPORT.json"
+      ],
+      "evidence": [
+        {
+          "path": "audits/evidence_math.md",
+          "sha256": "802ce8af376f13b0ef39dd26c34bc6ae5dd1dcf997d04925e2e1128d0bce6dd5"
+        },
+        {
+          "path": "control.py",
+          "sha256": "298d0a7064ff562c498ecc50d13c2f23cd9bdf1df6b1d616d7204bac24a49ed3"
+        },
+        {
+          "path": "sensitivity.py",
+          "sha256": "5d0af45a8e91f0a00d91f83244105d06f1beba6f422cc3cd6d20c2d43d762f0d"
+        },
+        {
+          "path": "tests/test_control.py",
+          "sha256": "c498db1b06716264e8338d8d7c6cfc31e6153fed427f7e3c9983934196234d6b"
+        },
+        {
+          "path": "tests/test_sensitivity.py",
+          "sha256": "e11159218a0d54fced011492bd6888c53091f06a8c96a91461c4aa345dc2e724"
+        },
+        {
+          "path": "analyses/gpu-reference-002/REPORT.json",
+          "sha256": "7f6ceeb57c7666034d1049406232e6b21da801f93253db91ceea6f79f3f3f988"
+        }
+      ]
+    },
+    {
+      "number": 9,
+      "title": "Mechanism sensitivity and causality",
+      "status": "incomplete",
+      "proof": "CPU analytic native-suffix-shaped apparatus and source-bound H3 review exist. Distinct H3 remains originally authorized subject to fresh gates.",
+      "remaining": "NEVER native-qualified/run: actual suffix/head state gradient, recomputed finite differences, sign/rank association. Seven eligible exposed first-token surrogates/five provisional parents; seven missing targets/two shape exclusions. No broad semantic/out-of-family prediction.",
+      "paths": [
+        "DIAGNOSTIC_DESIGN.md",
+        "DIAGNOSTIC_NATIVE_REGISTRATION.md",
+        "diagnostic_admission_v3.json",
+        "reviews/diagnostic_dispatch_receipt.json",
+        "audits/post_debug_authority_audit_001.json"
+      ],
+      "evidence": [
+        {
+          "path": "DIAGNOSTIC_DESIGN.md",
+          "sha256": "354a1b45c4eb4c015eb56e544f7d27cfa0a0b3b02c067cd962c991e5de3176f8"
+        },
+        {
+          "path": "DIAGNOSTIC_NATIVE_REGISTRATION.md",
+          "sha256": "e2f9e11ef2f1d2464612958e29d10f2f344bb41b90ae93ea05ad63378510639a"
+        },
+        {
+          "path": "diagnostic_admission_v3.json",
+          "sha256": "69c4f0367a733ea525c46a1955ce01ddadb1f71280737c91cd38929d9426edbe"
+        },
+        {
+          "path": "reviews/diagnostic_dispatch_receipt.json",
+          "sha256": "2557418e1a386d017fc0b2a7ee206219a7695f3534080544a08f9b25065b4c36"
+        },
+        {
+          "path": "audits/post_debug_authority_audit_001.json",
+          "sha256": "5d2f6f1b66598033bef7be6b67434ceadce7c425c4753b63100874a9e1114782"
+        }
+      ]
+    },
+    {
+      "number": 10,
+      "title": "Reference qualification before search",
+      "status": "proved",
+      "proof": "Reference noextra/unit/A3/A5/max2248/cache/restoration/positions/head passed; bulk max357/DEV-pool checks and short-debug qualification pass separately.",
+      "remaining": "Forward-only/short-clean-run qualification does not qualify a gradient tape, long-run stability or unfinished validation. Affected changes need fresh checks.",
+      "paths": [
+        "runs/native-gpu-reference-002/result/qualification.json",
+        "runs/native-gpu-reference-002/result/A5_qualification.json",
+        "runs/native-bulk-001/result/qualification.json",
+        "runs/native-runtime-debug-001/result/qualification.json",
+        "reviews/runtime_debug_execution_review_001.json"
+      ],
+      "evidence": [
+        {
+          "path": "runs/native-gpu-reference-002/result/qualification.json",
+          "sha256": "776e98ef714b50c2abac18998eb423f97fe6c123c68985fae9c04dae23963001"
+        },
+        {
+          "path": "runs/native-gpu-reference-002/result/A5_qualification.json",
+          "sha256": "05abd792fa8e65006b88a3df7f8a9f283eaa4015366fc346139aaaa806d68473"
+        },
+        {
+          "path": "runs/native-bulk-001/result/qualification.json",
+          "sha256": "8e8609504174412523d7379ec0a49c241367ecc98590eba402d7c48b6cbd5f84"
+        },
+        {
+          "path": "runs/native-runtime-debug-001/result/qualification.json",
+          "sha256": "4a31fd0aa3bd28f6566f5ccc81fb55cf497dc6b6828aeb4b1145874f4f7e1cab"
+        },
+        {
+          "path": "reviews/runtime_debug_execution_review_001.json",
+          "sha256": "630ae52931dca870398fde62a277bd898ba2f9d87af1aabdc73952a55c2b4c5f"
+        }
+      ]
+    },
+    {
+      "number": 11,
+      "title": "Complete control matrix and headroom",
+      "status": "incomplete",
+      "proof": "Reference 408 physical/32 oracle rows complete: 12/16 intact, 13/16 all recurrent controls; headroom0. Bulk DEV 192 cases/96 parents/2112 cells: fixed/unit69, A3/A567, oracle70, headroom1/192/capture-2.",
+      "remaining": "Whole bulk 2762/3296 physical rows incomplete; all primary validation NULL. No token-schedule/continuous oracle bound. OPEN24 preserved/unrun is not mandatory duplicate measurement merely because apparatus exists.",
+      "paths": [
+        "analyses/gpu-reference-002/REPORT.json",
+        "analyses/bulk-001/REPORT.json",
+        "analyses/bulk-001/DEV_DIAGNOSTIC.json",
+        "reviews/bulk_result_failure_review_001.json",
+        "reviews/runtime_debug_DEV_diagnostic_review_001.json"
+      ],
+      "evidence": [
+        {
+          "path": "analyses/gpu-reference-002/REPORT.json",
+          "sha256": "7f6ceeb57c7666034d1049406232e6b21da801f93253db91ceea6f79f3f3f988"
+        },
+        {
+          "path": "analyses/bulk-001/REPORT.json",
+          "sha256": "52ba49b4c082bf5bfde0f224e91ce008cce78b00138a18cd5db592e091383636"
+        },
+        {
+          "path": "analyses/bulk-001/DEV_DIAGNOSTIC.json",
+          "sha256": "3ac840fda044cc3f82042d116f48658d82b2d741c630acf35240350150927774"
+        },
+        {
+          "path": "reviews/bulk_result_failure_review_001.json",
+          "sha256": "78f86efec7c713bb135549ae280eda969645001d1127db44bf66264435e0431b"
+        },
+        {
+          "path": "reviews/runtime_debug_DEV_diagnostic_review_001.json",
+          "sha256": "5241eb3d1e7e2dbf4532e8a2d9ff6cdd89f2133378d28cb5a83bf05f21e133e6"
+        }
+      ]
+    },
+    {
+      "number": 12,
+      "title": "Adaptation ladder",
+      "status": "conditional",
+      "proof": "Zero new controller revisions; no estimator advanced from flat reference or provisional harmful bulk curve.",
+      "remaining": "StageB lacks useful-margin headroom or predictive sign. New operator/depth/gate/memory/readout requires own controls/scope/qualification; weight training remains prohibited.",
+      "paths": [
+        "REGISTRY.jsonl",
+        "BULK_ANALYSIS_PLAN_001.md",
+        "analyses/bulk-001/DEV_DIAGNOSTIC.json",
+        "DIAGNOSTIC_NATIVE_REGISTRATION.md"
+      ],
+      "evidence": [
+        {
+          "path": "REGISTRY.jsonl",
+          "sha256": "d28697dab9e074d32b345af70a743e488ebcecd999ec842f626d48e0d458deff"
+        },
+        {
+          "path": "BULK_ANALYSIS_PLAN_001.md",
+          "sha256": "d3f91618fc97c390588561b9fa274e11a8b3330d5807830c826f782b23e97b61"
+        },
+        {
+          "path": "analyses/bulk-001/DEV_DIAGNOSTIC.json",
+          "sha256": "3ac840fda044cc3f82042d116f48658d82b2d741c630acf35240350150927774"
+        },
+        {
+          "path": "DIAGNOSTIC_NATIVE_REGISTRATION.md",
+          "sha256": "e2f9e11ef2f1d2464612958e29d10f2f344bb41b90ae93ea05ad63378510639a"
+        }
+      ]
+    },
+    {
+      "number": 13,
+      "title": "Task coverage and preservation",
+      "status": "incomplete",
+      "proof": "288 authored cases/144 paired worlds cover all six structured categories; strict scorer, solvers, floors and token shapes bound. DEV own-floor71 exceeds bestmodel69.",
+      "remaining": "Unit retains57/63 intact successes; A3 retains55/63: preservation contradicted. Ledger0/32/program1-2/32/blanket refusals are weaknesses, not known causes. Semantic/ordinary-language retention and independent source replication limited; protected/nativeTEST closed.",
+      "paths": [
+        "LARGE_BANK_DESIGN_001.md",
+        "runs/bulk-bank-apparatus-001/audit.json",
+        "runs/bulk-bank-apparatus-001/positive_controls.json",
+        "runs/bulk-tokenizer-binding-002/BULK_TOKENIZER_BINDING.json",
+        "audits/task_bank.md",
+        "analyses/bulk-001/DEV_DIAGNOSTIC.json"
+      ],
+      "evidence": [
+        {
+          "path": "LARGE_BANK_DESIGN_001.md",
+          "sha256": "d822f1bfc9211ad45844c424427982659726c02d7e6b82ca269c54007c530c4e"
+        },
+        {
+          "path": "runs/bulk-bank-apparatus-001/audit.json",
+          "sha256": "dc77beb71105a7a8d460bcfa9da64b758caaba19580e65e736149b212cd6f82a"
+        },
+        {
+          "path": "runs/bulk-bank-apparatus-001/positive_controls.json",
+          "sha256": "7ea64f738100c8deba42e88a3bbbc3b3717d59dff7583a2022d845d4b06ac9b5"
+        },
+        {
+          "path": "runs/bulk-tokenizer-binding-002/BULK_TOKENIZER_BINDING.json",
+          "sha256": "1a3723cdc918bb219119044aef5d209334f36c4b140674b8b93174f5361553bf"
+        },
+        {
+          "path": "audits/task_bank.md",
+          "sha256": "300b3b2bb994889c62094597351104a756889469f7c4a9c8a89e08579427e048"
+        },
+        {
+          "path": "analyses/bulk-001/DEV_DIAGNOSTIC.json",
+          "sha256": "3ac840fda044cc3f82042d116f48658d82b2d741c630acf35240350150927774"
+        }
+      ]
+    },
+    {
+      "number": 14,
+      "title": "Statistics and selection",
+      "status": "incomplete",
+      "proof": "DEV fixed/pool freeze before validation; equal category/parent weights and within-case seed means; prospective 48 validation parent units/shared-generator/power limits.",
+      "remaining": "No complete validation precision/efficacy. Provisional 96-parent DEV is not confirmation. At least59 validation inputs exposed/attempted; renaming cannot restore unexposed status.",
+      "paths": [
+        "BULK_ANALYSIS_PLAN_001.md",
+        "runs/native-bulk-001/result/frozen_development.json",
+        "analyses/bulk-001/DEV_DIAGNOSTIC.json",
+        "reviews/bulk_result_failure_review_001.json"
+      ],
+      "evidence": [
+        {
+          "path": "BULK_ANALYSIS_PLAN_001.md",
+          "sha256": "d3f91618fc97c390588561b9fa274e11a8b3330d5807830c826f782b23e97b61"
+        },
+        {
+          "path": "runs/native-bulk-001/result/frozen_development.json",
+          "sha256": "679186f699bae9a66a8e016cf3bf0555c2a7d364966776a700fcdb7c48989e97"
+        },
+        {
+          "path": "analyses/bulk-001/DEV_DIAGNOSTIC.json",
+          "sha256": "3ac840fda044cc3f82042d116f48658d82b2d741c630acf35240350150927774"
+        },
+        {
+          "path": "reviews/bulk_result_failure_review_001.json",
+          "sha256": "78f86efec7c713bb135549ae280eda969645001d1127db44bf66264435e0431b"
+        }
+      ]
+    },
+    {
+      "number": 15,
+      "title": "Compute and systems costs",
+      "status": "incomplete",
+      "proof": "All refusal/failure/reference/debug costs charged; raw instrumented costs/resources/partial-work treatment retained; original TDR correlation preserved.",
+      "remaining": "Original postfault/partial GPU measurements remain NULL/UNVERIFIED. No repeated minimal matched-quality timing or deployment-speed evidence. Debug instrumentation changes timing/allocator behavior; cause/long-run reliability unknown.",
+      "paths": [
+        "BUDGET_LEDGER.jsonl",
+        "analyses/gpu-reference-002/REPORT.json",
+        "analyses/bulk-001/REPORT.json",
+        "runs/native-bulk-001/terminal_receipt.json",
+        "runs/native-runtime-debug-001/terminal_receipt.json",
+        "audits/runtime_debug_execution_math_001.json",
+        "audits/cuda_system_event_xml_001.json"
+      ],
+      "evidence": [
+        {
+          "path": "BUDGET_LEDGER.jsonl",
+          "sha256": "d6d14c6813e49c348ba795cce8932af4298ead845d342897c7c38324fa13956e"
+        },
+        {
+          "path": "analyses/gpu-reference-002/REPORT.json",
+          "sha256": "7f6ceeb57c7666034d1049406232e6b21da801f93253db91ceea6f79f3f3f988"
+        },
+        {
+          "path": "analyses/bulk-001/REPORT.json",
+          "sha256": "52ba49b4c082bf5bfde0f224e91ce008cce78b00138a18cd5db592e091383636"
+        },
+        {
+          "path": "runs/native-bulk-001/terminal_receipt.json",
+          "sha256": "56d5618530b52cc0029f87a10138ccdeed33b8696fa5da6df0442e89afaf37ca"
+        },
+        {
+          "path": "runs/native-runtime-debug-001/terminal_receipt.json",
+          "sha256": "bba9a2d46f585c8e36f526c3e0b1e3e9ddbefd9921bc9a8870644e76e5de7a2e"
+        },
+        {
+          "path": "audits/runtime_debug_execution_math_001.json",
+          "sha256": "30974c0fb94b85668706c0b46a4cc51233229be07f7cd83a0d01f7351bfe1335"
+        },
+        {
+          "path": "audits/cuda_system_event_xml_001.json",
+          "sha256": "783043cfefb4bc8b72d77434e21a77fa2268f65b0dbf7fc9129b9d9627aff17e"
+        }
+      ]
+    },
+    {
+      "number": 16,
+      "title": "Research-policy improvement loop",
+      "status": "proved_scoped_procedure",
+      "proof": "Policies through7 now have independent acceptance dispositions. Policy7 records failure observability using reviewed actual32/99/42.454s debug evidence.",
+      "remaining": "Real poisoned-CUDA cleanup not exercised natively; allocation/model/controller improvement not measured. Policy7 grants no native attempt and cannot silently modify H3 frozen instrumentation.",
+      "paths": [
+        "RESEARCH_POLICY.jsonl",
+        "CLAIM_LEDGER.jsonl",
+        "reviews/research_policy_v6_receipt.json",
+        "reviews/runtime_debug_execution_review_001.json",
+        "RESEARCH_POLICY_V7.md",
+        "reviews/research_policy_v7_receipt.json"
+      ],
+      "evidence": [
+        {
+          "path": "RESEARCH_POLICY.jsonl",
+          "sha256": "28176d3b24b5483ac3e60df613687e18fb9468ebefe913deb4bed493605d1cd3"
+        },
+        {
+          "path": "CLAIM_LEDGER.jsonl",
+          "sha256": "26c8bf8d60880fbf1376703003b5152aa35cf9a4f6dc51ee702b616baf11fe6d"
+        },
+        {
+          "path": "reviews/research_policy_v6_receipt.json",
+          "sha256": "fb53df2eb50a88c4101823095d4253dc643c1f9bb4f7ac18378ed3c51dd4528f"
+        },
+        {
+          "path": "reviews/runtime_debug_execution_review_001.json",
+          "sha256": "630ae52931dca870398fde62a277bd898ba2f9d87af1aabdc73952a55c2b4c5f"
+        },
+        {
+          "path": "RESEARCH_POLICY_V7.md",
+          "sha256": "99918e5769ef46ed67dadfc7e285c61680a98462d60b9143bff7589e6c22b6a5"
+        },
+        {
+          "path": "reviews/research_policy_v7_receipt.json",
+          "sha256": "4d7036d768ea492fe14731e0f387e053e4dcd56e4d1729206c2985f9f08a6a33"
+        }
+      ]
+    },
+    {
+      "number": 17,
+      "title": "Evidence packet and continuation",
+      "status": "incomplete",
+      "proof": "67 old paths preserved. Current report rewritten with prior bytes archived; CAMPAIGN/CONTINUE/STATE current authority explicitly supersedes earlier blanket prohibition; policy7 accepted.",
+      "remaining": "Regenerate canonical index after report/current-pointer/policy7/authority/audit changes. Clarify reference model/environment snapshot epoch and inactive18000 reservation scope if presented as current. C010 broad false flag remains historical and is superseded by current authority audit.",
+      "paths": [
+        "REPRODUCIBILITY_INDEX.json",
+        "REPRODUCIBILITY_INDEX_v5.json",
+        "CONTINUE.md",
+        "STATE.json",
+        "MODEL_BINDING.json",
+        "ENVIRONMENT.json",
+        "CAMPAIGN.md",
+        "RESEARCH_REPORT.md",
+        "CLAIM_LEDGER.jsonl",
+        "audits/post_debug_authority_audit_001.json",
+        "RESEARCH_POLICY_V7.md",
+        "reviews/research_policy_v7_receipt.json"
+      ],
+      "evidence": [
+        {
+          "path": "REPRODUCIBILITY_INDEX.json",
+          "sha256": "4f3b211151e91a77c21d05cf28603e0a39dc46babc7de99a54c06191c2dd4506"
+        },
+        {
+          "path": "REPRODUCIBILITY_INDEX_v5.json",
+          "sha256": "9fdf8291de3be73cc80b3864ec0ddf773abe8e342e311675fda8f0da67a6b2a6"
+        },
+        {
+          "path": "CONTINUE.md",
+          "sha256": "03258e27bdf90ec7513a2d06d5614d717fc864699c27f76ce2cc868011368dbf"
+        },
+        {
+          "path": "STATE.json",
+          "sha256": "9a79c413ab106f285860d3b6dc0ae1ba694be3918c5f21398812a919a018109e"
+        },
+        {
+          "path": "MODEL_BINDING.json",
+          "sha256": "3f5ad6c7dbb4bdf39ab6c0ee53efb7d08fccf12329e60aa259a326c7e2b3a503"
+        },
+        {
+          "path": "ENVIRONMENT.json",
+          "sha256": "06624a50b5697266a0a0145f0f7ffc079ef6704978ed856d14170cf99fc3f4e2"
+        },
+        {
+          "path": "CAMPAIGN.md",
+          "sha256": "337a47a7d059cd30c4affec38adfbca33cdb43a0c68cb17c947a5138ec342fd2"
+        },
+        {
+          "path": "RESEARCH_REPORT.md",
+          "sha256": "4ec8031b6000cbe9789ad77adebe79ebc9d96be2b13533a01f8f2077ebbe1999"
+        },
+        {
+          "path": "CLAIM_LEDGER.jsonl",
+          "sha256": "26c8bf8d60880fbf1376703003b5152aa35cf9a4f6dc51ee702b616baf11fe6d"
+        },
+        {
+          "path": "audits/post_debug_authority_audit_001.json",
+          "sha256": "5d2f6f1b66598033bef7be6b67434ceadce7c425c4753b63100874a9e1114782"
+        },
+        {
+          "path": "RESEARCH_POLICY_V7.md",
+          "sha256": "99918e5769ef46ed67dadfc7e285c61680a98462d60b9143bff7589e6c22b6a5"
+        },
+        {
+          "path": "reviews/research_policy_v7_receipt.json",
+          "sha256": "4d7036d768ea492fe14731e0f387e053e4dcd56e4d1729206c2985f9f08a6a33"
+        }
+      ]
+    },
+    {
+      "number": 18,
+      "title": "Advancement and stopping",
+      "status": "incomplete",
+      "proof": "Restricted reference null, provisional DEV adaptive harms and precise mechanism/runtime uncertainty retained; no efficacy/speed/confirmation promotion.",
+      "remaining": "Finish worthwhile original H3 mechanism gate if fresh resource/safety/gradient qualification feasible; root currently reports GPU1464MiB<6144 floor, host9.78GiB and no worker. Failed bulk/debug retries require separate allowance. No goal completion/block solely from this audit.",
+      "paths": [
+        "AUTHORITY.txt",
+        "STATE.json",
+        "RESEARCH_REPORT.md",
+        "analyses/bulk-001/DEV_DIAGNOSTIC.json",
+        "audits/post_debug_authority_audit_001.json"
+      ],
+      "evidence": [
+        {
+          "path": "AUTHORITY.txt",
+          "sha256": "18f9b5079c05138a28d783404b7c9f919d62e829c17fe0c7a7334b789dd2fa3d"
+        },
+        {
+          "path": "STATE.json",
+          "sha256": "9a79c413ab106f285860d3b6dc0ae1ba694be3918c5f21398812a919a018109e"
+        },
+        {
+          "path": "RESEARCH_REPORT.md",
+          "sha256": "4ec8031b6000cbe9789ad77adebe79ebc9d96be2b13533a01f8f2077ebbe1999"
+        },
+        {
+          "path": "analyses/bulk-001/DEV_DIAGNOSTIC.json",
+          "sha256": "3ac840fda044cc3f82042d116f48658d82b2d741c630acf35240350150927774"
+        },
+        {
+          "path": "audits/post_debug_authority_audit_001.json",
+          "sha256": "5d2f6f1b66598033bef7be6b67434ceadce7c425c4753b63100874a9e1114782"
+        }
+      ]
+    }
+  ],
+  "mission_named_gates": [
+    {
+      "gate": "H1_FIXED_VS_UNIT",
+      "status": "proved",
+      "finding": "No fixed-over-unit advantage in reference; provisional bulk bestfixed=unit69.",
+      "paths": [
+        "analyses/gpu-reference-002/REPORT.json",
+        "analyses/bulk-001/DEV_DIAGNOSTIC.json"
+      ],
+      "evidence": [
+        {
+          "path": "analyses/gpu-reference-002/REPORT.json",
+          "sha256": "7f6ceeb57c7666034d1049406232e6b21da801f93253db91ceea6f79f3f3f988"
+        },
+        {
+          "path": "analyses/bulk-001/DEV_DIAGNOSTIC.json",
+          "sha256": "3ac840fda044cc3f82042d116f48658d82b2d741c630acf35240350150927774"
+        }
+      ]
+    },
+    {
+      "gate": "H2_USEFUL_FINITE_HEADROOM",
+      "status": "incomplete",
+      "finding": "Reference0; provisional bulk1/192 below0.05 margin; finite oracle not all-schedule ceiling.",
+      "paths": [
+        "analyses/bulk-001/DEV_DIAGNOSTIC.json",
+        "BULK_ANALYSIS_PLAN_001.md"
+      ],
+      "evidence": [
+        {
+          "path": "analyses/bulk-001/DEV_DIAGNOSTIC.json",
+          "sha256": "3ac840fda044cc3f82042d116f48658d82b2d741c630acf35240350150927774"
+        },
+        {
+          "path": "BULK_ANALYSIS_PLAN_001.md",
+          "sha256": "d3f91618fc97c390588561b9fa274e11a8b3330d5807830c826f782b23e97b61"
+        }
+      ]
+    },
+    {
+      "gate": "H3_NATIVE_TASK_LOSS_DIRECTION",
+      "status": "incomplete",
+      "finding": "Native qualification/FD/sign/rank never run; distinct original scope permitted under fresh gates.",
+      "paths": [
+        "DIAGNOSTIC_NATIVE_REGISTRATION.md",
+        "diagnostic_admission_v3.json",
+        "reviews/diagnostic_dispatch_receipt.json",
+        "audits/post_debug_authority_audit_001.json"
+      ],
+      "evidence": [
+        {
+          "path": "DIAGNOSTIC_NATIVE_REGISTRATION.md",
+          "sha256": "e2f9e11ef2f1d2464612958e29d10f2f344bb41b90ae93ea05ad63378510639a"
+        },
+        {
+          "path": "diagnostic_admission_v3.json",
+          "sha256": "69c4f0367a733ea525c46a1955ce01ddadb1f71280737c91cd38929d9426edbe"
+        },
+        {
+          "path": "reviews/diagnostic_dispatch_receipt.json",
+          "sha256": "2557418e1a386d017fc0b2a7ee206219a7695f3534080544a08f9b25065b4c36"
+        },
+        {
+          "path": "audits/post_debug_authority_audit_001.json",
+          "sha256": "5d2f6f1b66598033bef7be6b67434ceadce7c425c4753b63100874a9e1114782"
+        }
+      ]
+    },
+    {
+      "gate": "H4_ADAPTIVE_BEYOND_FIXED_RANDOM",
+      "status": "contradicted_for_provisional_DEV_benefit",
+      "finding": "Reference tie; bulk A3 trails fixed by2 and matches A5 score vectors. Primary validationNULL.",
+      "paths": [
+        "analyses/bulk-001/DEV_DIAGNOSTIC.json",
+        "reviews/runtime_debug_DEV_diagnostic_review_001.json"
+      ],
+      "evidence": [
+        {
+          "path": "analyses/bulk-001/DEV_DIAGNOSTIC.json",
+          "sha256": "3ac840fda044cc3f82042d116f48658d82b2d741c630acf35240350150927774"
+        },
+        {
+          "path": "reviews/runtime_debug_DEV_diagnostic_review_001.json",
+          "sha256": "5241eb3d1e7e2dbf4532e8a2d9ff6cdd89f2133378d28cb5a83bf05f21e133e6"
+        }
+      ]
+    },
+    {
+      "gate": "H5_REPLICATION_PRESERVATION",
+      "status": "incomplete",
+      "finding": "Unit loses6/A3 loses8 original successes; benefit confirmation untriggered; semantic/source replication absent.",
+      "paths": [
+        "analyses/bulk-001/DEV_DIAGNOSTIC.json",
+        "LARGE_BANK_DESIGN_001.md"
+      ],
+      "evidence": [
+        {
+          "path": "analyses/bulk-001/DEV_DIAGNOSTIC.json",
+          "sha256": "3ac840fda044cc3f82042d116f48658d82b2d741c630acf35240350150927774"
+        },
+        {
+          "path": "LARGE_BANK_DESIGN_001.md",
+          "sha256": "d822f1bfc9211ad45844c424427982659726c02d7e6b82ca269c54007c530c4e"
+        }
+      ]
+    },
+    {
+      "gate": "H6_USEFUL_MATCHED_QUALITY_TIME",
+      "status": "conditional_unmeasured",
+      "finding": "Instrumented costs measured; minimal repeated timing needed for later speed/useful cost claim, no adaptive preserved benefit now.",
+      "paths": [
+        "BUDGET_LEDGER.jsonl",
+        "analyses/gpu-reference-002/REPORT.json",
+        "analyses/bulk-001/REPORT.json"
+      ],
+      "evidence": [
+        {
+          "path": "BUDGET_LEDGER.jsonl",
+          "sha256": "d6d14c6813e49c348ba795cce8932af4298ead845d342897c7c38324fa13956e"
+        },
+        {
+          "path": "analyses/gpu-reference-002/REPORT.json",
+          "sha256": "7f6ceeb57c7666034d1049406232e6b21da801f93253db91ceea6f79f3f3f988"
+        },
+        {
+          "path": "analyses/bulk-001/REPORT.json",
+          "sha256": "52ba49b4c082bf5bfde0f224e91ce008cce78b00138a18cd5db592e091383636"
+        }
+      ]
+    },
+    {
+      "gate": "BULK_COMPLETE_VALIDATION",
+      "status": "incomplete",
+      "finding": "2762/3296 physical rows; all primaryNULL; restart/retry needs separately reviewed additional authority.",
+      "paths": [
+        "analyses/bulk-001/REPORT.json",
+        "reviews/bulk_result_failure_review_001.json"
+      ],
+      "evidence": [
+        {
+          "path": "analyses/bulk-001/REPORT.json",
+          "sha256": "52ba49b4c082bf5bfde0f224e91ce008cce78b00138a18cd5db592e091383636"
+        },
+        {
+          "path": "reviews/bulk_result_failure_review_001.json",
+          "sha256": "78f86efec7c713bb135549ae280eda969645001d1127db44bf66264435e0431b"
+        }
+      ]
+    },
+    {
+      "gate": "FAULT_CAUSAL_LOCALIZATION",
+      "status": "incomplete",
+      "finding": "Short debug clean; seven TDR events correlated; trigger/application/kernel and long-run reliability unknown.",
+      "paths": [
+        "reviews/runtime_debug_execution_review_001.json",
+        "audits/runtime_debug_execution_math_001.json",
+        "audits/cuda_system_event_xml_001.json"
+      ],
+      "evidence": [
+        {
+          "path": "reviews/runtime_debug_execution_review_001.json",
+          "sha256": "630ae52931dca870398fde62a277bd898ba2f9d87af1aabdc73952a55c2b4c5f"
+        },
+        {
+          "path": "audits/runtime_debug_execution_math_001.json",
+          "sha256": "30974c0fb94b85668706c0b46a4cc51233229be07f7cd83a0d01f7351bfe1335"
+        },
+        {
+          "path": "audits/cuda_system_event_xml_001.json",
+          "sha256": "783043cfefb4bc8b72d77434e21a77fa2268f65b0dbf7fc9129b9d9627aff17e"
+        }
+      ]
+    },
+    {
+      "gate": "POLICY7_ERRORTRACE_ACCEPTANCE",
+      "status": "proved_scoped_observability",
+      "finding": "Policy7 independently accepted from actual debug/source/CPU evidence; real poisoned-context cleanup and allocation superiority remain unproven.",
+      "paths": [
+        "RESEARCH_POLICY.jsonl",
+        "reviews/research_policy_v6_receipt.json",
+        "reviews/runtime_debug_execution_review_001.json",
+        "RESEARCH_POLICY_V7.md",
+        "reviews/research_policy_v7_receipt.json"
+      ],
+      "evidence": [
+        {
+          "path": "RESEARCH_POLICY.jsonl",
+          "sha256": "28176d3b24b5483ac3e60df613687e18fb9468ebefe913deb4bed493605d1cd3"
+        },
+        {
+          "path": "reviews/research_policy_v6_receipt.json",
+          "sha256": "fb53df2eb50a88c4101823095d4253dc643c1f9bb4f7ac18378ed3c51dd4528f"
+        },
+        {
+          "path": "reviews/runtime_debug_execution_review_001.json",
+          "sha256": "630ae52931dca870398fde62a277bd898ba2f9d87af1aabdc73952a55c2b4c5f"
+        },
+        {
+          "path": "RESEARCH_POLICY_V7.md",
+          "sha256": "99918e5769ef46ed67dadfc7e285c61680a98462d60b9143bff7589e6c22b6a5"
+        },
+        {
+          "path": "reviews/research_policy_v7_receipt.json",
+          "sha256": "4d7036d768ea492fe14731e0f387e053e4dcd56e4d1729206c2985f9f08a6a33"
+        }
+      ]
+    },
+    {
+      "gate": "CURRENT_HANDOFF_CONSISTENCY",
+      "status": "incomplete_index_finalization",
+      "finding": "Current report/CAMPAIGN/CONTINUE/STATE now reconcile scope/budget/consumedgrant. New current sources, policy7/authority/audits require next canonical index; reference snapshot/reservation epochs should be explicit.",
+      "paths": [
+        "STATE.json",
+        "RESEARCH_REPORT.md",
+        "CAMPAIGN.md",
+        "REPRODUCIBILITY_INDEX_v5.json",
+        "audits/post_debug_authority_audit_001.json"
+      ],
+      "evidence": [
+        {
+          "path": "STATE.json",
+          "sha256": "9a79c413ab106f285860d3b6dc0ae1ba694be3918c5f21398812a919a018109e"
+        },
+        {
+          "path": "RESEARCH_REPORT.md",
+          "sha256": "4ec8031b6000cbe9789ad77adebe79ebc9d96be2b13533a01f8f2077ebbe1999"
+        },
+        {
+          "path": "CAMPAIGN.md",
+          "sha256": "337a47a7d059cd30c4affec38adfbca33cdb43a0c68cb17c947a5138ec342fd2"
+        },
+        {
+          "path": "REPRODUCIBILITY_INDEX_v5.json",
+          "sha256": "9fdf8291de3be73cc80b3864ec0ddf773abe8e342e311675fda8f0da67a6b2a6"
+        },
+        {
+          "path": "audits/post_debug_authority_audit_001.json",
+          "sha256": "5d2f6f1b66598033bef7be6b67434ceadce7c425c4753b63100874a9e1114782"
+        }
+      ]
+    },
+    {
+      "gate": "INDEPENDENT_CONFIRMATION",
+      "status": "conditional_not_triggered",
+      "finding": "No promoted benefit/candidate; genuine unexposed authorized frozen confirmation needed for later confirmation claim; protectedTESTclosed.",
+      "paths": [
+        "AUTHORITY.txt",
+        "BULK_ANALYSIS_PLAN_001.md"
+      ],
+      "evidence": [
+        {
+          "path": "AUTHORITY.txt",
+          "sha256": "18f9b5079c05138a28d783404b7c9f919d62e829c17fe0c7a7334b789dd2fa3d"
+        },
+        {
+          "path": "BULK_ANALYSIS_PLAN_001.md",
+          "sha256": "d3f91618fc97c390588561b9fa274e11a8b3330d5807830c826f782b23e97b61"
+        }
+      ]
+    },
+    {
+      "gate": "FULL_GOLD_NLL_TRAINING_DEEPER_NATIVE_PRODUCTION",
+      "status": "not_required_current_scope",
+      "finding": "Fullgold guard closed; zero optimization; no deeper native/production claim; expansions need explicit separate scope.",
+      "paths": [
+        "AUTHORITY.txt",
+        "DIAGNOSTIC_NATIVE_REGISTRATION.md",
+        "STATE.json"
+      ],
+      "evidence": [
+        {
+          "path": "AUTHORITY.txt",
+          "sha256": "18f9b5079c05138a28d783404b7c9f919d62e829c17fe0c7a7334b789dd2fa3d"
+        },
+        {
+          "path": "DIAGNOSTIC_NATIVE_REGISTRATION.md",
+          "sha256": "e2f9e11ef2f1d2464612958e29d10f2f344bb41b90ae93ea05ad63378510639a"
+        },
+        {
+          "path": "STATE.json",
+          "sha256": "9a79c413ab106f285860d3b6dc0ae1ba694be3918c5f21398812a919a018109e"
+        }
+      ]
+    }
+  ],
+  "next_original_scope_requirement": {
+    "experiment": "Distinct H3 state-sensitivity diagnostic",
+    "why": "Resolve missing native signed loss-sensitivity mechanism rather than fitting unsupported controller; independent of failed bulk completion.",
+    "registered_plan": "47 API attempts/9 state adjoints/7 eligible exposed first-token surrogate rows;1800s parentdeadline+1800globalreserve",
+    "fresh_requirements": [
+      "Version/review any affected errortrace/safety successor and exact hashes",
+      "Sole worker/known lock/suspended Job/deadline/cleanup",
+      "Fresh host>=7GiB/GPUfree>=6GiB and unchanged running/disk guards; complete forecast/reserve",
+      "Native max256 gradient/suffix/head FD/finite/cache/positions/parameter-grad-none/restoration qualification",
+      "Fault-safe CPU-only finalization after any CUDA fault; no infrastructure retry"
+    ],
+    "current_resource_evidence": "Coordinator reports GPU1464MiB below6144, host9.78GiB; not independently live-measured by auditor",
+    "native_dispatch_by_auditor": false
+  },
+  "safe_offline_actions": [
+    "Regenerate canonical reproducibility index after reconciled report/current pointers, accepted policy7, authority audit and completionv2 artifacts; preserve older snapshots.",
+    "Clarify reference MODEL_BINDING/ENVIRONMENT snapshot epoch and inactive18000 reservation as historical where needed; never retro-certify bulk postfault state from independent clean process."
+  ],
+  "not_selected": [
+    "No new controller/operator/depth/readout solution from provisional DEV",
+    "No mandatory duplicate OPEN24 measurement merely because prepared",
+    "No partial-validation selection, survivor efficacy, broad negative, speed or confirmation claim"
+  ],
+  "weak_or_unread_limits": [
+    "No exhaustive sibling/process inventory",
+    "No model/tensor/gradient/native recomputation by auditor",
+    "Paper author-code/HTML immutable bytes not newly established",
+    "No fresh hardware inventory; readiness is parent gate",
+    "Root goal tool lifecycle not independently queried",
+    "Known raw journals previously audited; this refresh checks source bindings/authoritative reviews rather than repeating full extraction"
+  ],
+  "artifact_bindings": {
+    "AUTHORITY.txt": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\AUTHORITY.txt",
+      "status": "PRESENT",
+      "sha256": "18f9b5079c05138a28d783404b7c9f919d62e829c17fe0c7a7334b789dd2fa3d",
+      "bytes": 44062
+    },
+    "AUTHORITY_EXTENSION_001.md": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\AUTHORITY_EXTENSION_001.md",
+      "status": "PRESENT",
+      "sha256": "9303b9922f0059f2966f2662114149324b95708016d39c0ec9283e28247a84a0",
+      "bytes": 2081
+    },
+    "BLOCKED_RESOURCE_RECEIPT_001.json": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\BLOCKED_RESOURCE_RECEIPT_001.json",
+      "status": "PRESENT",
+      "sha256": "412a4068cdf122fa85b8eb1879efcbd6acb26f5541254382ccdf614eca21f40b",
+      "bytes": 2002
+    },
+    "BUDGET_LEDGER.jsonl": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\BUDGET_LEDGER.jsonl",
+      "status": "PRESENT",
+      "sha256": "d6d14c6813e49c348ba795cce8932af4298ead845d342897c7c38324fa13956e",
+      "bytes": 12691
+    },
+    "BULK_ANALYSIS_PLAN_001.md": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\BULK_ANALYSIS_PLAN_001.md",
+      "status": "PRESENT",
+      "sha256": "d3f91618fc97c390588561b9fa274e11a8b3330d5807830c826f782b23e97b61",
+      "bytes": 6729
+    },
+    "BULK_NATIVE_DRAFT_001.md": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\BULK_NATIVE_DRAFT_001.md",
+      "status": "PRESENT",
+      "sha256": "081f5fe529a53ef571df97a63c8942a695c0ac4b09a2c2ec84855212a80f5a78",
+      "bytes": 5662
+    },
+    "BULK_NATIVE_REGISTRATION_001.md": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\BULK_NATIVE_REGISTRATION_001.md",
+      "status": "PRESENT",
+      "sha256": "1ce533aa4f34000a7b4faea73d7cee6089d6e979ec74ce9cde1d9346e83e8302",
+      "bytes": 7802
+    },
+    "BULK_READINESS_001.json": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\BULK_READINESS_001.json",
+      "status": "PRESENT",
+      "sha256": "fdcebd71da7c57455dce74770557c7195f64ee579e19371cb5e352b1c14df042",
+      "bytes": 1697
+    },
+    "CAMPAIGN.md": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\CAMPAIGN.md",
+      "status": "PRESENT",
+      "sha256": "337a47a7d059cd30c4affec38adfbca33cdb43a0c68cb17c947a5138ec342fd2",
+      "bytes": 5587
+    },
+    "CLAIM_LEDGER.jsonl": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\CLAIM_LEDGER.jsonl",
+      "status": "PRESENT",
+      "sha256": "26c8bf8d60880fbf1376703003b5152aa35cf9a4f6dc51ee702b616baf11fe6d",
+      "bytes": 4499
+    },
+    "CONTINUE.md": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\CONTINUE.md",
+      "status": "PRESENT",
+      "sha256": "03258e27bdf90ec7513a2d06d5614d717fc864699c27f76ce2cc868011368dbf",
+      "bytes": 14917
+    },
+    "DIAGNOSTIC_DESIGN.md": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\DIAGNOSTIC_DESIGN.md",
+      "status": "PRESENT",
+      "sha256": "354a1b45c4eb4c015eb56e544f7d27cfa0a0b3b02c067cd962c991e5de3176f8",
+      "bytes": 6269
+    },
+    "DIAGNOSTIC_NATIVE_REGISTRATION.md": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\DIAGNOSTIC_NATIVE_REGISTRATION.md",
+      "status": "PRESENT",
+      "sha256": "e2f9e11ef2f1d2464612958e29d10f2f344bb41b90ae93ea05ad63378510639a",
+      "bytes": 4574
+    },
+    "DISPOSITIONS.json": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\DISPOSITIONS.json",
+      "status": "PRESENT",
+      "sha256": "77f5e161e1ad8a373847b59fdcbd566e3189bf5592a58f29faab09d28ee6b78c",
+      "bytes": 3398
+    },
+    "ENVIRONMENT.json": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\ENVIRONMENT.json",
+      "status": "PRESENT",
+      "sha256": "06624a50b5697266a0a0145f0f7ffc079ef6704978ed856d14170cf99fc3f4e2",
+      "bytes": 7118
+    },
+    "GOAL_BLOCKED_RECEIPT_001.json": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\GOAL_BLOCKED_RECEIPT_001.json",
+      "status": "PRESENT",
+      "sha256": "4b1af01172ce550d4527f421e4cb2cdf749e336472c24e48d1fb89bd5bad4b73",
+      "bytes": 477
+    },
+    "GPU_HOST_REGISTRATION.md": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\GPU_HOST_REGISTRATION.md",
+      "status": "PRESENT",
+      "sha256": "2e77c54b7af18793a12d59b2c69b0f075cdd0aec81c3165534b0c925af66bcbb",
+      "bytes": 6349
+    },
+    "HUMAN_RUNTIME_DEBUG_ALLOWANCE_001.json": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\HUMAN_RUNTIME_DEBUG_ALLOWANCE_001.json",
+      "status": "PRESENT",
+      "sha256": "b96a8a0c950c241b4fa3fc3bb53ebdb82e6457fbcb46a36cfed55acc3be0457c",
+      "bytes": 319
+    },
+    "HUMAN_RUNTIME_DEBUG_APPROVAL_RECORD_001.json": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\HUMAN_RUNTIME_DEBUG_APPROVAL_RECORD_001.json",
+      "status": "PRESENT",
+      "sha256": "81e8ba14082dceca2ff5906cb745e016add662ed30270f6a068f91140631530e",
+      "bytes": 663
+    },
+    "LARGER_SCREEN_STATUS_001.md": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\LARGER_SCREEN_STATUS_001.md",
+      "status": "PRESENT",
+      "sha256": "8f7e4476feac4422d056adf6d913fbc92bc2ac97e7448c418f3bdf63e4f1714f",
+      "bytes": 5841
+    },
+    "LARGE_BANK_DESIGN_001.md": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\LARGE_BANK_DESIGN_001.md",
+      "status": "PRESENT",
+      "sha256": "d822f1bfc9211ad45844c424427982659726c02d7e6b82ca269c54007c530c4e",
+      "bytes": 9298
+    },
+    "MODEL_BINDING.json": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\MODEL_BINDING.json",
+      "status": "PRESENT",
+      "sha256": "3f5ad6c7dbb4bdf39ab6c0ee53efb7d08fccf12329e60aa259a326c7e2b3a503",
+      "bytes": 3777
+    },
+    "NONNATIVEdebugproposal_001.md": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\NONNATIVEdebugproposal_001.md",
+      "status": "PRESENT",
+      "sha256": "53b6916eafbb83335aba84cd8a828658ff8d7e9b1393d7f051e6485764e8ed31",
+      "bytes": 9862
+    },
+    "OPEN_BANK_DESIGN.md": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\OPEN_BANK_DESIGN.md",
+      "status": "PRESENT",
+      "sha256": "12d7544e911bf3d0e0c113497e33a5d3fc51302a17abc82145953e1609ec7a66",
+      "bytes": 6827
+    },
+    "OPEN_NATIVE_REGISTRATION.md": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\OPEN_NATIVE_REGISTRATION.md",
+      "status": "PRESENT",
+      "sha256": "8424e51b991046829dc871c947d0df705c46d1c07cf60cd7906f02b090991bf4",
+      "bytes": 7557
+    },
+    "OWNERSHIP.json": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\OWNERSHIP.json",
+      "status": "PRESENT",
+      "sha256": "fd13abef92621b2fcf339c11da77665392903cb1854a494aa16ffe52e1d6af2f",
+      "bytes": 3622
+    },
+    "PREREGISTRATION.md": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\PREREGISTRATION.md",
+      "status": "PRESENT",
+      "sha256": "3b944d5dc89309795c0c784fb69709ca42023d970a70c8656bfa2f299c1e251b",
+      "bytes": 6425
+    },
+    "PRIOR_FINDINGS.json": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\PRIOR_FINDINGS.json",
+      "status": "PRESENT",
+      "sha256": "2b8365d0978dea7bf70c612729527ba8facb3cced0eccb31ce0e443f2e2c1718",
+      "bytes": 64811
+    },
+    "REGISTRY.jsonl": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\REGISTRY.jsonl",
+      "status": "PRESENT",
+      "sha256": "d28697dab9e074d32b345af70a743e488ebcecd999ec842f626d48e0d458deff",
+      "bytes": 9409
+    },
+    "REPRODUCIBILITY_INDEX.json": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\REPRODUCIBILITY_INDEX.json",
+      "status": "PRESENT",
+      "sha256": "4f3b211151e91a77c21d05cf28603e0a39dc46babc7de99a54c06191c2dd4506",
+      "bytes": 18646
+    },
+    "REPRODUCIBILITY_INDEX_v5.json": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\REPRODUCIBILITY_INDEX_v5.json",
+      "status": "PRESENT",
+      "sha256": "9fdf8291de3be73cc80b3864ec0ddf773abe8e342e311675fda8f0da67a6b2a6",
+      "bytes": 41420
+    },
+    "RESEARCH_POLICY.jsonl": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\RESEARCH_POLICY.jsonl",
+      "status": "PRESENT",
+      "sha256": "28176d3b24b5483ac3e60df613687e18fb9468ebefe913deb4bed493605d1cd3",
+      "bytes": 6822
+    },
+    "RESEARCH_REPORT.md": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\RESEARCH_REPORT.md",
+      "status": "PRESENT",
+      "sha256": "4ec8031b6000cbe9789ad77adebe79ebc9d96be2b13533a01f8f2077ebbe1999",
+      "bytes": 8966
+    },
+    "RESOURCE_AMENDMENT_001.md": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\RESOURCE_AMENDMENT_001.md",
+      "status": "PRESENT",
+      "sha256": "e75fce10bbf8cbad9d43b31e60fae2b81bf4d014f7a519f1d146973d78a37407",
+      "bytes": 2258
+    },
+    "RUNTIME_DEBUG_COMMAND_002.md": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\RUNTIME_DEBUG_COMMAND_002.md",
+      "status": "PRESENT",
+      "sha256": "106edfc0551672f9314d5b8830e66bd791f6241c8855d00f33651307e87fed07",
+      "bytes": 2331
+    },
+    "RUNTIME_DEBUG_GRANT_TEMPLATE_001.json": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\RUNTIME_DEBUG_GRANT_TEMPLATE_001.json",
+      "status": "PRESENT",
+      "sha256": "ef8cd48841e5170dcef3d6bd392f55f174dc4b089c987ca0ad1e376d46a40896",
+      "bytes": 928
+    },
+    "RUNTIME_DEBUG_GRANT_TEMPLATE_002.json": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\RUNTIME_DEBUG_GRANT_TEMPLATE_002.json",
+      "status": "PRESENT",
+      "sha256": "f53ded21e613be4d05c1b641db6093296f4bac37b14ec960543b8d941059e7b3",
+      "bytes": 928
+    },
+    "RUNTIME_DEBUG_IMPLEMENTATION_001.md": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\RUNTIME_DEBUG_IMPLEMENTATION_001.md",
+      "status": "PRESENT",
+      "sha256": "9d63647ec0f6cdcd5ef5b82d89f9f774635b357ea61303bdd4dc19f63a6bd6aa",
+      "bytes": 9937
+    },
+    "RUNTIME_DEBUG_REGISTRATION_001.md": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\RUNTIME_DEBUG_REGISTRATION_001.md",
+      "status": "PRESENT",
+      "sha256": "65abb82a2c968e539e371e0a82f93d7eeaa518234b4b251561e065aaff308217",
+      "bytes": 5471
+    },
+    "RUNTIME_DEBUG_RESULT_001.md": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\RUNTIME_DEBUG_RESULT_001.md",
+      "status": "PRESENT",
+      "sha256": "a0a34f50baccf4226865c8734b96c2e5bbffbf1df86fc3e836d3c0fb18bfc4c2",
+      "bytes": 3508
+    },
+    "STATE.json": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\STATE.json",
+      "status": "PRESENT",
+      "sha256": "9a79c413ab106f285860d3b6dc0ae1ba694be3918c5f21398812a919a018109e",
+      "bytes": 2347
+    },
+    "STATE_HISTORY.jsonl": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\STATE_HISTORY.jsonl",
+      "status": "PRESENT",
+      "sha256": "11710ef42b9823d6efbaccefe3d55ac7045539c2566e50171b2b25c50029e7c0",
+      "bytes": 13836
+    },
+    "analyses/bulk-001/DEV_DIAGNOSTIC.json": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\analyses\\bulk-001\\DEV_DIAGNOSTIC.json",
+      "status": "PRESENT",
+      "sha256": "3ac840fda044cc3f82042d116f48658d82b2d741c630acf35240350150927774",
+      "bytes": 73012
+    },
+    "analyses/bulk-001/DEV_DIAGNOSTIC.md": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\analyses\\bulk-001\\DEV_DIAGNOSTIC.md",
+      "status": "PRESENT",
+      "sha256": "bd37641d9e438b4a81597e9e01cce28c195c8f0fce8f85331523b55c3189e9db",
+      "bytes": 10302
+    },
+    "analyses/bulk-001/MANIFEST.json": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\analyses\\bulk-001\\MANIFEST.json",
+      "status": "PRESENT",
+      "sha256": "18f3567e8899322253ea0ce829670703b8685aa02c49882539173af039f95c50",
+      "bytes": 26132
+    },
+    "analyses/bulk-001/REPORT.json": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\analyses\\bulk-001\\REPORT.json",
+      "status": "PRESENT",
+      "sha256": "52ba49b4c082bf5bfde0f224e91ce008cce78b00138a18cd5db592e091383636",
+      "bytes": 2966154
+    },
+    "analyses/gpu-reference-002/MANIFEST.json": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\analyses\\gpu-reference-002\\MANIFEST.json",
+      "status": "PRESENT",
+      "sha256": "7a03fd88b74a0d8cfd508988ed2954bba51f02cc10bdfcbeb62756f2795eb072",
+      "bytes": 6266
+    },
+    "analyses/gpu-reference-002/REPORT.json": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\analyses\\gpu-reference-002\\REPORT.json",
+      "status": "PRESENT",
+      "sha256": "7f6ceeb57c7666034d1049406232e6b21da801f93253db91ceea6f79f3f3f988",
+      "bytes": 84599
+    },
+    "analyses/gpu-reference-002/receipt.json": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\analyses\\gpu-reference-002\\receipt.json",
+      "status": "PRESENT",
+      "sha256": "297603c1476487dc276d358d5cb2aa0df71528194fa4acdbc39f098cf728f763",
+      "bytes": 280
+    },
+    "analyses/reference-tables-001/MANIFEST.json": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\analyses\\reference-tables-001\\MANIFEST.json",
+      "status": "PRESENT",
+      "sha256": "86c9c45b694a579279bd8aab005255158e307d477558a77ada8c473961234a04",
+      "bytes": 970
+    },
+    "analyses/reference-tables-002/MANIFEST.json": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\analyses\\reference-tables-002\\MANIFEST.json",
+      "status": "PRESENT",
+      "sha256": "db47b77f4f7c158ea394a571b45db0667981dcfb58ab7c0fdc6a6aa698f3dae8",
+      "bytes": 970
+    },
+    "analyses/reference-tables-002/alpha_features.csv": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\analyses\\reference-tables-002\\alpha_features.csv",
+      "status": "PRESENT",
+      "sha256": "489458663afaaaa503ccc1eded2a1796eeaa0d0a54488fc40b967b67300bb566",
+      "bytes": 1074
+    },
+    "analyses/reference-tables-002/instrumented_costs.csv": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\analyses\\reference-tables-002\\instrumented_costs.csv",
+      "status": "PRESENT",
+      "sha256": "3781df57539101a109bae756d7604e5bd23d8974ac0b8895199a8bb09d6835c0",
+      "bytes": 2145
+    },
+    "analyses/reference-tables-002/paired_cases.csv": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\analyses\\reference-tables-002\\paired_cases.csv",
+      "status": "PRESENT",
+      "sha256": "b9f414bf25882cab158667d6e5eb4707d64ac56905b2fa5096b61170d50ee8ec",
+      "bytes": 14028
+    },
+    "analyses/reference-tables-002/paired_contrasts.csv": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\analyses\\reference-tables-002\\paired_contrasts.csv",
+      "status": "PRESENT",
+      "sha256": "99314383d8a307ca8af2499e9a12cf6d962bd72abbdf6a01a440d6bc7ed23f27",
+      "bytes": 962
+    },
+    "analyses/reference-tables-002/policy_accuracy.csv": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\analyses\\reference-tables-002\\policy_accuracy.csv",
+      "status": "PRESENT",
+      "sha256": "9711bf8ea0661f05853642c380f7258cf20ba8d5ad24d702d635ad147d5ecb0c",
+      "bytes": 898
+    },
+    "analysis.py": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\analysis.py",
+      "status": "PRESENT",
+      "sha256": "378a5e12b467a4fec0807e372d93d7869f44e8e557cf762177beda6975cfc026",
+      "bytes": 39756
+    },
+    "audits/blocked_consistency_001.json": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\audits\\blocked_consistency_001.json",
+      "status": "PRESENT",
+      "sha256": "057706ca6b12a42b8a0d658160bb8571fdae29182a849798affa124e86a27f60",
+      "bytes": 12108
+    },
+    "audits/blocked_consistency_001.md": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\audits\\blocked_consistency_001.md",
+      "status": "PRESENT",
+      "sha256": "d1fa6a18ef32e99499299f3b91bc494ee30e620304a211fca76ae26791c3827e",
+      "bytes": 3208
+    },
+    "audits/bulk_runtime_failure_001.json": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\audits\\bulk_runtime_failure_001.json",
+      "status": "PRESENT",
+      "sha256": "a6748ad3703bf35ed1e7e5e325c80d829d4c89d4b125aff28ae14ef1df414f21",
+      "bytes": 21780
+    },
+    "audits/bulk_runtime_failure_001.md": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\audits\\bulk_runtime_failure_001.md",
+      "status": "PRESENT",
+      "sha256": "238fd56c82ddf754d018fe6836be6cca441ed6b67cbacf43b52cc2bdb13d824b",
+      "bytes": 6339
+    },
+    "audits/completion_audit.json": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\audits\\completion_audit.json",
+      "status": "PRESENT",
+      "sha256": "a0cae0a26b3723431d2ebc54aace25897892e0533f9fc5102ab13d7631dae862",
+      "bytes": 50799
+    },
+    "audits/completion_audit.md": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\audits\\completion_audit.md",
+      "status": "PRESENT",
+      "sha256": "42faef5fd1dfc919c5243131a63f5658f8b38fa22e5501770d08b64db31808b4",
+      "bytes": 8403
+    },
+    "audits/cuda_system_event_window_001.json": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\audits\\cuda_system_event_window_001.json",
+      "status": "PRESENT",
+      "sha256": "4b2c9896bcc4ec8bd79d2dd4bd2bd5366cf7b6d79e612fe74c0c09c6b1ca0d3c",
+      "bytes": 1626
+    },
+    "audits/cuda_system_event_xml_001.json": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\audits\\cuda_system_event_xml_001.json",
+      "status": "PRESENT",
+      "sha256": "783043cfefb4bc8b72d77434e21a77fa2268f65b0dbf7fc9129b9d9627aff17e",
+      "bytes": 11916
+    },
+    "audits/evidence_math.md": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\audits\\evidence_math.md",
+      "status": "PRESENT",
+      "sha256": "802ce8af376f13b0ef39dd26c34bc6ae5dd1dcf997d04925e2e1128d0bce6dd5",
+      "bytes": 16000
+    },
+    "audits/gpu_supervision_tests.md": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\audits\\gpu_supervision_tests.md",
+      "status": "PRESENT",
+      "sha256": "9dcca7cb93d862dead2f2c32754f6998645edf644344984b88dcf8c2e9878f1b",
+      "bytes": 6257
+    },
+    "audits/post_debug_authority_audit_001.json": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\audits\\post_debug_authority_audit_001.json",
+      "status": "PRESENT",
+      "sha256": "5d2f6f1b66598033bef7be6b67434ceadce7c425c4753b63100874a9e1114782",
+      "bytes": 13492
+    },
+    "audits/post_debug_authority_audit_001.md": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\audits\\post_debug_authority_audit_001.md",
+      "status": "PRESENT",
+      "sha256": "cf589299b2f6d48717b31dcf939c745ae2532d16d4891384d8d56f7b4469f4a8",
+      "bytes": 3659
+    },
+    "audits/runtime_debug_execution_math_001.json": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\audits\\runtime_debug_execution_math_001.json",
+      "status": "PRESENT",
+      "sha256": "30974c0fb94b85668706c0b46a4cc51233229be07f7cd83a0d01f7351bfe1335",
+      "bytes": 17681
+    },
+    "audits/runtime_debug_execution_math_001.md": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\audits\\runtime_debug_execution_math_001.md",
+      "status": "PRESENT",
+      "sha256": "f54eb987176f2c7c41c0e726226983f0467b8aa4232223ba25c88adf31c8a637",
+      "bytes": 3368
+    },
+    "audits/supervision_tests.md": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\audits\\supervision_tests.md",
+      "status": "PRESENT",
+      "sha256": "756497d257be8428a4e402cfd91a6d9c38e37a4db15b4e10332e419f65c6f1ed",
+      "bytes": 6102
+    },
+    "audits/task_bank.md": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\audits\\task_bank.md",
+      "status": "PRESENT",
+      "sha256": "300b3b2bb994889c62094597351104a756889469f7c4a9c8a89e08579427e048",
+      "bytes": 9377
+    },
+    "bulk_admission_v1.json": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\bulk_admission_v1.json",
+      "status": "PRESENT",
+      "sha256": "a303cd65c353a6d12e6544503bbf210c054ae919f795577d8b01e96224464aca",
+      "bytes": 18514
+    },
+    "control.py": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\control.py",
+      "status": "PRESENT",
+      "sha256": "298d0a7064ff562c498ecc50d13c2f23cd9bdf1df6b1d616d7204bac24a49ed3",
+      "bytes": 4965
+    },
+    "diagnostic_admission_v3.json": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\diagnostic_admission_v3.json",
+      "status": "PRESENT",
+      "sha256": "69c4f0367a733ea525c46a1955ce01ddadb1f71280737c91cd38929d9426edbe",
+      "bytes": 14591
+    },
+    "diagnostic_native.py": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\diagnostic_native.py",
+      "status": "PRESENT",
+      "sha256": "7b94f88308e7afbf4836065e73d28608bdae2c6e753226aee4a428a2941cbea6",
+      "bytes": 22721
+    },
+    "export_reference_tables.py": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\export_reference_tables.py",
+      "status": "PRESENT",
+      "sha256": "cc241817ad12f70a6ce638bdfc42151388d08bea24e176c7419ff0f498fc1b9d",
+      "bytes": 4416
+    },
+    "gpu_admission_v2.json": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\gpu_admission_v2.json",
+      "status": "PRESENT",
+      "sha256": "5f9f2d2921ea9cb49d6a9f5fa0748964c3ac628c9b90268bc3cd267471524238",
+      "bytes": 15579
+    },
+    "gpu_admission_v4.json": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\gpu_admission_v4.json",
+      "status": "PRESENT",
+      "sha256": "62e14bc729b28ee8c3d47a48fc8a4cb1c868c5aedc6544cbf1589c014021e152",
+      "bytes": 15913
+    },
+    "gpu_analysis.py": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\gpu_analysis.py",
+      "status": "PRESENT",
+      "sha256": "30d12cff4ac343b98c492e5edfe1d9554fb87fc50d86e3029abd3236765def13",
+      "bytes": 39296
+    },
+    "open_admission_v2.json": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\open_admission_v2.json",
+      "status": "PRESENT",
+      "sha256": "65e3e424d0d2b3c91905e99ec2dcb477e7d55ce4e9e56df623323c4b212b9c60",
+      "bytes": 16835
+    },
+    "open_analysis.py": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\open_analysis.py",
+      "status": "PRESENT",
+      "sha256": "c072790ea7d5ee4864fbeef762509fb24c0b9f9c99f7481b47eee37c28695576",
+      "bytes": 35528
+    },
+    "reconcile_evidence.py": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\reconcile_evidence.py",
+      "status": "PRESENT",
+      "sha256": "27ad14582c99525e17591531e15c547eab05aa4f54356dfee57823737f31d0b7",
+      "bytes": 6963
+    },
+    "reviews/bulk_analysis_review_receipt.json": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\reviews\\bulk_analysis_review_receipt.json",
+      "status": "PRESENT",
+      "sha256": "40caf4ba4620dabe8cfca10d4a8db639896813ffcd72e4f907f2f85de3721017",
+      "bytes": 5827
+    },
+    "reviews/bulk_binding_cpu_receipt_001.json": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\reviews\\bulk_binding_cpu_receipt_001.json",
+      "status": "PRESENT",
+      "sha256": "57be79b46051d5a473621aab3c4a6687cf01d1ded35fdf6b9b525bb59ff1e864",
+      "bytes": 2186
+    },
+    "reviews/bulk_design_review_001.json": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\reviews\\bulk_design_review_001.json",
+      "status": "PRESENT",
+      "sha256": "998ad0af48b8961363ef26e631f6912260bd24b9a3fc84db74c7fb95972cfb1f",
+      "bytes": 89623
+    },
+    "reviews/bulk_dispatch_receipt.json": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\reviews\\bulk_dispatch_receipt.json",
+      "status": "PRESENT",
+      "sha256": "5b2b45ad30e0a8d56c41bc9dafb169146a01a07328cc87c4c6c288d11f95cdd6",
+      "bytes": 18651
+    },
+    "reviews/bulk_native_qualification_review_001.json": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\reviews\\bulk_native_qualification_review_001.json",
+      "status": "PRESENT",
+      "sha256": "4beda219c633967851518fe520b4fed9dc394aba7e80aecf932553cdc0ad97db",
+      "bytes": 2811
+    },
+    "reviews/bulk_result_failure_review_001.json": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\reviews\\bulk_result_failure_review_001.json",
+      "status": "PRESENT",
+      "sha256": "78f86efec7c713bb135549ae280eda969645001d1127db44bf66264435e0431b",
+      "bytes": 8744
+    },
+    "reviews/control_binding_review_receipt.json": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\reviews\\control_binding_review_receipt.json",
+      "status": "PRESENT",
+      "sha256": "a1374c0de76245bfdff4df65e457f7763ae7b2fc257d88372c6b186942511bc5",
+      "bytes": 2500
+    },
+    "reviews/diagnostic_dispatch_receipt.json": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\reviews\\diagnostic_dispatch_receipt.json",
+      "status": "PRESENT",
+      "sha256": "2557418e1a386d017fc0b2a7ee206219a7695f3534080544a08f9b25065b4c36",
+      "bytes": 18877
+    },
+    "reviews/gpu_analysis_review_attempt002_receipt.json": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\reviews\\gpu_analysis_review_attempt002_receipt.json",
+      "status": "PRESENT",
+      "sha256": "9417acca73c5a10aa1c711087bebf2582fe971f4775bc21e3929ec351cbf26f3",
+      "bytes": 25105
+    },
+    "reviews/gpu_analysis_review_receipt.json": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\reviews\\gpu_analysis_review_receipt.json",
+      "status": "PRESENT",
+      "sha256": "46635987335c61b4562db15dc8933765504d0e0a188aa219777250c552f83e5f",
+      "bytes": 2808
+    },
+    "reviews/gpu_dispatch_receipt.json": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\reviews\\gpu_dispatch_receipt.json",
+      "status": "PRESENT",
+      "sha256": "10dc0d0842163ec9eb4eb825de2fef5a2b7cf29ecef586526fca89d6837d6a8d",
+      "bytes": 15762
+    },
+    "reviews/gpu_result_review_002.md": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\reviews\\gpu_result_review_002.md",
+      "status": "PRESENT",
+      "sha256": "6d5c2aa582662b5966658b7ccd8d8a003e0a7796aaf18c223ec4a81a41220f4a",
+      "bytes": 4374
+    },
+    "reviews/gpu_retry_dispatch_receipt.json": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\reviews\\gpu_retry_dispatch_receipt.json",
+      "status": "PRESENT",
+      "sha256": "5f26e69e96794d2c5dacc7c881bdcf927ae9bd2b8624064e1ca3be2bc05ac15d",
+      "bytes": 14177
+    },
+    "reviews/open_analysis_review_receipt.json": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\reviews\\open_analysis_review_receipt.json",
+      "status": "PRESENT",
+      "sha256": "3286f78cdcce2ea2b3a5b10fbeb482d6b1eac38ea2bfab9efcbcf949fae3ce9a",
+      "bytes": 3843
+    },
+    "reviews/open_bank_review_receipt.json": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\reviews\\open_bank_review_receipt.json",
+      "status": "PRESENT",
+      "sha256": "22ca54b2237b934f512e75a5bbe22d9fc3d60d19d0252dd67fdf86ccdfb1e46e",
+      "bytes": 5894
+    },
+    "reviews/open_dispatch_receipt.json": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\reviews\\open_dispatch_receipt.json",
+      "status": "PRESENT",
+      "sha256": "ae494569aca85555faedb824c3d549e0f90c4aecf7bd0a2056a528d75e6febdc",
+      "bytes": 15525
+    },
+    "reviews/open_native_review_receipt.json": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\reviews\\open_native_review_receipt.json",
+      "status": "PRESENT",
+      "sha256": "f334281bdaa29d71f532b83450e28c0519a6524a1de94f3d9ed2b34c9c9987bb",
+      "bytes": 2900
+    },
+    "reviews/reference_tables_review_001.json": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\reviews\\reference_tables_review_001.json",
+      "status": "PRESENT",
+      "sha256": "ba9cd318ca15d4e0e5f16f631c89c250056858f267a8b539eb24269938c49343",
+      "bytes": 130739
+    },
+    "reviews/reference_tables_review_002.json": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\reviews\\reference_tables_review_002.json",
+      "status": "PRESENT",
+      "sha256": "4c5da568cdd8c648b539b5befc9094c52189ad17553e79016a3a4e29f28bbb0d",
+      "bytes": 131032
+    },
+    "reviews/research_policy_v5_receipt.json": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\reviews\\research_policy_v5_receipt.json",
+      "status": "PRESENT",
+      "sha256": "667f46988f448fac803a9f3f92aff4679c1aa7670d1e62bec5edfa1b723ca8c3",
+      "bytes": 5246
+    },
+    "reviews/research_policy_v6_receipt.json": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\reviews\\research_policy_v6_receipt.json",
+      "status": "PRESENT",
+      "sha256": "fb53df2eb50a88c4101823095d4253dc643c1f9bb4f7ac18378ed3c51dd4528f",
+      "bytes": 5356
+    },
+    "reviews/runtime_debug_DEV_diagnostic_review_001.json": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\reviews\\runtime_debug_DEV_diagnostic_review_001.json",
+      "status": "PRESENT",
+      "sha256": "5241eb3d1e7e2dbf4532e8a2d9ff6cdd89f2133378d28cb5a83bf05f21e133e6",
+      "bytes": 1278
+    },
+    "reviews/runtime_debug_dispatch_receipt.json": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\reviews\\runtime_debug_dispatch_receipt.json",
+      "status": "PRESENT",
+      "sha256": "c9e17594778243d4d1e7f9c6088c05893941845ecda075c0925c498a3170504b",
+      "bytes": 22314
+    },
+    "reviews/runtime_debug_execution_review_001.json": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\reviews\\runtime_debug_execution_review_001.json",
+      "status": "PRESENT",
+      "sha256": "630ae52931dca870398fde62a277bd898ba2f9d87af1aabdc73952a55c2b4c5f",
+      "bytes": 18091
+    },
+    "reviews/runtime_debug_packet_review_001.md": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\reviews\\runtime_debug_packet_review_001.md",
+      "status": "PRESENT",
+      "sha256": "1c5111926f646ce0fc4aeb73c9d3c79e5bc4122cde8bd8c285692459c8952565",
+      "bytes": 2189
+    },
+    "runs/bulk-bank-apparatus-001/audit.json": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\bulk-bank-apparatus-001\\audit.json",
+      "status": "PRESENT",
+      "sha256": "dc77beb71105a7a8d460bcfa9da64b758caaba19580e65e736149b212cd6f82a",
+      "bytes": 40393
+    },
+    "runs/bulk-bank-apparatus-001/bank.json": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\bulk-bank-apparatus-001\\bank.json",
+      "status": "PRESENT",
+      "sha256": "862a63648caf7efb3d287c11bc5caaefc884e0ec6cb3130ce8f196526efc40cd",
+      "bytes": 582693
+    },
+    "runs/bulk-bank-apparatus-001/manifest.json": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\bulk-bank-apparatus-001\\manifest.json",
+      "status": "PRESENT",
+      "sha256": "64e459d8e5f800d63c2652fba5d04e8e4d709c6de45efd447d6450aa80f71e80",
+      "bytes": 935
+    },
+    "runs/bulk-bank-apparatus-001/positive_controls.json": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\bulk-bank-apparatus-001\\positive_controls.json",
+      "status": "PRESENT",
+      "sha256": "7ea64f738100c8deba42e88a3bbbc3b3717d59dff7583a2022d845d4b06ac9b5",
+      "bytes": 46019
+    },
+    "runs/bulk-tokenizer-binding-001/BULK_TOKENIZER_BINDING.json": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\bulk-tokenizer-binding-001\\BULK_TOKENIZER_BINDING.json",
+      "status": "PRESENT",
+      "sha256": "4ff318c386eee0206381feaa97921b4c625770dda9905417a648875390a7b70d",
+      "bytes": 933290
+    },
+    "runs/bulk-tokenizer-binding-002/BULK_TOKENIZER_BINDING.json": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\bulk-tokenizer-binding-002\\BULK_TOKENIZER_BINDING.json",
+      "status": "PRESENT",
+      "sha256": "1a3723cdc918bb219119044aef5d209334f36c4b140674b8b93174f5361553bf",
+      "bytes": 933389
+    },
+    "runs/cpu-armr-001/junit.xml": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\cpu-armr-001\\junit.xml",
+      "status": "PRESENT",
+      "sha256": "72bdd8bc110a94b274e58329c0782f38f4855614457403d12014fdbe3e86218a",
+      "bytes": 11010
+    },
+    "runs/cpu-v1-001/junit.xml": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\cpu-v1-001\\junit.xml",
+      "status": "PRESENT",
+      "sha256": "d4c0b6b255e65a55e0d91e2c6b92ddc54c5e23b6331db7d9fbe8ccad0f159aca",
+      "bytes": 9535
+    },
+    "runs/fixture-reference-001/result/headroom.csv": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\fixture-reference-001\\result\\headroom.csv",
+      "status": "PRESENT",
+      "sha256": "bda08a2f0b0c542f4990c747c20b3b737cd2e863e0827e4b0a9aabdc43d97eb4",
+      "bytes": 1213
+    },
+    "runs/native-bulk-001/resources.jsonl": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-bulk-001\\resources.jsonl",
+      "status": "PRESENT",
+      "sha256": "36b3514776680ad323c5be22a48107022afddce5e2fe837f44cf708d28a3a7b1",
+      "bytes": 147703
+    },
+    "runs/native-bulk-001/result/A5_qualification.json": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-bulk-001\\result\\A5_qualification.json",
+      "status": "PRESENT",
+      "sha256": "564b3faa455cf9841c1f8403efeda7fead0f06e562a2d6eb305575eeb008743a",
+      "bytes": 79
+    },
+    "runs/native-bulk-001/result/forwards.jsonl": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-bulk-001\\result\\forwards.jsonl",
+      "status": "PRESENT",
+      "sha256": "d607920f13d8ed1d55e598f4339e4b8c6d6a33bfb9966cdb38c60bb485194f81",
+      "bytes": 6364749
+    },
+    "runs/native-bulk-001/result/frozen_development.json": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-bulk-001\\result\\frozen_development.json",
+      "status": "PRESENT",
+      "sha256": "679186f699bae9a66a8e016cf3bf0555c2a7d364966776a700fcdb7c48989e97",
+      "bytes": 31591
+    },
+    "runs/native-bulk-001/result/matrix_forecast.json": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-bulk-001\\result\\matrix_forecast.json",
+      "status": "PRESENT",
+      "sha256": "46ebf50d86fc75b5df67dee8a09ebc73cc92311568872747c5d152d0585d39ef",
+      "bytes": 484
+    },
+    "runs/native-bulk-001/result/outcomes.jsonl": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-bulk-001\\result\\outcomes.jsonl",
+      "status": "PRESENT",
+      "sha256": "b9bc357ec54f4e413d236e8f52ad9c53bfc48a4768a37fed3113522f97107e3a",
+      "bytes": 12576649
+    },
+    "runs/native-bulk-001/result/qualification.json": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-bulk-001\\result\\qualification.json",
+      "status": "PRESENT",
+      "sha256": "8e8609504174412523d7379ec0a49c241367ecc98590eba402d7c48b6cbd5f84",
+      "bytes": 1136
+    },
+    "runs/native-bulk-001/result/readout_pairs.jsonl": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-bulk-001\\result\\readout_pairs.jsonl",
+      "status": "PRESENT",
+      "sha256": "34c955c694b43e77f2d16a010af56ed9c0ed2d4fbe9c95b50961f31ce59ec116",
+      "bytes": 1113534
+    },
+    "runs/native-bulk-001/result/receipt.json": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-bulk-001\\result\\receipt.json",
+      "status": "PRESENT",
+      "sha256": "bb41317d634ac9ff8e3492bb9d5645aeb5967633c8ba26b5f28de4017894cdc5",
+      "bytes": 1756
+    },
+    "runs/native-bulk-001/result/registration.json": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-bulk-001\\result\\registration.json",
+      "status": "PRESENT",
+      "sha256": "a59a64aac71c9f993bd1c36d3d46b7f9d5392d5bdc3d3d224f4f60655da84e88",
+      "bytes": 13524
+    },
+    "runs/native-bulk-001/result/trajectories.jsonl": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-bulk-001\\result\\trajectories.jsonl",
+      "status": "PRESENT",
+      "sha256": "b7ef89acc460702d09db780c0914fd00c818bdfa14bc5d46acdb419d56bbacec",
+      "bytes": 14869177
+    },
+    "runs/native-bulk-001/terminal_receipt.json": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-bulk-001\\terminal_receipt.json",
+      "status": "PRESENT",
+      "sha256": "56d5618530b52cc0029f87a10138ccdeed33b8696fa5da6df0442e89afaf37ca",
+      "bytes": 1722
+    },
+    "runs/native-gpu-reference-001/result/matrix_forecast.json": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-gpu-reference-001\\result\\matrix_forecast.json",
+      "status": "PRESENT",
+      "sha256": "d35e518ad1a30badc7f05e471f6d9ab0cf935a19432ac91ef9baf5b39d4aeb57",
+      "bytes": 455
+    },
+    "runs/native-gpu-reference-001/result/qualification.json": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-gpu-reference-001\\result\\qualification.json",
+      "status": "PRESENT",
+      "sha256": "d697df5823cf4a6cf45f825082415450efd5ad58d4813c79a0eead8691bf065b",
+      "bytes": 1664
+    },
+    "runs/native-gpu-reference-001/terminal_receipt.json": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-gpu-reference-001\\terminal_receipt.json",
+      "status": "PRESENT",
+      "sha256": "aadb5170c82dd4069f78e4b33403ea7b034bf8916f3145b161bf0dfe39c06792",
+      "bytes": 1786
+    },
+    "runs/native-gpu-reference-002/admission.json": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-gpu-reference-002\\admission.json",
+      "status": "PRESENT",
+      "sha256": "62e14bc729b28ee8c3d47a48fc8a4cb1c868c5aedc6544cbf1589c014021e152",
+      "bytes": 15913
+    },
+    "runs/native-gpu-reference-002/resources.jsonl": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-gpu-reference-002\\resources.jsonl",
+      "status": "PRESENT",
+      "sha256": "803731e60aeadd9c71bc246a385bc09cfd3bf9c5a9c7b025e5027889dbf68084",
+      "bytes": 148121
+    },
+    "runs/native-gpu-reference-002/result/A5_qualification.json": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-gpu-reference-002\\result\\A5_qualification.json",
+      "status": "PRESENT",
+      "sha256": "05abd792fa8e65006b88a3df7f8a9f283eaa4015366fc346139aaaa806d68473",
+      "bytes": 94
+    },
+    "runs/native-gpu-reference-002/result/forwards.jsonl": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-gpu-reference-002\\result\\forwards.jsonl",
+      "status": "PRESENT",
+      "sha256": "4d327b737995ec1c1cf805b333c0e180d40c2cca7f6c42f0ee3aaa287c46f669",
+      "bytes": 1817324
+    },
+    "runs/native-gpu-reference-002/result/frozen_dev_selection.json": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-gpu-reference-002\\result\\frozen_dev_selection.json",
+      "status": "PRESENT",
+      "sha256": "dd1c48b995d986d77f6cfdc88d77cabe35cfeccc660c5f4088fe456666faab38",
+      "bytes": 5223
+    },
+    "runs/native-gpu-reference-002/result/outcomes.jsonl": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-gpu-reference-002\\result\\outcomes.jsonl",
+      "status": "PRESENT",
+      "sha256": "05827563ce0633a96d3831749b70f8cc8b74002ba7b692ed2d264f49ffac0a0c",
+      "bytes": 1525157
+    },
+    "runs/native-gpu-reference-002/result/qualification.json": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-gpu-reference-002\\result\\qualification.json",
+      "status": "PRESENT",
+      "sha256": "776e98ef714b50c2abac18998eb423f97fe6c123c68985fae9c04dae23963001",
+      "bytes": 1664
+    },
+    "runs/native-gpu-reference-002/result/receipt.json": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-gpu-reference-002\\result\\receipt.json",
+      "status": "PRESENT",
+      "sha256": "ca8efe66eafdbf8a4566620d09f7ee76c8b547273cac64785d7161b7fe010af5",
+      "bytes": 2058
+    },
+    "runs/native-gpu-reference-002/result/registration.json": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-gpu-reference-002\\result\\registration.json",
+      "status": "PRESENT",
+      "sha256": "dc1cba108d4dc0ccb31065598903521175056f90fcc51ab1e538e13d9dd2045f",
+      "bytes": 11455
+    },
+    "runs/native-gpu-reference-002/result/trajectories.jsonl": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-gpu-reference-002\\result\\trajectories.jsonl",
+      "status": "PRESENT",
+      "sha256": "5745261d0eb11a2f80a47a8001e79fed2e3a223ae3f970ff3b4e272e8c96b156",
+      "bytes": 4094533
+    },
+    "runs/native-gpu-reference-002/review.json": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-gpu-reference-002\\review.json",
+      "status": "PRESENT",
+      "sha256": "5f26e69e96794d2c5dacc7c881bdcf927ae9bd2b8624064e1ca3be2bc05ac15d",
+      "bytes": 14177
+    },
+    "runs/native-gpu-reference-002/source_manifest.json": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-gpu-reference-002\\source_manifest.json",
+      "status": "PRESENT",
+      "sha256": "d8ab709daae65bd2ef318452ade9a65e65199a8a97157e8d7dd7e7063e607151",
+      "bytes": 102702
+    },
+    "runs/native-gpu-reference-002/terminal_receipt.json": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-gpu-reference-002\\terminal_receipt.json",
+      "status": "PRESENT",
+      "sha256": "7b9889e21a1522834fd663a2d9acb8efd8873aab5220020d210497a2cce75c28",
+      "bytes": 1784
+    },
+    "runs/native-reference-001/result/preflight.json": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-reference-001\\result\\preflight.json",
+      "status": "PRESENT",
+      "sha256": "4fb48b6f551a296556044aa6ee05b073c109e590e86f12189909904be8d2cd55",
+      "bytes": 615
+    },
+    "runs/native-reference-001/terminal_receipt.json": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-reference-001\\terminal_receipt.json",
+      "status": "PRESENT",
+      "sha256": "5e204ff2f8501a8456e27c8d55b47bb73d95533d8a6881b449dd0c242e1546ca",
+      "bytes": 1235
+    },
+    "runs/native-runtime-debug-001/resources.jsonl": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-runtime-debug-001\\resources.jsonl",
+      "status": "PRESENT",
+      "sha256": "d4b3047b57a682ba8c1076ee4a2e086a4eb1ac56bc60cc5e51e7c072409385d9",
+      "bytes": 10873
+    },
+    "runs/native-runtime-debug-001/result/forwards.jsonl": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-runtime-debug-001\\result\\forwards.jsonl",
+      "status": "PRESENT",
+      "sha256": "150c49fa04311a23f4551ceaa4089bee513cfd48d3975e0f7ea93c46a7fd0e43",
+      "bytes": 255384
+    },
+    "runs/native-runtime-debug-001/result/matrix_forecast.json": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-runtime-debug-001\\result\\matrix_forecast.json",
+      "status": "PRESENT",
+      "sha256": "a013d817393e9376709003e3ec9789567630fe6886ad7a8f1dd836f38994fb76",
+      "bytes": 308
+    },
+    "runs/native-runtime-debug-001/result/operations.jsonl": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-runtime-debug-001\\result\\operations.jsonl",
+      "status": "PRESENT",
+      "sha256": "a1334656de68c8dccfd562b6b4d5527e21b271c737fe03127dffda89ca94d0f5",
+      "bytes": 24914900
+    },
+    "runs/native-runtime-debug-001/result/outcomes.jsonl": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-runtime-debug-001\\result\\outcomes.jsonl",
+      "status": "PRESENT",
+      "sha256": "016417ff6cc2864acddd28e8345e48d6d02a01d6b6c120025e938552f9df9f5a",
+      "bytes": 84767
+    },
+    "runs/native-runtime-debug-001/result/qualification.json": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-runtime-debug-001\\result\\qualification.json",
+      "status": "PRESENT",
+      "sha256": "4a31fd0aa3bd28f6566f5ccc81fb55cf497dc6b6828aeb4b1145874f4f7e1cab",
+      "bytes": 499
+    },
+    "runs/native-runtime-debug-001/result/receipt.json": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-runtime-debug-001\\result\\receipt.json",
+      "status": "PRESENT",
+      "sha256": "9a203cbebd1551b733ea2b9f990a24822e94566b68bdd990f7a1c7209a6b207c",
+      "bytes": 2784
+    },
+    "runs/native-runtime-debug-001/result/registration.json": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-runtime-debug-001\\result\\registration.json",
+      "status": "PRESENT",
+      "sha256": "a41863256e9391c186ece867df3999eb2c16d533dff59a20cade1190986a2696",
+      "bytes": 12939
+    },
+    "runs/native-runtime-debug-001/result/trajectories.jsonl": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-runtime-debug-001\\result\\trajectories.jsonl",
+      "status": "PRESENT",
+      "sha256": "6197a18d79c0d7be03f8221ade27a2278addbb16d229f33addbec816203d90dd",
+      "bytes": 149738
+    },
+    "runs/native-runtime-debug-001/terminal_receipt.json": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-runtime-debug-001\\terminal_receipt.json",
+      "status": "PRESENT",
+      "sha256": "bba9a2d46f585c8e36f526c3e0b1e3e9ddbefd9921bc9a8870644e76e5de7a2e",
+      "bytes": 1781
+    },
+    "runs/open-bank-apparatus-002/audit.json": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\open-bank-apparatus-002\\audit.json",
+      "status": "PRESENT",
+      "sha256": "fb111cd23a3f4a2fe5bbcd390cbcb683a16a32093ea447686c1215aaee8502f9",
+      "bytes": 3416
+    },
+    "runs/open-bank-apparatus-002/bank.json": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\open-bank-apparatus-002\\bank.json",
+      "status": "PRESENT",
+      "sha256": "fa52fd850e3a0a2e113fd7bdefbdb56427c9632a0ce3137312c82ae4059c369f",
+      "bytes": 27018
+    },
+    "runs/open-bank-apparatus-002/manifest.json": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\open-bank-apparatus-002\\manifest.json",
+      "status": "PRESENT",
+      "sha256": "93e24bbdfdbfc58e71216c97e9e6d2814cdbd1197d12af15354893195df2c560",
+      "bytes": 723
+    },
+    "runs/open-bank-apparatus-002/positive_controls.json": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\open-bank-apparatus-002\\positive_controls.json",
+      "status": "PRESENT",
+      "sha256": "fdc553ab7550fd1ed5a01c9ea63933277854cb2e3238c044244d9f8b600de8fa",
+      "bytes": 2827
+    },
+    "runs/open-tokenizer-binding-001/OPEN_TOKENIZER_BINDING.json": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\open-tokenizer-binding-001\\OPEN_TOKENIZER_BINDING.json",
+      "status": "PRESENT",
+      "sha256": "0fb77896268645c32b7b0f8c1d4b750f461c5bdf35e26a9bee40f691c531e7eb",
+      "bytes": 64347
+    },
+    "runs/sensitivity-apparatus-002/junit.xml": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\sensitivity-apparatus-002\\junit.xml",
+      "status": "PRESENT",
+      "sha256": "42058ec16686063f8218b77873cb26887383ee259a9347e856badfc64a9c2834",
+      "bytes": 2973
+    },
+    "runs/solver-audit-003/summary.json": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\solver-audit-003\\summary.json",
+      "status": "PRESENT",
+      "sha256": "c4be0cf29e6d483f3539c9f9943d36f938985b8934210052b8b92e8dc3aec8cd",
+      "bytes": 2650
+    },
+    "runtime_debug.py": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runtime_debug.py",
+      "status": "PRESENT",
+      "sha256": "1e1fe306e44fdd6b68e15d39eefee3de78094d7761c90192ffb9861c257d9299",
+      "bytes": 38224
+    },
+    "runtime_debug_admission_v1.json": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runtime_debug_admission_v1.json",
+      "status": "PRESENT",
+      "sha256": "57f115131c0aa7eb41b68d3aced9880bcefca5c06d4398296ab99eff9123c3ee",
+      "bytes": 21038
+    },
+    "runtime_debug_admission_v2.json": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runtime_debug_admission_v2.json",
+      "status": "PRESENT",
+      "sha256": "0abe8ffd869531e98460f4c416e943dbe289b4da42d20e1d6627f29c1c691d94",
+      "bytes": 21038
+    },
+    "runtime_debug_entry.py": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runtime_debug_entry.py",
+      "status": "PRESENT",
+      "sha256": "5ee7ce118a9d1f2bfd3d1bd4bbd260ea58b3993ce952d9c9c33f107b9b0a5fa2",
+      "bytes": 1361
+    },
+    "runtime_debug_supervisor.py": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runtime_debug_supervisor.py",
+      "status": "PRESENT",
+      "sha256": "43c4aa8f41573454814f1845156c7915faeb8c3a9ed8c2977d74e19b4c1d3cdc",
+      "bytes": 11620
+    },
+    "sensitivity.py": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\sensitivity.py",
+      "status": "PRESENT",
+      "sha256": "5d0af45a8e91f0a00d91f83244105d06f1beba6f422cc3cd6d20c2d43d762f0d",
+      "bytes": 13690
+    },
+    "tests/test_control.py": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\tests\\test_control.py",
+      "status": "PRESENT",
+      "sha256": "c498db1b06716264e8338d8d7c6cfc31e6153fed427f7e3c9983934196234d6b",
+      "bytes": 10715
+    },
+    "tests/test_sensitivity.py": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\tests\\test_sensitivity.py",
+      "status": "PRESENT",
+      "sha256": "e11159218a0d54fced011492bd6888c53091f06a8c96a91461c4aa345dc2e724",
+      "bytes": 10910
+    },
+    "versions/bulk_analysis_v1/bulk_analysis.py": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\versions\\bulk_analysis_v1\\bulk_analysis.py",
+      "status": "PRESENT",
+      "sha256": "26d85d0e635f829beec7a8069ff54cd1a94d3125599897835a1ef80584116c54",
+      "bytes": 44833
+    },
+    "versions/bulk_analysis_v2/bulk_analysis.py": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\versions\\bulk_analysis_v2\\bulk_analysis.py",
+      "status": "PRESENT",
+      "sha256": "12cfb2e67f2934d6c9b35cf88b83a2391028fdcd75f70c277548ea55e7f221b4",
+      "bytes": 46387
+    },
+    "versions/bulk_binding_v1/bulk_binding.py": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\versions\\bulk_binding_v1\\bulk_binding.py",
+      "status": "PRESENT",
+      "sha256": "1be71c8419a8f22d1c3d1beb9ee52b907fafa2d14383652f65dd74e9a1ad156c",
+      "bytes": 7377
+    },
+    "versions/bulk_v1_final/ARCHIVE.json": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\versions\\bulk_v1_final\\ARCHIVE.json",
+      "status": "PRESENT",
+      "sha256": "6858eb875b6146336ffff006f9e2f7557b9317ded919b2992e60ab983ec0cc92",
+      "bytes": 14105
+    },
+    "versions/gpu_ref_retry1_final/ARCHIVE.json": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\versions\\gpu_ref_retry1_final\\ARCHIVE.json",
+      "status": "PRESENT",
+      "sha256": "32e85f3b60e000f28f853066e39bb6de239eeaed8fb0d99c5bf045bd6050e4df",
+      "bytes": 11940
+    },
+    "versions/gpu_ref_v1_final/ARCHIVE.json": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\versions\\gpu_ref_v1_final\\ARCHIVE.json",
+      "status": "PRESENT",
+      "sha256": "813789ff7d16c4a4caae211293743c64566d1191a0443d94dcab7759d7742f71",
+      "bytes": 11782
+    },
+    "versions/reference_tables_v1/export_reference_tables.py": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\versions\\reference_tables_v1\\export_reference_tables.py",
+      "status": "PRESENT",
+      "sha256": "0eca7f6641587a26e3728945868a61d1f7bdda36602441c96d17213b7b4e91e1",
+      "bytes": 4258
+    },
+    "versions/report_before_reconcile_001/RESEARCH_REPORT.md": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\versions\\report_before_reconcile_001\\RESEARCH_REPORT.md",
+      "status": "PRESENT",
+      "sha256": "33d47dd5b455417e6a23a6de9992f848846435a08a3dc56b6b49e86b78d51c9e",
+      "bytes": 11188
+    },
+    "versions/runtime_debug_v1/runtime_debug.py": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\versions\\runtime_debug_v1\\runtime_debug.py",
+      "status": "PRESENT",
+      "sha256": "83e84174c1a0fb16d1fc68c7cc5f28fd2de54651a5b217e69fbdf0643c23b5af",
+      "bytes": 36785
+    },
+    "versions/runtime_debug_v2/runtime_debug.py": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\versions\\runtime_debug_v2\\runtime_debug.py",
+      "status": "PRESENT",
+      "sha256": "e927f099663844693e5963076ada2a478913d479abfbe1547f9de2f7157b467d",
+      "bytes": 37662
+    },
+    "versions/runtime_debug_v2_final/ARCHIVE.json": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\versions\\runtime_debug_v2_final\\ARCHIVE.json",
+      "status": "PRESENT",
+      "sha256": "d9207f6132bf77e4b28f1e9d99e7fbf6265ee55f3699decfd10943a159c6167c",
+      "bytes": 15912
+    },
+    "RESEARCH_POLICY_V7.md": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\RESEARCH_POLICY_V7.md",
+      "status": "PRESENT",
+      "sha256": "99918e5769ef46ed67dadfc7e285c61680a98462d60b9143bff7589e6c22b6a5",
+      "bytes": 2882
+    },
+    "reviews/research_policy_v7_receipt.json": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\reviews\\research_policy_v7_receipt.json",
+      "status": "PRESENT",
+      "sha256": "4d7036d768ea492fe14731e0f387e053e4dcd56e4d1729206c2985f9f08a6a33",
+      "bytes": 6824
+    }
+  },
+  "audited_utc": "2026-10-05T00:39:32.819611+00:00",
+  "authority_sha256": "18f9b5079c05138a28d783404b7c9f919d62e829c17fe0c7a7334b789dd2fa3d",
+  "observed_head": "7ece5cead285ba65c7d73ab57c0327fae2dc40bb",
+  "observed_branch": "codex/rineya-taps-adaptation-loop",
+  "observed_git_status": "?? experiments/rineya_taps_adaptive_recurrence_campaign_v2/",
+  "missing_referenced_artifacts": [],
+  "index_checks": {
+    "old67_paths_present": true,
+    "old_binding_changed_count": 10,
+    "v5_grouped_entries": 158,
+    "v5_missing": [],
+    "v5_current_digest_differences": [
+      {
+        "group": "authority_and_state",
+        "path": "CAMPAIGN.md",
+        "old_sha256": "3314b68e257e6608a3a16be490efee9c2c3815c23c691ad5b93f860e15576c3d",
+        "current_sha256": "337a47a7d059cd30c4affec38adfbca33cdb43a0c68cb17c947a5138ec342fd2"
+      },
+      {
+        "group": "authority_and_state",
+        "path": "STATE.json",
+        "old_sha256": "cb38726cfdb8892fa10f760c5780cbd243de786934bab28f9f44eaf515392267",
+        "current_sha256": "9a79c413ab106f285860d3b6dc0ae1ba694be3918c5f21398812a919a018109e"
+      },
+      {
+        "group": "authority_and_state",
+        "path": "CONTINUE.md",
+        "old_sha256": "2ff6814ff310623f6ea7bda07325b2f8143df2a343bac9449eab0cdc900d7309",
+        "current_sha256": "03258e27bdf90ec7513a2d06d5614d717fc864699c27f76ce2cc868011368dbf"
+      },
+      {
+        "group": "authority_and_state",
+        "path": "RESEARCH_REPORT.md",
+        "old_sha256": "33d47dd5b455417e6a23a6de9992f848846435a08a3dc56b6b49e86b78d51c9e",
+        "current_sha256": "4ec8031b6000cbe9789ad77adebe79ebc9d96be2b13533a01f8f2077ebbe1999"
+      },
+      {
+        "group": "authority_and_state",
+        "path": "RESEARCH_POLICY.jsonl",
+        "old_sha256": "5b3ba30b74d64b5b6a81dd3d5cd1e44ca9db9c18467074706739232cde0f176e",
+        "current_sha256": "28176d3b24b5483ac3e60df613687e18fb9468ebefe913deb4bed493605d1cd3"
+      }
+    ],
+    "v5_current_source_differences": [
+      "build_reproducibility_index.py"
+    ],
+    "lock_absent": true,
+    "interpretation": "v5 passed before subsequent root report rewrite; current digest differences are explicit and require new canonical index; no original artifact overwritten by auditor"
+  },
+  "report_md_sha256": "8f28b77cad8eecb2dcb33fc1e6fa9a424d9f51aa007e33c72fb973bf6cbf382b",
+  "resolved_during_refresh": [
+    "Current research report completely rewritten, exact old bytes archived; no conflicting current allowance/budget/blocked assertions.",
+    "CAMPAIGN/CONTINUE/STATE explicitly restore original distinct H3 authority and record current GPU gate.",
+    "Policy7 independently accepted with explicit real-CUDA-fault and instrumentation limits."
+  ]
+}

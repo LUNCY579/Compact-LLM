@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://chatbubble.local/tgsa/phase1_run_manifest.schema.json",
+  "title": "TGSA Phase 1 run manifest",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "status",
+    "study_id",
+    "arm",
+    "seed",
+    "claim_scope",
+    "git",
+    "environment",
+    "study_config_sha256",
+    "dataset_manifest_sha256",
+    "model_config",
+    "parameter_audit",
+    "initialization_seed",
+    "data_order_seed",
+    "initial_model_state_sha256",
+    "final_model_state_sha256",
+    "training",
+    "telemetry",
+    "evaluations"
+  ],
+  "properties": {
+    "schema_version": {"const": "tgsa.phase1-model-run.v1"},
+    "status": {"const": "complete"},
+    "study_id": {"type": "string", "minLength": 1},
+    "arm": {"enum": ["parallel_mha", "cascade", "history_control", "raw_delta", "learned_delta", "qkv_conditioned", "predictor_corrector", "full"]},
+    "seed": {"type": "integer"},
+    "claim_scope": {"type": "string", "minLength": 1},
+    "study_config_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "dataset_manifest_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "initial_model_state_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "final_model_state_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "initialization_seed": {"type": "integer"},
+    "data_order_seed": {"type": "integer"},
+    "git": {"type": "object"},
+    "environment": {"type": "object"},
+    "model_config": {"type": "object"},
+    "parameter_audit": {"type": "object"},
+    "training": {
+      "type": "object",
+      "required": ["fixed_final_checkpoint", "early_stopping", "completed_steps", "examples_seen", "tokens_seen", "final_checkpoint", "final_checkpoint_sha256"],
+      "properties": {
+        "fixed_final_checkpoint": {"const": true},
+        "early_stopping": {"const": false},
+        "completed_steps": {"type": "integer", "minimum": 1},
+        "examples_seen": {"type": "integer", "minimum": 1},
+        "tokens_seen": {"type": "integer", "minimum": 1},
+        "final_checkpoint": {"type": "string", "minLength": 1},
+        "final_checkpoint_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+      },
+      "additionalProperties": true
+    },
+    "telemetry": {"type": "object"},
+    "evaluations": {
+      "type": "object",
+      "minProperties": 2,
+      "additionalProperties": {
+        "type": "object",
+        "required": ["path", "sha256", "summary"],
+        "properties": {
+          "path": {"type": "string", "minLength": 1},
+          "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+          "summary": {"type": "object"}
+        },
+        "additionalProperties": true
+      }
+    }
+  },
+  "additionalProperties": true
+}

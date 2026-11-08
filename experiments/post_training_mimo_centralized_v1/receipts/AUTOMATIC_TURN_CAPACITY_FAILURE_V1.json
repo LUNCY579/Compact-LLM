@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "status": "AUTOMATIC_TURN_FAILED_MODEL_SERVICE_CAPACITY",
+  "evidence_source": "Codex read_thread on the current chat; current get_goal status blocked",
+  "observed_previous_turn": {
+    "turn_id": "01a0f291-236a-7953-a72c-cd96a0a660fa",
+    "status": "failed",
+    "error": {
+      "message": "Selected model is at capacity. Please try a different model.",
+      "additionalDetails": null
+    },
+    "started_at": 1790775993,
+    "completed_at": 1790778465,
+    "duration_ms": 2472559
+  },
+  "worktree_recovered": true,
+  "model_worker_running_at_observation": false,
+  "available_host_RAM_GiB_at_observation": 0.67,
+  "registered_native_launch_available_RAM_GiB": 3.3125,
+  "interpretation": "The immediate automatic-turn failure was the selected-model capacity error. RAM admission and raw-model likelihood disagreement are separate experiment blockers. No GPU training was running or lost in that interrupted turn.",
+  "automatic_goal_status": "blocked",
+  "native_training_started": false
+}

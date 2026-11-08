@@ -1,0 +1,69 @@
+{
+  "created_at_utc": "2026-09-13T17:27:26.631014+00:00",
+  "purpose": "Static visualization of complete frozen Track B held-out calibration mechanism metrics; not efficacy.",
+  "source_head": "3dfd0078928d3aa3629f99cb1495c1eaff01b155",
+  "input_sha256": {
+    "experiments/supa_adaptive_compute_v2/cross_scale/evidence/01_alignment_matrix/alignment-cpu-v2-002/aggregate/attempt_000/matrix.json": "ad91c4776179ab9a047d8b2acbc888cede0701ec72b7664a08076dec71898d00",
+    "experiments/supa_adaptive_compute_v2/cross_scale/evidence/01_alignment_matrix/alignment-cpu-v2-002/aggregate/attempt_000/selection.json": "e05a8a8f4f6807f60b0f00809107f2ab2df753a601119f09b92802a0688f619b"
+  },
+  "input_bytes_match_committed_HEAD": true,
+  "render_script_sha256": "627cd4ce2f0567b5b41c9a96f3703a18a611dc68d54c442d6c708990fef51f5d",
+  "runtime": {
+    "python": "3.11.15",
+    "matplotlib": "3.11.1",
+    "numpy": "2.4.6",
+    "backend": "Agg"
+  },
+  "coverage": {
+    "pairs": 16,
+    "objectives": [
+      "B0",
+      "B1",
+      "B2",
+      "B3",
+      "BS",
+      "BR"
+    ],
+    "cells_per_figure": 96,
+    "heldout_scenarios": 32,
+    "ordinary_tokens_per_cell": 2395,
+    "ordinary_token_metrics_csv_rows": 96
+  },
+  "selected": {
+    "checks": {
+      "above_null_controls": true,
+      "absolute_delta_cosine": true,
+      "all_token_floor": true,
+      "improvement_over_B0": true,
+      "relative_error_improvement": true,
+      "scale_stability": true
+    },
+    "donor_layer": 24,
+    "go": true,
+    "objective": "B3",
+    "ordinary_delta_cosine": 0.8491775842112589,
+    "ordinary_delta_relative_mse": 0.2820784626027358,
+    "supa_layer": 19
+  },
+  "scales": {
+    "cosine": {
+      "minimum": 0,
+      "maximum": 1,
+      "scale": "linear"
+    },
+    "relative_mse": {
+      "minimum": 0.25,
+      "maximum": 128,
+      "scale": "logarithmic"
+    },
+    "all_values_in_scale": true,
+    "common_across_all_six_objectives": true
+  },
+  "artifact_sha256": {
+    "ordinary_delta_cosine.png": "395664238a895de6604c2faae396ac2ae171d561266db56481a9a61c0448ed64",
+    "ordinary_delta_cosine.pdf": "15bb03adaf01a44d68da9feb23abddc5960919f244a64c89d2bffc476a01e9b1",
+    "ordinary_delta_relative_mse.png": "9609a341f5f5f8c5130ee2fa1159ea2db6f874c416a41b9394d2d44985d31329",
+    "ordinary_delta_relative_mse.pdf": "ed33924d03919b98bad946cea87d0dc11e80a81521fb070da29ab7d05e0d7a08",
+    "ordinary_token_metrics.csv": "92242cb1121edef0eebeef2d9e98fe7e96f8896c878756cc13b77f81d3df4e3f"
+  }
+}

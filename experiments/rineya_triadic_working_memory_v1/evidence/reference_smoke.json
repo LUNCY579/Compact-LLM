@@ -1,0 +1,51 @@
+{
+  "arms": [
+    {
+      "arm": "baseline",
+      "initial_loss": 0.0029658444691449404,
+      "last_preupdate_loss": 0.0029658444691449404,
+      "optimizer_steps": 0,
+      "trainable_parameters": 0
+    },
+    {
+      "arm": "stateless",
+      "initial_loss": 0.0029658444691449404,
+      "last_preupdate_loss": 0.0012836925452575088,
+      "optimizer_steps": 12,
+      "trainable_parameters": 1105
+    },
+    {
+      "arm": "gdn_e1",
+      "initial_loss": 0.0029658444691449404,
+      "last_preupdate_loss": 0.0022332866210490465,
+      "optimizer_steps": 12,
+      "trainable_parameters": 697
+    },
+    {
+      "arm": "triadic_e4",
+      "initial_loss": 0.0029658444691449404,
+      "last_preupdate_loss": 0.0019428211962804198,
+      "optimizer_steps": 12,
+      "trainable_parameters": 1119
+    },
+    {
+      "arm": "matrix_state_matched",
+      "initial_loss": 0.0029658444691449404,
+      "last_preupdate_loss": 0.0012872721999883652,
+      "optimizer_steps": 12,
+      "trainable_parameters": 1657
+    }
+  ],
+  "efficacy_claim": false,
+  "environment": {
+    "cuda": false,
+    "device": "cpu",
+    "python": "3.13.5",
+    "source_sha256": "6687b8f1948cdb82b7b7d5fa78fd2641c0e67108d603f2de19a69ce3d663b152",
+    "torch": "2.10.0+cpu",
+    "transformers": null
+  },
+  "real_checkpoint_loaded": false,
+  "status": "REFERENCE_OPTIMIZATION_SMOKE_COMPLETED",
+  "task": "fixed_tensor_prefix_mean_regression"
+}

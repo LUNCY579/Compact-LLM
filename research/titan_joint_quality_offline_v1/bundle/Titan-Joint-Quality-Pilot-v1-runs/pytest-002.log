@@ -1,0 +1,20 @@
+..................................................F..................    [100%]
+================================== FAILURES ===================================
+__ test_budget_nonselection_is_explicit_and_all_parent_rows_remain_accounted __
+
+    def test_budget_nonselection_is_explicit_and_all_parent_rows_remain_accounted():
+        rows = fixture_rows(1024)
+        rows = [{**deepcopy(row), "case_id": f"copy-{copy}-{row['case_id']}",
+                 "parent_id": f"copy-{copy}-{row['parent_id']}"}
+                for copy in range(5) for row in rows]
+        plan = build_exposure_plan(encode_rows(rows, FakeTokenizerAdapter()), bindings())
+>       assert plan["status"] == "PROSPECTIVE_OFFLINE_EXPOSURE_PLAN"
+E       AssertionError: assert 'BLOCKED_EXPOSURE_PLAN' == 'PROSPECTIVE_...EXPOSURE_PLAN'
+E         
+E         - PROSPECTIVE_OFFLINE_EXPOSURE_PLAN
+E         + BLOCKED_EXPOSURE_PLAN
+
+tests\test_exposure.py:125: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/test_exposure.py::test_budget_nonselection_is_explicit_and_all_parent_rows_remain_accounted
+1 failed, 68 passed in 125.99s (0:02:05)

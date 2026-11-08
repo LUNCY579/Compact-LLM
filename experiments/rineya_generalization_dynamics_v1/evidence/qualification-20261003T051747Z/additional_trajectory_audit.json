@@ -1,0 +1,55 @@
+{
+  "experiment": "GD-001",
+  "recorded_utc": "2026-10-03T05:24:18.013246+00:00",
+  "audit_kind": "LOCAL_METADATA_ONLY_NOT_NATIVE_QUALIFICATION",
+  "baya_completed_candidate": {
+    "directory": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\artifacts\\baya_long_context_sft_v1\\stage_a",
+    "training_manifest_exists": true,
+    "training_manifest_sha256": "0f42d8d6dcb36b0ac27467a21392411d5146d59ca582113b0f1486357c4d535d",
+    "checkpoint_payloads": [
+      {
+        "step": 1150,
+        "directory_exists": true,
+        "adapter_weight_exists": false,
+        "trainer_state": {
+          "global_step": 1150,
+          "max_steps": 1200,
+          "epoch": 0.2725037765469032
+        }
+      },
+      {
+        "step": 1175,
+        "directory_exists": true,
+        "adapter_weight_exists": false,
+        "trainer_state": {
+          "global_step": 1175,
+          "max_steps": 1200,
+          "epoch": 0.2784277716892272
+        }
+      },
+      {
+        "step": 1200,
+        "directory_exists": true,
+        "adapter_weight_exists": false,
+        "trainer_state": {
+          "global_step": 1200,
+          "max_steps": 1200,
+          "epoch": 0.2843517668315512
+        }
+      }
+    ],
+    "all_weight_payloads_under_run": []
+  },
+  "titan_published_variants": {
+    "consecutive_training_checkpoints": false,
+    "Experimental": "Derives from Supa 1.7 plus RRP015 update.",
+    "Sparse": "Changes update support without a new training run.",
+    "Transition": "Combines donors; cannot be relabelled as next saved training step.",
+    "referenced_microfit_weights_found": false
+  },
+  "complete_admissible_trajectory_found": false,
+  "native_model_loads": 0,
+  "native_forward_calls": 0,
+  "native_confirmation_generated_or_opened": false,
+  "permits_model_promotion": false
+}

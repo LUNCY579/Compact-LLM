@@ -1,0 +1,80 @@
+{
+  "schema": "SCP_PROTOCOL_V1",
+  "experiment": "SCP-001",
+  "population_role": "OPEN_DEV",
+  "purpose": "Sequential capability/preservation/cost study; no unconditional multi-arm tournament",
+  "subject_policy": {
+    "student": "Titan-Sparse seed-17 FP32 incumbent",
+    "source_parameters": 596049920,
+    "source_dtype": "float32",
+    "delta_definition": "Delta = trained_fp32 - source_promoted_fp32 on the exact 220 trained tensors",
+    "incumbent_definition": "source + M_0.25(Delta)",
+    "mask": "per-tensor floor(n*0.25) largest absolute entries; stable ascending flat-index tie break",
+    "not_scalar_scaling": true,
+    "teacher": "BLOCKED: locate exact local adapted Qwen3-4B checkpoint, recipe, tokenizer and timing receipts"
+  },
+  "compression": {
+    "primary_basis": "M_0.25(Delta)",
+    "primary_rank": 16,
+    "auxiliary_ranks": [4, 64],
+    "primary_arms": ["source", "full", "sparse", "rank", "norm_control"],
+    "norm_control": "working_delta * norm(rank_r(working_delta))/norm(working_delta) per tensor",
+    "nonmatrix_policy": "preserve the selected basis update",
+    "zero_norm_policy": "zero update and ratio zero",
+    "rank_clamp": "min(registered_rank, matrix dimensions)",
+    "full_delta_compression": "separately labeled auxiliary, never pooled with incumbent compression",
+    "native_serving_status": "UNQUALIFIED; tensor shards and factors are not a qualified HF deployment"
+  },
+  "data": {
+    "targeted_pilot_train_worlds_proposed": 2048,
+    "pilot_size_is_not_a_power_claim": true,
+    "cal_check": "prospectively fixed, structurally/world/text-disjoint, permanently open development",
+    "topics": ["compositional acquisition", "grounded evidence", "counterfactual answerability", "preservation anchors"],
+    "max_full_sequence": 2048,
+    "max_prompt": 1920,
+    "completion_reserve": 128,
+    "no_truncation": true,
+    "shortcut_balanced_accuracy_max": 0.55,
+    "native_tokenizer_and_independent_solver_required": true,
+    "lcr_v2": "separate inherited 6000-row spec; this pilot does not replace it",
+    "confirmation": "not generated, not read, not consumed by this implementation"
+  },
+  "training": {
+    "arms": ["F", "P", "T"],
+    "F": "verified final answers",
+    "P": "verified compact solver steps plus final answers",
+    "T": "independently verified compact teacher steps plus final answers",
+    "primary_estimand": "matched worlds and presentations; actual processed/supervised tokens reported",
+    "same_preservation_exposure": true,
+    "teacher_success_filtering": false,
+    "new_output_contract": "FINAL_LINE_V1 for acquisition; preservation anchors keep original contracts",
+    "native_engine": "experiments.reasoning_posttraining_v1.engine.microfit unchanged",
+    "native_serialization": "experiments.reasoning_posttraining_v1.serialization.compile_row direct mode unchanged",
+    "native_grant": null,
+    "native_launcher": "not yet qualified for SCP subjects",
+    "optional_later": ["token-budget matched sensitivity", "512/2048/8192 nested data curve", "soft/on-policy distillation"]
+  },
+  "inference": {
+    "arms": ["O", "T", "REP", "MR"],
+    "O_cap": 64,
+    "T_cap": 288,
+    "REP_MR_caps": [64, 64, 64, 64, 32],
+    "role_mode": "independent perspectives",
+    "selector": "same label-blind candidate-index selector in REP and MR",
+    "tie_policy": "majority diagnostic uses first candidate",
+    "oracle": "post-generation analysis only",
+    "future_interaction": "(new_MR-new_O)-(old_MR-old_O)",
+    "no_compute_equivalence_claim": true
+  },
+  "decision": {
+    "preservation": "ZERO_OBSERVED_DAMAGE_OPEN_SCOUT; finite observations never prove universal preservation",
+    "acquisition": "family-specific gain beyond independently published shortcut floors on fresh permitted data",
+    "arithmetic_improvement_is_not_preservation": true,
+    "no_significance_implies_equivalence": false,
+    "primary_units": "worlds, with paired repairs/damage and clustered intervals",
+    "teacher_replication": "two further independent training seeds after exact original recipe is recovered; report failures",
+    "scale_or_composition": "conditional on informative prior stages, with separate registration",
+    "release": false,
+    "independent_confirmation": false
+  }
+}

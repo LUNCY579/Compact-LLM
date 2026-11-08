@@ -1,0 +1,167 @@
+{
+  "schema_version": 1,
+  "experiment_id": "RINEYA-0P6B-BRIDGE-SFT-E1",
+  "status": "FROZEN_FAST_LANE_DATA_ONLY",
+  "source_head_audited": "03db218ceebc61a2bc04f2482cf7e094045e01c1",
+  "report": {
+    "path": "Rineya_MiMo_PostTraining_Research_Report.pdf",
+    "sections": [
+      "2",
+      "5",
+      "8",
+      "10",
+      "11",
+      "Appendix A",
+      "Appendix C"
+    ],
+    "pdf_sha256": "a1c5b5c66e1cef0edd04631ab7c487c93731b1a207bb67ee87fddd40cf43c2d7"
+  },
+  "authorization": {
+    "implementation_and_synthetic_tests": true,
+    "dataset_artifact_generation": true,
+    "native_execution": false,
+    "check_rendering": false,
+    "final_rendering": false
+  },
+  "selection_seed": 20260927,
+  "independent_unit": "canonical_latent_parent",
+  "families": [
+    "bounded_integer_arithmetic",
+    "symbolic_variable_updates",
+    "finite_set_queries",
+    "constrained_text_transformations"
+  ],
+  "counts": {
+    "TRAIN": {
+      "acquisition_parents": 4096,
+      "per_family": 1024
+    },
+    "TRAIN_SELECTION": {
+      "acquisition_parents": 256,
+      "per_family": 64
+    },
+    "DEV": {
+      "acquisition_parents": 256,
+      "per_family": 64
+    },
+    "CHECK": {
+      "acquisition_parents": 512,
+      "per_family": 128,
+      "rendering": "RESERVATION_ONLY_UNTIL_GATE"
+    },
+    "FINAL": {
+      "acquisition_parents": null,
+      "rendering": "CLOSED_UNTIL_RECIPE_AND_CONFIRMATION_DESIGN_FROZEN"
+    },
+    "retention_train_rows": 1024,
+    "retention_check_parents": 512,
+    "retention_dev_rows": null
+  },
+  "proposed_amendments_requiring_root_protocol_freeze": [],
+  "parent_policy": {
+    "assignment": "sha256(domain separator + canonical semantic parent), first 64 bits modulo 10000",
+    "buckets": {
+      "TRAIN": [
+        0,
+        7000
+      ],
+      "TRAIN_SELECTION": [
+        7000,
+        7800
+      ],
+      "DEV": [
+        7800,
+        8600
+      ],
+      "CHECK": [
+        8600,
+        9400
+      ],
+      "FINAL": [
+        9400,
+        10000
+      ]
+    },
+    "before": [
+      "surface rendering",
+      "answer solving",
+      "teacher generation",
+      "student difficulty scoring",
+      "curriculum selection"
+    ],
+    "derivatives": "All renderings, reordered irrelevant fields and local diagnostic mutations remain attached to the original parent; mutations are not independent evaluation units.",
+    "normalizations": [
+      "arithmetic addition/multiplication operand commutation",
+      "finite-set sorting/deduplication and commutative query operands",
+      "symbolic variable indices independent of rendered names",
+      "text tokens and ordered transformation program"
+    ],
+    "not_proven": [
+      "general arithmetic equivalence",
+      "all graph or variable isomorphisms",
+      "pretraining exclusion",
+      "semantic independence from historical corpora"
+    ]
+  },
+  "target_policy": {
+    "envelope": "one strict JSON object with exactly the answer key; no rationale",
+    "arithmetic": "exact bounded integer",
+    "symbolic": "ordered final register integer list",
+    "sets": "sorted distinct integer list",
+    "text": "exact transformed string with explicitly instructed separator",
+    "verification": "separate solver and verifier implementations; all positives plus malformed and wrong-answer controls; metadata errors fail as host errors",
+    "teacher_required": false,
+    "teacher_calls_budget": 0,
+    "model_calls_budget": 0
+  },
+  "context_contract": {
+    "max_total_tokens": 1024,
+    "max_target_tokens": 128,
+    "tokenizer_template_sha256": null,
+    "prompt_token_hash": null,
+    "truncation": "forbidden; reject before final manifest freeze",
+    "actual_nonpadding_tokens": null,
+    "max_nonpadding_training_tokens_per_seed": 5242880
+  },
+  "required_row_lineage": [
+    "parent_id",
+    "source_id",
+    "source_revision",
+    "family",
+    "structure_id",
+    "role",
+    "canonical_parent_sha256",
+    "prompt_sha256",
+    "normalized_prompt_sha256",
+    "tokenized_prompt_sha256",
+    "target_sha256",
+    "verifier_version",
+    "verifier_result",
+    "generator_seed",
+    "candidate_index",
+    "generation_attempts",
+    "policy_or_teacher_identity",
+    "environment_revision",
+    "tool_actions",
+    "tool_outputs",
+    "reward",
+    "termination_reason",
+    "cost",
+    "license_provenance"
+  ],
+  "retention_requirements": [
+    "Training-safe replay must be disjoint from all scored preservation parents.",
+    "Fresh CHECK must not be a random re-split of an exposed historical bank.",
+    "Enroll actual base source-correct membership under frozen decoding; denominator zero is undefined.",
+    "Report retrieval, long-context, instruction following, language quality and abstention separately where represented; deterministic bridge tasks cannot establish all of these."
+  ],
+  "data_receipt_sha256": null,
+  "retention_source_manifest_sha256": null,
+  "historical_exclusion_receipt_sha256": null,
+  "native_qualified": false,
+  "e1_launch_ready": false,
+  "authority": "Current user brief + AMENDMENT_001.md; E1 native gate stays closed",
+  "primary_student_receipt": "receipts/PRIMARY_STUDENT_RECEIPT.json",
+  "primary_student_sha256": "537201676814ade103c4efa63f5ebe758ea309971803c4ad633dbca5b6b531b7",
+  "amendment": "AMENDMENT_001.md"
+}

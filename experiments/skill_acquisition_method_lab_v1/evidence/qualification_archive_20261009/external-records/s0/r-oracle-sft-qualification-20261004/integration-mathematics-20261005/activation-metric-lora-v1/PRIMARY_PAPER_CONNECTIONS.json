@@ -1,0 +1,44 @@
+{
+  "schema": "CE8-ACTIVATION-METRIC-PRIMARY-PAPER-CONNECTIONS-1",
+  "status": "LITERATURE_AND_CONDITIONAL_ANALYSIS_NOT_EMPIRICAL_MODEL_EVIDENCE",
+  "sources_checked_utc_date": "2026-10-09",
+  "papers": [
+    {
+      "title": "ASVD: Activation-aware Singular Value Decomposition for Compressing Large Language Models",
+      "version": "arXiv:2312.05821v5, 2025-08-28",
+      "url": "https://arxiv.org/html/2312.05821v5",
+      "sections": "Method, equations 7-9",
+      "supported_connection": "ASVD transforms weights using calibration activation statistics. Its diagonal scaling uses channelwise absolute activation means raised to an exponent; the revised paper also discusses Cholesky scaling. This supports studying activation geometry separately from raw weight-space distance.",
+      "scope_limit": "Diagonal magnitude statistics are not generally the full input second moment. Reported compression outcomes are the paper's experiments, not evidence for our adapters or retention."
+    },
+    {
+      "title": "SVD-LLM: Truncation-aware Singular Value Decomposition for Large Language Model Compression",
+      "version": "arXiv:2403.07378v5, 2025-03-16",
+      "url": "https://arxiv.org/html/2403.07378v5",
+      "sections": "3.1, Theorem 3.2 and Corollary 3.3; 3.2",
+      "supported_connection": "SVD-LLM whitens calibration activations using a Cholesky factor and relates discarded singular values to a layer reconstruction objective. It also performs sequential parameter recovery after compression. This provides established context for weighted low-rank approximation.",
+      "scope_limit": "A reconstruction theorem does not prove global model accuracy or preservation of every skill. Its inverse-whitening argument requires the relevant invertibility assumptions; singular moments need a support-aware treatment."
+    },
+    {
+      "title": "IO-SVD: Input-Output Whitened SVD for Adaptive-Rank LLM Compression",
+      "version": "arXiv:2605.15626v1, 2026-05-15",
+      "url": "https://arxiv.org/html/2605.15626v1",
+      "sections": "3.1, equations 2-8",
+      "supported_connection": "IO-SVD combines input moments with output sensitivity derived from a local predictive-KL approximation. The paper explicitly introduces moment decoupling before its double-sided weighted Frobenius objective, then uses damped metrics for invertible whitening and truncated SVD.",
+      "scope_limit": "Token-dependent sensitivity and input moments do not factor exactly in general. KL expansion, Jacobian linearization, moment decoupling, damping and top-K approximations are separate assumptions; none is an exact guarantee for our full model."
+    }
+  ],
+  "our_analysis_scope": [
+    "Derive exact activation-response Gram identities for effective LoRA deltas at a fixed linear layer, fixed input second moment and fixed PSD output metric.",
+    "Give exact finite counterexamples separating Frobenius orthogonality, activation response and token-dependent metric factorization.",
+    "Handle singular fixed metrics through their supported subspaces rather than silently applying an ordinary inverse.",
+    "Map these diagnostics to the existing Mimo/Central code without reading model weights, activations or scientific rows."
+  ],
+  "not_a_novelty_claim": "Activation-aware and double-sided whitening are established ideas. The contribution here is a source-specific diagnostic derivation and its limitations for the current skill-composition workflow.",
+  "notation_warning": "The papers often use X for a matrix of calibration columns; our theory uses an input second moment. Normalizing XX^T by token count changes loss scale and must be declared.",
+  "registration_or_execution_authorized": false,
+  "models_loaded": 0,
+  "optimizer_updates": 0,
+  "scientific_rows_read": 0,
+  "native_eligibility_block_unchanged": true
+}

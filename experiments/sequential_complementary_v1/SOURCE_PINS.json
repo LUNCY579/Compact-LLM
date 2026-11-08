@@ -1,0 +1,26 @@
+{
+  "schema": "SCP_SOURCE_PINS_V1",
+  "repository": "LUNCY579/ChatBubble",
+  "branch": "research/sequential-complementary-skills-v1",
+  "parent": {"branch": "codex/dataset-retention-audit-v1", "commit": "fbec90a0d0653aeb745d5223137ae3cfdd9c48dd", "tree": "b95bd7a85b28e476a772064b54e447a625847bd0"},
+  "complement": {"branch": "single-layer-fine-tuning", "commit": "954a0c2637e691b493c5ac3d488653a8c1adf675", "tree": "375a69ec5af206a3db8e8f9e4296fa31d330afbc"},
+  "merge_base": "34de429e391274d095c411273f81cee377d2c136",
+  "integration": "additive package; no merge, registry promotion or edits to historical code/evidence",
+  "git_blobs": {
+    "retention_CONTINUATION.md": "c286fa912de84fa0c51adb06bee70bdb4cbb015d",
+    "docs/LCR_GENERATION_PROMPT_V2_ADDENDUM.md": "558f6a9356d3b66da4e8a8a0e1834276479f73a9",
+    "experiments/reasoning_posttraining_v1/engine.py": "b6c9748f75ee55bc8c244ee82733d1931a857ace",
+    "experiments/reasoning_posttraining_v1/serialization.py": "bf2912f8d65b49fd9de0ef010558967ca2e883ec",
+    "experiments/reasoning_posttraining_v1/native_runtime.py": "5b87b7a49559fb342eb51cd0077b3c82186f2206",
+    "titan_sparse_CORE.json": "f57f51e74cb7fa553be4a9591f49999ffb7e131c",
+    "titan_sparse_build_sparse.py": "4429332083e711eddc0e125e75605396a3e9a834"
+  },
+  "weight_sha256": {
+    "supa_source": "962abc5bcd5a83e3b7693bd278ae9215b6d83389a847913da9330b34dd5dd24b",
+    "trained_partial_fp32": "07156fb5aa4a8c510c63e8af2118a08a8b6bf004549532d497c2e89e2deec24d",
+    "titan_sparse_incumbent": "a28629c9d3454fbf2e884fd7ca442c1b406e7caf4b36d34b2c0614d0add31284"
+  },
+  "teacher_evidence": {"status": "USER_REPORTED_LOCAL_NOT_LOCATED_IN_PINNED_REMOTE", "reported_scores": "270/180", "reported_seconds": 142, "checkpoint_sha256": null, "recipe_sha256": null},
+  "rep001_scope": "596M data-selection draws, not 4B teacher training-seed replication",
+  "source_claims_are_not_new_measurements": true
+}

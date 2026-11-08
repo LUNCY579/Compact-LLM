@@ -1,0 +1,99 @@
+{
+  "status": "SECOND_PRELOAD_ATTEMPT_SAME_RESUMED_GOAL_TURN",
+  "recorded_at_utc": "2026-09-29T05:49:48.825538+00:00",
+  "resumed_blocked_goal_turn_count": 1,
+  "native_attempts_this_resumed_turn": [
+    "e0_titan_v3",
+    "e0_titan_v4"
+  ],
+  "code_sha": "62ad48e2ade0ec4b3023e2aef5736bc34c6022d1",
+  "meaningful_OS_headroom_change": {
+    "prior_v3_free_GiB": 7.649284362792969,
+    "v4_observations": [
+      {
+        "at_utc": "2026-09-29T05:46:20.5264899Z",
+        "free_physical_kib": 8652312,
+        "free_GiB": 8.251487731933594
+      },
+      {
+        "at_utc": "2026-09-29T05:47:37.0262305Z",
+        "free_physical_kib": 8552252,
+        "free_GiB": 8.156063079833984,
+        "python_processes": 0,
+        "GPU_free_MiB": 7365,
+        "disk_free_GiB": 116.25363159179688
+      }
+    ]
+  },
+  "worker_preload_available_GiB": 7.378871917724609,
+  "admission_required_GiB": 7.4,
+  "worker_seconds": 13.860000000000127,
+  "supervisor_seconds": 14.547000000000025,
+  "peak_process_tree_RSS_bytes": 722923520,
+  "call_journal_reconciled_with_result_and_cost": true,
+  "accounting_version": 2,
+  "model_calls_attempted": 0,
+  "all_native_counters_zero": true,
+  "no_model_evidence": "Traceback at preload guard line392, before checkpoint hashing/tokenizer/model construct; four events runtime_import_start/complete,resource,failure; all8operationcounts0",
+  "native_qualified": false,
+  "source_math_resource_gates_changed": false,
+  "raw_files": {
+    "results/e0_titan_v4/CONFIG.json": {
+      "sha256": "8fcab3ce006c9a698af86975769a4076edc78cf8005f64ad823d9d47bcbe518d",
+      "bytes": 1865
+    },
+    "results/e0_titan_v4/COST_LEDGER.json": {
+      "sha256": "2f90096ab21912ec9bdf6cc8fa5f71a4b4fbdec5cb628580a8decfdec1c122ce",
+      "bytes": 1592
+    },
+    "results/e0_titan_v4/E0_RESULT.json": {
+      "sha256": "01ee2b14d282b73615bc904f4eddd8a4196dac7b1cdd17a845c7fdc39cd171e1",
+      "bytes": 3129
+    },
+    "results/e0_titan_v4/EVENTS.jsonl": {
+      "sha256": "c33ada5f54d58f724eb0d1e9408a8ae5a88c16ff95e78f8810d5cd4d227f8483",
+      "bytes": 534
+    },
+    "results/e0_titan_v4/FAILURE_RECEIPT.json": {
+      "sha256": "0c38ad165d7c01065072697422076ce21d54c0b9f716a6fa32b935f761614f90",
+      "bytes": 2692
+    },
+    "results/e0_titan_v4/RESOURCE_BASELINE.json": {
+      "sha256": "c85650e2c446f25c6b25b2f13adc0f6ff51a9a1b694f8aecc3a68f056c89187a",
+      "bytes": 420
+    },
+    "results/e0_titan_v4/RUNTIME_RECEIPT.json": {
+      "sha256": "35793b162a5cddf90ba76ef41dc7237f961984f492fc4325d68c796d7f8a3d8b",
+      "bytes": 571
+    },
+    "results/e0_titan_v4/SOURCE_RECEIPT.json": {
+      "sha256": "3a93f00e36da60e07e691d13f042e33a42991c7ced32139e4fdde0d59c969a96",
+      "bytes": 171
+    },
+    "results/e0_titan_v4_supervisor/FAILURE_RECEIPT.json": {
+      "sha256": "a0446c7e111095666d06f8180e805d7456b059c11a28e4315e147572a9edbbd8",
+      "bytes": 89
+    },
+    "results/e0_titan_v4_supervisor/GO.json": {
+      "sha256": "269c94cb9a919fccfe40712286bb2205c8bf70cde1c48f6616a33fb8e7c52b08",
+      "bytes": 90
+    },
+    "results/e0_titan_v4_supervisor/LAUNCH.json": {
+      "sha256": "78780c09c73cd054a83fd47ae13f27d7ed8701756aa0385036b109811d0377cf",
+      "bytes": 2560
+    },
+    "results/e0_titan_v4_supervisor/stderr.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "results/e0_titan_v4_supervisor/stdout.log": {
+      "sha256": "937756201a414bf8634f6895bb92abcd3f81383030cde713857d7e71d1fe7ab0",
+      "bytes": 111
+    },
+    "results/e0_titan_v4_supervisor/SUPERVISOR.json": {
+      "sha256": "707ebd5ccb82c7f5aa6cfaf0edefb7e6a04edd108f0c529818b996ab76f45c6e",
+      "bytes": 261
+    }
+  },
+  "next_native_attempt": "Only after another meaningful resource-state change; no automatic same-state retry"
+}

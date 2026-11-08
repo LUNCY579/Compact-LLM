@@ -1,0 +1,93 @@
+{
+  "audit_scope": "ChatBubble full fetched Git object database and fetched remote refs",
+  "audited_at_local_date": "2026-09-25",
+  "origin": "https://github.com/LUNCY579/ChatBubble.git",
+  "origin_main_sha": "7d9b4fd450bc56405f6cec41459a7e83df7958ae",
+  "requested_branch": {
+    "name": "research/soft-token-reasoning-v1",
+    "preexisting_remote_sha": "7d9b4fd450bc56405f6cec41459a7e83df7958ae",
+    "preexisting_remote_relation": "exactly equal to origin/main at audit time",
+    "policy": "No force push and no edits to unrelated branches; only a fast-forward of this empty placeholder ref is permitted for the requested deliverable."
+  },
+  "historical_anchors": [
+    {
+      "name": "research/rineya-reasoning-posttraining-v1",
+      "branch_ref_at_audit": "missing",
+      "anchor_sha": "d417e100ac10d225145f9701914854d10c55b43f",
+      "anchor_subject": "feat(rrp-003): arm A1 -- the first lane in this programme authorized to train",
+      "decision": "historical only; not relaunched"
+    },
+    {
+      "name": "codex/dataset-retention-audit-v1",
+      "branch_ref_at_audit": "missing",
+      "anchor_sha": "07e53b0e7d8ed1dd3243493b3a25b97b3988f4fd",
+      "anchor_subject": "docs(published-cores): withdraw the conflation account; report location, not mechanism",
+      "decision": "historical only; not used as a writable dependency"
+    }
+  ],
+  "search_terms": [
+    "RRP-003",
+    "RRP-004",
+    "RRP-005",
+    "reasoning posttraining",
+    "Forge-v2",
+    "preservation bank",
+    "held-out split binding",
+    "dataset retention audit"
+  ],
+  "related_current_refs": [
+    {
+      "branch": "research/delta-multi-reasoning-factorial-v1",
+      "sha": "b8e40d377c9cd461cd30c215a2c713515904197b",
+      "role": "current reasoning/evaluation successor inspected",
+      "relevant_contracts": [
+        "experiments/delta_multi_reasoning_v1/inference/gen_chunked.py",
+        "experiments/delta_multi_reasoning_v1/inference/roles.py",
+        "experiments/delta_multi_reasoning_v1/analysis/paired.py"
+      ]
+    },
+    {
+      "branch": "research/dmrf-pairwise-disjointness-v1",
+      "sha": "11f42f6bc11b8f9e235cb5951ca96a263259434a",
+      "role": "successor audit extension inspected",
+      "relevant_contracts": [
+        "experiments/delta_multi_reasoning_v1/audit/pairwise_disjointness.py",
+        "experiments/delta_multi_reasoning_v1/audit/pairwise_disjointness_manifest.template.json"
+      ]
+    },
+    {
+      "branch": "research/maxrl-comp002-pretraining-qualification-v1",
+      "sha": "21532b765269b19e6aabf8d596e7409be51b37ea",
+      "role": "current source/data/resource qualification gate inspected",
+      "relevant_contracts": [
+        "experiments/maxrl_comp002_pretraining_v1/QUALIFICATION.md",
+        "experiments/maxrl_comp002_pretraining_v1/mechanics.py",
+        "experiments/maxrl_comp002_pretraining_v1/preflight.py"
+      ]
+    },
+    {
+      "branch": "research/maxrl-composable-skills-data-v2",
+      "sha": "a97df24c2c7dd062985942ead8c3375bf20c66b9",
+      "branch_ref_at_audit": "not present in fetched heads; referenced by maxrl-comp002 source_lock",
+      "role": "immutable source/data contract inspected through the successor's source lock"
+    },
+    {
+      "branch": "research/rola-ngu-factorial-v1",
+      "branch_ref_at_audit": "missing",
+      "role": "requested related ref checked and not available in fetched heads"
+    }
+  ],
+  "canonical_successor": {
+    "reasoning_harness_branch": "research/delta-multi-reasoning-factorial-v1",
+    "reasoning_harness_sha": "b8e40d377c9cd461cd30c215a2c713515904197b",
+    "why": "It is the active reasoning/evaluation successor with explicit prompt-role contracts, label-isolation checks, paired repair/damage accounting, and bounded chunked generation. It is the canonical evaluation surface, not a training authorization.",
+    "qualification_gate_branch": "research/maxrl-comp002-pretraining-qualification-v1",
+    "qualification_gate_sha": "21532b765269b19e6aabf8d596e7409be51b37ea",
+    "why_qualification_gate": "It is the later qualification-first contract that refuses native training until exact model, tokenizer, runtime, trainable inventory, split, and resource bindings exist."
+  },
+  "historical_exclusions": [
+    "RRP-003/RRP-004/RRP-005 launch commands were not resurrected.",
+    "The historical 726-row Forge-v2 setup and preservation-bank artifacts are not this experiment's dataset or launch authorization.",
+    "No GFlowRL code or objective was imported."
+  ]
+}

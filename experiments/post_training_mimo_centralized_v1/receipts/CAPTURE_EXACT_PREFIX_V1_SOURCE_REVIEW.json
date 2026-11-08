@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "status": "PASS_EXACT_PREFIX_SOURCE_REVIEW_ONLY_PHYSICAL_UNPROVEN",
+  "author": "/root/review_source",
+  "reviewers": [
+    "/root",
+    "/root/review_evidence"
+  ],
+  "config_sha256": "ca74db0926b1409bcfe432dadf554b282b01f917e4d107422e0fa673ad65d819",
+  "source_pins": {
+    "scripts/qualify_capture_exact_prefix.py": {
+      "sha256": "bb29944a287c5b25b69b6923b7b60926e4dc97d8bc3c02f7abbae2c7770cb9dc",
+      "bytes": 47743
+    },
+    "tests/test_qualify_capture_exact_prefix.py": {
+      "sha256": "e813630b2ccc90df45621b7d472dea4e3abc4ed3e18a818fa616f48a57b369d3",
+      "bytes": 21572
+    },
+    "configs/CAPTURE_EXACT_PREFIX_QUAL_V1.json": {
+      "sha256": "ca74db0926b1409bcfe432dadf554b282b01f917e4d107422e0fa673ad65d819",
+      "bytes": 29319
+    }
+  },
+  "controls_passed": 20,
+  "physical_return_before_logits_extraction": true,
+  "fixture_matching_before_model_construct": true,
+  "independent_prefix_replay_and_partial_costs": true,
+  "raw_logit_hash_shape_dtype_finite_and_target_witnesses": true,
+  "full_resource_floors_unchanged": true,
+  "old_bulk_failure_preserved": true,
+  "native_execution": false,
+  "E1_authorized": false,
+  "CHECK_FINAL_access": false,
+  "goal_complete": false
+}

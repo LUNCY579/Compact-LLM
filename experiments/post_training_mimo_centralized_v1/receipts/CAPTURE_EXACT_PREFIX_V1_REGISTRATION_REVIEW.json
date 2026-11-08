@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "status": "PASS_PROSPECTIVE_EXACT_PREFIX_REGISTRATION_REVIEW_NO_NATIVE",
+  "reviewers": [
+    "/root",
+    "/root/review_evidence"
+  ],
+  "amendment": "AMENDMENT_022.md",
+  "registration": "configs/CAPTURE_EXACT_PREFIX_QUAL_V1.json",
+  "config_sha256": "ca74db0926b1409bcfe432dadf554b282b01f917e4d107422e0fa673ad65d819",
+  "all_generation_length_pairs_checked": 16384,
+  "ceiling_checks": {
+    "pretrained_loads": 1,
+    "optimizer_steps": 0,
+    "training_positions": 0,
+    "generated_tokens": 256,
+    "forward_calls": 514,
+    "forward_input_positions": 164352,
+    "logical_calls": 826
+  },
+  "prefix_rule": "input prompt+previous generated IDs excludes currenttarget; terminalEOSincluded in scoring; promptEOS doesnotstop generation",
+  "scoring_evidence": "Fresh independent repeated-prefix forward; allraw BF16logits finite/hashbitwise; selectedmodelLP maxandmean1e-4; no behaviorLPcomparison",
+  "original_bulk_failure_preserved": true,
+  "partial_counts_must_be_per_actual_attempt_not_completed_formula": true,
+  "fixtureIDs": "Observedoriginal128 plus stdlibderived256/384/512; tokenizerconstruction mustmatch beforemodel",
+  "native_execution_performed": false,
+  "qualification_granted": false,
+  "E1_authorized": false,
+  "CHECK_FINAL_access": false,
+  "current_admission_observation": {
+    "available_host_GiB": 7.033058166503906,
+    "GPU_free_MiB": 2347,
+    "GPU_required_MiB": 4096,
+    "eligible": false,
+    "other_processes_untouched": true
+  }
+}

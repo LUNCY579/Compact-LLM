@@ -1,0 +1,687 @@
+{
+  "schema_version": 1,
+  "stage": "SPEC_ONLY_NO_RENDERED_TEXT",
+  "author_id": "/root/baseline_enrollment",
+  "worlds": [
+    {
+      "parent_id": "LDEV-explanation-01",
+      "role": "DEV",
+      "stratum": "explanation",
+      "conversation_form": "single",
+      "semantic_world": {
+        "actors": ["Leah, a volunteer printing workshop badges", "Omar, the office coordinator"],
+        "facts": ["The office printer has a normal-paper tray and a separate thick-card tray.", "A job requesting thick card stays on hold until someone places card in the thick-card tray.", "The urgent flag changes the order of ready jobs but does not release held jobs.", "Leah's badge job requests thick card; the normal-paper tray is full and the thick-card tray is empty.", "Omar marked the badge job urgent, and an ordinary letter subsequently printed."],
+        "timeline": ["Leah submitted the badge job.", "Omar marked it urgent.", "A ready letter job printed while the badge job remained held."],
+        "constraints": ["Explain the supplied queue rules in everyday language.", "Do not diagnose an unspecified printer fault or claim to have changed its settings.", "Distinguish urgency from the missing material requirement."],
+        "task_intent": "Help Leah understand why the ordinary letter printed before the urgent badges and what prerequisite remains.",
+        "decisive_structure": "Priority ranks only ready jobs; it cannot override a job-specific resource hold, and paper in a different tray does not meet the requested material condition.",
+        "potential_confusions": ["Treating urgent status as permission to print on any available paper.", "Interpreting the successful letter as proof that the card requirement was satisfied."],
+        "exclusion_tags": ["office_print_queue", "priority_with_readiness_gate", "different_material_trays"]
+      },
+      "author_id": "/root/baseline_enrollment"
+    },
+    {
+      "parent_id": "LDEV-explanation-02",
+      "role": "DEV",
+      "stratum": "explanation",
+      "conversation_form": "single",
+      "semantic_world": {
+        "actors": ["Marta, a neighborhood exhibition organizer", "Dev, a first-time gallery volunteer"],
+        "facts": ["The exhibition catalogue counts artworks, while the unpacking sheet counts transport cases.", "One large case contains a connected three-panel artwork registered as one artwork.", "Two small cases each contain one separate sculpture.", "All panels and both sculptures arrived intact.", "The catalogue lists three artworks, and the unpacking sheet lists three cases."],
+        "timeline": ["The artist registered the connected panels as a single work.", "The volunteer unpacked five physical pieces from three cases.", "The volunteer compared the physical-piece count with the catalogue."],
+        "constraints": ["Explain the different counting units rather than simply repeating the totals.", "Do not imply an object is missing or invent another shipment.", "Use the stated registration of the panels, not an outside rule about art."],
+        "task_intent": "Explain why seeing five physical pieces does not contradict the catalogue's three-artwork total.",
+        "decisive_structure": "A physical component, a registered artwork and a transport case are different units; three components belong to one registered whole.",
+        "potential_confusions": ["Counting each connected panel as an independently registered artwork.", "Assuming that matching case and artwork totals means every case must contain one physical piece."],
+        "exclusion_tags": ["exhibition_catalogue", "component_whole_counting", "transport_vs_registration_units"]
+      },
+      "author_id": "/root/baseline_enrollment"
+    },
+    {
+      "parent_id": "LDEV-explanation-03",
+      "role": "DEV",
+      "stratum": "explanation",
+      "conversation_form": "single",
+      "semantic_world": {
+        "actors": ["Niko, a new volunteer at a seedling display", "Anya, the display organizer"],
+        "facts": ["In this display's volunteer system, a blue clip means the tray was checked during the current shift, not that it needs water.", "A written card attached to each tray states whether that tray needs water after inspection.", "The tray by the entrance has a blue clip and a card recording that no water is needed this shift.", "The clip was added only after the inspection was recorded."],
+        "timeline": ["Anya inspected the entrance tray and wrote its shift instruction.", "She attached the blue clip to mark the inspection complete.", "Niko interpreted the blue clip as a watering request."],
+        "constraints": ["Explain only the supplied volunteer labeling system.", "Do not provide general plant-care advice or infer a moisture condition beyond the card.", "Avoid making the new volunteer feel foolish."],
+        "task_intent": "Explain why the clip and the no-water card are consistent and which record governs this shift's action.",
+        "decisive_structure": "One marker records completion of a check; a separate record contains the resulting instruction. A check-completion signal is not the instruction itself.",
+        "potential_confusions": ["Interpreting a marker's color using everyday associations rather than the stated local meaning.", "Assuming every completed inspection must result in watering."],
+        "exclusion_tags": ["seedling_display_labels", "process_marker_vs_result", "local_symbol_definition"]
+      },
+      "author_id": "/root/baseline_enrollment"
+    },
+    {
+      "parent_id": "LDEV-explanation-04",
+      "role": "DEV",
+      "stratum": "explanation",
+      "conversation_form": "single",
+      "semantic_world": {
+        "actors": ["Iris, a community tool borrower", "Ben, the tool-room volunteer"],
+        "facts": ["The tool room holds a reserved item until the end of the pickup window.", "If nobody records pickup before that deadline, the reservation expires automatically.", "An expired item may then be offered to the next person waiting.", "Iris reserved a folding worktable for pickup before noon and arrived at one.", "Ben had already offered the table to the next waiting borrower after noon.", "Iris's earlier confirmation email has no extension or exception in it."],
+        "timeline": ["Iris received a reservation confirmation with the noon pickup deadline.", "No pickup was recorded by noon, so the hold expired.", "The table was offered to another borrower before Iris arrived."],
+        "constraints": ["Explain the effect of the deadline without blaming the borrower.", "Do not promise that the table can be recovered or that another is available.", "Do not invent a reminder message or claim to have contacted the tool room."],
+        "task_intent": "Explain why the old confirmation no longer guaranteed the table when Iris arrived.",
+        "decisive_structure": "A time-bounded reservation was valid earlier but ceased to reserve the item when its stated condition expired; historical confirmation is not current availability.",
+        "potential_confusions": ["Treating the original confirmation as an indefinite hold.", "Presenting the later offer as proof that the original reservation never existed."],
+        "exclusion_tags": ["community_tool_pickup", "expired_conditional_entitlement", "historical_vs_current_state"]
+      },
+      "author_id": "/root/baseline_enrollment"
+    },
+    {
+      "parent_id": "LDEV-explanation-05",
+      "role": "DEV",
+      "stratum": "explanation",
+      "conversation_form": "multi",
+      "semantic_world": {
+        "actors": ["Jo, a craft-stall organizer", "Ravi, Jo's helper", "The market steward"],
+        "facts": ["The market requires a stall wristband for anyone working behind a stall while customers are admitted.", "Helpers who only unload before the public opening use a temporary loading pass instead.", "Jo will run the stall during the public session.", "Ravi's final plan is to unload before opening and then leave; he will not return during the public session.", "A loading pass is available to pre-opening helpers under the stated market rule."],
+        "timeline": ["Jo initially described Ravi as a helper who would stay at the stall all day.", "The distinction between stall wristbands and loading passes was introduced.", "Jo corrected the plan: Ravi will only unload before opening and leave.", "The final request concerns why the corrected plan changes which pass Ravi needs."],
+        "constraints": ["Apply the corrected duration and activity, not the original all-day description.", "Explain the scope of each pass without suggesting that Ravi can work during public hours on a loading pass.", "Do not claim that passes have been issued."],
+        "task_intent": "Explain how Ravi's changed role affects the pass requirement while keeping Jo's own requirement clear.",
+        "decisive_structure": "Eligibility depends on activity during the public-access period, so correcting the helper's time and role changes one person's category without changing the stall organizer's category.",
+        "potential_confusions": ["Continuing to treat Ravi as an all-day seller.", "Treating the loading-pass exception as an exemption for everyone attached to the stall."],
+        "exclusion_tags": ["craft_market_access", "activity_and_time_scope", "corrected_helper_role"]
+      },
+      "author_id": "/root/baseline_enrollment"
+    },
+    {
+      "parent_id": "LDEV-explanation-06",
+      "role": "DEV",
+      "stratum": "explanation",
+      "conversation_form": "multi",
+      "semantic_world": {
+        "actors": ["Elena, a club audio editor", "Ash, a club member testing access"],
+        "facts": ["The club's shared editing folder and its public episode page are separate places.", "Uploading a recording to the editing folder makes it available only to approved editors.", "A separate publish action is required to place the recording on the public episode page.", "The recording is present in the editing folder.", "No publish action has occurred.", "Ash is an approved editor and can open the recording through the editing-folder link."],
+        "timeline": ["Elena initially reported that someone outside the editing session could open the recording and assumed it was public.", "Elena then clarified that the tester was Ash, an approved editor using the editing-folder link.", "Elena confirmed that nobody had used the separate publish action.", "The final request asks what the successful access test actually demonstrates."],
+        "constraints": ["Distinguish an approved editor's access from public availability.", "Use the correction about Ash's access rights.", "Do not claim to inspect the folder, change permissions or publish the episode."],
+        "task_intent": "Explain why Ash's successful access does not show that the recording is on the public page.",
+        "decisive_structure": "An access test is informative only about the tested identity and route; a privileged editor's result cannot establish anonymous public access or completion of a separate publication step.",
+        "potential_confusions": ["Keeping the initial assumption that the tester had no editor access.", "Equating upload, sharing with editors and public publication."],
+        "exclusion_tags": ["club_audio_workflow", "privileged_test_scope", "separate_publication_step"]
+      },
+      "author_id": "/root/baseline_enrollment"
+    },
+    {
+      "parent_id": "LDEV-explanation-07",
+      "role": "DEV",
+      "stratum": "explanation",
+      "conversation_form": "multi",
+      "semantic_world": {
+        "actors": ["Talia, a reunion organizer", "Mo, a relative answering an invitation", "Talia's aunt, who prepares place cards"],
+        "facts": ["The reunion invitation separates attendance at the afternoon gathering from participation in the optional evening meal.", "Place cards for the evening table are made only for people who choose the evening meal.", "Mo will attend the afternoon gathering but will leave before the meal.", "The aunt's list concerns evening place cards only; it is not the gathering's attendance list."],
+        "timeline": ["Talia first described Mo as missing from the attendee list despite accepting the invitation.", "Talia corrected the description: the list is the aunt's evening place-card list.", "Talia supplied Mo's decision to attend only the afternoon portion.", "The final request asks why Mo can have accepted without appearing on that list."],
+        "constraints": ["Preserve the distinction between attendance at one part and attendance at the whole event.", "Do not describe Mo as declining the invitation entirely.", "Do not invent a clerical error or add a meal reservation."],
+        "task_intent": "Explain the apparent discrepancy between Mo's acceptance and absence from the evening place-card list.",
+        "decisive_structure": "A subevent list is a subset of the full event population; participation in the broader gathering does not imply participation in the optional meal.",
+        "potential_confusions": ["Using the initial generic description of the list after its purpose is corrected.", "Treating a partial acceptance as either full attendance or a complete decline."],
+        "exclusion_tags": ["reunion_subevents", "subset_membership", "partial_acceptance"]
+      },
+      "author_id": "/root/baseline_enrollment"
+    },
+    {
+      "parent_id": "LDEV-explanation-08",
+      "role": "DEV",
+      "stratum": "explanation",
+      "conversation_form": "multi",
+      "semantic_world": {
+        "actors": ["Felix, a community film-night host", "Cora, the room coordinator"],
+        "facts": ["Room A has the fixed screen required for the planned projection.", "Room B has more chairs but no screen, and the screen cannot be moved.", "The film-night group initially expected more attendees than Room A could seat.", "The final confirmed attendance fits Room A.", "The current problem is choosing the room for the supplied film setup, not maximizing spare seats."],
+        "timeline": ["Felix initially preferred Room B because of the expected attendance.", "Cora supplied the fixed-screen restriction.", "Felix corrected the attendance estimate downward after confirmations, so everyone now fits Room A.", "The final request asks why the larger room is no longer the appropriate basis for the choice."],
+        "constraints": ["Explain the changed relevance of capacity after the attendance correction.", "Do not invent a portable screen, extra booking or alternative venue.", "Do not say that Room B is always worse for every kind of event."],
+        "task_intent": "Explain why a room with more spare seats is not the better fit for the final film-night requirements.",
+        "decisive_structure": "Once the capacity constraint is satisfied by the smaller room, an additional required feature decides suitability; maximizing an irrelevant surplus does not compensate for lacking that feature.",
+        "potential_confusions": ["Carrying forward the superseded attendance estimate.", "Assuming the largest value on one attribute always determines the best fit."],
+        "exclusion_tags": ["film_night_room", "satisfied_constraint_vs_required_feature", "revised_attendance"]
+      },
+      "author_id": "/root/baseline_enrollment"
+    },
+    {
+      "parent_id": "LCAL-explanation-01",
+      "role": "CAL",
+      "stratum": "explanation",
+      "conversation_form": "single",
+      "semantic_world": {
+        "actors": ["Uma, a volunteer assembling a neighborhood photo booklet", "Pavel, the booklet's editor"],
+        "facts": ["The booklet's index points to printed page numbers inside the booklet.", "The draft PDF begins with two unnumbered cover pages.", "The first numbered booklet page is therefore the third page displayed by the PDF viewer.", "A photograph listed on printed page four appears on the viewer's sixth page.", "No interior page or photograph is missing."],
+        "timeline": ["The editor added two unnumbered covers before the numbered interior.", "Uma followed the index number using the PDF viewer's page counter.", "Uma found the photograph two viewer pages later."],
+        "constraints": ["Explain the two numbering systems using only the supplied layout.", "Do not propose changing the document or claim to have inspected it.", "Avoid implying that the index or viewer is broken."],
+        "task_intent": "Explain why the index and PDF viewer show different page numbers for the same photograph.",
+        "decisive_structure": "A fixed offset arises because one numbering system includes unnumbered front matter while the other starts at the interior; the same location has two valid coordinates.",
+        "potential_confusions": ["Treating the two counts as measurements with the same origin.", "Inferring missing pages from a consistent offset."],
+        "exclusion_tags": ["booklet_front_matter", "coordinate_origin_offset", "index_vs_viewer_numbering"]
+      },
+      "author_id": "/root/baseline_enrollment"
+    },
+    {
+      "parent_id": "LCAL-explanation-02",
+      "role": "CAL",
+      "stratum": "explanation",
+      "conversation_form": "multi",
+      "semantic_world": {
+        "actors": ["Sana, an organizer counting votes for a shared mosaic", "Hugo, another mosaic participant"],
+        "facts": ["Each participant may choose one design, and submitting a later choice replaces that participant's earlier choice.", "Hugo originally chose the wave design and later submitted the leaf design.", "The latest submission records Hugo's leaf choice.", "The displayed total counts each participant's latest choice only.", "Hugo has not gained a second vote."],
+        "timeline": ["Sana initially thought the second submission added another vote.", "The replacement rule was stated.", "Sana confirmed that both submissions came from Hugo and that the leaf submission was later.", "The final request asks why the wave count fell while the participant count stayed the same."],
+        "constraints": ["Explain replacement rather than addition.", "Do not infer that another participant withdrew or that a vote was deleted as invalid.", "Do not invent exact overall totals."],
+        "task_intent": "Explain how one person's changed choice can alter design totals without changing the number of participants.",
+        "decisive_structure": "The ledger stores one current value per voter; replacing a value moves one contribution between categories while preserving the number of distinct contributors.",
+        "potential_confusions": ["Counting submissions instead of current participant choices.", "Treating the reduced wave count as reduced participation."],
+        "exclusion_tags": ["mosaic_design_vote", "replacement_ledger", "category_change_with_constant_population"]
+      },
+      "author_id": "/root/baseline_enrollment"
+    },
+    {
+      "parent_id": "LDEV-meaning_preserving_rewrite-01",
+      "role": "DEV",
+      "stratum": "meaning_preserving_rewrite",
+      "conversation_form": "single",
+      "semantic_world": {
+        "actors": ["Rosa, a volunteer coordinating a neighborhood pantry table", "Residents who leave reusable containers"],
+        "facts": ["The table accepts clean empty containers during the Saturday collection session.", "Containers left outside after the session cannot be stored by the volunteers.", "Rosa's draft notice contains the required collection rule but sounds accusatory toward residents.", "Rosa wants a courteous public notice that keeps the limit explicit."],
+        "timeline": ["Volunteers found containers outside after the table had closed.", "Rosa prepared a blunt notice about the accepted drop-off period.", "The current task is to revise its tone before posting."],
+        "constraints": ["Keep clean and empty as requirements.", "Keep Saturday's collection session as the allowed drop-off period.", "Do not offer collection from people's homes, outside storage or an additional opening time.", "Make the request polite without making compliance sound optional."],
+        "task_intent": "Rewrite a firm container-drop-off notice in a courteous, concise public-facing tone.",
+        "decisive_structure": "Tone can soften while the permitted action and boundary stay categorical; politeness must not create a new service or exception.",
+        "potential_confusions": ["Turning a requirement into a casual suggestion.", "Adding an unsupported convenience to make the notice sound friendlier."],
+        "exclusion_tags": ["pantry_container_notice", "courtesy_without_boundary_loss", "public_dropoff_rule"]
+      },
+      "author_id": "/root/baseline_enrollment"
+    },
+    {
+      "parent_id": "LDEV-meaning_preserving_rewrite-02",
+      "role": "DEV",
+      "stratum": "meaning_preserving_rewrite",
+      "conversation_form": "single",
+      "semantic_world": {
+        "actors": ["Dani, a resident who practiced a drum pattern late", "The neighboring resident"],
+        "facts": ["Dani practiced after the building's agreed quiet time on Tuesday.", "The neighbor asked Dani to avoid doing that again.", "Dani accepts responsibility for Tuesday's disturbance.", "Dani plans to move practice to earlier hours.", "Dani cannot promise that the apartment will never make any noise."],
+        "timeline": ["The late practice occurred on Tuesday.", "The neighbor raised the problem.", "Dani drafted an apology that mixes a valid apology with an unrealistic promise of complete silence."],
+        "constraints": ["Keep responsibility for the actual late practice.", "Keep the concrete plan to practice earlier.", "Remove the unlimited promise rather than replacing it with a different unlimited promise.", "Do not blame the neighbor for being sensitive."],
+        "task_intent": "Rewrite Dani's apology so it is sincere and specific without promising total silence forever.",
+        "decisive_structure": "Preserve accountability and a bounded behavioral commitment while removing an unsupported universal guarantee.",
+        "potential_confusions": ["Weakening the apology to avoid responsibility.", "Retaining an absolute promise because it sounds reassuring."],
+        "exclusion_tags": ["neighbor_noise_apology", "bounded_commitment", "accountability_without_universal_guarantee"]
+      },
+      "author_id": "/root/baseline_enrollment"
+    },
+    {
+      "parent_id": "LDEV-meaning_preserving_rewrite-03",
+      "role": "DEV",
+      "stratum": "meaning_preserving_rewrite",
+      "conversation_form": "single",
+      "semantic_world": {
+        "actors": ["Amina, a student craft-club organizer", "Parents receiving a museum-visit invitation", "The school office"],
+        "facts": ["The museum has confirmed the craft club's visit for Friday afternoon.", "The school office has not yet confirmed transport.", "Families may express interest now, but the organizer is not yet requesting payment or a final attendance commitment.", "Amina's draft invitation makes the transport plan sound settled."],
+        "timeline": ["The museum confirmed the visit slot.", "The organizer requested transport from the school office.", "The office's decision is still pending when the invitation is revised."],
+        "constraints": ["Preserve the confirmed visit slot and the separate unresolved transport condition.", "Request interest only.", "Do not invent a bus, cost, permission deadline or cancellation.", "Use a welcoming tone suitable for a short parent message."],
+        "task_intent": "Rewrite an invitation to distinguish confirmed museum arrangements from pending transport and avoid overstating commitment.",
+        "decisive_structure": "Different parts of a plan have different certainty levels; a confirmed destination appointment does not turn a pending means of attendance into a promise.",
+        "potential_confusions": ["Making the whole visit sound either fully settled or entirely unplanned.", "Converting an expression of interest into a binding signup."],
+        "exclusion_tags": ["craft_club_visit_invitation", "mixed_confirmation_states", "interest_vs_commitment"]
+      },
+      "author_id": "/root/baseline_enrollment"
+    },
+    {
+      "parent_id": "LDEV-meaning_preserving_rewrite-04",
+      "role": "DEV",
+      "stratum": "meaning_preserving_rewrite",
+      "conversation_form": "single",
+      "semantic_world": {
+        "actors": ["Theo, a colleague handing over a presentation", "June, the colleague completing the handover", "The folder administrator"],
+        "facts": ["Theo has finished the slide outline.", "June needs edit access to add the photographs.", "The folder administrator is due to grant June access on Wednesday, but has not done so yet.", "Theo can send the outline now as an attachment.", "Theo's original handover note uses dense office jargon and implies June can already edit the shared slides."],
+        "timeline": ["Theo completed the outline.", "The administrator scheduled the access change for Wednesday.", "Theo is preparing the handover before the access change."],
+        "constraints": ["Use plain language and retain the separate outline and photo tasks.", "Make the current attachment option distinct from later editing access.", "Do not claim the administrator has completed the change.", "Do not promise June's photo work is already finished."],
+        "task_intent": "Rewrite a jargon-heavy handover so June can tell what is ready now and what still depends on access.",
+        "decisive_structure": "A completed content artifact can be transferred before a permission dependency is resolved; simplifying wording must preserve that dependency and ownership of the remaining work.",
+        "potential_confusions": ["Treating a scheduled access change as a completed one.", "Collapsing the finished outline and unfinished photo insertion into one completed task."],
+        "exclusion_tags": ["presentation_handover", "plain_language_dependency", "artifact_ready_permission_pending"]
+      },
+      "author_id": "/root/baseline_enrollment"
+    },
+    {
+      "parent_id": "LDEV-meaning_preserving_rewrite-05",
+      "role": "DEV",
+      "stratum": "meaning_preserving_rewrite",
+      "conversation_form": "multi",
+      "semantic_world": {
+        "actors": ["Luz, a reading-circle facilitator", "Evan, a member who sent a private suggestion", "The other reading-circle members"],
+        "facts": ["Evan privately suggested leaving a short pause before moving to a new discussion question.", "Evan did not complain about any named member.", "Luz may present the facilitation idea to the group but Evan has asked not to be identified.", "The proposal is a trial for the next meeting, not an established group rule."],
+        "timeline": ["Luz initially described the planned message as reporting Evan's complaint about interruptions.", "Luz corrected that description: Evan offered a general private suggestion, not a complaint about a person.", "Luz added Evan's request for anonymity and the one-meeting trial scope.", "The final task is to revise the group message around the corrected meaning."],
+        "constraints": ["Remove the named attribution and complaint framing.", "Keep the actual proposal for a short pause and the trial status.", "Do not imply unanimous agreement or assign blame.", "Use a natural facilitator voice."],
+        "task_intent": "Rewrite a group announcement that introduces a facilitation trial without exposing its source or misrepresenting it as criticism.",
+        "decisive_structure": "Correcting the speech act from complaint to suggestion and honoring source anonymity must change attribution and framing while preserving the proposed action.",
+        "potential_confusions": ["Retaining Evan's name because it appeared in the initial description.", "Turning a one-meeting experiment into an agreed permanent rule."],
+        "exclusion_tags": ["reading_circle_private_suggestion", "corrected_speech_act", "anonymity_and_trial_scope"]
+        },
+      "author_id": "/root/baseline_enrollment"
+    },
+    {
+      "parent_id": "LDEV-meaning_preserving_rewrite-06",
+      "role": "DEV",
+      "stratum": "meaning_preserving_rewrite",
+      "conversation_form": "multi",
+      "semantic_world": {
+        "actors": ["Noor, a repair-cafe organizer", "Visitors bringing small lamps", "The volunteer team"],
+        "facts": ["Visitors should bring their own lamp and its existing removable power lead if it has one.", "The volunteers will have shared test leads for visitors whose removable lead is missing.", "Visitors are not asked to buy any replacement part before the session.", "The event offers inspection, not a guarantee that every lamp will be repaired."],
+        "timeline": ["Noor's initial poster draft told every visitor to bring a new replacement lead.", "Noor corrected the requirement to the existing removable lead, if available.", "Noor added the shared-test-lead option and clarified that repair is not guaranteed.", "The final request is for a short poster revision using the current requirements."],
+        "constraints": ["Do not advise buying or modifying electrical equipment.", "Preserve the conditional nature of bringing a lead.", "Keep the availability of shared test leads and the limit on guaranteed outcomes.", "Use inviting language rather than technical repair instructions."],
+        "task_intent": "Rewrite a visitor notice that accurately states what to bring and what the session offers.",
+        "decisive_structure": "An erroneous universal purchase requirement is replaced by a conditional bring-what-you-have instruction with a shared fallback; an offered inspection must not become an assured repair.",
+        "potential_confusions": ["Carrying forward the superseded instruction to buy a new part.", "Making lack of a lead sound like a reason the visitor cannot attend.", "Promising a successful repair."],
+        "exclusion_tags": ["repair_cafe_visitor_notice", "conditional_bring_requirement", "inspection_without_outcome_guarantee"]
+      },
+      "author_id": "/root/baseline_enrollment"
+    },
+    {
+      "parent_id": "LDEV-meaning_preserving_rewrite-07",
+      "role": "DEV",
+      "stratum": "meaning_preserving_rewrite",
+      "conversation_form": "multi",
+      "semantic_world": {
+        "actors": ["Milo, one of two roommates", "Reese, the other roommate"],
+        "facts": ["The roommates have not yet agreed a new kitchen-cleanup schedule.", "Milo wants to propose alternating responsibility for the shared drying rack each week.", "Milo is offering to take the first week if Reese agrees.", "Each roommate would still wash their own dishes; the proposal changes only responsibility for clearing the shared rack."],
+        "timeline": ["Milo initially described the arrangement as a decision they had already made.", "Milo corrected this: it is a new proposal that Reese has not heard.", "Milo narrowed the proposal to the drying rack, leaving individual dishwashing unchanged.", "The final request is to revise the message so it invites agreement."],
+        "constraints": ["Express a proposal rather than an imposed rule or a claim of prior agreement.", "Preserve Milo's conditional offer to take the first week.", "Keep the shared-rack scope separate from washing all dishes.", "Do not invent resentment or a history of unequal work."],
+        "task_intent": "Rewrite a roommate message as a clear, collaborative proposal with its actual limited scope.",
+        "decisive_structure": "A proposed allocation of one shared task differs from both an existing agreement and a redistribution of all kitchen work; the revision must preserve consent and scope.",
+        "potential_confusions": ["Using language that falsely presupposes Reese's agreement.", "Expanding the offer to washing both roommates' dishes."],
+        "exclusion_tags": ["roommate_shared_rack_proposal", "consent_not_yet_given", "limited_task_allocation"]
+      },
+      "author_id": "/root/baseline_enrollment"
+    },
+    {
+      "parent_id": "LDEV-meaning_preserving_rewrite-08",
+      "role": "DEV",
+      "stratum": "meaning_preserving_rewrite",
+      "conversation_form": "multi",
+      "semantic_world": {
+        "actors": ["Yasmin, a neighborhood choir newsletter editor", "The park event organizer", "Cal, the choir accompanist"],
+        "facts": ["The choir has been invited to discuss a park performance, but no performance booking is confirmed.", "The park organizer is still deciding the event program.", "Cal is available on Sunday but cannot attend Saturday.", "The choir has not decided whether to perform without Cal.", "The newsletter is meant to update members, not announce a public performance."],
+        "timeline": ["Yasmin initially drafted an announcement of a Saturday performance.", "Yasmin clarified that the invitation was only to discuss a possible slot.", "Cal then updated his availability to Sunday only.", "The final request asks for a member update that preserves both unresolved decisions."],
+        "constraints": ["Do not state or imply a confirmed date or performance.", "Keep the organizer's program decision separate from the choir's decision about performing without Cal.", "Mention the corrected accompanist availability without making it an automatic rescheduling.", "Keep the update brief and calm."],
+        "task_intent": "Rewrite a premature event announcement as an accurate internal update on the tentative opportunity.",
+        "decisive_structure": "An invitation to discuss, a performer's availability and an actual booking are separate states; a change in availability does not itself create a new confirmed event.",
+        "potential_confusions": ["Replacing the false Saturday booking with an equally unsupported Sunday booking.", "Reporting the absence of confirmation as an outright cancellation."],
+        "exclusion_tags": ["choir_tentative_invitation", "availability_not_booking", "two_unresolved_decisions"]
+      },
+      "author_id": "/root/baseline_enrollment"
+    },
+    {
+      "parent_id": "LCAL-meaning_preserving_rewrite-01",
+      "role": "CAL",
+      "stratum": "meaning_preserving_rewrite",
+      "conversation_form": "single",
+      "semantic_world": {
+        "actors": ["Ada, a shared art-room coordinator", "Members who borrow the storage key"],
+        "facts": ["The art room's storage key normally stays on the desk hook.", "When a member uses the key to open the supply cupboard, it should go straight back on the hook afterward.", "Ada's reminder is about returning the shared key, not restricting access to supplies.", "Members remain free to use the cupboard during the room's existing opening hours.", "Ada's draft reminder sounds as though members need her individual permission for every cupboard visit."],
+        "timeline": ["Members misplaced the shared key during two sessions.", "Ada drafted a reminder about putting it back.", "Ada noticed that the draft could be read as a new permission requirement."],
+        "constraints": ["Keep the immediate key-return request.", "Avoid creating a new permission or supervision requirement.", "Do not state new opening hours.", "Use a friendly reminder appropriate for peers sharing a room."],
+        "task_intent": "Rewrite the reminder so it protects the shared key's availability without changing members' existing access rights.",
+        "decisive_structure": "A handling obligation for a shared object must not be linguistically broadened into authority over an otherwise permitted activity.",
+        "potential_confusions": ["Making the coordinator sound like an approval gate for each visit.", "Dropping the return-after-use requirement while softening tone."],
+        "exclusion_tags": ["art_room_key_return", "object_handling_vs_activity_permission", "peer_reminder"]
+      },
+      "author_id": "/root/baseline_enrollment"
+    },
+    {
+      "parent_id": "LCAL-meaning_preserving_rewrite-02",
+      "role": "CAL",
+      "stratum": "meaning_preserving_rewrite",
+      "conversation_form": "multi",
+      "semantic_world": {
+        "actors": ["Finn, an amateur walking-group recorder", "Laila, a participant who described a route", "Readers of the group's trip notes"],
+        "facts": ["Laila walked the woodland loop last autumn.", "Finn has not personally walked it.", "The group has no recent information about its current surface conditions.", "Laila's note says the loop was easy to follow on her visit, not that it is always accessible in every condition.", "The group's trip notes should identify the timing and source of that observation."],
+        "timeline": ["Finn first drafted a first-person claim that the group recently checked the route.", "Finn corrected the source: the description came from Laila's walk last autumn.", "Finn clarified that no current conditions have been checked.", "The final task is to revise the note while keeping the useful historical observation."],
+        "constraints": ["Attribute the observation to Laila and retain its historical timing.", "Do not imply current verification or promise conditions on a future visit.", "Do not add outdoor-safety or accessibility claims beyond the supplied facts.", "Keep the note useful rather than discarding all information because it is old."],
+        "task_intent": "Rewrite a trip note to preserve a secondhand historical observation without presenting it as the writer's current experience.",
+        "decisive_structure": "Meaning depends on source and time as well as content; correcting both attribution and temporal scope limits what an observation can support.",
+        "potential_confusions": ["Changing the name while retaining first-person experience language.", "Turning a past visit into a current guarantee.", "Omitting the actual observation entirely."],
+        "exclusion_tags": ["walking_group_historical_note", "secondhand_attribution", "temporal_evidence_scope"]
+      },
+      "author_id": "/root/baseline_enrollment"
+    },
+    {
+      "parent_id": "LDEV-synthesis-01",
+      "role": "DEV",
+      "stratum": "synthesis",
+      "conversation_form": "single",
+      "semantic_world": {
+        "actors": ["Priya, a community mural coordinator", "Leo, the wall-preparation volunteer", "Hazel, the stencil designer"],
+        "facts": ["The courtyard owner has approved the mural design.", "Leo has cleaned the wall but still needs to attach the temporary protective sheet along the floor.", "Hazel's stencils are finished and are stored inside the courtyard office.", "The office will be open during Saturday setup.", "Painting is planned for after the protective sheet is attached.", "No additional design vote is scheduled."],
+        "timeline": ["The design received approval.", "Wall cleaning and stencil preparation were completed separately.", "Saturday setup will make the stencils accessible and finish floor protection before painting."],
+        "constraints": ["Summarize readiness and the remaining prerequisite in a useful volunteer handover.", "Do not call wall preparation fully complete.", "Do not reopen the approved design decision or invent a delivery.", "Keep who is responsible for the remaining task clear."],
+        "task_intent": "Combine separate preparation notes into a short current-status summary for the next volunteer shift.",
+        "decisive_structure": "Several completed workstreams converge on one remaining physical setup dependency; summarization must preserve the dependency rather than averaging everything into a vague ready/not-ready label.",
+        "potential_confusions": ["Equating a cleaned wall with all protective setup completed.", "Treating stored finished stencils as missing materials."],
+        "exclusion_tags": ["community_mural_handover", "parallel_workstream_readiness", "remaining_setup_dependency"]
+      },
+      "author_id": "/root/baseline_enrollment"
+    },
+    {
+      "parent_id": "LDEV-synthesis-02",
+      "role": "DEV",
+      "stratum": "synthesis",
+      "conversation_form": "single",
+      "semantic_world": {
+        "actors": ["Esme, a shared-house resident sorting the hallway", "Tariq, the owner of a green bag", "Wren, the owner of a folded easel", "A visitor whose umbrella is unclaimed"],
+        "facts": ["Tariq will collect the green bag from the hallway this evening.", "Wren wants the folded easel moved to the downstairs cupboard and has given permission for that move.", "Nobody has identified the umbrella's owner.", "The residents agreed not to donate unclaimed items until the visitor group has been asked.", "Esme wants a concise handover for a roommate helping clear the hallway."],
+        "timeline": ["The residents identified the bag and easel owners.", "Their owners supplied different instructions.", "The umbrella remains unresolved, and the visitor group has not yet been asked."],
+        "constraints": ["Keep the collection, authorized move and unresolved item separate.", "Do not turn a permission to move the easel into permission to donate it.", "Do not assign an owner to the umbrella.", "Make the unresolved follow-up visible without treating all items as unresolved."],
+        "task_intent": "Synthesize three item-specific messages into a practical hallway-clearing handover.",
+        "decisive_structure": "Items with different ownership certainty and permissions require different dispositions; a concise summary must preserve the mapping from each object to its authorized next step.",
+        "potential_confusions": ["Applying the donation hold to already identified items.", "Combining pickup and storage instructions into a single action for all items."],
+        "exclusion_tags": ["shared_house_hallway", "item_specific_permissions", "known_and_unknown_ownership"]
+      },
+      "author_id": "/root/baseline_enrollment"
+    },
+    {
+      "parent_id": "LDEV-synthesis-03",
+      "role": "DEV",
+      "stratum": "synthesis",
+      "conversation_form": "single",
+      "semantic_world": {
+        "actors": ["Mei, an organizer of a bread-making demonstration", "Owen, the demonstrator", "Participants bringing containers"],
+        "facts": ["The demonstration's morning portion shows mixing and shaping.", "A batch prepared earlier will be used for the afternoon tasting because the newly mixed batch is reserved for a later session.", "Participants may watch either portion without signing up for both.", "Owen provides ingredients and utensils.", "Participants who want to take a tasting piece away should bring an empty container.", "The organizer needs one short description for the event listing."],
+        "timeline": ["Owen arranged two distinct portions of the demonstration.", "An earlier batch was designated for tasting.", "The listing is being prepared before participants choose which portion to attend."],
+        "constraints": ["Preserve the distinction between the batch being demonstrated and the batch being tasted.", "Mention that attendance at both portions is optional.", "Do not add recipe, nutrition or food-safety advice.", "Do not imply that attendees must supply ingredients."],
+        "task_intent": "Combine program, participation and bring-along notes into an accurate compact event description.",
+        "decisive_structure": "A program has separate experiential components and uses different material batches for them; compressing the notes must preserve optional participation and the limited bring-along requirement.",
+        "potential_confusions": ["Saying attendees will taste the exact batch mixed that morning.", "Making the container requirement apply to watching the demonstration."],
+        "exclusion_tags": ["bread_demonstration_listing", "separate_batches_and_sessions", "conditional_takeaway_requirement"]
+      },
+      "author_id": "/root/baseline_enrollment"
+    },
+    {
+      "parent_id": "LDEV-synthesis-04",
+      "role": "DEV",
+      "stratum": "synthesis",
+      "conversation_form": "single",
+      "semantic_world": {
+        "actors": ["Dara, a volunteer updating a local walking-map display", "Kit, a volunteer who visited the western entrance", "Sol, a resident reporting on the eastern gate"],
+        "facts": ["Kit personally observed that the western entrance sign is missing.", "Sol reported by message that the eastern gate may be closed, but no volunteer has checked that report.", "The central paved entrance was checked today and is open.", "The map's path lines have not changed.", "Dara wants an update that distinguishes verified observations from an unresolved report."],
+        "timeline": ["Kit and a second volunteer checked the western and central entrances today.", "Sol separately sent an uncertain report about the eastern gate.", "The eastern report remains unverified when the display update is drafted."],
+        "constraints": ["Keep verification status attached to each statement.", "Do not declare the eastern gate closed or open.", "Do not infer a path closure merely from a missing sign.", "Summarize only the supplied observations and the outstanding check."],
+        "task_intent": "Synthesize the entrance notes into a brief update with clear evidence strength and one unresolved item.",
+        "decisive_structure": "Multiple reports have unequal certainty, and a signage defect is different from a physical access status; a faithful synthesis preserves those distinctions.",
+        "potential_confusions": ["Flattening all reports into verified facts.", "Inferring that a missing sign means the western entrance is closed."],
+        "exclusion_tags": ["walking_map_observations", "unequal_evidence_certainty", "signage_vs_access_status"]
+      },
+      "author_id": "/root/baseline_enrollment"
+    },
+    {
+      "parent_id": "LDEV-synthesis-05",
+      "role": "DEV",
+      "stratum": "synthesis",
+      "conversation_form": "multi",
+      "semantic_world": {
+        "actors": ["Yuri, a volunteer preparing an archive display", "Nell, a donor of event photographs", "The display editor"],
+        "facts": ["A photograph shows the neighborhood hall's reopening, not its original construction.", "Nell's handwritten date refers to when she donated the photograph, not when the depicted event occurred.", "The event year has not been established.", "Nell has given permission to display this photograph with her name as donor.", "The editor needs a short description of what can be stated and what still needs verification."],
+        "timeline": ["Yuri initially treated the handwritten date as the year the hall was built.", "Nell clarified that the scene is the reopening.", "Nell then clarified that the handwritten date is the donation date.", "The final request asks for a current editorial summary after both corrections."],
+        "constraints": ["Do not invent an event or construction year.", "Separate donor attribution from authorship of the photograph, which is not supplied.", "Retain display permission and the unresolved historical dating.", "Do not reproduce either superseded interpretation as fact."],
+        "task_intent": "Synthesize corrections into an editorial note that prevents an inaccurate historical caption.",
+        "decisive_structure": "Two independent metadata corrections change both the depicted event and the meaning of a date; the remaining uncertainty concerns event dating, not permission or donor identity.",
+        "potential_confusions": ["Correcting the event type but retaining the donation date as its year.", "Calling the donor the photographer without evidence."],
+        "exclusion_tags": ["archive_photo_metadata", "event_and_date_semantics_correction", "donor_not_photographer"]
+      },
+      "author_id": "/root/baseline_enrollment"
+    },
+    {
+      "parent_id": "LDEV-synthesis-06",
+      "role": "DEV",
+      "stratum": "synthesis",
+      "conversation_form": "multi",
+      "semantic_world": {
+        "actors": ["Tess, a tabletop-game host", "Al, a participant teaching a game", "Bea, a participant arriving later", "The other guests"],
+        "facts": ["Al can teach a short introductory round before the main game.", "Bea will arrive after the introductory round and already knows the main game.", "The guests have agreed that the main game should begin only after Bea arrives.", "The introductory round may go ahead earlier for guests who want it.", "The host supplies the game materials, and guests do not need to bring copies."],
+        "timeline": ["Tess initially planned to delay all play until Bea arrived because she might need instruction.", "Bea clarified that she already knows the main game.", "The group retained its agreement to wait for Bea before the main game but allowed an earlier optional introduction.", "The final request asks for a compact guest update reflecting the revised sequence."],
+        "constraints": ["Keep the optional early introduction distinct from the main game.", "Do not imply that Bea must catch up on a compulsory lesson.", "Preserve the group's decision to wait before starting the main game.", "Do not invent exact start times."],
+        "task_intent": "Summarize the current game-night plan so early and later arrivals understand what will happen.",
+        "decisive_structure": "A correction removes one reason to delay an optional preliminary activity while a separate social commitment still delays the main activity.",
+        "potential_confusions": ["Treating the correction as permission to begin the main game without Bea.", "Keeping the entire original delay after its teaching rationale has changed."],
+        "exclusion_tags": ["tabletop_game_night", "optional_intro_vs_main_activity", "independent_social_commitment"]
+        },
+      "author_id": "/root/baseline_enrollment"
+    },
+    {
+      "parent_id": "LDEV-synthesis-07",
+      "role": "DEV",
+      "stratum": "synthesis",
+      "conversation_form": "multi",
+      "semantic_world": {
+        "actors": ["Celia, a sewing-group coordinator", "Amir, who borrowed the cutting mat", "Pia, who borrowed the pattern weights", "The next session's helper"],
+        "facts": ["The cutting mat has been returned to the group's cupboard.", "The pattern weights are still with Pia, who will bring them directly to the next session.", "The helper is responsible for bringing the cupboard's contents to the session.", "The helper does not need to visit Pia or collect the weights in advance.", "The group's scissors were never borrowed and remain in the cupboard."],
+        "timeline": ["Celia first listed the mat and weights as both still borrowed.", "Amir confirmed that he had returned the mat.", "Pia confirmed a direct-to-session delivery for the weights.", "The final request asks for the helper's updated equipment handover."],
+        "constraints": ["Combine the latest status of each item without dropping the already available scissors.", "Distinguish cupboard collection from Pia's separate delivery.", "Do not ask the helper to perform an unnecessary pickup.", "Do not claim that the weights have already been returned."],
+        "task_intent": "Synthesize equipment updates into a clear division of responsibilities for the next session.",
+        "decisive_structure": "One loan closes while another remains open but has a different delivery path; the responsible person and physical location must stay linked to each item.",
+        "potential_confusions": ["Keeping a returned item on the outstanding-loan list.", "Treating a promised direct delivery as current cupboard inventory."],
+        "exclusion_tags": ["sewing_group_equipment", "return_vs_direct_delivery", "item_location_responsibility_map"]
+      },
+      "author_id": "/root/baseline_enrollment"
+    },
+    {
+      "parent_id": "LDEV-synthesis-08",
+      "role": "DEV",
+      "stratum": "synthesis",
+      "conversation_form": "multi",
+      "semantic_world": {
+        "actors": ["Marcus, a family picnic organizer", "Eli, a relative bringing a folding table", "Nora, a relative hosting an indoor fallback"],
+        "facts": ["The family has moved the picnic from the riverside lawn to the orchard clearing.", "Eli will bring the folding table to the orchard clearing.", "Nora's dining room remains the agreed fallback if the family decides not to meet outdoors.", "A decision about using the fallback will be made on the morning of the picnic.", "Nobody has yet decided to switch indoors.", "Each household is still bringing its own lunch."],
+        "timeline": ["Marcus initially shared the riverside location and an indoor fallback.", "The family changed the outdoor location to the orchard clearing.", "Eli confirmed that the table delivery follows the new outdoor location.", "Marcus clarified that the indoor fallback is unchanged and has not been activated.", "The final request asks for a concise final-plan summary."],
+        "constraints": ["Use the revised outdoor location.", "Keep the fallback conditional and its decision timing explicit.", "Retain the unchanged household-lunch arrangement.", "Do not invent a weather forecast or say the indoor host has already been called."],
+        "task_intent": "Combine changed and unchanged arrangements into one short picnic update.",
+        "decisive_structure": "A primary-plan location changes while a contingent alternative and unrelated responsibilities remain stable; synthesis must update only the affected branches.",
+        "potential_confusions": ["Treating the fallback as the new confirmed location.", "Dropping unchanged commitments when summarizing the latest update."],
+        "exclusion_tags": ["family_picnic_branches", "changed_primary_unchanged_fallback", "conditional_decision_pending"]
+      },
+      "author_id": "/root/baseline_enrollment"
+    },
+    {
+      "parent_id": "LCAL-synthesis-01",
+      "role": "CAL",
+      "stratum": "synthesis",
+      "conversation_form": "single",
+      "semantic_world": {
+        "actors": ["Ruth, the coordinator of a community dance show", "The lighting operator", "The performer carrying a lantern", "The curtain helper"],
+        "facts": ["The opening stage light stays dim until the lantern performer reaches the center mark.", "The performer will pause on the mark and raise the lantern as the lighting cue.", "The lighting operator then brings up the full stage light.", "The curtain helper closes the curtain only after the final bow, not at the opening pause.", "The coordinator wants an opening-sequence note that also prevents confusion with the separate closing cue."],
+        "timeline": ["The team agreed the opening cue and the final-bow curtain action at rehearsal.", "The opening performer begins from the side of the stage.", "The lantern raise triggers the lighting change; the final bow occurs much later."],
+        "constraints": ["Preserve the trigger, operator and action relationship.", "Do not turn the performer's pause into a curtain cue.", "Do not add music or timing counts absent from the notes.", "Keep the summary suitable for a short backstage reminder."],
+        "task_intent": "Synthesize a distributed cue plan into a clear short sequence with the closing action kept separate.",
+        "decisive_structure": "A visible event triggers one operator's action within an ordered sequence, while a similar-looking later pause belongs to a different phase and action.",
+        "potential_confusions": ["Losing the lantern raise as the actual trigger.", "Moving the final curtain action into the opening sequence."],
+        "exclusion_tags": ["community_dance_cues", "event_triggered_sequence", "opening_vs_closing_phase"]
+      },
+      "author_id": "/root/baseline_enrollment"
+    },
+    {
+      "parent_id": "LCAL-synthesis-02",
+      "role": "CAL",
+      "stratum": "synthesis",
+      "conversation_form": "multi",
+      "semantic_world": {
+        "actors": ["Ines, a neighborhood story-exchange organizer", "Gabriel, who offered a written story", "Jules, who offered an audio recording", "The person assembling the printed booklet"],
+        "facts": ["Gabriel permits his written story to appear in the printed booklet with his first name.", "Jules permits the audio recording to be played at the gathering but has not permitted a transcript to be printed.", "The booklet assembler has only the written story as currently authorized booklet content from these contributors.", "The gathering can still include Jules's audio under the separate playback permission.", "No request for transcript permission has yet been answered."],
+        "timeline": ["Ines initially described both contributions as available for the booklet.", "Jules clarified that the permission was for playback at the gathering only.", "Gabriel confirmed the printed-story permission and first-name attribution.", "The final request asks for a short permissions handover after the correction."],
+        "constraints": ["Distinguish the two media and their expressly supplied permissions.", "Do not present general copyright or legal advice.", "Do not treat unanswered permission as consent or remove the separately permitted playback.", "Keep the required first-name attribution attached to Gabriel's story."],
+        "task_intent": "Summarize which contribution may be used in which event material and which permission remains unresolved.",
+        "decisive_structure": "Permission for one presentation medium does not transfer to a derivative medium; correcting that scope changes the booklet inventory without canceling the live contribution.",
+        "potential_confusions": ["Equating recording playback with permission to print a transcript.", "Treating an unresolved transcript request as a refusal of all participation."],
+        "exclusion_tags": ["story_exchange_media_permissions", "medium_specific_consent", "print_inventory_vs_live_program"]
+      },
+      "author_id": "/root/baseline_enrollment"
+    },
+    {
+      "parent_id": "LDEV-clarification-01",
+      "role": "DEV",
+      "stratum": "clarification",
+      "conversation_form": "single",
+      "semantic_world": {
+        "actors": ["The user, who is labeling a borrowed board game for return", "Alex Chen, a neighbor who lent a puzzle", "Alex Reed, a club member who lent several games"],
+        "facts": ["The user has two contacts called Alex.", "Alex Chen lent the user a puzzle, while Alex Reed lent several games.", "The board game's owner was recorded only as Alex in the user's note.", "Neither contact's ownership of this particular game has been confirmed.", "The user wants help preparing a return label and has supplied no distinguishing ownership detail."],
+        "timeline": ["The user made an ambiguous note when borrowing the game.", "The user is now preparing the label before contacting either person."],
+        "constraints": ["Ask for the smallest missing fact needed to identify the intended recipient.", "Do not choose Alex Reed solely because that person has lent games before.", "Do not ask for unrelated addresses or invent a recipient.", "Do not claim to contact either person."],
+        "task_intent": "Recognize that the recipient is not established and request the necessary ownership clarification before drafting a specific label.",
+        "decisive_structure": "Category-related history creates a plausible guess but not a unique identity; the missing fact is ownership of this particular object, not general contact information.",
+        "potential_confusions": ["Treating previous game lending as conclusive ownership evidence.", "Requesting many logistical details before resolving the decisive ambiguity."],
+        "exclusion_tags": ["borrowed_game_ambiguous_owner", "plausibility_not_identity", "minimal_recipient_clarification"]
+      },
+      "author_id": "/root/baseline_enrollment"
+    },
+    {
+      "parent_id": "LDEV-clarification-02",
+      "role": "DEV",
+      "stratum": "clarification",
+      "conversation_form": "single",
+      "semantic_world": {
+        "actors": ["The user, who is preparing a visitor name card", "Morgan, the visitor"],
+        "facts": ["Morgan has explicitly requested the displayed name Morgan Vale.", "The event's cards use plain names without titles or organization names.", "The user asks what exact name should appear on Morgan's card.", "No other text or layout choice is part of the request."],
+        "timeline": ["Morgan supplied the preferred displayed name.", "The event organizer supplied the no-titles format rule.", "The user asks for the card text with both facts already available."],
+        "constraints": ["Answer the narrow supplied request directly.", "Do not ask for pronouns, professional title, spelling confirmation or organization when none is needed.", "Do not shorten the stated displayed name or add an honorific.", "Do not claim to have printed the card."],
+        "task_intent": "Provide the requested card text without creating an unnecessary clarification step.",
+        "decisive_structure": "The preferred form and formatting boundary fully determine the requested content; unrelated missing biographical details do not make the task underspecified.",
+        "potential_confusions": ["Asking routine personal-detail questions that do not affect the answer.", "Inferring a title or nickname instead of following the supplied preference."],
+        "exclusion_tags": ["visitor_displayed_name", "sufficient_explicit_preference", "avoid_unnecessary_question"]
+      },
+      "author_id": "/root/baseline_enrollment"
+    },
+    {
+      "parent_id": "LDEV-clarification-03",
+      "role": "DEV",
+      "stratum": "clarification",
+      "conversation_form": "single",
+      "semantic_world": {
+        "actors": ["The user, who is sharing a slide image with a volunteer team", "The team receiving the image"],
+        "facts": ["The user has been asked to make an image smaller.", "The request could concern its displayed width in the slide or the size of the attached file.", "The user has not said whether the problem is visual crowding or an attachment limit.", "No image editor or platform has been specified.", "The immediate goal is to understand the requested change before recommending a method."],
+        "timeline": ["The user received the ambiguous size request.", "The user asks for help interpreting what to change before editing the image."],
+        "constraints": ["Clarify the intended kind of size change first.", "Do not assume a software platform or give a long menu of editing steps.", "Do not assert that reducing display width will necessarily reduce attachment size.", "Keep the clarification focused on the actual ambiguity."],
+        "task_intent": "Ask whether smaller means less space on the slide or a smaller file before prescribing an editing action.",
+        "decisive_structure": "One adjective refers to two independent properties that imply different actions; the missing goal matters before implementation details.",
+        "potential_confusions": ["Choosing a familiar software operation before identifying the intended property.", "Asking for platform information while leaving the more basic goal ambiguity unresolved."],
+        "exclusion_tags": ["slide_image_size_request", "ambiguous_property", "goal_before_method"]
+      },
+      "author_id": "/root/baseline_enrollment"
+    },
+    {
+      "parent_id": "LDEV-clarification-04",
+      "role": "DEV",
+      "stratum": "clarification",
+      "conversation_form": "single",
+      "semantic_world": {
+        "actors": ["The user, who is choosing a table cover for a craft demonstration", "The demonstration organizer"],
+        "facts": ["The organizer requires a cover that fits the demonstration table and may be marked with washable pens.", "The blue cover fits and is approved for washable-pen marks.", "The striped cover fits but must not be marked.", "The cream cover may be marked but does not fit the table.", "The user has no additional color preference and asks which available cover meets the stated requirements."],
+        "timeline": ["The organizer supplied the two requirements.", "The user checked all three covers against those requirements.", "The user asks for the resulting choice."],
+        "constraints": ["Use both supplied requirements.", "Answer directly without asking the user to invent a color preference.", "Do not suggest purchasing or altering another cover.", "Do not add material-care advice."],
+        "task_intent": "Select the only supplied option satisfying the complete stated requirements without unnecessary follow-up questions.",
+        "decisive_structure": "The candidate attributes and required conjunction already isolate one option; absence of an irrelevant preference is not a reason to withhold the answer.",
+        "potential_confusions": ["Asking a subjective preference question when the functional constraints decide the choice.", "Using only fit or only permission to mark."],
+        "exclusion_tags": ["craft_table_cover_choice", "fully_specified_constraint_intersection", "irrelevant_preference_not_needed"]
+      },
+      "author_id": "/root/baseline_enrollment"
+    },
+    {
+      "parent_id": "LDEV-clarification-05",
+      "role": "DEV",
+      "stratum": "clarification",
+      "conversation_form": "multi",
+      "semantic_world": {
+        "actors": ["The user, a colleague drafting a message", "Seth, who was disappointed by a planning meeting"],
+        "facts": ["The user initially described having missed a planning meeting with Seth.", "The user later clarifies that they were never invited and had no responsibility for organizing or attending that meeting.", "Seth has said the meeting went badly, but has not explained why.", "The user wants a message to Seth but has not specified whether it should offer support or acknowledge some other action by the user.", "No separate wrongdoing by the user has been supplied."],
+        "timeline": ["The initial request frames the task as apologizing for missing a meeting.", "The user corrects that framing by explaining they were not an expected attendee.", "The user still asks for help with a message to Seth without identifying a new purpose.", "The final turn leaves the intended communicative act unresolved."],
+        "constraints": ["Do not draft a false admission of missing an obligation.", "Acknowledge the corrected context and ask a focused question about the desired message purpose.", "Do not invent what went wrong at Seth's meeting.", "Do not turn clarification into a lecture about workplace behavior."],
+        "task_intent": "Clarify the intended purpose of the message after the correction removes the stated basis for the apology.",
+        "decisive_structure": "New information invalidates the original speech-act premise, leaving the current communicative goal underspecified rather than merely changing a detail in an apology.",
+        "potential_confusions": ["Persisting with an apology for an obligation that did not exist.", "Assuming an emotional-support message is definitely desired without asking about the changed goal."],
+        "exclusion_tags": ["meeting_message_premise_correction", "invalidated_apology_goal", "clarify_communicative_purpose"]
+      },
+      "author_id": "/root/baseline_enrollment"
+    },
+    {
+      "parent_id": "LDEV-clarification-06",
+      "role": "DEV",
+      "stratum": "clarification",
+      "conversation_form": "multi",
+      "semantic_world": {
+        "actors": ["The user, helping a visitor reach a practice room", "The visitor, who needs a step-free route", "The building receptionist"],
+        "facts": ["In the supplied building layout, the entrance corridor leads directly to the lift.", "On the second floor, the practice room is the first door to the left of the lift.", "The stair route has steps and is unsuitable for the visitor's stated need.", "The receptionist's latest update says the lift is working normally.", "No other obstruction on the lift route is reported."],
+        "timeline": ["The user initially reported that the lift might be out of service.", "The visitor's step-free requirement and the building layout were supplied.", "The user then relayed the receptionist's current confirmation that the lift is working.", "The final request asks for a short direction using the now-complete information."],
+        "constraints": ["Use the corrected lift status and the supplied route.", "Do not ask again whether the lift works or whether steps are acceptable.", "Do not invent other building features or claim personal inspection.", "Keep the directions short and limited to the stated layout."],
+        "task_intent": "Give the available step-free directions directly after the missing lift-status fact has been resolved.",
+        "decisive_structure": "A material uncertainty initially blocks route selection, but a later authoritative local update resolves it; repeating the old clarification would ignore the conversation's information gain.",
+        "potential_confusions": ["Treating the superseded possible outage as current.", "Requesting a fact the user has just supplied.", "Suggesting the stairs despite the stated requirement."],
+        "exclusion_tags": ["practice_room_directions", "resolved_operational_uncertainty", "step_free_supplied_layout"]
+      },
+      "author_id": "/root/baseline_enrollment"
+    },
+    {
+      "parent_id": "LDEV-clarification-07",
+      "role": "DEV",
+      "stratum": "clarification",
+      "conversation_form": "multi",
+      "semantic_world": {
+        "actors": ["The user, arranging a costume fitting", "Rina, the person being fitted", "The volunteer fitting team"],
+        "facts": ["The team has one fitting session this Sunday and another the following Sunday.", "Rina previously mentioned both a rehearsal and a family visit on different weekends.", "The user first described Rina as choosing this Sunday's fitting.", "The user corrects the message to say Rina requested the Sunday after that, without specifying whether that refers to the rehearsal or the family visit.", "The dates of those two other events are not supplied."],
+        "timeline": ["The user initially interpreted Rina's request as the nearer Sunday.", "The user reread the message and withdrew that interpretation.", "The correction introduces an unresolved reference to one of two previously discussed events.", "The final request asks which fitting to record."],
+        "constraints": ["Do not guess which earlier event the reference means.", "Ask for the intended fitting date or the event that anchors the relative phrase.", "Do not invent calendar dates.", "Do not book a session or claim to contact Rina."],
+        "task_intent": "Seek the missing date reference rather than assigning a fitting after the user's correction makes the timing ambiguous.",
+        "decisive_structure": "A withdrawn initial interpretation cannot resolve a later relative-time expression whose antecedent has two live possibilities and no dates.",
+        "potential_confusions": ["Keeping the original near-Sunday choice despite its explicit withdrawal.", "Assuming the most recently mentioned event is the intended date anchor without evidence."],
+        "exclusion_tags": ["costume_fitting_relative_date", "withdrawn_interpretation", "ambiguous_temporal_antecedent"]
+      },
+      "author_id": "/root/baseline_enrollment"
+    },
+    {
+      "parent_id": "LDEV-clarification-08",
+      "role": "DEV",
+      "stratum": "clarification",
+      "conversation_form": "multi",
+      "semantic_world": {
+        "actors": ["The user, revising labels on a volunteer orientation diagram", "The coordinator who specified the style change"],
+        "facts": ["The diagram contains section headings and smaller descriptive labels beneath them.", "The coordinator wants the section headings in capitals.", "The smaller descriptive labels should retain their current capitalization.", "Colors and positions must remain unchanged.", "The user wants a short instruction to give the person editing the diagram, not an actual file edit."],
+        "timeline": ["The user initially described a request to capitalize all text.", "The user then checked the coordinator's note and corrected the scope to section headings only.", "The user added that color and position should stay the same.", "The final request asks for the editing instruction with that scope now established."],
+        "constraints": ["Answer directly using the corrected scope.", "Do not ask which text should be capitalized because that has been resolved.", "Do not include new layout or color recommendations.", "Do not claim the diagram has been edited."],
+        "task_intent": "Provide a concise handoff instruction after the distinction between headings and smaller labels is clarified.",
+        "decisive_structure": "A broad operation has been narrowed to a named subset with explicit invariants; the remaining task is articulation, not further discovery of scope.",
+        "potential_confusions": ["Applying the initial all-text instruction after correction.", "Reopening settled style choices as unnecessary questions."],
+        "exclusion_tags": ["orientation_diagram_edit_scope", "resolved_subset_operation", "explicit_layout_invariants"]
+      },
+      "author_id": "/root/baseline_enrollment"
+    },
+    {
+      "parent_id": "LCAL-clarification-01",
+      "role": "CAL",
+      "stratum": "clarification",
+      "conversation_form": "single",
+      "semantic_world": {
+        "actors": ["The user, preparing a community workshop poster", "The workshop leader", "Volunteers helping with room setup"],
+        "facts": ["The workshop leader's note lists a setup period and a later participant session.", "The user has the start times for both periods.", "The draft poster is described only as being for everyone, without stating whether it is meant to recruit setup volunteers or invite workshop participants.", "The user asks which start time should be the poster's main time.", "The intended audience and purpose determine which period should be emphasized."],
+        "timeline": ["The leader supplied separate setup and session times.", "The user began a poster before choosing which audience it addresses.", "The user asks which supplied time to emphasize."],
+        "constraints": ["Clarify the poster's primary audience or purpose rather than asking for times already supplied.", "Do not assume that all readers are setup volunteers.", "Do not invent a combined mandatory arrival time.", "Keep the question brief and actionable."],
+        "task_intent": "Ask whether the poster recruits helpers or invites participants before choosing its headline start time.",
+        "decisive_structure": "The facts are complete but their communicative priority depends on an unstated audience; more factual scheduling detail cannot resolve that audience choice.",
+        "potential_confusions": ["Defaulting to the earliest time as if earlier always means more relevant.", "Requesting schedule facts that are already known instead of the missing audience intent."],
+        "exclusion_tags": ["workshop_poster_audience", "priority_depends_on_purpose", "facts_complete_goal_missing"]
+      },
+      "author_id": "/root/baseline_enrollment"
+    },
+    {
+      "parent_id": "LCAL-clarification-02",
+      "role": "CAL",
+      "stratum": "clarification",
+      "conversation_form": "multi",
+      "semantic_world": {
+        "actors": ["The user, sorting books after a neighborhood exchange", "The exchange organizer", "An assistant volunteer"],
+        "facts": ["The exchange uses a round green sticker to mark books their owners have donated for anyone to take.", "A square green sticker marks books reserved for return to their owners.", "The book in question has a round green sticker.", "The organizer has confirmed the shape-based distinction and has placed no additional restriction on round-sticker books.", "The user asks whether to put this book on the free-to-take table or in the return box."],
+        "timeline": ["The user first described the book merely as having a green sticker and was unsure which destination applied.", "The organizer's rule distinguishing round from square stickers was supplied.", "The user inspected the book and confirmed the sticker is round.", "The final request asks for the destination using the resolved distinguishing feature."],
+        "constraints": ["Apply the supplied shape rule to the confirmed sticker.", "Do not ask again about color, shape or ownership permission.", "Do not generalize the rule to all green stickers.", "Do not claim that the book has physically been moved."],
+        "task_intent": "Answer the sorting question directly once the initially missing distinguishing feature has been provided.",
+        "decisive_structure": "An ambiguous shared attribute becomes sufficient when a later observation supplies the rule's discriminating attribute; clarification should stop once the relevant uncertainty is resolved.",
+        "potential_confusions": ["Continuing to treat the book as ambiguous because the first description was incomplete.", "Using color alone and ignoring the later shape information."],
+        "exclusion_tags": ["book_exchange_sticker_shapes", "resolved_discriminating_attribute", "stop_clarifying_when_sufficient"]
+      },
+      "author_id": "/root/baseline_enrollment"
+    }
+  ]
+}

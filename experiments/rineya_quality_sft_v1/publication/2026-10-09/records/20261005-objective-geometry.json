@@ -1,0 +1,202 @@
+{
+  "content": {
+    "actual_rineya_gradients_captured": false,
+    "aligned_direction": {
+      "actual_parameter_update_inferred": false,
+      "actual_parameter_update_l2": null,
+      "blocks": 1,
+      "capture_requirement": "Caller must independently bind same-state, same-group mean gradients; target ratios alone do not prove direction or Adam updates.",
+      "chunk_elements": 262144,
+      "clip_norm": 1.0,
+      "clipping": {
+        "prompt": {
+          "clipped_norm": 0.9999995635644099,
+          "scale": 0.4364355899958774
+        },
+        "response": {
+          "clipped_norm": 0.9999995635644099,
+          "scale": 0.4364355899958774
+        },
+        "whole": {
+          "clipped_norm": 0.9999995635644099,
+          "scale": 0.4364355899958774
+        }
+      },
+      "cosines": {
+        "prompt_whole": 1.0,
+        "response_prompt": 1.0,
+        "response_whole": 1.0
+      },
+      "device": "cpu",
+      "dtype": "torch.float64",
+      "elements": 3,
+      "evidence": "UNBOUND_GRADIENT_ALGEBRA_MECHANICS_ONLY",
+      "experiment": "RQSFT-001",
+      "gram_expected_whole_squared_norm": 5.25,
+      "gram_observed_squared_norm_residual": 0.0,
+      "gram_raw_squared_norm": 5.25,
+      "gram_roundoff_relative_tolerance": 1e-12,
+      "maximum_block_elements": 4194304,
+      "mixture_error_l2": 0.0,
+      "mixture_maximum_abs_error": 0.0,
+      "mixture_relative_error": 0.0,
+      "mixture_relative_scale": 2.29128784747792,
+      "mixture_tolerance": {
+        "atol": 1e-12,
+        "rtol": 1e-09
+      },
+      "mixture_tolerance_definition": "Component error<=atol+rtol*(wr*abs(gr)+wp*abs(gp)); global L2error/max(norm(gw),wr*norm(gr)+wp*norm(gp))<=rtol. Exact all-zero case is separately valid.",
+      "mixture_verified": true,
+      "native_gain": false,
+      "native_model_calls": 0,
+      "native_rqsft_recipe_changed": false,
+      "norms": {
+        "prompt": 2.29128784747792,
+        "response": 2.29128784747792,
+        "whole": 2.29128784747792
+      },
+      "optimizer_limit": "Unclipped gradients mix linearly; separately clipped gradients and Adam updates do not. Actual FP32 clipping/parameter rounding, theta-plus-delta ULP quantization and optimizer history are not modeled.",
+      "prompt_targets": 22728,
+      "response_targets": 1944,
+      "response_to_whole_gradient_norm_ratio": 1.0,
+      "schema": "RQSFT_STREAMING_GRADIENT_GEOMETRY_V1",
+      "squared_norms_and_dots": {
+        "error_squared": 0.0,
+        "pp": 5.25,
+        "pw": 5.25,
+        "rp": 5.25,
+        "rr": 5.25,
+        "rw": 5.25,
+        "ww": 5.25
+      },
+      "training_authorized": false,
+      "weighted_signal_cancellation_ratio": 1.0,
+      "whole_targets": 24672,
+      "wp": 0.9212062256809338,
+      "wr": 0.07879377431906615
+    },
+    "complement_gradient": [
+      -0.3,
+      -0.2,
+      0.15
+    ],
+    "first_step_adam": {
+      "assumptions": "Entire tiny vector, zero moments,zero decay,globalclip1,epsilon1e-8,idealFP64 step1; not later or native optimizer state",
+      "ideal_delta_norm_ratio": 1.0000000000000107,
+      "positive_gradient_scale": 12.691358024691358,
+      "response_delta": [
+        -9.999999770871122e-06,
+        -9.99999988543556e-06,
+        9.999999541742254e-06
+      ],
+      "scaled_response_delta": [
+        -9.999999770871214e-06,
+        -9.999999885435606e-06,
+        9.999999541742437e-06
+      ],
+      "whole_delta": [
+        9.999999493845422e-06,
+        9.99999624817659e-06,
+        -9.999998987690897e-06
+      ],
+      "whole_response_delta_cosine": -0.9999999999999885
+    },
+    "input": "Handwritten toy vectors, not measured Rineya gradients",
+    "new_model_calls": 0,
+    "new_rineya_gains": false,
+    "next_falsifier": "Observe same-state/same-group complete loss gradients on admitted TRAIN only under separately reviewed no-update scope; keep first two native cells unchanged.",
+    "opposed_direction": {
+      "actual_parameter_update_inferred": false,
+      "actual_parameter_update_l2": null,
+      "blocks": 1,
+      "capture_requirement": "Caller must independently bind same-state, same-group mean gradients; target ratios alone do not prove direction or Adam updates.",
+      "chunk_elements": 262144,
+      "clip_norm": 1.0,
+      "clipping": {
+        "prompt": {
+          "clipped_norm": 0.3905124837953327,
+          "scale": 1.0
+        },
+        "response": {
+          "clipped_norm": 0.9999995635644099,
+          "scale": 0.4364355899958774
+        },
+        "whole": {
+          "clipped_norm": 0.22249013223477176,
+          "scale": 1.0
+        }
+      },
+      "cosines": {
+        "prompt_whole": 0.9140658931496515,
+        "response_prompt": -0.8661380721520244,
+        "response_whole": -0.5890035825052886
+      },
+      "device": "cpu",
+      "dtype": "torch.float64",
+      "elements": 3,
+      "evidence": "UNBOUND_GRADIENT_ALGEBRA_MECHANICS_ONLY",
+      "experiment": "RQSFT-001",
+      "gram_expected_whole_squared_norm": 0.04950185894184622,
+      "gram_observed_squared_norm_residual": 0.0,
+      "gram_raw_squared_norm": 0.04950185894184622,
+      "gram_roundoff_relative_tolerance": 1e-12,
+      "maximum_block_elements": 4194304,
+      "mixture_error_l2": 6.206335383118183e-17,
+      "mixture_maximum_abs_error": 5.551115123125783e-17,
+      "mixture_relative_error": 1.1487220133807223e-16,
+      "mixture_relative_scale": 0.5402817488325794,
+      "mixture_tolerance": {
+        "atol": 1e-12,
+        "rtol": 1e-09
+      },
+      "mixture_tolerance_definition": "Component error<=atol+rtol*(wr*abs(gr)+wp*abs(gp)); global L2error/max(norm(gw),wr*norm(gr)+wp*norm(gp))<=rtol. Exact all-zero case is separately valid.",
+      "mixture_verified": true,
+      "native_gain": false,
+      "native_model_calls": 0,
+      "native_rqsft_recipe_changed": false,
+      "norms": {
+        "prompt": 0.3905124837953327,
+        "response": 2.29128784747792,
+        "whole": 0.22249013223477176
+      },
+      "optimizer_limit": "Unclipped gradients mix linearly; separately clipped gradients and Adam updates do not. Actual FP32 clipping/parameter rounding, theta-plus-delta ULP quantization and optimizer history are not modeled.",
+      "prompt_targets": 22728,
+      "response_targets": 1944,
+      "response_to_whole_gradient_norm_ratio": 10.298379638069301,
+      "schema": "RQSFT_STREAMING_GRADIENT_GEOMETRY_V1",
+      "squared_norms_and_dots": {
+        "error_squared": 3.851859888774472e-33,
+        "pp": 0.1525,
+        "pw": 0.07941877431906615,
+        "rp": -0.7749999999999999,
+        "rr": 5.25,
+        "rw": -0.3002675097276265,
+        "ww": 0.04950185894184622
+      },
+      "training_authorized": false,
+      "weighted_signal_cancellation_ratio": 0.4118039017892426,
+      "whole_targets": 24672,
+      "wp": 0.9212062256809338,
+      "wr": 0.07879377431906615
+    },
+    "response_gradient": [
+      1.0,
+      2.0,
+      -0.5
+    ],
+    "scope": "MATHEMATICAL_FIXTURE_ONLY",
+    "target_count_ratio": 12.691358024691358,
+    "target_share": 0.07879377431906615,
+    "whole_gradient": [
+      -0.19756809338521403,
+      -0.02665369649805449,
+      0.09878404669260701
+    ]
+  },
+  "execution_authority": false,
+  "original_bytes": 5537,
+  "original_raw_sha256": "de1bb13d2cbda650b485875786af1c831a7b980270c2b2e195ec48453fa049ae",
+  "original_source": "<BusinessProject>/rineya-quality-sft-records/mechanism-research-20261005-002/OBJECTIVE_GEOMETRY_DEMO.json",
+  "publication_policy": "Portable historical evidence only, not an executable packet or admission/qualification permit. Local paths, chat UUIDs and XML hostnames are removed; original raw-file hashes are retained separately from hashes of these exports. No banks, predictions, weights, checkpoints, environments or raw process inventories are exported. Originals remain unchanged outside Git.",
+  "record_type": "PORTABLE_EVIDENCE_EXPORT"
+}

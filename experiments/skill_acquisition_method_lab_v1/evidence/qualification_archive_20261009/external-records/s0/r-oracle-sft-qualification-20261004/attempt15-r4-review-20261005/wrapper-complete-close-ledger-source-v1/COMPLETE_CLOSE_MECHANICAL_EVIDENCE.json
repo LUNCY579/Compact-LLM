@@ -1,0 +1,71 @@
+{
+  "all7_fit_proven": false,
+  "candidate_processes": 0,
+  "checks": [
+    {
+      "name": "before guard refusal retains both diagnostics with zero actual calls",
+      "pass": true
+    },
+    {
+      "name": "operation admission exhaustion gets same secondary ledger zero calls",
+      "pass": true
+    },
+    {
+      "name": "actual close failure retains both errors and unknown one-attempt state",
+      "pass": true
+    },
+    {
+      "name": "unsafe second close refused without replacing actual close typename",
+      "pass": true
+    },
+    {
+      "name": "afterguard failure preserves observed successful close and secondary error",
+      "pass": true
+    },
+    {
+      "name": "observed closed slot cannot execute another close",
+      "pass": true
+    },
+    {
+      "name": "normal full close operation counts one I/O without secondary error",
+      "pass": true
+    },
+    {
+      "name": "exact1536 block/state5120 replaces actual retained payload storage",
+      "pass": true
+    },
+    {
+      "name": "all registered percase read/write/operation ceilings preserved",
+      "pass": true
+    },
+    {
+      "name": "fixed bounded secondary slots and original primary objects remain distinct",
+      "pass": true
+    }
+  ],
+  "classification": "SOURCE_EXTRACTED_SYNTHETIC_ONLY",
+  "complete_workspace_proved": false,
+  "count": 10,
+  "native_calls": 0,
+  "optimizer_updates": 0,
+  "qualification_pass": false,
+  "schema": "CE8-COMPLETE-CLOSE-LEDGER-MECHANICS-1",
+  "source_refs": {
+    "accounting.py": {
+      "bytes": 68853,
+      "sha256": "745ded872e6ef454d7700227706d0e3cd1f886f1fb84ccca14b95adcfaeeddb9"
+    },
+    "admission.py": {
+      "bytes": 20013,
+      "sha256": "2ce8b6171f508c7a6366c98b4392b690e41ca847497b396bd24a84a3ba4f0bb3"
+    },
+    "failure_envelope.py": {
+      "bytes": 31077,
+      "sha256": "15f2e9256bfec31cb49d2847d4c31e687fadd6fc6ddd5cca6ba7f8cd5e0d2fff"
+    },
+    "harness.py": {
+      "bytes": 47891,
+      "sha256": "42996d87cc063373141f25a2df68f025b73c7292f52f005deab1478aad082fc0"
+    }
+  }
+}

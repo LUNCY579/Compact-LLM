@@ -1,0 +1,29 @@
+{
+  "status": "INITIAL_STDLIB_PASS_WITH_REVIEW_DISCOVERED_DEADLINE_GAP",
+  "initial_control_count": 26,
+  "initial_reported_test_seconds": 0.015,
+  "source_pins_before_fix": {
+    "scripts/post_import_admission.py": {
+      "sha256": "06a87957ad912bed42260eceaee7003bd6881d847e62f03df46dd23f48c53e8a",
+      "bytes": 4133
+    },
+    "tests/test_post_import_admission.py": {
+      "sha256": "7edb1c451aa3953bf920686ef198ca9fa7b5c61d4cbb65e0020090666cb8b62a",
+      "bytes": 4426
+    },
+    "configs/CAPTURE_CAUSAL_DIAGNOSTIC_WAIT_V2.json": {
+      "sha256": "9282c2a4c93f6273fd5d0ec92f6b16a994c0df82ff50e2de086e8c31806e6ad5",
+      "bytes": 8373
+    },
+    "scripts/diagnose_capture_causality_wait.py": {
+      "sha256": "f9d4bfcc591a01da43b10c78dcc88536a5ce6ba86949398b012a5907c53339b5",
+      "bytes": 27540
+    }
+  },
+  "reviewer": "non-author /root/e1_bound_reader",
+  "finding": "Timestamp sampled before durable record callback was used after callback. A slow second journal returned ADMITTED with elapsed61s despite60s policy.",
+  "physical_model_calls": 0,
+  "native_run_performed": false,
+  "native_qualified": false,
+  "E1_authorized": false
+}

@@ -1,0 +1,82 @@
+# EFE-FUNC-001 saved-record data and endpoint audit
+
+Date: 2026-09-29. Disposition: **HOLD — no fresh confirmation bank has been admitted.** This is model-free preparation and a prospective design recommendation. It is not a native result, data registration receipt, completed preregistration, or preservation finding. No model was loaded; no protected or sealed raw bank was opened; historical quarantine was not changed. Applicable worktree/ancestor and destination `AGENTS.md` paths were checked; none was present for this directory.
+
+## Evidence boundary and provenance
+
+The fixed historical revisions are:
+
+- `b8e40d377c9cd461cd30c215a2c713515904197b:experiments/delta_multi_reasoning_v1/MAGNITUDE_IS_THE_MASTER_VARIABLE_20260920.md` (including its two INDEP-001 amendments).
+- `b8e40d377c9cd461cd30c215a2c713515904197b:experiments/delta_multi_reasoning_v1/analysis/TRAIN_EVAL_DISJOINTNESS_20260920.md` (including the H-namespace correction).
+- `b8e40d377c9cd461cd30c215a2c713515904197b:experiments/delta_multi_reasoning_v1/DMRF001_PREREG.md`.
+- `9abd010e675d2853fe689404c188baecb21af719:research/composition_endpoint_audit_v1/RESULT.md`.
+- `9abd010e675d2853fe689404c188baecb21af719:research/composition_endpoint_audit_v1/HLOC_RESULT.md`.
+- `9abd010e675d2853fe689404c188baecb21af719:research/reasoning_posttraining_v1/QUARANTINE.json` and `9abd010e675d2853fe689404c188baecb21af719:REHEARSAL_COMPOSITION.md`.
+
+The current EFE README, RESEARCH_PLAN, HOST_HANDOFF, and plan.json also explicitly require native asset/data qualification; their reference guards only validate supplied declarations. Local saved records under `C:/Users/clclc/BusinessProject/rineya-dataset-retention-records` were inspected as metadata/reports/code. Their exact metadata hashes are in `data_audit.json`. This is a scoped inspection, not a claim that every historical data manifest on the host was searched or every source-training document is known.
+
+## Exact skill domains and instrument weaknesses
+
+Skill T is the seed-17 transition-generator update from RRP-015, with rank-16 projection used by the proposed recipe. Saved `select-views-001/BUILD.json` binds the historical acquisition bank to `7dd53f2a751b54c349c2ef571e8f9c5153737f4a1ed3df5eafe25f95980e78a3`: 384 distinct parents, 128 each in `ledger_replay`, `prerequisite_plan`, and `register_machine`. It is a TRAIN-split derivative admitted for SELECTION/DEV and barred from confirmation. Same-generator, new-parent transfer is the limited historical construct; it does not establish broad reasoning or multi-step planning.
+
+Saved `select-views-001/FAMILY_DECOMPOSITION.json` identifies a major sensitivity issue: `prerequisite_plan`'s named precondition and ordering constraints each fired on **0/128** cases. The ledger status gate fired on 15/128, ledger kind dispatch on 53/128, and register kind dispatch on 67/128. The reported raw-composition loss was concentrated in prerequisite_plan rather than uniform across families. A fresh generator must include independently checked cases in which each constraint changes the correct answer, balanced positive/negative applicability and ordered/reordered dependencies, rather than inherit the dead constraints under a new salt. Labels must come from a separately tested solver, with deliberately invalid counterexamples and reachable-rule coverage receipts.
+
+Skill H is the boundary/clarification update from the 648-row `v3_preservation_slice` draw, with the frozen coefficient 0.25 in composition. `compose001-20260918/H/H-PREPARATION.json` records training family counts: boundary_setting 82, clarification 124, clarification_request 93, insufficient_information 85, knowledge_boundary 64, safety_boundary 118, uncertainty 82. Its contract's inherited `source_release=forge_v2` is explicitly documented as inaccurate; row lineage is `v3_preservation_slice`. Do not infer H lineage from that inherited field.
+
+Historical HSKILL-VIEWS-002 binds `ba1f2982fd5d08aac861d4547b1dadb33d20e6022ff9aa06934e1ad2e7154723`: 112 boundary rows (16 in each of the seven classes above), plus 112 `arithmetic_short_answer` rows. The corrected rule is `416cfb6aec8aa28240752d3db2fc1b8af85115c4962a873582765c009adc3bf0`. Its primary decision specificity means attempting an answer, even a wrong one. Any question/refusal can obtain boundary credit, including an irrelevant question. This is a behavioral endpoint, not semantic appropriateness. The scorer was initially developed after 12 source replies and later corrected when its normalization stripped question marks. The answerable side overlaps the arithmetic preservation domain and cannot be called independent evidence from it.
+
+New H scoring must separate: appropriate refusal/uncertainty/clarification; generic behavioral abstention; attempted answer; correct answer value; literal requested format; and termination. A clarifying question must request a missing fact necessary to answer. Correct currency values must remain semantically correct when a dollar sign is missing, while exact format is separately false. An irrelevant question, an empty answer, or a nonterminating generation cannot pass the semantic endpoint. A label-blind deterministic reference solver is suitable for determinate facts/arithmetic; a frozen, blinded rubric and adjudication contract are required for open-ended boundary responses. Scorers must be tested on constant abstain, never abstain, prompt echo, last-mentioned entity, trigger absence, set-complement, and adversarial irrelevant-question fixtures before candidate outcomes exist.
+
+## What remains spent or protected
+
+The historical synthesis reports acquisition 235/384 for T and 235/384 for INDEP-001, boundary 69/112 to 85/112, retention 39/47 to 39/47, and long-context 159/256 to 164/256. These are saved development results. H's quarter-strength coefficient was selected on the same H bank; equality of totals does not validate the coefficient or establish preservation.
+
+- SELECT-VIEWS-001 and HSKILL-VIEWS-002 are development/selection banks, never fresh confirmation. Template/entity renaming or redrawing from those same parents cannot change that status.
+- Saved `rci001-20260918/RCI_SEAL.json` and `rci002-20260918/RCI_SEAL.json` each record one authorized read and **reads_used=1**. Their calibration twins are spent for confirmation too. These seals agree with the fixed synthesis that both RCI instruments are spent.
+- HSKILL-CONFIRM-002 has hash `b758e0d13a2e57ad7b57da283700d342283ef49f81aa76bd8c8f71410021651c`; its saved quarantine marks it reserved for one confirmation decision, barred TRAIN/SELECTION/DEV. The old status says UNSPENT_AND_UNREAD, but that dated record is not a current authorization or evidence that no later read occurred. Do not commandeer it; no raw row was opened here.
+- The fixed RRP2 quarantine contains 18 entries, three ANY_READ restrictions: residual_capability_v23 direct_reasoning fresh_sealed, procedural_rag fresh_sealed, and Invisible Limit Lab test2. They remain unopened. Long Context Demo is SPENT and barred TRAIN/SELECTION/CONFIRMATION; its 64 literal UNKNOWN cases are part of that same bank, not an independent endpoint. Exposed FORGE tests, contaminated on-panel splits, consumed sealed tests, and superseded mq-data-001 remain excluded within their recorded scope.
+- REHEARSAL_COMPOSITION's Long Context Demo comparisons remain report-only. Their retrospective winner cannot supply confirmation or data-selection evidence.
+
+## Parent-disjoint feasibility
+
+Saved endpoint-training exclusion evidence is available: T `rrp015-20260917/control-prepared/ARM_BUILD.json` contains 384 selected RRFR2 parent IDs (seed17); its contract binds `microfit-train.jsonl` to `0881c027d166f7cdd0286518aff20e5966f92120f4f3877cbca6855fbee2d9e1`. H `H/H-PLAN.json` contains 648 distinct `row_order_per_exposure` IDs and `unique_worlds=648`; H's prepared contract binds its training file to `cb3df33343056ca51e26616d27ea18b84306f411a4491be7439de8338cdb71a8`. These training payload files were not reopened in this audit. H's preparation summary alone has no parent-ID list; the plan provides IDs but canonical semantic/template parent mapping still must be qualified.
+
+The historical disjointness note must be read with its amendment: RRFR2 stem checks worked for T but were vacuous for H's different namespace. H's eventual normalized-text and 20-gram positive controls repaired that narrow comparison; they are not a universal parent/semantic-contamination certificate. H preparation itself says semantic_contamination_certificate=false and system/assistant text was not checked.
+
+No fresh corpus or complete content/parent exclusion receipt has been supplied. The saved H clean-pool counts are 229 knowledge_boundary, 294 uncertainty, 333 arithmetic_short_answer, 414 safety_boundary, 460 clarification, 628 insufficient_information, 694 boundary_setting, and 762 clarification_request. Those counts predate later use and cannot supply the prospective sensitivity requirements or be treated as currently untouched. T's historical remaining-parent counts likewise are not a new confirmation inventory.
+
+A metadata-only reservation contract can be written now. Actual corpus admission requires: content hashes and byte sizes; generator/solver commits; immutable seeds; all raw/normalized/digit-blinded text fingerprints; exact anchor and endpoint training inventory bindings; selection/exposure/spent registries; canonical parent keys; family and semantic-template keys; and documented provenance review of related solver structures. Fresh parent keys must represent new independently constructed worlds, dependency graphs, ledgers, machines, or communication situations, not salts added to old IDs. Hold out whole parents across calibration, scorer qualification, preservation calibration, and confirmation. One tested canonical view per parent is the statistical unit; additional paraphrases/seeds are clustered diagnostics. An unseen domain is not automatically the same skill as the trained domain.
+
+Run every exclusion comparison with namespace/form assertions plus self-intersection and injected-collision positive controls. Exact-hash zero overlap alone cannot rule out paraphrases. For ANY_READ banks, consult their registries/hash manifests; do not reopen payloads to manufacture an exclusion inventory. The exact remaining blockers are unbound fresh generator/corpus hashes, unqualified canonical semantic parent/template mapping and historical exposure exclusions, and unqualified semantic H scorer. No independent confirmation is established by this audit.
+
+## Sensitivity and prospective decision rules
+
+The endpoint audit at `9abd010...:research/composition_endpoint_audit_v1/RESULT.md` finds a maximum of three discordant rows across all 28 comparisons among eight composition arms on 47 source-correct references. The most extreme two-sided exact McNemar p-value is `2 / 2^d`; unadjusted p<0.05 needs d>=6. Thus that family could not detect the claimed graded preservation effect. This is an absence of resolution, not a cost finding or preservation certificate.
+
+`9abd010...:research/composition_endpoint_audit_v1/HLOC_RESULT.md` was INDETERMINATE. Its two-test Holm procedure required at least seven clean discordant rows in the smallest-p limb, whereas the results had five and six. The corrected scorer requires all limbs resolved before a substantive verdict; `not significant` and `not above` may not turn unreadable limbs into positive evidence. Carry this structural three-valued rule into the fresh scorer.
+
+Recommended practical margins, fixed before outcomes: acquisition lower bound **> +5 percentage points** on semantic correctness relative to the relevant comparator; preservation paired semantic difference lower bound **> -3 percentage points**, plus upper bound on loss among comparator-correct parents **< 3%** where registered. These are operational tolerances, not margins estimated from the historic point values. Measure gains and damage separately with both all-parent and comparator-correct denominators. A weakly acquiring arm cannot pass simply by remaining near the source. The primary populations must be T, H, answerable, and broad preservation, with explicit equal-stratum weights fixed in advance. Per-family/class findings are descriptive under the proposed pooled gate family; they cannot support separate per-class preservation or acquisition claims.
+
+The coordinating protocol proposes ten all-required assertions: T versus source T acquisition; H versus source H acquisition; composition versus source T acquisition; composition versus T T noninferiority; composition versus T T conditional damage; composition versus T H acquisition; composition versus H H noninferiority; composition versus H H conditional damage; composition versus source answerable conditional damage; composition versus source broad conditional damage. The H comparator must be defined as the exact frozen single-H construction relevant to coefficient 0.25, not silently changed to a different dose. Full-strength H, raw sum, or shared-scale controls are descriptive and excluded from this confirmatory family unless prospectively added with revised multiplicity/budget.
+
+Use familywise alpha .05 / 10 = **.005 per assertion**. A conservative paired interval is `L_CP(gain,n,.0025) - U_CP(loss,n,.0025)`; the union bound makes it a .995 one-sided lower confidence bound. Conditional damage uses one-sided `U_CP(damage,n_comparator_correct,.005)`. No McNemar nonsignificance shortcut. Fixed greedy generation is preferred; sampling seeds do not increase n. Input overflow, empty/malformed output, timeout, and missing generations remain logged failures; the protocol must define conservative paired handling and preserve all rows.
+
+Model-free exact binomial calculations using standard-library log probabilities and inversion (no model/no SciPy) give:
+
+| Comparator-correct n | Largest observed losses passing <3% | Power if true loss rate is 1% | Upper bound if zero losses |
+|---:|---:|---:|---:|
+| 47 | impossible | 0 | 10.6608% |
+| 112 | impossible | 0 | 4.6205% |
+| 180 | 0 | 16.3808% | 2.9006% |
+| 700 | 9 | 83.1518% | 0.7540% |
+| 900 | 14 | 95.9345% | 0.5870% |
+
+Therefore require a pre-fixed **900 comparator-correct independent parents** for each conditional preservation endpoint or HOLD. Do not add cases adaptively until the floor is reached. A floor of 180 can occasionally certify zero observed losses but has poor power at a plausible 1% loss rate.
+
+For paired noninferiority at 3pp with the union-CP method, normal planning estimates for 80% power at true difference zero are approximately 511, 2,466, 5,764, and 14,792 independent parents when discordance q is .02, .10, .25, and 1 respectively. These are planning approximations, not outcome guarantees. At **20,000 parents**, the exact worst-discordance, equal-gain/loss-count lower bound is **-1.9897pp**, so the fixed robust target has room to resolve a 3pp margin without assuming small discordance. Freeze 20,000 per primary population only if parent supply and the separately qualified 30-hour execution ceiling support it; otherwise hold or prospectively revise to a separately named development design before any confirmation outcomes. Equal stratum weighting needs deterministic balanced sampling or a qualified stratified interval; ordinary pooled CP is not valid for arbitrary post-hoc weights.
+
+Stop before execution for missing exact assets, nonadmitted data, unresolved scorer qualification, incompatible runtime, lock/resource failure, or budget infeasibility. Stop in flight at the registered safety/time/token ceilings, preserving failure receipts and partial raw outputs; do not declare a confirmatory pass from a truncated bank. No early success/futility peeks, outcome-driven extension, coefficient sweep, or changes to precision/prompts/scorers/margins on this bank. If outcomes affect any such decision, relabel it development and reserve new untouched confirmation.
+
+## Audit disposition
+
+The historical records motivate testing a frozen candidate pair. They do not establish an optimum, semantic boundary skill, adequate retention sensitivity, or fresh confirmation. A complete model-free registration contract and reproducible scorer/statistical code are feasible now; corpus admission and native execution remain disabled until exact asset restoration, parent/content separation, scorer qualification, and fixed sensitivity/resource budgets are satisfied.

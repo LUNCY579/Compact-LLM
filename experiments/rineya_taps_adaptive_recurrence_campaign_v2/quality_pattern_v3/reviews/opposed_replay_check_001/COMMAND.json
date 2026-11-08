@@ -1,0 +1,24 @@
+{
+  "command": [
+    "C:/Users/clclc/BusinessProject/Chat-Bubble/.venv/Scripts/python.exe",
+    "-B",
+    "-m",
+    "pytest",
+    "-q",
+    "experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\quality_pattern_v3\\tests\\test_opposed_gate_policy.py",
+    "experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\quality_pattern_v3\\tests\\test_opposed_gate_replay.py",
+    "-p",
+    "no:cacheprovider",
+    "--basetemp",
+    "experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\quality_pattern_v3\\reviews\\opposed_replay_check_001\\t",
+    "--junitxml",
+    "experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\quality_pattern_v3\\reviews\\opposed_replay_check_001\\junit.xml"
+  ],
+  "models": 0,
+  "campaign_candidate_scoring": false,
+  "source_sha256": {
+    "opposed_gate_policy.py": "0d57ad3284d51cbf959c8c8fd96489f00374fc52be35b4dbcc68850dcb06cd6e",
+    "opposed_gate_replay.py": "af8f4c138fea66948bf6959dfd20ff0dd77fead7085ff290956060c5f30d22e0"
+  },
+  "timeout_seconds": 180
+}

@@ -1,0 +1,72 @@
+{
+ "bank": "T_BANK_V3X.json",
+ "exploratory": true,
+ "n": 864,
+ "per_arm_primary": {
+  "ADD-100": 413,
+  "ADD-A125": 427,
+  "AVG": 331,
+  "BASE": 4,
+  "DARE-O10": 415,
+  "DARE-O50": 412,
+  "DISJOINT-DARE": 409,
+  "SPARSE": 447,
+  "SPARSE-125": 448
+ },
+ "P1_DARE-O50_vs_ADD-100": {
+  "x": 413,
+  "y": 412,
+  "diff": -1,
+  "lost": 3,
+  "gained": 2,
+  "p": 1.0,
+  "band": "SAME"
+ },
+ "P2_DARE-O10_vs_ADD-100": {
+  "x": 413,
+  "y": 415,
+  "diff": 2,
+  "lost": 4,
+  "gained": 6,
+  "p": 0.75390625,
+  "band": "SAME"
+ },
+ "P3_DISJOINT-DARE_vs_ADD-100": {
+  "x": 413,
+  "y": 409,
+  "diff": -4,
+  "lost": 5,
+  "gained": 1,
+  "p": 0.21875,
+  "band": "SAME"
+ },
+ "P4_SPARSE-125_vs_SPARSE": {
+  "x": 447,
+  "y": 448,
+  "diff": 1,
+  "lost": 27,
+  "gained": 28,
+  "p": 1.0,
+  "band": "SAME"
+ },
+ "P5_interference_shrinks_at_alpha_1.25": {
+  "interference_at_1.00": -34,
+  "interference_at_1.25": -21,
+  "I_rows": 13,
+  "ci95": [
+   -4.0,
+   30.0
+  ],
+  "prediction": "I >= +10 with the CI excluding 0",
+  "met": false
+ },
+ "P6_ADD-A125_vs_SPARSE": {
+  "x": 447,
+  "y": 427,
+  "diff": -20,
+  "lost": 58,
+  "gained": 38,
+  "p": 0.05191052214883845,
+  "band": "INCONCLUSIVE"
+ }
+}

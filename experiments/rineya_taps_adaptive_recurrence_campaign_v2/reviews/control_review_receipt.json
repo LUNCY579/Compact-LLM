@@ -1,0 +1,57 @@
+{
+  "schema_version": "1.0",
+  "reviewer": "/root/adversarial_review",
+  "created_utc": "2026-10-02T04:13:03.4000808Z",
+  "status": "PASS_CPU_APPARATUS_NATIVE_NOT_QUALIFIED",
+  "source_sha256": {
+    "CAMPAIGN.md": "a7a01689361a14eb06f2854f9d75bc784fe0624275ed8f956427b6b3d3d84dc7",
+    "run_apparatus.py": "fafbcea5d238560e8ebdf728528860a681c40ff0633bede100c3de21db37446b",
+    "OWNERSHIP.json": "ee5ac11619a2b0dabb511678ad493eb3e2d70ab6d9d2eecee6bca9649b92a474",
+    "control.py": "298d0a7064ff562c498ecc50d13c2f23cd9bdf1df6b1d616d7204bac24a49ed3",
+    "tests/test_control.py": "4b99780bd1517bc4026772cc4c3a5eb28ee034b40fbbc3adeb1698585201fb5b"
+  },
+  "reviewed_files": [
+    "control.py",
+    "tests/test_control.py",
+    "run_apparatus.py",
+    "CAMPAIGN.md",
+    "OWNERSHIP.json"
+  ],
+  "native_model_loads": 0,
+  "protected_or_test_reads": false,
+  "independently_run_command": [
+    "C:/Users/clclc/BusinessProject/Chat-Bubble/.venv/Scripts/python.exe",
+    "-B",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "experiments/rineya_taps_adaptive_recurrence_campaign_v2/tests/test_control.py",
+    "--junitxml=experiments/rineya_taps_adaptive_recurrence_campaign_v2/reviews/control_review_junit.xml"
+  ],
+  "independent_test_result": {
+    "passed": 13,
+    "exit_code": 0,
+    "pytest_seconds": 3.27,
+    "junit_sha256": "e955d3a75eebd90930fa15bca4a50c1f65050a31adabd4611db3cd8970b2f86f",
+    "failed": 0
+  },
+  "checks": {
+    "reentry_restarts_stream": true,
+    "seed_arm_sample_binding": true,
+    "ownership_matches_assigned_paths": true,
+    "prefix_rng_survives_moment_reset": true,
+    "source_exact_A3_fixed_unit_parity_on_fake_host": true,
+    "no_model_loader_in_control_or_apparatus": true,
+    "warmup_consumes_no_random_draw": true,
+    "native_dev_absent_from_apparatus_parser": true
+  },
+  "unresolved": [
+    "Actual native caller must replace config seed with replicate seed before wrapper creation",
+    "Native scaled and random arms need fresh source-bound qualification",
+    "Maximum shape and normal/exception restored native outputs not yet qualified",
+    "Parent native supervisor and complete matrix resource admission still pending",
+    "Sixteen previously inspected DEV cases remain exploratory"
+  ]
+}

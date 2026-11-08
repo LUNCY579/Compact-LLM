@@ -1,0 +1,98 @@
+Historical selector localization and numeric-spelling addendum — 2026-10-05
+
+The first-record pattern is concentrated in revision selection, rather than a
+universal failure to bind queried entities or access distant records. This is
+an offline analysis of the completed October 4 source/site/seed DEV matrix.
+It establishes no new native quality gain and changes no registered score.
+
+Independent parsing covers both actual old DEV record/query template forms for
+lookup, identifier, number, update and route/destination joins: 64 rows and
+16 dependent worlds per family. Exact source/code/config/corpus and recovered
+adaptation bindings match the completed matrix. No model or GPU was executed.
+
+All-position correctness, strict / exact printed-value literal, each out of64:
+Task          A source    B original+adapt    C local+adapt    D recurrent+adapt
+lookup        30 /56      63 /63              60 /60           59 /59
+identifier    18 /56      64 /64              64 /64           64 /64
+number        11 /57      64 /64              61 /61           61 /61
+update        14 /18      13 /13              13 /13           12 /12
+join          20 /41      58 /58              58 /58           58 /58
+
+When the true requested-value record is not the first physical evidence record:
+Task          Rows       A strict/literal    B              C              D
+lookup        52         24 /44              51 /51         48 /48         47 /47
+identifier    36          6 /30              36 /36         36 /36         36 /36
+number        36          9 /32              36 /36         33 /33         33 /33
+update        52         14 /18               3 /3           2 /2           1 /1
+join          44         18 /32              42 /42         40 /40         40 /40
+For joins, this position refers to the final destination-code record; all three
+route/destination/code record positions are retained in the receipt separately.
+
+D's first physical-record agreement is lookup17/64, identifier28/64,
+number31/64, join22/64 and update62/64. In distant cases whose correct record is
+not first, C/D update correctness is0/26, while D lookup is24/26, identifier18/18,
+number17/18 and final joined-code18/22. These controls falsify a universal
+first-record output rule on these saved predictions. Remaining27 full-attention
+layers prevent an exclusive local/recurrent-route inference.
+
+Counterfactual response is task-specific as well. All target values change.
+For D, among32 world/position pairs per family, both variants are literal-correct
+in lookup28, identifier32, number30, join29 and update5 pairs. D's literal output
+changes in31,32,31,29 and7 pairs respectively. Among the16 distant update pairs,
+only3 outputs change and only3 pairs are both correct: the three worlds where
+the greatest revision is first. All13 other target-changing distant worlds keep
+the first-record answer. Changed output alone is not evidence of correct response.
+
+Concrete distant controls:
+  dev-identifier-world-002-distant_heldout-cf-1:
+    first: MABJB shipment="920"; second: QCXRL shipment="zuv-8709-Y".
+    Query QCXRL; D correctly returns {"v":"zuv-8709-Y"}, at1052-token evidence gap.
+  dev-number-world-014-distant_heldout-cf-1:
+    first: XOSQB measurement="706"; second: YQSUE measurement="72.78".
+    Query YQSUE; D correctly returns {"v":"72.78"}, at1053-token evidence gap.
+  dev-update-world-008-distant_heldout-cf-1:
+    same entity VJRIR: revision15 code="974", revision39 code="606",
+    revision54 code="960". Correct answer is {"v":"960"}; C/D return {"v":"974"}.
+  dev-update-world-005-distant_heldout-cf-1:
+    same entity YMKTR: revision20 code="289", revision81 code="943",
+    revision59 code="469". Correct answer is {"v":"943"}; C/D return {"v":"289"}.
+These are examples within different synthetic task worlds, rather than a
+randomized causal comparison of selector complexity.
+
+The fixed literal decoder reads one complete JSON value/object or one bare
+unquoted atom. It retains exact case and printed numeric spelling, including
+trailing zeros, and does not strip prose, extract substrings, round numbers or
+alter strict/type-contract scoring. JSON parse_int/parse_float use a token
+wrapper. Numeric canonical Decimal representation and raw numeric lexeme are
+recorded side-by-side, with canonical representation excluded from scoring.
+
+Eight source-A number outputs already print the exact requested value and must
+not be called wrong-value/selector repairs merely because numeric conversion
+changes spelling. They are:
+  world009 distant/near cf1:48.00
+  world004 distant cf1:99.90
+  world009 distant/near cf0:38.20
+  world001 distant/near cf1:-99.10
+  world002 distant cf0:-38.20
+Their targets contain these exact spellings as quoted JSON strings. The bare
+source outputs remain strict/type-contract failures; wrapper/type recovery can
+repair that contract without acquiring a new numeric selector skill. Other
+genuine wrong-subject value cases are classified by exact raw printed-value
+matches to a different subject's record, and inventoried independently.
+
+Actionable hypothesis: select the greatest revision among multiple records for
+the same entity/field, while preserving successful unique-entity/field and
+joined-endpoint selection. A future separately authorized discriminating
+control should hold records, query, target and filler fixed and move only the
+winning revision's order; include payload-number/revision conflicts. This
+addendum prepares no new corpus, model run, recovery training or permission.
+
+Verified artifacts: selector_controls_verified.py / selector_controls_verified.json
+The verified receipt passes2590 checks. Earlier drafts remain preserved;
+template-index and JSON histogram-key assumptions were corrected without
+changing any derived strict/literal counts or original native evidence.
+
+Limits: one old synthetic DEV panel, one model/site/seed, correlated variants,
+exploratory localization, and exact output contracts. No confirmation, broad
+retention, universal attention diagnosis, latent-algorithm proof, promotion,
+cross-corpus causal result or actual new quality gain is established.

@@ -1,0 +1,499 @@
+{
+  "record": "RRP002_PRESERVATION_BASELINE_MEASUREMENT",
+  "schema": 1,
+  "what_this_is": "The ungated Supa 1.7 SOURCE checkpoint on RRP2-PRES-DEV, the preservation / abstention DEV bank, at the already-qualified 2048 window. This is the P3 non-inferiority REFERENCE for every future arm. It is a baseline, not a quality claim.",
+  "experiment": "RRP-002-BASELINE-A3",
+  "grant_scope_note": "Run under A3, whose declared evaluation_bank covers this bank by sha256. A2 did not, which is CL-045.",
+  "source_state_unchanged": true,
+  "optimizer_steps": 0,
+  "window": 2048,
+  "trained_window": 2048,
+  "bank": {
+    "file": "RRP2_PRES_DEV_BANK.jsonl",
+    "sha256": "0dcbec17a5842d94f6157db34d888efda3650b5b73a6aaf1b266cc643b89a975",
+    "kind": "preservation",
+    "rows": 768
+  },
+  "denominators": {
+    "bank_rows": 768,
+    "evaluated_rows": 737,
+    "refused_rows": 31,
+    "refusal_reasons": {
+      "only explicit system/user evidence is allowed": 31
+    },
+    "refused_by_sub_bank": {
+      "v3_answer_or_abstain": 31
+    },
+    "refused_by_decision": {
+      "answer": 31
+    },
+    "the_receipt_field_is_misnamed": "baseline.json calls these `rejected_overlength_rows`, and NONE of them is overlength. Every prompt in this bank fits 2048 -- max 143 tokens measured. All 31 refusals are `only explicit system/user evidence is allowed`: serialization.compile_row accepts exactly one system turn and one user turn, and those rows are MULTI-TURN. The qualified evaluation path structurally cannot score part of this bank (CL-051).",
+    "the_loss_is_not_random": "all 31 refused rows are answerable rows of sub-bank (c), so (c)'s evaluated balance shifts from 96 answer / 96 abstain to 65 / 96. That raises (c)'s constant-abstain floor from 0.5 to 0.5963, and every floor reported here is recomputed on the EVALUATED SUBSET for exactly that reason -- never taken from the full bank."
+  },
+  "positive_control": {
+    "status": "PASS",
+    "accuracy": 1.0,
+    "failed": 0,
+    "failures": [],
+    "model_calls": 0
+  },
+  "model_tolerant": {
+    "rows": 737,
+    "correct": 166,
+    "accuracy": 0.2252,
+    "scored_by": "preservation contract: an answerable row needs its own gold (or a shipped alias) under the declared tolerance; an unanswerable row needs the exact abstain sentence. Tolerance is case, wrapping quotes and one trailing sentence mark -- no unit stripping, no substring credit.",
+    "tolerant": true,
+    "answer_channel": {
+      "n": 353,
+      "correct": 118,
+      "false_abstention": 96,
+      "wrong_answer": 139
+    },
+    "abstention_channel": {
+      "n": 384,
+      "correct": 48,
+      "abstained_at_all": 96,
+      "wrong_abstention_kind": 48,
+      "missing_abstention": 288
+    },
+    "per_required_abstention_kind": {
+      "answerable": {
+        "n": 353,
+        "correct": 118
+      },
+      "NO_EVIDENCE": {
+        "n": 336,
+        "correct": 48
+      },
+      "SOURCES_CONFLICT": {
+        "n": 48,
+        "correct": 0
+      }
+    },
+    "per_sub_bank": {
+      "direct_reasoning": {
+        "n": 384,
+        "correct": 77
+      },
+      "procedural_rag": {
+        "n": 192,
+        "correct": 48
+      },
+      "v3_answer_or_abstain": {
+        "n": 161,
+        "correct": 41
+      }
+    },
+    "per_decision": {
+      "answer": {
+        "n": 353,
+        "correct": 118
+      },
+      "abstain": {
+        "n": 336,
+        "correct": 48
+      },
+      "conflict": {
+        "n": 48,
+        "correct": 0
+      }
+    },
+    "per_abstention_cause": {
+      "n/a": {
+        "n": 353,
+        "correct": 118
+      },
+      "insufficient_information": {
+        "n": 192,
+        "correct": 0
+      },
+      "conflicting_evidence": {
+        "n": 96,
+        "correct": 0
+      },
+      "missing_required_input": {
+        "n": 48,
+        "correct": 48
+      },
+      "direct_conflict_equal_authority": {
+        "n": 48,
+        "correct": 0
+      }
+    },
+    "per_difficulty": {
+      "hard": {
+        "n": 142,
+        "correct": 25
+      },
+      "moderate": {
+        "n": 365,
+        "correct": 85
+      },
+      "easy": {
+        "n": 69,
+        "correct": 15
+      },
+      "intermediate": {
+        "n": 161,
+        "correct": 41
+      }
+    },
+    "reasons": {
+      "wrong_answer": 139,
+      "exact_match": 118,
+      "missing_abstention": 288,
+      "false_abstention": 96,
+      "correct_abstention": 48,
+      "wrong_abstention_kind": 48
+    },
+    "minimal_pair_calibration": {
+      "complete_pairs": 29,
+      "answers_regardless": 29
+    },
+    "quality_claim": false,
+    "confirmation_eligible": false
+  },
+  "model_strict": {
+    "rows": 737,
+    "correct": 48,
+    "accuracy": 0.0651,
+    "scored_by": "preservation contract: an answerable row needs its own gold (or a shipped alias) under the declared tolerance; an unanswerable row needs the exact abstain sentence. Tolerance is case, wrapping quotes and one trailing sentence mark -- no unit stripping, no substring credit.",
+    "tolerant": false,
+    "answer_channel": {
+      "n": 353,
+      "correct": 0,
+      "false_abstention": 96,
+      "wrong_answer": 257
+    },
+    "abstention_channel": {
+      "n": 384,
+      "correct": 48,
+      "abstained_at_all": 96,
+      "wrong_abstention_kind": 48,
+      "missing_abstention": 288
+    },
+    "per_required_abstention_kind": {
+      "answerable": {
+        "n": 353,
+        "correct": 0
+      },
+      "NO_EVIDENCE": {
+        "n": 336,
+        "correct": 48
+      },
+      "SOURCES_CONFLICT": {
+        "n": 48,
+        "correct": 0
+      }
+    },
+    "per_sub_bank": {
+      "direct_reasoning": {
+        "n": 384,
+        "correct": 0
+      },
+      "procedural_rag": {
+        "n": 192,
+        "correct": 48
+      },
+      "v3_answer_or_abstain": {
+        "n": 161,
+        "correct": 0
+      }
+    },
+    "per_decision": {
+      "answer": {
+        "n": 353,
+        "correct": 0
+      },
+      "abstain": {
+        "n": 336,
+        "correct": 48
+      },
+      "conflict": {
+        "n": 48,
+        "correct": 0
+      }
+    },
+    "per_abstention_cause": {
+      "n/a": {
+        "n": 353,
+        "correct": 0
+      },
+      "insufficient_information": {
+        "n": 192,
+        "correct": 0
+      },
+      "conflicting_evidence": {
+        "n": 96,
+        "correct": 0
+      },
+      "missing_required_input": {
+        "n": 48,
+        "correct": 48
+      },
+      "direct_conflict_equal_authority": {
+        "n": 48,
+        "correct": 0
+      }
+    },
+    "per_difficulty": {
+      "hard": {
+        "n": 142,
+        "correct": 0
+      },
+      "moderate": {
+        "n": 365,
+        "correct": 48
+      },
+      "easy": {
+        "n": 69,
+        "correct": 0
+      },
+      "intermediate": {
+        "n": 161,
+        "correct": 0
+      }
+    },
+    "reasons": {
+      "wrong_answer": 257,
+      "missing_abstention": 288,
+      "false_abstention": 96,
+      "correct_abstention": 48,
+      "wrong_abstention_kind": 48
+    },
+    "minimal_pair_calibration": {
+      "complete_pairs": 29,
+      "answers_regardless": 29
+    },
+    "quality_claim": false,
+    "confirmation_eligible": false
+  },
+  "text_match_lower_bound": {
+    "count": 48,
+    "of": 737,
+    "verifier_count": 166,
+    "under_count": 118,
+    "meaning": "the preservation contract accepts shipped aliases and a declared tolerance, and scores answerable and abstention rows by different rules, so the receipt's text comparison is a LOWER bound"
+  },
+  "shortcut_floor_evaluated_subset": {
+    "accuracy": 0.4559,
+    "correct": 336,
+    "per_sub_bank": {
+      "direct_reasoning": 192,
+      "procedural_rag": 48,
+      "v3_answer_or_abstain": 96
+    }
+  },
+  "shortcut_floor_predictor": "constant_abstain",
+  "clears_floor_by": -0.2307,
+  "all_shortcut_baselines": {
+    "constant_abstain": {
+      "accuracy": 0.4559,
+      "correct": 336,
+      "per_sub_bank": {
+        "direct_reasoning": 192,
+        "procedural_rag": 48,
+        "v3_answer_or_abstain": 96
+      }
+    },
+    "constant_conflict_sentence": {
+      "accuracy": 0.0651,
+      "correct": 48,
+      "per_sub_bank": {
+        "direct_reasoning": 0,
+        "procedural_rag": 48,
+        "v3_answer_or_abstain": 0
+      }
+    },
+    "constant_train_majority": {
+      "accuracy": 0.4559,
+      "correct": 336,
+      "per_sub_bank": {
+        "direct_reasoning": 192,
+        "procedural_rag": 48,
+        "v3_answer_or_abstain": 96
+      }
+    },
+    "constant_yes": {
+      "accuracy": 0.0,
+      "correct": 0,
+      "per_sub_bank": {
+        "direct_reasoning": 0,
+        "procedural_rag": 0,
+        "v3_answer_or_abstain": 0
+      }
+    },
+    "copy_last_capitalized_entity": {
+      "accuracy": 0.0,
+      "correct": 0,
+      "per_sub_bank": {
+        "direct_reasoning": 0,
+        "procedural_rag": 0,
+        "v3_answer_or_abstain": 0
+      }
+    },
+    "copy_last_number": {
+      "accuracy": 0.0014,
+      "correct": 1,
+      "per_sub_bank": {
+        "direct_reasoning": 0,
+        "procedural_rag": 0,
+        "v3_answer_or_abstain": 1
+      }
+    },
+    "empty": {
+      "accuracy": 0.0,
+      "correct": 0,
+      "per_sub_bank": {
+        "direct_reasoning": 0,
+        "procedural_rag": 0,
+        "v3_answer_or_abstain": 0
+      }
+    },
+    "prose_refusal": {
+      "accuracy": 0.0,
+      "correct": 0,
+      "per_sub_bank": {
+        "direct_reasoning": 0,
+        "procedural_rag": 0,
+        "v3_answer_or_abstain": 0
+      }
+    }
+  },
+  "per_sub_bank": {
+    "direct_reasoning": {
+      "rows": 384,
+      "accuracy": 0.2005,
+      "correct": 77,
+      "clusters": 384,
+      "shortcut_floor": 0.5,
+      "shortcut_floor_predictor": "constant_abstain",
+      "clears_floor_by": -0.2995,
+      "answer_channel": {
+        "n": 192,
+        "correct": 77,
+        "false_abstention": 0,
+        "wrong_answer": 115
+      },
+      "abstention_channel": {
+        "n": 192,
+        "correct": 0,
+        "abstained_at_all": 0,
+        "wrong_abstention_kind": 0,
+        "missing_abstention": 192
+      },
+      "resolution_if_all_clusters_moved": {
+        "clusters": 384,
+        "smallest_two_sided_p": 0.0,
+        "alpha": 0.05,
+        "can_reject_at_alpha": true,
+        "verdict": "the design can reach alpha"
+      }
+    },
+    "procedural_rag": {
+      "rows": 192,
+      "accuracy": 0.25,
+      "correct": 48,
+      "clusters": 16,
+      "shortcut_floor": 0.25,
+      "shortcut_floor_predictor": "constant_abstain",
+      "clears_floor_by": 0.0,
+      "answer_channel": {
+        "n": 96,
+        "correct": 0,
+        "false_abstention": 96,
+        "wrong_answer": 0
+      },
+      "abstention_channel": {
+        "n": 96,
+        "correct": 48,
+        "abstained_at_all": 96,
+        "wrong_abstention_kind": 48,
+        "missing_abstention": 0
+      },
+      "resolution_if_all_clusters_moved": {
+        "clusters": 16,
+        "smallest_two_sided_p": 3.0517578125e-05,
+        "alpha": 0.05,
+        "can_reject_at_alpha": true,
+        "verdict": "the design can reach alpha"
+      }
+    },
+    "v3_answer_or_abstain": {
+      "rows": 161,
+      "accuracy": 0.2547,
+      "correct": 41,
+      "clusters": 159,
+      "shortcut_floor": 0.5963,
+      "shortcut_floor_predictor": "constant_abstain",
+      "clears_floor_by": -0.3416,
+      "answer_channel": {
+        "n": 65,
+        "correct": 41,
+        "false_abstention": 0,
+        "wrong_answer": 24
+      },
+      "abstention_channel": {
+        "n": 96,
+        "correct": 0,
+        "abstained_at_all": 0,
+        "wrong_abstention_kind": 0,
+        "missing_abstention": 96
+      },
+      "resolution_if_all_clusters_moved": {
+        "clusters": 159,
+        "smallest_two_sided_p": 0.0,
+        "alpha": 0.05,
+        "can_reject_at_alpha": true,
+        "verdict": "the design can reach alpha"
+      }
+    }
+  },
+  "minimal_pair_calibration": {
+    "unit": "complete minimal pair (pair_id)",
+    "complete_pairs": 29,
+    "incomplete_pairs_excluded": 11,
+    "answers_regardless": 29,
+    "evidence_sensitivity_rate": 0.0,
+    "resolution": {
+      "clusters": 29,
+      "smallest_two_sided_p": 3.725290298461914e-09,
+      "alpha": 0.05,
+      "can_reject_at_alpha": true,
+      "verdict": "the design can reach alpha"
+    },
+    "reading": "`evidence_sensitive` is the only outcome that shows the model responded to the presence of the decisive fact. The other three are all failures of calibration, and `inverted` is the worst: it abstained where the fact was present and answered where it was absent.",
+    "quality_claim": false
+  },
+  "prospective_resolution": {
+    "note": "No arm exists yet, so no paired comparison is computed. These are the resolution limits the eventual P3 contrast will face, fixed by the bank's cluster structure rather than by any result.",
+    "primary_unit": "cluster_id",
+    "clusters_in_bank": 559,
+    "per_sub_bank_clusters": {
+      "direct_reasoning": 384,
+      "procedural_rag": 16,
+      "v3_answer_or_abstain": 159
+    },
+    "moving_clusters_needed_for_alpha_05": 6,
+    "why": "zero-difference clusters contribute nothing to the permutation distribution, so resolution is set by the clusters that MOVE, not by the 559 that exist (CL-046)"
+  },
+  "termination": {
+    "terminated": 737,
+    "truncated": 0,
+    "generated_tokens_actual": 4294,
+    "generation_allowance_per_row": 64,
+    "response_ce": 1.864418383024205,
+    "truncation_is_not_a_confound": "golds are <=14 tokens against a 64-token allowance, so a truncation is model verbosity"
+  },
+  "not_comparable_to_the_forge_banks": "this bank's floor is 0.4375; v1's is 0.1458 and v2's is 0.4345. Each accuracy is meaningful only against its own floor.",
+  "what_this_means_for_P3": "P3 was pre-registered as NON-INFERIORITY against this source, which is the correct definition of preservation. But this source is itself 0.2307 BELOW the trivial floor on this bank, so passing P3 means only 'the arm did not make a bad thing worse'. Every P3 report must therefore carry the absolute position against the floor alongside the non-inferiority verdict. Registering that now, before an arm exists, so it cannot be presented later as a strength (CL-052).",
+  "absolute_position": {
+    "model": null,
+    "floor": null,
+    "note": "filled by the fields above; see clears_floor_by"
+  },
+  "confirmation_eligible": false,
+  "human_review_status": "MACHINE_VERIFIED_NOT_HUMAN_REVIEWED",
+  "model_calls_by_this_analysis": 0,
+  "quality_claim": false
+}

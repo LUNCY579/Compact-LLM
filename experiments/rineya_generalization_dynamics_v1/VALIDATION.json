@@ -1,0 +1,51 @@
+{
+  "base_branch": "post-training-Mimo",
+  "base_commit": "03db218ceebc61a2bc04f2482cf7e094045e01c1",
+  "code_sha256": "6ead3a247aecd414d6057484ac1a065eca647fb7cb6ed0547a37a2626b3fc354",
+  "delivery_branch": "research/rineya-generalization-dynamics-v1",
+  "experiment": "GD-001",
+  "limitations": [
+    "No registered real Rineya weights in this environment.",
+    "Full HF/PEFT loader has not been exercised against actual snapshots.",
+    "No native retention, transfer, reasoning or efficiency gain established.",
+    "Dependencies and RAM block native inference here.",
+    "Existing repository banks and promotion policies unchanged."
+  ],
+  "native_preflight": {
+    "does_not_authorize_training_or_establish_compatibility": true,
+    "free_ram_gib": 3.5118255615234375,
+    "free_vram_gib": null,
+    "python": "3.13.5",
+    "reasons": [
+      "missing dependency: transformers",
+      "missing dependency: peft",
+      "host RAM below registered guard"
+    ],
+    "status": "BLOCKED",
+    "versions": {
+      "psutil": "7.2.2",
+      "safetensors": "0.7.0",
+      "torch": "2.10.0+cpu"
+    }
+  },
+  "python": "3.13.5",
+  "qualification": "MECHANICS_VERIFIED_NATIVE_UNQUALIFIED",
+  "recorded_utc": "2026-10-02T20:25:26.806807+00:00",
+  "repository": "LUNCY579/ChatBubble",
+  "validation": {
+    "compileall": "PASS",
+    "existing_sealed_bank_reads": 0,
+    "failures": 0,
+    "full_repository_test_suite": "NOT_RUN",
+    "mechanical_demo_evidence_kind": "mechanical_fixture",
+    "mechanical_end_to_end_demo": "PASS",
+    "native_inference_runs": 0,
+    "native_model_loads": 0,
+    "passed": 65,
+    "scoped_unittest_tests": 65,
+    "skipped": 0,
+    "stdlib_mechanical_tests": 57,
+    "torch_tensor_stub_tests": 8,
+    "training_runs": 0
+  }
+}

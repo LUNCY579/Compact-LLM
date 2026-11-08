@@ -1,0 +1,50 @@
+{
+  "status": "PASS_DATA_VERIFIER_DIAGNOSTIC",
+  "evidence": "CPU_DATA_ONLY_NOT_MODEL_EFFICACY",
+  "population": {
+    "selection": 256,
+    "DEV": 256,
+    "per_family_per_role": 64
+  },
+  "allocation": {
+    "candidate_specifications": 3312,
+    "duplicate_candidates_skipped": 1,
+    "selection_basis": "fixed generator order, role and structure quotas; no solver/model scoring"
+  },
+  "predictors_frozen": [
+    "zero",
+    "one",
+    "minus_one",
+    "empty",
+    "first_number",
+    "last_number",
+    "min_number",
+    "max_number",
+    "initial_state",
+    "first_set",
+    "all_numbers",
+    "selection_mode"
+  ],
+  "controls": {
+    "total": 2560,
+    "positive": 768,
+    "negative": 1792,
+    "false_accepts": 0,
+    "false_rejects": 0,
+    "failures": []
+  },
+  "costs": {
+    "reference_rows": 512,
+    "heuristic_candidates": 3072,
+    "mutation_candidates": 2560,
+    "make_row_reference_verifier_calls": 1024,
+    "additional_verifier_calls": 6144,
+    "elapsed_seconds": 0.4529999999995198,
+    "model_calls": 0,
+    "model_generation_tokens": 0,
+    "optimizer_steps": 0
+  },
+  "interpretation": "Per-family shortcut floors identify answer-prior/task vulnerabilities, not evidence that Rineya exploits them. Gold-derived controls are verifier tests, not deployable predictions.",
+  "CHECK": "CLOSED",
+  "FINAL": "CLOSED"
+}

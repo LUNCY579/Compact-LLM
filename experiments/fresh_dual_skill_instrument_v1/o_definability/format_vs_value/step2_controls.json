@@ -1,0 +1,650 @@
+{
+ "unit_cases": [
+  {
+   "row": "02515",
+   "text": "A 15% tip on a $60 bill is $9.",
+   "expected_loose": true,
+   "got": true,
+   "final": true,
+   "typed": true,
+   "carry": false,
+   "expected_typed": null
+  },
+  {
+   "row": "02515",
+   "text": "A 15% tip on a $60 bill is $19.",
+   "expected_loose": false,
+   "got": false,
+   "final": false,
+   "typed": false,
+   "carry": false,
+   "expected_typed": null
+  },
+  {
+   "row": "02677",
+   "text": "9:15 AM - 8:30 AM = 45 minutes",
+   "expected_loose": true,
+   "got": true,
+   "final": true,
+   "typed": true,
+   "carry": false,
+   "expected_typed": true
+  },
+  {
+   "row": "02229",
+   "text": "2 hours 15 minutes",
+   "expected_loose": false,
+   "got": false,
+   "final": false,
+   "typed": false,
+   "carry": false,
+   "expected_typed": false
+  },
+  {
+   "row": "02229",
+   "text": "2 hours, 15 minutes later: 2 hours",
+   "expected_loose": true,
+   "got": true,
+   "final": true,
+   "typed": true,
+   "carry": false,
+   "expected_typed": null
+  },
+  {
+   "row": "00982",
+   "text": "1 hour and 30 minutes.",
+   "expected_loose": true,
+   "got": true,
+   "final": true,
+   "typed": true,
+   "carry": false,
+   "expected_typed": null
+  },
+  {
+   "row": "00982",
+   "text": "90 minutes",
+   "expected_loose": true,
+   "got": true,
+   "final": true,
+   "typed": true,
+   "carry": false,
+   "expected_typed": null
+  },
+  {
+   "row": "00982",
+   "text": "1.5 hours",
+   "expected_loose": true,
+   "got": true,
+   "final": true,
+   "typed": true,
+   "carry": false,
+   "expected_typed": null
+  },
+  {
+   "row": "00982",
+   "text": "90",
+   "expected_loose": false,
+   "got": false,
+   "final": false,
+   "typed": false,
+   "carry": false,
+   "expected_typed": null
+  },
+  {
+   "row": "02628",
+   "text": "11:30 AM + 50 minutes = 12:20 PM",
+   "expected_loose": true,
+   "got": true,
+   "final": true,
+   "typed": true,
+   "carry": false,
+   "expected_typed": true
+  },
+  {
+   "row": "02628",
+   "text": "12:20",
+   "expected_loose": true,
+   "got": true,
+   "final": true,
+   "typed": true,
+   "carry": false,
+   "note": "24-hour 12:20 == 740 by the scorer parser; expectation corrected a priori",
+   "expected_typed": null
+  },
+  {
+   "row": "02842",
+   "text": "9:15 AM + 55 minutes = 9:70 AM",
+   "expected_loose": false,
+   "got": false,
+   "final": false,
+   "typed": false,
+   "carry": true,
+   "expected_typed": null
+  },
+  {
+   "row": "01293",
+   "text": "3 1/5 cups",
+   "expected_loose": false,
+   "got": false,
+   "final": false,
+   "typed": false,
+   "carry": false,
+   "expected_typed": null
+  },
+  {
+   "row": "01293",
+   "text": "16/5 cups",
+   "expected_loose": true,
+   "got": true,
+   "final": true,
+   "typed": true,
+   "carry": false,
+   "expected_typed": null
+  },
+  {
+   "row": "01293",
+   "text": "3.2 cups",
+   "expected_loose": true,
+   "got": true,
+   "final": true,
+   "typed": true,
+   "carry": false,
+   "expected_typed": null
+  },
+  {
+   "row": "02752",
+   "text": "55000 m",
+   "expected_loose": true,
+   "got": true,
+   "final": true,
+   "typed": true,
+   "carry": false,
+   "expected_typed": null
+  },
+  {
+   "row": "02025",
+   "text": "50% of 120 units = 60 units.",
+   "expected_loose": true,
+   "got": true,
+   "final": true,
+   "typed": true,
+   "carry": false,
+   "expected_typed": null
+  },
+  {
+   "row": "02025",
+   "text": "50% of 120 units = 160 units.",
+   "expected_loose": false,
+   "got": false,
+   "final": false,
+   "typed": false,
+   "carry": false,
+   "expected_typed": null
+  },
+  {
+   "row": "01221",
+   "text": "25",
+   "expected_loose": true,
+   "got": true,
+   "final": true,
+   "typed": true,
+   "carry": false,
+   "expected_typed": null
+  },
+  {
+   "row": "02961",
+   "text": "1 hour and 30 minutes",
+   "expected_loose": false,
+   "got": false,
+   "final": false,
+   "typed": false,
+   "carry": false,
+   "expected_typed": false
+  },
+  {
+   "row": "02961",
+   "text": "It is 30 minutes.",
+   "expected_loose": true,
+   "got": true,
+   "final": true,
+   "typed": true,
+   "carry": false,
+   "expected_typed": true
+  },
+  {
+   "row": "02681",
+   "text": "9:55 PM",
+   "expected_loose": false,
+   "got": false,
+   "final": false,
+   "typed": false,
+   "carry": false,
+   "expected_typed": false
+  },
+  {
+   "row": "02681",
+   "text": "It ends at 9:55 AM.",
+   "expected_loose": true,
+   "got": true,
+   "final": true,
+   "typed": true,
+   "carry": false,
+   "expected_typed": null
+  },
+  {
+   "row": "02681",
+   "text": "9:55",
+   "expected_loose": true,
+   "got": true,
+   "final": true,
+   "typed": true,
+   "carry": false,
+   "expected_typed": null
+  }
+ ],
+ "unit_cases_all_pass": true,
+ "P0_gold": {
+  "permissive": {
+   "gold_scored_correct": 146,
+   "n": 150,
+   "loose_present": 150,
+   "typed_present": 150,
+   "final_present": 150
+  },
+  "strict": {
+   "gold_scored_correct": 111,
+   "n": 150,
+   "loose_present": 150,
+   "typed_present": 111,
+   "final_present": 150
+  }
+ },
+ "P1_correct_rows": {
+  "supa|permissive": {
+   "n_correct": 47,
+   "loose_present": 47,
+   "typed_present": 47,
+   "final_present": 47,
+   "misses": {}
+  },
+  "supa|strict": {
+   "n_correct": 41,
+   "loose_present": 41,
+   "typed_present": 41,
+   "final_present": 41,
+   "misses": {}
+  },
+  "opallo_bf16|permissive": {
+   "n_correct": 73,
+   "loose_present": 73,
+   "typed_present": 73,
+   "final_present": 73,
+   "misses": {}
+  },
+  "opallo_bf16|strict": {
+   "n_correct": 59,
+   "loose_present": 59,
+   "typed_present": 59,
+   "final_present": 59,
+   "misses": {}
+  },
+  "opallo_fp32|permissive": {
+   "n_correct": 74,
+   "loose_present": 74,
+   "typed_present": 74,
+   "final_present": 74,
+   "misses": {}
+  },
+  "opallo_fp32|strict": {
+   "n_correct": 59,
+   "loose_present": 59,
+   "typed_present": 59,
+   "final_present": 59,
+   "misses": {}
+  }
+ },
+ "P2_synthetic_format_damage": {
+  "permissive|prose_prefix": {
+   "n": 150,
+   "scorer_rejected": 150,
+   "loose_fired": 150,
+   "loose_fired_on_rejected": 150
+  },
+  "permissive|prose_suffix": {
+   "n": 150,
+   "scorer_rejected": 150,
+   "loose_fired": 150,
+   "loose_fired_on_rejected": 150
+  },
+  "permissive|working_then_answer": {
+   "n": 150,
+   "scorer_rejected": 150,
+   "loose_fired": 150,
+   "loose_fired_on_rejected": 150
+  },
+  "permissive|restated_subject": {
+   "n": 150,
+   "scorer_rejected": 150,
+   "loose_fired": 150,
+   "loose_fired_on_rejected": 150
+  },
+  "permissive|nonterminated": {
+   "n": 150,
+   "scorer_rejected": 150,
+   "loose_fired": 150,
+   "loose_fired_on_rejected": 150
+  },
+  "strict|prose_prefix": {
+   "n": 150,
+   "scorer_rejected": 150,
+   "loose_fired": 150,
+   "loose_fired_on_rejected": 150
+  },
+  "strict|prose_suffix": {
+   "n": 150,
+   "scorer_rejected": 150,
+   "loose_fired": 150,
+   "loose_fired_on_rejected": 150
+  },
+  "strict|working_then_answer": {
+   "n": 150,
+   "scorer_rejected": 150,
+   "loose_fired": 150,
+   "loose_fired_on_rejected": 150
+  },
+  "strict|restated_subject": {
+   "n": 150,
+   "scorer_rejected": 150,
+   "loose_fired": 150,
+   "loose_fired_on_rejected": 150
+  },
+  "strict|nonterminated": {
+   "n": 150,
+   "scorer_rejected": 150,
+   "loose_fired": 150,
+   "loose_fired_on_rejected": 150
+  }
+ },
+ "N_negative_controls": {
+  "permissive|D1_shift1_within_class|supa": {
+   "pairs": 141,
+   "collisions_excluded": 9,
+   "loose_fp": 0,
+   "typed_fp": 0,
+   "final_fp": 0,
+   "carry_fp": 0,
+   "pairs_on_arm_wrong_rows": 95,
+   "loose_fp_on_wrong_rows": 0,
+   "typed_fp_on_wrong_rows": 0,
+   "final_fp_on_wrong_rows": 0,
+   "loose_fp_rows": []
+  },
+  "permissive|D1_shift1_within_class|opallo_bf16": {
+   "pairs": 141,
+   "collisions_excluded": 9,
+   "loose_fp": 1,
+   "typed_fp": 1,
+   "final_fp": 1,
+   "carry_fp": 0,
+   "pairs_on_arm_wrong_rows": 70,
+   "loose_fp_on_wrong_rows": 1,
+   "typed_fp_on_wrong_rows": 1,
+   "final_fp_on_wrong_rows": 1,
+   "loose_fp_rows": [
+    "rati_02675"
+   ]
+  },
+  "permissive|D1_shift1_within_class|opallo_fp32": {
+   "pairs": 141,
+   "collisions_excluded": 9,
+   "loose_fp": 1,
+   "typed_fp": 1,
+   "final_fp": 1,
+   "carry_fp": 0,
+   "pairs_on_arm_wrong_rows": 69,
+   "loose_fp_on_wrong_rows": 1,
+   "typed_fp_on_wrong_rows": 1,
+   "final_fp_on_wrong_rows": 1,
+   "loose_fp_rows": [
+    "rati_02675"
+   ]
+  },
+  "permissive|D2_shift1_within_class_and_kind|supa": {
+   "pairs": 137,
+   "collisions_excluded": 13,
+   "loose_fp": 1,
+   "typed_fp": 1,
+   "final_fp": 1,
+   "carry_fp": 0,
+   "pairs_on_arm_wrong_rows": 93,
+   "loose_fp_on_wrong_rows": 1,
+   "typed_fp_on_wrong_rows": 1,
+   "final_fp_on_wrong_rows": 1,
+   "loose_fp_rows": [
+    "rati_01779"
+   ]
+  },
+  "permissive|D2_shift1_within_class_and_kind|opallo_bf16": {
+   "pairs": 137,
+   "collisions_excluded": 13,
+   "loose_fp": 4,
+   "typed_fp": 4,
+   "final_fp": 4,
+   "carry_fp": 0,
+   "pairs_on_arm_wrong_rows": 69,
+   "loose_fp_on_wrong_rows": 4,
+   "typed_fp_on_wrong_rows": 4,
+   "final_fp_on_wrong_rows": 4,
+   "loose_fp_rows": [
+    "rati_02931",
+    "rati_01779",
+    "rati_02675",
+    "rati_02115"
+   ]
+  },
+  "permissive|D2_shift1_within_class_and_kind|opallo_fp32": {
+   "pairs": 137,
+   "collisions_excluded": 13,
+   "loose_fp": 4,
+   "typed_fp": 4,
+   "final_fp": 4,
+   "carry_fp": 0,
+   "pairs_on_arm_wrong_rows": 68,
+   "loose_fp_on_wrong_rows": 4,
+   "typed_fp_on_wrong_rows": 4,
+   "final_fp_on_wrong_rows": 4,
+   "loose_fp_rows": [
+    "rati_02931",
+    "rati_01779",
+    "rati_02675",
+    "rati_02115"
+   ]
+  },
+  "permissive|N3_near_miss_plus1_or_plus10min|supa": {
+   "pairs": 150,
+   "collisions_excluded": 0,
+   "loose_fp": 1,
+   "typed_fp": 1,
+   "final_fp": 1,
+   "carry_fp": 0,
+   "pairs_on_arm_wrong_rows": 103,
+   "loose_fp_on_wrong_rows": 1,
+   "typed_fp_on_wrong_rows": 1,
+   "final_fp_on_wrong_rows": 1,
+   "loose_fp_rows": [
+    "time_00626"
+   ]
+  },
+  "permissive|N3_near_miss_plus1_or_plus10min|opallo_bf16": {
+   "pairs": 150,
+   "collisions_excluded": 0,
+   "loose_fp": 1,
+   "typed_fp": 1,
+   "final_fp": 1,
+   "carry_fp": 0,
+   "pairs_on_arm_wrong_rows": 77,
+   "loose_fp_on_wrong_rows": 1,
+   "typed_fp_on_wrong_rows": 1,
+   "final_fp_on_wrong_rows": 1,
+   "loose_fp_rows": [
+    "time_01739"
+   ]
+  },
+  "permissive|N3_near_miss_plus1_or_plus10min|opallo_fp32": {
+   "pairs": 150,
+   "collisions_excluded": 0,
+   "loose_fp": 2,
+   "typed_fp": 2,
+   "final_fp": 2,
+   "carry_fp": 0,
+   "pairs_on_arm_wrong_rows": 76,
+   "loose_fp_on_wrong_rows": 2,
+   "typed_fp_on_wrong_rows": 2,
+   "final_fp_on_wrong_rows": 2,
+   "loose_fp_rows": [
+    "time_01739",
+    "time_01408"
+   ]
+  },
+  "strict|D1_shift1_within_class|supa": {
+   "pairs": 141,
+   "collisions_excluded": 9,
+   "loose_fp": 0,
+   "typed_fp": 0,
+   "final_fp": 0,
+   "carry_fp": 0,
+   "pairs_on_arm_wrong_rows": 101,
+   "loose_fp_on_wrong_rows": 0,
+   "typed_fp_on_wrong_rows": 0,
+   "final_fp_on_wrong_rows": 0,
+   "loose_fp_rows": []
+  },
+  "strict|D1_shift1_within_class|opallo_bf16": {
+   "pairs": 141,
+   "collisions_excluded": 9,
+   "loose_fp": 1,
+   "typed_fp": 0,
+   "final_fp": 1,
+   "carry_fp": 0,
+   "pairs_on_arm_wrong_rows": 84,
+   "loose_fp_on_wrong_rows": 1,
+   "typed_fp_on_wrong_rows": 0,
+   "final_fp_on_wrong_rows": 1,
+   "loose_fp_rows": [
+    "rati_02675"
+   ]
+  },
+  "strict|D1_shift1_within_class|opallo_fp32": {
+   "pairs": 141,
+   "collisions_excluded": 9,
+   "loose_fp": 1,
+   "typed_fp": 0,
+   "final_fp": 1,
+   "carry_fp": 0,
+   "pairs_on_arm_wrong_rows": 84,
+   "loose_fp_on_wrong_rows": 1,
+   "typed_fp_on_wrong_rows": 0,
+   "final_fp_on_wrong_rows": 1,
+   "loose_fp_rows": [
+    "rati_02675"
+   ]
+  },
+  "strict|D2_shift1_within_class_and_kind|supa": {
+   "pairs": 137,
+   "collisions_excluded": 13,
+   "loose_fp": 1,
+   "typed_fp": 0,
+   "final_fp": 1,
+   "carry_fp": 0,
+   "pairs_on_arm_wrong_rows": 99,
+   "loose_fp_on_wrong_rows": 1,
+   "typed_fp_on_wrong_rows": 0,
+   "final_fp_on_wrong_rows": 1,
+   "loose_fp_rows": [
+    "rati_01779"
+   ]
+  },
+  "strict|D2_shift1_within_class_and_kind|opallo_bf16": {
+   "pairs": 137,
+   "collisions_excluded": 13,
+   "loose_fp": 4,
+   "typed_fp": 0,
+   "final_fp": 4,
+   "carry_fp": 0,
+   "pairs_on_arm_wrong_rows": 83,
+   "loose_fp_on_wrong_rows": 4,
+   "typed_fp_on_wrong_rows": 0,
+   "final_fp_on_wrong_rows": 4,
+   "loose_fp_rows": [
+    "rati_02931",
+    "rati_01779",
+    "rati_02675",
+    "rati_02115"
+   ]
+  },
+  "strict|D2_shift1_within_class_and_kind|opallo_fp32": {
+   "pairs": 137,
+   "collisions_excluded": 13,
+   "loose_fp": 4,
+   "typed_fp": 0,
+   "final_fp": 4,
+   "carry_fp": 0,
+   "pairs_on_arm_wrong_rows": 83,
+   "loose_fp_on_wrong_rows": 4,
+   "typed_fp_on_wrong_rows": 0,
+   "final_fp_on_wrong_rows": 4,
+   "loose_fp_rows": [
+    "rati_02931",
+    "rati_01779",
+    "rati_02675",
+    "rati_02115"
+   ]
+  },
+  "strict|N3_near_miss_plus1_or_plus10min|supa": {
+   "pairs": 150,
+   "collisions_excluded": 0,
+   "loose_fp": 1,
+   "typed_fp": 1,
+   "final_fp": 1,
+   "carry_fp": 0,
+   "pairs_on_arm_wrong_rows": 109,
+   "loose_fp_on_wrong_rows": 1,
+   "typed_fp_on_wrong_rows": 1,
+   "final_fp_on_wrong_rows": 1,
+   "loose_fp_rows": [
+    "time_00626"
+   ]
+  },
+  "strict|N3_near_miss_plus1_or_plus10min|opallo_bf16": {
+   "pairs": 150,
+   "collisions_excluded": 0,
+   "loose_fp": 1,
+   "typed_fp": 1,
+   "final_fp": 1,
+   "carry_fp": 0,
+   "pairs_on_arm_wrong_rows": 91,
+   "loose_fp_on_wrong_rows": 1,
+   "typed_fp_on_wrong_rows": 1,
+   "final_fp_on_wrong_rows": 1,
+   "loose_fp_rows": [
+    "time_01739"
+   ]
+  },
+  "strict|N3_near_miss_plus1_or_plus10min|opallo_fp32": {
+   "pairs": 150,
+   "collisions_excluded": 0,
+   "loose_fp": 2,
+   "typed_fp": 2,
+   "final_fp": 2,
+   "carry_fp": 0,
+   "pairs_on_arm_wrong_rows": 91,
+   "loose_fp_on_wrong_rows": 2,
+   "typed_fp_on_wrong_rows": 2,
+   "final_fp_on_wrong_rows": 2,
+   "loose_fp_rows": [
+    "time_01739",
+    "time_01408"
+   ]
+  }
+ }
+}

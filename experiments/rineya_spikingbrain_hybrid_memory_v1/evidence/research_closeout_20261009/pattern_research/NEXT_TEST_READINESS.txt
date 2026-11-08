@@ -1,0 +1,30 @@
+Next model-quality test — pending separate authorization
+
+The same-budget, separately reviewed repeat proposal is:
+proposed-repeat/proposal.json
+Canonical SHA256: 5253d01843e39d0d38c90e1d9d2c1ae5a25e0f943242b0cddb5a5fb802df1aa4
+
+It contains five qualifications, two512-step adaptations, three672-row DEV
+measurements and one comparison. Source, data, code, recipe and registered
+gates are unchanged. The stopped run is preserved and never resumed or pooled.
+
+Additional operator launch condition (separate from native runner code):
+launch-readiness-policy.json
+SHA256: a0badfa92e40a7c864c6064a60b3ec53c1279ba9415ed61eba413f6e9f8e0e13
+
+Before any model load, save at least60 consecutive one-second available-host-
+RAM samples. EVERY sample must be >=12GiB (12,884,901,888bytes). A missing or
+insufficient sample blocks launch. This conservative condition adds starting
+headroom; it is not a fit guarantee. The unchanged native7.4GiB admission,
+6GiB runtime,4GiB RSS and1GiB VRAM-reserve guards still apply and can stop the
+run. Current RAM observations belowadmission do not permit starting.
+
+Only one new attempt is proposed, with no automaticretry, budget expansion,
+other-owner process termination, serving change or model promotion. The fresh
+native grant remains absent until explicit human approval binds BOTH the exact
+proposal and this operator policy. The original one-run permission is not reused.
+
+The intrinsic quality goal remains active and unproven. Saved-output repairs
+or corpus fixtures do not establish model gains. Auxiliary readouts document
+representation, selection and field-binding failures without changing primary
+gates or replacing the prescribed controlled test.

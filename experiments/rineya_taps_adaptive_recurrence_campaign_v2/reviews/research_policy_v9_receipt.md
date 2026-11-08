@@ -1,0 +1,5 @@
+Policy v9 is accepted for its narrow path-admission procedure: exercise the worker's exact production predicate on every frozen path, verify bytes, and stop for a reviewed correction/new freeze on any rejection. It grants no allowlist widening, model changes, spending or launch authority.
+
+The v4 receipt binds d1051861 and records all 97 paths accepted, zero hash mismatches and ten canonical assets matched. The independent production-parent missing-grant fixture stopped before Popen, output/lock creation and ledger mutation. These existing checks meet the stated acceptance; future freezes require their own checks.
+
+A passing path check does not qualify native numerics or guarantee runtime feasibility. Fresh full-matrix forecast, all original floors and a new direct human attempt authorization remain required. The actual extended grant is absent, and root reports current RAM below the unchanged parent floor. Research-allocation efficiency and model/agent self-improvement remain unmeasured. No model or additional test was run for this review.

@@ -1,0 +1,289 @@
+{
+  "status": "VERIFIED_QUALIFICATION_PASS_COMPLETE_TASK_FORECAST_REFUSAL",
+  "audited_utc": "2026-10-05T04:35:23.176373+00:00",
+  "native_model_calls_by_auditor": 0,
+  "optimizer_calls_by_auditor": 0,
+  "author_code_or_endpoint_changes": 0,
+  "run": "native-cpu-causal-replay-002",
+  "terminal_status": "WORKER_NONZERO",
+  "worker_status": "FAIL",
+  "error": "TimeoutError: complete192-case causal replay does not fit3600s/reserve",
+  "qualification_status": "PASS_CPU_CAUSAL_REPLAY_MECHANICS",
+  "qualification_counts": {
+    "API_attempts": 29,
+    "full_forward_attempts": 27,
+    "completed_forwards": 26,
+    "state_adjoints": 3,
+    "completed_prefix_positions": 4764,
+    "expected_partial": 1,
+    "cache_rejections": 2,
+    "partial_positions": null
+  },
+  "event_counts": {
+    "VALUE_FORWARD_STARTED": 18,
+    "VALUE_FORWARD_COMPLETED": 17,
+    "REPLAY_FORWARD_STARTED": 9,
+    "REPLAY_FORWARD_COMPLETED": 9,
+    "VALUE_FORWARD_FAILED": 1,
+    "CACHE_REJECTION_STARTED": 2,
+    "CACHE_REJECTED": 2
+  },
+  "native_qualification_checks": [
+    {
+      "label": "representative_scalarCE",
+      "shape": [
+        1,
+        84,
+        1024
+      ],
+      "dtype": "float32",
+      "vector_file_sha256": "b80a6edcf6693b5a56cba030d517a3c7152a13fb97fdf95927abd74c028ac574",
+      "G_array_sha256": "4669b774caf41d447f7a2c9b87f2190e7389bad02c8b4110a86d8f12624aaa32",
+      "d2_array_sha256": "9b2bc509c346546a3087701a9362db47e3a45643537dfb63c6a0cfd2fe0f0478",
+      "dot_FP64_recomputed_from_FP32_vectors": 0.00038783215630615656,
+      "recorded_FP32_dot": 0.00038783211493864655,
+      "dot_rounding_difference": 4.1367510003435803e-11,
+      "FD_recomputed": 0.00038711586967110634,
+      "absolute_FD_error": 7.162452675402164e-07,
+      "registered_tolerance": 0.0010116349634481593,
+      "loss_nominal": 0.0008164886385202408,
+      "loss_plus": 0.0008204193436540663,
+      "loss_minus": 0.0008126770262606442,
+      "canonical_EOT_CE": null
+    },
+    {
+      "label": "maximum256_scalarCE",
+      "shape": [
+        1,
+        256,
+        1024
+      ],
+      "dtype": "float32",
+      "vector_file_sha256": "d862989ebe7c95e6b6498194eba6490b4fcb7a0fdd56780c48d51600f05fee0a",
+      "G_array_sha256": "ef36bf32007202d7b9296afc01eca313011ea78d3892b33a9ac85f89f737305c",
+      "d2_array_sha256": "de53654d2d92f38333b91e3d7a4ae0b87bbbeb7dea9272f9370dd2d154362f3b",
+      "dot_FP64_recomputed_from_FP32_vectors": 1.8381951510911272,
+      "recorded_FP32_dot": 1.8381953239440918,
+      "dot_rounding_difference": 1.7285296460833877e-07,
+      "FD_recomputed": 1.837921142578125,
+      "absolute_FD_error": 0.0002741813659667969,
+      "registered_tolerance": 0.056145859718322755,
+      "loss_nominal": 8.241917610168457,
+      "loss_plus": 8.260106086730957,
+      "loss_minus": 8.223347663879395,
+      "canonical_EOT_CE": null
+    },
+    {
+      "label": "maximum256_EOSmass",
+      "shape": [
+        1,
+        256,
+        1024
+      ],
+      "dtype": "float32",
+      "vector_file_sha256": "3e82722b0b9b85c1cdfa31d5a80559222ce15513990199dcfb6e7e4de65ac907",
+      "G_array_sha256": "cfe47072b2ff80d842157e5f910c3add4def1643313d81e02c8db0de5056382b",
+      "d2_array_sha256": "de53654d2d92f38333b91e3d7a4ae0b87bbbeb7dea9272f9370dd2d154362f3b",
+      "dot_FP64_recomputed_from_FP32_vectors": -0.0024500749382319054,
+      "recorded_FP32_dot": -0.002450075466185808,
+      "dot_rounding_difference": 5.279539028180125e-10,
+      "FD_recomputed": -0.002384185791015625,
+      "absolute_FD_error": 6.588967517018318e-05,
+      "registered_tolerance": 0.0010735022639855743,
+      "loss_nominal": 0.009721755981445312,
+      "loss_plus": 0.009698867797851562,
+      "loss_minus": 0.009746551513671875,
+      "canonical_EOT_CE": 0.00972143653780222
+    }
+  ],
+  "parity_exact_pairs": 8,
+  "source_and_state": {
+    "admission_review_binding": true,
+    "dispatch_source_files": 96,
+    "current_frozen_source_mismatches": [],
+    "loaded_custom_code_sha256": "b77b7d709fac3690d86f5978d46de409fd7ad3548c66a9d400188c225d99fa3d",
+    "loaded_state_sha256": "b23dec7edc2413189c9a35cc7a2596cdc03cb67b08628a0c443173c305d61551",
+    "qualification_before_after_state": "b23dec7edc2413189c9a35cc7a2596cdc03cb67b08628a0c443173c305d61551",
+    "qualification_source_assets_unchanged": true,
+    "qualification_parameter_gradients": "NONE",
+    "final_resident_state_serialized": false,
+    "final_source_and_gradient_success_proof_serialized": false,
+    "limit": "Latest verified state/source/grad proof is the fresh qualification checkpoint before forecast refusal. Failure receipt has no final before/after-state success fields; do not promote it to a fully completed preservation receipt."
+  },
+  "task_matrix": {
+    "required_cases": 192,
+    "measured_cases": 0,
+    "missing_cases": 192,
+    "required_answer_targets": 440,
+    "required_EOS_targets": 192,
+    "actual_target_rows": 0,
+    "actual_feature_rows": 0,
+    "actual_case_outcome_rows": 0,
+    "primary": null,
+    "EOS_secondary": null,
+    "semantic_efficacy": null,
+    "bulk_validation_primary": null
+  },
+  "forecast": {
+    "maximum_whole_forward_adjoint_seconds": 1.7388156999986677,
+    "maximum_value_seconds": 0.9941931000030308,
+    "remaining_targets": 632,
+    "factor": 1.5,
+    "remaining_seconds_recomputed": 3533.3874012044835,
+    "elapsed_seconds": 64.91039009999804,
+    "internal_reserve_seconds": 180,
+    "total_projected_worker_seconds": 3778.2977913044815,
+    "authorized_ceiling_seconds": 3600,
+    "excess_seconds": 178.2977913044815,
+    "admitted": false,
+    "no_dropped_cases_or_extension": true
+  },
+  "permit": {
+    "sha256": "5397a0b51cdc62891c00c0f6a2147f5e53fafe5e277759b71d28ce3b93948063",
+    "attempts": 1,
+    "maximum_seconds": 3600,
+    "consumed_by_launched_worker": true,
+    "no_further_retry_granted": true
+  },
+  "cost": {
+    "charged_native_worker_seconds": 66.10900000000038,
+    "supervisor_wall_seconds": 73.23400000000038,
+    "worker_recorded_wall_seconds": 64.911443099998,
+    "cumulative_ledger_seconds_used": 1448.5149999999976,
+    "cumulative_remaining_seconds": 20151.485,
+    "parent_sampled_peak_RSS_bytes": 4333367296,
+    "worker_lifetime_peak_RSS_bytes": 4456894464,
+    "scope": "CPU qualification only; no deployable speed or GPU pooling."
+  },
+  "frozen_reader": {
+    "status": "INCOMPLETE_NO_PRIMARY_MECHANISM_COMPARISON",
+    "primary": null,
+    "EOS_secondary": null,
+    "raised_exception": false,
+    "limit": "Complete-task reader correctly rejects qualification-only run; it reports missing proof without inventing task results."
+  },
+  "prospective_higher_deadline_only": {
+    "parent_ceiling_seconds": 5400,
+    "global_evidence_reserve_seconds": 1800,
+    "total_ceiling_reservation_seconds": 7200,
+    "fits_current_remaining_budget": true,
+    "current_observed_forecast_margin_under5400_seconds": 1621.7022086955185,
+    "science_endpoints_counts_unchanged": true,
+    "currently_authorized": false,
+    "required": [
+      "Concrete newly reviewed exact source/admission/grant template bound to5400; preserve this3600 attempt and outputs.",
+      "Another directhuman one-attempt allowance and anti-replay guard; consumed5397 grant cannot be extended.",
+      "Version only deadline/budget-proof handling, including deadline-bound analyzer checks; do not mutate frozen3600 source/plan or change endpoint/matrix.",
+      "Fresh source/CPU resources/native qualification and full632-target forecast before task rows. No model/case-drop/retry by auditor."
+    ],
+    "interpretation": "Budget fit is feasibility, not permission or scientific efficacy. CPU cost may change; no guarantee from this point estimate."
+  },
+  "sources": [
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-cpu-causal-replay-002\\admission.json",
+      "sha256": "bd9d7538e8ac2868961429518f1a237e303393c556f28b92606d0e56e0ccc1d1",
+      "bytes": 20181
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-cpu-causal-replay-002\\review.json",
+      "sha256": "ebfa329287017b5bebc4f31b341143cbe9974d71133af96cbd2d8fdfdd77d21a",
+      "bytes": 21070
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-cpu-causal-replay-002\\source_manifest.json",
+      "sha256": "0f3a61e1a0d422b7466c8db4713f5bce90de6a4f7ffffe2583002166a53bffde",
+      "bytes": 324278
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-cpu-causal-replay-002\\terminal_receipt.json",
+      "sha256": "ac0ad348cd84224944377edee93e7f616dcec03d161b40a4cd1fae158a650534",
+      "bytes": 1609
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-cpu-causal-replay-002\\resources.jsonl",
+      "sha256": "0fb9749b39a01e8e90276cb2b9e550c16db53869ceec9559451633c68c51a15f",
+      "bytes": 13591
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-cpu-causal-replay-002\\result\\receipt.json",
+      "sha256": "af4a34306d62371a4f467aa2ee5054c4fdafd99e189a8f27d36926a8021bad5b",
+      "bytes": 1976
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-cpu-causal-replay-002\\result\\population.json",
+      "sha256": "c3fb4ff38cc112c96bbd1e56e196156374cd6ba597509acd3fdd331410f9c531",
+      "bytes": 1758384
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-cpu-causal-replay-002\\result\\registration.json",
+      "sha256": "d151f4efd538fe905a05c8600b6b8baaf648726e8635334d683fc5509067d17a",
+      "bytes": 10401
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-cpu-causal-replay-002\\result\\preflight.json",
+      "sha256": "0ed13370a12c7196d5f3fa9a546743c1abbbe4568332bab58d68b71fef3b6d4f",
+      "bytes": 283
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-cpu-causal-replay-002\\result\\qualification.json",
+      "sha256": "fc5f10b3dfc39400e3d9b95dce72e65d27f52fc48730b378a6789b8c053e8316",
+      "bytes": 13107
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-cpu-causal-replay-002\\result\\matrix_forecast.json",
+      "sha256": "09989eb6ded5e280aec3507dd47920dcf9f7ea41b02df57799f61a77739bd481",
+      "bytes": 421
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-cpu-causal-replay-002\\result\\attempts.jsonl",
+      "sha256": "901633b8080fd3a612c440e0104591b6901df973aeb72a88936f53dd7993cb8a",
+      "bytes": 34672
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-cpu-causal-replay-002\\result\\targets.jsonl",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-cpu-causal-replay-002\\result\\outcomes.jsonl",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-cpu-causal-replay-002\\result\\features.jsonl",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-cpu-causal-replay-002\\result\\qualification_vectors\\representative_G_d2.npz",
+      "sha256": "b80a6edcf6693b5a56cba030d517a3c7152a13fb97fdf95927abd74c028ac574",
+      "bytes": 688620
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-cpu-causal-replay-002\\result\\qualification_vectors\\maximum256_G_d2.npz",
+      "sha256": "d862989ebe7c95e6b6498194eba6490b4fcb7a0fdd56780c48d51600f05fee0a",
+      "bytes": 2097644
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-cpu-causal-replay-002\\result\\qualification_vectors\\EOS_G_d2.npz",
+      "sha256": "3e82722b0b9b85c1cdfa31d5a80559222ce15513990199dcfb6e7e4de65ac907",
+      "bytes": 2097644
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\HUMAN_CAUSAL_REPLAY_ALLOWANCE_001.json",
+      "sha256": "5397a0b51cdc62891c00c0f6a2147f5e53fafe5e277759b71d28ce3b93948063",
+      "bytes": 508
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\HUMAN_CAUSAL_REPLAY_APPROVAL_RECORD_001.json",
+      "sha256": "946c7e9d55b5dfa9ff56136397b5d19b63c8f39ad0de7c12a572a9eb867cc646",
+      "bytes": 761
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\BUDGET_LEDGER.jsonl",
+      "sha256": "172b8c4463ef4a52da5628fa7a6499b62aba09cddb47e0b546925d1e1aad53db",
+      "bytes": 18196
+    }
+  ],
+  "report_md_sha256": "0a8ac81e460f2dc3fb5276565be8d46ae6553124482e8ec86ec62491f08f7de2"
+}

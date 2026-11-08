@@ -1,0 +1,573 @@
+{
+  "costs": {
+    "charged_native_worker_seconds": 7.96900000000096,
+    "scope": "Charged worker interval includes entry/import/source refusal. No model execution or measured task cost.",
+    "supervisor_wall_seconds": 14.46900000000096,
+    "worker_parent_clock_seconds": 7.312228200000391
+  },
+  "created_utc": "2026-10-05T03:50:13.146186+00:00",
+  "failure": {
+    "admitted_sha256": "b75df9368e27cfc7de58e55370090e55bd5bcb4d1bd86aeb079b486555925da0",
+    "corrective_source_is_separate_and_requires_new_review_and_human_attempt_authorization": true,
+    "current_sha256": "b75df9368e27cfc7de58e55370090e55bd5bcb4d1bd86aeb079b486555925da0",
+    "dependency": "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/data/evaluation/mergedev_fast.jsonl",
+    "error": "RuntimeError: source closure differs:Rineya_Cross_Scale_Capability_Transfer_Lab_v1/data/evaluation/mergedev_fast.jsonl",
+    "exit_code": 2,
+    "hash_matches": true,
+    "localized_cause": "Worker source path allowlist omitted one exact DEV dependency that was present in the reviewed admission and matched its expected hash. The refusal precedes metadata parsing, asset admission, tokenizer and model loaders.",
+    "terminal_status": "WORKER_NONZERO",
+    "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\cpu_causal_replay_native.py\", line 234, in run\n    if not (PACKAGE in path.parents or relative.startswith(('experiments/rineya_taps_adaptive_recurrence_v1/','experiments/anchor_routed_middle_recurrence_v1/','Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/'))) or sha(path)!=value:raise RuntimeError('source closure differs:'+relative)\n                                                                                                                                                                                                                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nRuntimeError: source closure differs:Rineya_Cross_Scale_Capability_Transfer_Lab_v1/data/evaluation/mergedev_fast.jsonl\n",
+    "worker_status": "FAIL"
+  },
+  "lane": "CPU_CAUSAL_REPLAY_FP32",
+  "limits": [
+    "No Rineya weights, tokenizer, native model, GPU, parameter gradients, diagnostic loss or state adjoint were invoked by this audit. Asset verification was CPU streaming SHA256 only.",
+    "This audit verifies the exact failure, source/archive/assets, costs and available host measurements. It provides no efficacy, numerical qualification or native causal replay result.",
+    "A corrected successor and its review cannot authorize another attempt; the additional actual human allowance and sole-parent gates remain required."
+  ],
+  "matching_budget_ledger_events": [
+    {
+      "event": "native_started",
+      "lane": "CPU_CAUSAL_REPLAY_FP32",
+      "reserved_seconds": 3600,
+      "run": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-cpu-causal-replay-001",
+      "timestamp_utc": "2026-10-05T03:31:08.534588+00:00",
+      "worker_pid": 274084
+    },
+    {
+      "command": [
+        "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\.venv\\Scripts\\python.exe",
+        "-B",
+        "-m",
+        "experiments.rineya_taps_adaptive_recurrence_campaign_v2.cpu_causal_replay_entry",
+        "--release",
+        "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-cpu-causal-replay-001\\release.json",
+        "--source",
+        "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\Rineya_Published_Cores\\Rineya-Supa-A1.1-1.1.0-devfreeze",
+        "--out",
+        "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-cpu-causal-replay-001\\result",
+        "--admission",
+        "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\cpu_causal_replay_admission_v2.json"
+      ],
+      "ended_utc": "2026-10-05T03:31:16.362990+00:00",
+      "event": "native_completed",
+      "exit_code": 2,
+      "lane": "CPU_CAUSAL_REPLAY_FP32",
+      "native_worker_seconds": 7.96900000000096,
+      "peak_rss_bytes": 503013376,
+      "run": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-cpu-causal-replay-001",
+      "started_utc": "2026-10-05T03:31:01.891857+00:00",
+      "status": "WORKER_NONZERO",
+      "supervisor_wall_seconds": 14.46900000000096,
+      "worker_pid": 274084
+    }
+  ],
+  "missing_measurements": {
+    "EOS_mass_losses": null,
+    "absent_raw_files": [
+      "population.json",
+      "registration.json",
+      "preflight.json",
+      "attempts.jsonl",
+      "qualification.json",
+      "matrix_forecast.json",
+      "compute_ledger.json",
+      "targets.jsonl",
+      "features.jsonl",
+      "outcomes.jsonl"
+    ],
+    "fresh_maximum256_forward_and_adjoint_costs": null,
+    "input_only_features": null,
+    "maximum256_mechanics": null,
+    "qualification": null,
+    "qualification_vector_pairs": null,
+    "state_gradient_values": null,
+    "target_case_rows": null,
+    "target_losses": null,
+    "target_processed_prefix_positions": null,
+    "target_rows": null
+  },
+  "native_TEST": false,
+  "native_qualification": "NOT_RUN",
+  "no_model_compute_proof": {
+    "after_state_sha256": null,
+    "completed_forwards": 0,
+    "conclusion": "ZERO_MODEL_APIS_AND_STATE_ADJOINTS_BY_PRELOADER_CONTROL_FLOW",
+    "loaded_state_sha256": null,
+    "model_APIs": 0,
+    "resident_state_preservation": "NOT_APPLICABLE_NO_MODEL_LOADED",
+    "scope": "Source-inferred count; no forward/adjoint journal was opened.",
+    "state_adjoints": 0
+  },
+  "observed_loader_counters": {
+    "model_load_attempts": 0,
+    "native_model_loads": 0
+  },
+  "optimizer_steps": 0,
+  "primary": null,
+  "registered_not_executed": {
+    "EOS_targets": 192,
+    "answer_targets": 440,
+    "cache_rejections": 2,
+    "cases": 192,
+    "completed_forwards": 1922,
+    "completed_prefix_positions": 252696,
+    "expected_partial": 1,
+    "full_forward_attempts": 1923,
+    "model_API_attempts": 1925,
+    "parents": 96,
+    "qualification_API_attempts": 29,
+    "qualification_adjoints": 3,
+    "state_adjoints": 635,
+    "targets": 632,
+    "task_targets": 632
+  },
+  "resources": {
+    "GPU_measurements": null,
+    "RSS_ceiling_bytes": 6442450944,
+    "limitations": "Before-weight 7.4 GiB model gate and fresh max-tape resource qualification were not reached. Parent samples show a venv redirector and real Python child, with zero model loads; this is not multiple model workers.",
+    "parent_min_sampled_host_available_bytes": 10862600192,
+    "parent_peak_sampled_job_RSS_bytes": 503013376,
+    "parent_resource_sample_count": 6,
+    "recorded_resource_violation": false,
+    "running_host_reserve_bytes": 1073741824,
+    "worker_stop_snapshot": {
+      "GPU_memory": null,
+      "device": "cpu",
+      "host_available_bytes": 10842906624,
+      "peak_rss_bytes": 524136448,
+      "rss_bytes": 523059200
+    }
+  },
+  "retry_or_model_dispatch_by_auditor": false,
+  "run": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-cpu-causal-replay-001",
+  "scientific_matrix": "INCOMPLETE_NO_MODEL_EXECUTION",
+  "source_proof": {
+    "all_10_current_on_disk_assets_match": true,
+    "all_archived_dispatch_bytes_match_failed_admission": true,
+    "archive": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\versions\\cpu_causal_replay_v2_final",
+    "canonical_on_disk_assets": {
+      "CORE.json": {
+        "current_on_disk_sha256": "bf640ab323d29c2fc18c306294c7e6f7c53e19cd67364f5df8aa041992075914",
+        "expected_sha256": "bf640ab323d29c2fc18c306294c7e6f7c53e19cd67364f5df8aa041992075914"
+      },
+      "FILES.json": {
+        "current_on_disk_sha256": "4446aef8d1f19f4c968aaa20636200094da0df7d6e518bca6acc4041896b8b6e",
+        "expected_sha256": "4446aef8d1f19f4c968aaa20636200094da0df7d6e518bca6acc4041896b8b6e"
+      },
+      "config.json": {
+        "current_on_disk_sha256": "89c4ae7398449895d044750c858614584b07db8d67130074920ef524c6eb5705",
+        "expected_sha256": "89c4ae7398449895d044750c858614584b07db8d67130074920ef524c6eb5705"
+      },
+      "generation_config.json": {
+        "current_on_disk_sha256": "0a6ef79013177858dd5820698b12270863e03baf60ec36521e5c6a34da63dbdc",
+        "expected_sha256": "0a6ef79013177858dd5820698b12270863e03baf60ec36521e5c6a34da63dbdc"
+      },
+      "merges.txt": {
+        "current_on_disk_sha256": "8831e4f1a044471340f7c0a83d7bd71306a5b867e95fd870f74d0c5308a904d5",
+        "expected_sha256": "8831e4f1a044471340f7c0a83d7bd71306a5b867e95fd870f74d0c5308a904d5"
+      },
+      "model.safetensors": {
+        "current_on_disk_sha256": "a99f079d32212bbcbb703c2e2bad801ea32d43afea52004f38bf94eec5dc4026",
+        "expected_sha256": "a99f079d32212bbcbb703c2e2bad801ea32d43afea52004f38bf94eec5dc4026"
+      },
+      "modeling_supa_a11.py": {
+        "current_on_disk_sha256": "b77b7d709fac3690d86f5978d46de409fd7ad3548c66a9d400188c225d99fa3d",
+        "expected_sha256": "b77b7d709fac3690d86f5978d46de409fd7ad3548c66a9d400188c225d99fa3d"
+      },
+      "tokenizer.json": {
+        "current_on_disk_sha256": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+        "expected_sha256": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4"
+      },
+      "tokenizer_config.json": {
+        "current_on_disk_sha256": "d5d09f07b48c3086c508b30d1c9114bd1189145b74e982a265350c923acd8101",
+        "expected_sha256": "d5d09f07b48c3086c508b30d1c9114bd1189145b74e982a265350c923acd8101"
+      },
+      "vocab.json": {
+        "current_on_disk_sha256": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910",
+        "expected_sha256": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910"
+      }
+    },
+    "dispatch_checks": {
+      "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/data/evaluation/mergedev_fast.jsonl": {
+        "actual_sha256": "b75df9368e27cfc7de58e55370090e55bd5bcb4d1bd86aeb079b486555925da0",
+        "expected_sha256": "b75df9368e27cfc7de58e55370090e55bd5bcb4d1bd86aeb079b486555925da0"
+      },
+      "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/__init__.py": {
+        "actual_sha256": "e3ed1f5eebc49d142de7f909ab08b4141678290bd538568a65cf83940a75e444",
+        "expected_sha256": "e3ed1f5eebc49d142de7f909ab08b4141678290bd538568a65cf83940a75e444"
+      },
+      "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/advanced.py": {
+        "actual_sha256": "e07a97bda1862544578cc3347a663816262e6a40c5063dd90147c946d98efb7c",
+        "expected_sha256": "e07a97bda1862544578cc3347a663816262e6a40c5063dd90147c946d98efb7c"
+      },
+      "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/aligned_projection.py": {
+        "actual_sha256": "36c41abd48aa0e6d5327c030909fbedb7fb7ecd7da50daaa3cd1d9a043f22d59",
+        "expected_sha256": "36c41abd48aa0e6d5327c030909fbedb7fb7ecd7da50daaa3cd1d9a043f22d59"
+      },
+      "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/architecture.py": {
+        "actual_sha256": "ff94015b9b11417dfa7208e7ce90fd4448a734757f69b4e46276c0b4cf6f2d50",
+        "expected_sha256": "ff94015b9b11417dfa7208e7ce90fd4448a734757f69b4e46276c0b4cf6f2d50"
+      },
+      "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/checkpoint.py": {
+        "actual_sha256": "408edf877c6459ccf9072a6d92be145762a6535cd76bc168b30e33930b3e44ad",
+        "expected_sha256": "408edf877c6459ccf9072a6d92be145762a6535cd76bc168b30e33930b3e44ad"
+      },
+      "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/cka.py": {
+        "actual_sha256": "7c26ac61d731de1c83d1069ccc00f5b96505271de7e23499b7a1b5f75ca69798",
+        "expected_sha256": "7c26ac61d731de1c83d1069ccc00f5b96505271de7e23499b7a1b5f75ca69798"
+      },
+      "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/comparison.py": {
+        "actual_sha256": "6806172940354da8583a3a119207377171bf4620b2c9178ce317bc4b4844e0ca",
+        "expected_sha256": "6806172940354da8583a3a119207377171bf4620b2c9178ce317bc4b4844e0ca"
+      },
+      "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/consensus_target_basis.py": {
+        "actual_sha256": "90de43e21ffbe4684634bbe95391bcc9791af9d4eb052963ef71e90460ee151a",
+        "expected_sha256": "90de43e21ffbe4684634bbe95391bcc9791af9d4eb052963ef71e90460ee151a"
+      },
+      "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/delta_analysis.py": {
+        "actual_sha256": "b5db6232a86c8ad2215ee2f6c6af62a010b2208eb88ee5b429a17bc7469aac4f",
+        "expected_sha256": "b5db6232a86c8ad2215ee2f6c6af62a010b2208eb88ee5b429a17bc7469aac4f"
+      },
+      "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/diagnostics.py": {
+        "actual_sha256": "cd91c30c7d794878312026858b3108313e8771d4cd4533ed61371234cffca0f2",
+        "expected_sha256": "cd91c30c7d794878312026858b3108313e8771d4cd4533ed61371234cffca0f2"
+      },
+      "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/direction_transfer.py": {
+        "actual_sha256": "457972fd01d5690717bea73a7c7c28da539c87d0d7ede53049490753c6564a95",
+        "expected_sha256": "457972fd01d5690717bea73a7c7c28da539c87d0d7ede53049490753c6564a95"
+      },
+      "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/evaluation/__init__.py": {
+        "actual_sha256": "b5e59b71df7529a9dc842358f6852a4ae6e983bfb98a9efca39f0c320498f012",
+        "expected_sha256": "b5e59b71df7529a9dc842358f6852a4ae6e983bfb98a9efca39f0c320498f012"
+      },
+      "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/evaluation/banks.py": {
+        "actual_sha256": "d13b3699b49c15aaccdb26837bddc4541d59dc08bddc2290dd5edd4759e8fc1c",
+        "expected_sha256": "d13b3699b49c15aaccdb26837bddc4541d59dc08bddc2290dd5edd4759e8fc1c"
+      },
+      "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/evaluation/runner.py": {
+        "actual_sha256": "a3b475dfea308f02ee745ba2794f4e43059b62250554117af62f21b4703f2a26",
+        "expected_sha256": "a3b475dfea308f02ee745ba2794f4e43059b62250554117af62f21b4703f2a26"
+      },
+      "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/evaluation/scoring.py": {
+        "actual_sha256": "5a22e1c1ff7b0a56623931c0782f81dd2b3a9df83ccfe77ce3724d37cf320086",
+        "expected_sha256": "5a22e1c1ff7b0a56623931c0782f81dd2b3a9df83ccfe77ce3724d37cf320086"
+      },
+      "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/evidence.py": {
+        "actual_sha256": "fdf528727bd269b89ab431ceb9e301dc3ad14d827c18be21944c56c99e820c6b",
+        "expected_sha256": "fdf528727bd269b89ab431ceb9e301dc3ad14d827c18be21944c56c99e820c6b"
+      },
+      "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/fisher.py": {
+        "actual_sha256": "e097ecdc41a61466e3bab98d74c6d342aa871c155f2b7fb2ff6f393c6b139997",
+        "expected_sha256": "e097ecdc41a61466e3bab98d74c6d342aa871c155f2b7fb2ff6f393c6b139997"
+      },
+      "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/functional_atlas.py": {
+        "actual_sha256": "3e60791f8b55b30c74c801ddfba6145576828dd01c62083247eeb842aa516df8",
+        "expected_sha256": "3e60791f8b55b30c74c801ddfba6145576828dd01c62083247eeb842aa516df8"
+      },
+      "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/functional_localization.py": {
+        "actual_sha256": "5f4049dc25d0446c356c9556e0390a58b32241f2ed557c4be6dfcecd13b059f7",
+        "expected_sha256": "5f4049dc25d0446c356c9556e0390a58b32241f2ed557c4be6dfcecd13b059f7"
+      },
+      "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/functional_translator.py": {
+        "actual_sha256": "e0a10a826653f5bf122c1dff11fab89de06f96240f28e8f17df03da2bc3a0bd3",
+        "expected_sha256": "e0a10a826653f5bf122c1dff11fab89de06f96240f28e8f17df03da2bc3a0bd3"
+      },
+      "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/hashing.py": {
+        "actual_sha256": "68116088fbfbc68e3775bfe5be89b95ecb6a3742098a51bed1f7fec048dc87a0",
+        "expected_sha256": "68116088fbfbc68e3775bfe5be89b95ecb6a3742098a51bed1f7fec048dc87a0"
+      },
+      "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/interventions.py": {
+        "actual_sha256": "0cd82c5ba6d9c7a6badea8f05c6ebc98717ae7e266a0811b3ded6332101b0c17",
+        "expected_sha256": "0cd82c5ba6d9c7a6badea8f05c6ebc98717ae7e266a0811b3ded6332101b0c17"
+      },
+      "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/layer_ablation.py": {
+        "actual_sha256": "a003d6bfe0ff980715a589fa85206e96a48710b112defc8d6c55a85673658fd7",
+        "expected_sha256": "a003d6bfe0ff980715a589fa85206e96a48710b112defc8d6c55a85673658fd7"
+      },
+      "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/leakage.py": {
+        "actual_sha256": "a4e18801cd6f1cf9f1dde2ef040de63b9e845bd04d285b88f43929c7e462c215",
+        "expected_sha256": "a4e18801cd6f1cf9f1dde2ef040de63b9e845bd04d285b88f43929c7e462c215"
+      },
+      "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/operations.py": {
+        "actual_sha256": "c27ccef6ad5e16eb1c9f4517e900cdcd6011f048930eef1e18a1b4723ec0d112",
+        "expected_sha256": "c27ccef6ad5e16eb1c9f4517e900cdcd6011f048930eef1e18a1b4723ec0d112"
+      },
+      "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/projection.py": {
+        "actual_sha256": "5814db9766715507bcbfe70e5e17a15f15b448154ae3976ec553ef1abeecfa2e",
+        "expected_sha256": "5814db9766715507bcbfe70e5e17a15f15b448154ae3976ec553ef1abeecfa2e"
+      },
+      "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/promotion.py": {
+        "actual_sha256": "c19b0f66f13c18c19860bb7f6211c429344f6e5b8c045e224929d5f9a110846f",
+        "expected_sha256": "c19b0f66f13c18c19860bb7f6211c429344f6e5b8c045e224929d5f9a110846f"
+      },
+      "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/registry.py": {
+        "actual_sha256": "e52791d8d2f0ca4c158ecb863323f60054c5a272b4f358d2df9a98b177260d50",
+        "expected_sha256": "e52791d8d2f0ca4c158ecb863323f60054c5a272b4f358d2df9a98b177260d50"
+      },
+      "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/resource_trace.py": {
+        "actual_sha256": "9ee4af7b2dad19991349f3887b103aac568c16abba7b43ee44bd062dadd4665a",
+        "expected_sha256": "9ee4af7b2dad19991349f3887b103aac568c16abba7b43ee44bd062dadd4665a"
+      },
+      "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/sequential_runner.py": {
+        "actual_sha256": "9d10265a107893df76ccadb51d05a85934b3c8c9bc193f60a4427f6fc60f025b",
+        "expected_sha256": "9d10265a107893df76ccadb51d05a85934b3c8c9bc193f60a4427f6fc60f025b"
+      },
+      "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/spectral_projection.py": {
+        "actual_sha256": "0379c0f3c14e05824f3c12efa340bff95aa328cd8b8a7cb33f4315eccd95ad22",
+        "expected_sha256": "0379c0f3c14e05824f3c12efa340bff95aa328cd8b8a7cb33f4315eccd95ad22"
+      },
+      "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/streaming_forward.py": {
+        "actual_sha256": "3ff342ab403ac866622fc8faa1ca63bfb2f193dfd97ec5f098bfd8d03366961e",
+        "expected_sha256": "3ff342ab403ac866622fc8faa1ca63bfb2f193dfd97ec5f098bfd8d03366961e"
+      },
+      "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/transport_sanity.py": {
+        "actual_sha256": "3f3089ced6cdb091bf071335add28d1da0c5852bb84afef093b4ab1c1a9d6e31",
+        "expected_sha256": "3f3089ced6cdb091bf071335add28d1da0c5852bb84afef093b4ab1c1a9d6e31"
+      },
+      "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/v2.py": {
+        "actual_sha256": "4d6f942e3dc5fbbc9570538d22027df3614183450461d796ff1b6a880bb155ed",
+        "expected_sha256": "4d6f942e3dc5fbbc9570538d22027df3614183450461d796ff1b6a880bb155ed"
+      },
+      "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/v3_transport.py": {
+        "actual_sha256": "cadf2ccb3723e16f3919fc5401ed25c9f9c83c87573fc0c82074ca56f1f94555",
+        "expected_sha256": "cadf2ccb3723e16f3919fc5401ed25c9f9c83c87573fc0c82074ca56f1f94555"
+      },
+      "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/validation.py": {
+        "actual_sha256": "c3b43df9a0e3c3a21f8b47cc66dd85316ee8e20500eb808e67d9478bb6d245c6",
+        "expected_sha256": "c3b43df9a0e3c3a21f8b47cc66dd85316ee8e20500eb808e67d9478bb6d245c6"
+      },
+      "experiments/anchor_routed_middle_recurrence_v1/src/armr/__init__.py": {
+        "actual_sha256": "45bf40eb692379c12c31d90c5e6fe4a78358f28b23783f24a0bf658893ba5065",
+        "expected_sha256": "45bf40eb692379c12c31d90c5e6fe4a78358f28b23783f24a0bf658893ba5065"
+      },
+      "experiments/anchor_routed_middle_recurrence_v1/src/armr/evaluation.py": {
+        "actual_sha256": "e262761b45105d6586221c2c99b6f56ecc7d3aba2fe276b392e9b1e13cd80bfa",
+        "expected_sha256": "e262761b45105d6586221c2c99b6f56ecc7d3aba2fe276b392e9b1e13cd80bfa"
+      },
+      "experiments/anchor_routed_middle_recurrence_v1/src/armr/hooks.py": {
+        "actual_sha256": "a73baf73515ca905c39a631feb576caad232bec60bb05f0150204e952e0d36a3",
+        "expected_sha256": "a73baf73515ca905c39a631feb576caad232bec60bb05f0150204e952e0d36a3"
+      },
+      "experiments/anchor_routed_middle_recurrence_v1/src/armr/metrics.py": {
+        "actual_sha256": "c2653a5129f4cf03b3c7081d0c99f6540fcefd0d17a717c7132b8c1ccf50ed67",
+        "expected_sha256": "c2653a5129f4cf03b3c7081d0c99f6540fcefd0d17a717c7132b8c1ccf50ed67"
+      },
+      "experiments/anchor_routed_middle_recurrence_v1/src/armr/preregistration.py": {
+        "actual_sha256": "baf03fd503db38270afb8d63d7080007b1a973c6f5faf0c00d55161581e80dad",
+        "expected_sha256": "baf03fd503db38270afb8d63d7080007b1a973c6f5faf0c00d55161581e80dad"
+      },
+      "experiments/anchor_routed_middle_recurrence_v1/src/armr/provenance.py": {
+        "actual_sha256": "3f84bc41851a4709ff123217b0f781e6d1ec93e3f40dc7c911a95f44c1ee9018",
+        "expected_sha256": "3f84bc41851a4709ff123217b0f781e6d1ec93e3f40dc7c911a95f44c1ee9018"
+      },
+      "experiments/anchor_routed_middle_recurrence_v1/src/armr/recurrence.py": {
+        "actual_sha256": "88ab4c791b1871dc3765a85f89dbd857023bcf5e4dfa55b6c24142aaee0edea9",
+        "expected_sha256": "88ab4c791b1871dc3765a85f89dbd857023bcf5e4dfa55b6c24142aaee0edea9"
+      },
+      "experiments/anchor_routed_middle_recurrence_v1/src/armr/reporting.py": {
+        "actual_sha256": "99ca41eed1da02d7ef5a3d3a7a43c004c60f18cccaa328267ba41b980cfd2021",
+        "expected_sha256": "99ca41eed1da02d7ef5a3d3a7a43c004c60f18cccaa328267ba41b980cfd2021"
+      },
+      "experiments/rineya_taps_adaptive_recurrence_campaign_v2/AUTHORITY.txt": {
+        "actual_sha256": "18f9b5079c05138a28d783404b7c9f919d62e829c17fe0c7a7334b789dd2fa3d",
+        "expected_sha256": "18f9b5079c05138a28d783404b7c9f919d62e829c17fe0c7a7334b789dd2fa3d"
+      },
+      "experiments/rineya_taps_adaptive_recurrence_campaign_v2/CPU_CAUSAL_REPLAY_ANALYSIS_PLAN_001.md": {
+        "actual_sha256": "6282ac717afc6575587d6c5615518441038d7c8db2f54fca7eb562f980cb6a11",
+        "expected_sha256": "6282ac717afc6575587d6c5615518441038d7c8db2f54fca7eb562f980cb6a11"
+      },
+      "experiments/rineya_taps_adaptive_recurrence_campaign_v2/CPU_CAUSAL_REPLAY_DESIGN_DRAFT_002.md": {
+        "actual_sha256": "f8b962447f403105a564ec071bbfa89fd3e40843fcfef6800b7ec72a22412492",
+        "expected_sha256": "f8b962447f403105a564ec071bbfa89fd3e40843fcfef6800b7ec72a22412492"
+      },
+      "experiments/rineya_taps_adaptive_recurrence_campaign_v2/CPU_CAUSAL_REPLAY_FEASIBILITY_DRAFT_001.json": {
+        "actual_sha256": "021ea720f4b644d0e0fff0b975ab460d80e6c02cb401400fd0be58a0ba4cb359",
+        "expected_sha256": "021ea720f4b644d0e0fff0b975ab460d80e6c02cb401400fd0be58a0ba4cb359"
+      },
+      "experiments/rineya_taps_adaptive_recurrence_campaign_v2/CPU_CAUSAL_REPLAY_NATIVE_REGISTRATION_001.md": {
+        "actual_sha256": "eb331f809d6ddd5fa44cb743933eae82fc0015ac84f4741abbd56c886b529c04",
+        "expected_sha256": "eb331f809d6ddd5fa44cb743933eae82fc0015ac84f4741abbd56c886b529c04"
+      },
+      "experiments/rineya_taps_adaptive_recurrence_campaign_v2/binding.py": {
+        "actual_sha256": "5334aefc6e179dd784f75a46c5d75111f793b973d2f4807315fba760f1c86a82",
+        "expected_sha256": "5334aefc6e179dd784f75a46c5d75111f793b973d2f4807315fba760f1c86a82"
+      },
+      "experiments/rineya_taps_adaptive_recurrence_campaign_v2/bulk_bank.py": {
+        "actual_sha256": "3242439231064fc81991e157c0da62833f4e4223ec71d60cf9ffd2851815b5eb",
+        "expected_sha256": "3242439231064fc81991e157c0da62833f4e4223ec71d60cf9ffd2851815b5eb"
+      },
+      "experiments/rineya_taps_adaptive_recurrence_campaign_v2/causal_replay_metadata.py": {
+        "actual_sha256": "7071f731c503e5bc7af01c4e6983ee75b46cd3bfed5672a4d13849601cbc2c6b",
+        "expected_sha256": "7071f731c503e5bc7af01c4e6983ee75b46cd3bfed5672a4d13849601cbc2c6b"
+      },
+      "experiments/rineya_taps_adaptive_recurrence_campaign_v2/control.py": {
+        "actual_sha256": "298d0a7064ff562c498ecc50d13c2f23cd9bdf1df6b1d616d7204bac24a49ed3",
+        "expected_sha256": "298d0a7064ff562c498ecc50d13c2f23cd9bdf1df6b1d616d7204bac24a49ed3"
+      },
+      "experiments/rineya_taps_adaptive_recurrence_campaign_v2/cpu_causal_replay_analysis.py": {
+        "actual_sha256": "8e6c156b8da639feec2732a177df0da04d19bd9af1590e533f875bacb702359e",
+        "expected_sha256": "8e6c156b8da639feec2732a177df0da04d19bd9af1590e533f875bacb702359e"
+      },
+      "experiments/rineya_taps_adaptive_recurrence_campaign_v2/cpu_causal_replay_entry.py": {
+        "actual_sha256": "61d57f439611aafe95eba8846b3bde796d0ab7d1f46c11e8f178490df118a1b6",
+        "expected_sha256": "61d57f439611aafe95eba8846b3bde796d0ab7d1f46c11e8f178490df118a1b6"
+      },
+      "experiments/rineya_taps_adaptive_recurrence_campaign_v2/cpu_causal_replay_native.py": {
+        "actual_sha256": "61e74ebfd006cda12c38a67686d7329814fdd2dcd49ede09fd8f23ae9d80b9c4",
+        "expected_sha256": "61e74ebfd006cda12c38a67686d7329814fdd2dcd49ede09fd8f23ae9d80b9c4"
+      },
+      "experiments/rineya_taps_adaptive_recurrence_campaign_v2/cpu_causal_replay_supervisor.py": {
+        "actual_sha256": "4bef22d26bf43dbc0ab9044372f97418973d03aeeff846d4c11ccadbde2585dc",
+        "expected_sha256": "4bef22d26bf43dbc0ab9044372f97418973d03aeeff846d4c11ccadbde2585dc"
+      },
+      "experiments/rineya_taps_adaptive_recurrence_campaign_v2/cpu_h3_native.py": {
+        "actual_sha256": "f242676e0ec0f019dd94ac27e5f3cb5eb8f3e311beb64cc0355102492396eaca",
+        "expected_sha256": "f242676e0ec0f019dd94ac27e5f3cb5eb8f3e311beb64cc0355102492396eaca"
+      },
+      "experiments/rineya_taps_adaptive_recurrence_campaign_v2/open_bank.py": {
+        "actual_sha256": "25db8ad7b8bd4166188eccab4be73c9a430f696610dea5b8c83b380883f9d42a",
+        "expected_sha256": "25db8ad7b8bd4166188eccab4be73c9a430f696610dea5b8c83b380883f9d42a"
+      },
+      "experiments/rineya_taps_adaptive_recurrence_campaign_v2/prepare_cpu_causal_replay_admission.py": {
+        "actual_sha256": "0ab4f90c34c7ecf0ba999d8c7dfa2900b4ed68df0a4293913233387d62696d9f",
+        "expected_sha256": "0ab4f90c34c7ecf0ba999d8c7dfa2900b4ed68df0a4293913233387d62696d9f"
+      },
+      "experiments/rineya_taps_adaptive_recurrence_campaign_v2/reviews/cpu_causal_replay_analysis_review_001.json": {
+        "actual_sha256": "a20874012613cbae36358cb1a3462d692a3466605f589d4b84c214f2dc4de95f",
+        "expected_sha256": "a20874012613cbae36358cb1a3462d692a3466605f589d4b84c214f2dc4de95f"
+      },
+      "experiments/rineya_taps_adaptive_recurrence_campaign_v2/reviews/cpu_causal_replay_design_review_001.json": {
+        "actual_sha256": "d4733c0d2fb52ff53bc7f7bd5d484c27667e002150d7b396e0264e82a8051567",
+        "expected_sha256": "d4733c0d2fb52ff53bc7f7bd5d484c27667e002150d7b396e0264e82a8051567"
+      },
+      "experiments/rineya_taps_adaptive_recurrence_campaign_v2/reviews/cpu_causal_replay_parent_review_001.json": {
+        "actual_sha256": "c6bce787e6fe0caf04966ec5d1093942af58d9e9af57c436ca4a038436c67a4b",
+        "expected_sha256": "c6bce787e6fe0caf04966ec5d1093942af58d9e9af57c436ca4a038436c67a4b"
+      },
+      "experiments/rineya_taps_adaptive_recurrence_campaign_v2/reviews/cpu_causal_replay_worker_review_001.json": {
+        "actual_sha256": "062705d75fadc23be0e58097fcdd49b6c4426da038510a325f192e111a484701",
+        "expected_sha256": "062705d75fadc23be0e58097fcdd49b6c4426da038510a325f192e111a484701"
+      },
+      "experiments/rineya_taps_adaptive_recurrence_campaign_v2/run_apparatus.py": {
+        "actual_sha256": "fafbcea5d238560e8ebdf728528860a681c40ff0633bede100c3de21db37446b",
+        "expected_sha256": "fafbcea5d238560e8ebdf728528860a681c40ff0633bede100c3de21db37446b"
+      },
+      "experiments/rineya_taps_adaptive_recurrence_campaign_v2/runs/binding-001/MODEL_DATA_BINDING.json": {
+        "actual_sha256": "82590a8f76eca27e7b15694b724123477e21ae0cc38ed2b33b56641ab9e70f26",
+        "expected_sha256": "82590a8f76eca27e7b15694b724123477e21ae0cc38ed2b33b56641ab9e70f26"
+      },
+      "experiments/rineya_taps_adaptive_recurrence_campaign_v2/runs/binding-001/PROMPT_AUDIT.json": {
+        "actual_sha256": "f4b5b21638bc2d8a8da4fac707072208d3a8a1aa2f1918c7574a326cc996bf7d",
+        "expected_sha256": "f4b5b21638bc2d8a8da4fac707072208d3a8a1aa2f1918c7574a326cc996bf7d"
+      },
+      "experiments/rineya_taps_adaptive_recurrence_campaign_v2/runs/causal-replay-DEV-export-001/DEVELOPMENT_BANK.json": {
+        "actual_sha256": "566e6d6e64f258ff4deaa28a9909841a451fb96cf939ca44533726c59b2a7ff0",
+        "expected_sha256": "566e6d6e64f258ff4deaa28a9909841a451fb96cf939ca44533726c59b2a7ff0"
+      },
+      "experiments/rineya_taps_adaptive_recurrence_campaign_v2/runs/causal-replay-DEV-export-001/DEVELOPMENT_TOKEN_BINDING.json": {
+        "actual_sha256": "6529b48b26264123fafc9f81d67cb6cc5a957fe30a0ab4853440790c56bfdd53",
+        "expected_sha256": "6529b48b26264123fafc9f81d67cb6cc5a957fe30a0ab4853440790c56bfdd53"
+      },
+      "experiments/rineya_taps_adaptive_recurrence_campaign_v2/runs/causal-replay-DEV-export-001/MANIFEST.json": {
+        "actual_sha256": "278242ad25488a5f7896957aab4e9269dfdf96babe21abf64bc8167838514302",
+        "expected_sha256": "278242ad25488a5f7896957aab4e9269dfdf96babe21abf64bc8167838514302"
+      },
+      "experiments/rineya_taps_adaptive_recurrence_campaign_v2/sensitivity.py": {
+        "actual_sha256": "5d0af45a8e91f0a00d91f83244105d06f1beba6f422cc3cd6d20c2d43d762f0d",
+        "expected_sha256": "5d0af45a8e91f0a00d91f83244105d06f1beba6f422cc3cd6d20c2d43d762f0d"
+      },
+      "experiments/rineya_taps_adaptive_recurrence_campaign_v2/supervision.py": {
+        "actual_sha256": "894e7ffec1d7863d686cb82d410309a3a100d4fdb392892a4b534b989d4a4fcc",
+        "expected_sha256": "894e7ffec1d7863d686cb82d410309a3a100d4fdb392892a4b534b989d4a4fcc"
+      },
+      "experiments/rineya_taps_adaptive_recurrence_campaign_v2/tests/test_cpu_causal_replay_analysis.py": {
+        "actual_sha256": "c1a3136fbedf6a03011a771d31a89620d378cfdcedc3eda43fd9edf442c0affd",
+        "expected_sha256": "c1a3136fbedf6a03011a771d31a89620d378cfdcedc3eda43fd9edf442c0affd"
+      },
+      "experiments/rineya_taps_adaptive_recurrence_campaign_v2/tests/test_cpu_causal_replay_native.py": {
+        "actual_sha256": "095a7864191f221b31ecc7be74ba17445113b58a22408e7275115df730e5bfcf",
+        "expected_sha256": "095a7864191f221b31ecc7be74ba17445113b58a22408e7275115df730e5bfcf"
+      },
+      "experiments/rineya_taps_adaptive_recurrence_campaign_v2/tests/test_cpu_causal_replay_parent_refusal.py": {
+        "actual_sha256": "37b03014e53a6cc8d4f4b31a1070cda06d23ac89181540896fcca785518e7989",
+        "expected_sha256": "37b03014e53a6cc8d4f4b31a1070cda06d23ac89181540896fcca785518e7989"
+      },
+      "experiments/rineya_taps_adaptive_recurrence_campaign_v2/tests/test_cpu_causal_replay_supervision.py": {
+        "actual_sha256": "651030c3ade9296ad468b8cd9768be487eaa1b0b118f1ff360f6581429f8b5cd",
+        "expected_sha256": "651030c3ade9296ad468b8cd9768be487eaa1b0b118f1ff360f6581429f8b5cd"
+      },
+      "experiments/rineya_taps_adaptive_recurrence_campaign_v2/tests/test_sensitivity.py": {
+        "actual_sha256": "e11159218a0d54fced011492bd6888c53091f06a8c96a91461c4aa345dc2e724",
+        "expected_sha256": "e11159218a0d54fced011492bd6888c53091f06a8c96a91461c4aa345dc2e724"
+      },
+      "experiments/rineya_taps_adaptive_recurrence_campaign_v2/tests/test_supervision.py": {
+        "actual_sha256": "146acab920cfd3e9eaa0033a4c12a4f8bbe64efe22e55e530496430bccde3199",
+        "expected_sha256": "146acab920cfd3e9eaa0033a4c12a4f8bbe64efe22e55e530496430bccde3199"
+      },
+      "experiments/rineya_taps_adaptive_recurrence_v1/__init__.py": {
+        "actual_sha256": "c718048ae6399e64733bdf4a755eca9c9b9f1ee5c264bc48b63a0e3ca455807b",
+        "expected_sha256": "c718048ae6399e64733bdf4a755eca9c9b9f1ee5c264bc48b63a0e3ca455807b"
+      },
+      "experiments/rineya_taps_adaptive_recurrence_v1/__main__.py": {
+        "actual_sha256": "11352c668a19be86c5bd643a1761452f5ebf5267c2e02dca6bcdf74fa63192db",
+        "expected_sha256": "11352c668a19be86c5bd643a1761452f5ebf5267c2e02dca6bcdf74fa63192db"
+      },
+      "experiments/rineya_taps_adaptive_recurrence_v1/diagnostics.py": {
+        "actual_sha256": "a697b1ed0c27788a0920d7416ab3821f2dc599cb4af2762fdc9d538e7481ff6b",
+        "expected_sha256": "a697b1ed0c27788a0920d7416ab3821f2dc599cb4af2762fdc9d538e7481ff6b"
+      },
+      "experiments/rineya_taps_adaptive_recurrence_v1/experiment.py": {
+        "actual_sha256": "ce189da75251af9d16e96d1192664206cecea7ecc961bd136ceb61bb08812a81",
+        "expected_sha256": "ce189da75251af9d16e96d1192664206cecea7ecc961bd136ceb61bb08812a81"
+      },
+      "experiments/rineya_taps_adaptive_recurrence_v1/integration.py": {
+        "actual_sha256": "57445e67903309c903655f1de9537658ccf6f8fe83fbc451d2f5062ce61d4b4a",
+        "expected_sha256": "57445e67903309c903655f1de9537658ccf6f8fe83fbc451d2f5062ce61d4b4a"
+      },
+      "experiments/rineya_taps_adaptive_recurrence_v1/native.py": {
+        "actual_sha256": "2a0f47512e3f67b6be8d8c5956acd6bbebfab5979fb92c273e7483cf538892e3",
+        "expected_sha256": "2a0f47512e3f67b6be8d8c5956acd6bbebfab5979fb92c273e7483cf538892e3"
+      },
+      "experiments/rineya_taps_adaptive_recurrence_v1/safety.py": {
+        "actual_sha256": "80bd40abfe83f5f98a95de204dafc6761df6c52e0fc2cad428986ec6f226a1aa",
+        "expected_sha256": "80bd40abfe83f5f98a95de204dafc6761df6c52e0fc2cad428986ec6f226a1aa"
+      },
+      "experiments/rineya_taps_adaptive_recurrence_v1/scheduler.py": {
+        "actual_sha256": "eaaa5cd8cab8b390dc932f850f7002dcfc81177c07bef50bcc368bf64ac9d546",
+        "expected_sha256": "eaaa5cd8cab8b390dc932f850f7002dcfc81177c07bef50bcc368bf64ac9d546"
+      },
+      "experiments/rineya_taps_adaptive_recurrence_v1/scripts/check_inherited.py": {
+        "actual_sha256": "e26bfc4f5675c89cd0ec65d07f80e4b9145c725602ff86c7ea4cd98d6bf07497",
+        "expected_sha256": "e26bfc4f5675c89cd0ec65d07f80e4b9145c725602ff86c7ea4cd98d6bf07497"
+      },
+      "experiments/rineya_taps_adaptive_recurrence_v1/scripts/report.py": {
+        "actual_sha256": "48253f3d7728768a2019bfcde7d556773163a0ac5ec396c0ee7bbfb047a1b821",
+        "expected_sha256": "48253f3d7728768a2019bfcde7d556773163a0ac5ec396c0ee7bbfb047a1b821"
+      },
+      "experiments/rineya_taps_adaptive_recurrence_v1/tests/test_taps.py": {
+        "actual_sha256": "13269cb13093143d81edc196948f074e43b3b67e0b1310f49df5a24bf2584e72",
+        "expected_sha256": "13269cb13093143d81edc196948f074e43b3b67e0b1310f49df5a24bf2584e72"
+      }
+    },
+    "dispatch_entry_count": 90,
+    "failed_worker_archive_sha256": "61e74ebfd006cda12c38a67686d7329814fdd2dcd49ede09fd8f23ae9d80b9c4",
+    "original_helper_sha256": "f242676e0ec0f019dd94ac27e5f3cb5eb8f3e311beb64cc0355102492396eaca",
+    "original_sensitivity_sha256": "5d0af45a8e91f0a00d91f83244105d06f1beba6f422cc3cd6d20c2d43d762f0d",
+    "raw_artifact_sha256": {
+      "runs/native-cpu-causal-replay-001/admission.json": "b98fcb66c1b1b00eabf2ac1e210c56aabf752b3f9ed82878c128f362c6d790f6",
+      "runs/native-cpu-causal-replay-001/release.json": "82e69334d4c061279007f489de5eeb4c111f578ad1c98fb35d6c2d3cc572c62b",
+      "runs/native-cpu-causal-replay-001/resources.jsonl": "866f7fc635144292ad79c3964851533a6578ece099e1a078f520a966783cc28c",
+      "runs/native-cpu-causal-replay-001/result/receipt.json": "1991eb56b44e3b6608db1065036e04d9179b5ccc360f5521d3be1f5d96e60438",
+      "runs/native-cpu-causal-replay-001/review.json": "77238613a87ceb0ca40c94934ed419c56a73ba63c7afdde9aca3b2c33b9f5bc4",
+      "runs/native-cpu-causal-replay-001/source_manifest.json": "e9886de68a9aa584de4ecc24165b370a10e064ee13d2526399ac4835a9b62437",
+      "runs/native-cpu-causal-replay-001/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "runs/native-cpu-causal-replay-001/stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "runs/native-cpu-causal-replay-001/terminal_receipt.json": "fe48534f36f72319f8e45f9891f7c5164f1108e282cae9ff9fd82a33a1745e14"
+    },
+    "runtime_qualification": "NOT_RUN",
+    "runtime_source_bound_interpreter": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\.venv\\Scripts\\python.exe"
+  },
+  "status": "PASS_AUDIT_OF_PREMODEL_SOURCE_REFUSAL",
+  "training": false
+}

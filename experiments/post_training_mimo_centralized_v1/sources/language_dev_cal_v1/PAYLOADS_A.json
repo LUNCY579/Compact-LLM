@@ -1,0 +1,1831 @@
+{
+  "schema_version": 1,
+  "stage": "RENDERED_CANDIDATES_UNQUALIFIED",
+  "spec_file_sha256": "7c0c2d7ecde5229672782a764230fafa23271b38b16e68a71cf74b154889b340",
+  "author_id": "/root/baseline_enrollment",
+  "worlds": [
+    {
+      "parent_id": "LDEV-explanation-01",
+      "world_spec_sha256": "2065d2a258ebf82394b2d61ef59cf14f62c36ef7b09df922b0958b1b7cbe53ae",
+      "messages": [
+        {
+          "role": "user",
+          "content": "I'm Leah, printing badges at our volunteer office. The badge job requests thick card. The normal-paper tray is full, but the card tray is empty. Our rule says card jobs stay on hold until that tray has card; 'urgent' only changes the order of ready jobs. Omar marked my job urgent, yet an ordinary letter printed first. Could you briefly explain why, and what's still needed?"
+        }
+      ],
+      "semantic_contract": {
+        "must_include": [
+          "Urgency only orders ready jobs; the badge job is still held.",
+          "The requested card tray needs card; normal paper in another tray does not meet that condition."
+        ],
+        "must_avoid": [
+          "Inventing a printer fault or saying urgency changes the requested material.",
+          "Claiming settings or trays have been changed."
+        ],
+        "acceptable_variation": [
+          "Equivalent concise wording is acceptable; the illustrative text is not an exhaustive answer key.",
+          "The explanation may reorder its points while preserving the stated relationships and uncertainty."
+        ],
+        "dimensions": {
+          "adequacy": "Help Leah understand why the ordinary letter printed before the urgent badges and what prerequisite remains.",
+          "relevance": "Address the requested explanation using the supplied situation, without unrelated advice.",
+          "fluency": "Use natural, coherent short English; distinguish readability from factual accuracy.",
+          "role_consistency": "Speak as a chat assistant without claiming outside access, observations, or completed actions."
+        }
+      },
+      "dev_exemplar": "The badges are still on hold because the card tray is empty. Urgent status moves a job ahead only once it's ready, so the ready letter could print first. The badges still need card in the requested tray; paper in the normal tray doesn't satisfy that requirement.",
+      "cal_controls": [],
+      "authorship": "assistant_source_candidate"
+    },
+    {
+      "parent_id": "LDEV-explanation-02",
+      "world_spec_sha256": "40e0d228bfadbf1c08b7b8ca6f455efb78117e4c747b809fe8d7ffe017527b74",
+      "messages": [
+        {
+          "role": "user",
+          "content": "I'm helping Marta unpack an exhibition. One case holds three connected panels registered as one artwork. Two other cases each hold a separate sculpture. Everything arrived intact. I've unpacked five physical pieces, but the catalogue lists three artworks and the unpacking sheet lists three cases. Can you explain why those numbers aren't a discrepancy?"
+        }
+      ],
+      "semantic_contract": {
+        "must_include": [
+          "The connected three-panel work counts as one registered artwork.",
+          "Physical pieces, artworks and transport cases are different counting units."
+        ],
+        "must_avoid": [
+          "Saying something is missing.",
+          "Assuming each case must contain one physical piece."
+        ],
+        "acceptable_variation": [
+          "Equivalent concise wording is acceptable; the illustrative text is not an exhaustive answer key.",
+          "The explanation may reorder its points while preserving the stated relationships and uncertainty."
+        ],
+        "dimensions": {
+          "adequacy": "Explain why seeing five physical pieces does not contradict the catalogue's three-artwork total.",
+          "relevance": "Address the requested explanation using the supplied situation, without unrelated advice.",
+          "fluency": "Use natural, coherent short English; distinguish readability from factual accuracy.",
+          "role_consistency": "Speak as a chat assistant without claiming outside access, observations, or completed actions."
+        }
+      },
+      "dev_exemplar": "You're counting different things. The three connected panels form one registered artwork; the two sculptures make three artworks altogether. There are five physical pieces, carried in three cases. The matching artwork and case totals don't mean every case contains just one piece.",
+      "cal_controls": [],
+      "authorship": "assistant_source_candidate"
+    },
+    {
+      "parent_id": "LDEV-explanation-03",
+      "world_spec_sha256": "0e099b4f4cf5005a47ba01ccec64d97ca4abdc8bc59320e144fa32cf8ba33554",
+      "messages": [
+        {
+          "role": "user",
+          "content": "I'm Niko, helping with a seedling display. Here a blue clip means someone checked a tray this shift, and the attached written card says whether it needs water. Anya inspected the entrance tray, wrote 'No water needed this shift,' then added a blue clip. I thought blue meant water it. Please explain how the clip and card fit together, without giving general plant-care advice."
+        }
+      ],
+      "semantic_contract": {
+        "must_include": [
+          "The clip marks that the inspection happened.",
+          "The card gives the resulting instruction, which is no water this shift."
+        ],
+        "must_avoid": [
+          "Using color associations to override the local rule.",
+          "Inferring general plant-care needs."
+        ],
+        "acceptable_variation": [
+          "Equivalent concise wording is acceptable; the illustrative text is not an exhaustive answer key.",
+          "The explanation may reorder its points while preserving the stated relationships and uncertainty."
+        ],
+        "dimensions": {
+          "adequacy": "Explain why the clip and the no-water card are consistent and which record governs this shift's action.",
+          "relevance": "Address the requested explanation using the supplied situation, without unrelated advice.",
+          "fluency": "Use natural, coherent short English; distinguish readability from factual accuracy.",
+          "role_consistency": "Speak as a chat assistant without claiming outside access, observations, or completed actions."
+        }
+      },
+      "dev_exemplar": "The blue clip records that Anya completed the check; it isn't a watering request. The card records what that check determined. So the two agree: this tray has been checked, and its instruction is no water this shift.",
+      "cal_controls": [],
+      "authorship": "assistant_source_candidate"
+    },
+    {
+      "parent_id": "LDEV-explanation-04",
+      "world_spec_sha256": "62b6f6c463d14e74a06f08beeb697745ed15d07ed74df2ef34c146740f225161",
+      "messages": [
+        {
+          "role": "user",
+          "content": "I'm Iris. The tool room holds reserved items until the pickup deadline, then automatically releases any uncollected item to the waiting list. My folding-table confirmation said pickup before noon, with no extension. I arrived at one, after Ben had offered it to the next borrower. Why didn't my confirmation still guarantee the table? Please explain without assuming another table is available."
+        }
+      ],
+      "semantic_contract": {
+        "must_include": [
+          "The reservation expired when its noon pickup condition was not met.",
+          "The confirmation recorded the earlier time-limited hold, not indefinite availability."
+        ],
+        "must_avoid": [
+          "Claiming the original reservation never existed.",
+          "Promising recovery, replacement or an extension."
+        ],
+        "acceptable_variation": [
+          "Equivalent concise wording is acceptable; the illustrative text is not an exhaustive answer key.",
+          "The explanation may reorder its points while preserving the stated relationships and uncertainty."
+        ],
+        "dimensions": {
+          "adequacy": "Explain why the old confirmation no longer guaranteed the table when Iris arrived.",
+          "relevance": "Address the requested explanation using the supplied situation, without unrelated advice.",
+          "fluency": "Use natural, coherent short English; distinguish readability from factual accuracy.",
+          "role_consistency": "Speak as a chat assistant without claiming outside access, observations, or completed actions."
+        }
+      },
+      "dev_exemplar": "Your confirmation was for a hold lasting until noon. Because no pickup was recorded by then, that hold expired and the table could be offered to the next borrower. The email confirms the earlier reservation, but it doesn't extend it beyond the stated deadline.",
+      "cal_controls": [],
+      "authorship": "assistant_source_candidate"
+    },
+    {
+      "parent_id": "LDEV-explanation-05",
+      "world_spec_sha256": "344fda5ddc7cbbf1fb313f73710b80b25a20740ed6d1b1424763a810211a00d9",
+      "messages": [
+        {
+          "role": "user",
+          "content": "I'm Jo, organizing a craft stall. Ravi will help me all day, so I think we both need stall wristbands. The steward says anyone working behind a stall during public hours needs one, while helpers who only unload before opening can use a loading pass."
+        },
+        {
+          "role": "assistant",
+          "content": "Will Ravi be behind the stall while customers are admitted, or only helping before opening?"
+        },
+        {
+          "role": "user",
+          "content": "Correction: Ravi will unload before opening and then leave, with no return during public hours. Loading passes are available for that. I'll run the stall during the public session. Briefly explain how this changes Ravi's pass requirement and whether it changes mine."
+        }
+      ],
+      "semantic_contract": {
+        "must_include": [
+          "Ravi now falls under the pre-opening loading-pass provision.",
+          "Jo still works during public hours and needs a stall wristband."
+        ],
+        "must_avoid": [
+          "Using Ravi's superseded all-day role.",
+          "Saying a loading pass permits selling during public hours or that passes were issued."
+        ],
+        "acceptable_variation": [
+          "Equivalent concise wording is acceptable; the illustrative text is not an exhaustive answer key.",
+          "The explanation may reorder its points while preserving the stated relationships and uncertainty."
+        ],
+        "dimensions": {
+          "adequacy": "Explain how Ravi's changed role affects the pass requirement while keeping Jo's own requirement clear.",
+          "relevance": "Address the requested explanation using the supplied situation, without unrelated advice.",
+          "fluency": "Use natural, coherent short English; distinguish readability from factual accuracy.",
+          "role_consistency": "Speak as a chat assistant without claiming outside access, observations, or completed actions."
+        }
+      },
+      "dev_exemplar": "Ravi's corrected role is pre-opening unloading only, so the loading-pass provision applies to him. You will still work behind the stall while customers are admitted, so your wristband requirement stays the same. The change concerns Ravi's role, not the rule for the stall itself.",
+      "cal_controls": [],
+      "authorship": "assistant_source_candidate"
+    },
+    {
+      "parent_id": "LDEV-explanation-06",
+      "world_spec_sha256": "41f9a0cc679f92b4085796c6a31f50c69d2c290dd3c6c2d54b236482b99fc0b7",
+      "messages": [
+        {
+          "role": "user",
+          "content": "I'm Elena, editing a club recording. Uploading puts it in our editors-only folder; a separate publish action puts it on the public episode page. The recording is uploaded, and someone outside our editing session opened it. Does that mean it's public?"
+        },
+        {
+          "role": "assistant",
+          "content": "Who tested it, and which link did they use?"
+        },
+        {
+          "role": "user",
+          "content": "It was Ash, who is an approved editor, using the editing-folder link. Nobody has used Publish. Please explain what Ash's successful test actually tells us."
+        }
+      ],
+      "semantic_contract": {
+        "must_include": [
+          "The test demonstrates an approved editor can access the editing copy.",
+          "It does not demonstrate public availability; the separate publish action has not occurred."
+        ],
+        "must_avoid": [
+          "Treating Ash as an unapproved public visitor.",
+          "Claiming to inspect permissions or publish the recording."
+        ],
+        "acceptable_variation": [
+          "Equivalent concise wording is acceptable; the illustrative text is not an exhaustive answer key.",
+          "The explanation may reorder its points while preserving the stated relationships and uncertainty."
+        ],
+        "dimensions": {
+          "adequacy": "Explain why Ash's successful access does not show that the recording is on the public page.",
+          "relevance": "Address the requested explanation using the supplied situation, without unrelated advice.",
+          "fluency": "Use natural, coherent short English; distinguish readability from factual accuracy.",
+          "role_consistency": "Speak as a chat assistant without claiming outside access, observations, or completed actions."
+        }
+      },
+      "dev_exemplar": "It shows that Ash can open the editing copy with an approved editor's access. It doesn't test public access. Since nobody has used the separate publish action, Ash's successful test is consistent with the recording still being available only in the editing folder.",
+      "cal_controls": [],
+      "authorship": "assistant_source_candidate"
+    },
+    {
+      "parent_id": "LDEV-explanation-07",
+      "world_spec_sha256": "b435cabc81c45b99fd8cbd2d3f65ee91df99849e0631b5a7001c644adb20ef93",
+      "messages": [
+        {
+          "role": "user",
+          "content": "I'm Talia, organizing a reunion. Mo accepted our invitation but is missing from my aunt's attendee list. The invitation covers an afternoon gathering and an optional evening meal, chosen separately."
+        },
+        {
+          "role": "assistant",
+          "content": "Is your aunt's list for the whole gathering or for a particular part?"
+        },
+        {
+          "role": "user",
+          "content": "I described it badly: it's her evening place-card list, which includes only people choosing the meal. Mo is coming in the afternoon and leaving before dinner. Can you briefly explain why the acceptance and the list don't conflict?"
+        }
+      ],
+      "semantic_contract": {
+        "must_include": [
+          "Mo accepted the afternoon portion but not the optional meal.",
+          "The aunt's list covers meal participants, not all gathering attendees."
+        ],
+        "must_avoid": [
+          "Describing Mo as declining the entire invitation.",
+          "Inventing a clerical mistake or meal reservation."
+        ],
+        "acceptable_variation": [
+          "Equivalent concise wording is acceptable; the illustrative text is not an exhaustive answer key.",
+          "The explanation may reorder its points while preserving the stated relationships and uncertainty."
+        ],
+        "dimensions": {
+          "adequacy": "Explain the apparent discrepancy between Mo's acceptance and absence from the evening place-card list.",
+          "relevance": "Address the requested explanation using the supplied situation, without unrelated advice.",
+          "fluency": "Use natural, coherent short English; distinguish readability from factual accuracy.",
+          "role_consistency": "Speak as a chat assistant without claiming outside access, observations, or completed actions."
+        }
+      },
+      "dev_exemplar": "Mo's acceptance is for the afternoon gathering. Your aunt's list is only for the evening meal, which Mo isn't attending. So Mo can be an accepted guest at the reunion without needing an evening place card.",
+      "cal_controls": [],
+      "authorship": "assistant_source_candidate"
+    },
+    {
+      "parent_id": "LDEV-explanation-08",
+      "world_spec_sha256": "833dc1b947e14a639774ac794e3bb426f886919115b7b5dfce04dbb7874ffab0",
+      "messages": [
+        {
+          "role": "user",
+          "content": "I'm Felix, hosting a film night. Our expected crowd was too large for Room A, so I preferred Room B. A has the fixed screen we need. B has more chairs but no screen, and the screen can't be moved."
+        },
+        {
+          "role": "assistant",
+          "content": "Is that crowd estimate still current?"
+        },
+        {
+          "role": "user",
+          "content": "No, the confirmed attendance is smaller and everyone now fits in A. We're still using the planned projection setup. Explain why B's extra seats aren't the deciding advantage now, without suggesting new equipment or venues."
+        }
+      ],
+      "semantic_contract": {
+        "must_include": [
+          "Room A now satisfies capacity and provides the required screen.",
+          "Room B's extra seats do not compensate for its missing required feature."
+        ],
+        "must_avoid": [
+          "Retaining the old attendance estimate.",
+          "Inventing movable equipment or claiming B is universally unsuitable."
+        ],
+        "acceptable_variation": [
+          "Equivalent concise wording is acceptable; the illustrative text is not an exhaustive answer key.",
+          "The explanation may reorder its points while preserving the stated relationships and uncertainty."
+        ],
+        "dimensions": {
+          "adequacy": "Explain why a room with more spare seats is not the better fit for the final film-night requirements.",
+          "relevance": "Address the requested explanation using the supplied situation, without unrelated advice.",
+          "fluency": "Use natural, coherent short English; distinguish readability from factual accuracy.",
+          "role_consistency": "Speak as a chat assistant without claiming outside access, observations, or completed actions."
+        }
+      },
+      "dev_exemplar": "Once everyone fits in A, the extra seats in B no longer solve a problem you have. A also has the screen required for the planned projection, whereas B doesn't. For this film night, meeting both requirements matters more than having unused seats.",
+      "cal_controls": [],
+      "authorship": "assistant_source_candidate"
+    },
+    {
+      "parent_id": "LCAL-explanation-01",
+      "world_spec_sha256": "c8d19210206d8ff4ddccd8ca7160234dce7ecbb9cf6e865d48ced07476e827cc",
+      "messages": [
+        {
+          "role": "user",
+          "content": "I'm Uma, assembling a photo booklet. Its PDF starts with two unnumbered cover pages; printed page 1 is the viewer's third page. The index uses printed page numbers. A photograph indexed on printed page 4 appears on viewer page 6. Nothing is missing. Please explain the mismatch in plain language, without suggesting edits."
+        }
+      ],
+      "semantic_contract": {
+        "must_include": [
+          "The viewer counts the two cover pages while printed numbering starts afterward.",
+          "Printed page four and viewer page six identify the same location."
+        ],
+        "must_avoid": [
+          "Calling either numbering system broken or claiming missing pages.",
+          "Claiming to have opened or edited the PDF."
+        ],
+        "acceptable_variation": [
+          "Equivalent concise wording is acceptable; the illustrative text is not an exhaustive answer key.",
+          "The explanation may reorder its points while preserving the stated relationships and uncertainty."
+        ],
+        "dimensions": {
+          "adequacy": "Explain why the index and PDF viewer show different page numbers for the same photograph.",
+          "relevance": "Address the requested explanation using the supplied situation, without unrelated advice.",
+          "fluency": "Use natural, coherent short English; distinguish readability from factual accuracy.",
+          "role_consistency": "Speak as a chat assistant without claiming outside access, observations, or completed actions."
+        }
+      },
+      "dev_exemplar": null,
+      "cal_controls": [
+        {
+          "control_id": "positive_a",
+          "response": "The viewer counts the two cover pages, but the printed numbering starts after them. That puts each printed page two places later in the viewer: printed page 4 is viewer page 6. Both numbers refer to the same photograph.",
+          "author_intent": "intended_acceptable",
+          "intent_rationale": "Intended acceptable explanation of the different numbering origins and the supplied example; wording is non-exhaustive.",
+          "qualified_reference_scores": null
+        },
+        {
+          "control_id": "positive_b",
+          "response": "There's a two-page offset, not missing content. The index starts counting at the booklet's interior, while the PDF viewer starts with the covers. That's why the photograph can be on printed page 4 and the viewer's sixth page.",
+          "author_intent": "intended_acceptable",
+          "intent_rationale": "Intended acceptable alternate wording that preserves the offset without claiming a fault.",
+          "qualified_reference_scores": null
+        },
+        {
+          "control_id": "adequacy",
+          "response": "The index includes the covers but the viewer skips them, so printed page 4 appears as viewer page 6.",
+          "author_intent": "adequacy",
+          "intent_rationale": "Primarily intended adequacy defect: reverses which numbering system includes the covers despite fluent, on-topic wording.",
+          "qualified_reference_scores": null
+        },
+        {
+          "control_id": "relevance",
+          "response": "Photographs can make a neighborhood booklet feel personal. A mixture of portraits and street scenes gives readers plenty to enjoy.",
+          "author_intent": "relevance",
+          "intent_rationale": "Primarily intended relevance defect: discusses photo selection rather than numbering; it also omits the requested explanation.",
+          "qualified_reference_scores": null
+        },
+        {
+          "control_id": "fluency",
+          "response": "Two covers viewer counts. Printed starts after, after them. Four printed, six viewer, same photograph it is. Covers counted, printed not covers counted.",
+          "author_intent": "fluency",
+          "intent_rationale": "Primarily intended fluency defect: the correct offset remains recoverable, but broken syntax and repetition impair natural readability.",
+          "qualified_reference_scores": null
+        },
+        {
+          "control_id": "role_consistency",
+          "response": "I opened your PDF and checked the photograph myself. The viewer counts the two covers, so its page 6 is the booklet's printed page 4.",
+          "author_intent": "role_consistency",
+          "intent_rationale": "Primarily intended role-consistency defect: fabricates file access and personal inspection while retaining the supplied numbering explanation.",
+          "qualified_reference_scores": null
+        }
+      ],
+      "authorship": "assistant_source_candidate"
+    },
+    {
+      "parent_id": "LCAL-explanation-02",
+      "world_spec_sha256": "6f9ed9b3df8083e940fca71082a63c7fbda65966062c4b65395d021afaa212f6",
+      "messages": [
+        {
+          "role": "user",
+          "content": "I'm Sana, counting votes for our shared mosaic. Hugo chose waves, then sent another form choosing leaves. I thought his second form added another vote."
+        },
+        {
+          "role": "assistant",
+          "content": "Does the voting rule add submissions, or replace a participant's earlier choice?"
+        },
+        {
+          "role": "user",
+          "content": "It replaces their earlier choice: one current choice per person. I've confirmed both forms are Hugo's and leaves was later. The totals use only the latest choices. Briefly explain why the wave count fell but the number of participants didn't."
+        }
+      ],
+      "semantic_contract": {
+        "must_include": [
+          "Hugo's leaf choice replaces his earlier wave choice.",
+          "He remains one participant; his contribution moves categories instead of adding a voter."
+        ],
+        "must_avoid": [
+          "Counting both submissions as current votes.",
+          "Inventing overall totals or another person's withdrawal."
+        ],
+        "acceptable_variation": [
+          "Equivalent concise wording is acceptable; the illustrative text is not an exhaustive answer key.",
+          "The explanation may reorder its points while preserving the stated relationships and uncertainty."
+        ],
+        "dimensions": {
+          "adequacy": "Explain how one person's changed choice can alter design totals without changing the number of participants.",
+          "relevance": "Address the requested explanation using the supplied situation, without unrelated advice.",
+          "fluency": "Use natural, coherent short English; distinguish readability from factual accuracy.",
+          "role_consistency": "Speak as a chat assistant without claiming outside access, observations, or completed actions."
+        }
+      },
+      "dev_exemplar": null,
+      "cal_controls": [
+        {
+          "control_id": "positive_a",
+          "response": "Hugo is still one participant. His later leaf choice replaced his wave choice, so his vote moved from one design to the other. That lowers the wave count without changing how many people voted.",
+          "author_intent": "intended_acceptable",
+          "intent_rationale": "Intended acceptable account of replacement and unchanged distinct-participant count.",
+          "qualified_reference_scores": null
+        },
+        {
+          "control_id": "positive_b",
+          "response": "You're counting people's current choices, not all the forms they sent. Hugo's current choice is leaves; waves no longer includes his vote. The category changed, but the person counted is still Hugo.",
+          "author_intent": "intended_acceptable",
+          "intent_rationale": "Intended acceptable alternate explanation using current choices rather than submission totals.",
+          "qualified_reference_scores": null
+        },
+        {
+          "control_id": "adequacy",
+          "response": "Hugo now counts as two participants because he submitted two forms; the wave count fell because his first form was removed.",
+          "author_intent": "adequacy",
+          "intent_rationale": "Primarily intended adequacy defect: contradicts the one-participant replacement rule and the stated unchanged participant count.",
+          "qualified_reference_scores": null
+        },
+        {
+          "control_id": "relevance",
+          "response": "Leaves and waves can both work well in a mosaic. You could compare the colors beside the wall before deciding which design feels more welcoming.",
+          "author_intent": "relevance",
+          "intent_rationale": "Primarily intended relevance defect: proposes a design exercise instead of explaining vote accounting; it also fails the requested task.",
+          "qualified_reference_scores": null
+        },
+        {
+          "control_id": "fluency",
+          "response": "Hugo one person stays. Leaf now his; wave before not now. Category move does, people number not move. One Hugo still one, one.",
+          "author_intent": "fluency",
+          "intent_rationale": "Primarily intended fluency defect: replacement and constant participation remain recognizable, but grammar and repetition are conspicuously impaired.",
+          "qualified_reference_scores": null
+        },
+        {
+          "control_id": "role_consistency",
+          "response": "I checked the live ballot records and moved Hugo's vote to leaves. He still counts as one participant, so the wave total fell without losing a voter.",
+          "author_intent": "role_consistency",
+          "intent_rationale": "Primarily intended role-consistency defect: invents access to live records and an action on them; the explanation otherwise follows the replacement rule.",
+          "qualified_reference_scores": null
+        }
+      ],
+      "authorship": "assistant_source_candidate"
+    },
+    {
+      "parent_id": "LDEV-meaning_preserving_rewrite-01",
+      "world_spec_sha256": "9f25eb49dab62832f852b2a5c748ed4e9663d490d4f7432e49f04bcbb449beab",
+      "messages": [
+        {
+          "role": "user",
+          "content": "I'm Rosa, coordinating a neighborhood pantry table. We accept clean, empty containers during Saturday's collection session only; we can't store containers left outside afterward. My draft sounds accusatory: 'Stop leaving containers outside when we've closed. Bring only clean, empty ones during Saturday's collection. We can't store your late drop-offs.' Please rewrite it as a courteous short public notice while keeping the limit firm."
+        }
+      ],
+      "semantic_contract": {
+        "must_include": [
+          "Clean, empty containers are accepted only during Saturday's collection session.",
+          "Containers left outside afterward cannot be stored."
+        ],
+        "must_avoid": [
+          "Making the requirement optional or blaming residents.",
+          "Offering home collection, outside storage or another opening time."
+        ],
+        "acceptable_variation": [
+          "Alternative natural drafts may use different wording and sentence order while preserving the current facts, scope and requested tone.",
+          "A brief introduction to the draft is optional; no exact wording is required."
+        ],
+        "dimensions": {
+          "adequacy": "Rewrite a firm container-drop-off notice in a courteous, concise public-facing tone.",
+          "relevance": "Provide the requested revised message rather than general advice about writing or the situation.",
+          "fluency": "Write clear, natural short English suited to the specified audience and tone.",
+          "role_consistency": "The draft may use the requested speaker's voice; distinguish drafting from actual actions or observations by the assistant."
+        }
+      },
+      "dev_exemplar": "Please bring clean, empty containers during Saturday's collection session only. We can't store containers left outside after the session, so please keep them until a collection session is open. Thank you for helping us keep the table organized.",
+      "cal_controls": [],
+      "authorship": "assistant_source_candidate"
+    },
+    {
+      "parent_id": "LDEV-meaning_preserving_rewrite-02",
+      "world_spec_sha256": "0e05537d257ed4437be0d798650f69de16c365ab31a6a1a7882ff3bd620715f4",
+      "messages": [
+        {
+          "role": "user",
+          "content": "I'm Dani. I practiced a drum pattern after our building's agreed quiet time on Tuesday. My neighbor asked me not to do that again, and I accept that I disturbed them. I plan to practice earlier. My draft says, 'Sorry about Tuesday. I promise you'll never hear any noise from my apartment again.' I can't promise total silence. Please rewrite it as a sincere, specific apology with a realistic commitment."
+        }
+      ],
+      "semantic_contract": {
+        "must_include": [
+          "Accept responsibility for Tuesday's late practice.",
+          "Commit to moving practice earlier."
+        ],
+        "must_avoid": [
+          "A universal promise of silence.",
+          "Blaming the neighbor or weakening responsibility."
+        ],
+        "acceptable_variation": [
+          "Alternative natural drafts may use different wording and sentence order while preserving the current facts, scope and requested tone.",
+          "A brief introduction to the draft is optional; no exact wording is required."
+        ],
+        "dimensions": {
+          "adequacy": "Rewrite Dani's apology so it is sincere and specific without promising total silence forever.",
+          "relevance": "Provide the requested revised message rather than general advice about writing or the situation.",
+          "fluency": "Write clear, natural short English suited to the specified audience and tone.",
+          "role_consistency": "The draft may use the requested speaker's voice; distinguish drafting from actual actions or observations by the assistant."
+        }
+      },
+      "dev_exemplar": "I'm sorry I practiced after quiet time on Tuesday and disturbed you. I'll move my practice to earlier hours. Thank you for letting me know.",
+      "cal_controls": [],
+      "authorship": "assistant_source_candidate"
+    },
+    {
+      "parent_id": "LDEV-meaning_preserving_rewrite-03",
+      "world_spec_sha256": "7cd8ed414246ac861a8ebba0dde45e0ff51a388ac63cabe84ca3307222ae7b61",
+      "messages": [
+        {
+          "role": "user",
+          "content": "I'm Amina, organizing a craft-club museum visit. The museum has confirmed Friday afternoon, but the school office hasn't confirmed transport. For now, I only want families to express interest, not pay or commit to attendance. My draft says, 'Our Friday museum trip and transport are all arranged. Please confirm your place.' Please rewrite it as a welcoming short message that reflects what's actually settled."
+        }
+      ],
+      "semantic_contract": {
+        "must_include": [
+          "The museum slot is confirmed for Friday afternoon; transport is pending.",
+          "Invite expressions of interest only."
+        ],
+        "must_avoid": [
+          "Inventing a transport arrangement, cost or deadline.",
+          "Requesting payment or a final attendance commitment."
+        ],
+        "acceptable_variation": [
+          "Alternative natural drafts may use different wording and sentence order while preserving the current facts, scope and requested tone.",
+          "A brief introduction to the draft is optional; no exact wording is required."
+        ],
+        "dimensions": {
+          "adequacy": "Rewrite an invitation to distinguish confirmed museum arrangements from pending transport and avoid overstating commitment.",
+          "relevance": "Provide the requested revised message rather than general advice about writing or the situation.",
+          "fluency": "Write clear, natural short English suited to the specified audience and tone.",
+          "role_consistency": "The draft may use the requested speaker's voice; distinguish drafting from actual actions or observations by the assistant."
+        }
+      },
+      "dev_exemplar": "We're planning a craft-club museum visit for Friday afternoon, and the museum has confirmed our slot. We're still waiting for the school office to confirm transport. Please let us know if your family is interested; we're not asking for payment or a final attendance commitment yet.",
+      "cal_controls": [],
+      "authorship": "assistant_source_candidate"
+    },
+    {
+      "parent_id": "LDEV-meaning_preserving_rewrite-04",
+      "world_spec_sha256": "16b8e678d4c437f97b0db54b6f134b8a23d9ab308f17f129b9fcaff79306c36a",
+      "messages": [
+        {
+          "role": "user",
+          "content": "I'm Theo, handing a presentation over to June. I've finished the outline and can send it as an attachment now. June will add the photographs, but the administrator is only due to grant shared-folder edit access on Wednesday; it hasn't happened yet. My note says, 'The outline deliverable is operationalized; proceed with image integration in the shared workspace.' Please make it plain and accurate about what can happen now and what must wait."
+        }
+      ],
+      "semantic_contract": {
+        "must_include": [
+          "The outline is finished and can be sent as an attachment now.",
+          "June's shared-slide editing depends on access due Wednesday, not yet granted."
+        ],
+        "must_avoid": [
+          "Treating scheduled access as completed.",
+          "Saying the photographs have already been inserted."
+        ],
+        "acceptable_variation": [
+          "Alternative natural drafts may use different wording and sentence order while preserving the current facts, scope and requested tone.",
+          "A brief introduction to the draft is optional; no exact wording is required."
+        ],
+        "dimensions": {
+          "adequacy": "Rewrite a jargon-heavy handover so June can tell what is ready now and what still depends on access.",
+          "relevance": "Provide the requested revised message rather than general advice about writing or the situation.",
+          "fluency": "Write clear, natural short English suited to the specified audience and tone.",
+          "role_consistency": "The draft may use the requested speaker's voice; distinguish drafting from actual actions or observations by the assistant."
+        }
+      },
+      "dev_exemplar": "The outline is finished, and I can send it to you as an attachment now. You'll add the photographs once you have edit access to the shared slides. The administrator is due to grant that on Wednesday, but access hasn't been enabled yet.",
+      "cal_controls": [],
+      "authorship": "assistant_source_candidate"
+    },
+    {
+      "parent_id": "LDEV-meaning_preserving_rewrite-05",
+      "world_spec_sha256": "2e01d8427eb5806c751f372847a7ac8b2b28efa5b9a557a391f72978ed159f8e",
+      "messages": [
+        {
+          "role": "user",
+          "content": "I'm Luz, facilitating a reading circle. I was going to tell the group: 'Evan complained about interruptions, so from now on we'll pause before every new question.' Can you help revise that?"
+        },
+        {
+          "role": "assistant",
+          "content": "Before revising it, did Evan describe it as a complaint, and has the group agreed to a permanent change?"
+        },
+        {
+          "role": "user",
+          "content": "I got that wrong. Evan privately suggested a short pause before moving to a new question, without criticizing anyone. Evan doesn't want to be named. It's only a trial for the next meeting, not an agreed permanent rule. Please write a natural facilitator message that preserves those distinctions."
+        }
+      ],
+      "semantic_contract": {
+        "must_include": [
+          "Introduce a short pause before moving to a new discussion question.",
+          "Frame it as a trial for the next meeting."
+        ],
+        "must_avoid": [
+          "Naming Evan or presenting a complaint about other members.",
+          "Claiming permanent agreement, unanimity or blame."
+        ],
+        "acceptable_variation": [
+          "Alternative natural drafts may use different wording and sentence order while preserving the current facts, scope and requested tone.",
+          "A brief introduction to the draft is optional; no exact wording is required."
+        ],
+        "dimensions": {
+          "adequacy": "Rewrite a group announcement that introduces a facilitation trial without exposing its source or misrepresenting it as criticism.",
+          "relevance": "Provide the requested revised message rather than general advice about writing or the situation.",
+          "fluency": "Write clear, natural short English suited to the specified audience and tone.",
+          "role_consistency": "The draft may use the requested speaker's voice; distinguish drafting from actual actions or observations by the assistant."
+        }
+      },
+      "dev_exemplar": "At our next meeting, let's try leaving a short pause before moving to a new discussion question. We'll treat it as a trial for that meeting and see how it works for the group.",
+      "cal_controls": [],
+      "authorship": "assistant_source_candidate"
+    },
+    {
+      "parent_id": "LDEV-meaning_preserving_rewrite-06",
+      "world_spec_sha256": "f84b59fb24cc65327f71d45df098a39402e8b50faa1a9aba7fe87121512c32b9",
+      "messages": [
+        {
+          "role": "user",
+          "content": "I'm Noor, making a repair-cafe poster for people bringing small lamps. My draft says, 'Bring your lamp and a new replacement lead, and we'll get it working.'"
+        },
+        {
+          "role": "assistant",
+          "content": "Does everyone need a new lead, and is a repair guaranteed?"
+        },
+        {
+          "role": "user",
+          "content": "No. Visitors should bring the lamp's existing removable lead if they have it. We have shared test leads when one is missing, so nobody should buy parts beforehand. The session offers inspection, not a guaranteed repair. Please rewrite the poster text briefly and invitingly, without giving repair instructions."
+        }
+      ],
+      "semantic_contract": {
+        "must_include": [
+          "Bring the lamp and its existing removable lead if available.",
+          "Shared test leads are available if the lead is missing; no advance parts purchase is requested.",
+          "The offer is inspection without a repair guarantee."
+        ],
+        "must_avoid": [
+          "Requiring a new lead or excluding visitors without one.",
+          "Giving repair instructions or promising a successful repair."
+        ],
+        "acceptable_variation": [
+          "Alternative natural drafts may use different wording and sentence order while preserving the current facts, scope and requested tone.",
+          "A brief introduction to the draft is optional; no exact wording is required."
+        ],
+        "dimensions": {
+          "adequacy": "Rewrite a visitor notice that accurately states what to bring and what the session offers.",
+          "relevance": "Provide the requested revised message rather than general advice about writing or the situation.",
+          "fluency": "Write clear, natural short English suited to the specified audience and tone.",
+          "role_consistency": "The draft may use the requested speaker's voice; distinguish drafting from actual actions or observations by the assistant."
+        }
+      },
+      "dev_exemplar": "Bring your lamp and its existing removable lead, if you have it. If the lead is missing, we have shared test leads available. There's no need to buy parts beforehand. Our volunteers can inspect your lamp, though we can't guarantee a repair.",
+      "cal_controls": [],
+      "authorship": "assistant_source_candidate"
+    },
+    {
+      "parent_id": "LDEV-meaning_preserving_rewrite-07",
+      "world_spec_sha256": "c8aa5a5f3ad879827f4f0d6630fe6f2a53efe6d47ec19a15e7b95615fa6d7791",
+      "messages": [
+        {
+          "role": "user",
+          "content": "I'm Milo. I want to message my roommate Reese: 'As agreed, we'll alternate kitchen cleanup each week. I'll take the first week.'"
+        },
+        {
+          "role": "assistant",
+          "content": "What part of cleanup did you agree to alternate?"
+        },
+        {
+          "role": "user",
+          "content": "Actually, we haven't agreed yet; Reese hasn't heard this idea. I only mean clearing the shared drying rack. We'd still each wash our own dishes. I'm offering to take the first week if Reese agrees. Please rewrite it as a clear, collaborative proposal."
+        }
+      ],
+      "semantic_contract": {
+        "must_include": [
+          "Propose alternating responsibility for clearing the shared drying rack.",
+          "Keep individual dishwashing unchanged and the first-week offer conditional on agreement."
+        ],
+        "must_avoid": [
+          "Claiming prior agreement or imposing a rule.",
+          "Expanding responsibility to all kitchen cleanup or both people's dishes."
+        ],
+        "acceptable_variation": [
+          "Alternative natural drafts may use different wording and sentence order while preserving the current facts, scope and requested tone.",
+          "A brief introduction to the draft is optional; no exact wording is required."
+        ],
+        "dimensions": {
+          "adequacy": "Rewrite a roommate message as a clear, collaborative proposal with its actual limited scope.",
+          "relevance": "Provide the requested revised message rather than general advice about writing or the situation.",
+          "fluency": "Write clear, natural short English suited to the specified audience and tone.",
+          "role_consistency": "The draft may use the requested speaker's voice; distinguish drafting from actual actions or observations by the assistant."
+        }
+      },
+      "dev_exemplar": "Would you be up for alternating weeks clearing the shared drying rack? We'd still each wash our own dishes. If that works for you, I'm happy to take the first week.",
+      "cal_controls": [],
+      "authorship": "assistant_source_candidate"
+    },
+    {
+      "parent_id": "LDEV-meaning_preserving_rewrite-08",
+      "world_spec_sha256": "2e36b9a478aed77306adaa43629a912c8556c115a30f21501d41c8c8b2b35ae5",
+      "messages": [
+        {
+          "role": "user",
+          "content": "I'm Yasmin, writing our choir newsletter. My draft says, 'We're performing in the park on Saturday.' The park organizer invited us to discuss a possible slot."
+        },
+        {
+          "role": "assistant",
+          "content": "Has the organizer confirmed a performance booking?"
+        },
+        {
+          "role": "user",
+          "content": "No, the program is still being decided. Also, Cal, our accompanist, has now said he's available Sunday but not Saturday. We haven't decided whether we'd perform without him. Please rewrite this as a brief internal update, preserving what remains unresolved rather than announcing a performance."
+        }
+      ],
+      "semantic_contract": {
+        "must_include": [
+          "The park performance is only a possibility; the organizer has not confirmed the program.",
+          "Cal is available Sunday only, and the choir has not decided whether to perform without him."
+        ],
+        "must_avoid": [
+          "Announcing either a Saturday or Sunday booking.",
+          "Calling the tentative opportunity canceled."
+        ],
+        "acceptable_variation": [
+          "Alternative natural drafts may use different wording and sentence order while preserving the current facts, scope and requested tone.",
+          "A brief introduction to the draft is optional; no exact wording is required."
+        ],
+        "dimensions": {
+          "adequacy": "Rewrite a premature event announcement as an accurate internal update on the tentative opportunity.",
+          "relevance": "Provide the requested revised message rather than general advice about writing or the situation.",
+          "fluency": "Write clear, natural short English suited to the specified audience and tone.",
+          "role_consistency": "The draft may use the requested speaker's voice; distinguish drafting from actual actions or observations by the assistant."
+        }
+      },
+      "dev_exemplar": "We've been invited to discuss a possible park performance, but the organizer hasn't confirmed the program yet. Cal is available Sunday, not Saturday, and we haven't decided whether we'd perform without him. There's no confirmed performance date to announce at this stage.",
+      "cal_controls": [],
+      "authorship": "assistant_source_candidate"
+    },
+    {
+      "parent_id": "LCAL-meaning_preserving_rewrite-01",
+      "world_spec_sha256": "f1f136c46eec4e6ffb81b4a8a07494a1c96e2cc10818b7a5f2d65bc7639e17e4",
+      "messages": [
+        {
+          "role": "user",
+          "content": "I'm Ada, coordinating a shared art room. Members can use the supply cupboard during our existing opening hours without asking me. The shared key belongs on the desk hook immediately after each use. It was misplaced during two sessions. My draft, 'Check with me whenever you need the cupboard key,' sounds like a new permission rule, which I don't want. Please replace it with a friendly reminder that keeps access unchanged."
+        }
+      ],
+      "semantic_contract": {
+        "must_include": [
+          "Return the shared key to the desk hook immediately after use.",
+          "Preserve existing cupboard access without individual permission."
+        ],
+        "must_avoid": [
+          "Creating an approval requirement or new opening hours.",
+          "Claiming the assistant handled the key."
+        ],
+        "acceptable_variation": [
+          "Alternative natural drafts may use different wording and sentence order while preserving the current facts, scope and requested tone.",
+          "A brief introduction to the draft is optional; no exact wording is required."
+        ],
+        "dimensions": {
+          "adequacy": "Rewrite the reminder so it protects the shared key's availability without changing members' existing access rights.",
+          "relevance": "Provide the requested revised message rather than general advice about writing or the situation.",
+          "fluency": "Write clear, natural short English suited to the specified audience and tone.",
+          "role_consistency": "The draft may use the requested speaker's voice; distinguish drafting from actual actions or observations by the assistant."
+        }
+      },
+      "dev_exemplar": null,
+      "cal_controls": [
+        {
+          "control_id": "positive_a",
+          "response": "Please put the shared key straight back on the desk hook after using the cupboard. You can keep using the supplies during our usual opening hours without checking with me. Thanks for keeping the key available for everyone.",
+          "author_intent": "intended_acceptable",
+          "intent_rationale": "Intended acceptable reminder that preserves the return duty and existing access rights.",
+          "qualified_reference_scores": null
+        },
+        {
+          "control_id": "positive_b",
+          "response": "A quick reminder: return the cupboard key to the desk hook as soon as you're finished. Nothing about access has changed; members can use the cupboard during our normal opening hours without asking me.",
+          "author_intent": "intended_acceptable",
+          "intent_rationale": "Intended acceptable alternate wording separating key handling from permission.",
+          "qualified_reference_scores": null
+        },
+        {
+          "control_id": "adequacy",
+          "response": "Please ask me for permission before each cupboard visit, and return the key to the desk hook afterward.",
+          "author_intent": "adequacy",
+          "intent_rationale": "Primarily intended adequacy defect: creates the exact individual approval requirement the user rejected.",
+          "qualified_reference_scores": null
+        },
+        {
+          "control_id": "relevance",
+          "response": "An art room can feel more welcoming when members display their projects. A small rotating gallery could give everyone a chance to share something.",
+          "author_intent": "relevance",
+          "intent_rationale": "Primarily intended relevance defect: unrelated room-improvement advice replaces the requested reminder and also fails adequacy.",
+          "qualified_reference_scores": null
+        },
+        {
+          "control_id": "fluency",
+          "response": "Key after cupboard use put hook back straight. Access same, usual hours, ask me no need. Key on hook, on hook after, so everyone key available.",
+          "author_intent": "fluency",
+          "intent_rationale": "Primarily intended fluency defect: the intended rule and unchanged access remain discernible through broken syntax and repetition.",
+          "qualified_reference_scores": null
+        },
+        {
+          "control_id": "role_consistency",
+          "response": "I checked the desk and put the key back myself. Here's your reminder: please return the shared key to its hook immediately after use; cupboard access during normal opening hours hasn't changed.",
+          "author_intent": "role_consistency",
+          "intent_rationale": "Primarily intended role-consistency defect: invents physical inspection and key handling by the assistant while including a relevant reminder.",
+          "qualified_reference_scores": null
+        }
+      ],
+      "authorship": "assistant_source_candidate"
+    },
+    {
+      "parent_id": "LCAL-meaning_preserving_rewrite-02",
+      "world_spec_sha256": "9e0483e01c1f092cd0d7af758e73d6ec488e059e0b7874300eeaeef9d7f1cd0b",
+      "messages": [
+        {
+          "role": "user",
+          "content": "I'm Finn, writing our walking group's trip notes. My draft says, 'We recently checked the woodland loop and found it easy to follow.'"
+        },
+        {
+          "role": "assistant",
+          "content": "Who visited the route, and when was that?"
+        },
+        {
+          "role": "user",
+          "content": "Correction: Laila walked it last autumn and said it was easy to follow on that visit. I haven't walked it, and nobody has checked current surface conditions for this note. Please rewrite it to keep her useful observation with its source and timing, without implying a present-day guarantee."
+        }
+      ],
+      "semantic_contract": {
+        "must_include": [
+          "Attribute the observation to Laila's visit last autumn.",
+          "Keep current conditions explicitly unverified."
+        ],
+        "must_avoid": [
+          "Claiming Finn or the assistant walked or recently checked the route.",
+          "Making a future-condition or accessibility guarantee."
+        ],
+        "acceptable_variation": [
+          "Alternative natural drafts may use different wording and sentence order while preserving the current facts, scope and requested tone.",
+          "A brief introduction to the draft is optional; no exact wording is required."
+        ],
+        "dimensions": {
+          "adequacy": "Rewrite a trip note to preserve a secondhand historical observation without presenting it as the writer's current experience.",
+          "relevance": "Provide the requested revised message rather than general advice about writing or the situation.",
+          "fluency": "Write clear, natural short English suited to the specified audience and tone.",
+          "role_consistency": "The draft may use the requested speaker's voice; distinguish drafting from actual actions or observations by the assistant."
+        }
+      },
+      "dev_exemplar": null,
+      "cal_controls": [
+        {
+          "control_id": "positive_a",
+          "response": "Laila found the woodland loop easy to follow when she walked it last autumn. We haven't checked current surface conditions, so her note describes that visit rather than conditions now.",
+          "author_intent": "intended_acceptable",
+          "intent_rationale": "Intended acceptable attribution and historical scope, preserving the useful observation without a present guarantee.",
+          "qualified_reference_scores": null
+        },
+        {
+          "control_id": "positive_b",
+          "response": "From Laila's walk last autumn: the woodland loop was easy to follow on that occasion. This isn't a current conditions report; those haven't been checked for these notes.",
+          "author_intent": "intended_acceptable",
+          "intent_rationale": "Intended acceptable alternate wording that distinguishes secondhand history from current verification.",
+          "qualified_reference_scores": null
+        },
+        {
+          "control_id": "adequacy",
+          "response": "Laila found the woodland loop easy to follow last autumn, so readers can rely on it being easy to follow in its current condition.",
+          "author_intent": "adequacy",
+          "intent_rationale": "Primarily intended adequacy defect: turns a historical observation into an unsupported current assurance.",
+          "qualified_reference_scores": null
+        },
+        {
+          "control_id": "relevance",
+          "response": "Walking groups can be a pleasant way to meet neighbors. Bringing conversation topics can help new members feel included.",
+          "author_intent": "relevance",
+          "intent_rationale": "Primarily intended relevance defect: generic social advice does not revise the route note; adequacy is also affected.",
+          "qualified_reference_scores": null
+        },
+        {
+          "control_id": "fluency",
+          "response": "Laila last autumn walked. Easy follow was then, that visit. Now surface no checked, not now report, then her report of then.",
+          "author_intent": "fluency",
+          "intent_rationale": "Primarily intended fluency defect: attribution and uncertainty survive, but broken grammar and repetition undermine readability.",
+          "qualified_reference_scores": null
+        },
+        {
+          "control_id": "role_consistency",
+          "response": "I walked the loop with Laila last autumn and found it easy to follow. We haven't checked the current conditions.",
+          "author_intent": "role_consistency",
+          "intent_rationale": "Primarily intended role-consistency defect: invents personal participation despite Finn's explicit nonattendance; it also corrupts attribution and therefore adequacy.",
+          "qualified_reference_scores": null
+        }
+      ],
+      "authorship": "assistant_source_candidate"
+    },
+    {
+      "parent_id": "LDEV-synthesis-01",
+      "world_spec_sha256": "4e353c3eef0d994e27d9289ab334c0f687707e8d4871bcfe757c9ca0e0abd78a",
+      "messages": [
+        {
+          "role": "user",
+          "content": "I'm Priya, handing our community mural setup to the next volunteer shift. The courtyard owner has approved the design, with no further design vote planned. Leo cleaned the wall but still has to attach the temporary floor-protection sheet before painting. Hazel's finished stencils are in the courtyard office, which will be open during Saturday setup. Please turn those notes into a short handover showing what's ready and what remains."
+        }
+      ],
+      "semantic_contract": {
+        "must_include": [
+          "Design approval, wall cleaning and stencils are complete.",
+          "Leo must attach floor protection before painting; stencils are accessible in the office during Saturday setup."
+        ],
+        "must_avoid": [
+          "Calling all wall preparation complete.",
+          "Inventing a design vote, delivery or completed floor protection."
+        ],
+        "acceptable_variation": [
+          "Equivalent concise summaries may reorder facts or use a short list.",
+          "The response need not repeat superseded details if it clearly represents the current state."
+        ],
+        "dimensions": {
+          "adequacy": "Combine separate preparation notes into a short current-status summary for the next volunteer shift.",
+          "relevance": "Synthesize the supplied notes for the stated audience instead of adding unrelated planning advice.",
+          "fluency": "Use coherent, natural short English with clear links between people, actions and conditions.",
+          "role_consistency": "Summarize what was supplied without claiming to inspect, contact, approve, or perform anything outside the chat."
+        }
+      },
+      "dev_exemplar": "The design is approved, the wall is cleaned, and Hazel's finished stencils are in the courtyard office, which will be open during Saturday setup. Leo still needs to attach the floor-protection sheet before painting can begin. No further design vote is planned.",
+      "cal_controls": [],
+      "authorship": "assistant_source_candidate"
+    },
+    {
+      "parent_id": "LDEV-synthesis-02",
+      "world_spec_sha256": "29262dc18f88833d05a88464e13edc07e23af76f5c6ebcf91b023cf9241fa3cd",
+      "messages": [
+        {
+          "role": "user",
+          "content": "I'm Esme, sorting our shared-house hallway with a roommate. Tariq will collect his green bag this evening. Wren has given permission to move the folded easel to the downstairs cupboard. The umbrella's owner is still unknown, and we agreed not to donate unclaimed things until we've asked the visitor group; we haven't asked yet. Please give my roommate a concise handover that keeps the instructions separate."
+        }
+      ],
+      "semantic_contract": {
+        "must_include": [
+          "Tariq will collect the green bag this evening.",
+          "The easel may be moved to the downstairs cupboard with Wren's permission.",
+          "The umbrella remains unidentified and cannot be donated before the visitor-group check."
+        ],
+        "must_avoid": [
+          "Assigning an umbrella owner or permission to donate the easel.",
+          "Applying one disposition to every item."
+        ],
+        "acceptable_variation": [
+          "Equivalent concise summaries may reorder facts or use a short list.",
+          "The response need not repeat superseded details if it clearly represents the current state."
+        ],
+        "dimensions": {
+          "adequacy": "Synthesize three item-specific messages into a practical hallway-clearing handover.",
+          "relevance": "Synthesize the supplied notes for the stated audience instead of adding unrelated planning advice.",
+          "fluency": "Use coherent, natural short English with clear links between people, actions and conditions.",
+          "role_consistency": "Summarize what was supplied without claiming to inspect, contact, approve, or perform anything outside the chat."
+        }
+      },
+      "dev_exemplar": "Leave Tariq's green bag for his collection this evening. Wren has approved moving the folded easel to the downstairs cupboard. Keep the umbrella for now: its owner is unknown, and the visitor group still needs to be asked before any donation.",
+      "cal_controls": [],
+      "authorship": "assistant_source_candidate"
+    },
+    {
+      "parent_id": "LDEV-synthesis-03",
+      "world_spec_sha256": "c5b51a102a21915d1b856a0426221afb4af39aa22f10d2ff1b0e05512af26c6b",
+      "messages": [
+        {
+          "role": "user",
+          "content": "I'm Mei, listing Owen's bread demonstration. The morning portion covers mixing and shaping; the afternoon offers tasting from a batch prepared earlier. The batch mixed that morning is for a later session. People may attend either portion without attending both. Owen supplies ingredients and utensils. Only people taking a tasting piece away need an empty container. Please combine that into a short event description, without recipe advice."
+        }
+      ],
+      "semantic_contract": {
+        "must_include": [
+          "Morning mixing/shaping and afternoon tasting use different batches.",
+          "Either portion may be attended independently; ingredients and utensils are provided.",
+          "An empty container is only needed for taking a tasting piece away."
+        ],
+        "must_avoid": [
+          "Saying people taste the morning's newly mixed batch.",
+          "Requiring both sessions or attendee-supplied ingredients."
+        ],
+        "acceptable_variation": [
+          "Equivalent concise summaries may reorder facts or use a short list.",
+          "The response need not repeat superseded details if it clearly represents the current state."
+        ],
+        "dimensions": {
+          "adequacy": "Combine program, participation and bring-along notes into an accurate compact event description.",
+          "relevance": "Synthesize the supplied notes for the stated audience instead of adding unrelated planning advice.",
+          "fluency": "Use coherent, natural short English with clear links between people, actions and conditions.",
+          "role_consistency": "Summarize what was supplied without claiming to inspect, contact, approve, or perform anything outside the chat."
+        }
+      },
+      "dev_exemplar": "Join Owen for morning mixing and shaping or afternoon tasting; you're welcome at either portion or both. Tasting uses an earlier batch, while the morning's batch is reserved for a later session. Ingredients and utensils are supplied. Bring an empty container only if you'd like to take a tasting piece away.",
+      "cal_controls": [],
+      "authorship": "assistant_source_candidate"
+    },
+    {
+      "parent_id": "LDEV-synthesis-04",
+      "world_spec_sha256": "3ab72ab11744ea1f8c9a9f45c1adb4245a6da8f981caaad156d349159b6e1af0",
+      "messages": [
+        {
+          "role": "user",
+          "content": "I'm Dara, updating a local walking-map display. Kit saw that the western entrance sign is missing. Sol messaged that the eastern gate may be closed, but no volunteer has checked. The central paved entrance was checked today and is open. The map's path lines haven't changed. Please summarize this briefly, separating verified facts from the unresolved report and not equating a missing sign with a closed entrance."
+        }
+      ],
+      "semantic_contract": {
+        "must_include": [
+          "Western signage is confirmed missing and the central paved entrance is confirmed open.",
+          "Eastern gate closure is only an unverified possibility needing a check.",
+          "The path lines remain unchanged."
+        ],
+        "must_avoid": [
+          "Declaring the eastern gate open or closed.",
+          "Inferring western closure from its missing sign."
+        ],
+        "acceptable_variation": [
+          "Equivalent concise summaries may reorder facts or use a short list.",
+          "The response need not repeat superseded details if it clearly represents the current state."
+        ],
+        "dimensions": {
+          "adequacy": "Synthesize the entrance notes into a brief update with clear evidence strength and one unresolved item.",
+          "relevance": "Synthesize the supplied notes for the stated audience instead of adding unrelated planning advice.",
+          "fluency": "Use coherent, natural short English with clear links between people, actions and conditions.",
+          "role_consistency": "Summarize what was supplied without claiming to inspect, contact, approve, or perform anything outside the chat."
+        }
+      },
+      "dev_exemplar": "The western entrance sign is confirmed missing, and the central paved entrance was checked today and is open. The report that the eastern gate may be closed still needs verification. The map's path lines are unchanged; the missing western sign doesn't itself establish a closure.",
+      "cal_controls": [],
+      "authorship": "assistant_source_candidate"
+    },
+    {
+      "parent_id": "LDEV-synthesis-05",
+      "world_spec_sha256": "07eaa67de71977c46b9565a0dab2319a96f76e83b36c6be77790e83d8ce697fc",
+      "messages": [
+        {
+          "role": "user",
+          "content": "I'm Yuri, preparing an archive display. I thought Nell's photo showed our hall being built, and I used its handwritten date as the construction year."
+        },
+        {
+          "role": "assistant",
+          "content": "What has Nell confirmed about the scene and the handwritten date?"
+        },
+        {
+          "role": "user",
+          "content": "She says it shows the reopening, and the handwritten date is when she donated the photo. We still don't know the event year or who took the photo. Nell has allowed us to display it with her name as donor. Please give the editor a brief note on what we can say and what remains unverified."
+        }
+      ],
+      "semantic_contract": {
+        "must_include": [
+          "The scene is the hall reopening; the handwritten date records donation, not the event.",
+          "The event year is unknown; Nell may be credited as donor with display permission."
+        ],
+        "must_avoid": [
+          "Inventing an event/construction year or calling Nell the photographer.",
+          "Keeping a superseded interpretation as fact."
+        ],
+        "acceptable_variation": [
+          "Equivalent concise summaries may reorder facts or use a short list.",
+          "The response need not repeat superseded details if it clearly represents the current state."
+        ],
+        "dimensions": {
+          "adequacy": "Synthesize corrections into an editorial note that prevents an inaccurate historical caption.",
+          "relevance": "Synthesize the supplied notes for the stated audience instead of adding unrelated planning advice.",
+          "fluency": "Use coherent, natural short English with clear links between people, actions and conditions.",
+          "role_consistency": "Summarize what was supplied without claiming to inspect, contact, approve, or perform anything outside the chat."
+        }
+      },
+      "dev_exemplar": "The photo shows the hall's reopening, not its construction. Its handwritten date records Nell's donation, so the event year still needs verification. Nell has permitted display with her name as donor; we don't know who took the photograph.",
+      "cal_controls": [],
+      "authorship": "assistant_source_candidate"
+    },
+    {
+      "parent_id": "LDEV-synthesis-06",
+      "world_spec_sha256": "69cd7c1db6ffee4014476f1d794d1b4ba6d5a398697f1f9884a5763187c3e7b5",
+      "messages": [
+        {
+          "role": "user",
+          "content": "I'm Tess, hosting game night. Bea will arrive late, and I thought we should delay all play because she might need Al's introductory lesson. The group agreed the main game should wait until Bea arrives."
+        },
+        {
+          "role": "assistant",
+          "content": "Does Bea need the introduction, or could it be separate from the main game?"
+        },
+        {
+          "role": "user",
+          "content": "Bea has clarified that she already knows the main game. Al can run an optional short introduction for the earlier guests. Everyone still agrees to wait for Bea before the main game. I'm supplying the materials, so guests needn't bring copies. Please write a compact update for guests."
+        }
+      ],
+      "semantic_contract": {
+        "must_include": [
+          "An optional introduction can happen before Bea arrives.",
+          "The main game still waits for Bea; she already knows it.",
+          "The host supplies materials."
+        ],
+        "must_avoid": [
+          "Treating the introduction as compulsory for Bea.",
+          "Starting the main game early or inventing exact times."
+        ],
+        "acceptable_variation": [
+          "Equivalent concise summaries may reorder facts or use a short list.",
+          "The response need not repeat superseded details if it clearly represents the current state."
+        ],
+        "dimensions": {
+          "adequacy": "Summarize the current game-night plan so early and later arrivals understand what will happen.",
+          "relevance": "Synthesize the supplied notes for the stated audience instead of adding unrelated planning advice.",
+          "fluency": "Use coherent, natural short English with clear links between people, actions and conditions.",
+          "role_consistency": "Summarize what was supplied without claiming to inspect, contact, approve, or perform anything outside the chat."
+        }
+      },
+      "dev_exemplar": "Al can run an optional introduction for anyone arriving early. We'll still wait for Bea before starting the main game; she already knows how to play. I'll supply the game materials, so there's no need to bring copies.",
+      "cal_controls": [],
+      "authorship": "assistant_source_candidate"
+    },
+    {
+      "parent_id": "LDEV-synthesis-07",
+      "world_spec_sha256": "40ef15baef4c4b8ffc5c2e913c6355194aa79c506fdc154de4080159d3d323b6",
+      "messages": [
+        {
+          "role": "user",
+          "content": "I'm Celia, coordinating our sewing group. I was going to tell the next helper that Amir still has the cutting mat and Pia still has the pattern weights. The helper brings the cupboard contents to the session; the scissors were never borrowed and are in there."
+        },
+        {
+          "role": "assistant",
+          "content": "Have either of the borrowers confirmed a return or delivery plan?"
+        },
+        {
+          "role": "user",
+          "content": "Amir has now confirmed the mat is back in the cupboard. Pia still has the weights and will bring them straight to the session; the helper doesn't need to collect them. Please turn this into a clear equipment handover."
+        }
+      ],
+      "semantic_contract": {
+        "must_include": [
+          "The helper brings the mat and scissors from the cupboard.",
+          "Pia still has the weights and will deliver them directly; no separate pickup is needed."
+        ],
+        "must_avoid": [
+          "Calling the mat outstanding or the weights already returned.",
+          "Assigning an unnecessary visit to Pia."
+        ],
+        "acceptable_variation": [
+          "Equivalent concise summaries may reorder facts or use a short list.",
+          "The response need not repeat superseded details if it clearly represents the current state."
+        ],
+        "dimensions": {
+          "adequacy": "Synthesize equipment updates into a clear division of responsibilities for the next session.",
+          "relevance": "Synthesize the supplied notes for the stated audience instead of adding unrelated planning advice.",
+          "fluency": "Use coherent, natural short English with clear links between people, actions and conditions.",
+          "role_consistency": "Summarize what was supplied without claiming to inspect, contact, approve, or perform anything outside the chat."
+        }
+      },
+      "dev_exemplar": "Please bring the cutting mat and scissors from the cupboard. Amir has returned the mat. Pia still has the pattern weights and will bring them directly to the session, so you don't need to collect those separately.",
+      "cal_controls": [],
+      "authorship": "assistant_source_candidate"
+    },
+    {
+      "parent_id": "LDEV-synthesis-08",
+      "world_spec_sha256": "14d71293f6f0ac9298daee8469e6d859f7c9d867c620650847c27c42aa637efc",
+      "messages": [
+        {
+          "role": "user",
+          "content": "I'm Marcus, arranging a family picnic on the riverside lawn. Eli will bring a folding table, each household brings its own lunch, and Nora's dining room is our indoor fallback. We'll decide on the morning whether to use the fallback."
+        },
+        {
+          "role": "assistant",
+          "content": "Are those arrangements still current?"
+        },
+        {
+          "role": "user",
+          "content": "We've moved the outdoor picnic to the orchard clearing, and Eli will bring the table there. The household lunches and Nora's fallback are unchanged. We haven't decided to move indoors; that decision is still for the morning. Please summarize the current plan briefly, without guessing the weather."
+        }
+      ],
+      "semantic_contract": {
+        "must_include": [
+          "The outdoor location is now the orchard clearing, with Eli bringing the table there.",
+          "Households still bring their own lunch.",
+          "Nora's dining room remains a conditional fallback to be decided on the morning."
+        ],
+        "must_avoid": [
+          "Using the obsolete riverside site or declaring the indoor fallback activated.",
+          "Inventing weather or claiming anyone was contacted."
+        ],
+        "acceptable_variation": [
+          "Equivalent concise summaries may reorder facts or use a short list.",
+          "The response need not repeat superseded details if it clearly represents the current state."
+        ],
+        "dimensions": {
+          "adequacy": "Combine changed and unchanged arrangements into one short picnic update.",
+          "relevance": "Synthesize the supplied notes for the stated audience instead of adding unrelated planning advice.",
+          "fluency": "Use coherent, natural short English with clear links between people, actions and conditions.",
+          "role_consistency": "Summarize what was supplied without claiming to inspect, contact, approve, or perform anything outside the chat."
+        }
+      },
+      "dev_exemplar": "The outdoor picnic is now at the orchard clearing, where Eli will bring the folding table. Each household still brings its own lunch. Nora's dining room remains the indoor fallback, with the decision about using it still due on the morning of the picnic.",
+      "cal_controls": [],
+      "authorship": "assistant_source_candidate"
+    },
+    {
+      "parent_id": "LCAL-synthesis-01",
+      "world_spec_sha256": "ec7c370775f320d24720e999dce83555de99464b8182cb1fd0a0e02aac79320b",
+      "messages": [
+        {
+          "role": "user",
+          "content": "I'm Ruth, preparing a short backstage reminder for our community dance show. At the opening, the stage stays dim while the lantern performer walks from the side to the center mark. They pause there and raise the lantern; that raise cues the lighting operator to bring up the full light. The curtain helper closes the curtain only after the final bow, much later. Please summarize the opening sequence and keep the separate closing cue clear."
+        }
+      ],
+      "semantic_contract": {
+        "must_include": [
+          "Keep the stage dim until the performer reaches the center mark and raises the lantern.",
+          "The lantern raise cues the lighting operator; the curtain closes only after the final bow."
+        ],
+        "must_avoid": [
+          "Using the opening pause as a curtain cue.",
+          "Inventing timing counts, music or assistant participation."
+        ],
+        "acceptable_variation": [
+          "Equivalent concise summaries may reorder facts or use a short list.",
+          "The response need not repeat superseded details if it clearly represents the current state."
+        ],
+        "dimensions": {
+          "adequacy": "Synthesize a distributed cue plan into a clear short sequence with the closing action kept separate.",
+          "relevance": "Synthesize the supplied notes for the stated audience instead of adding unrelated planning advice.",
+          "fluency": "Use coherent, natural short English with clear links between people, actions and conditions.",
+          "role_consistency": "Summarize what was supplied without claiming to inspect, contact, approve, or perform anything outside the chat."
+        }
+      },
+      "dev_exemplar": null,
+      "cal_controls": [
+        {
+          "control_id": "positive_a",
+          "response": "Keep the opening light dim while the performer moves to the center mark. When they pause and raise the lantern, the lighting operator brings up the full stage light. The curtain stays separate from that cue: close it only after the final bow.",
+          "author_intent": "intended_acceptable",
+          "intent_rationale": "Intended acceptable concise sequence preserving the visible trigger, operator and separate closing phase.",
+          "qualified_reference_scores": null
+        },
+        {
+          "control_id": "positive_b",
+          "response": "Opening: the performer reaches center, pauses, then raises the lantern to cue full stage lighting. Until that raise, the stage remains dim. The curtain helper waits for the final bow before closing the curtain.",
+          "author_intent": "intended_acceptable",
+          "intent_rationale": "Intended acceptable alternative organization of the same ordered cues.",
+          "qualified_reference_scores": null
+        },
+        {
+          "control_id": "adequacy",
+          "response": "Bring up the full light as soon as the performer enters from the side, then close the curtain when they pause at center. The lantern raise can follow afterward.",
+          "author_intent": "adequacy",
+          "intent_rationale": "Primarily intended adequacy defect: changes both the lighting trigger and the curtain phase despite clear on-topic wording.",
+          "qualified_reference_scores": null
+        },
+        {
+          "control_id": "relevance",
+          "response": "A community dance show gives volunteers a chance to contribute in different ways. Thanking the backstage team can help everyone feel included.",
+          "author_intent": "relevance",
+          "intent_rationale": "Primarily intended relevance defect: replaces the requested cue summary with general appreciation advice; adequacy also fails.",
+          "qualified_reference_scores": null
+        },
+        {
+          "control_id": "fluency",
+          "response": "Dim keep stage. Center performer go, pause then lantern raise, full light operator do. Curtain final bow only, not center pause, curtain later bow only.",
+          "author_intent": "fluency",
+          "intent_rationale": "Primarily intended fluency defect: cue order and closing distinction remain recoverable through noticeably broken syntax and repetition.",
+          "qualified_reference_scores": null
+        },
+        {
+          "control_id": "role_consistency",
+          "response": "I watched your rehearsal from backstage. The lantern raise at center is the operator's cue for full light, and the curtain waits until after the final bow.",
+          "author_intent": "role_consistency",
+          "intent_rationale": "Primarily intended role-consistency defect: claims an unprovided firsthand rehearsal observation while reporting the given sequence.",
+          "qualified_reference_scores": null
+        }
+      ],
+      "authorship": "assistant_source_candidate"
+    },
+    {
+      "parent_id": "LCAL-synthesis-02",
+      "world_spec_sha256": "e632fa6658b7c9504623f009181d66fec65ab9060eaf3e39317658ac5709e290",
+      "messages": [
+        {
+          "role": "user",
+          "content": "I'm Ines, organizing a neighborhood story exchange. I first told our booklet assembler that Gabriel's written story and a transcript of Jules's audio contribution could both go in the booklet."
+        },
+        {
+          "role": "assistant",
+          "content": "What permission has each contributor actually given?"
+        },
+        {
+          "role": "user",
+          "content": "Jules clarified that the audio may be played at the gathering, but a transcript hasn't been approved for print; our request is unanswered. Gabriel has confirmed we can print his written story with his first name. Please give the assembler a short permissions handover, using only those agreements."
+        }
+      ],
+      "semantic_contract": {
+        "must_include": [
+          "Gabriel's story may be printed with first-name attribution.",
+          "Jules's audio may be played at the gathering, but transcript printing remains unapproved."
+        ],
+        "must_avoid": [
+          "Treating unanswered permission as consent or removing the allowed playback.",
+          "Claiming legal authority or an external permission request was completed by the assistant."
+        ],
+        "acceptable_variation": [
+          "Equivalent concise summaries may reorder facts or use a short list.",
+          "The response need not repeat superseded details if it clearly represents the current state."
+        ],
+        "dimensions": {
+          "adequacy": "Summarize which contribution may be used in which event material and which permission remains unresolved.",
+          "relevance": "Synthesize the supplied notes for the stated audience instead of adding unrelated planning advice.",
+          "fluency": "Use coherent, natural short English with clear links between people, actions and conditions.",
+          "role_consistency": "Summarize what was supplied without claiming to inspect, contact, approve, or perform anything outside the chat."
+        }
+      },
+      "dev_exemplar": null,
+      "cal_controls": [
+        {
+          "control_id": "positive_a",
+          "response": "Print Gabriel's written story with his first name. Jules has permitted audio playback at the gathering, but not a printed transcript; that permission request is still unanswered. So only Gabriel's contribution is currently cleared for the booklet.",
+          "author_intent": "intended_acceptable",
+          "intent_rationale": "Intended acceptable mapping from each supplied permission to its medium, retaining the unresolved transcript request.",
+          "qualified_reference_scores": null
+        },
+        {
+          "control_id": "positive_b",
+          "response": "For the booklet, use Gabriel's story and credit him by first name. Keep Jules's recording in the live program only for now. Playback is permitted, while permission to print a transcript has not been received.",
+          "author_intent": "intended_acceptable",
+          "intent_rationale": "Intended acceptable alternate wording preserving both permitted uses and the remaining limit.",
+          "qualified_reference_scores": null
+        },
+        {
+          "control_id": "adequacy",
+          "response": "Both contributions may go in the booklet: permission to play Jules's recording also covers printing its transcript. Credit Gabriel by first name.",
+          "author_intent": "adequacy",
+          "intent_rationale": "Primarily intended adequacy defect: incorrectly transfers permission across media while preserving one correct attribution detail.",
+          "qualified_reference_scores": null
+        },
+        {
+          "control_id": "relevance",
+          "response": "You could arrange the gathering's chairs in a circle to make the story exchange feel more informal and welcoming.",
+          "author_intent": "relevance",
+          "intent_rationale": "Primarily intended relevance defect: offers room-layout advice instead of a permissions handover, also omitting required substance.",
+          "qualified_reference_scores": null
+        },
+        {
+          "control_id": "fluency",
+          "response": "Gabriel story print, first name with. Jules audio play gathering yes, transcript print no received yet. Request unanswered still, booklet only Gabriel now now.",
+          "author_intent": "fluency",
+          "intent_rationale": "Primarily intended fluency defect: media distinctions are understandable but grammar and repetition are materially awkward.",
+          "qualified_reference_scores": null
+        },
+        {
+          "control_id": "role_consistency",
+          "response": "I've spoken to Jules and obtained permission for the transcript, so both pieces can go in the booklet. Gabriel's story should carry his first name.",
+          "author_intent": "role_consistency",
+          "intent_rationale": "Primarily intended role-consistency defect: invents contact and permission obtained by the assistant; that invented action also produces an inadequate permissions summary.",
+          "qualified_reference_scores": null
+        }
+      ],
+      "authorship": "assistant_source_candidate"
+    },
+    {
+      "parent_id": "LDEV-clarification-01",
+      "world_spec_sha256": "660f14d0db19533d183370c5d84121a8cf048d9c52273e09d5a304832837a110",
+      "messages": [
+        {
+          "role": "user",
+          "content": "I'm preparing a return label for a borrowed board game. My note only says 'Alex.' I know Alex Chen, who lent me a puzzle, and Alex Reed, who has lent me several games. I haven't confirmed who owns this particular game, and I have no other identifying detail. Can you help me get the right recipient on the label?"
+        }
+      ],
+      "semantic_contract": {
+        "must_include": [
+          "Ask which Alex lent or owns this particular game before specifying a recipient."
+        ],
+        "must_avoid": [
+          "Choosing Alex Reed from general lending history alone.",
+          "Requesting unrelated logistics or claiming to contact either person."
+        ],
+        "acceptable_variation": [
+          "A focused question may be phrased differently if it resolves the same decisive uncertainty.",
+          "When the necessary facts are supplied, a concise direct answer may use equivalent wording and need not add a question."
+        ],
+        "dimensions": {
+          "adequacy": "Recognize that the recipient is not established and request the necessary ownership clarification before drafting a specific label.",
+          "relevance": "Address the specific missing information or already-resolved task without gathering unrelated details.",
+          "fluency": "Use natural, concise English appropriate to a brief question, label, instruction or explanation.",
+          "role_consistency": "Stay within the supplied chat context; do not claim to contact people, book arrangements, edit files or move objects."
+        }
+      },
+      "dev_exemplar": "Which Alex owns this particular game—Alex Chen or Alex Reed? That needs confirming before choosing the recipient for the label.",
+      "cal_controls": [],
+      "authorship": "assistant_source_candidate"
+    },
+    {
+      "parent_id": "LDEV-clarification-02",
+      "world_spec_sha256": "26859e3a14cffce9f2c306bf05e2a152f8fa1df2e1955ef807dceb9a3ed410dc",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Morgan has asked for 'Morgan Vale' on their visitor name card. Our event uses plain names, with no titles or organization names. What exact name should I put on the card? I don't need layout advice."
+        }
+      ],
+      "semantic_contract": {
+        "must_include": [
+          "Provide Morgan Vale as the requested displayed name."
+        ],
+        "must_avoid": [
+          "Adding a title, organization or nickname.",
+          "Asking for irrelevant personal details or claiming to print the card."
+        ],
+        "acceptable_variation": [
+          "A focused question may be phrased differently if it resolves the same decisive uncertainty.",
+          "When the necessary facts are supplied, a concise direct answer may use equivalent wording and need not add a question."
+        ],
+        "dimensions": {
+          "adequacy": "Provide the requested card text without creating an unnecessary clarification step.",
+          "relevance": "Address the specific missing information or already-resolved task without gathering unrelated details.",
+          "fluency": "Use natural, concise English appropriate to a brief question, label, instruction or explanation.",
+          "role_consistency": "Stay within the supplied chat context; do not claim to contact people, book arrangements, edit files or move objects."
+        }
+      },
+      "dev_exemplar": "Morgan Vale",
+      "cal_controls": [],
+      "authorship": "assistant_source_candidate"
+    },
+    {
+      "parent_id": "LDEV-clarification-03",
+      "world_spec_sha256": "96741dfadf9939955fdfafc0f8cae7187dca213546c50ca6d044d1c263aec560",
+      "messages": [
+        {
+          "role": "user",
+          "content": "A volunteer asked me to make a slide image 'smaller.' I don't know whether they mean taking up less space on the slide or making the attachment file smaller. They haven't said whether the problem is crowding or an attachment limit. Before I choose an editing method, what should I clarify?"
+        }
+      ],
+      "semantic_contract": {
+        "must_include": [
+          "Clarify whether the intended change concerns displayed dimensions or file size."
+        ],
+        "must_avoid": [
+          "Assuming a platform or prescribing editing steps before resolving the goal.",
+          "Equating a smaller displayed image with a smaller attachment."
+        ],
+        "acceptable_variation": [
+          "A focused question may be phrased differently if it resolves the same decisive uncertainty.",
+          "When the necessary facts are supplied, a concise direct answer may use equivalent wording and need not add a question."
+        ],
+        "dimensions": {
+          "adequacy": "Ask whether smaller means less space on the slide or a smaller file before prescribing an editing action.",
+          "relevance": "Address the specific missing information or already-resolved task without gathering unrelated details.",
+          "fluency": "Use natural, concise English appropriate to a brief question, label, instruction or explanation.",
+          "role_consistency": "Stay within the supplied chat context; do not claim to contact people, book arrangements, edit files or move objects."
+        }
+      },
+      "dev_exemplar": "Ask whether they want the image to take up less space on the slide or the file to be small enough to meet an attachment limit.",
+      "cal_controls": [],
+      "authorship": "assistant_source_candidate"
+    },
+    {
+      "parent_id": "LDEV-clarification-04",
+      "world_spec_sha256": "7ce4b83cddbca431522faa4bacae8a0109dc5dbad5dc4298097de468c72e0856",
+      "messages": [
+        {
+          "role": "user",
+          "content": "For a craft demonstration, the table cover must fit the table and be allowed to receive washable-pen marks. The blue cover fits and may be marked. The striped one fits but mustn't be marked. The cream one may be marked but doesn't fit. I have no color preference. Which of these available covers meets our requirements?"
+        }
+      ],
+      "semantic_contract": {
+        "must_include": [
+          "Choose the blue cover because it satisfies both fit and permission to mark."
+        ],
+        "must_avoid": [
+          "Asking an irrelevant color-preference question.",
+          "Using only one requirement or introducing a purchase."
+        ],
+        "acceptable_variation": [
+          "A focused question may be phrased differently if it resolves the same decisive uncertainty.",
+          "When the necessary facts are supplied, a concise direct answer may use equivalent wording and need not add a question."
+        ],
+        "dimensions": {
+          "adequacy": "Select the only supplied option satisfying the complete stated requirements without unnecessary follow-up questions.",
+          "relevance": "Address the specific missing information or already-resolved task without gathering unrelated details.",
+          "fluency": "Use natural, concise English appropriate to a brief question, label, instruction or explanation.",
+          "role_consistency": "Stay within the supplied chat context; do not claim to contact people, book arrangements, edit files or move objects."
+        }
+      },
+      "dev_exemplar": "The blue cover meets both requirements: it fits the table and is approved for washable-pen marks.",
+      "cal_controls": [],
+      "authorship": "assistant_source_candidate"
+    },
+    {
+      "parent_id": "LDEV-clarification-05",
+      "world_spec_sha256": "ceb96a056e0eb514a1dfd691185e76df55b938de0dfa16fd54355ff18fa5d1fa",
+      "messages": [
+        {
+          "role": "user",
+          "content": "I want to apologize to Seth for missing a planning meeting. He says it went badly, and I'd like help writing a message."
+        },
+        {
+          "role": "assistant",
+          "content": "Were you expected to attend, and what would you like to acknowledge?"
+        },
+        {
+          "role": "user",
+          "content": "I described that badly: I wasn't invited and had no role in organizing or attending. Seth hasn't explained what went wrong, and I haven't mentioned any other action of mine. I still want to send him a message, but I'm not sure what kind. Can you help me work out what to write?"
+        }
+      ],
+      "semantic_contract": {
+        "must_include": [
+          "Recognize that an apology for missing an obligation is unsupported after the correction.",
+          "Ask what purpose the user wants the message to serve."
+        ],
+        "must_avoid": [
+          "Drafting a false admission of responsibility.",
+          "Inventing what went wrong or assuming another wrongdoing."
+        ],
+        "acceptable_variation": [
+          "A focused question may be phrased differently if it resolves the same decisive uncertainty.",
+          "When the necessary facts are supplied, a concise direct answer may use equivalent wording and need not add a question."
+        ],
+        "dimensions": {
+          "adequacy": "Clarify the intended purpose of the message after the correction removes the stated basis for the apology.",
+          "relevance": "Address the specific missing information or already-resolved task without gathering unrelated details.",
+          "fluency": "Use natural, concise English appropriate to a brief question, label, instruction or explanation.",
+          "role_consistency": "Stay within the supplied chat context; do not claim to contact people, book arrangements, edit files or move objects."
+        }
+      },
+      "dev_exemplar": "Since you weren't expected to attend, what would you like the message to do—offer support about the meeting, or address something else between you and Seth?",
+      "cal_controls": [],
+      "authorship": "assistant_source_candidate"
+    },
+    {
+      "parent_id": "LDEV-clarification-06",
+      "world_spec_sha256": "75a41874eafa5943fe9ba3ab25607e36a80ec84a57f0fb646e9c7c3efcfe7602",
+      "messages": [
+        {
+          "role": "user",
+          "content": "I'm helping a visitor get to a second-floor practice room. They need a step-free route. The entrance corridor leads straight to the lift, and the room is the first door left of the lift on the second floor. The stairs have steps. I heard the lift might be out of service."
+        },
+        {
+          "role": "assistant",
+          "content": "Has the receptionist confirmed the lift's current status?"
+        },
+        {
+          "role": "user",
+          "content": "Yes, the receptionist has now confirmed it's working normally, with no other obstruction reported on that route. Please give me short directions for the visitor using the information we have."
+        }
+      ],
+      "semantic_contract": {
+        "must_include": [
+          "Use the corridor, working lift to the second floor, and first door to its left."
+        ],
+        "must_avoid": [
+          "Repeating a question about lift status or whether stairs are acceptable.",
+          "Keeping the superseded possible outage or inventing building details."
+        ],
+        "acceptable_variation": [
+          "A focused question may be phrased differently if it resolves the same decisive uncertainty.",
+          "When the necessary facts are supplied, a concise direct answer may use equivalent wording and need not add a question."
+        ],
+        "dimensions": {
+          "adequacy": "Give the available step-free directions directly after the missing lift-status fact has been resolved.",
+          "relevance": "Address the specific missing information or already-resolved task without gathering unrelated details.",
+          "fluency": "Use natural, concise English appropriate to a brief question, label, instruction or explanation.",
+          "role_consistency": "Stay within the supplied chat context; do not claim to contact people, book arrangements, edit files or move objects."
+        }
+      },
+      "dev_exemplar": "Follow the entrance corridor to the lift and take it to the second floor. The practice room is the first door on your left as you leave the lift.",
+      "cal_controls": [],
+      "authorship": "assistant_source_candidate"
+    },
+    {
+      "parent_id": "LDEV-clarification-07",
+      "world_spec_sha256": "4d5ff81631a239358566ba26fde53e075dac19cca8169cc100ba0a7ea9410170",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Our costume team has fittings this Sunday and the following Sunday. I thought Rina had chosen this Sunday's session. Earlier we'd also discussed her rehearsal and family visit on different weekends."
+        },
+        {
+          "role": "assistant",
+          "content": "Does Rina's message identify a fitting date clearly?"
+        },
+        {
+          "role": "user",
+          "content": "I've reread it and withdrawn my first interpretation. It says 'the Sunday after that,' but I can't tell whether 'that' refers to the rehearsal or the family visit. I don't have either event's date here. Which fitting should I record?"
+        }
+      ],
+      "semantic_contract": {
+        "must_include": [
+          "Request the intended fitting Sunday or the event/date anchoring the relative phrase."
+        ],
+        "must_avoid": [
+          "Guessing the nearer Sunday or another unsupported date.",
+          "Treating the withdrawn interpretation as evidence or claiming to book/contact anyone."
+        ],
+        "acceptable_variation": [
+          "A focused question may be phrased differently if it resolves the same decisive uncertainty.",
+          "When the necessary facts are supplied, a concise direct answer may use equivalent wording and need not add a question."
+        ],
+        "dimensions": {
+          "adequacy": "Seek the missing date reference rather than assigning a fitting after the user's correction makes the timing ambiguous.",
+          "relevance": "Address the specific missing information or already-resolved task without gathering unrelated details.",
+          "fluency": "Use natural, concise English appropriate to a brief question, label, instruction or explanation.",
+          "role_consistency": "Stay within the supplied chat context; do not claim to contact people, book arrangements, edit files or move objects."
+        }
+      },
+      "dev_exemplar": "Ask Rina which fitting Sunday she means. The phrase 'after that' doesn't identify a session until you know which event and date she's referring to.",
+      "cal_controls": [],
+      "authorship": "assistant_source_candidate"
+    },
+    {
+      "parent_id": "LDEV-clarification-08",
+      "world_spec_sha256": "5a436f8e54a33e95f0a840bf47ab387ca74ad139beaada765a1178f7dd8ed445",
+      "messages": [
+        {
+          "role": "user",
+          "content": "I'm handing an orientation diagram to an editor. I first read the coordinator's request as 'put all text in capitals.' The diagram has section headings and smaller descriptive labels."
+        },
+        {
+          "role": "assistant",
+          "content": "Does the note apply to both kinds of text?"
+        },
+        {
+          "role": "user",
+          "content": "I've checked: only the section headings should be in capitals. The smaller labels keep their current capitalization, and colors and positions stay unchanged. Please write a short instruction for the editor, not an actual file edit."
+        }
+      ],
+      "semantic_contract": {
+        "must_include": [
+          "Capitalize only section headings.",
+          "Keep smaller labels' capitalization, colors and positions unchanged."
+        ],
+        "must_avoid": [
+          "Applying the earlier all-text instruction.",
+          "Asking already-resolved scope questions or claiming the edit is complete."
+        ],
+        "acceptable_variation": [
+          "A focused question may be phrased differently if it resolves the same decisive uncertainty.",
+          "When the necessary facts are supplied, a concise direct answer may use equivalent wording and need not add a question."
+        ],
+        "dimensions": {
+          "adequacy": "Provide a concise handoff instruction after the distinction between headings and smaller labels is clarified.",
+          "relevance": "Address the specific missing information or already-resolved task without gathering unrelated details.",
+          "fluency": "Use natural, concise English appropriate to a brief question, label, instruction or explanation.",
+          "role_consistency": "Stay within the supplied chat context; do not claim to contact people, book arrangements, edit files or move objects."
+        }
+      },
+      "dev_exemplar": "Please put only the section headings in capitals. Keep the smaller descriptive labels as they are, and leave all colors and positions unchanged.",
+      "cal_controls": [],
+      "authorship": "assistant_source_candidate"
+    },
+    {
+      "parent_id": "LCAL-clarification-01",
+      "world_spec_sha256": "f95799718d5678995f7f36ff2ac5c5830af1f07dd635a851e411bd7f4ca444a5",
+      "messages": [
+        {
+          "role": "user",
+          "content": "I'm making a community workshop poster. The leader's note has a setup start time and a later participant-session start time; I have both to copy. I called the poster 'for everyone,' but haven't decided whether it's recruiting setup volunteers or inviting participants. Which start time should be the main one on it?"
+        }
+      ],
+      "semantic_contract": {
+        "must_include": [
+          "Clarify whether the primary audience is setup volunteers or workshop participants."
+        ],
+        "must_avoid": [
+          "Automatically selecting the earliest time or inventing a universal arrival time.",
+          "Asking for schedule details instead of the missing audience/purpose or claiming outside contact."
+        ],
+        "acceptable_variation": [
+          "A focused question may be phrased differently if it resolves the same decisive uncertainty.",
+          "When the necessary facts are supplied, a concise direct answer may use equivalent wording and need not add a question."
+        ],
+        "dimensions": {
+          "adequacy": "Ask whether the poster recruits helpers or invites participants before choosing its headline start time.",
+          "relevance": "Address the specific missing information or already-resolved task without gathering unrelated details.",
+          "fluency": "Use natural, concise English appropriate to a brief question, label, instruction or explanation.",
+          "role_consistency": "Stay within the supplied chat context; do not claim to contact people, book arrangements, edit files or move objects."
+        }
+      },
+      "dev_exemplar": null,
+      "cal_controls": [
+        {
+          "control_id": "positive_a",
+          "response": "Is the poster mainly recruiting people to help set up, or inviting people to attend the workshop? That determines which of the two start times should lead.",
+          "author_intent": "intended_acceptable",
+          "intent_rationale": "Intended acceptable focused question about the missing purpose rather than additional schedule facts.",
+          "qualified_reference_scores": null
+        },
+        {
+          "control_id": "positive_b",
+          "response": "Who do you most need the poster to reach: setup volunteers or workshop participants? Once that's clear, you can emphasize the time for that group.",
+          "author_intent": "intended_acceptable",
+          "intent_rationale": "Intended acceptable alternate question linking the headline time to the intended audience.",
+          "qualified_reference_scores": null
+        },
+        {
+          "control_id": "adequacy",
+          "response": "Use the earlier setup time as the main time. Everyone attending the workshop is required to arrive then.",
+          "author_intent": "adequacy",
+          "intent_rationale": "Primarily intended adequacy defect: invents a universal setup obligation instead of resolving the unspecified audience.",
+          "qualified_reference_scores": null
+        },
+        {
+          "control_id": "relevance",
+          "response": "Would you rather use a blue border or a green one on the poster? Either could look welcoming.",
+          "author_intent": "relevance",
+          "intent_rationale": "Primarily intended relevance defect: asks about an unrelated design preference and leaves the audience ambiguity unresolved; adequacy is also affected.",
+          "qualified_reference_scores": null
+        },
+        {
+          "control_id": "fluency",
+          "response": "Poster for who mostly, setup helpers or session people? That who makes time which first, first main time for who.",
+          "author_intent": "fluency",
+          "intent_rationale": "Primarily intended fluency defect: the audience question is recoverable but phrased with broken, repetitive syntax.",
+          "qualified_reference_scores": null
+        },
+        {
+          "control_id": "role_consistency",
+          "response": "I asked the workshop leader, and they confirmed this poster is for participants. Use the participant-session time as the main one.",
+          "author_intent": "role_consistency",
+          "intent_rationale": "Primarily intended role-consistency defect: fabricates contact and a resolved audience decision; the invented fact also affects adequacy.",
+          "qualified_reference_scores": null
+        }
+      ],
+      "authorship": "assistant_source_candidate"
+    },
+    {
+      "parent_id": "LCAL-clarification-02",
+      "world_spec_sha256": "d6122de37b0cc12f5724a7976ed8efb39bb7877a11da340e79a027b1b5d66199",
+      "messages": [
+        {
+          "role": "user",
+          "content": "I'm sorting books after our neighborhood exchange. One book has a green sticker, and I don't know whether it goes on the free-to-take table or in the return box."
+        },
+        {
+          "role": "assistant",
+          "content": "Has the organizer explained how those stickers distinguish donated books from books to return?"
+        },
+        {
+          "role": "user",
+          "content": "Yes: round green stickers mean donated for anyone to take, while square green ones mean reserved for their owners. I've checked this book and its sticker is round. The organizer confirmed there are no extra restrictions on the round-sticker books. Where should I put it?"
+        }
+      ],
+      "semantic_contract": {
+        "must_include": [
+          "Direct the round-sticker book to the free-to-take table.",
+          "Use the supplied shape distinction rather than color alone."
+        ],
+        "must_avoid": [
+          "Asking again about shape, ownership permission or color.",
+          "Sending it to the return box or claiming to move it."
+        ],
+        "acceptable_variation": [
+          "A focused question may be phrased differently if it resolves the same decisive uncertainty.",
+          "When the necessary facts are supplied, a concise direct answer may use equivalent wording and need not add a question."
+        ],
+        "dimensions": {
+          "adequacy": "Answer the sorting question directly once the initially missing distinguishing feature has been provided.",
+          "relevance": "Address the specific missing information or already-resolved task without gathering unrelated details.",
+          "fluency": "Use natural, concise English appropriate to a brief question, label, instruction or explanation.",
+          "role_consistency": "Stay within the supplied chat context; do not claim to contact people, book arrangements, edit files or move objects."
+        }
+      },
+      "dev_exemplar": null,
+      "cal_controls": [
+        {
+          "control_id": "positive_a",
+          "response": "Put it on the free-to-take table. The round sticker identifies it as donated, and the organizer has confirmed there are no extra restrictions.",
+          "author_intent": "intended_acceptable",
+          "intent_rationale": "Intended acceptable direct answer using the now-resolved distinguishing attribute.",
+          "qualified_reference_scores": null
+        },
+        {
+          "control_id": "positive_b",
+          "response": "It belongs on the free-to-take table: this sticker is round. The return box is for books with the square green sticker.",
+          "author_intent": "intended_acceptable",
+          "intent_rationale": "Intended acceptable alternate wording that keeps the two shapes' meanings distinct.",
+          "qualified_reference_scores": null
+        },
+        {
+          "control_id": "adequacy",
+          "response": "Put it in the return box. A round green sticker means the owner wants it back.",
+          "author_intent": "adequacy",
+          "intent_rationale": "Primarily intended adequacy defect: reverses the supplied meaning of the round sticker.",
+          "qualified_reference_scores": null
+        },
+        {
+          "control_id": "relevance",
+          "response": "Book exchanges are a lovely way to discover an author you haven't read before. You might enjoy browsing the other tables.",
+          "author_intent": "relevance",
+          "intent_rationale": "Primarily intended relevance defect: offers unrelated encouragement instead of answering the sorting question; adequacy is also affected.",
+          "qualified_reference_scores": null
+        },
+        {
+          "control_id": "fluency",
+          "response": "Round sticker this book has. Free table goes it, round donated yes. Square return is, this not square, free table table.",
+          "author_intent": "fluency",
+          "intent_rationale": "Primarily intended fluency defect: the correct destination and shape distinction are present but delivered with broken syntax and repetition.",
+          "qualified_reference_scores": null
+        },
+        {
+          "control_id": "role_consistency",
+          "response": "I've moved it onto the free-to-take table for you. Its round sticker shows that it's donated.",
+          "author_intent": "role_consistency",
+          "intent_rationale": "Primarily intended role-consistency defect: claims a physical action by the assistant while giving the correct supplied classification.",
+          "qualified_reference_scores": null
+        }
+      ],
+      "authorship": "assistant_source_candidate"
+    }
+  ]
+}

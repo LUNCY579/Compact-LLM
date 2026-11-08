@@ -1,0 +1,701 @@
+{
+  "schema_version": "tgsa.programme-ledger.v1",
+  "generated_on": "2026-09-04",
+  "purpose": "Single read-only index of TGSA programme progress, results and provenance. This branch aggregates RECORDS only. It does not merge, pool or reimplement any stage's code, and it is not a scientific artifact in its own right.",
+  "governing_document": "Rineya_Trajectory_Guided_Sequential_Attention_Lab_v1/TGSA_MTP_CANONICAL_PATH.md",
+  "constraints_honoured": [
+    "the two MTP histories are not merged into one implementation namespace",
+    "evidence is not pooled across stages",
+    "no artifact is relabelled under a generic TGSA+MTP identity",
+    "both branch histories are preserved for provenance"
+  ],
+  "programme_status": {
+    "mechanism_hypotheses_resolved": 0,
+    "hypothesis_ladder": [
+      "H1a",
+      "H1b",
+      "H1c"
+    ],
+    "confirmed_tgsa_results": null,
+    "blocking_gate": "a new competence preregistration with learnable, non-saturated primary families; the v4 band is rejected and permits no further measurement. v5.1 is the vehicle for that preregistration, but it is frozen and not yet executed: Stage 0 apparatus qualification is prepared and costed and awaits the human operator's --attest-no-prior-outcome-inspection attestation. No competence-qualified regime exists.",
+    "next_scientific_step": "Stage 0 apparatus qualification under research/tgsa-v5-1-unified-programme (prerequisite probe, then the 36-cell qualification), followed by Phase 2A trajectory-mechanism identification only after a competence GO"
+  },
+  "lineage": {
+    "root_commit": "bef44ce",
+    "shape": "near-linear chain; two side branches diverge at 04d3c02 and 8b5737e. The v5 chain extends the spine linearly: de3bd63 -> b091490 -> fd6e20f.",
+    "note": "C1..C6 and C9..C10 are fully contained in research/tgsa-v5-1-unified-programme, which is now the spine tip. Only the Phase 2B (C7) and retrofit (C8) branches hold commits outside that chain."
+  },
+  "stages": [
+    {
+      "id": "C1",
+      "branch": "research/tgsa-phase1-model-identifiability-launch-audit",
+      "commit": "bef44ce",
+      "upstream": "gone",
+      "archive_tag": "archive/tgsa-phase1-launch-audit",
+      "worktree": null,
+      "branch_ref": "deleted 2026-08-31; read via the archive tag",
+      "role": "Phase 1 launch audit",
+      "mtp_semantics": null,
+      "decision": "superseded",
+      "contained_in_spine": true,
+      "note": "ancestor of every other TGSA branch; reachable even if the branch ref is deleted"
+    },
+    {
+      "id": "C2",
+      "branch": "research/tgsa-phase1-identifiability-v2-launch-ready",
+      "commit": "e0063f0",
+      "upstream": "gone",
+      "archive_tag": "archive/tgsa-phase1-v2-launch-ready",
+      "worktree": null,
+      "branch_ref": "deleted 2026-08-31; read via the archive tag",
+      "role": "Phase 1 v2 launch-ready",
+      "mtp_semantics": null,
+      "decision": "superseded",
+      "contained_in_spine": true,
+      "note": "tagged; safe to delete the branch ref"
+    },
+    {
+      "id": "C3",
+      "branch": "research/tgsa-phase1-identifiability-v3-powered-confirmatory",
+      "commit": "6c97ac1",
+      "upstream": "gone",
+      "archive_tag": "archive/tgsa-phase1-v3-inconclusive",
+      "worktree": null,
+      "branch_ref": "deleted 2026-08-31; read via the archive tag",
+      "role": "Phase 1 v3 powered confirmatory study",
+      "mtp_semantics": null,
+      "decision": "INCONCLUSIVE",
+      "contained_in_spine": true,
+      "study_id": "tgsa-phase1-identifiability-v3-2026-08-29",
+      "result": {
+        "matrix": "3 arms x 20 seeds = 60 cells, 2500 updates each, 60/60 completed",
+        "evidence_checks": "2001 passed, 0 errors",
+        "H1a_delta_minus_history": {
+          "estimate": 0.0014,
+          "ci95": [
+            -0.0021,
+            0.0048
+          ],
+          "p_gt_0": 0.79,
+          "negative_seeds": "9/20"
+        },
+        "H1b_delta_minus_cascade": {
+          "estimate": 0.0004,
+          "ci95": [
+            -0.0025,
+            0.0034
+          ],
+          "p_gt_0": 0.619,
+          "negative_seeds": "8/20"
+        },
+        "H1c_aligned_minus_replay_deranged": {
+          "estimate": 0.0019,
+          "ci95": [
+            -0.0003,
+            0.004
+          ],
+          "p_gt_0": 0.959,
+          "negative_seeds": "7/20"
+        },
+        "reason": "no arm was competent; the contrast is uninterpretable",
+        "estimator_robustness": "all four sensitivity estimators agree on H1a"
+      },
+      "evidence_root": "Rineya_Trajectory_Guided_Sequential_Attention_Lab_v1/evidence/v3_result/"
+    },
+    {
+      "id": "C4",
+      "branch": "research/tgsa-phase1-v4-competence-first",
+      "commit": "8b5737e",
+      "upstream": "retired to tag 2026-08-31; no branch on origin",
+      "archive_tag": "archive/tgsa-phase1-v4-regime-rejected",
+      "worktree": "C:/Users/clclc/BusinessProject/Chat-Bubble-v4",
+      "role": "frozen competence and regime-selection boundary",
+      "mtp_semantics": null,
+      "decision": "V4_REGIME_FAMILY_REJECTED",
+      "contained_in_spine": true,
+      "result": {
+        "regimes": {
+          "easy_50k_20k": {
+            "distinct_examples": 49998,
+            "effective_epochs": 25.6,
+            "verdict": "NO_GO",
+            "failed": [
+              "reliability",
+              "memorization",
+              "saturation"
+            ]
+          },
+          "easy_200k_20k": {
+            "distinct_examples": 199998,
+            "effective_epochs": 6.4,
+            "verdict": "NO_GO",
+            "failed": [
+              "reliability"
+            ]
+          }
+        },
+        "sample_presentations_both": 1280000,
+        "deciding_check": "no_primary_family_saturated",
+        "family_behaviour": {
+          "direct_lookup": "inert (guardrail)",
+          "pointer_chase": "inert (primary)",
+          "state_update": "floor to saturation, +0.947 / +0.890"
+        },
+        "interpretation": "apparatus result; says nothing about the TGSA mechanism in either direction",
+        "escalation": "NO FURTHER MEASUREMENT PERMITTED; no confirmatory matrix dispatched"
+      },
+      "evidence_root": "Rineya_Trajectory_Guided_Sequential_Attention_Lab_v1/evidence/v4_competence/",
+      "lifecycle": "frozen; must not receive Phase-2 implementation commits",
+      "branch_ref": "no branch on origin; read-only local checkout retained at Chat-Bubble-v4, not a work surface"
+    },
+    {
+      "id": "C5",
+      "branch": "research/tgsa-phase2-mtp-complementarity",
+      "commit": "d71b558",
+      "upstream": "retired to tag 2026-08-31; no branch anywhere",
+      "archive_tag": "archive/tgsa-phase2a-superseded-2026-08-31",
+      "worktree": null,
+      "branch_ref": "deleted 2026-08-31; read via the archive tag",
+      "role": "ARCHIVED predecessor of the Phase 2A branch",
+      "mtp_semantics": "sequential_teacher_forced_recursive_v1",
+      "decision": "ARCHIVED 2026-08-31; superseded by C6; no result",
+      "contained_in_spine": true,
+      "tests": 350,
+      "note": "held the Phase 2A role and the PR review surface until 2026-08-31. Fully contained in C6 as of merge ce4f134; nothing here is unique. Read through the tag; do not commit to this branch.",
+      "tests_note": "350 measured by collection at d71b558. C5's own README claimed 349, and the archive/tgsa-phase2a-superseded-2026-08-31 tag annotation repeats 349; both are frozen historical text and were left unchanged. The same README-understates-collection drift is recorded for C10."
+    },
+    {
+      "id": "C6",
+      "branch": "research/tgsa-phase2a-ci-and-competence",
+      "commit": "de3bd63",
+      "upstream": "retired to tag 2026-09-03; branch ref proposed for deletion on origin",
+      "archive_tag": "archive/tgsa-phase2a-ci-and-competence-superseded-2026-09-03",
+      "worktree": "C:/Users/clclc/BusinessProject/Chat-Bubble-phase2a-next",
+      "role": "Phase 2A: trajectory-mechanism identification. Held THE CANONICAL ACTIVE BRANCH designation from 2026-08-31 until 2026-09-03, and simultaneously served as the pinned execution base of the v5 programme.",
+      "mtp_semantics": "sequential_teacher_forced_recursive_v1",
+      "decision": "SUPERSEDED 2026-09-03 by C11; development-only; no result",
+      "contained_in_spine": true,
+      "tests": 396,
+      "contains": [
+        "C1",
+        "C2",
+        "C3",
+        "C4",
+        "C5"
+      ],
+      "unique_content": [
+        "v5 preregistration",
+        "within-study qualification gate",
+        "per-family null scoring",
+        "README overclaim property guard"
+      ],
+      "note": "tip advanced 4caace5 -> de3bd63 after the 2026-08-31 ledger snapshot (one commit: docs repair of a sentence a blanket replace mangled in the v5 prereg). Fully contained in C11: merge-base == de3bd63 and 0 commits outside. Still the value of expected_base_commit in configs/phase1_v5_smoke.json, and one of the six SHAs pinned by configs/v5_1_programme_contract.json, so this object must stay fetchable. A local worktree remains at Chat-Bubble-phase2a-next; it is no longer a work surface. Read through the tag; do not commit to this branch.",
+      "also_known_as": "research/tgsa-v5-competence-execution (C9) pointed at this same commit",
+      "shared_not_unique": "the four phase2_program_contract files are NOT unique to C6: C5 (d71b558) carries all four byte-identically, introduced by 1c14521 before the C5/C6 merge-base 81755bf, and C7 carries them too. What C6 alone held against C5 was PHASE1_V5_PREREGISTRATION.md, tgsa/scope.py and tests/test_scope.py."
+    },
+    {
+      "id": "C7",
+      "branch": "research/tgsa-mtp-rineya-complementarity-v1",
+      "commit": "49aa961",
+      "upstream": "in sync with origin",
+      "archive_tag": null,
+      "worktree": "C:/Users/clclc/BusinessProject/Chat-Bubble-phase2b",
+      "role": "Phase 2B: system factorial, exact verified decoding, real-model integration",
+      "mtp_semantics": "parallel_independent_offsets_v1",
+      "decision": "active; development-only; no result",
+      "contained_in_spine": false,
+      "tests": 359,
+      "unique_commits_vs_spine": 7,
+      "unique_content": [
+        "parallel independent-offset factorial",
+        "warm-start source device/dose binding",
+        "regime-laundering hardening",
+        ".github/workflows/tgsa-mtp.yml",
+        "3 docs imported under TGSA_PROGRAMME/imported/phase2b/"
+      ],
+      "pooling": "outputs must not be pooled with C5/C6; the causal graphs differ"
+    },
+    {
+      "id": "C8",
+      "branch": "research/tgsa-rineya-pretrained-retrofit",
+      "commit": "927405a",
+      "upstream": "in sync with origin",
+      "archive_tag": "parked/tgsa-rineya-retrofit-2026-08-31",
+      "worktree": "C:/Users/clclc/BusinessProject/Chat-Bubble-rineya-retrofit",
+      "role": "real pretrained Qwen3/Rineya retrofit path",
+      "mtp_semantics": null,
+      "decision": "PARKED; sequenced third, after Phase 2A and Phase 2B",
+      "contained_in_spine": false,
+      "diverged_at": "04d3c02 (mid-v3)",
+      "unique_commits_vs_spine": 16,
+      "stale_by": "91 lab files behind the C11 spine (84 vs 175); lacks the v3 final result, the v4 rejection, all Phase 2 work and the whole v5/v5.1 programme",
+      "result": {
+        "candidate_intake": "no candidate is ship-positive; no promotion authorized",
+        "rejected": [
+          "A1.1/Baya 50/50 soup (transfer-positive, failed preservation)",
+          "A1.1 adapter dose 1.0625 (transfer-fail)",
+          "A1.1 + Pulse negative vector (catastrophic anchor incompatibility)",
+          "4B/8B spectral consensus (development +1 vanished on DEV-FULL)",
+          "normalized significance/count KV retention (quality 5/12 vs 6/12)",
+          "Supa abstention threshold copied to Baya (Showcase 40 -> 35)"
+        ],
+        "deferred": [
+          "TGSA Phase-1 v5",
+          "TGSA + MTP Phase 2A",
+          "PSA / SGSA interventions"
+        ],
+        "already_integrated": [
+          "Supa-A1.1 FP16 + abstention"
+        ]
+      },
+      "lift_condition": "a competence-qualified regime from a new preregistration, not the rejected v4 band",
+      "note": "tip advanced eea4f64 -> ef5194b -> 927405a. The parked/tgsa-rineya-retrofit-2026-08-31 tag covers eea4f64 only, not this tip. 927405a is pointer hygiene only, made while the branch stayed parked: after research/tgsa-phase2a-ci-and-competence was deleted from origin it repointed the broken origin/<branch>:<path> evidence pointers at commit shas and refreshed the ref-scan table and the hold note to match. No lab file changed, nothing was merged and no gate moved, so stale_by and the result block above are unchanged and the branch is still PARKED."
+    },
+    {
+      "id": "C9",
+      "branch": "research/tgsa-v5-competence-execution",
+      "commit": "de3bd63",
+      "upstream": "gone",
+      "archive_tag": "archive/tgsa-v5-competence-execution-superseded-2026-09-03",
+      "worktree": null,
+      "branch_ref": "deleted from origin before 2026-09-03; read via the archive tag",
+      "role": "v5 competence-execution designation",
+      "mtp_semantics": null,
+      "decision": "SUPERSEDED 2026-09-03 by C11; development-only; no result",
+      "contained_in_spine": true,
+      "tests": 396,
+      "note": "not a distinct commit: this branch name pointed at exactly the same commit as C6 (de3bd63), so its deletion could never have orphaned an object. Recorded as its own stage because the branch identity was distinct and the commit is pinned by the programme contract."
+    },
+    {
+      "id": "C10",
+      "branch": "research/tgsa-v5-competence-and-mechanism",
+      "commit": "b091490",
+      "upstream": "retired to tag 2026-09-03; branch ref proposed for deletion on origin",
+      "archive_tag": "archive/tgsa-v5-competence-and-mechanism-superseded-2026-09-03",
+      "worktree": null,
+      "role": "v5 competence-and-mechanism; strict descendant of C9 (+5 commits); the audited implementation base of v5.1",
+      "mtp_semantics": null,
+      "decision": "SUPERSEDED 2026-09-03 by C11; development-only; no result",
+      "contained_in_spine": true,
+      "tests": 436,
+      "unique_content": [
+        "executable phase 1 v5 qualification apparatus",
+        "closed-chain v5 smoke qualification CI",
+        "v5 contract test collection repair",
+        "linear-memory control-only telemetry",
+        "isolated MTP probe and co-training gradients"
+      ],
+      "note": "V5_1_UNIFIED_PROGRAMME.md records this commit as its **Base:**, and the single v5.1 commit sits directly on it. Its own README still claimed 396 tests while the suite collected 436 -- the documentation drift v5.1 repairs. One of the six SHAs pinned by the programme contract, so this object must stay fetchable. Read through the tag; do not commit to this branch."
+    },
+    {
+      "id": "C11",
+      "branch": "research/tgsa-v5-1-unified-programme",
+      "commit": "b60d470",
+      "upstream": "in sync with origin",
+      "archive_tag": null,
+      "worktree": "C:/Users/clclc/BusinessProject/Chat-Bubble-v51",
+      "role": "Phase 1 v5.1 unified programme. THE CANONICAL ACTIVE BRANCH and PR review surface, redesignated 2026-09-03. A prospectively frozen staged research programme.",
+      "mtp_semantics": "none at this stage; v5 qualifies the apparatus before any auxiliary future-prediction objective may shape the trajectory",
+      "decision": "ACTIVE; FROZEN and prospectively registered; development-only; no result yet",
+      "contained_in_spine": "is the spine tip",
+      "tests": 458,
+      "contains": [
+        "C1",
+        "C2",
+        "C3",
+        "C4",
+        "C5",
+        "C6",
+        "C9",
+        "C10"
+      ],
+      "unique_content": [
+        "V5_1_UNIFIED_PROGRAMME.md (the unified staged programme)",
+        "V5_1_DOCUMENTATION_STATUS.md (frozen historical evidence register)",
+        "configs/v5_1_programme_contract.json and its three evidence schemas",
+        "tgsa/v5_1_programme.py (resolves lineage by SHA, never by branch name)",
+        "scripts/verify_v5_1_programme_contract.py, phase1_v5_1_qualify.py, select_phase1_v5_1.py",
+        "tests/test_v5_1_programme_contract.py (4 programme-contract regressions)",
+        "phase1_v5_plan.schema.json: required key typo famili_roles -> family_roles",
+        ".github/workflows/tgsa-v5.yml: runner-temporary paths initialized after runner allocation"
+      ],
+      "test_count_derivation": "458 = 436 at C10, plus 4 programme-contract regressions, plus 4 auto-parametrized test_seed_determinism cases (444), plus 14 covering the gate-hardening fixes. Measured, not asserted.",
+      "pooling": "preserves separate Phase 2A and Phase 2B causal identities; sequential_teacher_forced_recursive_v1 and parallel_independent_offsets_v1 outputs must never be pooled or called replications",
+      "authorization_state": "the contract is frozen but NOT yet locked against a nondevelopment run: --attest-no-prior-outcome-inspection records a HUMAN operator's attestation and has not been given. Every run so far is development_only=true.",
+      "note": "work here. Materialized as one plain reviewable commit on C10, replacing a four-commit bootstrap (26c563b, b6a42a6, 6c94adb, b7b2cbe) built from a .v51-bootstrap ten-part binary blob plus a contents:write materialization workflow that failed four times. The third failure died on `git diff --check` over two Markdown hard-break trailing spaces; the fourth repaired them, cleared every gate, and then had its push rejected for lack of `workflows` permission on .github/workflows/tgsa-v5.yml. The package reassembled to sha256 b03f5032a4ffe315653e35307bd1256017bb669b31ae814adac6fdc742d5217a and contained 16 files; 15 are real content and the 16th, .v51-bootstrap/materialize.sh, was bootstrap machinery and was dropped. Beyond the package this commit also fixes the tgsa-v5.yml runner-temp env defect that the package did ship, and the `famili_roles` required-key typo that it did not -- that one was inherited from b091490 via 9602d3d.",
+      "ci": "green: run 33774170876, 'TGSA Phase 1 v5 apparatus qualification', success in 2m13s on 2026-09-03",
+      "predecessor_tip": "fd6e20f held this branch from 2026-09-03 to 2026-09-04 and is preserved by archive/tgsa-v5-1-pre-gate-hardening-2026-09-04. DO NOT RUN STAGE 0 FROM THAT COMMIT: its qualification gate can certify a cell GO with a seed below the primary family's null, and an interrupt can silently diverge a resumed cell.",
+      "merged_amendment": {
+        "branch": "research/tgsa-v5-1-gate-hardening",
+        "tip": "b60d470",
+        "base": "fd6e20f",
+        "status": "MERGED into C11 on 2026-09-04 by fast-forward -- fd6e20f is an ancestor of b60d470, so no merge commit exists and the history stays linear. Six commits. 458 tests pass, the contract verifier is green on all ten checks with programme_sha256 unchanged at d52d89a3..., the locked plan blob 0538faf4d2ad142dbce9c408910f9dcbcf1fd064 is byte-unchanged, and no file under configs/ or evidence/ was touched. The branch research/tgsa-v5-1-gate-hardening remains on origin at the same commit as a review surface.",
+        "why": "an adversarial review of the v5 apparatus confirmed four defects, three of them high severity, none of which any existing verifier would have caught. All were fixed before any nondevelopment run, which is the only point at which strengthening a frozen prospective registration is legitimate.",
+        "defects_fixed": [
+          "the qualification gate could certify a cell GO with one of three seeds BELOW the family null. minimum_absolute_accuracy stayed at v4's 0.070, which was ~1.9x v4's wrong 0.0377 baseline but only 0.53x the corrected pointer_chase null of 0.1318. Reproduced: seeds [0.0966, 0.1948, 0.1948] gave GO with all checks true and reasons empty. Fixed by adding every_seed_beats_its_family_null, registered in PHASE1_V5_PREREGISTRATION.md section 7",
+          "an interrupt between optimizer.step() and the next_step assignment made resume re-apply that step. Measured divergence: uninterrupted 0b48dd27... vs resumed a9d1dadf.... The handler no longer nominates a resume point; its snapshot goes to interrupted_state.pt as diagnostic evidence and resume falls back to the last periodic checkpoint",
+          "select_qualified_exposure, which emits AUTHORIZE_MTP_FREE_MECHANISM_STUDY, validated the frozen band's plan_sha256 but accepted any report with a matching schema, rung and exposure. Both it and freeze_band_after_probe now require the plan hash on every report and refuse development-only evidence",
+          "CUBLAS_WORKSPACE_CONFIG is set with setdefault, so an inherited value wins and selects different cuBLAS GEMM behaviour, and it appeared in no fingerprint. Now recorded in environment_snapshot and carried into the cell identity, so a changed setting fails the fingerprint instead of silently changing CUDA arithmetic"
+        ],
+        "self_inflicted_and_corrected": [
+          "failure.json's resume_note stated the applied_steps relation backwards, and commit 7ca0a68's message repeated it. applied_steps == next_step is the UNTORN state; applied_steps == next_step + 1 is the stale-counter window. Corrected in e868360",
+          "the new check used family_null.get(family, 0.0), so a missing null put the bar at 0.030 alone. Now fails closed",
+          "the new check assumed per_seed_holdout_accuracy always carries the first primary family. Only phase1_v5_runner does; the three v4-era callers pass POOLED across-family accuracy, where comparing against one family's null is fail-open. ArmCompetence now declares per_seed_family and a pooled arm is held to the strongest trivial baseline instead",
+          "V5_1_DOCUMENTATION_STATUS.md still said of PHASE1_V5_PREREGISTRATION.md that 'the file itself is not rewritten' after 32f1253 amended it. Corrected, along with a pre-existing error in the same index: it listed PHASE2_IMPLEMENTATION_SUMMARY.md, which exists only on C7 at 49aa961"
+        ],
+        "not_weakened": "measured at the tip: gate checks 9 -> 10 with none removed, zero pre-existing tests removed across the five touched test files, zero skip or xfail markers added, and no file under configs/ or evidence/ touched. Two pre-existing selection tests were given the plan provenance a real report carries, so they exercise the stronger contract rather than a looser one.",
+        "diff_scope": "839 insertions, 9 deletions across 11 files. A sixth commit restored tests/test_phase1_v5.py to LF: a Python write_text() had flipped it to CRLF while making a 125-line change, which inflated the branch diff to 1253/423 and made it read as a whole-file rewrite. The lab has mixed conventions on purpose -- bootstrap-package files are LF, older sources CRLF -- so an edit must match the file's existing endings."
+      },
+      "fresh_clone_verification": {
+        "date": "2026-09-04",
+        "why": "the two superseded branch refs were deleted from origin on this date. tgsa/v5_1_programme.py resolves the pinned lineage SHAs with cat-file -e and merge-base, never by branch name, so the question is not whether the branch names exist but whether the OBJECTS still reach a fresh clone. Tested rather than assumed.",
+        "method": "cloned the origin repository fresh AFTER both deletions, checked out research/tgsa-v5-1-unified-programme, and ran scripts/verify_v5_1_programme_contract.py against the clone",
+        "result": "clone HEAD b60d470, worktree clean, verifier exit 0 with all ten checks true and programme_sha256 identical at d52d89a3020972dde7935120094d55dfe50dc8d3e8b6fe288860daa14e8142e9. All five pinned commits (de3bd63, b091490, 49aa961, ef5194b, 8b5737e) resolved via cat-file -e. The full suite also passed in the clone."
+      }
+    }
+  ],
+  "shared_facts": [
+    "every implementation branch descends from bef44ce and shares the Phase-1 chain and the PART 11 reporting standard with OBSERVED / SUPPORTED / HYPOTHESIS marking; research/tgsa-programme-ledger is the one exception, an orphan with no shared history",
+    "all report under the PART 11 standard with OBSERVED / SUPPORTED / HYPOTHESIS marking",
+    "C7 and C8 hold a near-identical retrofit codebase: of 27 co-modified files only 3 differ, and C8 is authoritative (60 files vs C7's 37)",
+    "the retrofit tree and the lab tree are near-disjoint: the spine has 0 retrofit files; C8 carries a stale 84-file lab against the C11 spine's 175",
+    "the programme contract is stage-neutral: it defines phase2a and phase2b and the verifier routes on study_kind, so C6 and C7 carry copies that differ only in the phase2a stage's `branch` field -- one line -- rather than being divergent forks. They are NOT byte-identical: 188ed21 moved the Phase 2A designation across six references including that field.",
+    "the v5 chain introduced no new MTP semantics: v5 and v5.1 qualify the apparatus, and mtp.enabled is false in the v5 plans"
+  ],
+  "imported_records": [
+    {
+      "path": "TGSA_PROGRAMME/imported/phase2b/PHASE2_IMPLEMENTATION_SUMMARY.md",
+      "source_branch": "research/tgsa-mtp-rineya-complementarity-v1",
+      "source_commit": "49aa961",
+      "source_path": "Rineya_Trajectory_Guided_Sequential_Attention_Lab_v1/PHASE2_IMPLEMENTATION_SUMMARY.md",
+      "sha256": "ec3deb7ad3f1cee8d581322ca9c183b61e786883cb8ffddb215c15c54331bfcf",
+      "verbatim_copy": true
+    },
+    {
+      "path": "TGSA_PROGRAMME/imported/phase2b/PHASE2_RUNBOOK.md",
+      "source_branch": "research/tgsa-mtp-rineya-complementarity-v1",
+      "source_commit": "49aa961",
+      "source_path": "Rineya_Trajectory_Guided_Sequential_Attention_Lab_v1/PHASE2_RUNBOOK.md",
+      "sha256": "757b8370c7ccab7b1ab54d811fe8a5042d96a77e04f27d3ac3b57b7a8b4f20ce",
+      "verbatim_copy": true
+    },
+    {
+      "path": "TGSA_PROGRAMME/imported/phase2b/TGSA_MTP_COMPLEMENTARITY_PROTOCOL.md",
+      "source_branch": "research/tgsa-mtp-rineya-complementarity-v1",
+      "source_commit": "49aa961",
+      "source_path": "Rineya_Trajectory_Guided_Sequential_Attention_Lab_v1/TGSA_MTP_COMPLEMENTARITY_PROTOCOL.md",
+      "sha256": "d51ade0d3d6c95bc803ddd0f2c041c78ab05d160fbfa3203ee57e24b130b7761",
+      "verbatim_copy": true
+    },
+    {
+      "path": "TGSA_PROGRAMME/imported/retrofit/CANDIDATE_LEDGER.md",
+      "source_branch": "research/tgsa-rineya-pretrained-retrofit",
+      "source_commit": "eea4f64",
+      "source_path": "Rineya_TGSA_Retrofit_v1/CANDIDATE_LEDGER.md",
+      "sha256": "e4f1c2e82597e251310a0650a268e8de425e7e661e07ad15c7efb6d6169988ea",
+      "verbatim_copy": true
+    },
+    {
+      "path": "TGSA_PROGRAMME/imported/retrofit/HISTORICAL_PRODUCTION_HARVEST_AUDIT.md",
+      "source_branch": "research/tgsa-rineya-pretrained-retrofit",
+      "source_commit": "eea4f64",
+      "source_path": "Rineya_TGSA_Retrofit_v1/HISTORICAL_PRODUCTION_HARVEST_AUDIT.md",
+      "sha256": "fcac73cf4b8b4f7c8abcc769676fb45903e1d299272e306e4e413a4c50844761",
+      "verbatim_copy": true
+    },
+    {
+      "path": "TGSA_PROGRAMME/imported/retrofit/PRODUCTION_RETROFIT_AUDIT.md",
+      "source_branch": "research/tgsa-rineya-pretrained-retrofit",
+      "source_commit": "927405a",
+      "source_path": "Rineya_TGSA_Retrofit_v1/PRODUCTION_RETROFIT_AUDIT.md",
+      "sha256": "0d32f8026822abc9b6e137cef884e7737978ae7cce9069d5a5d12222e643d6d5",
+      "verbatim_copy": true,
+      "reimported_on": "2026-09-04",
+      "supersedes": "the eea4f64 copy (401670e6cbb6...), stale after 927405a gave the ref-scan table a ref-status column recording which inspected branches are retired"
+    },
+    {
+      "path": "TGSA_PROGRAMME/imported/retrofit/PRODUCTION_TRIAL_QUEUE.md",
+      "source_branch": "research/tgsa-rineya-pretrained-retrofit",
+      "source_commit": "eea4f64",
+      "source_path": "Rineya_TGSA_Retrofit_v1/PRODUCTION_TRIAL_QUEUE.md",
+      "sha256": "95cff06cf7f696fa3956dba596901c0a1a7a0c4f66baf78f4a9b1feca20635b7",
+      "verbatim_copy": true
+    },
+    {
+      "path": "TGSA_PROGRAMME/imported/retrofit/HANDOFF_REPORT.md",
+      "source_branch": "research/tgsa-rineya-pretrained-retrofit",
+      "source_commit": "eea4f64",
+      "source_path": "Rineya_TGSA_Retrofit_v1/HANDOFF_REPORT.md",
+      "sha256": "7f5eaa3489a7adcd97ac044824a8ea51e1416a496f884be67265824e0604cc30",
+      "verbatim_copy": true
+    },
+    {
+      "path": "TGSA_PROGRAMME/imported/retrofit/RETROFIT_RUNBOOK.md",
+      "source_branch": "research/tgsa-rineya-pretrained-retrofit",
+      "source_commit": "eea4f64",
+      "source_path": "Rineya_TGSA_Retrofit_v1/RETROFIT_RUNBOOK.md",
+      "sha256": "8ddfe311d4bd91359d368048202c2b18544f1eb2f0b14a06a71440e57ea7d6d4",
+      "verbatim_copy": true
+    },
+    {
+      "path": "TGSA_PROGRAMME/imported/retrofit/PHASE1B_CONDITIONING_LADDER.md",
+      "source_branch": "research/tgsa-rineya-pretrained-retrofit",
+      "source_commit": "eea4f64",
+      "source_path": "Rineya_TGSA_Retrofit_v1/PHASE1B_CONDITIONING_LADDER.md",
+      "sha256": "30b37c334adac52789bdd5b3d301f1841b7ca6989eaf2e712ffe81f7312f4414",
+      "verbatim_copy": true
+    },
+    {
+      "path": "TGSA_PROGRAMME/imported/retrofit/PHASE1_V3_EXECUTION_HANDOFF.md",
+      "source_branch": "research/tgsa-rineya-pretrained-retrofit",
+      "source_commit": "eea4f64",
+      "source_path": "Rineya_TGSA_Retrofit_v1/PHASE1_V3_EXECUTION_HANDOFF.md",
+      "sha256": "6e09ab6389d08a73aef6d515df074d29f5cf65765de58a945927e08da01a2c67",
+      "verbatim_copy": true
+    },
+    {
+      "path": "TGSA_PROGRAMME/imported/retrofit/PHASE2A_PREREQUISITE_HOLD.md",
+      "source_branch": "research/tgsa-rineya-pretrained-retrofit",
+      "source_commit": "927405a",
+      "source_path": "Rineya_TGSA_Retrofit_v1/PHASE2A_PREREQUISITE_HOLD.md",
+      "sha256": "632d26748d95bb3353df8f8dd75d4ab73e8fa936851e3722c0a7d7d79f504a2c",
+      "verbatim_copy": true,
+      "reimported_on": "2026-09-04",
+      "supersedes": "the ef5194b copy (44008d5822d6...), stale after 927405a repointed the hold note at commit de3bd63 instead of the retired branch name"
+    },
+    {
+      "path": "TGSA_PROGRAMME/imported/retrofit/candidate_ledger.json",
+      "source_branch": "research/tgsa-rineya-pretrained-retrofit",
+      "source_commit": "927405a",
+      "source_path": "Rineya_TGSA_Retrofit_v1/evidence/candidate_ledger.json",
+      "sha256": "74a1ff79c530696c4d6877a99ad9ae6fe5052ea0e1288fce8676a7b6987d648e",
+      "verbatim_copy": true,
+      "reimported_on": "2026-09-04",
+      "supersedes": "the eea4f64 copy (4971afd792ee...), stale after 927405a repointed its origin/<branch>:<path> evidence pointers at commit shas"
+    },
+    {
+      "path": "TGSA_PROGRAMME/imported/retrofit/candidate_ledger.schema.json",
+      "source_branch": "research/tgsa-rineya-pretrained-retrofit",
+      "source_commit": "eea4f64",
+      "source_path": "Rineya_TGSA_Retrofit_v1/schemas/candidate_ledger.schema.json",
+      "sha256": "9cad375a0bfbea90eed6a1a5813fb86acb1e254d8272084ae8c43c82084da631",
+      "verbatim_copy": true
+    }
+  ],
+  "not_imported": {
+    "source_code": "no implementation file from any stage is copied here; read it on its own branch",
+    "rehearsal_output": "evidence/phase2_mtp_smoke_local/ on C5 is regenerated scratch (CPU, one seed, three updates, confirmatory=false) and is gitignored, not archived",
+    "checkpoints": "*.pt / *.pth are excluded programme-wide; the repo tracks zero of them"
+  },
+  "active_branches": {
+    "work_here": "research/tgsa-v5-1-unified-programme",
+    "also_active": [
+      "research/tgsa-mtp-rineya-complementarity-v1 (Phase 2B, must stay separate)",
+      "research/tgsa-rineya-pretrained-retrofit (parked, third in sequence)",
+      "research/tgsa-programme-ledger (records only; ORPHAN branch, no shared history)"
+    ],
+    "archived_branch_refs_deleted_2026_08_31": {
+      "note": "these four branch refs no longer exist locally or on origin. Their commits are preserved by annotated tags pushed to origin and are contained in the active branch. Read them through the tag; restore with: git branch <name> <tag>",
+      "tags": [
+        "archive/tgsa-phase1-launch-audit",
+        "archive/tgsa-phase1-v2-launch-ready",
+        "archive/tgsa-phase1-v3-inconclusive",
+        "archive/tgsa-phase2a-superseded-2026-08-31"
+      ]
+    },
+    "frozen_evidence": "archive/tgsa-phase1-v4-regime-rejected -- tag only, no branch on origin. A branch that does not exist cannot be pushed to, which is the strongest form of the contract's no-Phase-2-merges rule.",
+    "branches_visible_on_github": 6,
+    "archived_branch_refs_deleted_2026_09_03": {
+      "note": "research/tgsa-v5-competence-execution was already absent from origin when this snapshot was taken. The other two are tagged and PROPOSED for deletion, deferred by decision until CI is confirmed green on the materialized tree; until then they still exist on origin. All three tips are strict ancestors of C11 (fd6e20f), so no deletion can orphan an object. Restore with: git branch <name> <tag>",
+      "tags": [
+        "archive/tgsa-phase2a-ci-and-competence-superseded-2026-09-03 -> de3bd63",
+        "archive/tgsa-v5-competence-execution-superseded-2026-09-03 -> de3bd63",
+        "archive/tgsa-v5-competence-and-mechanism-superseded-2026-09-03 -> b091490"
+      ],
+      "status": "tags created locally and pushed to origin; no remote ref deleted"
+    },
+    "branches_visible_on_github_after_proposed_retirement": 4,
+    "lineage_objects_must_stay_fetchable": "configs/v5_1_programme_contract.json pins six SHAs -- 0538faf (the phase1_v5_plan.json blob), 49aa961, 8b5737e, b091490, de3bd63 and ef5194b -- and tgsa/v5_1_programme.py resolves them with `cat-file -e` and `merge-base`, never by branch name. Always fetch with --tags before running any verifier: a v5.1 CI run already failed on exactly this after v4 was retired to a tag."
+  },
+  "consolidation_2026_08_31": {
+    "merge": "ce4f134 folded C5 into C6; within-stage, same semantics, one additive .gitignore conflict resolved by keeping both rules",
+    "redesignation": "188ed21 moved the Phase 2A designation from C5 to C6 across all six references: canonical path stages table and branch lifecycle, README chain, runbook lineage, programme contract stage field, CI trigger",
+    "tags_created": [
+      "archive/tgsa-phase1-launch-audit -> bef44ce",
+      "archive/tgsa-phase2a-superseded-2026-08-31 -> d71b558",
+      "parked/tgsa-rineya-retrofit-2026-08-31 -> eea4f64"
+    ],
+    "pushed": "all five branches and three new tags pushed to origin; every push was a clean fast-forward, no force, no divergence",
+    "cleanup": "four archived branch refs deleted with git branch -d (merge-verified, not forced) after their tags were confirmed on origin; two archived worktrees removed. TGSA branches went from 8 to 5, worktrees from 6 to 4",
+    "result": "GitHub shows 4 TGSA branches; 5 stages reachable only through tags; 0 open pull requests",
+    "pull_requests_closed": [
+      "#2 research(tgsa) add competence-gated MTP complementarity -- targeted the FROZEN v4 branch, which TGSA_MTP_CANONICAL_PATH.md forbids in two places, and was MERGEABLE. Head fully contained in the active branch, so nothing was lost.",
+      "#3 fix(tgsa) green Phase 2A CI -- pointed backwards after the redesignation; its head IS the active branch."
+    ],
+    "remote_branches_retired_to_tags": [
+      "research/tgsa-phase2-mtp-complementarity -> archive/tgsa-phase2a-superseded-2026-08-31",
+      "research/tgsa-phase1-v4-competence-first -> archive/tgsa-phase1-v4-regime-rejected"
+    ],
+    "ledger_rebuilt_as_orphan": "the ledger had descended from the Phase 2A branch and so carried a full copy of the lab, which made it read as the most advanced branch to experiment on. Rebuilt with no shared history and nothing but TGSA_PROGRAMME/ and a .gitignore in the tree.",
+    "ci_fix": "tgsa-phase1.yml triggered on push to four deleted branches, so it could only fire on pull_request or manual dispatch. Retargeted to the active branch."
+  },
+  "open_items": [
+    "no competence-qualified regime exists, so no Phase 2 confirmatory run is authorized; this remains the single blocking gate for the whole programme",
+    "the four apparatus defects are fixed and merged: C11 is at b60d470. The remaining blocker on Stage 0 is the operator's --attest-no-prior-outcome-inspection attestation and nothing else.",
+    "Stage 0 apparatus qualification is prepared and costed but NOT run. It cannot start until the human operator supplies --attest-no-prior-outcome-inspection: the contract must be frozen before any nondevelopment run, and running first would destroy the prospective registration irrecoverably",
+    "promotion-order step 7 (port manifest reconciling C7's retrofit snapshot against C8) is not started",
+    "the three v4-era callers of evaluate_competence pass POOLED per-run accuracy (scripts/phase1_v4_competence_run.py:433, scripts/regate_competence_report.py:99, scripts/phase1_v4_pipeline_rehearsal.py:69). They are now measured against the strongest trivial baseline rather than a family null, which is correct for a pooled number, but none of them declares per_seed_family and the v4 regime is rejected, so nothing should be re-gated through them without revisiting that first.",
+    "the Stage 0 pre-flight audit is INCOMPLETE and must be finished before the operator attests. Three dimensions never ran (gate-arithmetic, data-flow-chain, plan-contract-schema -- the last being where the famili_roles typo lived), the completeness critic never ran, and seven candidate findings were never adjudicated because their refuters died on a usage limit. One confirmed defect was found and fixed (section 4.0's ladder reports). Treat the rest as unexamined, not clean. See consolidation_2026_09_05."
+  ],
+  "consolidation_2026_09_03": {
+    "materialization": "fd6e20f replaced the v5.1 bootstrap. The bootstrap was FOUR commits -- 26c563b, b6a42a6, 6c94adb and b7b2cbe -- carrying ten binary parts under .v51-bootstrap/ plus .github/workflows/tgsa-v5-1-bootstrap.yml, a contents:write workflow that reassembled a tarball, verified it, and force-pushed a materialized commit. It failed FOUR times (runs 33699105352, 33699971132, 33700347537, 33772927517), and no failure was scientific. Run 33700347537, the THIRD, is the well-known one: all 444 tests, contract verification, schema validation and the probe+qualification smoke chain passed and it printed 'bootstrap validation passed for the exact final v5.1 tree', then it died on `git diff --check` because V5_1_UNIFIED_PROGRAMME.md lines 3 and 4 end in two trailing spaces (Markdown hard breaks). The FOURTH and last, run 33772927517 on b7b2cbe, repaired exactly those two lines, cleared `git diff --check`, again passed all 444 tests and printed the same validation line -- and then had its push rejected outright: 'refusing to allow a GitHub App to create or update workflow .github/workflows/tgsa-v5.yml without `workflows` permission'. That permission boundary, not the whitespace guard, is what finally ended the bootstrap route.",
+    "why_replaced_not_repaired": "the opaque blob made the content unreviewable in the diff and had already accreted an inline CI string-patch hack. With the package verified, the 15 real files were committed plainly instead.",
+    "package_provenance": "the ten parts reassembled to sha256 b03f5032a4ffe315653e35307bd1256017bb669b31ae814adac6fdc742d5217a from both the git blobs and the working tree, containing 16 files. 15 are real content; the 16th, .v51-bootstrap/materialize.sh, was bootstrap machinery and was dropped.",
+    "corrections_applied": [
+      "README.md 440 tests -> 444 tests (fail-closed on exactly one occurrence)",
+      "V5_1_UNIFIED_PROGRAMME.md records 440 tests -> records 444 tests (fail-closed on exactly one occurrence)",
+      "V5_1_UNIFIED_PROGRAMME.md lines 3-4: stripped two trailing spaces each, fail-closed that no other line in the package carried trailing whitespace"
+    ],
+    "base": "committed on b091490 (C10), the base V5_1_UNIFIED_PROGRAMME.md itself declares, discarding the four bootstrap commits 26c563b, b6a42a6, 6c94adb and b7b2cbe. Their combined diff added nothing but the ten parts, the bootstrap workflow and a documentation whitespace repair, so no real content was dropped. origin's tip immediately before the plain materialization was b7b2cbe, not 6c94adb.",
+    "verification": "444 tests passed; contract schema valid; verify_v5_1_programme_contract.py passed with all ten checks green; verification-report schema valid; the development-only probe and qualification smoke chain both returned status=complete with exit 0; `git diff --check b091490..HEAD` clean.",
+    "tags_created": [
+      "archive/tgsa-phase2a-ci-and-competence-superseded-2026-09-03 -> de3bd63",
+      "archive/tgsa-v5-competence-execution-superseded-2026-09-03 -> de3bd63",
+      "archive/tgsa-v5-competence-and-mechanism-superseded-2026-09-03 -> b091490"
+    ],
+    "ledger_refresh": "two stage tips had moved since the 2026-08-31 snapshot and were refreshed: C6 4caace5 -> de3bd63 and C8 eea4f64 -> ef5194b. C8's advance changed an imported record, so imported/retrofit/PHASE2A_PREREQUISITE_HOLD.md was re-imported at ef5194b (sha256 44008d5822d6...).",
+    "pushed": "v5.1 is on origin as fd6e20f with CI green (run 33774170876). The three archive tags and this ledger refresh follow. No remote ref has been deleted: retirement of research/tgsa-phase2a-ci-and-competence and research/tgsa-v5-competence-and-mechanism is deferred until after CI is confirmed green on the materialized tree.",
+    "ordering_constraint": "verify_programme_ledger.py resolves every stage commit locally, so this ledger refresh must not reach origin before fd6e20f. That ordering is now satisfied: v5.1 landed first.",
+    "defects_found_beyond_the_package": "fd6e20f fixes two latent defects, but only ONE of them came from the package: .github/workflows/tgsa-v5.yml resolved ${{ runner.temp }} in a job-level env block, before runner allocation, leaving ARTIFACT_ROOT and PROGRAMME_REPORT empty. The other -- `famili_roles` in the plan schema's required array, so family_roles was never actually enforced -- was NOT in the package: evidence/phase1_v5_plan.schema.json is not among the package's 16 entries, and the extracted tarball contains zero occurrences of the byte string 'famili'. That typo was pre-existing repository content at the audited base b091490, introduced by 9602d3d. Three scripts also needed the exec bit materialize.sh had applied with chmod +x. The narrower lesson still holds for the workflow defect: reassembling a package to its exact sha256 proves integrity, not correctness.",
+    "audit_trail": "three independent adversarial audits were run against this refresh. The first confirmed 2 errors, the second 13 (five root causes), the third -- run uncapped -- confirmed 16 of 28 candidates, reducing to the seven corrected here plus four in the Stage 0 plan document. The single high-severity finding was not in the ledger at all: the Stage 0 plan's qualification commands omitted the mandatory --frozen-band argument and the select_phase1_v5_1.py capacity step that produces it, so every qualification invocation would have raised V5ContractError before creating output. Development-only smoke runs could not have caught it, because _validate_frozen_band returns early when development_only is true. verify_programme_ledger.py catches none of this class of error: it checks imported-file hashes and stage-commit resolution, never counts, run histories, cross-branch byte-identity, or command validity."
+  },
+  "consolidation_2026_09_04": {
+    "apparatus_review": "three adversarial review passes were run against the v5 apparatus and the fixes to it. The first swept scoring, nulls, arm isolation, gates, determinism and data generation: 19 candidates, 4 confirmed, 3 of them high. The second reviewed the fixes themselves and caught an inverted operator diagnostic in one of them. Coverage was incomplete in both cases -- agents died on a session limit -- and the accounting bug that hid it is recorded below.",
+    "review_accounting_bug": "the first review reported 'confirmed: []' with every candidate counted as refuted, which read as a clean apparatus. It was not: four refuters had died and returned null verdicts, and the tally counted null as refuted. Two finder dimensions had not run at all. Re-run with unadjudicated tracked separately, the same review returned 4 confirmed defects including 3 high. A verification harness that cannot distinguish 'refuted' from 'never checked' will report a clean result for work it never examined.",
+    "lesson": "two of the four defects were invisible to every test the programme permits at this stage, because development mode bypasses the code that was wrong: _validate_frozen_band returns early when development_only is true, so no smoke run could reach the missing --frozen-band, and the smoke plan's null is low enough that the below-chance seed hole never opened. Development-mode escape hatches hide exactly the defects that only matter in a real run.",
+    "pushed": "research/tgsa-v5-1-gate-hardening at 1af0b5a is on origin as a separate branch. C11 itself is untouched at fd6e20f, so the frozen registration is unchanged until a merge decision is taken.",
+    "merged": "research/tgsa-v5-1-unified-programme was fast-forwarded fd6e20f -> b60d470 on 2026-09-04, after the pre-merge tip was pinned by archive/tgsa-v5-1-pre-gate-hardening-2026-09-04 (pushed) and every ref was captured in an off-GitHub bundle at BusinessProject/tgsa-backups/tgsa-all-refs-2026-09-04.bundle, verified as recording a complete history. Stage 0 is no longer blocked on the apparatus; it is blocked only on the operator's attestation.",
+    "ref_retirement": {
+      "date": "2026-09-04",
+      "deleted_from_origin": [
+        {
+          "ref": "research/tgsa-phase2a-ci-and-competence",
+          "commit": "de3bd632b491df294f9b8736079bdcbbdd64e4d3",
+          "archive_tags": [
+            "archive/tgsa-phase2a-ci-and-competence-superseded-2026-09-03",
+            "archive/tgsa-v5-competence-execution-superseded-2026-09-03"
+          ]
+        },
+        {
+          "ref": "research/tgsa-v5-competence-and-mechanism",
+          "commit": "b09149002a7892a87a461af0b3c852ed14842905",
+          "archive_tags": [
+            "archive/tgsa-v5-competence-and-mechanism-superseded-2026-09-03"
+          ]
+        }
+      ],
+      "condition_that_was_waited_for": "the operator deferred this deletion until v5.1 CI passed against the materialized tree. CI run 33889037837 succeeded on headSha b60d470, which is exactly the merged registered tip, so the condition was met on the right commit rather than an approximate one",
+      "why_this_lost_nothing": "both commits are ANCESTORS of C11's tip b60d470, so they remain reachable from the registered branch itself and would survive even with no tag at all. They are additionally reachable from annotated archive tags on origin, and present in all THREE verified bundles -- corrected from two by the 2026-09-05 audit, which found a third bundle on disk and confirmed every bundle is self-contained (no prerequisites) and carries b60d470, so both commits are inside all three by reachability even where no ref names them. Three independent paths, and the fresh-clone test above measured the outcome instead of inferring it.",
+      "local_state": "only the REMOTE refs were deleted. The local branch research/tgsa-phase2a-ci-and-competence and its worktree at Chat-Bubble-phase2a-next were left untouched, as were the other eleven worktrees",
+      "third_ref": "research/tgsa-v5-competence-execution was retired earlier and was already absent from origin; it pointed at de3bd63, the same commit, which is why two archive tags name that one object"
+    },
+    "backups": {
+      "bundles": [
+        {
+          "path": "C:/Users/clclc/BusinessProject/tgsa-backups/tgsa-all-refs-2026-09-04.bundle",
+          "covers": "pre-merge state: unified-programme at fd6e20f, ledger at 2e0e3fe",
+          "verified": "git bundle verify reports a complete history"
+        },
+        {
+          "path": "C:/Users/clclc/BusinessProject/tgsa-backups/tgsa-all-refs-2026-09-04-post-merge.bundle",
+          "covers": "post-merge state: unified-programme and gate-hardening both at b60d470, ledger at 4581fc0, and BOTH retired refs at de3bd63 and b091490. Taken before the deletions",
+          "verified": "git bundle verify reports a complete history"
+        },
+        {
+          "path": "C:/Users/clclc/BusinessProject/tgsa-backups/tgsa-all-refs-2026-09-04-final.bundle",
+          "covers": "post-DELETION state, taken 15:21 after the two remote refs were removed: unified-programme and gate-hardening at b60d470, ledger at 26b1d0d, retrofit at ef5194b. The two retired refs survive in it as LOCAL branches (research/tgsa-phase2a-ci-and-competence at de3bd63, research/tgsa-phase1-v4-competence-first at 8b5737e); their refs/remotes/origin/ entries are absent precisely because origin no longer had them",
+          "verified": "git bundle verify reports a complete history (re-checked 2026-09-05)",
+          "recorded_late": "this bundle was created on 2026-09-04 but was missing from this ledger until the 2026-09-05 audit found it on disk. The ledger said two bundles in three places and there were three."
+        }
+      ],
+      "why_three": "the first predates the ledger commit that records the merge, so it alone would not restore the ledger; it is the only off-GitHub copy of the pre-merge registered tip as it stood when the merge decision was taken. The second is the last snapshot in which the two retired refs still existed ON ORIGIN, which is what makes it the authoritative record of what those refs pointed at. The third is the only snapshot of the post-deletion state and carries the most recent ledger tip of the three. All three verify.",
+      "recovery": "git branch <name> archive/tgsa-v5-1-pre-gate-hardening-2026-09-04 restores the pre-hardening apparatus. That tag's annotation carries a DO NOT RUN STAGE 0 FROM THIS COMMIT warning and the reason, so the commit cannot be restored and then used by mistake"
+    },
+    "stage0_execution_plan": {
+      "path": "TGSA_PROGRAMME/STAGE0_EXECUTION_PLAN.md",
+      "why_here": "it existed only in a session-scoped OS temp directory, which is not a backup. Recorded on this records-only branch: it is a document, not code, and the branch already carries operational records under imported/",
+      "status": "PREPARED, NOT RUN. Header refreshed to the merged apparatus (b60d470, CI run 33889037837, 458 tests). The probe thresholds quoted in the document were re-checked field by field against the locked plan on this date and match: margin_over_family_null 0.15, mean ceiling 0.95, seed CV 0.35, generalization gap 0.10, minimum_seed_runs 3, seeds [17, 29, 43], arm cascade"
+    },
+    "attestation_factual_basis": {
+      "statement_verbatim": "No nondevelopment outcome produced under the locked v5 plan was inspected before the prospective v5.1 lock.",
+      "scope_note": "the statement is narrow: it concerns outcomes produced UNDER THE LOCKED v5 PLAN, not any prior TGSA result. v4's rejected-regime evidence was produced under a different plan and is frozen historical evidence, so having inspected it does not bear on this attestation",
+      "evidence_gathered_2026_09_04": "no probe_report.json, qualification_report.json, frozen band or v5_1_registration_verification.json has EVER been committed on any ref or tag in the repository: git log --all --diff-filter=A over those names returns nothing, and a tree scan of every origin ref and tag returns nothing. No runs/, results/ or outputs/ directory exists on disk in the v5.1 worktree, and the worktree is clean. Every run made during preparation used a development_only=true plan",
+      "who_may_assert_it": "the human operator only. It was not asserted by the assistant and the flag was not passed. The evidence above is recorded so the operator's attestation can be informed, not to substitute for it"
+    },
+    "c8_pointer_repair": {
+      "commit": "927405a on research/tgsa-rineya-pretrained-retrofit (C8), local only, not pushed",
+      "why": "deleting research/tgsa-phase2a-ci-and-competence from origin broke every evidence pointer that named it. The commit it held, de3bd63, was never at risk; the loss was purely that three pointers in C8 candidate_ledger.json were written as origin/<branch>:<path>, and a branch name is not a durable ref.",
+      "pointers_repaired": [
+        "candidate_ledger.json: 3 pointers naming research/tgsa-phase2a-ci-and-competence -> de3bd632b491df294f9b8736079bdcbbdd64e4d3",
+        "candidate_ledger.json: a FOURTH broken pointer not previously recorded, naming research/tgsa-phase1-v4-competence-first (retired 2026-08-31) -> 8b5737e260b5478427b8bb033cffa394a5f3fc5d, the frozen v4 boundary the hold note already treats as the v4 anchor. The blob is bit-identical at both commits (467da3d7), so the evidence content is unchanged",
+        "PRODUCTION_RETROFIT_AUDIT.md: the ref-scan table gained a ref-status column. THREE of its six inspected branches are retired, not the two previously recorded: research/tgsa-phase2-mtp-complementarity is gone from origin as well",
+        "PHASE2A_PREREQUISITE_HOLD.md: cites Phase 2A by commit de3bd63, records the 2026-09-04 retirement, and re-anchors its divergence figures to that commit (96 commits and 63 lab files; the 95 was stale)"
+      ],
+      "why_commits_not_tags": "tgsa/v5_1_programme.py resolves lineage with cat-file -e and merge-base on commit shas and never by branch name, so a commit pointer is the form the programme's own code trusts. An archive tag would also resolve today, but a tag is a movable ref and a commit is not.",
+      "left_deliberately": "the two source_branch fields in candidate_ledger.json still name research/tgsa-phase2a-ci-and-competence, and the audit table still lists branch names in its first column. Both are historical statements of where work happened, not resolvable pointers, and the resolvable field beside each (source_commit, and the tip column) does resolve. The 84-file stale lab tree is untouched and stays with promotion-order step 7.",
+      "verification": "all 10 ref:path pointers in candidate_ledger.json resolve under git cat-file -e; verify_candidate_ledger.py returns status PASS with promotable [], so no gate moved; line endings preserved per file (candidate_ledger.json and PRODUCTION_RETROFIT_AUDIT.md LF, PHASE2A_PREREQUISITE_HOLD.md CRLF).",
+      "one_pointer_still_unresolvable": "the historical-a11-pulse-negative-vector record cites the worktree-relative path artifacts/rineya_published_core_search_v1/negative_vectors/neg_200_250_1p25_m0p25/soup_manifest.json, which exists nowhere in the C8 worktree. That is a pre-existing missing-artifact gap, not a branch-name breakage, and repairing it would mean touching the parked stale lab tree. Left alone, recorded here so it is not rediscovered as new.",
+      "content_preservation_proof": "MEASURED on 2026-09-05, not inferred. The concern a repoint raises is whether the new target names the same content the old pointer would have resolved to: if origin's ref had been AHEAD of the local branch when it was deleted, rewriting to de3bd63 would silently change the evidence. The remote reflog died with the ref, but tgsa-all-refs-2026-09-04-post-merge.bundle was taken BEFORE the deletions and still holds refs/remotes/origin/research/tgsa-phase2a-ci-and-competence -> de3bd632b491df294f9b8736079bdcbbdd64e4d3, the exact commit the three Phase 2A pointers now name, and refs/heads/research/tgsa-phase1-v4-competence-first -> 8b5737e260b5478427b8bb033cffa394a5f3fc5d, the exact commit the v4 pointer now names. Origin was not ahead. Both repoints are content-preserving, and the bundle is an off-GitHub artifact that cannot be retro-edited by anything on origin.",
+      "durability_proof": "git ls-remote on 2026-09-05 puts origin's canonical tip at b60d4703fc546581998bd06e64d67c3a0e3067c5, and both de3bd63 and 8b5737e are ancestors of it, so both reach any fresh clone of origin with their trees and blobs. Reachability, not branch naming, is what a clone transfers -- which is the whole reason a commit pointer survives a branch retirement and an origin/<branch>:<path> pointer does not.",
+      "regression_check": "MEASURED on 2026-09-05. The first pass ran only the standalone verify_candidate_ledger.py; candidate_ledger.json is also consumed by rineya_tgsa/promotion.py, which validates research_evidence, so the test suite was the check that mattered and it had been skipped. Run since: tests/test_promotion.py 5 passed, and the full C8 suite 71 passed.",
+      "pushed": "2026-09-05, in the order the maintenance note requires: C8 first (ef5194b..927405a on research/tgsa-rineya-pretrained-retrofit), then the ledger (26b1d0d..ceadce6). Pushing the ledger first would have put a stage commit on origin's ledger that origin's other refs could not resolve, and verify_programme_ledger.py fails closed on exactly that. Both were clean fast-forwards, behind=0.",
+      "fresh_clone_proof": "MEASURED 2026-09-05, after the push, and this is the check that actually settles the repair. A clone was taken from origin with nothing local available: verify_programme_ledger.py returned 53 checks PASSED inside it, C8's own verify_candidate_ledger.py returned status PASS with promotable [], and all four repointed pointers resolved under git show, returning real content (15487, 8525, 10800 and 5765 bytes). A reviewer needs nothing but origin. This is the same standard the ref_retirement record was held to, applied to the repair itself."
+    },
+    "resolved_open_items": [
+      "the ref-retirement item is removed: both refs were deleted from origin on 2026-09-04 after CI went green on the merged tip, which was the condition the operator set. Recorded under ref_retirement above.",
+      "the C8 branch-naming item is removed: 927405a repointed every broken evidence pointer at a commit sha, so nothing in C8 resolves through a retired branch name any more. Recorded under c8_pointer_repair above. What that item called five occurrences was four broken pointers across two retired branches, plus two source_branch fields that are history rather than pointers; the branch stays parked and its lab tree stays stale on purpose."
+    ],
+    "fresh_clone_test_gotcha": "WINDOWS MAX_PATH makes verify_programme_ledger.py report a FALSE failure when the clone sits at a deep path. Run from a 185-character scratchpad directory it reported 'ledger provenance: FAILED' with three 'unreadable source: 49aa961:...' errors against the imported/phase2b records. Nothing was wrong: the commit and all three paths are present at 49aa961. git show <rev>:<path> falls back to stat()ing the whole argument as a filename when the combined length exceeds MAX_PATH, and fails with 'Filename too long', which the verifier reports as an unreadable source. The identical clone moved to a 17-character path returned 53 checks PASSED. Clone shallow in the directory tree before concluding the ledger has drifted -- the phase2b paths are the longest recorded and fail first, so they are the canary."
+  },
+  "consolidation_2026_09_05": {
+    "stage0_preflight_audit": {
+      "why": "Stage 0 is a prospective registration and running it before the lock destroys that registration irrecoverably, so the last cheap moment to find an apparatus or runbook defect is BEFORE the operator attests. The 2026-09-04 round had already found one defect of the only class that matters here -- a command defect invisible to every permitted test, because the code it would have tripped is behind `if not development_only`. This audit went looking for more of that class.",
+      "method": "static, read-only, no pipeline execution and no attestation flag. Seven dimensions fanned out over the dev-unreachable surface (ten sites), verbatim command-vs-argparse validity, plan/contract/schema required-array integrity, the five-step probe->band->qualification data flow, threshold arithmetic direction, resume/idempotency contamination, and attestation plumbing. Each finding faced three adversarial refuters on distinct lenses.",
+      "confirmed_finding": {
+        "title": "STAGE0_EXECUTION_PLAN.md section 4.0 told the operator to point --report at the passing rung only; the ladder is not skippable, so the band cannot be frozen whenever C1 is not the rung that passes",
+        "severity": "high, but fail-closed: nothing is destroyed and recovery is a re-run",
+        "mechanism": "freeze_band_after_probe (tgsa/phase1_v5.py:1077-1087) walks the registered ladder C1 -> C2 -> C3 from the FIRST rung and raises 'probe report for rung <X> is missing; rung selection must follow the registered order' the moment a rung has no report. A failing rung's report is still required -- it is the evidence the climb was registered. A NO_GO rung yields decision ADVANCE_CAPACITY_RUNG, which is deliberately NOT among the loop's break conditions (REJECT_SATURATED_BAND, REJECT_TASK_FAMILY), so the loop advances and demands the next rung's report too. Symmetrically a report AFTER the first pass is refused. The doc stated neither constraint.",
+        "why_no_test_caught_it": "for the registered plan freeze_band_after_probe raises 'development-only probe reports cannot freeze a real band' at tgsa/phase1_v5.py:1075, BEFORE the ladder loop is entered, so no development-mode run can reach the missing-report check. And every freeze_band_after_probe test in tests/test_phase1_v5.py uses C1 as the passing rung, so the 'C1 failed, a later rung passed' path has no coverage at all.",
+        "failure_scenario": "probe C1 returns NO_GO/ADVANCE_CAPACITY_RUNG after ~0.79 h; probe C2 returns GO after ~1.60 h; the operator runs section 4.0 verbatim per the old note, supplying only probe_C2's report; the selector raises V5ContractError naming rung C1, writes no frozen_band.json, and the entire 36-cell / 1.08 M-step qualification is blocked with the doc pointing away from the fix.",
+        "verified_how": "confirmed by direct reading of the code, the argparse definitions, the registered plan's ladder (rung ids C1/C2/C3, development_only false) and the test suite -- not accepted on a subagent's report. Two of three adversarial refuters also confirmed it; the third died on the session limit.",
+        "fix": "documentation only; the code is correct and needs no change. --report is action='append' on both the capacity and exposure subcommands (scripts/select_phase1_v5_1.py:79,85), so repetition was always supported. Section 4.0 now states the rule (one --report per rung from C1 up to and including the pass, in order, none after it), shows the two-report form, and records why no test covers it.",
+        "residual_recommendation": "the C1-fails-then-C2-passes ladder path still has zero test coverage. Adding that test would touch C11, the frozen registration tree, so it is left as an operator decision rather than done unilaterally. It is not required to make Stage 0 safe -- the code already enforces the rule correctly; only the runbook was wrong."
+      },
+      "audit_is_INCOMPLETE": {
+        "what_happened": "26 of 32 agents died on a session usage limit. 6 completed.",
+        "dimensions_that_NEVER_RAN": [
+          "gate-arithmetic",
+          "data-flow-chain",
+          "plan-contract-schema"
+        ],
+        "dimensions_that_produced_findings": [
+          "dev-unreachable",
+          "command-validity",
+          "resume-idempotency",
+          "attestation-plumbing"
+        ],
+        "completeness_critic": "never ran",
+        "findings_never_adjudicated": 7,
+        "status": "this audit must NOT be read as clearing the apparatus. It cleared nothing. It found one confirmed defect and left seven candidate findings unchecked and three dimensions unexamined -- including plan-contract-schema, which is the dimension the famili_roles typo lived in, and gate-arithmetic, which is where a threshold compared in the wrong direction would live.",
+        "unadjudicated_candidates": [
+          "verify_phase2_program_contract.py defaults development_only to `not confirmatory`, so the site-80 gate may never fire for a config that omits the field",
+          "nothing may bind the four qualification invocations and the probe to one apparatus commit, so the artifact emitting AUTHORIZE_MTP_FREE_MECHANISM_STUDY could pool two code states",
+          "a successful resume may delete failure.json while keeping interrupted_state.pt, losing the record of why a nondevelopment cell died",
+          "the attestation record may be built with a stricter JSON hasher than the report was written with, so a non-finite value could crash the registration write AFTER the run and leave the outcome unregisterable",
+          "a complete unattested Stage 0 pipeline may still exist (phase1_v5_qualify.py + select_phase1_v5.py) whose frozen band the v5.1 layer would accept, which if true falsifies the plan's claim that no band can be frozen without the attestation"
+        ]
+      },
+      "accounting_bug_RECURRED": "the review_accounting_bug recorded under 2026-09-04 happened again, in the audit harness itself. The workflow's survivor rule was `confirmed >= 2 || (confirmed >= 1 && refuted == 0)`, so a finding whose three refuters ALL died scored confirmed=0 and fell into the 'refuted' bucket despite never having been examined. Seven findings were mislabelled that way. The run was only readable because the harness ALSO tracked unadjudicated separately and emitted an incomplete_adjudication list, which is the only reason the mislabelling was visible rather than silent. Lesson, restated because restating it did not prevent it: a three-way verdict (confirmed / refuted / never-checked) must be carried all the way into the FINAL bucketing, not just into the tally. Defaulting an unexamined finding to 'refuted' turns a dead verifier into a clean bill of health."
+    }
+  }
+}

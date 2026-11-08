@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "status": "PASS_COMMITTED_SOURCE_JOIN_DATA_ONLY",
+  "recorded_at_utc": "2026-09-30T09:57:10.573627+00:00",
+  "producer_commit": "e717d87a59263e84db7b555dd902f48a7b928eac",
+  "test_count": 18,
+  "test_seconds": 0.27,
+  "test_process_seconds": 0.607732100001158,
+  "actual_binding_process_seconds": 3.8009929999971064,
+  "actual_binding_body_seconds": 3.3292842999981076,
+  "peak_reader_working_set_bytes": 40898560,
+  "joined_rows": 5120,
+  "maximum_sequence_tokens": 398,
+  "nonpadding_tokens": 680532,
+  "supervised_tokens": 63546,
+  "prior_assistant_turns_masked": 81,
+  "join_sha256": "555776a347ea7a82e7a111b90ab041f5947bb0e54bd32c8b306e9064fbd5fc68",
+  "historical_data_sha256": "51b87fe4fd70d2fb23d16f270d1023716172dbbe1c88efd79dff8c3548623d6d",
+  "source_SHA256": {
+    "scripts/train_scope.py": "7d24b694571a65855021ad5e68ff6c1c66a4e8c278077dc9f8d5241653fbc3ef",
+    "tests/test_train_scope.py": "07648ef7d72cd7ddfe81d8317c9dd33c3bd2d88c375f70296145e531c46ec730",
+    "manifests/E1_CE512_TRAIN_SCOPE_V1.json": "951f8278bfe107bad23c927c87db64c75d9b47a83eab0ba3252cad758add3e70"
+  },
+  "files": {
+    "actual_stderr.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "actual_stdout.log": {
+      "sha256": "f180d11f943def25a5b9eceb3a2402a4d45fb45cdbc40726f25d7b080c196aef",
+      "bytes": 654
+    },
+    "tests_stderr.log": {
+      "sha256": "663733e705a89401a160b9b385d479ee2e6cbb1e55d7765ad30d914c2c07ac26",
+      "bytes": 4166
+    },
+    "tests_stdout.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "TRAIN_SCOPE_RECEIPT.json": {
+      "sha256": "03a2331eec0114f81d4631cd5d930082806e200af83774f0463160864512d45f",
+      "bytes": 8402
+    }
+  },
+  "helper_framework_imports": 0,
+  "new_tokenization_calls": 0,
+  "model_weight_reads": 0,
+  "native_model_calls": 0,
+  "training_updates": 0,
+  "resource_enforcement": "cooperative checks with OS high-water RSS observations; historical binder checked on return; no hard process containment",
+  "scope_limits": "Data/interface and deterministicreferencecompatibility only; historicaltokenization/languageoriginreview reused, no humanquality/pretrainingexclusion/nativeE1fit claim",
+  "E1_authorized": false,
+  "goal_complete": false
+}

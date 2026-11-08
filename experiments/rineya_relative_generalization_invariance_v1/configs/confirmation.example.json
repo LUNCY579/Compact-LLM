@@ -1,0 +1,22 @@
+{
+  "approved": false,
+  "claim": "DRAFT ONLY: replace with a bounded, artifact-specific claim before approving and freezing.",
+  "bootstrap_repeats": 5000,
+  "seed": 17,
+  "behavior_gates": [
+    {
+      "endpoint": "ledger_four_step_exact_state",
+      "direction": "higher",
+      "mode": "superiority",
+      "margin": 0.05,
+      "expected_items": 150
+    },
+    {
+      "endpoint": "protected_accuracy",
+      "direction": "higher",
+      "mode": "noninferiority",
+      "margin": 0.02,
+      "expected_items": 500
+    }
+  ]
+}

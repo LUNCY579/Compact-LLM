@@ -1,0 +1,163 @@
+name: FWT-001 source provenance only
+run-name: FWT-001 provenance for 94fbe17945a9 (no model or tests)
+# This workflow is deliberately NOT the 75-test suite or a P1/P2 receipt.
+# It runs only on this new receipt branch and checks out the immutable subject.
+# No experiment code, dependency installation, model loading or optimization.
+on:
+  push:
+    branches: [research/ced-full-width-remote-receipt-94fbe179-v1]
+    paths: ['.github/workflows/fwt-001-source-provenance.yml']
+permissions:
+  contents: read
+concurrency:
+  group: fwt001-source-provenance-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  source-provenance:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    env:
+      TARGET_SHA: 94fbe17945a9d7d88ac2422dab124a95d35ee653
+      TARGET_TREE: cf9d85e87f0134d02b0af72c9c67733915c83848
+      WORKFLOW_SHA: ${{ github.workflow_sha }}
+      HF_HUB_OFFLINE: '1'
+      TRANSFORMERS_OFFLINE: '1'
+      CUDA_VISIBLE_DEVICES: ''
+    steps:
+      - name: Open provenance-only attempt
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/fwt001-provenance"
+          printf 'Target: %s\nWorkflow/event head: %s\nScope: source provenance only; no model, tests, optimization, or stage license.\n' "$TARGET_SHA" "$GITHUB_SHA" | tee "$RUNNER_TEMP/fwt001-provenance/attempt.txt"
+      - name: Read only pinned source metadata
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: 94fbe17945a9d7d88ac2422dab124a95d35ee653
+          fetch-depth: 1
+          persist-credentials: false
+          submodules: false
+          lfs: false
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /experiments/full_width_transition_v1/protocol.json
+            /experiments/full_width_transition_v1/dependency_lock.json
+            /experiments/full_width_transition_v1/verification/LOCAL_VERIFICATION.json
+      - name: Bind source identity and record closed boundaries
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -I - <<'PY'
+          import datetime
+          import hashlib
+          import json
+          import os
+          import pathlib
+          import platform
+          import subprocess
+          import sys
+          import traceback
+
+          out = pathlib.Path(os.environ['RUNNER_TEMP']) / 'fwt001-provenance'
+          target = os.environ['TARGET_SHA']
+          expected_tree = os.environ['TARGET_TREE']
+          def git(*args):
+              return subprocess.check_output(['git', *args], text=True).strip()
+          def require(condition, message):
+              if not condition:
+                  raise RuntimeError(message)
+          closed = {key: False for key in (
+              'official_pretrained_execution', 'official_P1', 'official_P2',
+              'registered_training', 'recovery', 'open_dev', 'sealed_evaluation',
+              'pure_ced_replacement', 'depth_expansion_campaign', 'width_pruning',
+              'efficacy_claim', 'gpu_fit_claim', 'speed_claim', 'deployment')}
+          receipt = {
+              'schema': 1,
+              'experiment': 'FWT-001',
+              'evidence_kind': 'remote_source_provenance_only_no_experiment_execution',
+              'status': 'INCOMPLETE',
+              'subject_commit': target,
+              'expected_subject_tree': expected_tree,
+              'workflow_event_head_sha': os.environ['GITHUB_SHA'],
+              'workflow_definition_sha': os.environ['WORKFLOW_SHA'],
+              'workflow_ref': os.environ['GITHUB_REF'],
+              'run_id': os.environ['GITHUB_RUN_ID'],
+              'run_attempt': os.environ['GITHUB_RUN_ATTEMPT'],
+              'run_url': os.environ['GITHUB_SERVER_URL'] + '/' + os.environ['GITHUB_REPOSITORY'] + '/actions/runs/' + os.environ['GITHUB_RUN_ID'],
+              'recorded_at_utc': datetime.datetime.now(datetime.timezone.utc).isoformat(),
+              'runtime': {'python': sys.version, 'platform': platform.platform()},
+              'remote_tests': {'executed': False, 'count': 0},
+              'experiment_code_imported': False,
+              'model_execution': False,
+              'optimization_executed': False,
+              'permissions': closed,
+              'licenses_any_stage': False,
+              'is_P1_or_P2_receipt': False,
+              'limitations': [
+                  'Source-provenance checks only; no remote rerun of the 75 local tests.',
+                  'Historical local verification is recorded, not independently reproduced.',
+                  'The Actions check belongs to workflow_event_head_sha, not subject_commit.',
+                  'This file is not an attestation of the final workflow conclusion.',
+                  'No official source availability, native parity, recovery, efficacy, GPU-fit, speed, or deployment result.'
+              ],
+          }
+          error = None
+          try:
+              receipt['observed_subject_commit'] = git('rev-parse', 'HEAD')
+              receipt['observed_subject_tree'] = git('rev-parse', 'HEAD^{tree}')
+              require(receipt['observed_subject_commit'] == target, 'Wrong subject commit')
+              require(receipt['observed_subject_tree'] == expected_tree, 'Wrong subject tree')
+              require(not git('status', '--porcelain', '--untracked-files=all'), 'Source checkout is not clean')
+              expected_blobs = {
+                  'experiments/full_width_transition_v1/protocol.json': '81c7f5f2e49ef2d75a43dbc48d5edaa5cd2d566d',
+                  'experiments/full_width_transition_v1/verification/LOCAL_VERIFICATION.json': '2d15dd21cd1530bb276165aff66a937b97bde860',
+              }
+              receipt['metadata_sha256'] = {}
+              for path, expected in expected_blobs.items():
+                  require(git('hash-object', '--', path) == expected, 'Metadata blob mismatch: ' + path)
+                  receipt['metadata_sha256'][path] = hashlib.sha256(pathlib.Path(path).read_bytes()).hexdigest()
+              root = pathlib.Path('experiments/full_width_transition_v1')
+              protocol = json.loads((root / 'protocol.json').read_text())
+              require(protocol['experiment_id'] == 'FWT-001', 'Wrong experiment')
+              require(protocol['frozen_dimensions'] == {
+                  'hidden_size': 1024, 'intermediate_size': 3072,
+                  'num_attention_heads': 16, 'num_key_value_heads': 8,
+                  'head_dim': 128, 'layers': 28}, 'Frozen dimensions changed')
+              require(bool(protocol['permissions']) and all(value is False for value in protocol['permissions'].values()), 'A protocol permission is open')
+              receipt['source_protocol_permissions'] = protocol['permissions']
+              receipt['frozen_dimensions'] = protocol['frozen_dimensions']
+              historical = json.loads((root / 'verification/LOCAL_VERIFICATION.json').read_text())
+              receipt['historical_local_report_not_reproduced'] = {
+                  'tests': historical['tests'],
+                  'evidence_kind': historical['evidence_kind'],
+                  'reported_implementation_sha256': historical['implementation_sha256'],
+                  'implementation_sha256_recomputed_remotely': False,
+              }
+              receipt['status'] = 'SOURCE_PROVENANCE_PASS'
+          except Exception as exc:
+              error = exc
+              receipt['status'] = 'SOURCE_PROVENANCE_FAIL'
+              receipt['error'] = str(exc)
+              (out / 'failure.txt').write_text(traceback.format_exc())
+          finally:
+              text = json.dumps(receipt, indent=2, sort_keys=True) + '\n'
+              (out / 'SOURCE_PROVENANCE.json').write_text(text)
+              digest = hashlib.sha256(text.encode()).hexdigest()
+              (out / 'SHA256SUMS.txt').write_text(digest + '  SOURCE_PROVENANCE.json\n')
+              print(text)
+              with open(os.environ['GITHUB_STEP_SUMMARY'], 'a') as summary:
+                  summary.write('## FWT-001: ' + receipt['status'] + '\n\n')
+                  summary.write('Subject: `' + target + '`\n\n')
+                  summary.write('Workflow/event head: `' + os.environ['GITHUB_SHA'] + '`\n\n')
+                  summary.write('**Provenance only. Zero tests and zero model/optimization execution. All stage and claim permissions remain closed.**\n')
+          if error is not None:
+              raise SystemExit(1)
+          PY
+      - name: Preserve provenance or failure evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: FWT-001-source-provenance-94fbe17945a9-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/fwt001-provenance/
+          if-no-files-found: error
+          retention-days: 90

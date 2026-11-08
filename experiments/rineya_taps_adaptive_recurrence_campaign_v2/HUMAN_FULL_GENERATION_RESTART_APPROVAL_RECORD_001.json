@@ -1,0 +1,30 @@
+{
+  "status": "DIRECT_USER_APPROVAL_RECORDED",
+  "human_reply": "I will approve and continue",
+  "source": "Direct human message in this chat after the pending request and blocked-status final specifically identified the single full288-case generation restart.",
+  "approved_scope": {
+    "status": "EXPLICIT_ADDITIONAL_FULL_GENERATION_RESTART_AUTHORIZED",
+    "id": "FULL-GENERATION-RESTART-001",
+    "lane": "GPU_FP32_FULL_GENERATION_RESTART",
+    "attempts": 1,
+    "max_native_worker_seconds": 16000,
+    "model_API_attempts": 28436,
+    "state_adjoints": 0,
+    "cases": 288,
+    "physical_evaluations": 3296,
+    "maximum_prefix_tokens": 357,
+    "scientific_generation_cap": 8,
+    "SMOKE_generation_cap": 24,
+    "no_further_retry": true,
+    "parent_run": "native-bulk-001",
+    "training": false,
+    "full_bulk_matrix_retry": true,
+    "worker_sha256": "899d88cf37fe2399cab445400934a12dff1eb997e9085352c82ec32ad663dd4f"
+  },
+  "approval_interpretation": "Exactly one reviewed original-config full288 generation restart,16000seconds28436API3296physical/no training/no further retry; no broader changes.",
+  "admission": "full_generation_restart_admission_v1.json",
+  "admission_sha256": "a6611ea9c493d314fbe47771ec59521440178153e0779be283128c6ae59e723c",
+  "template_sha256": "2f42ce379924f37fa497700cf660af57d8577c14d9a9eda072be6b4481fc817e",
+  "recorded_utc": "2026-10-05T18:19:56.431397+00:00",
+  "user_message_timestamp": "not supplied; recorded_utc is capture time"
+}

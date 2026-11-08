@@ -1,0 +1,38 @@
+stage: a
+seed: 11
+replay_fraction: 0.20
+strata:
+  - 2k
+  - 4k
+trainer_eval_examples: 64
+paths:
+  model_id: Rineya_Published_Cores/Rineya-Halo-1.2.0-devfreeze
+  corpus_root: rineya_long_context_cc0_v1_main
+  short_replay: short-response-model-phase-0-1-2/data/train/train.jsonl
+  output_dir: artifacts/halo_long_context_sft_v1/stage_a
+training:
+  qlora: true
+  gradient_checkpointing: true
+  lora_rank: 16
+  lora_alpha: 32
+  lora_dropout: 0.05
+  learning_rate: 0.0002
+  epochs: 1.0
+  max_steps: -1
+  per_device_batch_size: 1
+  gradient_accumulation_steps: 8
+  max_sequence_length: 4096
+  warmup_ratio: 0.03
+  weight_decay: 0.0
+  logging_steps: 5
+  save_steps: 50
+  eval_steps: 50
+  save_total_limit: 3
+  selected_layers: all
+  target_module_group: both
+  run_label: halo_long_context_stage_a_qlora
+decode:
+  max_new_tokens: 32
+  do_sample: false
+  normalization: trim
+  torch_dtype: auto

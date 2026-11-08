@@ -1,0 +1,3187 @@
+{
+  "cluster_sizes": {
+    "mergedev_binding_0000": 1,
+    "mergedev_chat_0003": 1,
+    "mergedev_common_sense_0001": 1,
+    "mergedev_counter_0001": 1,
+    "mergedev_instruction_0003": 1,
+    "mergedev_long_0000": 2,
+    "mergedev_math_0002": 1,
+    "mergedev_para_0003": 3,
+    "mergedev_rag_0001": 1,
+    "mergedev_reason_0001": 1,
+    "mergedev_science_0000": 1,
+    "mergedev_short_0001": 1,
+    "mergedev_unknown_0003": 1
+  },
+  "complete": false,
+  "constant_oracle": {
+    "accuracy": null,
+    "capture": null,
+    "headroom": null,
+    "physical_run": false,
+    "reported_rows_verified": false,
+    "scope": "per-example constant finite grid only",
+    "status": "INCOMPLETE_MATRIX"
+  },
+  "costs": {
+    "block_width": 2,
+    "cumulative_native_worker_seconds": 18.73399999999674,
+    "duplicate_budget_run_events": false,
+    "extra_block_applications_inferred": 0,
+    "generation_calls_inferred_from_completed_token_lists": 0,
+    "inferred_count_note": "completed generation rows only; failed/unwritten forwards remain unmeasured",
+    "initial_block_applications_inferred": 0,
+    "latency_scope": "instrumented diagnostic path; no deployable or matched-quality speed claim",
+    "peak_sampled_worker_tree_rss_bytes": 866652160,
+    "per_arm": {},
+    "physical_row_sums": {
+      "controller_logging_seconds": {
+        "complete_value": 0,
+        "known_subtotal": null,
+        "missing_rows": 0,
+        "rows": 0
+      },
+      "controller_seconds": {
+        "complete_value": 0,
+        "known_subtotal": null,
+        "missing_rows": 0,
+        "rows": 0
+      },
+      "full_model_calls_including_gold_nll": {
+        "complete_value": 0,
+        "known_subtotal": null,
+        "missing_rows": 0,
+        "rows": 0
+      },
+      "generation_dense_matmul_flops_estimate": {
+        "complete_value": 0,
+        "known_subtotal": null,
+        "missing_rows": 0,
+        "rows": 0
+      },
+      "processed_token_positions": {
+        "complete_value": 0,
+        "known_subtotal": null,
+        "missing_rows": 0,
+        "rows": 0
+      },
+      "total_token_positions_including_gold_nll": {
+        "complete_value": 0,
+        "known_subtotal": null,
+        "missing_rows": 0,
+        "rows": 0
+      },
+      "wall_seconds": {
+        "complete_value": 0,
+        "known_subtotal": null,
+        "missing_rows": 0,
+        "rows": 0
+      }
+    },
+    "remaining_native_seconds": 21581.266000000003,
+    "resource_samples": 16,
+    "reused_oracle_additional_generation_cost": 0,
+    "reused_oracle_cost_note": "copied row timings/counters excluded; generation already charged to A2",
+    "supervisor_wall_seconds": 20.045999999998457,
+    "worker_wall_seconds": 18.73399999999674
+  },
+  "deterministic_repeat_divergence": [],
+  "dev_items": 16,
+  "duplicate_cells": [],
+  "efficacy_claim_supported": false,
+  "errors": [
+    "missing journal: outcomes.jsonl",
+    "frozen selection DEV dataset binding missing/mismatched",
+    "native registered source/operator/grid/seed contract differs",
+    "native generation/controller configuration differs from frozen reference",
+    "native registration DEV data mismatch",
+    "native gold/training closure differs",
+    "native preflight missing/blocked",
+    "frozen fixed/pool configuration or data binding differs",
+    "frozen random pool differs from generation-only DEV A3 journal",
+    "missing journal: trajectories.jsonl",
+    "missing/mismatched frozen DEV-selected fixed alpha",
+    "missing/incorrect nonphysical constant-oracle rows"
+  ],
+  "expected_physical_rows": 392,
+  "features": {
+    "lower_saturation_fraction": null,
+    "normalized_movement_definition": "controlled movement / max(state_norm,1e-12)",
+    "normalized_raw_update_definition": "delta_norm / max(state_norm,1e-12)",
+    "per_item": {},
+    "pool_weighting": "generated prefix observations with nominal deterministic repeats; long generations contribute more",
+    "predictive_validation": "NOT_RUN",
+    "prefix_weighted": {
+      "alpha": {
+        "max": null,
+        "mean": null,
+        "median": null,
+        "min": null,
+        "n": 0
+      },
+      "balance": {
+        "max": null,
+        "mean": null,
+        "median": null,
+        "min": null,
+        "n": 0
+      },
+      "delta_cosine": {
+        "max": null,
+        "mean": null,
+        "median": null,
+        "min": null,
+        "n": 0
+      },
+      "delta_norm": {
+        "max": null,
+        "mean": null,
+        "median": null,
+        "min": null,
+        "n": 0
+      },
+      "ema_cosine": {
+        "max": null,
+        "mean": null,
+        "median": null,
+        "min": null,
+        "n": 0
+      },
+      "fluctuation": {
+        "max": null,
+        "mean": null,
+        "median": null,
+        "min": null,
+        "n": 0
+      },
+      "movement": {
+        "max": null,
+        "mean": null,
+        "median": null,
+        "min": null,
+        "n": 0
+      },
+      "normalized_movement": {
+        "max": null,
+        "mean": null,
+        "median": null,
+        "min": null,
+        "n": 0
+      },
+      "normalized_raw_update": {
+        "max": null,
+        "mean": null,
+        "median": null,
+        "min": null,
+        "n": 0
+      },
+      "previous_ema_cosine": {
+        "max": null,
+        "mean": null,
+        "median": null,
+        "min": null,
+        "n": 0
+      },
+      "progress": {
+        "max": null,
+        "mean": null,
+        "median": null,
+        "min": null,
+        "n": 0
+      },
+      "state_norm": {
+        "max": null,
+        "mean": null,
+        "median": null,
+        "min": null,
+        "n": 0
+      }
+    },
+    "upper_saturation_fraction": null
+  },
+  "fixed_alpha_curve": [
+    {
+      "accuracy": null,
+      "alpha": 0.8,
+      "observed_partial_accuracy": null
+    },
+    {
+      "accuracy": null,
+      "alpha": 0.9,
+      "observed_partial_accuracy": null
+    },
+    {
+      "accuracy": null,
+      "alpha": 1.0,
+      "observed_partial_accuracy": null
+    },
+    {
+      "accuracy": null,
+      "alpha": 1.1,
+      "observed_partial_accuracy": null
+    },
+    {
+      "accuracy": null,
+      "alpha": 1.2,
+      "observed_partial_accuracy": null
+    }
+  ],
+  "frozen_fixed_comparator": {
+    "accuracy": null,
+    "alpha": null,
+    "raw_selection_verified": false,
+    "selection_surface": "same exposed DEV; frozen before A5, not independent validation"
+  },
+  "generator_independence": "NOT_ESTABLISHED",
+  "independent_issue_receipt": {
+    "issue_ids": [
+      "R01",
+      "R02",
+      "R03",
+      "R04",
+      "R05",
+      "R06",
+      "R07",
+      "R08",
+      "R09",
+      "R10",
+      "R11"
+    ],
+    "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\reviews\\initial_issue_receipt.json",
+    "sha256": "caef8d3e3544a646aef9b5d24e14043a4bdf7c592b460f3cdb240e49bab48d8b",
+    "status": "CONDITIONAL_APPARATUS_PROCEED_NATIVE_DISPATCH_BLOCKED_PENDING_DISPOSITIONS"
+  },
+  "independent_replication": "NOT_RUN",
+  "legacy_A5": "per-example first draw repeated at every prefix; nominal config.seed stays17; H4 control incomplete",
+  "matrix_cells_complete": false,
+  "missing_cells": [
+    [
+      "DEV",
+      17,
+      "mergedev_common_sense_025ea65887df6a1b",
+      "A0",
+      0
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_common_sense_025ea65887df6a1b",
+      "A1",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_common_sense_025ea65887df6a1b",
+      "A2:0.8",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_common_sense_025ea65887df6a1b",
+      "A2:0.9",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_common_sense_025ea65887df6a1b",
+      "A2:1",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_common_sense_025ea65887df6a1b",
+      "A2:1.1",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_common_sense_025ea65887df6a1b",
+      "A2:1.2",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_common_sense_025ea65887df6a1b",
+      "A3",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_common_sense_025ea65887df6a1b",
+      "A5",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_counterfactual_reasoning_770aaf5dae0c1fb5",
+      "A0",
+      0
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_counterfactual_reasoning_770aaf5dae0c1fb5",
+      "A1",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_counterfactual_reasoning_770aaf5dae0c1fb5",
+      "A2:0.8",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_counterfactual_reasoning_770aaf5dae0c1fb5",
+      "A2:0.9",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_counterfactual_reasoning_770aaf5dae0c1fb5",
+      "A2:1",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_counterfactual_reasoning_770aaf5dae0c1fb5",
+      "A2:1.1",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_counterfactual_reasoning_770aaf5dae0c1fb5",
+      "A2:1.2",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_counterfactual_reasoning_770aaf5dae0c1fb5",
+      "A3",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_counterfactual_reasoning_770aaf5dae0c1fb5",
+      "A5",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_general_reasoning_078451b6adf65710",
+      "A0",
+      0
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_general_reasoning_078451b6adf65710",
+      "A1",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_general_reasoning_078451b6adf65710",
+      "A2:0.8",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_general_reasoning_078451b6adf65710",
+      "A2:0.9",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_general_reasoning_078451b6adf65710",
+      "A2:1",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_general_reasoning_078451b6adf65710",
+      "A2:1.1",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_general_reasoning_078451b6adf65710",
+      "A2:1.2",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_general_reasoning_078451b6adf65710",
+      "A3",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_general_reasoning_078451b6adf65710",
+      "A5",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_grounded_qa_rag_10414013c88bdaac",
+      "A0",
+      0
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_grounded_qa_rag_10414013c88bdaac",
+      "A1",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_grounded_qa_rag_10414013c88bdaac",
+      "A2:0.8",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_grounded_qa_rag_10414013c88bdaac",
+      "A2:0.9",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_grounded_qa_rag_10414013c88bdaac",
+      "A2:1",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_grounded_qa_rag_10414013c88bdaac",
+      "A2:1.1",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_grounded_qa_rag_10414013c88bdaac",
+      "A2:1.2",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_grounded_qa_rag_10414013c88bdaac",
+      "A3",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_grounded_qa_rag_10414013c88bdaac",
+      "A5",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_instruction_following_7c4b4480b4835c0f",
+      "A0",
+      0
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_instruction_following_7c4b4480b4835c0f",
+      "A1",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_instruction_following_7c4b4480b4835c0f",
+      "A2:0.8",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_instruction_following_7c4b4480b4835c0f",
+      "A2:0.9",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_instruction_following_7c4b4480b4835c0f",
+      "A2:1",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_instruction_following_7c4b4480b4835c0f",
+      "A2:1.1",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_instruction_following_7c4b4480b4835c0f",
+      "A2:1.2",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_instruction_following_7c4b4480b4835c0f",
+      "A3",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_instruction_following_7c4b4480b4835c0f",
+      "A5",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_long_context_retrieval_20550a305b3b2af6",
+      "A0",
+      0
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_long_context_retrieval_20550a305b3b2af6",
+      "A1",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_long_context_retrieval_20550a305b3b2af6",
+      "A2:0.8",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_long_context_retrieval_20550a305b3b2af6",
+      "A2:0.9",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_long_context_retrieval_20550a305b3b2af6",
+      "A2:1",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_long_context_retrieval_20550a305b3b2af6",
+      "A2:1.1",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_long_context_retrieval_20550a305b3b2af6",
+      "A2:1.2",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_long_context_retrieval_20550a305b3b2af6",
+      "A3",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_long_context_retrieval_20550a305b3b2af6",
+      "A5",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_lost_in_the_middle_e4e7cc76239741de",
+      "A0",
+      0
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_lost_in_the_middle_e4e7cc76239741de",
+      "A1",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_lost_in_the_middle_e4e7cc76239741de",
+      "A2:0.8",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_lost_in_the_middle_e4e7cc76239741de",
+      "A2:0.9",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_lost_in_the_middle_e4e7cc76239741de",
+      "A2:1",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_lost_in_the_middle_e4e7cc76239741de",
+      "A2:1.1",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_lost_in_the_middle_e4e7cc76239741de",
+      "A2:1.2",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_lost_in_the_middle_e4e7cc76239741de",
+      "A3",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_lost_in_the_middle_e4e7cc76239741de",
+      "A5",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_mathematics_12cd1363c6e3df98",
+      "A0",
+      0
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_mathematics_12cd1363c6e3df98",
+      "A1",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_mathematics_12cd1363c6e3df98",
+      "A2:0.8",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_mathematics_12cd1363c6e3df98",
+      "A2:0.9",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_mathematics_12cd1363c6e3df98",
+      "A2:1",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_mathematics_12cd1363c6e3df98",
+      "A2:1.1",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_mathematics_12cd1363c6e3df98",
+      "A2:1.2",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_mathematics_12cd1363c6e3df98",
+      "A3",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_mathematics_12cd1363c6e3df98",
+      "A5",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_multi_hop_binding_492bf31e1ae5deff",
+      "A0",
+      0
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_multi_hop_binding_492bf31e1ae5deff",
+      "A1",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_multi_hop_binding_492bf31e1ae5deff",
+      "A2:0.8",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_multi_hop_binding_492bf31e1ae5deff",
+      "A2:0.9",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_multi_hop_binding_492bf31e1ae5deff",
+      "A2:1",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_multi_hop_binding_492bf31e1ae5deff",
+      "A2:1.1",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_multi_hop_binding_492bf31e1ae5deff",
+      "A2:1.2",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_multi_hop_binding_492bf31e1ae5deff",
+      "A3",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_multi_hop_binding_492bf31e1ae5deff",
+      "A5",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_normal_conversation_4a73375fc950bab7",
+      "A0",
+      0
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_normal_conversation_4a73375fc950bab7",
+      "A1",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_normal_conversation_4a73375fc950bab7",
+      "A2:0.8",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_normal_conversation_4a73375fc950bab7",
+      "A2:0.9",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_normal_conversation_4a73375fc950bab7",
+      "A2:1",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_normal_conversation_4a73375fc950bab7",
+      "A2:1.1",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_normal_conversation_4a73375fc950bab7",
+      "A2:1.2",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_normal_conversation_4a73375fc950bab7",
+      "A3",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_normal_conversation_4a73375fc950bab7",
+      "A5",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_paraphrase_robustness_0cfbf1026bf11fe7",
+      "A0",
+      0
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_paraphrase_robustness_0cfbf1026bf11fe7",
+      "A1",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_paraphrase_robustness_0cfbf1026bf11fe7",
+      "A2:0.8",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_paraphrase_robustness_0cfbf1026bf11fe7",
+      "A2:0.9",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_paraphrase_robustness_0cfbf1026bf11fe7",
+      "A2:1",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_paraphrase_robustness_0cfbf1026bf11fe7",
+      "A2:1.1",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_paraphrase_robustness_0cfbf1026bf11fe7",
+      "A2:1.2",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_paraphrase_robustness_0cfbf1026bf11fe7",
+      "A3",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_paraphrase_robustness_0cfbf1026bf11fe7",
+      "A5",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_paraphrase_robustness_44e3777f1aad20a2",
+      "A0",
+      0
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_paraphrase_robustness_44e3777f1aad20a2",
+      "A1",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_paraphrase_robustness_44e3777f1aad20a2",
+      "A2:0.8",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_paraphrase_robustness_44e3777f1aad20a2",
+      "A2:0.9",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_paraphrase_robustness_44e3777f1aad20a2",
+      "A2:1",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_paraphrase_robustness_44e3777f1aad20a2",
+      "A2:1.1",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_paraphrase_robustness_44e3777f1aad20a2",
+      "A2:1.2",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_paraphrase_robustness_44e3777f1aad20a2",
+      "A3",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_paraphrase_robustness_44e3777f1aad20a2",
+      "A5",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_paraphrase_robustness_c26fef498d2d9fd3",
+      "A0",
+      0
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_paraphrase_robustness_c26fef498d2d9fd3",
+      "A1",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_paraphrase_robustness_c26fef498d2d9fd3",
+      "A2:0.8",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_paraphrase_robustness_c26fef498d2d9fd3",
+      "A2:0.9",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_paraphrase_robustness_c26fef498d2d9fd3",
+      "A2:1",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_paraphrase_robustness_c26fef498d2d9fd3",
+      "A2:1.1",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_paraphrase_robustness_c26fef498d2d9fd3",
+      "A2:1.2",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_paraphrase_robustness_c26fef498d2d9fd3",
+      "A3",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_paraphrase_robustness_c26fef498d2d9fd3",
+      "A5",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_science_0ac5af678b239ec5",
+      "A0",
+      0
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_science_0ac5af678b239ec5",
+      "A1",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_science_0ac5af678b239ec5",
+      "A2:0.8",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_science_0ac5af678b239ec5",
+      "A2:0.9",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_science_0ac5af678b239ec5",
+      "A2:1",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_science_0ac5af678b239ec5",
+      "A2:1.1",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_science_0ac5af678b239ec5",
+      "A2:1.2",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_science_0ac5af678b239ec5",
+      "A3",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_science_0ac5af678b239ec5",
+      "A5",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_short_response_30785feeb5a8abdf",
+      "A0",
+      0
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_short_response_30785feeb5a8abdf",
+      "A1",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_short_response_30785feeb5a8abdf",
+      "A2:0.8",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_short_response_30785feeb5a8abdf",
+      "A2:0.9",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_short_response_30785feeb5a8abdf",
+      "A2:1",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_short_response_30785feeb5a8abdf",
+      "A2:1.1",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_short_response_30785feeb5a8abdf",
+      "A2:1.2",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_short_response_30785feeb5a8abdf",
+      "A3",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_short_response_30785feeb5a8abdf",
+      "A5",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_unanswerable_abstention_22f9fcfd9ce716c8",
+      "A0",
+      0
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_unanswerable_abstention_22f9fcfd9ce716c8",
+      "A1",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_unanswerable_abstention_22f9fcfd9ce716c8",
+      "A2:0.8",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_unanswerable_abstention_22f9fcfd9ce716c8",
+      "A2:0.9",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_unanswerable_abstention_22f9fcfd9ce716c8",
+      "A2:1",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_unanswerable_abstention_22f9fcfd9ce716c8",
+      "A2:1.1",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_unanswerable_abstention_22f9fcfd9ce716c8",
+      "A2:1.2",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_unanswerable_abstention_22f9fcfd9ce716c8",
+      "A3",
+      1
+    ],
+    [
+      "DEV",
+      17,
+      "mergedev_unanswerable_abstention_22f9fcfd9ce716c8",
+      "A5",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_common_sense_025ea65887df6a1b",
+      "A0",
+      0
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_common_sense_025ea65887df6a1b",
+      "A1",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_common_sense_025ea65887df6a1b",
+      "A2:0.8",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_common_sense_025ea65887df6a1b",
+      "A2:0.9",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_common_sense_025ea65887df6a1b",
+      "A2:1",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_common_sense_025ea65887df6a1b",
+      "A2:1.1",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_common_sense_025ea65887df6a1b",
+      "A2:1.2",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_common_sense_025ea65887df6a1b",
+      "A3",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_common_sense_025ea65887df6a1b",
+      "A5",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_counterfactual_reasoning_770aaf5dae0c1fb5",
+      "A0",
+      0
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_counterfactual_reasoning_770aaf5dae0c1fb5",
+      "A1",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_counterfactual_reasoning_770aaf5dae0c1fb5",
+      "A2:0.8",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_counterfactual_reasoning_770aaf5dae0c1fb5",
+      "A2:0.9",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_counterfactual_reasoning_770aaf5dae0c1fb5",
+      "A2:1",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_counterfactual_reasoning_770aaf5dae0c1fb5",
+      "A2:1.1",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_counterfactual_reasoning_770aaf5dae0c1fb5",
+      "A2:1.2",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_counterfactual_reasoning_770aaf5dae0c1fb5",
+      "A3",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_counterfactual_reasoning_770aaf5dae0c1fb5",
+      "A5",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_general_reasoning_078451b6adf65710",
+      "A0",
+      0
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_general_reasoning_078451b6adf65710",
+      "A1",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_general_reasoning_078451b6adf65710",
+      "A2:0.8",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_general_reasoning_078451b6adf65710",
+      "A2:0.9",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_general_reasoning_078451b6adf65710",
+      "A2:1",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_general_reasoning_078451b6adf65710",
+      "A2:1.1",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_general_reasoning_078451b6adf65710",
+      "A2:1.2",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_general_reasoning_078451b6adf65710",
+      "A3",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_general_reasoning_078451b6adf65710",
+      "A5",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_grounded_qa_rag_10414013c88bdaac",
+      "A0",
+      0
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_grounded_qa_rag_10414013c88bdaac",
+      "A1",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_grounded_qa_rag_10414013c88bdaac",
+      "A2:0.8",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_grounded_qa_rag_10414013c88bdaac",
+      "A2:0.9",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_grounded_qa_rag_10414013c88bdaac",
+      "A2:1",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_grounded_qa_rag_10414013c88bdaac",
+      "A2:1.1",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_grounded_qa_rag_10414013c88bdaac",
+      "A2:1.2",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_grounded_qa_rag_10414013c88bdaac",
+      "A3",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_grounded_qa_rag_10414013c88bdaac",
+      "A5",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_instruction_following_7c4b4480b4835c0f",
+      "A0",
+      0
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_instruction_following_7c4b4480b4835c0f",
+      "A1",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_instruction_following_7c4b4480b4835c0f",
+      "A2:0.8",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_instruction_following_7c4b4480b4835c0f",
+      "A2:0.9",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_instruction_following_7c4b4480b4835c0f",
+      "A2:1",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_instruction_following_7c4b4480b4835c0f",
+      "A2:1.1",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_instruction_following_7c4b4480b4835c0f",
+      "A2:1.2",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_instruction_following_7c4b4480b4835c0f",
+      "A3",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_instruction_following_7c4b4480b4835c0f",
+      "A5",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_long_context_retrieval_20550a305b3b2af6",
+      "A0",
+      0
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_long_context_retrieval_20550a305b3b2af6",
+      "A1",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_long_context_retrieval_20550a305b3b2af6",
+      "A2:0.8",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_long_context_retrieval_20550a305b3b2af6",
+      "A2:0.9",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_long_context_retrieval_20550a305b3b2af6",
+      "A2:1",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_long_context_retrieval_20550a305b3b2af6",
+      "A2:1.1",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_long_context_retrieval_20550a305b3b2af6",
+      "A2:1.2",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_long_context_retrieval_20550a305b3b2af6",
+      "A3",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_long_context_retrieval_20550a305b3b2af6",
+      "A5",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_lost_in_the_middle_e4e7cc76239741de",
+      "A0",
+      0
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_lost_in_the_middle_e4e7cc76239741de",
+      "A1",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_lost_in_the_middle_e4e7cc76239741de",
+      "A2:0.8",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_lost_in_the_middle_e4e7cc76239741de",
+      "A2:0.9",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_lost_in_the_middle_e4e7cc76239741de",
+      "A2:1",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_lost_in_the_middle_e4e7cc76239741de",
+      "A2:1.1",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_lost_in_the_middle_e4e7cc76239741de",
+      "A2:1.2",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_lost_in_the_middle_e4e7cc76239741de",
+      "A3",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_lost_in_the_middle_e4e7cc76239741de",
+      "A5",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_mathematics_12cd1363c6e3df98",
+      "A0",
+      0
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_mathematics_12cd1363c6e3df98",
+      "A1",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_mathematics_12cd1363c6e3df98",
+      "A2:0.8",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_mathematics_12cd1363c6e3df98",
+      "A2:0.9",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_mathematics_12cd1363c6e3df98",
+      "A2:1",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_mathematics_12cd1363c6e3df98",
+      "A2:1.1",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_mathematics_12cd1363c6e3df98",
+      "A2:1.2",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_mathematics_12cd1363c6e3df98",
+      "A3",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_mathematics_12cd1363c6e3df98",
+      "A5",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_multi_hop_binding_492bf31e1ae5deff",
+      "A0",
+      0
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_multi_hop_binding_492bf31e1ae5deff",
+      "A1",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_multi_hop_binding_492bf31e1ae5deff",
+      "A2:0.8",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_multi_hop_binding_492bf31e1ae5deff",
+      "A2:0.9",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_multi_hop_binding_492bf31e1ae5deff",
+      "A2:1",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_multi_hop_binding_492bf31e1ae5deff",
+      "A2:1.1",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_multi_hop_binding_492bf31e1ae5deff",
+      "A2:1.2",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_multi_hop_binding_492bf31e1ae5deff",
+      "A3",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_multi_hop_binding_492bf31e1ae5deff",
+      "A5",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_normal_conversation_4a73375fc950bab7",
+      "A0",
+      0
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_normal_conversation_4a73375fc950bab7",
+      "A1",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_normal_conversation_4a73375fc950bab7",
+      "A2:0.8",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_normal_conversation_4a73375fc950bab7",
+      "A2:0.9",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_normal_conversation_4a73375fc950bab7",
+      "A2:1",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_normal_conversation_4a73375fc950bab7",
+      "A2:1.1",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_normal_conversation_4a73375fc950bab7",
+      "A2:1.2",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_normal_conversation_4a73375fc950bab7",
+      "A3",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_normal_conversation_4a73375fc950bab7",
+      "A5",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_paraphrase_robustness_0cfbf1026bf11fe7",
+      "A0",
+      0
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_paraphrase_robustness_0cfbf1026bf11fe7",
+      "A1",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_paraphrase_robustness_0cfbf1026bf11fe7",
+      "A2:0.8",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_paraphrase_robustness_0cfbf1026bf11fe7",
+      "A2:0.9",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_paraphrase_robustness_0cfbf1026bf11fe7",
+      "A2:1",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_paraphrase_robustness_0cfbf1026bf11fe7",
+      "A2:1.1",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_paraphrase_robustness_0cfbf1026bf11fe7",
+      "A2:1.2",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_paraphrase_robustness_0cfbf1026bf11fe7",
+      "A3",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_paraphrase_robustness_0cfbf1026bf11fe7",
+      "A5",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_paraphrase_robustness_44e3777f1aad20a2",
+      "A0",
+      0
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_paraphrase_robustness_44e3777f1aad20a2",
+      "A1",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_paraphrase_robustness_44e3777f1aad20a2",
+      "A2:0.8",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_paraphrase_robustness_44e3777f1aad20a2",
+      "A2:0.9",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_paraphrase_robustness_44e3777f1aad20a2",
+      "A2:1",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_paraphrase_robustness_44e3777f1aad20a2",
+      "A2:1.1",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_paraphrase_robustness_44e3777f1aad20a2",
+      "A2:1.2",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_paraphrase_robustness_44e3777f1aad20a2",
+      "A3",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_paraphrase_robustness_44e3777f1aad20a2",
+      "A5",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_paraphrase_robustness_c26fef498d2d9fd3",
+      "A0",
+      0
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_paraphrase_robustness_c26fef498d2d9fd3",
+      "A1",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_paraphrase_robustness_c26fef498d2d9fd3",
+      "A2:0.8",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_paraphrase_robustness_c26fef498d2d9fd3",
+      "A2:0.9",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_paraphrase_robustness_c26fef498d2d9fd3",
+      "A2:1",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_paraphrase_robustness_c26fef498d2d9fd3",
+      "A2:1.1",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_paraphrase_robustness_c26fef498d2d9fd3",
+      "A2:1.2",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_paraphrase_robustness_c26fef498d2d9fd3",
+      "A3",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_paraphrase_robustness_c26fef498d2d9fd3",
+      "A5",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_science_0ac5af678b239ec5",
+      "A0",
+      0
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_science_0ac5af678b239ec5",
+      "A1",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_science_0ac5af678b239ec5",
+      "A2:0.8",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_science_0ac5af678b239ec5",
+      "A2:0.9",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_science_0ac5af678b239ec5",
+      "A2:1",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_science_0ac5af678b239ec5",
+      "A2:1.1",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_science_0ac5af678b239ec5",
+      "A2:1.2",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_science_0ac5af678b239ec5",
+      "A3",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_science_0ac5af678b239ec5",
+      "A5",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_short_response_30785feeb5a8abdf",
+      "A0",
+      0
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_short_response_30785feeb5a8abdf",
+      "A1",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_short_response_30785feeb5a8abdf",
+      "A2:0.8",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_short_response_30785feeb5a8abdf",
+      "A2:0.9",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_short_response_30785feeb5a8abdf",
+      "A2:1",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_short_response_30785feeb5a8abdf",
+      "A2:1.1",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_short_response_30785feeb5a8abdf",
+      "A2:1.2",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_short_response_30785feeb5a8abdf",
+      "A3",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_short_response_30785feeb5a8abdf",
+      "A5",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_unanswerable_abstention_22f9fcfd9ce716c8",
+      "A0",
+      0
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_unanswerable_abstention_22f9fcfd9ce716c8",
+      "A1",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_unanswerable_abstention_22f9fcfd9ce716c8",
+      "A2:0.8",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_unanswerable_abstention_22f9fcfd9ce716c8",
+      "A2:0.9",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_unanswerable_abstention_22f9fcfd9ce716c8",
+      "A2:1",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_unanswerable_abstention_22f9fcfd9ce716c8",
+      "A2:1.1",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_unanswerable_abstention_22f9fcfd9ce716c8",
+      "A2:1.2",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_unanswerable_abstention_22f9fcfd9ce716c8",
+      "A3",
+      1
+    ],
+    [
+      "DEV",
+      29,
+      "mergedev_unanswerable_abstention_22f9fcfd9ce716c8",
+      "A5",
+      1
+    ],
+    [
+      "SMOKE",
+      17,
+      "calibration_common_sense_ac2b34a1ecce0a8d",
+      "A0",
+      0
+    ],
+    [
+      "SMOKE",
+      17,
+      "calibration_common_sense_ac2b34a1ecce0a8d",
+      "A1",
+      1
+    ],
+    [
+      "SMOKE",
+      17,
+      "calibration_common_sense_ac2b34a1ecce0a8d",
+      "A2:0.8",
+      1
+    ],
+    [
+      "SMOKE",
+      17,
+      "calibration_common_sense_ac2b34a1ecce0a8d",
+      "A2:0.9",
+      1
+    ],
+    [
+      "SMOKE",
+      17,
+      "calibration_common_sense_ac2b34a1ecce0a8d",
+      "A2:1",
+      1
+    ],
+    [
+      "SMOKE",
+      17,
+      "calibration_common_sense_ac2b34a1ecce0a8d",
+      "A2:1.1",
+      1
+    ],
+    [
+      "SMOKE",
+      17,
+      "calibration_common_sense_ac2b34a1ecce0a8d",
+      "A2:1.2",
+      1
+    ],
+    [
+      "SMOKE",
+      17,
+      "calibration_common_sense_ac2b34a1ecce0a8d",
+      "A3",
+      1
+    ],
+    [
+      "SMOKE",
+      17,
+      "calibration_common_sense_ac2b34a1ecce0a8d",
+      "A5",
+      1
+    ],
+    [
+      "SMOKE",
+      17,
+      "calibration_common_sense_ac2b34a1ecce0a8d",
+      "qualification_legacy",
+      0
+    ],
+    [
+      "SMOKE",
+      17,
+      "calibration_common_sense_ac2b34a1ecce0a8d",
+      "qualification_legacy",
+      1
+    ],
+    [
+      "SMOKE",
+      17,
+      "calibration_common_sense_ac2b34a1ecce0a8d",
+      "qualification_new",
+      0
+    ],
+    [
+      "SMOKE",
+      17,
+      "calibration_common_sense_ac2b34a1ecce0a8d",
+      "qualification_new",
+      1
+    ],
+    [
+      "SMOKE",
+      17,
+      "calibration_instruction_following_1d15f77eca5d17f0",
+      "A0",
+      0
+    ],
+    [
+      "SMOKE",
+      17,
+      "calibration_instruction_following_1d15f77eca5d17f0",
+      "A1",
+      1
+    ],
+    [
+      "SMOKE",
+      17,
+      "calibration_instruction_following_1d15f77eca5d17f0",
+      "A2:0.8",
+      1
+    ],
+    [
+      "SMOKE",
+      17,
+      "calibration_instruction_following_1d15f77eca5d17f0",
+      "A2:0.9",
+      1
+    ],
+    [
+      "SMOKE",
+      17,
+      "calibration_instruction_following_1d15f77eca5d17f0",
+      "A2:1",
+      1
+    ],
+    [
+      "SMOKE",
+      17,
+      "calibration_instruction_following_1d15f77eca5d17f0",
+      "A2:1.1",
+      1
+    ],
+    [
+      "SMOKE",
+      17,
+      "calibration_instruction_following_1d15f77eca5d17f0",
+      "A2:1.2",
+      1
+    ],
+    [
+      "SMOKE",
+      17,
+      "calibration_instruction_following_1d15f77eca5d17f0",
+      "A3",
+      1
+    ],
+    [
+      "SMOKE",
+      17,
+      "calibration_instruction_following_1d15f77eca5d17f0",
+      "A5",
+      1
+    ],
+    [
+      "SMOKE",
+      17,
+      "calibration_instruction_following_1d15f77eca5d17f0",
+      "qualification_legacy",
+      0
+    ],
+    [
+      "SMOKE",
+      17,
+      "calibration_instruction_following_1d15f77eca5d17f0",
+      "qualification_legacy",
+      1
+    ],
+    [
+      "SMOKE",
+      17,
+      "calibration_instruction_following_1d15f77eca5d17f0",
+      "qualification_new",
+      0
+    ],
+    [
+      "SMOKE",
+      17,
+      "calibration_instruction_following_1d15f77eca5d17f0",
+      "qualification_new",
+      1
+    ],
+    [
+      "SMOKE",
+      17,
+      "calibration_mathematics_429ca310e753b947",
+      "A0",
+      0
+    ],
+    [
+      "SMOKE",
+      17,
+      "calibration_mathematics_429ca310e753b947",
+      "A1",
+      1
+    ],
+    [
+      "SMOKE",
+      17,
+      "calibration_mathematics_429ca310e753b947",
+      "A2:0.8",
+      1
+    ],
+    [
+      "SMOKE",
+      17,
+      "calibration_mathematics_429ca310e753b947",
+      "A2:0.9",
+      1
+    ],
+    [
+      "SMOKE",
+      17,
+      "calibration_mathematics_429ca310e753b947",
+      "A2:1",
+      1
+    ],
+    [
+      "SMOKE",
+      17,
+      "calibration_mathematics_429ca310e753b947",
+      "A2:1.1",
+      1
+    ],
+    [
+      "SMOKE",
+      17,
+      "calibration_mathematics_429ca310e753b947",
+      "A2:1.2",
+      1
+    ],
+    [
+      "SMOKE",
+      17,
+      "calibration_mathematics_429ca310e753b947",
+      "A3",
+      1
+    ],
+    [
+      "SMOKE",
+      17,
+      "calibration_mathematics_429ca310e753b947",
+      "A5",
+      1
+    ],
+    [
+      "SMOKE",
+      17,
+      "calibration_mathematics_429ca310e753b947",
+      "qualification_legacy",
+      0
+    ],
+    [
+      "SMOKE",
+      17,
+      "calibration_mathematics_429ca310e753b947",
+      "qualification_legacy",
+      1
+    ],
+    [
+      "SMOKE",
+      17,
+      "calibration_mathematics_429ca310e753b947",
+      "qualification_new",
+      0
+    ],
+    [
+      "SMOKE",
+      17,
+      "calibration_mathematics_429ca310e753b947",
+      "qualification_new",
+      1
+    ],
+    [
+      "SMOKE",
+      17,
+      "calibration_multi_hop_binding_caa1eea53ea0585a",
+      "A0",
+      0
+    ],
+    [
+      "SMOKE",
+      17,
+      "calibration_multi_hop_binding_caa1eea53ea0585a",
+      "A1",
+      1
+    ],
+    [
+      "SMOKE",
+      17,
+      "calibration_multi_hop_binding_caa1eea53ea0585a",
+      "A2:0.8",
+      1
+    ],
+    [
+      "SMOKE",
+      17,
+      "calibration_multi_hop_binding_caa1eea53ea0585a",
+      "A2:0.9",
+      1
+    ],
+    [
+      "SMOKE",
+      17,
+      "calibration_multi_hop_binding_caa1eea53ea0585a",
+      "A2:1",
+      1
+    ],
+    [
+      "SMOKE",
+      17,
+      "calibration_multi_hop_binding_caa1eea53ea0585a",
+      "A2:1.1",
+      1
+    ],
+    [
+      "SMOKE",
+      17,
+      "calibration_multi_hop_binding_caa1eea53ea0585a",
+      "A2:1.2",
+      1
+    ],
+    [
+      "SMOKE",
+      17,
+      "calibration_multi_hop_binding_caa1eea53ea0585a",
+      "A3",
+      1
+    ],
+    [
+      "SMOKE",
+      17,
+      "calibration_multi_hop_binding_caa1eea53ea0585a",
+      "A5",
+      1
+    ],
+    [
+      "SMOKE",
+      17,
+      "calibration_multi_hop_binding_caa1eea53ea0585a",
+      "qualification_legacy",
+      0
+    ],
+    [
+      "SMOKE",
+      17,
+      "calibration_multi_hop_binding_caa1eea53ea0585a",
+      "qualification_legacy",
+      1
+    ],
+    [
+      "SMOKE",
+      17,
+      "calibration_multi_hop_binding_caa1eea53ea0585a",
+      "qualification_new",
+      0
+    ],
+    [
+      "SMOKE",
+      17,
+      "calibration_multi_hop_binding_caa1eea53ea0585a",
+      "qualification_new",
+      1
+    ],
+    [
+      "SMOKE",
+      17,
+      "calibration_normal_conversation_029382dc0a778c44",
+      "A0",
+      0
+    ],
+    [
+      "SMOKE",
+      17,
+      "calibration_normal_conversation_029382dc0a778c44",
+      "A1",
+      1
+    ],
+    [
+      "SMOKE",
+      17,
+      "calibration_normal_conversation_029382dc0a778c44",
+      "A2:0.8",
+      1
+    ],
+    [
+      "SMOKE",
+      17,
+      "calibration_normal_conversation_029382dc0a778c44",
+      "A2:0.9",
+      1
+    ],
+    [
+      "SMOKE",
+      17,
+      "calibration_normal_conversation_029382dc0a778c44",
+      "A2:1",
+      1
+    ],
+    [
+      "SMOKE",
+      17,
+      "calibration_normal_conversation_029382dc0a778c44",
+      "A2:1.1",
+      1
+    ],
+    [
+      "SMOKE",
+      17,
+      "calibration_normal_conversation_029382dc0a778c44",
+      "A2:1.2",
+      1
+    ],
+    [
+      "SMOKE",
+      17,
+      "calibration_normal_conversation_029382dc0a778c44",
+      "A3",
+      1
+    ],
+    [
+      "SMOKE",
+      17,
+      "calibration_normal_conversation_029382dc0a778c44",
+      "A5",
+      1
+    ],
+    [
+      "SMOKE",
+      17,
+      "calibration_normal_conversation_029382dc0a778c44",
+      "qualification_legacy",
+      0
+    ],
+    [
+      "SMOKE",
+      17,
+      "calibration_normal_conversation_029382dc0a778c44",
+      "qualification_legacy",
+      1
+    ],
+    [
+      "SMOKE",
+      17,
+      "calibration_normal_conversation_029382dc0a778c44",
+      "qualification_new",
+      0
+    ],
+    [
+      "SMOKE",
+      17,
+      "calibration_normal_conversation_029382dc0a778c44",
+      "qualification_new",
+      1
+    ],
+    [
+      "SMOKE",
+      17,
+      "calibration_science_9cf33d8dbb5fd050",
+      "A0",
+      0
+    ],
+    [
+      "SMOKE",
+      17,
+      "calibration_science_9cf33d8dbb5fd050",
+      "A1",
+      1
+    ],
+    [
+      "SMOKE",
+      17,
+      "calibration_science_9cf33d8dbb5fd050",
+      "A2:0.8",
+      1
+    ],
+    [
+      "SMOKE",
+      17,
+      "calibration_science_9cf33d8dbb5fd050",
+      "A2:0.9",
+      1
+    ],
+    [
+      "SMOKE",
+      17,
+      "calibration_science_9cf33d8dbb5fd050",
+      "A2:1",
+      1
+    ],
+    [
+      "SMOKE",
+      17,
+      "calibration_science_9cf33d8dbb5fd050",
+      "A2:1.1",
+      1
+    ],
+    [
+      "SMOKE",
+      17,
+      "calibration_science_9cf33d8dbb5fd050",
+      "A2:1.2",
+      1
+    ],
+    [
+      "SMOKE",
+      17,
+      "calibration_science_9cf33d8dbb5fd050",
+      "A3",
+      1
+    ],
+    [
+      "SMOKE",
+      17,
+      "calibration_science_9cf33d8dbb5fd050",
+      "A5",
+      1
+    ],
+    [
+      "SMOKE",
+      17,
+      "calibration_science_9cf33d8dbb5fd050",
+      "qualification_legacy",
+      0
+    ],
+    [
+      "SMOKE",
+      17,
+      "calibration_science_9cf33d8dbb5fd050",
+      "qualification_legacy",
+      1
+    ],
+    [
+      "SMOKE",
+      17,
+      "calibration_science_9cf33d8dbb5fd050",
+      "qualification_new",
+      0
+    ],
+    [
+      "SMOKE",
+      17,
+      "calibration_science_9cf33d8dbb5fd050",
+      "qualification_new",
+      1
+    ],
+    [
+      "SMOKE",
+      17,
+      "calibration_short_response_15273c49b438f1a9",
+      "A0",
+      0
+    ],
+    [
+      "SMOKE",
+      17,
+      "calibration_short_response_15273c49b438f1a9",
+      "A1",
+      1
+    ],
+    [
+      "SMOKE",
+      17,
+      "calibration_short_response_15273c49b438f1a9",
+      "A2:0.8",
+      1
+    ],
+    [
+      "SMOKE",
+      17,
+      "calibration_short_response_15273c49b438f1a9",
+      "A2:0.9",
+      1
+    ],
+    [
+      "SMOKE",
+      17,
+      "calibration_short_response_15273c49b438f1a9",
+      "A2:1",
+      1
+    ],
+    [
+      "SMOKE",
+      17,
+      "calibration_short_response_15273c49b438f1a9",
+      "A2:1.1",
+      1
+    ],
+    [
+      "SMOKE",
+      17,
+      "calibration_short_response_15273c49b438f1a9",
+      "A2:1.2",
+      1
+    ],
+    [
+      "SMOKE",
+      17,
+      "calibration_short_response_15273c49b438f1a9",
+      "A3",
+      1
+    ],
+    [
+      "SMOKE",
+      17,
+      "calibration_short_response_15273c49b438f1a9",
+      "A5",
+      1
+    ],
+    [
+      "SMOKE",
+      17,
+      "calibration_short_response_15273c49b438f1a9",
+      "qualification_legacy",
+      0
+    ],
+    [
+      "SMOKE",
+      17,
+      "calibration_short_response_15273c49b438f1a9",
+      "qualification_legacy",
+      1
+    ],
+    [
+      "SMOKE",
+      17,
+      "calibration_short_response_15273c49b438f1a9",
+      "qualification_new",
+      0
+    ],
+    [
+      "SMOKE",
+      17,
+      "calibration_short_response_15273c49b438f1a9",
+      "qualification_new",
+      1
+    ],
+    [
+      "SMOKE",
+      17,
+      "calibration_unanswerable_abstention_3006ee0f901c7173",
+      "A0",
+      0
+    ],
+    [
+      "SMOKE",
+      17,
+      "calibration_unanswerable_abstention_3006ee0f901c7173",
+      "A1",
+      1
+    ],
+    [
+      "SMOKE",
+      17,
+      "calibration_unanswerable_abstention_3006ee0f901c7173",
+      "A2:0.8",
+      1
+    ],
+    [
+      "SMOKE",
+      17,
+      "calibration_unanswerable_abstention_3006ee0f901c7173",
+      "A2:0.9",
+      1
+    ],
+    [
+      "SMOKE",
+      17,
+      "calibration_unanswerable_abstention_3006ee0f901c7173",
+      "A2:1",
+      1
+    ],
+    [
+      "SMOKE",
+      17,
+      "calibration_unanswerable_abstention_3006ee0f901c7173",
+      "A2:1.1",
+      1
+    ],
+    [
+      "SMOKE",
+      17,
+      "calibration_unanswerable_abstention_3006ee0f901c7173",
+      "A2:1.2",
+      1
+    ],
+    [
+      "SMOKE",
+      17,
+      "calibration_unanswerable_abstention_3006ee0f901c7173",
+      "A3",
+      1
+    ],
+    [
+      "SMOKE",
+      17,
+      "calibration_unanswerable_abstention_3006ee0f901c7173",
+      "A5",
+      1
+    ],
+    [
+      "SMOKE",
+      17,
+      "calibration_unanswerable_abstention_3006ee0f901c7173",
+      "qualification_legacy",
+      0
+    ],
+    [
+      "SMOKE",
+      17,
+      "calibration_unanswerable_abstention_3006ee0f901c7173",
+      "qualification_legacy",
+      1
+    ],
+    [
+      "SMOKE",
+      17,
+      "calibration_unanswerable_abstention_3006ee0f901c7173",
+      "qualification_new",
+      0
+    ],
+    [
+      "SMOKE",
+      17,
+      "calibration_unanswerable_abstention_3006ee0f901c7173",
+      "qualification_new",
+      1
+    ]
+  ],
+  "native_TEST": "CLOSED",
+  "own_bank_floors": {
+    "DEV": {
+      "best_tested_constant_accuracy": 0.0625,
+      "constant_accuracy": {
+        "": 0.0,
+        "0": 0.0,
+        "1": 0.0,
+        "NO": 0.0,
+        "UNKNOWN": 0.0625,
+        "YES": 0.0625
+      },
+      "items": 16,
+      "positive_solver": "NOT_VERIFIED",
+      "prediction_input": "prompt only or fixed literal; scorer targets used only to evaluate",
+      "prompt_copy_accuracy": 0.1875,
+      "query_blind": "NOT_IMPLEMENTED"
+    },
+    "SMOKE": {
+      "best_tested_constant_accuracy": 0.125,
+      "constant_accuracy": {
+        "": 0.0,
+        "0": 0.0,
+        "1": 0.0,
+        "NO": 0.0,
+        "UNKNOWN": 0.125,
+        "YES": 0.0
+      },
+      "items": 8,
+      "positive_solver": "NOT_VERIFIED",
+      "prediction_input": "prompt only or fixed literal; scorer targets used only to evaluate",
+      "prompt_copy_accuracy": 0.25,
+      "query_blind": "NOT_IMPLEMENTED"
+    }
+  },
+  "pairs": {},
+  "per_step_oracle": "NOT_ENUMERATED_NATIVE_PREFIX_SCHEDULES",
+  "physical_rows": 0,
+  "practical_margin": 0.05,
+  "primary_endpoint": "inherited binary task score; equal item weights after within-item repeat averaging",
+  "provisional_cluster_count": 13,
+  "registered_seeds": [
+    17,
+    29
+  ],
+  "retrospective_global_fixed_envelope": {
+    "accuracy": null,
+    "alpha": null,
+    "diagnostic_only": true
+  },
+  "reused_oracle_rows": 0,
+  "run_lineage": {
+    "admission_id": "REF-V1-CPU-001",
+    "errors": [
+      "native registered source/operator/grid/seed contract differs",
+      "native generation/controller configuration differs from frozen reference",
+      "native registration DEV data mismatch",
+      "native gold/training closure differs",
+      "native preflight missing/blocked",
+      "frozen fixed/pool configuration or data binding differs",
+      "frozen random pool differs from generation-only DEV A3 journal"
+    ],
+    "frozen_pool_status": "NOT_VERIFIED",
+    "source_head": "7ece5cead285ba65c7d73ab57c0327fae2dc40bb",
+    "valid": false
+  },
+  "seeds_are_independent_examples": false,
+  "semantic_correctness": "NOT_ASSESSED",
+  "status": "INCOMPLETE_NO_PRIMARY_COMPARISON",
+  "tables": [
+    {
+      "accuracy": null,
+      "case_count": 0,
+      "format_score": null,
+      "invalid_rate": null,
+      "literal_UNKNOWN_rate": null,
+      "observed_partial_accuracy": null,
+      "policy": "A0",
+      "semantic_abstention": "NOT_ASSESSED",
+      "status": "PARTIAL_OBSERVED_ONLY",
+      "termination_counts": {}
+    },
+    {
+      "accuracy": null,
+      "case_count": 0,
+      "format_score": null,
+      "invalid_rate": null,
+      "literal_UNKNOWN_rate": null,
+      "observed_partial_accuracy": null,
+      "policy": "A1",
+      "semantic_abstention": "NOT_ASSESSED",
+      "status": "PARTIAL_OBSERVED_ONLY",
+      "termination_counts": {}
+    },
+    {
+      "accuracy": null,
+      "case_count": 0,
+      "format_score": null,
+      "invalid_rate": null,
+      "literal_UNKNOWN_rate": null,
+      "observed_partial_accuracy": null,
+      "policy": "A3",
+      "semantic_abstention": "NOT_ASSESSED",
+      "status": "PARTIAL_OBSERVED_ONLY",
+      "termination_counts": {}
+    },
+    {
+      "accuracy": null,
+      "case_count": 0,
+      "format_score": null,
+      "invalid_rate": null,
+      "literal_UNKNOWN_rate": null,
+      "observed_partial_accuracy": null,
+      "policy": "A5",
+      "semantic_abstention": "NOT_ASSESSED",
+      "status": "PARTIAL_OBSERVED_ONLY",
+      "termination_counts": {}
+    },
+    {
+      "accuracy": null,
+      "case_count": 0,
+      "format_score": null,
+      "invalid_rate": null,
+      "literal_UNKNOWN_rate": null,
+      "observed_partial_accuracy": null,
+      "policy": "A2:0.8",
+      "semantic_abstention": "NOT_ASSESSED",
+      "status": "PARTIAL_OBSERVED_ONLY",
+      "termination_counts": {}
+    },
+    {
+      "accuracy": null,
+      "case_count": 0,
+      "format_score": null,
+      "invalid_rate": null,
+      "literal_UNKNOWN_rate": null,
+      "observed_partial_accuracy": null,
+      "policy": "A2:0.9",
+      "semantic_abstention": "NOT_ASSESSED",
+      "status": "PARTIAL_OBSERVED_ONLY",
+      "termination_counts": {}
+    },
+    {
+      "accuracy": null,
+      "case_count": 0,
+      "format_score": null,
+      "invalid_rate": null,
+      "literal_UNKNOWN_rate": null,
+      "observed_partial_accuracy": null,
+      "policy": "A2:1",
+      "semantic_abstention": "NOT_ASSESSED",
+      "status": "PARTIAL_OBSERVED_ONLY",
+      "termination_counts": {}
+    },
+    {
+      "accuracy": null,
+      "case_count": 0,
+      "format_score": null,
+      "invalid_rate": null,
+      "literal_UNKNOWN_rate": null,
+      "observed_partial_accuracy": null,
+      "policy": "A2:1.1",
+      "semantic_abstention": "NOT_ASSESSED",
+      "status": "PARTIAL_OBSERVED_ONLY",
+      "termination_counts": {}
+    },
+    {
+      "accuracy": null,
+      "case_count": 0,
+      "format_score": null,
+      "invalid_rate": null,
+      "literal_UNKNOWN_rate": null,
+      "observed_partial_accuracy": null,
+      "policy": "A2:1.2",
+      "semantic_abstention": "NOT_ASSESSED",
+      "status": "PARTIAL_OBSERVED_ONLY",
+      "termination_counts": {}
+    }
+  ],
+  "terminal_status_valid": false,
+  "unexpected_cells": [],
+  "unsafe_rows": 0,
+  "unsupported_answers": "NOT_ASSESSED"
+}

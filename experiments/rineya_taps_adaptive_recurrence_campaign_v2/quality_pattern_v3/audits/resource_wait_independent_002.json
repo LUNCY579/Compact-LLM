@@ -1,0 +1,98 @@
+{
+  "schema": "independent_resource_wait_audit_v2",
+  "status": "EXTERNAL_HOST_RAM_IMPASSE_NO_REQUIRED_PREPARATION_REMAINS",
+  "disposition": "NO_DISPATCH while the unchanged seven-GiB parent host floor fails; source packet is ready for coordinator fresh live readiness when resources recover.",
+  "bindings": {
+    "fresh_admission_v2.json": "e0de045b5d2544acb09b860fdbcae59cbbae0c98fb0e0f6fe504114f4d12878a",
+    "reviews/fresh_dispatch_review_002.json": "00c40d8e6f50040d5f25b24dda844cb0bbfe01235be0144c64d0ce1032393e9b",
+    "fresh_supervisor.py": "3e81f147c69ec5d4abe424c143be44e9891ba811622fc93eed4d185801615c4a",
+    "fresh_scope.py": "22e08e1c342fcd068544d642952d7448c0b7d9de9fe659c8d3231e3eb47e634e",
+    "fresh_readiness.py": "b9966132fec1fd1ca3d3bcc1a835a52174c02a55d9d87aa0dddca338e12e9182",
+    "reviews/fresh_worker_reader_source_review_002.json": "b884892977019f63e1dd7b2da35ab6106200b7e9cd09b3ac1854e299d8e9a46d",
+    "reviews/fresh_data_execution_review_001.json": "6e6dece999832956473de9903b9e42e7cd553f219ae40ab829f1d159310bac42",
+    "FRESH_READINESS_001.json": "e0ccf807179292152d04c78c1bff2ae14030a37a11b7b374e2aa816c8d2a899b",
+    "audits/fresh_resource_refusal_001.json": "550acd5b9073db7c5f0f5342dae934c9263fc958dcbad5d43445f1eb0a352a0e",
+    "audits/fresh_resource_cheap_recheck_001.json": "7f2832230466ba2a9e6350493df3353acf938ae093649e4305bcf4019ecb4c80",
+    "REPRODUCIBILITY_INDEX_V3_001.json": "43feb154de54c272167ee4b35725c0bc728e950906b1a587d14ba0a063c069a2",
+    "STATE.json": "d348036eeb741805c6141544aec90f74f6ea9c1bc1817436f9f010efd9b05334",
+    "CONTINUE.md": "f8533621361486a0dc0fa3ab7e7321a4a4703be13420ecabf004d7e0108a112c"
+  },
+  "floor_proof": {
+    "admitted_parent_floor_bytes": 7516192768,
+    "admitted_parent_floor_GiB": 7,
+    "parent_guard_line": 37,
+    "Popen_line": 82,
+    "guard_occurs_before_Popen": true,
+    "GPU_initial_floor_MiB": 6144,
+    "worker_preweight_floor_GiB": 6,
+    "running_host_reserve_GiB": 1,
+    "gates_not_lowered": true
+  },
+  "resource_evidence": {
+    "latest_file_observation": "audits/fresh_resource_cheap_recheck_001.json records host1.638439GiB<7 and GPU6452MiB>=6144; historical refusal/readiness also preworker.",
+    "coordinator_current_turn_observation": {
+      "GPU_free_MiB": 6366,
+      "host_available_GiB": 3.51,
+      "attribution": "Trusted coordinator task message; not independently queried by reviewer."
+    },
+    "independent_live_resource_query": false,
+    "classification": "Host RAM below a binding native guard, external to this reviewed source/data preparation."
+  },
+  "preparation_state": {
+    "actual_v2_admission_sha256": "e0de045b5d2544acb09b860fdbcae59cbbae0c98fb0e0f6fe504114f4d12878a",
+    "accepted_dispatch_receipt_sha256": "00c40d8e6f50040d5f25b24dda844cb0bbfe01235be0144c64d0ce1032393e9b",
+    "corrected_reader_and_peer_review_complete": true,
+    "actual_corpus_and_canonical_tokenizer_export_review_complete": true,
+    "source_scientific_membership_tests_and_bytechecks_previously_passed": true,
+    "reproducibility_packet_status": "COMPLETE_PRE_NATIVE_REPRODUCIBILITY_PACKET_NOT_EFFICACY",
+    "required_available_preparation": [],
+    "required_pending_measurements": [
+      "Fresh native mechanics qualification and all-control measured forecast after contained launch.",
+      "Full 432-case/216-parent plus24-panel nine-path matrix and terminal source/state/resource/cost proof.",
+      "Terminal-only grading and independent raw primary/preservation result review."
+    ],
+    "these_requirements_depend_on_RAM_gate": true
+  },
+  "attempt_and_objective": {
+    "fresh_native_events": 0,
+    "fresh_run_exists": false,
+    "campaign_lock_exists": false,
+    "fresh_attempt_consumed": false,
+    "native_seconds_used": 3690.2476851,
+    "native_seconds_remaining": 17909.7523149,
+    "meaningful_deterministic_quality_gain_established": false,
+    "current_positive_gain_objective_complete": false,
+    "source_pass_is_not_quality_gain": true
+  },
+  "continuation_classification": {
+    "current_consecutive_resource_blocker_goal_turn": 2,
+    "previous_turn": "Meaningful progress: accepted v2 corrected source/dispatch/repro packet, then resource refusal.",
+    "third_turn_blocked_threshold_met": false,
+    "goal_status_changed_by_reviewer": false,
+    "authority": "Coordinator owns lifecycle; this audit neither pauses nor blocks nor completes the goal.",
+    "historical_resource_blocker002_003": "Earlier probe-cycle files are historical and not counted as current fresh-study turns."
+  },
+  "metadata_limits": {
+    "observed_STATE_counter": 2,
+    "observed_STATE_epoch": "The inspected STATE/CONTINUE describe the preceding progress/resource-refusal turn; coordinator may advance the new turn counter separately.",
+    "historical_aliases": {
+      "fresh_successor_admission": "fresh_admission_v2.json;CREATED_ACCEPTED",
+      "fresh_native_source_review": "reviews/fresh_worker_reader_source_review_002.json"
+    },
+    "controlling_paths": "Current fresh_admission, source_review002 and dispatch_review002 fields plus CONTINUE and native consumers correctly bind v2.",
+    "aliases_are_not_missing_preparation": "Historical flat aliases may be reconciled administratively; they do not create required source/data/science work or authorize launch."
+  },
+  "appropriate_next_gate": "A fresh external RAM recovery to at least7GiB, then coordinator-only live all-gate preflight; do not lower floors, alter other workloads, repeat old tests, generate new controllers/data or promote exposed outcomes to fill this wait.",
+  "review_scope": {
+    "new_tests": 0,
+    "models": 0,
+    "GPU_queries": 0,
+    "tokenizers": 0,
+    "weight_file_reads_or_rehashes": 0,
+    "protected_data_reads": 0,
+    "source_or_data_edits": false,
+    "goal_updates": false,
+    "review_files_only": true,
+    "remaining133_source_or10asset_hashes_recomputed": false
+  }
+}

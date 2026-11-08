@@ -1,0 +1,273 @@
+{
+  "schema": "titan_quality.owner_integration_and_opposition/1",
+  "created_utc": "2026-10-05T22:11:48.165437+00:00",
+  "status": "OFFLINE_COMPATIBILITY_MEMORANDUM_NOT_NATIVE_ADMISSION",
+  "owner_chat": "01a0dfa3-9cdf-7703-a362-32f559ec15a7",
+  "goal_completion": false,
+  "source_identity": {
+    "immediate_sparse_parent_sha256": "a28629c9d3454fbf2e884fd7ca442c1b406e7caf4b36d34b2c0614d0add31284",
+    "artifact_binding_available_offline": true,
+    "native_source_objective_runtime_qualified": false
+  },
+  "existing_scientific_comparison": {
+    "comparison": {
+      "A": "verified final-answer SFT plus assistant replay",
+      "B": "same tasks prompts final gold replay; compact independently verified steps on reasoning cases"
+    },
+    "registration_status": "UNAPPROVED_OFFLINE_DRAFT",
+    "interpretation": "The owner protocol already prespecifies A/B. Its registration is an unapproved offline draft, not accepted native registration or authority.",
+    "trainable_scope": "frozen FP32 Sparse base; rank8/alpha16/dropout0 q/v LoRA at layers8-27",
+    "planned_trainable_values": 819200,
+    "planned_adapter_tensors": 80,
+    "training_rows": 800,
+    "updates": 100,
+    "train_sequence_cap": 512,
+    "optimizer": {
+      "gradient_clip_norm": 1.0,
+      "learning_rate": 0.0001,
+      "name": "AdamW",
+      "weight_decay": 0.01
+    },
+    "evaluation": {
+      "DEV_rows": 384,
+      "CHECK_rows": 768,
+      "approved_input_cap": null,
+      "approved_output_cap": null,
+      "proposed_caps_are_unapproved": true
+    },
+    "mechanism_isolated": false,
+    "current_gates": {
+      "scientific_review": "BLOCKED",
+      "native_qualification": "BLOCKED",
+      "TRAIN_A": "BLOCKED",
+      "TRAIN_B": "BLOCKED",
+      "DEV": "BLOCKED",
+      "frozen_selection": "BLOCKED",
+      "CHECK": "BLOCKED",
+      "release": "BLOCKED"
+    }
+  },
+  "external_v2_comparison": {
+    "status": "PROSPECTIVE_OFFLINE_IMPLEMENTATION_NOT_NATIVE_QUALIFIED",
+    "handoff_status": "HELD_OWNER_REVIEW_AND_NATIVE_INTEGRATION_REQUIRED",
+    "arms": [
+      "reasoning_only",
+      "joint"
+    ],
+    "intervention": "joint additionally supervises preservation, grounding and format targets",
+    "trainable_scope": "dense tail8-27; 220 tensors /314618880 trainable values; inherited sparse delta is not remasked",
+    "recipe": {
+      "dtype": "float32",
+      "peak_lr": 1e-05,
+      "betas": [
+        0.9,
+        0.95
+      ],
+      "epsilon": 1e-08,
+      "weight_decay": 0,
+      "clip_norm": 1,
+      "scheduler": "pinned MQ rate_at: token-based WSD20/60/20, 1-sqrt decay to0.1peak",
+      "optimizer": "pinned MQ CpuAdamW"
+    },
+    "selected_rows_per_arm": 200,
+    "selected_parents": 100,
+    "processed_tokens_per_arm": 53925,
+    "updates": 28,
+    "row_cap": 1024,
+    "update_token_cap": 2048,
+    "pilot_rows": 384,
+    "pilot_parents": 192,
+    "output_cap": 48,
+    "loss_denominator": "sum selected causal response-plus-EOS CE / common planned response-plus-EOS target count per update",
+    "native_integration_complete": false
+  },
+  "compatibility_disposition": {
+    "drop_in_compatible": false,
+    "same_parent_does_not_transfer_qualification": true,
+    "differences": [
+      "dense tail versus q/v LoRA and different optimizer recipe",
+      "joint preservation/grounding/format supervision versus compact steps",
+      "200 selected rows/28 updates/shared denominators versus800 rows/100 updates",
+      "1024-token training rows/48-token output versus512-token training and unapproved output caps",
+      "v2 reasoning/transition/arithmetic/grounding/longcontext/format cohorts versus owner transition/arithmetic/grounding/uncertainty/instruction/conversation",
+      "v2 zero individual Sparse-correct loss versus owner per-domain nonnegative net plus separate harm gates"
+    ],
+    "owner_choice": null,
+    "required_resolution": "Choose and independently review one exact source-bound successor/integration. Do not silently replace the existing owner A/B protocol or spend its permits."
+  },
+  "remaining_native_prerequisites": [
+    "Attributable teacher, history/ancestry, rights, family/nuisance, wording, rubric and scientific admission reviews on exact bank epochs.",
+    "Real source-owned model/tokenizer/mask/loss/optimizer/checkpoint/generation bridge for the chosen trainable inventory.",
+    "Exact FP32 Sparse, module/tensor shapes, tokenizer/template/EOS/greedy overrides, runtime/dependencies and maximum-shape qualification.",
+    "Frozen parent/buffers, finite gradients/Adam, correct causal response+EOS labels and cleared-boundary full save/reload proof.",
+    "Owned launch identity, OS containment/watchdog, sensors, single-worker custody, monotonic deadline, exit/lease/postflight and failed-work accounting.",
+    "Complete measured cost and resource review followed by action-specific source-bound authority; no imported historical grant."
+  ],
+  "source_correct_enrollment": {
+    "sparse_baseline_capture": null,
+    "supa_baseline_capture": null,
+    "frozen_correct_memberships": null,
+    "per_domain_usable_denominators": null,
+    "blind_semantic_rubric_review": null,
+    "required": "Before candidate outputs, capture complete exact-policy baselines and freeze Sparse-correct preservation plus Supa-correct/Sparse-wrong recovery parents. Gold alone is not baseline competence. Preserve individual harms, repairs, incompletes and parent dependence.",
+    "native_baseline_and_raw_result_review_implemented_by_fixture_analyser": false
+  },
+  "six_hour_budget_gap": {
+    "v2_total_seconds_ceiling": 21600,
+    "finalization_reserve_seconds": 1800,
+    "body_ceiling_seconds": 19800,
+    "qualification_counts": null,
+    "native_operation_prices": null,
+    "memory_storage_io_peaks": null,
+    "complete_forecast_seconds": null,
+    "fits_six_hours": null,
+    "native_budget_granted": false,
+    "must_cover": [
+      "startup/source hashes/qualified loads",
+      "failed and partial work",
+      "pair qualification",
+      "both training arms",
+      "all five evaluated configurations and baseline enrollment",
+      "384 rows per configuration with48-forward cap",
+      "checkpoints/readback/logging/sensors/cleanup/finalization"
+    ],
+    "owner_existing_phase_caps_sum_seconds_without_qualification": 57600,
+    "phase_cap_note": "Static sum is2x3600 TRAIN +3x7200 DEV +2x14400 CHECK, not measured elapsed time or proof of infeasibility. It cannot be relabeled a complete six-hour v2 envelope."
+  },
+  "future_pruning_opposition": {
+    "status": "MECHANICAL_SCAFFOLD_ONLY_SEPARATE_REGISTRATION_AND_BUDGET_REQUIRED",
+    "eligible_new_joint_absolute_checkpoint": null,
+    "exact_relative_delta_provenance": null,
+    "conversion": "new_delta = new_joint_absolute_checkpoint - immediate_FP32_Sparse_parent exactly once",
+    "arms": [
+      "dense_new_delta",
+      "stable_per_tensor_top25_new_delta",
+      "per_tensor_uniform_normmatch_new_delta"
+    ],
+    "operator_envelope": {
+      "arm_count": 3,
+      "parameter_sweep": false,
+      "automatic_additional_training": false
+    },
+    "inherited_delta_rule": "Add each transformed NEW delta once to the immediate Sparse parent; do not double-add inherited Titan/Sparse updates or treat raw LoRA A/B factors as full deltas.",
+    "if_owner_keeps_LoRA": "Effective full-weight materialization and the control frame need their own explicit registration; the dense-joint proposal cannot be assumed.",
+    "native_FP32_artifact_or_norm_qualification": null,
+    "complete_native_control_cost": null,
+    "source_correct_and_statistical_acceptance": null,
+    "historical_lead": {
+      "matched_training_draws": 3,
+      "retained_deltas": [
+        1,
+        1,
+        4
+      ],
+      "limits": "One null longcontext draw, arithmetic regressions, spent report-only retention instruments; neither universal quality gain nor no forgetting."
+    },
+    "native_model_comparison_run": false
+  },
+  "literature_scope": {
+    "audit_status": "PRIMARY_SOURCE_RESEARCH_NOT_RINEYA_NATIVE_EVIDENCE",
+    "sources": [
+      {
+        "title": "DARE / Language Models are Super Mario",
+        "url": "https://arxiv.org/html/2311.03099v3"
+      },
+      {
+        "title": "WiSE-FT / Robust fine-tuning of zero-shot models",
+        "url": "https://arxiv.org/abs/2109.01903"
+      },
+      {
+        "title": "TIES-Merging",
+        "url": "https://arxiv.org/abs/2306.01708"
+      }
+    ],
+    "decision": "DARE, global interpolation and sign-aware merging remain distinct hypotheses. None automatically expands the three-arm control envelope or supplies Titan capability/authority."
+  },
+  "next_concrete_decision": "Existing owner accepts or rejects a source-bound integration of v2; close genuine scientific/native qualification and complete-cost gates before asking for or exercising the corresponding action authority.",
+  "unproved_decisions": {
+    "scientific_admission": null,
+    "native_integration_acceptance": null,
+    "native_qualification_receipt": null,
+    "native_run_approval": null,
+    "pruning_native_approval": null
+  },
+  "actions": {
+    "native_authorized": false,
+    "training_authorized": false,
+    "protected_data_authorized": false,
+    "owner_messages": 0,
+    "model_loads": 0,
+    "native_calls": 0,
+    "repo_changes": 0,
+    "permits_created": 0,
+    "model_gain_established": false
+  },
+  "inputs": {
+    "owner_registration": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\titan-sparse-quality-offline-20261005\\records\\drafts-v1\\REGISTRATION_DRAFT.json",
+      "bytes": 4738,
+      "sha256": "06a5b8a712a0945ffc360377e6b2e09c000cdc6dd3b52f014c18839f4bee9c04"
+    },
+    "owner_protocol": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\titan-sparse-quality-offline-20261005\\experiments\\titan_sparse_quality_v1\\PROTOCOL.md",
+      "bytes": 13748,
+      "sha256": "3d005ff2590f7ba4170c4bdd92913a184a10dc68fa754f2648605cfc998b0ef0"
+    },
+    "owner_status": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\titan-sparse-quality-offline-20261005\\experiments\\titan_sparse_quality_v1\\STATUS.json",
+      "bytes": 1456,
+      "sha256": "b79a4031b3c0bc0cf6339ed9a1328399d2cd59ce1885ef293cc0f1a81ee192d5"
+    },
+    "owner_readme": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\titan-sparse-quality-offline-20261005\\experiments\\titan_sparse_quality_v1\\README.md",
+      "bytes": 4265,
+      "sha256": "394fb99269497fcbbc997efd149eef351245a6c8ca522f9b1683a03520136ad2"
+    },
+    "owner_runbook": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\titan-sparse-quality-offline-20261005\\experiments\\titan_sparse_quality_v1\\RUNBOOK.md",
+      "bytes": 3267,
+      "sha256": "123aef2b735986c179acc99f84c942c1cbcbca4b892fce27290beb1198a315bf"
+    },
+    "external_v2_protocol": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Titan-Joint-Quality-Pilot-v2\\PROTOCOL.json",
+      "bytes": 4557,
+      "sha256": "5ac5ed48e116ca2e6c8bd9680f8ffb5fa3357e73a37164ee3f395a9f8f81cab9"
+    },
+    "external_v2_readme": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Titan-Joint-Quality-Pilot-v2\\README.md",
+      "bytes": 8482,
+      "sha256": "612e54581fe0fb3ebc6a4608a610291693bb040f27a1a07c461df12a4f5f3861"
+    },
+    "immutable_v2_handoff": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Titan-Joint-Quality-Pilot-v2-runs\\handoff-001\\OWNER_HANDOFF.json",
+      "bytes": 5486,
+      "sha256": "b62d153a86d7e0cd59d457b0653c207c72e427b6c7f08dba9daab19fc74f8439"
+    },
+    "immutable_v2_exposure": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Titan-Joint-Quality-Pilot-v2-runs\\exposure-001\\EXPOSURE_PLAN.json",
+      "bytes": 3413510,
+      "sha256": "e5836e31082db6ab02cb275e39bfe851e8e5ff187a4c15a0309ba841b441a727"
+    },
+    "metadata_source_receipt": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Titan-Joint-Quality-Pilot-v2-runs\\source-001.json",
+      "bytes": 5959,
+      "sha256": "5f9b02660a23463da89b515d3775d9237e55f06cb3d6b01bf944fedce18ce928"
+    },
+    "pruning_mechanics": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Titan-Quality-Patterns-v1\\pruning_controls.py",
+      "bytes": 8568,
+      "sha256": "2865cff8e62ee6068ab89dad65e39bbf6da34602b521569938f14116e5f12a69"
+    },
+    "literature_opposition": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Titan-Quality-Patterns-v1-runs\\LITERATURE_OPPOSITION_001.json",
+      "bytes": 2656,
+      "sha256": "1d267b7dd131eec52c9eb1826045dfe6590ca55d112500cc6683d44b15d64af3"
+    },
+    "historical_pruning_report": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\Rineya_Published_Cores\\Rineya-Titan-Sparse-Experimental-1.0.0-devfreeze\\evidence\\REP001_RESULTS.md",
+      "bytes": 6418,
+      "sha256": "ea3a62de5d157430f3787a13de285e690f831438f92e27c2a1705a2c71c7448b"
+    }
+  },
+  "memo_markdown_sha256": "e3ba610503fac4a4af7a5647d1c6f4c8c175a33b3e1c1642ec0e47fbd6abea15"
+}

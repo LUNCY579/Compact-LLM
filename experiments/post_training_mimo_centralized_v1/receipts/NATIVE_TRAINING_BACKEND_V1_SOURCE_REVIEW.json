@@ -1,0 +1,50 @@
+{
+  "status": "PASS_SOURCE_REVIEW_UNQUALIFIED_BACKEND_COMPONENTS",
+  "human_approval": false,
+  "files": {
+    "scripts/native_training_backend.py": {
+      "sha256": "587696b67614bb674efe3e382be5446708c5402d489273c2e04605012f4030f7",
+      "bytes": 34450
+    },
+    "tests/test_native_training_backend.py": {
+      "sha256": "240417ac0a8bbc29c2cbbacef36095fecbbfb27341f7cb447f780a5d34bca550",
+      "bytes": 25299
+    },
+    "scripts/e1_training_engine_v2.py": {
+      "sha256": "2c15f248c360bf218caf3ad607016cabcf1344830fca2a4c7d5cbe46a9d990b3",
+      "bytes": 13488
+    },
+    "tests/test_e1_training_engine_v2.py": {
+      "sha256": "5c38cc8eb5921ee031839e4c63ec8ffccfbce269e8fe7a3041f34827b7b02266",
+      "bytes": 8587
+    }
+  },
+  "reviews": [
+    {
+      "component": "NativeTrainingBackend",
+      "reviewer": "non-author root",
+      "checks": [
+        "RealinjectedTorch method implementation retainingqualifiedhelpermath",
+        "Exactinventory/basehash/tie andgradientconfinement checks",
+        "Explicitcomponent/partialphase rejection",
+        "Boundedartifact+manifest reads/sameBytesIO validationbeforeGPUmutation",
+        "TypedV2publication and returnedprimitivecosts distinctfrombackendspans",
+        "Constructorfactory preservesoriginalexception+actualprimitive costs"
+      ],
+      "limitations": "No actualframework/GPU/model test; source/runtime/loader auth andnativeworker remainexternal."
+    },
+    {
+      "component": "EngineV2",
+      "reviewer": "non-author /root/e1_bound_reader",
+      "checks": [
+        "PublicationafterPOST-save validation,beforecheckpoint exposure",
+        "Failurepreserves returnedsave costs",
+        "Explicitplannedcomponent,wrongelementblockedbeforeforward",
+        "Finalprimitive snapshot failure refuses success whileoutercosts retained"
+      ],
+      "native_calls": 0
+    }
+  ],
+  "native_qualified": false,
+  "E1_authorized": false
+}

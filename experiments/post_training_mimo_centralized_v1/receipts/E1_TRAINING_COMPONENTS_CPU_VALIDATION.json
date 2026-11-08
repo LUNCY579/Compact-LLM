@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "status": "PASS_53_STDLIB_COMPONENT_CONTROLS_NO_NATIVE",
+  "command": [
+    "C:\\Users\\clclc\\AppData\\Local\\Programs\\Python\\Python313\\python.exe",
+    "-B",
+    "-m",
+    "unittest",
+    "experiments.post_training_mimo_centralized_v1.tests.test_e1_train_reader",
+    "experiments.post_training_mimo_centralized_v1.tests.test_e1_training_accounting",
+    "experiments.post_training_mimo_centralized_v1.tests.test_e1_training_engine"
+  ],
+  "exit_code": 0,
+  "tests": 53,
+  "reported_test_seconds": 6.525,
+  "measured_process_seconds": 7.120191199996043,
+  "control_sets": {
+    "TRAIN_reader": 23,
+    "E1_accounting": 16,
+    "accumulation_engine": 14
+  },
+  "files": [
+    {
+      "path": "scripts/e1_train_reader.py",
+      "sha256": "dd118645057c0819c49b297f9a00f7148d1e82c6c67d6ec5abc88d82f4fa931c",
+      "bytes": 30225
+    },
+    {
+      "path": "tests/test_e1_train_reader.py",
+      "sha256": "0117f4ed8c07cff12135a90cd33b1b4777dd128ab39037f8a0e20fafe2e7daf3",
+      "bytes": 19769
+    },
+    {
+      "path": "scripts/e1_training_accounting.py",
+      "sha256": "da0b9515ec594cf44fe2a1f08de4c1a929b50444f4c330e8fef9a9d7190e0dec",
+      "bytes": 9174
+    },
+    {
+      "path": "tests/test_e1_training_accounting.py",
+      "sha256": "3729dc1ce8a5ebd96398d197a81b7c71495e850ab0dd37abf02cc4471b9be87d",
+      "bytes": 7512
+    },
+    {
+      "path": "scripts/e1_training_engine.py",
+      "sha256": "81a3359713cacb8a21b75590562723a8adfd7a5ae61506f8ecfe029bdf357780",
+      "bytes": 11899
+    },
+    {
+      "path": "tests/test_e1_training_engine.py",
+      "sha256": "ac9e042080ed61b49ff04084c6bd274544ac0ba3f855a7b2180a8285a263837b",
+      "bytes": 13677
+    },
+    {
+      "path": "receipts/e1_training_components_cpu/stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "receipts/e1_training_components_cpu/stderr.log",
+      "sha256": "93d7f22e52e61996231d941730ee692716cc47cc6a77e80a10ef4afece7fe187",
+      "bytes": 157
+    }
+  ],
+  "initial_reader_failure_preserved_separately": true,
+  "standalone_native_backend_implemented": false,
+  "model_calls": 0,
+  "training_updates": 0,
+  "E1_authorized": false,
+  "native_resume_qualified": false,
+  "goal_complete": false
+}

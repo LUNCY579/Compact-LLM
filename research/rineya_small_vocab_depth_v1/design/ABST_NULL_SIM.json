@@ -1,0 +1,188 @@
+{
+ "schema": 1,
+ "record": "ABST_NULL_SIM",
+ "code_sha256": {
+  "abst_verdict.py": "abeb12ea027e99566e9af4fa9ca499ab142a45aa3294ff23d5525383a17ea289",
+  "hlcc_verdict.py": "baf465b803c25d26d95d70c90dc138e68b774d617bd4e18932e4bb7f90952531",
+  "abst_null_sim.py": "2e440cce143b2abe982e6d4b4931bd06c16df19a56c685b07e55e7371264e334"
+ },
+ "seed": 20260926,
+ "sims": 20000,
+ "alpha": 0.025,
+ "alpha_anchor_tail": 0.0125,
+ "alpha_after_anchor": 0.0125,
+ "pools": [
+  112,
+  109,
+  109,
+  102
+ ],
+ "per_family": 64,
+ "cells": {
+  "N1a_half_floor": {
+   "false_LC_LOWERS": {
+    "rate": 0.0001,
+    "k": 2,
+    "n": 20000,
+    "upper_3se": 0.0003121214274890681
+   },
+   "false_LC_RAISES": {
+    "rate": 0.00115,
+    "k": 23,
+    "n": 20000,
+    "upper_3se": 0.0018689609690379582
+   }
+  },
+  "N1b_half_ceil": {
+   "false_LC_LOWERS": {
+    "rate": 0.00075,
+    "k": 15,
+    "n": 20000,
+    "upper_3se": 0.0013307296057546922
+   },
+   "false_LC_RAISES": {
+    "rate": 0.0002,
+    "k": 4,
+    "n": 20000,
+    "upper_3se": 0.0004999699984998499
+   }
+  },
+  "N2_hetero": {
+   "false_LC_LOWERS": {
+    "rate": 0.0,
+    "k": 0,
+    "n": 20000,
+    "upper_3se": 2.1213203435596425e-08
+   },
+   "false_LC_RAISES": {
+    "rate": 0.0001,
+    "k": 2,
+    "n": 20000,
+    "upper_3se": 0.0003121214274890681
+   }
+  },
+  "N3_mirror_hetero": {
+   "false_LC_LOWERS": {
+    "rate": 5e-05,
+    "k": 1,
+    "n": 20000,
+    "upper_3se": 0.00019999624995312382
+   },
+   "false_LC_RAISES": {
+    "rate": 0.00015,
+    "k": 3,
+    "n": 20000,
+    "upper_3se": 0.0004097881348329827
+   }
+  },
+  "N4_unknown_anchor_null": {
+   "false_step2_rejection": {
+    "rate": 0.02005,
+    "k": 401,
+    "n": 20000,
+    "upper_3se": 0.023023482617235216
+   }
+  },
+  "D1_teacher_blind_answer_type_shift": {
+   "TEACHER_CONSISTENT_DIRECTION_rate": {
+    "rate": 0.99915,
+    "k": 19983,
+    "n": 20000,
+    "upper_3se": 0.99976820293998
+   },
+   "step2_toward_rate": 0.99915,
+   "reading": "REPORTED: the label is not teacher-specific"
+  },
+  "D2_teacher_blind_generic_damage": {
+   "TEACHER_CONSISTENT_DIRECTION_rate": {
+    "rate": 0.0,
+    "k": 0,
+    "n": 20000,
+    "upper_3se": 2.1213203435596425e-08
+   },
+   "step2_toward_rate": 0.99905,
+   "reading": "must stay <= 0.025; holds by construction of the spent known-row geometry (plain above the teacher)"
+  },
+  "D2r_generic_damage_60pct_known_rows_reversed": {
+   "TEACHER_CONSISTENT_DIRECTION_rate": {
+    "rate": 0.47195,
+    "k": 9439,
+    "n": 20000,
+    "upper_3se": 0.4825398979633894
+   },
+   "step2_toward_rate": 0.99945,
+   "reading": "REPORTED: with most known rows reversed, step 2b no longer excludes generic damage"
+  },
+  "N5_holm_sign_nulls": {
+   "fwer_over_true_nulls": {
+    "rate": 0.0,
+    "k": 0,
+    "n": 5000,
+    "upper_3se": 4.242640687119285e-08
+   },
+   "step3_reached": 1.0,
+   "true_nulls": [
+    "D+",
+    "D-",
+    "B+",
+    "B-",
+    "C+",
+    "C-"
+   ]
+  },
+  "N6_holm_contrast_nulls": {
+   "fwer_over_true_nulls": {
+    "rate": 0.001,
+    "k": 5,
+    "n": 5000,
+    "upper_3se": 0.0023409697983176204
+   },
+   "step3_reached": 1.0,
+   "true_nulls": [
+    "D+",
+    "D-",
+    "dV",
+    "dD"
+   ]
+  },
+  "P1_lead_shape": {
+   "power_LC_LOWERS": 1.0
+  },
+  "P2_homog_060": {
+   "power_LC_LOWERS": 0.9524
+  },
+  "P3_homog_065": {
+   "power_LC_LOWERS": 1.0
+  },
+  "P4_teacher_consistent_truth": {
+   "power_TEACHER_CONSISTENT_DIRECTION": 1.0,
+   "note": "UNKNOWN rows all closer, known rows 85% toward: an extreme alternative"
+  },
+  "P4b_teacher_consistent_known_060": {
+   "power_TEACHER_CONSISTENT_DIRECTION": 0.8138,
+   "reading": "REPORTED"
+  },
+  "P5_holm_depth_truth": {
+   "power_DEPTH_label": 1.0
+  },
+  "S1_superpopulation_family_effect_sd015": {
+   "false_LC_LOWERS_for_new_families": {
+    "rate": 0.2148,
+    "k": 1074,
+    "n": 5000,
+    "upper_3se": 0.23222382644541661
+   },
+   "reading": "above alpha: the row-level test licenses the POOLS, not new families"
+  }
+ },
+ "checks": {
+  "N1-N3 each directional false rate <= 0.025 + 3SE": true,
+  "N4 false step-2 rejection <= 0.025 + 3SE": true,
+  "D2 TEACHER_CONSISTENT_DIRECTION under teacher-blind generic damage <= 0.025 + 3SE": true,
+  "N5/N6 Holm FWER <= 0.0125 + 3SE": true,
+  "P1 power >= 0.95": true,
+  "P4 TEACHER_CONSISTENT_DIRECTION power >= 0.95": true,
+  "P5 DEPTH power >= 0.90": true
+ },
+ "all_pass": true
+}

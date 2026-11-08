@@ -1,0 +1,757 @@
+{
+  "A3_vs_intact_losses": [],
+  "A3_vs_intact_wins": [
+    "mergedev_counterfactual_reasoning_770aaf5dae0c1fb5"
+  ],
+  "DEV_physical_rows": 288,
+  "adaptive_specific_losses": [],
+  "adaptive_specific_wins": [],
+  "broad_IQ_claim": false,
+  "capture_ratio": null,
+  "clipping_saturation": "0 upper and lower",
+  "created_utc": "2026-10-02T05:37:23.522325+00:00",
+  "cumulative_worker_seconds": 732.1709999999948,
+  "finite_constant_grid_headroom": 0.0,
+  "fixed_alpha_tie_selected": 0.8,
+  "format_caution": "Counterfactual format scorer expects gold YES, so syntactically valid NO is counted invalid; the 14/16\u219215/16 inherited rise duplicates correctness, not an independent syntax improvement",
+  "generation_calls": 2317,
+  "generation_prefix_positions": 648901,
+  "houseplant_caution": "Plausible open-ended answers rejected by gold keyword; frozen primary scores remain unchanged",
+  "human_review": "NOT_REVIEWED",
+  "independent_confirmation": "NOT_RUN",
+  "independently_recomputed_accuracy": {
+    "A0": 0.75,
+    "A1": 0.8125,
+    "A2:0.8": 0.8125,
+    "A2:0.9": 0.8125,
+    "A2:1": 0.8125,
+    "A2:1.1": 0.8125,
+    "A2:1.2": 0.8125,
+    "A3": 0.8125,
+    "A5": 0.8125
+  },
+  "inherited_format_accuracy": {
+    "A0": 0.875,
+    "A1": 0.9375,
+    "A2:0.8": 0.9375,
+    "A2:0.9": 0.9375,
+    "A2:1": 0.9375,
+    "A2:1.1": 0.9375,
+    "A2:1.2": 0.9375,
+    "A3": 0.9375,
+    "A5": 0.9375
+  },
+  "intact_scored_correct_retained": "12/12",
+  "manual_semantic_case_review": [
+    {
+      "case_id": "mergedev_common_sense_025ea65887df6a1b",
+      "family": "common_sense",
+      "machine_solver_prediction": null,
+      "machine_solver_status": "NOT_APPLICABLE",
+      "machine_solver_witness": {
+        "reason": "unrecognized/factual/language task; no target fallback"
+      },
+      "response_variants": [
+        {
+          "agent_prompt_success": true,
+          "frozen_format_score": 1.0,
+          "frozen_task_score": 0.0,
+          "human_review": "NOT_REVIEWED",
+          "method": "agent judgment on exposed open-ended prompt",
+          "policies": [
+            "A0"
+          ],
+          "rationale": "Drying/moisture loss is a plausible consequence of prolonged lack of watering; keyword 'wilts' is unnecessarily narrow",
+          "response": "It may dry out and lose color.",
+          "syntax_only_valid_where_checked": true
+        },
+        {
+          "agent_prompt_success": true,
+          "frozen_format_score": 1.0,
+          "frozen_task_score": 0.0,
+          "human_review": "NOT_REVIEWED",
+          "method": "agent judgment on exposed open-ended prompt",
+          "policies": [
+            "A1",
+            "A2:0.8",
+            "A2:0.9",
+            "A2:1",
+            "A2:1.1",
+            "A2:1.2",
+            "A3",
+            "A5"
+          ],
+          "rationale": "Drying/moisture loss is a plausible consequence of prolonged lack of watering; keyword 'wilts' is unnecessarily narrow",
+          "response": "It may dry out and lose moisture.",
+          "syntax_only_valid_where_checked": true
+        }
+      ],
+      "scenario_id": "mergedev_common_sense_0001",
+      "semantic_status": "AGENT_REVIEW_OF_EXPOSED_DEV_POSTHOC_DIAGNOSTIC_NOT_PRIMARY"
+    },
+    {
+      "case_id": "mergedev_counterfactual_reasoning_770aaf5dae0c1fb5",
+      "family": "counterfactual_reasoning",
+      "machine_solver_prediction": "YES",
+      "machine_solver_status": "PROMPT_ONLY_SOLVED",
+      "machine_solver_witness": {
+        "edges": [
+          [
+            "yellow",
+            "coral"
+          ],
+          [
+            "coral",
+            "ochre"
+          ]
+        ],
+        "initial": "yellow",
+        "reached": [
+          "coral",
+          "ochre",
+          "yellow"
+        ]
+      },
+      "response_variants": [
+        {
+          "agent_prompt_success": false,
+          "frozen_format_score": 0.0,
+          "frozen_task_score": 0.0,
+          "human_review": "NOT_REVIEWED",
+          "method": "prompt-only symbolic solver/witness plus agent review",
+          "policies": [
+            "A0"
+          ],
+          "rationale": "Response contradicts parsed prompt solution",
+          "response": "NO",
+          "syntax_only_valid_where_checked": true
+        },
+        {
+          "agent_prompt_success": true,
+          "frozen_format_score": 1.0,
+          "frozen_task_score": 1.0,
+          "human_review": "NOT_REVIEWED",
+          "method": "prompt-only symbolic solver/witness plus agent review",
+          "policies": [
+            "A1",
+            "A2:0.8",
+            "A2:0.9",
+            "A2:1",
+            "A2:1.1",
+            "A2:1.2",
+            "A3",
+            "A5"
+          ],
+          "rationale": "Response matches parsed prompt solution",
+          "response": "YES",
+          "syntax_only_valid_where_checked": true
+        }
+      ],
+      "scenario_id": "mergedev_counter_0001",
+      "semantic_status": "AGENT_REVIEW_OF_EXPOSED_DEV_POSTHOC_DIAGNOSTIC_NOT_PRIMARY"
+    },
+    {
+      "case_id": "mergedev_general_reasoning_078451b6adf65710",
+      "family": "general_reasoning",
+      "machine_solver_prediction": "Dina",
+      "machine_solver_status": "PROMPT_ONLY_SOLVED",
+      "machine_solver_witness": {
+        "relations": [
+          [
+            "Ari",
+            "Enzo"
+          ],
+          [
+            "Enzo",
+            "Cato"
+          ],
+          [
+            "Cato",
+            "Dina"
+          ]
+        ],
+        "unique_minimum": true
+      },
+      "response_variants": [
+        {
+          "agent_prompt_success": true,
+          "frozen_format_score": 1.0,
+          "frozen_task_score": 1.0,
+          "human_review": "NOT_REVIEWED",
+          "method": "prompt-only symbolic solver/witness plus agent review",
+          "policies": [
+            "A0",
+            "A1",
+            "A2:0.8",
+            "A2:0.9",
+            "A2:1",
+            "A2:1.1",
+            "A2:1.2",
+            "A3",
+            "A5"
+          ],
+          "rationale": "Response matches parsed prompt solution",
+          "response": "Dina",
+          "syntax_only_valid_where_checked": true
+        }
+      ],
+      "scenario_id": "mergedev_reason_0001",
+      "semantic_status": "AGENT_REVIEW_OF_EXPOSED_DEV_POSTHOC_DIAGNOSTIC_NOT_PRIMARY"
+    },
+    {
+      "case_id": "mergedev_grounded_qa_rag_10414013c88bdaac",
+      "family": "grounded_qa_rag",
+      "machine_solver_prediction": "4673",
+      "machine_solver_status": "PROMPT_ONLY_SOLVED",
+      "machine_solver_witness": {
+        "evidence": [
+          [
+            "Merek",
+            "4673"
+          ],
+          [
+            "Keris",
+            "8962"
+          ],
+          [
+            "Pavo",
+            "4642"
+          ],
+          [
+            "Ralo",
+            "7491"
+          ]
+        ],
+        "query": "Merek"
+      },
+      "response_variants": [
+        {
+          "agent_prompt_success": true,
+          "frozen_format_score": 1.0,
+          "frozen_task_score": 1.0,
+          "human_review": "NOT_REVIEWED",
+          "method": "prompt-only symbolic solver/witness plus agent review",
+          "policies": [
+            "A0",
+            "A1",
+            "A2:0.8",
+            "A2:0.9",
+            "A2:1",
+            "A2:1.1",
+            "A2:1.2",
+            "A3",
+            "A5"
+          ],
+          "rationale": "Response matches parsed prompt solution",
+          "response": "4673",
+          "syntax_only_valid_where_checked": true
+        }
+      ],
+      "scenario_id": "mergedev_rag_0001",
+      "semantic_status": "AGENT_REVIEW_OF_EXPOSED_DEV_POSTHOC_DIAGNOSTIC_NOT_PRIMARY"
+    },
+    {
+      "case_id": "mergedev_instruction_following_7c4b4480b4835c0f",
+      "family": "instruction_following",
+      "machine_solver_prediction": "{\"label\":\"tag-967958\",\"ok\":true}",
+      "machine_solver_status": "PROMPT_ONLY_SOLVED",
+      "machine_solver_witness": {
+        "copied_prompt_payload": true
+      },
+      "response_variants": [
+        {
+          "agent_prompt_success": true,
+          "frozen_format_score": 1.0,
+          "frozen_task_score": 1.0,
+          "human_review": "NOT_REVIEWED",
+          "method": "prompt-only symbolic solver/witness plus agent review",
+          "policies": [
+            "A0",
+            "A1",
+            "A2:0.8",
+            "A2:0.9",
+            "A2:1",
+            "A2:1.1",
+            "A2:1.2",
+            "A3",
+            "A5"
+          ],
+          "rationale": "Response matches parsed prompt solution",
+          "response": "{\"label\":\"tag-967958\",\"ok\":true}",
+          "syntax_only_valid_where_checked": true
+        }
+      ],
+      "scenario_id": "mergedev_instruction_0003",
+      "semantic_status": "AGENT_REVIEW_OF_EXPOSED_DEV_POSTHOC_DIAGNOSTIC_NOT_PRIMARY"
+    },
+    {
+      "case_id": "mergedev_long_context_retrieval_20550a305b3b2af6",
+      "family": "long_context_retrieval",
+      "machine_solver_prediction": "128448",
+      "machine_solver_status": "PROMPT_ONLY_SOLVED",
+      "machine_solver_witness": {
+        "query": "Zorin",
+        "records": 100,
+        "source_record": 95
+      },
+      "response_variants": [
+        {
+          "agent_prompt_success": true,
+          "frozen_format_score": 1.0,
+          "frozen_task_score": 1.0,
+          "human_review": "NOT_REVIEWED",
+          "method": "prompt-only symbolic solver/witness plus agent review",
+          "policies": [
+            "A0",
+            "A1",
+            "A2:0.8",
+            "A2:0.9",
+            "A2:1",
+            "A2:1.1",
+            "A2:1.2",
+            "A3",
+            "A5"
+          ],
+          "rationale": "Response matches parsed prompt solution",
+          "response": "128448",
+          "syntax_only_valid_where_checked": true
+        }
+      ],
+      "scenario_id": "mergedev_long_0000",
+      "semantic_status": "AGENT_REVIEW_OF_EXPOSED_DEV_POSTHOC_DIAGNOSTIC_NOT_PRIMARY"
+    },
+    {
+      "case_id": "mergedev_lost_in_the_middle_e4e7cc76239741de",
+      "family": "lost_in_the_middle",
+      "machine_solver_prediction": "128448",
+      "machine_solver_status": "PROMPT_ONLY_SOLVED",
+      "machine_solver_witness": {
+        "query": "Zorin",
+        "records": 100,
+        "source_record": 50
+      },
+      "response_variants": [
+        {
+          "agent_prompt_success": true,
+          "frozen_format_score": 1.0,
+          "frozen_task_score": 1.0,
+          "human_review": "NOT_REVIEWED",
+          "method": "prompt-only symbolic solver/witness plus agent review",
+          "policies": [
+            "A0",
+            "A1",
+            "A2:0.8",
+            "A2:0.9",
+            "A2:1",
+            "A2:1.1",
+            "A2:1.2",
+            "A3",
+            "A5"
+          ],
+          "rationale": "Response matches parsed prompt solution",
+          "response": "128448",
+          "syntax_only_valid_where_checked": true
+        }
+      ],
+      "scenario_id": "mergedev_long_0000",
+      "semantic_status": "AGENT_REVIEW_OF_EXPOSED_DEV_POSTHOC_DIAGNOSTIC_NOT_PRIMARY"
+    },
+    {
+      "case_id": "mergedev_mathematics_12cd1363c6e3df98",
+      "family": "mathematics",
+      "machine_solver_prediction": "201",
+      "machine_solver_status": "PROMPT_ONLY_SOLVED",
+      "machine_solver_witness": {
+        "operands": [
+          30,
+          8,
+          -39
+        ]
+      },
+      "response_variants": [
+        {
+          "agent_prompt_success": false,
+          "frozen_format_score": 1.0,
+          "frozen_task_score": 0.0,
+          "human_review": "NOT_REVIEWED",
+          "method": "prompt-only symbolic solver/witness plus agent review",
+          "policies": [
+            "A0",
+            "A2:0.8"
+          ],
+          "rationale": "Response contradicts parsed prompt solution",
+          "response": "21",
+          "syntax_only_valid_where_checked": true
+        },
+        {
+          "agent_prompt_success": false,
+          "frozen_format_score": 1.0,
+          "frozen_task_score": 0.0,
+          "human_review": "NOT_REVIEWED",
+          "method": "prompt-only symbolic solver/witness plus agent review",
+          "policies": [
+            "A1",
+            "A2:0.9",
+            "A2:1",
+            "A2:1.1",
+            "A2:1.2",
+            "A3",
+            "A5"
+          ],
+          "rationale": "Response contradicts parsed prompt solution",
+          "response": "247",
+          "syntax_only_valid_where_checked": true
+        }
+      ],
+      "scenario_id": "mergedev_math_0002",
+      "semantic_status": "AGENT_REVIEW_OF_EXPOSED_DEV_POSTHOC_DIAGNOSTIC_NOT_PRIMARY"
+    },
+    {
+      "case_id": "mergedev_multi_hop_binding_492bf31e1ae5deff",
+      "family": "multi_hop_binding",
+      "machine_solver_prediction": "Bex",
+      "machine_solver_status": "PROMPT_ONLY_SOLVED",
+      "machine_solver_witness": {
+        "item": "token",
+        "path": [
+          "Enzo",
+          "Ari",
+          "Dina",
+          "Bex"
+        ]
+      },
+      "response_variants": [
+        {
+          "agent_prompt_success": true,
+          "frozen_format_score": 1.0,
+          "frozen_task_score": 1.0,
+          "human_review": "NOT_REVIEWED",
+          "method": "prompt-only symbolic solver/witness plus agent review",
+          "policies": [
+            "A0",
+            "A1",
+            "A2:0.8",
+            "A2:0.9",
+            "A2:1",
+            "A2:1.1",
+            "A2:1.2",
+            "A3",
+            "A5"
+          ],
+          "rationale": "Response matches parsed prompt solution",
+          "response": "Bex",
+          "syntax_only_valid_where_checked": true
+        }
+      ],
+      "scenario_id": "mergedev_binding_0000",
+      "semantic_status": "AGENT_REVIEW_OF_EXPOSED_DEV_POSTHOC_DIAGNOSTIC_NOT_PRIMARY"
+    },
+    {
+      "case_id": "mergedev_normal_conversation_4a73375fc950bab7",
+      "family": "normal_conversation",
+      "machine_solver_prediction": null,
+      "machine_solver_status": "NOT_APPLICABLE",
+      "machine_solver_witness": {
+        "reason": "unrecognized/factual/language task; no target fallback"
+      },
+      "response_variants": [
+        {
+          "agent_prompt_success": false,
+          "frozen_format_score": 0.0,
+          "frozen_task_score": 0.0,
+          "human_review": "NOT_REVIEWED",
+          "method": "agent review plus explicit response-contract check",
+          "policies": [
+            "A0",
+            "A1",
+            "A2:0.8",
+            "A2:0.9",
+            "A2:1",
+            "A2:1.1",
+            "A2:1.2",
+            "A3",
+            "A5"
+          ],
+          "rationale": "Greeting is understandable but two words and an exclamation violate both explicit constraints",
+          "response": "Hi Hcqaku!",
+          "syntax_only_valid_where_checked": false
+        }
+      ],
+      "scenario_id": "mergedev_chat_0003",
+      "semantic_status": "AGENT_REVIEW_OF_EXPOSED_DEV_POSTHOC_DIAGNOSTIC_NOT_PRIMARY"
+    },
+    {
+      "case_id": "mergedev_paraphrase_robustness_0cfbf1026bf11fe7",
+      "family": "paraphrase_robustness",
+      "machine_solver_prediction": "77",
+      "machine_solver_status": "PROMPT_ONLY_SOLVED",
+      "machine_solver_witness": {
+        "operands": [
+          84,
+          7
+        ]
+      },
+      "response_variants": [
+        {
+          "agent_prompt_success": true,
+          "frozen_format_score": 1.0,
+          "frozen_task_score": 1.0,
+          "human_review": "NOT_REVIEWED",
+          "method": "prompt-only symbolic solver/witness plus agent review",
+          "policies": [
+            "A0",
+            "A1",
+            "A2:0.8",
+            "A2:0.9",
+            "A2:1",
+            "A2:1.1",
+            "A2:1.2",
+            "A3",
+            "A5"
+          ],
+          "rationale": "Response matches parsed prompt solution",
+          "response": "77",
+          "syntax_only_valid_where_checked": true
+        }
+      ],
+      "scenario_id": "mergedev_para_0003",
+      "semantic_status": "AGENT_REVIEW_OF_EXPOSED_DEV_POSTHOC_DIAGNOSTIC_NOT_PRIMARY"
+    },
+    {
+      "case_id": "mergedev_paraphrase_robustness_44e3777f1aad20a2",
+      "family": "paraphrase_robustness",
+      "machine_solver_prediction": "77",
+      "machine_solver_status": "PROMPT_ONLY_SOLVED",
+      "machine_solver_witness": {
+        "operands": [
+          84,
+          7
+        ]
+      },
+      "response_variants": [
+        {
+          "agent_prompt_success": true,
+          "frozen_format_score": 1.0,
+          "frozen_task_score": 1.0,
+          "human_review": "NOT_REVIEWED",
+          "method": "prompt-only symbolic solver/witness plus agent review",
+          "policies": [
+            "A0",
+            "A1",
+            "A2:0.8",
+            "A2:0.9",
+            "A2:1",
+            "A2:1.1",
+            "A2:1.2",
+            "A3",
+            "A5"
+          ],
+          "rationale": "Response matches parsed prompt solution",
+          "response": "77",
+          "syntax_only_valid_where_checked": true
+        }
+      ],
+      "scenario_id": "mergedev_para_0003",
+      "semantic_status": "AGENT_REVIEW_OF_EXPOSED_DEV_POSTHOC_DIAGNOSTIC_NOT_PRIMARY"
+    },
+    {
+      "case_id": "mergedev_paraphrase_robustness_c26fef498d2d9fd3",
+      "family": "paraphrase_robustness",
+      "machine_solver_prediction": "77",
+      "machine_solver_status": "PROMPT_ONLY_SOLVED",
+      "machine_solver_witness": {
+        "operands": [
+          84,
+          7
+        ]
+      },
+      "response_variants": [
+        {
+          "agent_prompt_success": true,
+          "frozen_format_score": 1.0,
+          "frozen_task_score": 1.0,
+          "human_review": "NOT_REVIEWED",
+          "method": "prompt-only symbolic solver/witness plus agent review",
+          "policies": [
+            "A0",
+            "A1",
+            "A2:0.8",
+            "A2:0.9",
+            "A2:1",
+            "A2:1.1",
+            "A2:1.2",
+            "A3",
+            "A5"
+          ],
+          "rationale": "Response matches parsed prompt solution",
+          "response": "77",
+          "syntax_only_valid_where_checked": true
+        }
+      ],
+      "scenario_id": "mergedev_para_0003",
+      "semantic_status": "AGENT_REVIEW_OF_EXPOSED_DEV_POSTHOC_DIAGNOSTIC_NOT_PRIMARY"
+    },
+    {
+      "case_id": "mergedev_science_0ac5af678b239ec5",
+      "family": "science",
+      "machine_solver_prediction": null,
+      "machine_solver_status": "NOT_APPLICABLE",
+      "machine_solver_witness": {
+        "reason": "unrecognized/factual/language task; no target fallback"
+      },
+      "response_variants": [
+        {
+          "agent_prompt_success": true,
+          "frozen_format_score": 1.0,
+          "frozen_task_score": 1.0,
+          "human_review": "NOT_REVIEWED",
+          "method": "agent review of exposed factual answer",
+          "policies": [
+            "A1",
+            "A2:0.9",
+            "A2:1",
+            "A2:1.1",
+            "A2:1.2",
+            "A3",
+            "A5"
+          ],
+          "rationale": "Red blood cells correctly answer the question; phrasing expansion does not change correctness",
+          "response": "Red blood cells (RBCs) carry oxygen.",
+          "syntax_only_valid_where_checked": true
+        },
+        {
+          "agent_prompt_success": true,
+          "frozen_format_score": 1.0,
+          "frozen_task_score": 1.0,
+          "human_review": "NOT_REVIEWED",
+          "method": "agent review of exposed factual answer",
+          "policies": [
+            "A0",
+            "A2:0.8"
+          ],
+          "rationale": "Red blood cells correctly answer the question; phrasing expansion does not change correctness",
+          "response": "Red blood cells.",
+          "syntax_only_valid_where_checked": true
+        }
+      ],
+      "scenario_id": "mergedev_science_0000",
+      "semantic_status": "AGENT_REVIEW_OF_EXPOSED_DEV_POSTHOC_DIAGNOSTIC_NOT_PRIMARY"
+    },
+    {
+      "case_id": "mergedev_short_response_30785feeb5a8abdf",
+      "family": "short_response",
+      "machine_solver_prediction": "K",
+      "machine_solver_status": "PROMPT_ONLY_SOLVED",
+      "machine_solver_witness": {
+        "input_string": "KTBTGVG"
+      },
+      "response_variants": [
+        {
+          "agent_prompt_success": true,
+          "frozen_format_score": 1.0,
+          "frozen_task_score": 1.0,
+          "human_review": "NOT_REVIEWED",
+          "method": "prompt-only symbolic solver/witness plus agent review",
+          "policies": [
+            "A0",
+            "A1",
+            "A2:0.8",
+            "A2:0.9",
+            "A2:1",
+            "A2:1.1",
+            "A2:1.2",
+            "A3",
+            "A5"
+          ],
+          "rationale": "Response matches parsed prompt solution",
+          "response": "K",
+          "syntax_only_valid_where_checked": true
+        }
+      ],
+      "scenario_id": "mergedev_short_0001",
+      "semantic_status": "AGENT_REVIEW_OF_EXPOSED_DEV_POSTHOC_DIAGNOSTIC_NOT_PRIMARY"
+    },
+    {
+      "case_id": "mergedev_unanswerable_abstention_22f9fcfd9ce716c8",
+      "family": "unanswerable_abstention",
+      "machine_solver_prediction": "UNKNOWN",
+      "machine_solver_status": "PROMPT_ONLY_SOLVED",
+      "machine_solver_witness": {
+        "evidence": [
+          [
+            "Ralo",
+            "5093"
+          ]
+        ],
+        "fallback_from_explicit_prompt_instruction": true,
+        "query": "Merek"
+      },
+      "response_variants": [
+        {
+          "agent_prompt_success": true,
+          "frozen_format_score": 1.0,
+          "frozen_task_score": 1.0,
+          "human_review": "NOT_REVIEWED",
+          "method": "prompt-only symbolic solver/witness plus agent review",
+          "policies": [
+            "A0",
+            "A1",
+            "A2:0.8",
+            "A2:0.9",
+            "A2:1",
+            "A2:1.1",
+            "A2:1.2",
+            "A3",
+            "A5"
+          ],
+          "rationale": "Response matches parsed prompt solution",
+          "response": "UNKNOWN",
+          "syntax_only_valid_where_checked": true
+        }
+      ],
+      "scenario_id": "mergedev_unknown_0003",
+      "semantic_status": "AGENT_REVIEW_OF_EXPOSED_DEV_POSTHOC_DIAGNOSTIC_NOT_PRIMARY"
+    }
+  ],
+  "model_calls_completed_including_maxima": 2333,
+  "native_model_loads_by_reviewer": 0,
+  "nonphysical_oracle_rows": 32,
+  "oracle_accuracy": 0.8125,
+  "outcome_scope": "No supported fixed-scale advantage beyond unit and no finite constant-selector accuracy headroom on this exposed bank; not a universal claim about adaptive prefix schedules or reasoning",
+  "partial_forced_compute_positions": null,
+  "peak_RSS_bytes": 2257219584,
+  "peak_gpu_allocated_bytes": 3271689728,
+  "peak_gpu_reserved_bytes": 3600809984,
+  "physical_rows": 408,
+  "pool_alpha_range": [
+    1.1140036582946777,
+    1.169747233390808
+  ],
+  "pool_mean": 1.1473425965417514,
+  "pool_size": 176,
+  "processed_prefix_positions_completed_including_maxima": 684869,
+  "protected_or_native_TEST_reads": false,
+  "raw_forward_sha256": "4d327b737995ec1c1cf805b333c0e180d40c2cca7f6c42f0ee3aaa287c46f669",
+  "raw_outcomes_sha256": "05827563ce0633a96d3831749b70f8cc8b74002ba7b692ed2d264f49ffac0a0c",
+  "raw_trajectories_sha256": "5745261d0eb11a2f80a47a8001e79fed2e3a223ae3f970ff3b4e272e8c96b156",
+  "recommendation": "No A3 revision justified by this primary endpoint; improve bank discrimination/scorer separation prospectively, with own baselines and independent generator partitions",
+  "remaining_native_seconds_snapshot": 20867.829000000005,
+  "review_script_sha256": "9c8e35c3e80a9944356b37615b46a80f4671ba8b1c5a5bf14f89aa0a6ec08ecd",
+  "reviewed_analyzer_report_sha256": "7f6ceeb57c7666034d1049406232e6b21da801f93253db91ceea6f79f3f3f988",
+  "reviewer": "/root/adversarial_review",
+  "run": "runs/native-gpu-reference-002",
+  "schema_version": "1.0",
+  "score_vectors_of_all_recurrent_policies_identical": true,
+  "semantic_abstention_agent_review": {
+    "broad_answerability_inference": "NOT_SUPPORTED",
+    "correct_missing-code_UNKNOWN_per_policy": "1/1",
+    "false_abstention_on_answerables_per_policy": "0/15",
+    "status": "AGENT_REVIEW_NOT_HUMAN",
+    "unsupported_answer_on_missing-code_case_per_policy": "0/1"
+  },
+  "speed_claim": false,
+  "status": "PASS_COMPLETE_EXPLORATORY_REFERENCE_RECOMPUTATION",
+  "termination": "All DEV rows EOS; no invalid/safety/truncation rows",
+  "unique_DEV_cases": 16,
+  "worker_seconds": 568.0939999999973
+}

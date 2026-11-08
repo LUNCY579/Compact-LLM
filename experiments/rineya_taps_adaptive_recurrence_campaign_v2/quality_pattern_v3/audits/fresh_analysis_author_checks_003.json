@@ -1,0 +1,50 @@
+{
+  "author_role": "Readerauthor, not independentreviewer",
+  "bindings": {
+    "FRESH_ANALYSIS_PLAN_DRAFT_001.md": "811dcfdd8d257e295382bfa90e92b39fd097f15c3b43e44cd34d2e04e270e1b2",
+    "fresh_analysis.py": "a986b3affad1e9f1084b45c63fe2ce4c0927fc3f2fa52ab070fe07c2ae1988aa",
+    "tests/test_fresh_analysis.py": "6b593e6a5cfd98537fc1179067e3bfcba7540a7555721d5409e8aee6000fa9e2"
+  },
+  "changes": [
+    "Allforecastduration/costcomponents finiteANDnonnegative;warmforward strictlypositive",
+    "33744forwardcalls*factor1.5*warmmax and4104row nonforwardbound reconcile to respectivecosts;remainingforecast equalsbothcomponents",
+    "ExactV2admission filename fresh_admission_v2.json; exact reviews/fresh_dispatch_review_002.json plus copiedreview/admissionSHA/status required"
+  ],
+  "created_utc": "2026-10-06T03:34:33.088132+00:00",
+  "native_models_Torch_tokenizers_GPU_actualfreshlabels_outcomes": 0,
+  "preserved": {
+    "directory": "experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\quality_pattern_v3\\versions\\fresh_analysis_pre_negative_forecast_fix_001",
+    "sha256": {
+      "audits/fresh_analysis_author_checks_002.json": "3b9e3b3f3189cfa6fe2d6a1406d734b8a563a39cf3a3e16ceb01f4564824fd7f",
+      "audits/fresh_analysis_author_checks_002.md": "cc98076f3c76b58ea92609662c6702e49afc8b831d0c01550c6f453ff5f2efea",
+      "fresh_analysis.py": "d07a99c3a8de65a09b5a405f6bc253f4859574c231f13a057a96790eaf9b45de",
+      "tests/test_fresh_analysis.py": "18698dd0068e393b80960367474c5b49332b6d3188af07110482b939e4c26eaf"
+    }
+  },
+  "remaining": "independentdelta+V2consumeractualpacket review beforefirstnewmodel; no nativeauthorityorefficacyfromthisauthorreceipt",
+  "schema": "v3_fresh_analysis_author_checks_v3",
+  "status": "FINAL_HOLD_FORECAST_NONNEGATIVE_V2_CONSUMER_NOT_NATIVE_RUN",
+  "tests": {
+    "affected_forecast_and_validmatrix_tests": 8,
+    "affected_path_test": 1,
+    "commands": [
+      "-B pytest test_fresh_analysis.py -p no:cacheprovider --basetemp V3/reviews/fresh_analysis_author_fixture_005 -k forecast or full_raw",
+      "-B pytest test_fresh_analysis.py -p no:cacheprovider --basetemp V3/reviews/fresh_analysis_author_fixture_006 -k exact_v2"
+    ],
+    "coverage": [
+      "negativeforward/nonforward/total/elapsed/warmmax/perrowbound eachrefuse",
+      "zero/NaN/factor/reserve/sum mismatchrefuse",
+      "validfullsynthetic456x9stillpasses",
+      "exactV2pathaccepts prior001/generic/outside pathsrefuse"
+    ],
+    "fixtures_only": true,
+    "path_seconds": 1.01,
+    "seconds": 5.08,
+    "source_total_tests": 17
+  },
+  "unchanged": [
+    "allscientificstats/bootstrap/primary/practicalmargin/zero-caseharm/secondarylimits",
+    "852/34596/count/source/data/pose/nativeguard contracts",
+    "no modelrun or retry; frozenV1admission retainedbyRoot"
+  ]
+}

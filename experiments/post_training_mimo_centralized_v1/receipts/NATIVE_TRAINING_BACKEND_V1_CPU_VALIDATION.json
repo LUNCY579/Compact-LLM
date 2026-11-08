@@ -1,0 +1,63 @@
+{
+  "schema_version": 1,
+  "status": "PASS_35_FAKE_DISPATCH_AND_ENGINE_CONTROLS_ONLY",
+  "command": [
+    "C:\\Users\\clclc\\BusinessProject\\.venv-mq001\\Scripts\\python.exe",
+    "-B",
+    "-m",
+    "unittest",
+    "experiments.post_training_mimo_centralized_v1.tests.test_native_training_backend",
+    "experiments.post_training_mimo_centralized_v1.tests.test_e1_training_engine_v2"
+  ],
+  "tests": 35,
+  "control_sets": {
+    "backend_fake_dispatch": 21,
+    "engine_V2_synthetic_publication": 14
+  },
+  "reported_test_seconds": 5.629,
+  "measured_process_seconds": 5.9181813999966835,
+  "files": {
+    "scripts/native_training_backend.py": {
+      "sha256": "587696b67614bb674efe3e382be5446708c5402d489273c2e04605012f4030f7",
+      "bytes": 34450
+    },
+    "tests/test_native_training_backend.py": {
+      "sha256": "240417ac0a8bbc29c2cbbacef36095fecbbfb27341f7cb447f780a5d34bca550",
+      "bytes": 25299
+    },
+    "scripts/e1_training_engine_v2.py": {
+      "sha256": "2c15f248c360bf218caf3ad607016cabcf1344830fca2a4c7d5cbe46a9d990b3",
+      "bytes": 13488
+    },
+    "tests/test_e1_training_engine_v2.py": {
+      "sha256": "5c38cc8eb5921ee031839e4c63ec8ffccfbce269e8fe7a3041f34827b7b02266",
+      "bytes": 8587
+    }
+  },
+  "earlier_runs": {
+    "initial_engine_discovery_count": 21,
+    "initial_engine_actual_new_controls": 7,
+    "initial_engine_imported_legacy_controls": 14,
+    "corrected_engine_controls": 9,
+    "explicit_component_controls_added": 2,
+    "primitive_snapshot_controls_added": 3,
+    "backend_initial8_controls": {
+      "passed": 5,
+      "errors": 3,
+      "seconds": 0.52,
+      "reason": "Test captured pre-save snapshot inside pending save span; fixture corrected."
+    },
+    "backend19_controls_seconds": 1.428,
+    "backend_final21_controls_seconds": 1.542,
+    "original_agent_streams_retained": false
+  },
+  "frameworks_imported": false,
+  "actual_model_calls": 0,
+  "actual_training_updates": 0,
+  "GPU_jobs": 0,
+  "physical_tensor_math_verified": false,
+  "native_resume_qualified": false,
+  "owned_native_worker_connected": false,
+  "E1_authorized": false,
+  "CHECK_FINAL_access": false
+}

@@ -1,0 +1,5285 @@
+{
+  "schema": 1,
+  "evidence_kind": "exploratory_arm_dose_response_only",
+  "note": "Matched-dose comparison across arms. Trains on the GPU, probes on the CPU (the frozen reference device). Per-row correctness is recorded so arms can be compared as matched pairs. Outside the hashed root: no receipt, no gate, no stage opened, no efficacy claim, no checkpoint released.",
+  "arm": "B28last20",
+  "mode": "B28",
+  "read_tail": null,
+  "block_tail": 20,
+  "canonical_tag": "B28last20_lr1e-05_b26000_seed17_wsd0.2-0.2_b20.95",
+  "run_label": "exhausttest3",
+  "arm_description": "B28 source, blocks 8..27 trainable (20 of 28); embeddings, final norm and all earlier blocks frozen",
+  "completed": false,
+  "aborted_reason": null,
+  "exhausted_corpus": "TRAIN exhausted after 149 rows and 25966 of 26000 supervised tokens; the split cannot supply the requested budget",
+  "lr": 1e-05,
+  "token_budget": 26000,
+  "seed": 17,
+  "probe_fractions": [
+    1.0
+  ],
+  "probe_milestones": [
+    0,
+    26000
+  ],
+  "parameters": 596049920,
+  "trainable_parameters": 314618880,
+  "train_device": "cuda",
+  "probe_device": "cpu",
+  "numerics": {
+    "cuda_matmul_allow_tf32": false,
+    "cudnn_allow_tf32": false,
+    "float32_matmul_precision": "highest"
+  },
+  "optimizer": "AdamW(offloaded) lr=1e-05 wd=0 clip=1.0 micro_batch=1 betas=(0.9,0.95) eps=1e-8",
+  "beta2": 0.95,
+  "schedule_spec": "wsd:0.2:0.2",
+  "schedule_kind": "wsd",
+  "warmup_fraction": 0.2,
+  "decay_fraction": 0.2,
+  "warmup_tokens": 5200,
+  "schedule": "WSD: linear warmup 20%, stable, 1-sqrt decay over final 20% to 10%",
+  "supervised_target_tokens": 25966,
+  "optimizer_steps": 149,
+  "train_rows_consumed": 149,
+  "per_step_target_tokens": [
+    95,
+    175,
+    88,
+    167,
+    144,
+    196,
+    140,
+    118,
+    106,
+    134,
+    161,
+    171,
+    211,
+    555,
+    211,
+    110,
+    127,
+    96,
+    746,
+    121,
+    1000,
+    107,
+    183,
+    174,
+    200,
+    121,
+    122,
+    91,
+    175,
+    81,
+    154,
+    173,
+    85,
+    145,
+    123,
+    115,
+    106,
+    95,
+    180,
+    101,
+    84,
+    151,
+    90,
+    127,
+    113,
+    128,
+    114,
+    139,
+    108,
+    99,
+    186,
+    89,
+    150,
+    99,
+    180,
+    806,
+    189,
+    105,
+    128,
+    119,
+    125,
+    81,
+    128,
+    235,
+    87,
+    105,
+    89,
+    98,
+    126,
+    102,
+    141,
+    117,
+    194,
+    173,
+    193,
+    96,
+    139,
+    100,
+    148,
+    187,
+    114,
+    101,
+    168,
+    726,
+    115,
+    88,
+    143,
+    132,
+    105,
+    115,
+    953,
+    112,
+    95,
+    92,
+    98,
+    660,
+    106,
+    91,
+    526,
+    96,
+    185,
+    129,
+    943,
+    116,
+    101,
+    178,
+    150,
+    184,
+    127,
+    130,
+    142,
+    145,
+    113,
+    161,
+    125,
+    132,
+    96,
+    125,
+    931,
+    194,
+    150,
+    153,
+    108,
+    114,
+    191,
+    152,
+    127,
+    104,
+    101,
+    84,
+    134,
+    98,
+    106,
+    100,
+    103,
+    115,
+    102,
+    172,
+    186,
+    137,
+    127,
+    95,
+    174,
+    120,
+    167,
+    99,
+    125,
+    118,
+    90
+  ],
+  "train_row_ids_consumed": [
+    "rineya_v3_sft__troubleshooting_diagnosis__reas_troubleshooting_diagnosis_s02__00617",
+    "rineya_v3_sft__comparative_recommendation__inte_comparative_recommendation_s09__02969",
+    "rineya_v3_sft__sequence_pattern__reas_sequence_pattern_s00__00167",
+    "rineya_v3_sft__informal_texting__comm_informal_texting_s07__02276",
+    "rineya_v3_sft__multi_turn_context_update__inte_multi_turn_context_update_s13__03903",
+    "rineya_v3_sft__contradiction_detection__reas_contradiction_detection_s09__02779",
+    "rineya_v3_sft__communication_rewrite__inte_communication_rewrite_s10__03098",
+    "rineya_v3_sft__logical_implication__reas_logical_implication_s05__01761",
+    "rineya_v3_sft__spatial_relations__reas_spatial_relations_s03__01097",
+    "rineya_v3_sft__sequence_pattern__reas_sequence_pattern_s09__02705",
+    "rineya_v3_sft__logical_implication__reas_logical_implication_s08__02552",
+    "rineya_v3_sft__physical_commonsense__reas_physical_commonsense_s09__02901",
+    "rineya_v3_sft__roleplay_reasoning__inte_roleplay_reasoning_s12__03664",
+    "RRF1-56b93a39d3d489eb250b",
+    "rineya_v3_sft__contradiction_detection__reas_contradiction_detection_s07__02395",
+    "rineya_v3_sft__counting_sets__reas_counting_sets_s01__00299",
+    "rineya_v3_sft__unit_conversion__reas_unit_conversion_s02__00932",
+    "rineya_v3_sft__acknowledgment_update__comm_acknowledgment_update_s00__00002",
+    "RRF1-6983907d18c3ab2936aa",
+    "rineya_v3_sft__constraint_selection__reas_constraint_selection_s00__00185",
+    "RRF1-e61bf36a9a8e0ebdd124",
+    "rineya_v3_sft__empathy_validation__comm_empathy_validation_s01__00535",
+    "rineya_v3_sft__conditional_rules__reas_conditional_rules_s08__02622",
+    "rineya_v3_sft__comparative_recommendation__inte_comparative_recommendation_s12__03673",
+    "rineya_v3_sft__comparative_recommendation__inte_comparative_recommendation_s10__03114",
+    "rineya_v3_sft__counting_sets__reas_counting_sets_s04__01478",
+    "rineya_v3_sft__conversation_closure__comm_conversation_closure_s03__01104",
+    "rineya_v3_sft__plan_revision__inte_plan_revision_s02__00650",
+    "rineya_v3_sft__estimation_sanity__reas_estimation_sanity_s07__02383",
+    "rineya_v3_sft__unit_conversion__reas_unit_conversion_s00__00118",
+    "rineya_v3_sft__logical_implication__reas_logical_implication_s06__01992",
+    "rineya_v3_sft__estimation_sanity__reas_estimation_sanity_s07__02161",
+    "rineya_v3_sft__sequence_pattern__reas_sequence_pattern_s01__00546",
+    "rineya_v3_sft__comparison_ranking__reas_comparison_ranking_s07__02379",
+    "rineya_v3_sft__physical_commonsense__reas_physical_commonsense_s04__01265",
+    "rineya_v3_sft__insufficient_information__reas_insufficient_information_s05__01707",
+    "rineya_v3_sft__roleplay_reasoning__inte_roleplay_reasoning_s02__00875",
+    "rineya_v3_sft__deescalation__comm_deescalation_s00__00115",
+    "rineya_v3_sft__tactful_disagreement__comm_tactful_disagreement_s07__02170",
+    "rineya_v3_sft__spatial_relations__reas_spatial_relations_s02__00879",
+    "rineya_v3_sft__natural_follow_up__comm_natural_follow_up_s02__00736",
+    "rineya_v3_sft__contradiction_detection__reas_contradiction_detection_s05__01518",
+    "rineya_v3_sft__multi_turn_context_update__inte_multi_turn_context_update_s01__00402",
+    "rineya_v3_sft__causal_reasoning__reas_causal_reasoning_s06__01971",
+    "rineya_v3_sft__roleplay_reasoning__inte_roleplay_reasoning_s02__00858",
+    "rineya_v3_sft__schedule_ordering__reas_schedule_ordering_s04__01426",
+    "rineya_v3_sft__decision_explanation__inte_decision_explanation_s03__01096",
+    "rineya_v3_sft__troubleshooting_diagnosis__reas_troubleshooting_diagnosis_s03__01011",
+    "rineya_v3_sft__multi_turn_context_update__inte_multi_turn_context_update_s02__00698",
+    "rineya_v3_sft__estimation_sanity__reas_estimation_sanity_s01__00513",
+    "rineya_v3_sft__communication_rewrite__inte_communication_rewrite_s09__02938",
+    "rineya_v3_sft__plan_revision__inte_plan_revision_s00__00013",
+    "rineya_v3_sft__decision_explanation__inte_decision_explanation_s07__02241",
+    "rineya_v3_sft__schedule_ordering__reas_schedule_ordering_s01__00443",
+    "rineya_v3_sft__practical_next_step__inte_practical_next_step_s13__04176",
+    "RRF1-09609c4cefb409d558fa",
+    "rineya_v3_sft__comparison_ranking__reas_comparison_ranking_s09__02829",
+    "rineya_v3_sft__negotiation_compromise__comm_negotiation_compromise_s00__00051",
+    "rineya_v3_sft__estimation_sanity__reas_estimation_sanity_s05__01598",
+    "rineya_v3_sft__causal_reasoning__reas_causal_reasoning_s03__01033",
+    "rineya_v3_sft__practical_next_step__inte_practical_next_step_s04__01443",
+    "rineya_v3_sft__unit_conversion__reas_unit_conversion_s00__00073",
+    "rineya_v3_sft__counting_sets__reas_counting_sets_s05__01616",
+    "rineya_v3_sft__constraint_selection__reas_constraint_selection_s09__02998",
+    "rineya_v3_sft__plan_revision__inte_plan_revision_s01__00387",
+    "rineya_v3_sft__informal_texting__comm_informal_texting_s01__00406",
+    "rineya_v3_sft__apology_repair__comm_apology_repair_s00__00009",
+    "rineya_v3_sft__evidence_grounded_dialogue__inte_evidence_grounded_dialogue_s01__00409",
+    "rineya_v3_sft__boundary_setting__comm_boundary_setting_s03__01072",
+    "rineya_v3_sft__comparison_ranking__reas_comparison_ranking_s00__00123",
+    "rineya_v3_sft__comparison_ranking__reas_comparison_ranking_s08__02609",
+    "rineya_v3_sft__constraint_selection__reas_constraint_selection_s00__00299",
+    "rineya_v3_sft__counting_sets__reas_counting_sets_s07__02164",
+    "rineya_v3_sft__natural_follow_up__comm_natural_follow_up_s07__02216",
+    "rineya_v3_sft__empathy_validation__comm_empathy_validation_s09__02714",
+    "rineya_v3_sft__evidence_inference__reas_evidence_inference_s04__01408",
+    "rineya_v3_sft__conditional_rules__reas_conditional_rules_s09__02786",
+    "rineya_v3_sft__insufficient_information__reas_insufficient_information_s00__00160",
+    "rineya_v3_sft__deescalation__comm_deescalation_s07__02368",
+    "rineya_v3_sft__troubleshooting_diagnosis__reas_troubleshooting_diagnosis_s08__02694",
+    "rineya_v3_sft__preference_opinion__comm_preference_opinion_s05__01643",
+    "rineya_v3_sft__multi_turn_context_update__inte_multi_turn_context_update_s06__01797",
+    "rineya_v3_sft__plan_revision__inte_plan_revision_s11__03426",
+    "RRF1-63cc119f0b4179545ca2",
+    "rineya_v3_sft__practical_next_step__inte_practical_next_step_s04__01274",
+    "rineya_v3_sft__natural_follow_up__comm_natural_follow_up_s03__01166",
+    "rineya_v3_sft__evidence_inference__reas_evidence_inference_s04__01246",
+    "rineya_v3_sft__boundary_setting__comm_boundary_setting_s07__02290",
+    "rineya_v3_sft__conditional_rules__reas_conditional_rules_s00__00164",
+    "rineya_v3_sft__conversation_closure__comm_conversation_closure_s02__00715",
+    "RRF1-1563af4bebdb72c2a8de",
+    "rineya_v3_sft__deescalation__comm_deescalation_s05__01503",
+    "rineya_v3_sft__comparison_ranking__reas_comparison_ranking_s02__00690",
+    "rineya_v3_sft__plan_revision__inte_plan_revision_s03__01017",
+    "rineya_v3_sft__logical_implication__reas_logical_implication_s01__00436",
+    "RRF1-3daa40a87629e08d955f",
+    "rineya_v3_sft__physical_commonsense__reas_physical_commonsense_s03__00943",
+    "rineya_v3_sft__spatial_relations__reas_spatial_relations_s02__00818",
+    "RRF1-9e63e82affd9c10d0eb6",
+    "rineya_v3_sft__evidence_grounded_dialogue__inte_evidence_grounded_dialogue_s06__01848",
+    "rineya_v3_sft__communication_rewrite__inte_communication_rewrite_s14__04268",
+    "rineya_v3_sft__schedule_ordering__reas_schedule_ordering_s09__02800",
+    "RRF1-cd2aec96407785a25966",
+    "rineya_v3_sft__communication_rewrite__inte_communication_rewrite_s06__02010",
+    "rineya_v3_sft__plan_revision__inte_plan_revision_s03__01036",
+    "rineya_v3_sft__deescalation__comm_deescalation_s07__02386",
+    "rineya_v3_sft__preference_opinion__comm_preference_opinion_s04__01227",
+    "rineya_v3_sft__troubleshooting_diagnosis__reas_troubleshooting_diagnosis_s07__02186",
+    "rineya_v3_sft__natural_follow_up__comm_natural_follow_up_s04__01314",
+    "rineya_v3_sft__apology_repair__comm_apology_repair_s04__01225",
+    "rineya_v3_sft__acknowledgment_update__comm_acknowledgment_update_s07__02344",
+    "rineya_v3_sft__evidence_grounded_dialogue__inte_evidence_grounded_dialogue_s06__02011",
+    "rineya_v3_sft__preference_opinion__comm_preference_opinion_s02__00849",
+    "rineya_v3_sft__negotiation_compromise__comm_negotiation_compromise_s08__02665",
+    "rineya_v3_sft__physical_commonsense__reas_physical_commonsense_s02__00809",
+    "rineya_v3_sft__roleplay_reasoning__inte_roleplay_reasoning_s09__02728",
+    "rineya_v3_sft__causal_reasoning__reas_causal_reasoning_s06__01864",
+    "rineya_v3_sft__comparative_recommendation__inte_comparative_recommendation_s04__01309",
+    "RRF1-89adf475597b6e0d7ae7",
+    "rineya_v3_sft__causal_reasoning__reas_causal_reasoning_s09__02956",
+    "rineya_v3_sft__physical_commonsense__reas_physical_commonsense_s09__02976",
+    "rineya_v3_sft__multi_turn_context_update__inte_multi_turn_context_update_s07__02282",
+    "rineya_v3_sft__comparative_recommendation__inte_comparative_recommendation_s03__01016",
+    "rineya_v3_sft__causal_reasoning__reas_causal_reasoning_s01__00516",
+    "rineya_v3_sft__decision_explanation__inte_decision_explanation_s12__03722",
+    "rineya_v3_sft__constraint_selection__reas_constraint_selection_s04__01361",
+    "rineya_v3_sft__natural_follow_up__comm_natural_follow_up_s09__02825",
+    "rineya_v3_sft__practical_next_step__inte_practical_next_step_s04__01291",
+    "rineya_v3_sft__counting_sets__reas_counting_sets_s02__00794",
+    "rineya_v3_sft__clarification_request__comm_clarification_request_s02__00718",
+    "rineya_v3_sft__troubleshooting_diagnosis__reas_troubleshooting_diagnosis_s02__00762",
+    "rineya_v3_sft__natural_follow_up__comm_natural_follow_up_s06__01897",
+    "rineya_v3_sft__plan_revision__inte_plan_revision_s03__00985",
+    "rineya_v3_sft__unit_conversion__reas_unit_conversion_s03__01037",
+    "rineya_v3_sft__plan_revision__inte_plan_revision_s01__00505",
+    "rineya_v3_sft__clarification_request__comm_clarification_request_s03__00970",
+    "rineya_v3_sft__preference_opinion__comm_preference_opinion_s00__00216",
+    "rineya_v3_sft__insufficient_information__reas_insufficient_information_s06__02065",
+    "rineya_v3_sft__practical_next_step__inte_practical_next_step_s13__04139",
+    "rineya_v3_sft__evidence_grounded_dialogue__inte_evidence_grounded_dialogue_s10__03314",
+    "rineya_v3_sft__physical_commonsense__reas_physical_commonsense_s03__01034",
+    "rineya_v3_sft__acknowledgment_update__comm_acknowledgment_update_s01__00436",
+    "rineya_v3_sft__insufficient_information__reas_insufficient_information_s08__02565",
+    "rineya_v3_sft__causal_reasoning__reas_causal_reasoning_s03__01020",
+    "rineya_v3_sft__negotiation_compromise__comm_negotiation_compromise_s06__02075",
+    "rineya_v3_sft__conditional_rules__reas_conditional_rules_s06__01910",
+    "rineya_v3_sft__natural_follow_up__comm_natural_follow_up_s06__02065",
+    "rineya_v3_sft__causal_reasoning__reas_causal_reasoning_s05__01698",
+    "rineya_v3_sft__comparison_ranking__reas_comparison_ranking_s01__00361"
+  ],
+  "train_row_ids_sha256": "a6d310c21c7db876fee1da7cffeed00f57a3f27bd76f9c624322a4036ac2ea2f",
+  "data_sha256": {
+    "train": "2196814459de6cfe9aec6713884b2c054c2d1bf10d8082d32e1fc1613a78bc54",
+    "dev": "14bcd079363990c130063e66660097ab95888e69eeaf3d1ea68af6e18561d3f9",
+    "monitor_probe": "5f6df1c14aa082eb2f61024a2652809077dbc91a6d7a4e19933d55f7890ae266",
+    "probe_label_audit": "4857cf868202763e76bc610f6e787aebee20b9d18bfa7451f42c603ed871e6d7"
+  },
+  "source_assets_sha256": {
+    "model.safetensors": "962abc5bcd5a83e3b7693bd278ae9215b6d83389a847913da9330b34dd5dd24b",
+    "config.json": "660db3b73d788119c04535e48cf9be5f55bc3100841a718637ae695b442f27dd",
+    "generation_config.json": "2325da0f15bb848e018c5ae071b7943332e9f871d6b60e2ed22ca97d4cb993d2",
+    "merges.txt": "8831e4f1a044471340f7c0a83d7bd71306a5b867e95fd870f74d0c5308a904d5",
+    "tokenizer.json": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+    "tokenizer_config.json": "d5d09f07b48c3086c508b30d1c9114bd1189145b74e982a265350c923acd8101",
+    "vocab.json": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910"
+  },
+  "source_weights_sha256": "962abc5bcd5a83e3b7693bd278ae9215b6d83389a847913da9330b34dd5dd24b",
+  "exploration_harness_sha256": "28ff9930c46ab2783f5e58c3df2e4642490bdf1d5cd1dcc481653868c6bd7c19",
+  "optimizer_harness_sha256": "1c6c50012e40fec55874b68dc27f5013824588ae5460d8e3929cd0f4b8caa544",
+  "run_directory": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-ced-native-loader-qualification\\experiments\\architecture_benchmark_001\\outputs\\arm-runs\\B28last20_lr1e-05_b26000_seed17_wsd0.2-0.2_b20.95_exhausttest3_20260914T084656560643Z",
+  "optimizer_storage_backend": "memmap",
+  "optimizer_storage_harness_sha256": null,
+  "gpu_workspace_reserve_gib": 0.6,
+  "resource_trace": [
+    {
+      "phase": "optimizer_ready",
+      "step": 0,
+      "host": {
+        "available": true,
+        "memory_load_percent": 59,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.121768951416016,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 21.39154052734375,
+        "commit_over_phys_gib": 6.173358917236328
+      },
+      "cuda_allocated_gib": 4.565040588378906,
+      "cuda_reserved_gib": 4.56640625,
+      "cuda_peak_allocated_gib": 4.565040588378906
+    },
+    {
+      "phase": "initial_control_passed",
+      "step": 0,
+      "host": {
+        "available": true,
+        "memory_load_percent": 60,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 5.993640899658203,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 21.63277816772461,
+        "commit_over_phys_gib": 6.4145965576171875
+      },
+      "cuda_allocated_gib": 4.572975158691406,
+      "cuda_reserved_gib": 4.578125,
+      "cuda_peak_allocated_gib": 4.804471492767334
+    },
+    {
+      "phase": "before_forward",
+      "step": 1,
+      "host": {
+        "available": true,
+        "memory_load_percent": 60,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 5.993633270263672,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 21.63277816772461,
+        "commit_over_phys_gib": 6.4145965576171875
+      },
+      "cuda_allocated_gib": 4.572976112365723,
+      "cuda_reserved_gib": 4.578125,
+      "cuda_peak_allocated_gib": 4.804471492767334
+    },
+    {
+      "phase": "after_backward",
+      "step": 1,
+      "host": {
+        "available": true,
+        "memory_load_percent": 60,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 5.994171142578125,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 22.839122772216797,
+        "commit_over_phys_gib": 7.620941162109375
+      },
+      "cuda_allocated_gib": 5.753446578979492,
+      "cuda_reserved_gib": 5.796875,
+      "cuda_peak_allocated_gib": 5.756009101867676
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 1,
+      "host": {
+        "available": true,
+        "memory_load_percent": 61,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 5.925510406494141,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 22.92596435546875,
+        "commit_over_phys_gib": 7.707782745361328
+      },
+      "cuda_allocated_gib": 4.580911636352539,
+      "cuda_reserved_gib": 5.796875,
+      "cuda_peak_allocated_gib": 5.76516580581665
+    },
+    {
+      "phase": "before_forward",
+      "step": 2,
+      "host": {
+        "available": true,
+        "memory_load_percent": 61,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 5.925510406494141,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 22.92596435546875,
+        "commit_over_phys_gib": 7.707782745361328
+      },
+      "cuda_allocated_gib": 4.580913066864014,
+      "cuda_reserved_gib": 5.796875,
+      "cuda_peak_allocated_gib": 5.76516580581665
+    },
+    {
+      "phase": "after_backward",
+      "step": 2,
+      "host": {
+        "available": true,
+        "memory_load_percent": 61,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 5.9092254638671875,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.23760223388672,
+        "commit_over_phys_gib": 8.019420623779297
+      },
+      "cuda_allocated_gib": 5.753203392028809,
+      "cuda_reserved_gib": 6.103515625,
+      "cuda_peak_allocated_gib": 5.76516580581665
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 2,
+      "host": {
+        "available": true,
+        "memory_load_percent": 61,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 5.9091644287109375,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.237632751464844,
+        "commit_over_phys_gib": 8.019451141357422
+      },
+      "cuda_allocated_gib": 4.580912113189697,
+      "cuda_reserved_gib": 6.103515625,
+      "cuda_peak_allocated_gib": 5.76516580581665
+    },
+    {
+      "phase": "before_forward",
+      "step": 3,
+      "host": {
+        "available": true,
+        "memory_load_percent": 61,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 5.9091644287109375,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.237632751464844,
+        "commit_over_phys_gib": 8.019451141357422
+      },
+      "cuda_allocated_gib": 4.580913066864014,
+      "cuda_reserved_gib": 6.103515625,
+      "cuda_peak_allocated_gib": 5.76516580581665
+    },
+    {
+      "phase": "after_backward",
+      "step": 3,
+      "host": {
+        "available": true,
+        "memory_load_percent": 61,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 5.907600402832031,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.24353790283203,
+        "commit_over_phys_gib": 8.02535629272461
+      },
+      "cuda_allocated_gib": 5.75295877456665,
+      "cuda_reserved_gib": 6.103515625,
+      "cuda_peak_allocated_gib": 5.76516580581665
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 3,
+      "host": {
+        "available": true,
+        "memory_load_percent": 61,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 5.907596588134766,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.242874145507812,
+        "commit_over_phys_gib": 8.02469253540039
+      },
+      "cuda_allocated_gib": 4.580911636352539,
+      "cuda_reserved_gib": 6.103515625,
+      "cuda_peak_allocated_gib": 5.76516580581665
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 4,
+      "host": {
+        "available": true,
+        "memory_load_percent": 61,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 5.914558410644531,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.232162475585938,
+        "commit_over_phys_gib": 8.013980865478516
+      },
+      "cuda_allocated_gib": 4.580912113189697,
+      "cuda_reserved_gib": 6.103515625,
+      "cuda_peak_allocated_gib": 5.765898704528809
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 5,
+      "host": {
+        "available": true,
+        "memory_load_percent": 61,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 5.919441223144531,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.22863006591797,
+        "commit_over_phys_gib": 8.010448455810547
+      },
+      "cuda_allocated_gib": 4.580912113189697,
+      "cuda_reserved_gib": 6.103515625,
+      "cuda_peak_allocated_gib": 5.766318321228027
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 6,
+      "host": {
+        "available": true,
+        "memory_load_percent": 61,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 5.919410705566406,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.571441650390625,
+        "commit_over_phys_gib": 8.353260040283203
+      },
+      "cuda_allocated_gib": 4.5809125900268555,
+      "cuda_reserved_gib": 6.439453125,
+      "cuda_peak_allocated_gib": 5.76718282699585
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 7,
+      "host": {
+        "available": true,
+        "memory_load_percent": 61,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 5.918678283691406,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.571300506591797,
+        "commit_over_phys_gib": 8.353118896484375
+      },
+      "cuda_allocated_gib": 4.580912113189697,
+      "cuda_reserved_gib": 6.439453125,
+      "cuda_peak_allocated_gib": 5.76718282699585
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 8,
+      "host": {
+        "available": true,
+        "memory_load_percent": 61,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 5.918693542480469,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.57027816772461,
+        "commit_over_phys_gib": 8.352096557617188
+      },
+      "cuda_allocated_gib": 4.580911636352539,
+      "cuda_reserved_gib": 6.439453125,
+      "cuda_peak_allocated_gib": 5.76718282699585
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 9,
+      "host": {
+        "available": true,
+        "memory_load_percent": 61,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 5.925163269042969,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.559619903564453,
+        "commit_over_phys_gib": 8.341438293457031
+      },
+      "cuda_allocated_gib": 4.580911636352539,
+      "cuda_reserved_gib": 6.439453125,
+      "cuda_peak_allocated_gib": 5.76718282699585
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 10,
+      "host": {
+        "available": true,
+        "memory_load_percent": 61,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 5.925102233886719,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.561386108398438,
+        "commit_over_phys_gib": 8.343204498291016
+      },
+      "cuda_allocated_gib": 4.580912113189697,
+      "cuda_reserved_gib": 6.439453125,
+      "cuda_peak_allocated_gib": 5.76718282699585
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 11,
+      "host": {
+        "available": true,
+        "memory_load_percent": 61,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 5.924915313720703,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.56249237060547,
+        "commit_over_phys_gib": 8.344310760498047
+      },
+      "cuda_allocated_gib": 4.580912113189697,
+      "cuda_reserved_gib": 6.439453125,
+      "cuda_peak_allocated_gib": 5.76718282699585
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 12,
+      "host": {
+        "available": true,
+        "memory_load_percent": 61,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 5.924854278564453,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.56063461303711,
+        "commit_over_phys_gib": 8.342453002929688
+      },
+      "cuda_allocated_gib": 4.580912113189697,
+      "cuda_reserved_gib": 6.439453125,
+      "cuda_peak_allocated_gib": 5.76718282699585
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 13,
+      "host": {
+        "available": true,
+        "memory_load_percent": 61,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 5.930660247802734,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.91983413696289,
+        "commit_over_phys_gib": 8.701652526855469
+      },
+      "cuda_allocated_gib": 4.5809125900268555,
+      "cuda_reserved_gib": 6.802734375,
+      "cuda_peak_allocated_gib": 5.776895523071289
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 14,
+      "host": {
+        "available": true,
+        "memory_load_percent": 61,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 5.925838470458984,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 24.364444732666016,
+        "commit_over_phys_gib": 9.146263122558594
+      },
+      "cuda_allocated_gib": 4.580915451049805,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 5.905791759490967
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 15,
+      "host": {
+        "available": true,
+        "memory_load_percent": 61,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 5.925773620605469,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 24.365612030029297,
+        "commit_over_phys_gib": 9.147430419921875
+      },
+      "cuda_allocated_gib": 4.5809125900268555,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 5.905791759490967
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 16,
+      "host": {
+        "available": true,
+        "memory_load_percent": 61,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 5.925777435302734,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 24.36566162109375,
+        "commit_over_phys_gib": 9.147480010986328
+      },
+      "cuda_allocated_gib": 4.580911636352539,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 5.905791759490967
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 17,
+      "host": {
+        "available": true,
+        "memory_load_percent": 61,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 5.9247589111328125,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 24.362342834472656,
+        "commit_over_phys_gib": 9.144161224365234
+      },
+      "cuda_allocated_gib": 4.580911636352539,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 5.905791759490967
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 18,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.36309814453125,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.871471405029297,
+        "commit_over_phys_gib": 8.653289794921875
+      },
+      "cuda_allocated_gib": 4.580911636352539,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 5.905791759490967
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 19,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.368480682373047,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.869338989257812,
+        "commit_over_phys_gib": 8.65115737915039
+      },
+      "cuda_allocated_gib": 4.580916881561279,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.022271156311035
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 20,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.368415832519531,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.872947692871094,
+        "commit_over_phys_gib": 8.654766082763672
+      },
+      "cuda_allocated_gib": 4.580911636352539,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.022271156311035
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 21,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.369594573974609,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.873252868652344,
+        "commit_over_phys_gib": 8.655071258544922
+      },
+      "cuda_allocated_gib": 4.580918788909912,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 22,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.369598388671875,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.872764587402344,
+        "commit_over_phys_gib": 8.654582977294922
+      },
+      "cuda_allocated_gib": 4.580911636352539,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 23,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.369598388671875,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.87371826171875,
+        "commit_over_phys_gib": 8.655536651611328
+      },
+      "cuda_allocated_gib": 4.580912113189697,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 24,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.369594573974609,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.87378692626953,
+        "commit_over_phys_gib": 8.65560531616211
+      },
+      "cuda_allocated_gib": 4.580912113189697,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 25,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.374546051025391,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.864978790283203,
+        "commit_over_phys_gib": 8.646797180175781
+      },
+      "cuda_allocated_gib": 4.5809125900268555,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 26,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.37445068359375,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.870113372802734,
+        "commit_over_phys_gib": 8.651931762695312
+      },
+      "cuda_allocated_gib": 4.580911636352539,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 27,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.374446868896484,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.86960220336914,
+        "commit_over_phys_gib": 8.651420593261719
+      },
+      "cuda_allocated_gib": 4.580911636352539,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 28,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.373908996582031,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.871597290039062,
+        "commit_over_phys_gib": 8.65341567993164
+      },
+      "cuda_allocated_gib": 4.580911636352539,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 29,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.373878479003906,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.871234893798828,
+        "commit_over_phys_gib": 8.653053283691406
+      },
+      "cuda_allocated_gib": 4.580912113189697,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 30,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.373878479003906,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.87102508544922,
+        "commit_over_phys_gib": 8.652843475341797
+      },
+      "cuda_allocated_gib": 4.580911636352539,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 31,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.373691558837891,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.871910095214844,
+        "commit_over_phys_gib": 8.653728485107422
+      },
+      "cuda_allocated_gib": 4.580912113189697,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 32,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.373683929443359,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.871902465820312,
+        "commit_over_phys_gib": 8.65372085571289
+      },
+      "cuda_allocated_gib": 4.580912113189697,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 33,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.382316589355469,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.876407623291016,
+        "commit_over_phys_gib": 8.658226013183594
+      },
+      "cuda_allocated_gib": 4.580911636352539,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 34,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.374568939208984,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.886993408203125,
+        "commit_over_phys_gib": 8.668811798095703
+      },
+      "cuda_allocated_gib": 4.580912113189697,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 35,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.374568939208984,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.887523651123047,
+        "commit_over_phys_gib": 8.669342041015625
+      },
+      "cuda_allocated_gib": 4.580911636352539,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 36,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.374568939208984,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.887638092041016,
+        "commit_over_phys_gib": 8.669456481933594
+      },
+      "cuda_allocated_gib": 4.580911636352539,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 37,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.374523162841797,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.89017105102539,
+        "commit_over_phys_gib": 8.671989440917969
+      },
+      "cuda_allocated_gib": 4.580911636352539,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 38,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.375274658203125,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.88492202758789,
+        "commit_over_phys_gib": 8.666740417480469
+      },
+      "cuda_allocated_gib": 4.580911636352539,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 39,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.375083923339844,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.884593963623047,
+        "commit_over_phys_gib": 8.666412353515625
+      },
+      "cuda_allocated_gib": 4.580912113189697,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 40,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.375099182128906,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.883041381835938,
+        "commit_over_phys_gib": 8.664859771728516
+      },
+      "cuda_allocated_gib": 4.580911636352539,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 41,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.375053405761719,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.88314437866211,
+        "commit_over_phys_gib": 8.664962768554688
+      },
+      "cuda_allocated_gib": 4.580911636352539,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 42,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.376102447509766,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.88141632080078,
+        "commit_over_phys_gib": 8.66323471069336
+      },
+      "cuda_allocated_gib": 4.580912113189697,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 43,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.3759765625,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.881027221679688,
+        "commit_over_phys_gib": 8.662845611572266
+      },
+      "cuda_allocated_gib": 4.580911636352539,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 44,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.37591552734375,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.881317138671875,
+        "commit_over_phys_gib": 8.663135528564453
+      },
+      "cuda_allocated_gib": 4.580911636352539,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 45,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.375736236572266,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.88135528564453,
+        "commit_over_phys_gib": 8.66317367553711
+      },
+      "cuda_allocated_gib": 4.580911636352539,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 46,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.375774383544922,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.880638122558594,
+        "commit_over_phys_gib": 8.662456512451172
+      },
+      "cuda_allocated_gib": 4.580912113189697,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 47,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.375591278076172,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.88079833984375,
+        "commit_over_phys_gib": 8.662616729736328
+      },
+      "cuda_allocated_gib": 4.580911636352539,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 48,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.375598907470703,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.880855560302734,
+        "commit_over_phys_gib": 8.662673950195312
+      },
+      "cuda_allocated_gib": 4.580912113189697,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 49,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.375591278076172,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.882789611816406,
+        "commit_over_phys_gib": 8.664608001708984
+      },
+      "cuda_allocated_gib": 4.580911636352539,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 50,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.376590728759766,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.882728576660156,
+        "commit_over_phys_gib": 8.664546966552734
+      },
+      "cuda_allocated_gib": 4.580911636352539,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 51,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.376468658447266,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.88574981689453,
+        "commit_over_phys_gib": 8.66756820678711
+      },
+      "cuda_allocated_gib": 4.580912113189697,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 52,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.376407623291016,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.88711166381836,
+        "commit_over_phys_gib": 8.668930053710938
+      },
+      "cuda_allocated_gib": 4.580911636352539,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 53,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.376277923583984,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.888206481933594,
+        "commit_over_phys_gib": 8.670024871826172
+      },
+      "cuda_allocated_gib": 4.580912113189697,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 54,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.377826690673828,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.87612533569336,
+        "commit_over_phys_gib": 8.657943725585938
+      },
+      "cuda_allocated_gib": 4.580911636352539,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 55,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.371479034423828,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.89229965209961,
+        "commit_over_phys_gib": 8.674118041992188
+      },
+      "cuda_allocated_gib": 4.580912113189697,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 56,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.376049041748047,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.886810302734375,
+        "commit_over_phys_gib": 8.668628692626953
+      },
+      "cuda_allocated_gib": 4.5809173583984375,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 57,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.3760986328125,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.88454818725586,
+        "commit_over_phys_gib": 8.666366577148438
+      },
+      "cuda_allocated_gib": 4.580912113189697,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 58,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.376033782958984,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.884925842285156,
+        "commit_over_phys_gib": 8.666744232177734
+      },
+      "cuda_allocated_gib": 4.580911636352539,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 59,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.374927520751953,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.885944366455078,
+        "commit_over_phys_gib": 8.667762756347656
+      },
+      "cuda_allocated_gib": 4.580912113189697,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 60,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.374702453613281,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.887027740478516,
+        "commit_over_phys_gib": 8.668846130371094
+      },
+      "cuda_allocated_gib": 4.580911636352539,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 61,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.375186920166016,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.88284683227539,
+        "commit_over_phys_gib": 8.664665222167969
+      },
+      "cuda_allocated_gib": 4.580911636352539,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 62,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.373050689697266,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.884986877441406,
+        "commit_over_phys_gib": 8.666805267333984
+      },
+      "cuda_allocated_gib": 4.580911636352539,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 63,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.373058319091797,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.885082244873047,
+        "commit_over_phys_gib": 8.666900634765625
+      },
+      "cuda_allocated_gib": 4.580912113189697,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 64,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.372760772705078,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.885223388671875,
+        "commit_over_phys_gib": 8.667041778564453
+      },
+      "cuda_allocated_gib": 4.5809125900268555,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 65,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.3734588623046875,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.885581970214844,
+        "commit_over_phys_gib": 8.667400360107422
+      },
+      "cuda_allocated_gib": 4.580911636352539,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 66,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.3733978271484375,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.88299560546875,
+        "commit_over_phys_gib": 8.664813995361328
+      },
+      "cuda_allocated_gib": 4.580911636352539,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 67,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.3732757568359375,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.88373565673828,
+        "commit_over_phys_gib": 8.66555404663086
+      },
+      "cuda_allocated_gib": 4.580911636352539,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 68,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.3731536865234375,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.883731842041016,
+        "commit_over_phys_gib": 8.665550231933594
+      },
+      "cuda_allocated_gib": 4.580911636352539,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 69,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.373531341552734,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.878765106201172,
+        "commit_over_phys_gib": 8.66058349609375
+      },
+      "cuda_allocated_gib": 4.580911636352539,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 70,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.373283386230469,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.883846282958984,
+        "commit_over_phys_gib": 8.665664672851562
+      },
+      "cuda_allocated_gib": 4.580911636352539,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 71,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.3732757568359375,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.882671356201172,
+        "commit_over_phys_gib": 8.66448974609375
+      },
+      "cuda_allocated_gib": 4.580912113189697,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 72,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.373191833496094,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.870712280273438,
+        "commit_over_phys_gib": 8.652530670166016
+      },
+      "cuda_allocated_gib": 4.580911636352539,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 73,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.373191833496094,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.870716094970703,
+        "commit_over_phys_gib": 8.652534484863281
+      },
+      "cuda_allocated_gib": 4.5809125900268555,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 74,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.375659942626953,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.870391845703125,
+        "commit_over_phys_gib": 8.652210235595703
+      },
+      "cuda_allocated_gib": 4.580912113189697,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 75,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.3756561279296875,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.870182037353516,
+        "commit_over_phys_gib": 8.652000427246094
+      },
+      "cuda_allocated_gib": 4.5809125900268555,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 76,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.3756561279296875,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.870010375976562,
+        "commit_over_phys_gib": 8.65182876586914
+      },
+      "cuda_allocated_gib": 4.580911636352539,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 77,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.3755950927734375,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.86764907836914,
+        "commit_over_phys_gib": 8.649467468261719
+      },
+      "cuda_allocated_gib": 4.580912113189697,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 78,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.3754119873046875,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.869525909423828,
+        "commit_over_phys_gib": 8.651344299316406
+      },
+      "cuda_allocated_gib": 4.580911636352539,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 79,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.3754119873046875,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.869403839111328,
+        "commit_over_phys_gib": 8.651222229003906
+      },
+      "cuda_allocated_gib": 4.580912113189697,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 80,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.375362396240234,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.869346618652344,
+        "commit_over_phys_gib": 8.651165008544922
+      },
+      "cuda_allocated_gib": 4.580912113189697,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 81,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.375282287597656,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.869373321533203,
+        "commit_over_phys_gib": 8.651191711425781
+      },
+      "cuda_allocated_gib": 4.580911636352539,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 82,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.376544952392578,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.869728088378906,
+        "commit_over_phys_gib": 8.651546478271484
+      },
+      "cuda_allocated_gib": 4.580911636352539,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 83,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.376483917236328,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.869136810302734,
+        "commit_over_phys_gib": 8.650955200195312
+      },
+      "cuda_allocated_gib": 4.580912113189697,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 84,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.376426696777344,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.86821746826172,
+        "commit_over_phys_gib": 8.650035858154297
+      },
+      "cuda_allocated_gib": 4.580916881561279,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 85,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.376361846923828,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.868309020996094,
+        "commit_over_phys_gib": 8.650127410888672
+      },
+      "cuda_allocated_gib": 4.580911636352539,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 86,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.376361846923828,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.86834716796875,
+        "commit_over_phys_gib": 8.650165557861328
+      },
+      "cuda_allocated_gib": 4.580911636352539,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 87,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.376293182373047,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.868358612060547,
+        "commit_over_phys_gib": 8.650177001953125
+      },
+      "cuda_allocated_gib": 4.580912113189697,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 88,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.377159118652344,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.866870880126953,
+        "commit_over_phys_gib": 8.648689270019531
+      },
+      "cuda_allocated_gib": 4.580912113189697,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 89,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.3761138916015625,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.868309020996094,
+        "commit_over_phys_gib": 8.650127410888672
+      },
+      "cuda_allocated_gib": 4.580911636352539,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 90,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.375770568847656,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.869125366210938,
+        "commit_over_phys_gib": 8.650943756103516
+      },
+      "cuda_allocated_gib": 4.580911636352539,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 91,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.37548828125,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.868541717529297,
+        "commit_over_phys_gib": 8.650360107421875
+      },
+      "cuda_allocated_gib": 4.580918312072754,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 92,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.375370025634766,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.868335723876953,
+        "commit_over_phys_gib": 8.650154113769531
+      },
+      "cuda_allocated_gib": 4.580911636352539,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 93,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.375270843505859,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.86913299560547,
+        "commit_over_phys_gib": 8.650951385498047
+      },
+      "cuda_allocated_gib": 4.580911636352539,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 94,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.380718231201172,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.86383056640625,
+        "commit_over_phys_gib": 8.645648956298828
+      },
+      "cuda_allocated_gib": 4.580911636352539,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 95,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.375511169433594,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.868709564208984,
+        "commit_over_phys_gib": 8.650527954101562
+      },
+      "cuda_allocated_gib": 4.580911636352539,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 96,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.376003265380859,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.865371704101562,
+        "commit_over_phys_gib": 8.64719009399414
+      },
+      "cuda_allocated_gib": 4.580916404724121,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 97,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.3794403076171875,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.864471435546875,
+        "commit_over_phys_gib": 8.646289825439453
+      },
+      "cuda_allocated_gib": 4.580911636352539,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 98,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.376335144042969,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.865371704101562,
+        "commit_over_phys_gib": 8.64719009399414
+      },
+      "cuda_allocated_gib": 4.580911636352539,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 99,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.3758392333984375,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.865306854248047,
+        "commit_over_phys_gib": 8.647125244140625
+      },
+      "cuda_allocated_gib": 4.580915451049805,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 100,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.375652313232422,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.865169525146484,
+        "commit_over_phys_gib": 8.646987915039062
+      },
+      "cuda_allocated_gib": 4.580911636352539,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 101,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.373329162597656,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.87100601196289,
+        "commit_over_phys_gib": 8.652824401855469
+      },
+      "cuda_allocated_gib": 4.580912113189697,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 102,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.375835418701172,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.865894317626953,
+        "commit_over_phys_gib": 8.647712707519531
+      },
+      "cuda_allocated_gib": 4.580912113189697,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 103,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.376125335693359,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.86252212524414,
+        "commit_over_phys_gib": 8.644340515136719
+      },
+      "cuda_allocated_gib": 4.580918312072754,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 104,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.375862121582031,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.86529541015625,
+        "commit_over_phys_gib": 8.647113800048828
+      },
+      "cuda_allocated_gib": 4.580911636352539,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 105,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.375801086425781,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.865360260009766,
+        "commit_over_phys_gib": 8.647178649902344
+      },
+      "cuda_allocated_gib": 4.580911636352539,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 106,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.376117706298828,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.865093231201172,
+        "commit_over_phys_gib": 8.64691162109375
+      },
+      "cuda_allocated_gib": 4.580912113189697,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 107,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.377555847167969,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.864810943603516,
+        "commit_over_phys_gib": 8.646629333496094
+      },
+      "cuda_allocated_gib": 4.580912113189697,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 108,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.377490997314453,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.864608764648438,
+        "commit_over_phys_gib": 8.646427154541016
+      },
+      "cuda_allocated_gib": 4.580912113189697,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 109,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.3773651123046875,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.864501953125,
+        "commit_over_phys_gib": 8.646320343017578
+      },
+      "cuda_allocated_gib": 4.580911636352539,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 110,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.3767242431640625,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.868457794189453,
+        "commit_over_phys_gib": 8.650276184082031
+      },
+      "cuda_allocated_gib": 4.580912113189697,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 111,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.375175476074219,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.87079620361328,
+        "commit_over_phys_gib": 8.65261459350586
+      },
+      "cuda_allocated_gib": 4.580912113189697,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 112,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.375091552734375,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.87004852294922,
+        "commit_over_phys_gib": 8.651866912841797
+      },
+      "cuda_allocated_gib": 4.580912113189697,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 113,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.370822906494141,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.873878479003906,
+        "commit_over_phys_gib": 8.655696868896484
+      },
+      "cuda_allocated_gib": 4.580911636352539,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 114,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.375026702880859,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.86865997314453,
+        "commit_over_phys_gib": 8.65047836303711
+      },
+      "cuda_allocated_gib": 4.580912113189697,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 115,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.3763885498046875,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.867794036865234,
+        "commit_over_phys_gib": 8.649612426757812
+      },
+      "cuda_allocated_gib": 4.580911636352539,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 116,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.376438140869141,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.867469787597656,
+        "commit_over_phys_gib": 8.649288177490234
+      },
+      "cuda_allocated_gib": 4.580912113189697,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 117,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.376377105712891,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.867351531982422,
+        "commit_over_phys_gib": 8.649169921875
+      },
+      "cuda_allocated_gib": 4.580911636352539,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 118,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.376377105712891,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.867401123046875,
+        "commit_over_phys_gib": 8.649219512939453
+      },
+      "cuda_allocated_gib": 4.580911636352539,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 119,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.376354217529297,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.86703109741211,
+        "commit_over_phys_gib": 8.648849487304688
+      },
+      "cuda_allocated_gib": 4.580918312072754,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 120,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.376350402832031,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.86874771118164,
+        "commit_over_phys_gib": 8.650566101074219
+      },
+      "cuda_allocated_gib": 4.5809125900268555,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 121,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.352783203125,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.91082000732422,
+        "commit_over_phys_gib": 8.692638397216797
+      },
+      "cuda_allocated_gib": 4.580912113189697,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 122,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.335182189941406,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.927024841308594,
+        "commit_over_phys_gib": 8.708843231201172
+      },
+      "cuda_allocated_gib": 4.580912113189697,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 123,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.318904876708984,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.94184112548828,
+        "commit_over_phys_gib": 8.72365951538086
+      },
+      "cuda_allocated_gib": 4.580911636352539,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 124,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.311073303222656,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.947040557861328,
+        "commit_over_phys_gib": 8.728858947753906
+      },
+      "cuda_allocated_gib": 4.580911636352539,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 125,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.296649932861328,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.96038055419922,
+        "commit_over_phys_gib": 8.742198944091797
+      },
+      "cuda_allocated_gib": 4.580912113189697,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 126,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.2846221923828125,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.95950698852539,
+        "commit_over_phys_gib": 8.741325378417969
+      },
+      "cuda_allocated_gib": 4.580912113189697,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 127,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.282402038574219,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.960521697998047,
+        "commit_over_phys_gib": 8.742340087890625
+      },
+      "cuda_allocated_gib": 4.580911636352539,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 128,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.2821502685546875,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.961711883544922,
+        "commit_over_phys_gib": 8.7435302734375
+      },
+      "cuda_allocated_gib": 4.580911636352539,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 129,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.283977508544922,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.96475601196289,
+        "commit_over_phys_gib": 8.746574401855469
+      },
+      "cuda_allocated_gib": 4.580911636352539,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 130,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.289028167724609,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.954776763916016,
+        "commit_over_phys_gib": 8.736595153808594
+      },
+      "cuda_allocated_gib": 4.580911636352539,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 131,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.292079925537109,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.951770782470703,
+        "commit_over_phys_gib": 8.733589172363281
+      },
+      "cuda_allocated_gib": 4.580912113189697,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 132,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.3028106689453125,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.94900131225586,
+        "commit_over_phys_gib": 8.730819702148438
+      },
+      "cuda_allocated_gib": 4.580911636352539,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 133,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.3027496337890625,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.94781494140625,
+        "commit_over_phys_gib": 8.729633331298828
+      },
+      "cuda_allocated_gib": 4.580911636352539,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 134,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.302757263183594,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.944305419921875,
+        "commit_over_phys_gib": 8.726123809814453
+      },
+      "cuda_allocated_gib": 4.580911636352539,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 135,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.302776336669922,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.94394302368164,
+        "commit_over_phys_gib": 8.725761413574219
+      },
+      "cuda_allocated_gib": 4.580911636352539,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 136,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.303401947021484,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.943328857421875,
+        "commit_over_phys_gib": 8.725147247314453
+      },
+      "cuda_allocated_gib": 4.580911636352539,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 137,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.303398132324219,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.94417953491211,
+        "commit_over_phys_gib": 8.725997924804688
+      },
+      "cuda_allocated_gib": 4.580911636352539,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 138,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.303123474121094,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.946918487548828,
+        "commit_over_phys_gib": 8.728736877441406
+      },
+      "cuda_allocated_gib": 4.580912113189697,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 139,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.303058624267578,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.94687271118164,
+        "commit_over_phys_gib": 8.728691101074219
+      },
+      "cuda_allocated_gib": 4.580912113189697,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 140,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.306194305419922,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.942176818847656,
+        "commit_over_phys_gib": 8.723995208740234
+      },
+      "cuda_allocated_gib": 4.580912113189697,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 141,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.302982330322266,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.94525909423828,
+        "commit_over_phys_gib": 8.72707748413086
+      },
+      "cuda_allocated_gib": 4.580911636352539,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 142,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.3029327392578125,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.96035385131836,
+        "commit_over_phys_gib": 8.742172241210938
+      },
+      "cuda_allocated_gib": 4.580911636352539,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 143,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.302394866943359,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.963462829589844,
+        "commit_over_phys_gib": 8.745281219482422
+      },
+      "cuda_allocated_gib": 4.580912113189697,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 144,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.302276611328125,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.963520050048828,
+        "commit_over_phys_gib": 8.745338439941406
+      },
+      "cuda_allocated_gib": 4.580911636352539,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 145,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.306800842285156,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.963523864746094,
+        "commit_over_phys_gib": 8.745342254638672
+      },
+      "cuda_allocated_gib": 4.580912113189697,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 146,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.306793212890625,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.963260650634766,
+        "commit_over_phys_gib": 8.745079040527344
+      },
+      "cuda_allocated_gib": 4.580911636352539,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 147,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.306720733642578,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.963363647460938,
+        "commit_over_phys_gib": 8.745182037353516
+      },
+      "cuda_allocated_gib": 4.580911636352539,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 148,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.3067169189453125,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.963489532470703,
+        "commit_over_phys_gib": 8.745307922363281
+      },
+      "cuda_allocated_gib": 4.580911636352539,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "after_optimizer_step",
+      "step": 149,
+      "host": {
+        "available": true,
+        "memory_load_percent": 58,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 6.307861328125,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 23.957660675048828,
+        "commit_over_phys_gib": 8.739479064941406
+      },
+      "cuda_allocated_gib": 4.580911636352539,
+      "cuda_reserved_gib": 7.2421875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    },
+    {
+      "phase": "optimizer_released_before_save",
+      "step": 149,
+      "host": {
+        "available": true,
+        "memory_load_percent": 61,
+        "total_phys_gib": 15.218181610107422,
+        "free_phys_gib": 5.847236633300781,
+        "commit_limit_gib": 34.60940933227539,
+        "committed_gib": 19.658191680908203,
+        "commit_over_phys_gib": 4.440010070800781
+      },
+      "cuda_allocated_gib": 2.236818313598633,
+      "cuda_reserved_gib": 2.248046875,
+      "cuda_peak_allocated_gib": 6.220162868499756
+    }
+  ],
+  "checkpoint_serialization_sha256": "e90a974c9f810a3afcf6c148fa301c65b63c097c6a7434c53b2ed140d657fa2f",
+  "read_o_proj_tensors": 0,
+  "step_trace": [
+    {
+      "step": 1,
+      "tokens": 95,
+      "lr": 1.826923076923077e-07,
+      "train_ce": 5.6921916007995605,
+      "grad_norm": 44.08418273925781,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 2,
+      "tokens": 270,
+      "lr": 5.192307692307692e-07,
+      "train_ce": 4.683311462402344,
+      "grad_norm": 45.946720123291016,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 3,
+      "tokens": 358,
+      "lr": 6.884615384615385e-07,
+      "train_ce": 5.4317145347595215,
+      "grad_norm": 44.272396087646484,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 4,
+      "tokens": 525,
+      "lr": 1.0096153846153846e-06,
+      "train_ce": 5.489080905914307,
+      "grad_norm": 65.12127685546875,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 5,
+      "tokens": 669,
+      "lr": 1.2865384615384618e-06,
+      "train_ce": 5.48082971572876,
+      "grad_norm": 69.18081665039062,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 6,
+      "tokens": 865,
+      "lr": 1.6634615384615382e-06,
+      "train_ce": 4.070517539978027,
+      "grad_norm": 52.84267044067383,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 7,
+      "tokens": 1005,
+      "lr": 1.932692307692308e-06,
+      "train_ce": 4.7733330726623535,
+      "grad_norm": 49.17228317260742,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 8,
+      "tokens": 1123,
+      "lr": 2.1596153846153846e-06,
+      "train_ce": 4.875150203704834,
+      "grad_norm": 43.09909439086914,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 9,
+      "tokens": 1229,
+      "lr": 2.3634615384615384e-06,
+      "train_ce": 4.599496364593506,
+      "grad_norm": 33.24045181274414,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 10,
+      "tokens": 1363,
+      "lr": 2.6211538461538462e-06,
+      "train_ce": 3.5576722621917725,
+      "grad_norm": 24.69306182861328,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 11,
+      "tokens": 1524,
+      "lr": 2.9307692307692312e-06,
+      "train_ce": 3.408848524093628,
+      "grad_norm": 22.03437614440918,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 12,
+      "tokens": 1695,
+      "lr": 3.2596153846153847e-06,
+      "train_ce": 3.7679286003112793,
+      "grad_norm": 24.24477195739746,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 13,
+      "tokens": 1906,
+      "lr": 3.6653846153846155e-06,
+      "train_ce": 3.7371602058410645,
+      "grad_norm": 23.516435623168945,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 14,
+      "tokens": 2461,
+      "lr": 4.732692307692308e-06,
+      "train_ce": 3.0397539138793945,
+      "grad_norm": 13.980051040649414,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 15,
+      "tokens": 2672,
+      "lr": 5.138461538461539e-06,
+      "train_ce": 2.6533052921295166,
+      "grad_norm": 18.42979621887207,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 16,
+      "tokens": 2782,
+      "lr": 5.3500000000000004e-06,
+      "train_ce": 3.7481679916381836,
+      "grad_norm": 29.368410110473633,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 17,
+      "tokens": 2909,
+      "lr": 5.59423076923077e-06,
+      "train_ce": 3.6022531986236572,
+      "grad_norm": 25.629093170166016,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 18,
+      "tokens": 3005,
+      "lr": 5.778846153846154e-06,
+      "train_ce": 4.276849746704102,
+      "grad_norm": 27.855026245117188,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 19,
+      "tokens": 3751,
+      "lr": 7.213461538461538e-06,
+      "train_ce": 1.9926830530166626,
+      "grad_norm": 7.774365425109863,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 20,
+      "tokens": 3872,
+      "lr": 7.446153846153847e-06,
+      "train_ce": 2.8688454627990723,
+      "grad_norm": 19.72060775756836,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 21,
+      "tokens": 4872,
+      "lr": 9.36923076923077e-06,
+      "train_ce": 2.4768521785736084,
+      "grad_norm": 8.234116554260254,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 22,
+      "tokens": 4979,
+      "lr": 9.575e-06,
+      "train_ce": 3.772247552871704,
+      "grad_norm": 20.389240264892578,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 23,
+      "tokens": 5162,
+      "lr": 9.926923076923076e-06,
+      "train_ce": 3.0478458404541016,
+      "grad_norm": 16.452110290527344,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 24,
+      "tokens": 5336,
+      "lr": 1e-05,
+      "train_ce": 2.9742796421051025,
+      "grad_norm": 14.494606971740723,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 25,
+      "tokens": 5536,
+      "lr": 1e-05,
+      "train_ce": 2.841845750808716,
+      "grad_norm": 14.57312297821045,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 26,
+      "tokens": 5657,
+      "lr": 1e-05,
+      "train_ce": 2.969494581222534,
+      "grad_norm": 16.96611785888672,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 27,
+      "tokens": 5779,
+      "lr": 1e-05,
+      "train_ce": 3.018625020980835,
+      "grad_norm": 18.44927215576172,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 28,
+      "tokens": 5870,
+      "lr": 1e-05,
+      "train_ce": 3.6395981311798096,
+      "grad_norm": 20.233882904052734,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 29,
+      "tokens": 6045,
+      "lr": 1e-05,
+      "train_ce": 2.268775224685669,
+      "grad_norm": 13.623966217041016,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 30,
+      "tokens": 6126,
+      "lr": 1e-05,
+      "train_ce": 2.3321235179901123,
+      "grad_norm": 24.57061767578125,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 31,
+      "tokens": 6280,
+      "lr": 1e-05,
+      "train_ce": 2.2605502605438232,
+      "grad_norm": 12.91627025604248,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 32,
+      "tokens": 6453,
+      "lr": 1e-05,
+      "train_ce": 2.1149606704711914,
+      "grad_norm": 12.457233428955078,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 33,
+      "tokens": 6538,
+      "lr": 1e-05,
+      "train_ce": 2.40077805519104,
+      "grad_norm": 17.98842430114746,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 34,
+      "tokens": 6683,
+      "lr": 1e-05,
+      "train_ce": 1.5170148611068726,
+      "grad_norm": 12.433954238891602,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 35,
+      "tokens": 6806,
+      "lr": 1e-05,
+      "train_ce": 2.553720235824585,
+      "grad_norm": 15.309635162353516,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 36,
+      "tokens": 6921,
+      "lr": 1e-05,
+      "train_ce": 1.8289918899536133,
+      "grad_norm": 16.065296173095703,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 37,
+      "tokens": 7027,
+      "lr": 1e-05,
+      "train_ce": 3.1066532135009766,
+      "grad_norm": 21.798810958862305,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 38,
+      "tokens": 7122,
+      "lr": 1e-05,
+      "train_ce": 2.9124398231506348,
+      "grad_norm": 23.33551025390625,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 39,
+      "tokens": 7302,
+      "lr": 1e-05,
+      "train_ce": 2.2355895042419434,
+      "grad_norm": 14.570626258850098,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 40,
+      "tokens": 7403,
+      "lr": 1e-05,
+      "train_ce": 2.2862730026245117,
+      "grad_norm": 24.392166137695312,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 41,
+      "tokens": 7487,
+      "lr": 1e-05,
+      "train_ce": 2.377631425857544,
+      "grad_norm": 21.899972915649414,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 42,
+      "tokens": 7638,
+      "lr": 1e-05,
+      "train_ce": 1.6974412202835083,
+      "grad_norm": 15.092869758605957,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 43,
+      "tokens": 7728,
+      "lr": 1e-05,
+      "train_ce": 3.1664674282073975,
+      "grad_norm": 47.880313873291016,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 44,
+      "tokens": 7855,
+      "lr": 1e-05,
+      "train_ce": 2.402353048324585,
+      "grad_norm": 34.602840423583984,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 45,
+      "tokens": 7968,
+      "lr": 1e-05,
+      "train_ce": 2.6161649227142334,
+      "grad_norm": 19.14961051940918,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 46,
+      "tokens": 8096,
+      "lr": 1e-05,
+      "train_ce": 1.9288548231124878,
+      "grad_norm": 15.484460830688477,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 47,
+      "tokens": 8210,
+      "lr": 1e-05,
+      "train_ce": 2.9815709590911865,
+      "grad_norm": 32.14825439453125,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 48,
+      "tokens": 8349,
+      "lr": 1e-05,
+      "train_ce": 1.7862402200698853,
+      "grad_norm": 15.984769821166992,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 49,
+      "tokens": 8457,
+      "lr": 1e-05,
+      "train_ce": 2.623988628387451,
+      "grad_norm": 21.1164608001709,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 50,
+      "tokens": 8556,
+      "lr": 1e-05,
+      "train_ce": 1.9765859842300415,
+      "grad_norm": 19.929044723510742,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 51,
+      "tokens": 8742,
+      "lr": 1e-05,
+      "train_ce": 2.62552809715271,
+      "grad_norm": 18.995759963989258,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 52,
+      "tokens": 8831,
+      "lr": 1e-05,
+      "train_ce": 3.3046677112579346,
+      "grad_norm": 28.647756576538086,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 53,
+      "tokens": 8981,
+      "lr": 1e-05,
+      "train_ce": 1.9315731525421143,
+      "grad_norm": 17.52530860900879,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 54,
+      "tokens": 9080,
+      "lr": 1e-05,
+      "train_ce": 1.7885831594467163,
+      "grad_norm": 28.158430099487305,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 55,
+      "tokens": 9260,
+      "lr": 1e-05,
+      "train_ce": 2.156064510345459,
+      "grad_norm": 15.22463321685791,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 56,
+      "tokens": 10066,
+      "lr": 1e-05,
+      "train_ce": 2.837702989578247,
+      "grad_norm": 14.432001113891602,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 57,
+      "tokens": 10255,
+      "lr": 1e-05,
+      "train_ce": 1.118127465248108,
+      "grad_norm": 9.320167541503906,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 58,
+      "tokens": 10360,
+      "lr": 1e-05,
+      "train_ce": 1.9799023866653442,
+      "grad_norm": 24.923791885375977,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 59,
+      "tokens": 10488,
+      "lr": 1e-05,
+      "train_ce": 1.5574350357055664,
+      "grad_norm": 15.405360221862793,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 60,
+      "tokens": 10607,
+      "lr": 1e-05,
+      "train_ce": 1.9993537664413452,
+      "grad_norm": 15.642799377441406,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 61,
+      "tokens": 10732,
+      "lr": 1e-05,
+      "train_ce": 2.2505640983581543,
+      "grad_norm": 23.770627975463867,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 62,
+      "tokens": 10813,
+      "lr": 1e-05,
+      "train_ce": 1.3695515394210815,
+      "grad_norm": 15.404440879821777,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 63,
+      "tokens": 10941,
+      "lr": 1e-05,
+      "train_ce": 1.2795321941375732,
+      "grad_norm": 13.171463012695312,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 64,
+      "tokens": 11176,
+      "lr": 1e-05,
+      "train_ce": 1.174708604812622,
+      "grad_norm": 9.924938201904297,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 65,
+      "tokens": 11263,
+      "lr": 1e-05,
+      "train_ce": 1.9486452341079712,
+      "grad_norm": 22.034875869750977,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 66,
+      "tokens": 11368,
+      "lr": 1e-05,
+      "train_ce": 3.533984422683716,
+      "grad_norm": 27.073814392089844,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 67,
+      "tokens": 11457,
+      "lr": 1e-05,
+      "train_ce": 2.2375738620758057,
+      "grad_norm": 27.45461082458496,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 68,
+      "tokens": 11555,
+      "lr": 1e-05,
+      "train_ce": 2.3041231632232666,
+      "grad_norm": 22.393016815185547,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 69,
+      "tokens": 11681,
+      "lr": 1e-05,
+      "train_ce": 1.533769130706787,
+      "grad_norm": 16.885822296142578,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 70,
+      "tokens": 11783,
+      "lr": 1e-05,
+      "train_ce": 1.3870660066604614,
+      "grad_norm": 15.052530288696289,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 71,
+      "tokens": 11924,
+      "lr": 1e-05,
+      "train_ce": 1.2950780391693115,
+      "grad_norm": 13.520502090454102,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 72,
+      "tokens": 12041,
+      "lr": 1e-05,
+      "train_ce": 1.6444872617721558,
+      "grad_norm": 18.581371307373047,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 73,
+      "tokens": 12235,
+      "lr": 1e-05,
+      "train_ce": 1.1797852516174316,
+      "grad_norm": 12.820154190063477,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 74,
+      "tokens": 12408,
+      "lr": 1e-05,
+      "train_ce": 1.5876693725585938,
+      "grad_norm": 16.806222915649414,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 75,
+      "tokens": 12601,
+      "lr": 1e-05,
+      "train_ce": 1.3857673406600952,
+      "grad_norm": 13.431260108947754,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 76,
+      "tokens": 12697,
+      "lr": 1e-05,
+      "train_ce": 2.13485050201416,
+      "grad_norm": 24.89845085144043,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 77,
+      "tokens": 12836,
+      "lr": 1e-05,
+      "train_ce": 1.552567958831787,
+      "grad_norm": 14.539548873901367,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 78,
+      "tokens": 12936,
+      "lr": 1e-05,
+      "train_ce": 1.4896962642669678,
+      "grad_norm": 17.935487747192383,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 79,
+      "tokens": 13084,
+      "lr": 1e-05,
+      "train_ce": 1.9011744260787964,
+      "grad_norm": 15.791773796081543,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 80,
+      "tokens": 13271,
+      "lr": 1e-05,
+      "train_ce": 0.9778357744216919,
+      "grad_norm": 11.248621940612793,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 81,
+      "tokens": 13385,
+      "lr": 1e-05,
+      "train_ce": 2.5755271911621094,
+      "grad_norm": 19.00423240661621,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 82,
+      "tokens": 13486,
+      "lr": 1e-05,
+      "train_ce": 1.5904600620269775,
+      "grad_norm": 23.148229598999023,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 83,
+      "tokens": 13654,
+      "lr": 1e-05,
+      "train_ce": 1.325514316558838,
+      "grad_norm": 13.34315299987793,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 84,
+      "tokens": 14380,
+      "lr": 1e-05,
+      "train_ce": 1.5848485231399536,
+      "grad_norm": 7.820332050323486,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 85,
+      "tokens": 14495,
+      "lr": 1e-05,
+      "train_ce": 1.5656379461288452,
+      "grad_norm": 17.800188064575195,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 86,
+      "tokens": 14583,
+      "lr": 1e-05,
+      "train_ce": 3.146249294281006,
+      "grad_norm": 52.06450653076172,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 87,
+      "tokens": 14726,
+      "lr": 1e-05,
+      "train_ce": 1.4703617095947266,
+      "grad_norm": 18.555418014526367,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 88,
+      "tokens": 14858,
+      "lr": 1e-05,
+      "train_ce": 1.1710692644119263,
+      "grad_norm": 14.935698509216309,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 89,
+      "tokens": 14963,
+      "lr": 1e-05,
+      "train_ce": 1.243497371673584,
+      "grad_norm": 16.080810546875,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 90,
+      "tokens": 15078,
+      "lr": 1e-05,
+      "train_ce": 1.5723881721496582,
+      "grad_norm": 19.721668243408203,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 91,
+      "tokens": 16031,
+      "lr": 1e-05,
+      "train_ce": 2.262235641479492,
+      "grad_norm": 10.480761528015137,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 92,
+      "tokens": 16143,
+      "lr": 1e-05,
+      "train_ce": 2.1335599422454834,
+      "grad_norm": 33.44960403442383,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 93,
+      "tokens": 16238,
+      "lr": 1e-05,
+      "train_ce": 1.1753675937652588,
+      "grad_norm": 18.885156631469727,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 94,
+      "tokens": 16330,
+      "lr": 1e-05,
+      "train_ce": 1.2078440189361572,
+      "grad_norm": 19.809877395629883,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 95,
+      "tokens": 16428,
+      "lr": 1e-05,
+      "train_ce": 1.5395336151123047,
+      "grad_norm": 21.517717361450195,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 96,
+      "tokens": 17088,
+      "lr": 1e-05,
+      "train_ce": 1.9834357500076294,
+      "grad_norm": 7.7594380378723145,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 97,
+      "tokens": 17194,
+      "lr": 1e-05,
+      "train_ce": 1.4392375946044922,
+      "grad_norm": 14.555603981018066,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 98,
+      "tokens": 17285,
+      "lr": 1e-05,
+      "train_ce": 1.4187875986099243,
+      "grad_norm": 17.17924690246582,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 99,
+      "tokens": 17811,
+      "lr": 1e-05,
+      "train_ce": 2.1922874450683594,
+      "grad_norm": 13.070540428161621,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 100,
+      "tokens": 17907,
+      "lr": 1e-05,
+      "train_ce": 1.684503436088562,
+      "grad_norm": 17.552824020385742,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 101,
+      "tokens": 18092,
+      "lr": 1e-05,
+      "train_ce": 1.2494611740112305,
+      "grad_norm": 12.069725036621094,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 102,
+      "tokens": 18221,
+      "lr": 1e-05,
+      "train_ce": 1.2601200342178345,
+      "grad_norm": 14.434325218200684,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 103,
+      "tokens": 19164,
+      "lr": 1e-05,
+      "train_ce": 1.9057072401046753,
+      "grad_norm": 6.587244033813477,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 104,
+      "tokens": 19280,
+      "lr": 1e-05,
+      "train_ce": 1.4804061651229858,
+      "grad_norm": 16.00179672241211,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 105,
+      "tokens": 19381,
+      "lr": 1e-05,
+      "train_ce": 1.5845773220062256,
+      "grad_norm": 16.15174102783203,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 106,
+      "tokens": 19559,
+      "lr": 1e-05,
+      "train_ce": 1.124821662902832,
+      "grad_norm": 11.200838088989258,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 107,
+      "tokens": 19709,
+      "lr": 1e-05,
+      "train_ce": 1.4318355321884155,
+      "grad_norm": 13.9410982131958,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 108,
+      "tokens": 19893,
+      "lr": 1e-05,
+      "train_ce": 1.172084927558899,
+      "grad_norm": 11.06143856048584,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 109,
+      "tokens": 20020,
+      "lr": 1e-05,
+      "train_ce": 1.4541659355163574,
+      "grad_norm": 16.505483627319336,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 110,
+      "tokens": 20150,
+      "lr": 1e-05,
+      "train_ce": 1.0192697048187256,
+      "grad_norm": 11.933982849121094,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 111,
+      "tokens": 20292,
+      "lr": 1e-05,
+      "train_ce": 1.1427435874938965,
+      "grad_norm": 14.681896209716797,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 112,
+      "tokens": 20437,
+      "lr": 1e-05,
+      "train_ce": 1.5037016868591309,
+      "grad_norm": 15.260069847106934,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 113,
+      "tokens": 20550,
+      "lr": 1e-05,
+      "train_ce": 1.6153509616851807,
+      "grad_norm": 13.813430786132812,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 114,
+      "tokens": 20711,
+      "lr": 1e-05,
+      "train_ce": 1.079087495803833,
+      "grad_norm": 11.004817008972168,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 115,
+      "tokens": 20836,
+      "lr": 9.251154735095959e-06,
+      "train_ce": 1.23429274559021,
+      "grad_norm": 13.668336868286133,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 116,
+      "tokens": 20968,
+      "lr": 8.382309338308756e-06,
+      "train_ce": 1.7002036571502686,
+      "grad_norm": 19.001380920410156,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 117,
+      "tokens": 21064,
+      "lr": 7.972117436263221e-06,
+      "train_ce": 1.4027414321899414,
+      "grad_norm": 17.48566436767578,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 118,
+      "tokens": 21189,
+      "lr": 7.538410457260781e-06,
+      "train_ce": 2.333951234817505,
+      "grad_norm": 18.930755615234375,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 119,
+      "tokens": 22120,
+      "lr": 5.4655167370979946e-06,
+      "train_ce": 2.3414266109466553,
+      "grad_norm": 7.923311233520508,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 120,
+      "tokens": 22314,
+      "lr": 5.143719371940958e-06,
+      "train_ce": 0.9114190936088562,
+      "grad_norm": 9.679316520690918,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 121,
+      "tokens": 22464,
+      "lr": 4.90883117545686e-06,
+      "train_ce": 1.12495756149292,
+      "grad_norm": 12.04327392578125,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 122,
+      "tokens": 22617,
+      "lr": 4.679918306006082e-06,
+      "train_ce": 1.103378415107727,
+      "grad_norm": 12.125107765197754,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 123,
+      "tokens": 22725,
+      "lr": 4.524091223999718e-06,
+      "train_ce": 1.5575224161148071,
+      "grad_norm": 16.341400146484375,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 124,
+      "tokens": 22839,
+      "lr": 4.3642794467924375e-06,
+      "train_ce": 1.6189312934875488,
+      "grad_norm": 16.04254150390625,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 125,
+      "tokens": 23030,
+      "lr": 4.10622884211319e-06,
+      "train_ce": 1.0685005187988281,
+      "grad_norm": 11.661582946777344,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 126,
+      "tokens": 23182,
+      "lr": 3.908675778680736e-06,
+      "train_ce": 1.1298558712005615,
+      "grad_norm": 11.733721733093262,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 127,
+      "tokens": 23309,
+      "lr": 3.7484002047475907e-06,
+      "train_ce": 0.8022297620773315,
+      "grad_norm": 11.497160911560059,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 128,
+      "tokens": 23413,
+      "lr": 3.620148904558981e-06,
+      "train_ce": 1.7944623231887817,
+      "grad_norm": 16.27755355834961,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 129,
+      "tokens": 23514,
+      "lr": 3.498018053641706e-06,
+      "train_ce": 1.1274305582046509,
+      "grad_norm": 12.926420211791992,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 130,
+      "tokens": 23598,
+      "lr": 3.3981645908709045e-06,
+      "train_ce": 1.2612749338150024,
+      "grad_norm": 15.690567016601562,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 131,
+      "tokens": 23732,
+      "lr": 3.241927903496557e-06,
+      "train_ce": 0.8566147089004517,
+      "grad_norm": 11.579285621643066,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 132,
+      "tokens": 23830,
+      "lr": 3.1299143438326117e-06,
+      "train_ce": 1.6943061351776123,
+      "grad_norm": 20.582183837890625,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 133,
+      "tokens": 23936,
+      "lr": 3.0107775275621143e-06,
+      "train_ce": 1.8440508842468262,
+      "grad_norm": 17.326732635498047,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 134,
+      "tokens": 24036,
+      "lr": 2.9002166880303273e-06,
+      "train_ce": 1.0519522428512573,
+      "grad_norm": 14.021950721740723,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 135,
+      "tokens": 24139,
+      "lr": 2.7881107777610642e-06,
+      "train_ce": 1.856814980506897,
+      "grad_norm": 19.609905242919922,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 136,
+      "tokens": 24254,
+      "lr": 2.6649681454207503e-06,
+      "train_ce": 1.5217595100402832,
+      "grad_norm": 19.359420776367188,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 137,
+      "tokens": 24356,
+      "lr": 2.557450808927196e-06,
+      "train_ce": 1.4152448177337646,
+      "grad_norm": 17.86113929748535,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 138,
+      "tokens": 24528,
+      "lr": 2.3795820829321175e-06,
+      "train_ce": 0.9022662043571472,
+      "grad_norm": 12.040799140930176,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 139,
+      "tokens": 24714,
+      "lr": 2.19179425712431e-06,
+      "train_ce": 0.8976547718048096,
+      "grad_norm": 10.539117813110352,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 140,
+      "tokens": 24851,
+      "lr": 2.0563160067500552e-06,
+      "train_ce": 1.0120488405227661,
+      "grad_norm": 13.230203628540039,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 141,
+      "tokens": 24978,
+      "lr": 1.9327585498272948e-06,
+      "train_ce": 1.3642323017120361,
+      "grad_norm": 14.129570007324219,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 142,
+      "tokens": 25073,
+      "lr": 1.841556992434629e-06,
+      "train_ce": 1.4798444509506226,
+      "grad_norm": 19.70372772216797,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 143,
+      "tokens": 25247,
+      "lr": 1.6771052557973018e-06,
+      "train_ce": 0.7764861583709717,
+      "grad_norm": 11.82217788696289,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 144,
+      "tokens": 25367,
+      "lr": 1.5655582465519576e-06,
+      "train_ce": 1.8928714990615845,
+      "grad_norm": 17.859790802001953,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 145,
+      "tokens": 25534,
+      "lr": 1.412733039776053e-06,
+      "train_ce": 0.8254873752593994,
+      "grad_norm": 10.044340133666992,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 146,
+      "tokens": 25633,
+      "lr": 1.3234068188735964e-06,
+      "train_ce": 1.667555332183838,
+      "grad_norm": 17.994457244873047,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 147,
+      "tokens": 25758,
+      "lr": 1.211918035465044e-06,
+      "train_ce": 0.7503508925437927,
+      "grad_norm": 12.171987533569336,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 148,
+      "tokens": 25876,
+      "lr": 1.1079551542706713e-06,
+      "train_ce": 0.9183388948440552,
+      "grad_norm": 14.180318832397461,
+      "read_o_proj_norm": 0.0
+    },
+    {
+      "step": 149,
+      "tokens": 25966,
+      "lr": 1.0294713302177902e-06,
+      "train_ce": 0.9077511429786682,
+      "grad_norm": 11.110748291015625,
+      "read_o_proj_norm": 0.0
+    }
+  ],
+  "checkpoint": null,
+  "save_policy": "none",
+  "read_o_proj_norm_end": 0.0,
+  "reference_receipt": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-ced-native-loader-qualification\\experiments\\architecture_benchmark_001\\outputs\\retention-a329eb7b\\B28\\retention.json",
+  "reference_digest": "a329eb7bb06fc003a9220ea41713e721fba575c478008240749c425774b2b58e",
+  "reference_sizes": {
+    "permissive": 47,
+    "strict": 41
+  },
+  "registered_bare_policy": "permissive",
+  "device_integrity_control_passed": true,
+  "headline": {
+    "dev_ce_start": 5.578190601453841,
+    "dev_ce_end": 1.202254420041224,
+    "correct_start": 47,
+    "correct_end": 46,
+    "gained_end": 16,
+    "lost_end": 17,
+    "net_end": -1,
+    "retained_end": 30,
+    "answers_changed_end": 143,
+    "status_start": "PASS",
+    "status_end": "FAIL"
+  },
+  "checkpoints": [
+    {
+      "tokens": 0,
+      "milestone": 0,
+      "steps": 0,
+      "lr": 0.0,
+      "dev_ce_nats": 5.578190601453841,
+      "answers_changed_vs_source": 0,
+      "termination_changed_vs_source": 0,
+      "retention": {
+        "permissive": {
+          "status": "PASS",
+          "correct_total": 47,
+          "lost_total": 0,
+          "retained_total": 47,
+          "terminated_total": 148,
+          "gained_total": 0,
+          "reference_n": 47,
+          "per_class": {
+            "percentage_reasoning": {
+              "rows": 50,
+              "reference_n": 21,
+              "lost": 0,
+              "lost_ids": [],
+              "retained": 21,
+              "gained": 0,
+              "terminated": 49,
+              "source_correct_terminated": 21,
+              "arm_correct": 21
+            },
+            "ratio_proportion": {
+              "rows": 50,
+              "reference_n": 16,
+              "lost": 0,
+              "lost_ids": [],
+              "retained": 16,
+              "gained": 0,
+              "terminated": 50,
+              "source_correct_terminated": 16,
+              "arm_correct": 16
+            },
+            "time_duration": {
+              "rows": 50,
+              "reference_n": 10,
+              "lost": 0,
+              "lost_ids": [],
+              "retained": 10,
+              "gained": 0,
+              "terminated": 49,
+              "source_correct_terminated": 10,
+              "arm_correct": 10
+            }
+          },
+          "failed_classes": []
+        },
+        "per_row": {
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s00__00223": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s00__00270": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s00__00280": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00324": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00381": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00487": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00515": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00526": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00564": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00574": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s02__00617": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s02__00729": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s02__00751": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s02__00777": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s03__00947": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s03__00974": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s03__01035": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s03__01139": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s03__01155": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s03__01186": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s04__01208": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s04__01440": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s04__01475": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s05__01533": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s05__01554": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s05__01577": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s05__01599": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s05__01723": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s05__01778": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s06__02013": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s06__02025": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s06__02056": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02233": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02298": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s08__02504": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s08__02515": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s08__02574": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s08__02611": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s08__02622": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s08__02683": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s09__02729": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s09__02753": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s09__02787": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s09__02811": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s09__02825": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s09__02832": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s09__02937": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s09__02944": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s00__00035": true,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s00__00094": true,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s00__00233": true,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s00__00261": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s01__00350": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s01__00374": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s01__00529": true,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s01__00538": true,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s01__00547": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s01__00598": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s02__00699": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s02__00720": true,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s02__00744": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s02__00774": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s02__00812": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s02__00883": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__00933": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__00969": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__01007": true,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__01017": true,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__01086": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__01120": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__01181": true,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s04__01293": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s04__01368": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s05__01592": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s05__01698": true,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s06__01779": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s06__01863": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s06__01931": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s06__01940": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s06__01952": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s06__02027": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s07__02115": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s07__02155": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s07__02247": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s07__02248": true,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s07__02273": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s07__02281": true,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s07__02307": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s08__02526": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s08__02552": true,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s08__02638": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s08__02658": true,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s08__02675": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s09__02752": true,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s09__02851": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s09__02931": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s09__02944": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s09__02970": true,
+          "rineya_v3_sft__time_duration__reas_time_duration_s00__00027": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s00__00171": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s00__00242": true,
+          "rineya_v3_sft__time_duration__reas_time_duration_s01__00538": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s02__00597": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s02__00626": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s02__00681": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s02__00828": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s02__00840": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s02__00849": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s03__00982": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s03__01029": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s03__01033": true,
+          "rineya_v3_sft__time_duration__reas_time_duration_s04__01221": true,
+          "rineya_v3_sft__time_duration__reas_time_duration_s04__01281": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s04__01339": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s04__01408": true,
+          "rineya_v3_sft__time_duration__reas_time_duration_s04__01429": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s05__01539": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s05__01566": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s05__01594": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s05__01600": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s05__01610": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s05__01656": true,
+          "rineya_v3_sft__time_duration__reas_time_duration_s05__01679": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s05__01696": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s05__01739": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s05__01749": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s06__01801": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s06__01827": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s06__01985": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s07__02114": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s07__02213": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s07__02229": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s07__02257": true,
+          "rineya_v3_sft__time_duration__reas_time_duration_s07__02318": true,
+          "rineya_v3_sft__time_duration__reas_time_duration_s07__02345": true,
+          "rineya_v3_sft__time_duration__reas_time_duration_s08__02401": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s08__02422": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s08__02506": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s08__02562": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s08__02628": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s08__02677": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s08__02681": true,
+          "rineya_v3_sft__time_duration__reas_time_duration_s09__02720": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s09__02781": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s09__02842": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s09__02953": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s09__02961": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s09__02996": true
+        },
+        "strict": {
+          "status": "PASS",
+          "correct_total": 41,
+          "lost_total": 0,
+          "retained_total": 41,
+          "terminated_total": 148,
+          "gained_total": 0,
+          "reference_n": 41,
+          "per_class": {
+            "percentage_reasoning": {
+              "rows": 50,
+              "reference_n": 21,
+              "lost": 0,
+              "lost_ids": [],
+              "retained": 21,
+              "gained": 0,
+              "terminated": 49,
+              "source_correct_terminated": 21,
+              "arm_correct": 21
+            },
+            "ratio_proportion": {
+              "rows": 50,
+              "reference_n": 10,
+              "lost": 0,
+              "lost_ids": [],
+              "retained": 10,
+              "gained": 0,
+              "terminated": 50,
+              "source_correct_terminated": 10,
+              "arm_correct": 10
+            },
+            "time_duration": {
+              "rows": 50,
+              "reference_n": 10,
+              "lost": 0,
+              "lost_ids": [],
+              "retained": 10,
+              "gained": 0,
+              "terminated": 49,
+              "source_correct_terminated": 10,
+              "arm_correct": 10
+            }
+          },
+          "failed_classes": []
+        }
+      },
+      "wall_seconds": 160.92942680000124,
+      "outputs": {
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s05__01577": {
+          "text": "60 units.",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00515": {
+          "text": "30 units.",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s08__02677": {
+          "text": "9:15 AM - 8:30 AM = 45 minutes",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s03__00982": {
+          "text": "2 hours",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s06__01827": {
+          "text": "9:15 AM to 10:85 AM",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s05__01656": {
+          "text": "4:20 PM",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s02__00699": {
+          "text": "36 sensor tags.",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s09__02781": {
+          "text": "It ends at 6:55 PM.",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s02__00777": {
+          "text": "50 units.",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s02__00883": {
+          "text": "15",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s09__02787": {
+          "text": "A quantity of 120 decreases by 25%.",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s09__02752": {
+          "text": "55 km",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s05__01554": {
+          "text": "200%",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s00__00171": {
+          "text": "9:15 AM + 70 minutes = 10:45 AM",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s02__00812": {
+          "text": "16 cups",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s07__02155": {
+          "text": "20 cups",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s00__00027": {
+          "text": "10:45 AM",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s07__02213": {
+          "text": "It runs from 2:20 PM to 3:10 PM.",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s07__02114": {
+          "text": "It ends at 4:10 PM.",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s02__00681": {
+          "text": "11:55 AM",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s05__01739": {
+          "text": "1 hour and 40 minutes",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s01__00598": {
+          "text": "$168",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s08__02552": {
+          "text": "9",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s00__00270": {
+          "text": "$108",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s04__01221": {
+          "text": "25 minutes",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s05__01600": {
+          "text": "6:20 PM + 45 minutes = 6:65 PM",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s04__01281": {
+          "text": "1 hour and 25 minutes",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s09__02937": {
+          "text": "25%",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s02__00774": {
+          "text": "162 shipping labels.",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s07__02229": {
+          "text": "2 hours 15 minutes",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00574": {
+          "text": "90",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s08__02504": {
+          "text": "70 units.",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s09__02944": {
+          "text": "60",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s08__02628": {
+          "text": "11:30 AM + 50 minutes = 12:20 PM",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s09__02931": {
+          "text": "24",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s08__02506": {
+          "text": "9:15 AM + 55 minutes = 9:70 AM",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s04__01440": {
+          "text": "110 units",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s05__01778": {
+          "text": "35 units",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s00__00094": {
+          "text": "60 km",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s02__00617": {
+          "text": "60%",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__01017": {
+          "text": "15",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s04__01208": {
+          "text": "12.5%",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s00__00035": {
+          "text": "44 km.",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s07__02345": {
+          "text": "7:40 AM",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s03__01186": {
+          "text": "95 units.",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s03__00947": {
+          "text": "$90",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311": {
+          "text": "10",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s06__01779": {
+          "text": "15",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s01__00374": {
+          "text": "9",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s09__02996": {
+          "text": "1 hour and 30 minutes.",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s01__00350": {
+          "text": "16 cups",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s03__01139": {
+          "text": "The percent increase is 10%.",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02233": {
+          "text": "160 - 20 = 140 units.",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s01__00538": {
+          "text": "15",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s04__01293": {
+          "text": "16 cups",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s05__01592": {
+          "text": "$72",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s06__02027": {
+          "text": "24",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s08__02401": {
+          "text": "The coding sprint ends at 9:55 AM.",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s01__00547": {
+          "text": "24",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s03__01155": {
+          "text": "108",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s09__02811": {
+          "text": "30%",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s09__02851": {
+          "text": "24",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s06__02013": {
+          "text": "$36",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s09__02753": {
+          "text": "40 units.",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s05__01723": {
+          "text": "$90",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s09__02825": {
+          "text": "24 units.",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s07__02307": {
+          "text": "24",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s02__00828": {
+          "text": "1:50 PM to 2:20 PM",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s03__01035": {
+          "text": "$5",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s00__00280": {
+          "text": "125 - 100 = 25. 25 / 100 = 2",
+          "terminated": false
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s06__01863": {
+          "text": "16 drill bits.",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__01086": {
+          "text": "$80",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s06__01940": {
+          "text": "240 pages.",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s02__00744": {
+          "text": "6",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s07__02281": {
+          "text": "18 cups",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__00933": {
+          "text": "16 access badges.",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s07__02257": {
+          "text": "6:30 PM",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s07__02248": {
+          "text": "6 cups.",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s08__02515": {
+          "text": "A 15% tip on a $60 bill is $9.",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s08__02658": {
+          "text": "15",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s05__01533": {
+          "text": "$8",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s09__02832": {
+          "text": "60%",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s06__01952": {
+          "text": "12 cups",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s07__02273": {
+          "text": "120 pages.",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s01__00529": {
+          "text": "12",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__01181": {
+          "text": "16 km",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s01__00538": {
+          "text": "100 minutes",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s06__01985": {
+          "text": "11:55 AM",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s00__00261": {
+          "text": "30 pages.",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s08__02675": {
+          "text": "24",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00381": {
+          "text": "10%",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s02__00840": {
+          "text": "End time: 9:40 AM",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s05__01698": {
+          "text": "15 timing chips",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s05__01610": {
+          "text": "1 hour and 45 minutes",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s02__00849": {
+          "text": "1 hour and 25 minutes",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s08__02681": {
+          "text": "9:55 AM",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s02__00751": {
+          "text": "4",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s04__01339": {
+          "text": "8 hours 25 minutes",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s03__01033": {
+          "text": "9:55 AM",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s09__02961": {
+          "text": "1 hour 30 minutes",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s05__01696": {
+          "text": "10:30 AM",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s02__00626": {
+          "text": "55 minutes",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s05__01594": {
+          "text": "4:50 PM + 45 minutes = 5:35 PM",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s08__02638": {
+          "text": "32 helmets.",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s09__02729": {
+          "text": "200 decreases by 25% is 150.",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s08__02574": {
+          "text": "120",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s09__02953": {
+          "text": "10:55 AM",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s09__02944": {
+          "text": "15",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00526": {
+          "text": "30",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349": {
+          "text": "25",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s08__02611": {
+          "text": "10 units remaining.",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__01007": {
+          "text": "$30",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s08__02526": {
+          "text": "16 cups water.",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s06__02025": {
+          "text": "50% of 120 units = 60 units.",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00324": {
+          "text": "$4",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s06__01801": {
+          "text": "It ends at 10:15 AM.",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s04__01475": {
+          "text": "220",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s06__02056": {
+          "text": "30 units.",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s05__01566": {
+          "text": "10 minutes",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s00__00233": {
+          "text": "12 chips",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s03__01029": {
+          "text": "3:10 PM + 75 minutes = 3:10 PM + 75 minutes =",
+          "terminated": false
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s00__00223": {
+          "text": "60",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02298": {
+          "text": "10% tip on a $40 bill is $4.",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s03__00974": {
+          "text": "$4.",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__01120": {
+          "text": "6",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s08__02622": {
+          "text": "24",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s04__01368": {
+          "text": "160 timing chips.",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s08__02683": {
+          "text": "50 units.",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s08__02422": {
+          "text": "It ends at 10:30 AM.",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s04__01408": {
+          "text": "10:00 AM",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s09__02720": {
+          "text": "9:15 AM + 25 minutes = 9:40 AM",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00487": {
+          "text": "12.5%",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s05__01539": {
+          "text": "1 hour 45 minutes",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s02__00720": {
+          "text": "4 cups",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s07__02247": {
+          "text": "28",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s07__02115": {
+          "text": "24",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s08__02562": {
+          "text": "9:15 AM + 55 minutes = 10:10 AM",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s06__01931": {
+          "text": "12 cups",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00564": {
+          "text": "10 units.",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__00969": {
+          "text": "16 cups",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s09__02842": {
+          "text": "9:15 AM + 55 minutes = 9:70 AM",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s05__01679": {
+          "text": "1:00 PM",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s07__02318": {
+          "text": "40 minutes.",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s00__00242": {
+          "text": "10:10 AM",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s04__01429": {
+          "text": "105 minutes = 1 hour 45 minutes.",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s02__00729": {
+          "text": "20 units.",
+          "terminated": true
+        },
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s09__02970": {
+          "text": "15",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s05__01749": {
+          "text": "It is 10 minutes.",
+          "terminated": true
+        },
+        "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s05__01599": {
+          "text": "75",
+          "terminated": true
+        },
+        "rineya_v3_sft__time_duration__reas_time_duration_s02__00597": {
+          "text": "It is 2 hours and 40 minutes.",
+          "terminated": true
+        }
+      }
+    },
+    {
+      "tokens": 25966,
+      "milestone": 25966,
+      "steps": 149,
+      "lr": 1.0294713302177902e-06,
+      "dev_ce_nats": 1.202254420041224,
+      "answers_changed_vs_source": 143,
+      "termination_changed_vs_source": 2,
+      "retention": {
+        "permissive": {
+          "status": "FAIL",
+          "correct_total": 46,
+          "lost_total": 17,
+          "retained_total": 30,
+          "terminated_total": 150,
+          "gained_total": 16,
+          "reference_n": 47,
+          "per_class": {
+            "percentage_reasoning": {
+              "rows": 50,
+              "reference_n": 21,
+              "lost": 7,
+              "lost_ids": [
+                "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+                "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00324",
+                "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s02__00751",
+                "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s03__00974",
+                "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s03__01035",
+                "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349",
+                "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s08__02622"
+              ],
+              "retained": 14,
+              "gained": 8,
+              "terminated": 50,
+              "source_correct_terminated": 21,
+              "arm_correct": 22
+            },
+            "ratio_proportion": {
+              "rows": 50,
+              "reference_n": 16,
+              "lost": 3,
+              "lost_ids": [
+                "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__01007",
+                "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s08__02552",
+                "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s09__02970"
+              ],
+              "retained": 13,
+              "gained": 2,
+              "terminated": 50,
+              "source_correct_terminated": 16,
+              "arm_correct": 15
+            },
+            "time_duration": {
+              "rows": 50,
+              "reference_n": 10,
+              "lost": 7,
+              "lost_ids": [
+                "rineya_v3_sft__time_duration__reas_time_duration_s00__00242",
+                "rineya_v3_sft__time_duration__reas_time_duration_s03__01033",
+                "rineya_v3_sft__time_duration__reas_time_duration_s04__01408",
+                "rineya_v3_sft__time_duration__reas_time_duration_s05__01656",
+                "rineya_v3_sft__time_duration__reas_time_duration_s07__02257",
+                "rineya_v3_sft__time_duration__reas_time_duration_s07__02345",
+                "rineya_v3_sft__time_duration__reas_time_duration_s08__02681"
+              ],
+              "retained": 3,
+              "gained": 6,
+              "terminated": 50,
+              "source_correct_terminated": 10,
+              "arm_correct": 9
+            }
+          },
+          "failed_classes": [
+            "percentage_reasoning",
+            "ratio_proportion",
+            "time_duration"
+          ]
+        },
+        "per_row": {
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s00__00223": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s00__00270": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s00__00280": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00324": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00381": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00487": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00515": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00526": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00564": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00574": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s02__00617": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s02__00729": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s02__00751": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s02__00777": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s03__00947": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s03__00974": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s03__01035": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s03__01139": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s03__01155": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s03__01186": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s04__01208": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s04__01440": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s04__01475": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s05__01533": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s05__01554": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s05__01577": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s05__01599": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s05__01723": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s05__01778": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s06__02013": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s06__02025": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s06__02056": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02233": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02298": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s08__02504": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s08__02515": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s08__02574": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s08__02611": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s08__02622": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s08__02683": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s09__02729": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s09__02753": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s09__02787": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s09__02811": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s09__02825": false,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s09__02832": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s09__02937": true,
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s09__02944": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s00__00035": true,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s00__00094": true,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s00__00233": true,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s00__00261": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s01__00350": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s01__00374": true,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s01__00529": true,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s01__00538": true,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s01__00547": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s01__00598": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s02__00699": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s02__00720": true,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s02__00744": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s02__00774": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s02__00812": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s02__00883": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__00933": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__00969": true,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__01007": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__01017": true,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__01086": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__01120": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__01181": true,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s04__01293": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s04__01368": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s05__01592": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s05__01698": true,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s06__01779": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s06__01863": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s06__01931": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s06__01940": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s06__01952": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s06__02027": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s07__02115": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s07__02155": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s07__02247": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s07__02248": true,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s07__02273": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s07__02281": true,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s07__02307": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s08__02526": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s08__02552": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s08__02638": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s08__02658": true,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s08__02675": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s09__02752": true,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s09__02851": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s09__02931": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s09__02944": false,
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s09__02970": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s00__00027": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s00__00171": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s00__00242": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s01__00538": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s02__00597": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s02__00626": true,
+          "rineya_v3_sft__time_duration__reas_time_duration_s02__00681": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s02__00828": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s02__00840": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s02__00849": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s03__00982": true,
+          "rineya_v3_sft__time_duration__reas_time_duration_s03__01029": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s03__01033": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s04__01221": true,
+          "rineya_v3_sft__time_duration__reas_time_duration_s04__01281": true,
+          "rineya_v3_sft__time_duration__reas_time_duration_s04__01339": true,
+          "rineya_v3_sft__time_duration__reas_time_duration_s04__01408": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s04__01429": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s05__01539": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s05__01566": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s05__01594": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s05__01600": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s05__01610": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s05__01656": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s05__01679": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s05__01696": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s05__01739": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s05__01749": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s06__01801": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s06__01827": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s06__01985": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s07__02114": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s07__02213": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s07__02229": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s07__02257": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s07__02318": true,
+          "rineya_v3_sft__time_duration__reas_time_duration_s07__02345": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s08__02401": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s08__02422": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s08__02506": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s08__02562": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s08__02628": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s08__02677": true,
+          "rineya_v3_sft__time_duration__reas_time_duration_s08__02681": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s09__02720": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s09__02781": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s09__02842": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s09__02953": false,
+          "rineya_v3_sft__time_duration__reas_time_duration_s09__02961": true,
+          "rineya_v3_sft__time_duration__reas_time_duration_s09__02996": true
+        },
+        "strict": {
+          "status": "FAIL",
+          "correct_total": 36,
+          "lost_total": 19,
+          "retained_total": 22,
+          "terminated_total": 150,
+          "gained_total": 14,
+          "reference_n": 41,
+          "per_class": {
+            "percentage_reasoning": {
+              "rows": 50,
+              "reference_n": 21,
+              "lost": 9,
+              "lost_ids": [
+                "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+                "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00324",
+                "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00564",
+                "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s02__00751",
+                "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s02__00777",
+                "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s03__00974",
+                "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s03__01035",
+                "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349",
+                "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s08__02622"
+              ],
+              "retained": 12,
+              "gained": 7,
+              "terminated": 50,
+              "source_correct_terminated": 21,
+              "arm_correct": 19
+            },
+            "ratio_proportion": {
+              "rows": 50,
+              "reference_n": 10,
+              "lost": 3,
+              "lost_ids": [
+                "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s00__00233",
+                "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__01007",
+                "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s05__01698"
+              ],
+              "retained": 7,
+              "gained": 1,
+              "terminated": 50,
+              "source_correct_terminated": 10,
+              "arm_correct": 8
+            },
+            "time_duration": {
+              "rows": 50,
+              "reference_n": 10,
+              "lost": 7,
+              "lost_ids": [
+                "rineya_v3_sft__time_duration__reas_time_duration_s00__00242",
+                "rineya_v3_sft__time_duration__reas_time_duration_s03__01033",
+                "rineya_v3_sft__time_duration__reas_time_duration_s04__01408",
+                "rineya_v3_sft__time_duration__reas_time_duration_s05__01656",
+                "rineya_v3_sft__time_duration__reas_time_duration_s07__02257",
+                "rineya_v3_sft__time_duration__reas_time_duration_s07__02345",
+                "rineya_v3_sft__time_duration__reas_time_duration_s08__02681"
+              ],
+              "retained": 3,
+              "gained": 6,
+              "terminated": 50,
+              "source_correct_terminated": 10,
+              "arm_correct": 9
+            }
+          },
+          "failed_classes": [
+            "percentage_reasoning",
+            "ratio_proportion",
+            "time_duration"
+          ]
+        }
+      },
+      "wall_seconds": 349.86774069999956
+    }
+  ],
+  "wall_seconds": 349.96661160000076,
+  "licenses_registered_training": false,
+  "licenses_efficacy_claim": false
+}

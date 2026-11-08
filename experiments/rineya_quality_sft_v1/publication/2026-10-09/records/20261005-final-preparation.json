@@ -1,0 +1,552 @@
+{
+  "content": {
+    "actual_owner_export": null,
+    "advancement_gates": {
+      "blinded_communication_rating_change_min": 0,
+      "fresh_acquisition_gain_percentage_points_min": 5,
+      "harder_transfer_gain": "strictly positive",
+      "macro_preservation_decline_percentage_points_max": 2,
+      "new_critical_grounding_failures_max": 0,
+      "paired_gain_loss_termination_tokens_updates": "complete",
+      "source_correct_preservation_retention_min": 0.98
+    },
+    "arms": [
+      "frozen_source",
+      "whole_1e-5",
+      "response_1e-5"
+    ],
+    "candidate_outcomes": null,
+    "checkout": {
+      "base": "e1737660cd0feacd6efd4177ea1d1579bf0cd865",
+      "branch": "codex/rineya-quality-sft-v1",
+      "clean": true,
+      "head": "b96683586956cfd5b6f7ff690c4f9fffcce4cedb"
+    },
+    "code_identity": {
+      "files": {
+        "experiments/model_quality_gpu_v1/.gitignore": "92057450e77b938c512ff2f661e0c07adbf5800ab7b6af9ef837b7d5b1bc20df",
+        "experiments/model_quality_gpu_v1/AGENTS.md": "5eb9c80f186be6408400eef07cdca26d8ada99888cb1cc08a3e103188a6650a6",
+        "experiments/model_quality_gpu_v1/AUDIT.md": "8068c2121929799f074989802af1fac3da7929c2520d07329dcb6d1728878d93",
+        "experiments/model_quality_gpu_v1/DESIGN.md": "26f53325c435ef8c2fc314730a10c9269334ef083c7ec2c6d6cc184337cfe199",
+        "experiments/model_quality_gpu_v1/PLAN.md": "1c97f009325bd93eab78f4ecdde2296e135a9ef84cd3fa6bf1b2191ee7f2b2b5",
+        "experiments/model_quality_gpu_v1/POOL_STATUS.md": "509155d7a715e99f4aa27c3928b7b424bc7892679939dcf0e3067302f0be62f2",
+        "experiments/model_quality_gpu_v1/README.md": "75c755087bdde7e981af08160e1cdd010b1d0e5d5d5d4e677436416344166865",
+        "experiments/model_quality_gpu_v1/RUNBOOK.md": "8d9b6e7e36a2e19d597363b95e21253475bfdb3c6377b82e054ede92f84983c7",
+        "experiments/model_quality_gpu_v1/__init__.py": "37dcc94c1ea6094b8ca3eacb49a3b865d83cace238727d3b3613d7b290183ace",
+        "experiments/model_quality_gpu_v1/__main__.py": "e1db44950e96e96cdf38c5aa2b9a523d1d492b58577b8c3edb4dc0aedc40bdd2",
+        "experiments/model_quality_gpu_v1/analyze.py": "867874878818f7507e9348ca06744b0b752daf23f2d7cb37e2e1527bf1a7c8b7",
+        "experiments/model_quality_gpu_v1/build_pool.py": "34f4a2e51d593b451c34a975ef6e8496e283ca243e835619c107693d357deb2d",
+        "experiments/model_quality_gpu_v1/cell_inproc.sh": "ff952f92af1e4159cf77d01640ed8f955a9b20b9d18ef9f9eba214c359eca577",
+        "experiments/model_quality_gpu_v1/checkpoints.py": "616b1af1505d54c979d3d02574d71431e98a05f55f39b201c2dcac3cd87ad885",
+        "experiments/model_quality_gpu_v1/config.py": "de8c268886978050634e0e8f18691439c024c5d8c31a6132cdc4913b3a367834",
+        "experiments/model_quality_gpu_v1/data.py": "148204b01b9e17e9979f3ef1a92b3effae6c72186cb9d07ce72e0afb611f65ab",
+        "experiments/model_quality_gpu_v1/engine.py": "8e519efae4ab5dc0b0c7be0900295fcd26c0c6868c9a3e74083597e6ecf23dd0",
+        "experiments/model_quality_gpu_v1/evaluation.py": "4f123afd60e311011d34b47aec8773dac6667197c9819f9fc282cb687790f83e",
+        "experiments/model_quality_gpu_v1/integrity.py": "94909ce24304c340fa637d1f4aceb19c3dcf7e19136fb5016a828da39ff6b658",
+        "experiments/model_quality_gpu_v1/losses.py": "cd62c9ea0622573644c40749a6a5e614c41f3d5352f8e06ddb694660d371a6cd",
+        "experiments/model_quality_gpu_v1/native.py": "e69e057dab1a77ba6dcbe50c0a953948de5e923801c7c76386008acd1a617468",
+        "experiments/model_quality_gpu_v1/optimizer.py": "ae45207132fe8d98c763f571f20e1a94bfdb521e818692e7736d7a3b2648c6d1",
+        "experiments/model_quality_gpu_v1/requirements.txt": "75de608df98248ff0ab4c5bc6097ab163bae2fe700d8dda9f68124d352ed1041",
+        "experiments/model_quality_gpu_v1/resources.py": "91e21105bdc988cbd1eb29c73e189a2ad15ce067ec4e548db4f0dfd477d1bad1",
+        "experiments/model_quality_gpu_v1/run.py": "68d8e49f5de13e160d9df4d2fd2c6160160b46fb7b6f410ef8411f0d43544eb8",
+        "experiments/model_quality_gpu_v1/run_cell.sh": "ff952f92af1e4159cf77d01640ed8f955a9b20b9d18ef9f9eba214c359eca577",
+        "experiments/model_quality_gpu_v1/source_lock.json": "4945317bfe2152690230bcd3e509a286b6b9bbe6a84c0f1af3bd86c449abaa9a",
+        "experiments/model_quality_gpu_v1/supervisor.py": "b8a086d37a2f5eb16a2dc1568aa19644739bfbba20d5ede027e455d95a6adc1b",
+        "experiments/model_quality_gpu_v1/tests/fixtures.py": "d2de27a58bd959c127747e8d99b6c6734fc82294428eef0a2bc327b91430bb36",
+        "experiments/model_quality_gpu_v1/tests/test_mechanics.py": "21da91ea72004ea15ea8f6d1aa738118e6ee42554ecc86f837a093a0e22e000d",
+        "experiments/model_quality_gpu_v1/tests/test_native_optional.py": "d31ea03352aec0fe1415c1e2ce811f5c69362a3516e340710f0f077ff8f3afd9",
+        "experiments/model_quality_gpu_v1/tests/test_supervisor.py": "1170f016b792cfb9f5af8e2dde42d2f5aa5327b20d8e3de0a9fa9f32872459ae",
+        "experiments/rineya_quality_sft_v1/AGENTS.md": "708aca11e10befa49ea76e04af8fd0b349cfb1d32460513fcdff10ce0f2a916e",
+        "experiments/rineya_quality_sft_v1/PROTOCOL.md": "58d150164bb634d673119fa548007d814db33724659fd4c9087e2f21da797333",
+        "experiments/rineya_quality_sft_v1/README.md": "29e7e5507c191eeb102620a6cf10201af4338ecca66e03b1d7272651d17065e2",
+        "experiments/rineya_quality_sft_v1/RESEARCH_PATTERNS.md": "e25d9356031ee1dfc7296bab545b93de562064085ec30541556eb83a3e5357d6",
+        "experiments/rineya_quality_sft_v1/RUNBOOK.md": "69ab5f6d720101efcd4514b35e478d8f8838b6113ca682f5fe83c1d256351f54",
+        "experiments/rineya_quality_sft_v1/STATUS.md": "d907b813ac81af9e1002dd91b09edb650dd9bef0626ba2491702014fd42c45e0",
+        "experiments/rineya_quality_sft_v1/__init__.py": "4af8394aaec841a529f111b035b1a0cf3ef2ceda520a8feba771230f8c118245",
+        "experiments/rineya_quality_sft_v1/__main__.py": "e1db44950e96e96cdf38c5aa2b9a523d1d492b58577b8c3edb4dc0aedc40bdd2",
+        "experiments/rineya_quality_sft_v1/analysis.py": "69484d9015f49eb927016d425f219a07c78f2f29d7caa4d62cb7095c446bcfa5",
+        "experiments/rineya_quality_sft_v1/bank.py": "8c1808f0f9612478fe2a2262178cf6cad2c731add0cfd9ce6f82211ad8206597",
+        "experiments/rineya_quality_sft_v1/campaign.py": "021218ce03db164dd7a78b2ab591bd3c69d73642abebc47e603e61fda2044954",
+        "experiments/rineya_quality_sft_v1/compiler.py": "57eedf7873ec23dd3ace38b7f7820157be7348a90c485a1fed7c6fc2e9078651",
+        "experiments/rineya_quality_sft_v1/contract.py": "ef75c8da6e5262ba734f03d4033b0eadc1d2ff4f9165ce35e5d96c817d5f2347",
+        "experiments/rineya_quality_sft_v1/engine.py": "b57d8636f21bc746ca8eed3d5fc64ef1c0a8cb9bf71fe4c3d9b783a7f6407742",
+        "experiments/rineya_quality_sft_v1/evaluation.py": "6e10e8c0914983134914bc87a967a65a937f64ff7a6bf3147bb910132c88ab55",
+        "experiments/rineya_quality_sft_v1/integrity.py": "d11cafbe3a0d3452b342afdcc90f3dd1a0d24102db659b112965a20ccac36c24",
+        "experiments/rineya_quality_sft_v1/mechanism_witness.py": "24093928598a670780a5c5b332dc91915c5cb3e7576befbc18c030eb54d6ce56",
+        "experiments/rineya_quality_sft_v1/native.py": "941d1e5b2877f9a92dceafe9c08233a2a0186ed5566c2713e13c1595b0b38c73",
+        "experiments/rineya_quality_sft_v1/objective_geometry.py": "317863a6d30096bb4b5e73c05dd15881ed73eef91dda6636e426fe0336542f6b",
+        "experiments/rineya_quality_sft_v1/pattern_audit.py": "679fd6496bcc84ad560bf8faa620865a775e92e33e3cab6a5bff3b9794274ee0",
+        "experiments/rineya_quality_sft_v1/reuse.py": "46877d849ca531adae3084511cbd96b898f5fb79cdb3ba58bf2e5991baf8c135",
+        "experiments/rineya_quality_sft_v1/run.py": "9cf6e1aabccd4fe5077ef313e98e6d125a052f2feb81267d61495a554d0c8878",
+        "experiments/rineya_quality_sft_v1/supervisor.py": "e91fe5eb84ebcf0350d0b56190bc696e24c110d087ebdd4190255ba99ef36df4",
+        "experiments/rineya_quality_sft_v1/tests/test_bank_compiler.py": "553e80979b9dd58c96a031cde61f0fea27188e1a38e8e249af1089702e89f011",
+        "experiments/rineya_quality_sft_v1/tests/test_mechanism_witness.py": "5f9de2edb78360469b25d7f9d21fe00baacf71d49ce8fb3a6dc36d99090c372b",
+        "experiments/rineya_quality_sft_v1/tests/test_native_engine.py": "4926c794e309dc7e1a7ae42cd3bbd16dedc35e3a1ad205b5c03a6caec9e894de",
+        "experiments/rineya_quality_sft_v1/tests/test_objective_geometry.py": "84530ae8bd72aabe7f3606142f094a8aeedfb3e8fd91121693f0ab5c0b20ade2",
+        "experiments/rineya_quality_sft_v1/tests/test_pattern_audit.py": "13b82c2740467b967c0035e0c1c5a092c24cec38cf997e7899476e5a59072b64",
+        "experiments/rineya_quality_sft_v1/tests/test_quality_analysis.py": "de1311d363a80f06408043233ee16a9d251c4e6da0feffb146cc2f58918980cb",
+        "experiments/rineya_quality_sft_v1/tests/test_run.py": "6a5d2c5dc51b4a78384adeadbdc7dc2dd9d39b3fc907589e0a4afd52a128c6dd"
+      },
+      "sha256": "7ce4a65d8120c5b38b3f6cfeeaab9906e4f52c479c7fb40ff03c75ec702081be"
+    },
+    "completion_audit": {
+      "path": "<BusinessProject>/rineya-quality-sft-records/admission-interface-20261005-003/COMPLETION_AUDIT.json",
+      "sha256": "99320dafc2533f9bbc38e045907cfec3fc39ddb04498e1f70cd8daea4a781a82"
+    },
+    "dev_counts": {
+      "acquisition": 128,
+      "grounding_contracts": 128,
+      "harder_transfer": 128,
+      "preservation_dialogue": 128
+    },
+    "dsd_preserved": {
+      "branch": "research/rineya-self-distillation-axes-v1",
+      "head": "e1737660cd0feacd6efd4177ea1d1579bf0cd865",
+      "status": [
+        "?? experiments/rineya_self_distillation_axes_v1/RUNBOOK.md",
+        "?? experiments/rineya_self_distillation_axes_v1/STATUS.md",
+        "?? experiments/rineya_self_distillation_axes_v1/comparison.py",
+        "?? experiments/rineya_self_distillation_axes_v1/mechanical_qualification.py",
+        "?? experiments/rineya_self_distillation_axes_v1/proposal.py",
+        "?? experiments/rineya_self_distillation_axes_v1/proposal_data.py",
+        "?? experiments/rineya_self_distillation_axes_v1/reviewed_qualification.py",
+        "?? experiments/rineya_self_distillation_axes_v1/tests/test_mechanical_qualification.py",
+        "?? experiments/rineya_self_distillation_axes_v1/tests/test_proposal.py",
+        "?? experiments/rineya_self_distillation_axes_v1/tests/test_proposal_data.py",
+        "?? experiments/rineya_self_distillation_axes_v1/tests/test_reviewed_qualification.py"
+      ]
+    },
+    "experiment": "RQSFT-001",
+    "followups_before_new_outcomes": [
+      "Formatting-only gain: prospectively test short independently solver-verified process supervision.",
+      "Acquisition gain/preservation failure: match acquisition with independent retention replay; weaker update alone is not success.",
+      "Cue/wording dependence: repair data and evaluator before further training.",
+      "Response SFT passes: freeze recipe and replicate on two independently generated TRAIN draws.",
+      "Both healthy but ineffective: investigate task difficulty/evidence binding before expanding optimization or architecture.",
+      "Qualified competent teacher: advance existing tiny DSD proposal separately."
+    ],
+    "fresh_source_measurements": null,
+    "gain_claim": "No new native Rineya quality evidence. Histories and math fixtures identify hypotheses, not deterministic capability gains.",
+    "hash_interpretation": "Raw hashes bind exact bytes. code_identity normalizes CRLF to LF by its declared algorithm. Owner hash-only mismatches must be compared using the same algorithm; normalized historical dependencies match the earlier packet exactly.",
+    "historical_dependency_differences_under_same_algorithm": {},
+    "independent_implementation_review": {
+      "path": "<BusinessProject>/rineya-quality-sft-records/admission-interface-20261005-003/INDEPENDENT_SOURCE_REVIEW.json",
+      "sha256": "f21d8782cb7d22ee0a775f4998ab0f44fe116c7bc694c487a10028760facd4f3"
+    },
+    "native_execution_ready": false,
+    "native_exposure_review": null,
+    "native_permission": false,
+    "native_plan_hash": null,
+    "native_qualification": null,
+    "next_concrete_dependency": "Existing owner must close eligible source/exclusion/reservation/review route and deliver exact admitted200/512 immutable export. Then full-bank preparation/exposure review, exact-source zero-update qualification, complete source baseline/blinded review, and only the two named SFT cells.",
+    "observed_at_utc": "2026-10-05T23:08:55.265454+00:00",
+    "owner": {
+      "root": "<BusinessProject>/Rineya-Dataset/Rineya_Intelligence_Quality_Foundry_v1",
+      "title": "Plan Rineya dataset pipeline"
+    },
+    "owner_admission": false,
+    "owner_status": {
+      "path": "<BusinessProject>/Rineya-Dataset/Rineya_Intelligence_Quality_Foundry_v1/program/20261005_rqsft_owner_intake_v1/OWNER_STATUS_003.json",
+      "sha256": "4b97b2037258b0343d59d9306981a3818a779d4a7d5c74c72cbb4d7cd1c8096f"
+    },
+    "prior_packets_preserved": [
+      {
+        "path": "<BusinessProject>/rineya-quality-sft-records/rqsft001-preparation-20261005/IMPLEMENTATION_PACKET.json",
+        "sha256": "44d3b6a97c7e990ba6fedaaf2bab7e7294ff0560ecc0a55b8b04edb6135ced6e"
+      },
+      {
+        "path": "<BusinessProject>/rineya-quality-sft-records/pattern-research-20261005-001/RESEARCH_RECEIPT.json",
+        "sha256": "905dd97807ec646a1852748ae261068f8b2a429e91b23ba5b9ba1e04a9bc46dc"
+      },
+      {
+        "path": "<BusinessProject>/rineya-quality-sft-records/mechanism-research-20261005-002/RESEARCH_RECEIPT.json",
+        "sha256": "f4abab4b2ce1a463bb24793b11635a53a6b6726cdc10ff0cc5924b4ba6e565ac"
+      }
+    ],
+    "promotion_allowed": false,
+    "protocol": {
+      "path": "<BusinessProject>/ChatBubble-rineya-quality-sft-v1/experiments/rineya_quality_sft_v1/PROTOCOL.md",
+      "sha256": "58d150164bb634d673119fa548007d814db33724659fd4c9087e2f21da797333"
+    },
+    "raw_and_LF_normalized_file_hashes": {
+      "experiments/model_quality_gpu_v1/.gitignore": {
+        "LF_normalized_sha256": "92057450e77b938c512ff2f661e0c07adbf5800ab7b6af9ef837b7d5b1bc20df",
+        "bytes": 43,
+        "raw_sha256": "92057450e77b938c512ff2f661e0c07adbf5800ab7b6af9ef837b7d5b1bc20df"
+      },
+      "experiments/model_quality_gpu_v1/AGENTS.md": {
+        "LF_normalized_sha256": "5eb9c80f186be6408400eef07cdca26d8ada99888cb1cc08a3e103188a6650a6",
+        "bytes": 2047,
+        "raw_sha256": "5eb9c80f186be6408400eef07cdca26d8ada99888cb1cc08a3e103188a6650a6"
+      },
+      "experiments/model_quality_gpu_v1/AUDIT.md": {
+        "LF_normalized_sha256": "8068c2121929799f074989802af1fac3da7929c2520d07329dcb6d1728878d93",
+        "bytes": 6152,
+        "raw_sha256": "8068c2121929799f074989802af1fac3da7929c2520d07329dcb6d1728878d93"
+      },
+      "experiments/model_quality_gpu_v1/DESIGN.md": {
+        "LF_normalized_sha256": "26f53325c435ef8c2fc314730a10c9269334ef083c7ec2c6d6cc184337cfe199",
+        "bytes": 8543,
+        "raw_sha256": "26f53325c435ef8c2fc314730a10c9269334ef083c7ec2c6d6cc184337cfe199"
+      },
+      "experiments/model_quality_gpu_v1/PLAN.md": {
+        "LF_normalized_sha256": "1c97f009325bd93eab78f4ecdde2296e135a9ef84cd3fa6bf1b2191ee7f2b2b5",
+        "bytes": 2071,
+        "raw_sha256": "1c97f009325bd93eab78f4ecdde2296e135a9ef84cd3fa6bf1b2191ee7f2b2b5"
+      },
+      "experiments/model_quality_gpu_v1/POOL_STATUS.md": {
+        "LF_normalized_sha256": "509155d7a715e99f4aa27c3928b7b424bc7892679939dcf0e3067302f0be62f2",
+        "bytes": 2874,
+        "raw_sha256": "509155d7a715e99f4aa27c3928b7b424bc7892679939dcf0e3067302f0be62f2"
+      },
+      "experiments/model_quality_gpu_v1/README.md": {
+        "LF_normalized_sha256": "75c755087bdde7e981af08160e1cdd010b1d0e5d5d5d4e677436416344166865",
+        "bytes": 3504,
+        "raw_sha256": "75c755087bdde7e981af08160e1cdd010b1d0e5d5d5d4e677436416344166865"
+      },
+      "experiments/model_quality_gpu_v1/RUNBOOK.md": {
+        "LF_normalized_sha256": "8d9b6e7e36a2e19d597363b95e21253475bfdb3c6377b82e054ede92f84983c7",
+        "bytes": 5534,
+        "raw_sha256": "8d9b6e7e36a2e19d597363b95e21253475bfdb3c6377b82e054ede92f84983c7"
+      },
+      "experiments/model_quality_gpu_v1/__init__.py": {
+        "LF_normalized_sha256": "37dcc94c1ea6094b8ca3eacb49a3b865d83cace238727d3b3613d7b290183ace",
+        "bytes": 68,
+        "raw_sha256": "37dcc94c1ea6094b8ca3eacb49a3b865d83cace238727d3b3613d7b290183ace"
+      },
+      "experiments/model_quality_gpu_v1/__main__.py": {
+        "LF_normalized_sha256": "e1db44950e96e96cdf38c5aa2b9a523d1d492b58577b8c3edb4dc0aedc40bdd2",
+        "bytes": 79,
+        "raw_sha256": "e1db44950e96e96cdf38c5aa2b9a523d1d492b58577b8c3edb4dc0aedc40bdd2"
+      },
+      "experiments/model_quality_gpu_v1/analyze.py": {
+        "LF_normalized_sha256": "867874878818f7507e9348ca06744b0b752daf23f2d7cb37e2e1527bf1a7c8b7",
+        "bytes": 3355,
+        "raw_sha256": "867874878818f7507e9348ca06744b0b752daf23f2d7cb37e2e1527bf1a7c8b7"
+      },
+      "experiments/model_quality_gpu_v1/build_pool.py": {
+        "LF_normalized_sha256": "34f4a2e51d593b451c34a975ef6e8496e283ca243e835619c107693d357deb2d",
+        "bytes": 24933,
+        "raw_sha256": "13eeaa069d4cd2e358517f593f2fb81ac53ee693f7c4f62a3ad7e0024d716c0e"
+      },
+      "experiments/model_quality_gpu_v1/cell_inproc.sh": {
+        "LF_normalized_sha256": "ff952f92af1e4159cf77d01640ed8f955a9b20b9d18ef9f9eba214c359eca577",
+        "bytes": 343,
+        "raw_sha256": "ff952f92af1e4159cf77d01640ed8f955a9b20b9d18ef9f9eba214c359eca577"
+      },
+      "experiments/model_quality_gpu_v1/checkpoints.py": {
+        "LF_normalized_sha256": "616b1af1505d54c979d3d02574d71431e98a05f55f39b201c2dcac3cd87ad885",
+        "bytes": 5283,
+        "raw_sha256": "616b1af1505d54c979d3d02574d71431e98a05f55f39b201c2dcac3cd87ad885"
+      },
+      "experiments/model_quality_gpu_v1/config.py": {
+        "LF_normalized_sha256": "de8c268886978050634e0e8f18691439c024c5d8c31a6132cdc4913b3a367834",
+        "bytes": 3804,
+        "raw_sha256": "de8c268886978050634e0e8f18691439c024c5d8c31a6132cdc4913b3a367834"
+      },
+      "experiments/model_quality_gpu_v1/data.py": {
+        "LF_normalized_sha256": "148204b01b9e17e9979f3ef1a92b3effae6c72186cb9d07ce72e0afb611f65ab",
+        "bytes": 11099,
+        "raw_sha256": "148204b01b9e17e9979f3ef1a92b3effae6c72186cb9d07ce72e0afb611f65ab"
+      },
+      "experiments/model_quality_gpu_v1/engine.py": {
+        "LF_normalized_sha256": "8e519efae4ab5dc0b0c7be0900295fcd26c0c6868c9a3e74083597e6ecf23dd0",
+        "bytes": 6482,
+        "raw_sha256": "8e519efae4ab5dc0b0c7be0900295fcd26c0c6868c9a3e74083597e6ecf23dd0"
+      },
+      "experiments/model_quality_gpu_v1/evaluation.py": {
+        "LF_normalized_sha256": "4f123afd60e311011d34b47aec8773dac6667197c9819f9fc282cb687790f83e",
+        "bytes": 4345,
+        "raw_sha256": "4f123afd60e311011d34b47aec8773dac6667197c9819f9fc282cb687790f83e"
+      },
+      "experiments/model_quality_gpu_v1/integrity.py": {
+        "LF_normalized_sha256": "94909ce24304c340fa637d1f4aceb19c3dcf7e19136fb5016a828da39ff6b658",
+        "bytes": 4261,
+        "raw_sha256": "94909ce24304c340fa637d1f4aceb19c3dcf7e19136fb5016a828da39ff6b658"
+      },
+      "experiments/model_quality_gpu_v1/losses.py": {
+        "LF_normalized_sha256": "cd62c9ea0622573644c40749a6a5e614c41f3d5352f8e06ddb694660d371a6cd",
+        "bytes": 1608,
+        "raw_sha256": "cd62c9ea0622573644c40749a6a5e614c41f3d5352f8e06ddb694660d371a6cd"
+      },
+      "experiments/model_quality_gpu_v1/native.py": {
+        "LF_normalized_sha256": "e69e057dab1a77ba6dcbe50c0a953948de5e923801c7c76386008acd1a617468",
+        "bytes": 6219,
+        "raw_sha256": "e69e057dab1a77ba6dcbe50c0a953948de5e923801c7c76386008acd1a617468"
+      },
+      "experiments/model_quality_gpu_v1/optimizer.py": {
+        "LF_normalized_sha256": "ae45207132fe8d98c763f571f20e1a94bfdb521e818692e7736d7a3b2648c6d1",
+        "bytes": 2477,
+        "raw_sha256": "ae45207132fe8d98c763f571f20e1a94bfdb521e818692e7736d7a3b2648c6d1"
+      },
+      "experiments/model_quality_gpu_v1/requirements.txt": {
+        "LF_normalized_sha256": "75de608df98248ff0ab4c5bc6097ab163bae2fe700d8dda9f68124d352ed1041",
+        "bytes": 269,
+        "raw_sha256": "75de608df98248ff0ab4c5bc6097ab163bae2fe700d8dda9f68124d352ed1041"
+      },
+      "experiments/model_quality_gpu_v1/resources.py": {
+        "LF_normalized_sha256": "91e21105bdc988cbd1eb29c73e189a2ad15ce067ec4e548db4f0dfd477d1bad1",
+        "bytes": 4433,
+        "raw_sha256": "91e21105bdc988cbd1eb29c73e189a2ad15ce067ec4e548db4f0dfd477d1bad1"
+      },
+      "experiments/model_quality_gpu_v1/run.py": {
+        "LF_normalized_sha256": "68d8e49f5de13e160d9df4d2fd2c6160160b46fb7b6f410ef8411f0d43544eb8",
+        "bytes": 15405,
+        "raw_sha256": "68d8e49f5de13e160d9df4d2fd2c6160160b46fb7b6f410ef8411f0d43544eb8"
+      },
+      "experiments/model_quality_gpu_v1/run_cell.sh": {
+        "LF_normalized_sha256": "ff952f92af1e4159cf77d01640ed8f955a9b20b9d18ef9f9eba214c359eca577",
+        "bytes": 343,
+        "raw_sha256": "ff952f92af1e4159cf77d01640ed8f955a9b20b9d18ef9f9eba214c359eca577"
+      },
+      "experiments/model_quality_gpu_v1/source_lock.json": {
+        "LF_normalized_sha256": "4945317bfe2152690230bcd3e509a286b6b9bbe6a84c0f1af3bd86c449abaa9a",
+        "bytes": 1007,
+        "raw_sha256": "4945317bfe2152690230bcd3e509a286b6b9bbe6a84c0f1af3bd86c449abaa9a"
+      },
+      "experiments/model_quality_gpu_v1/supervisor.py": {
+        "LF_normalized_sha256": "b8a086d37a2f5eb16a2dc1568aa19644739bfbba20d5ede027e455d95a6adc1b",
+        "bytes": 7156,
+        "raw_sha256": "b8a086d37a2f5eb16a2dc1568aa19644739bfbba20d5ede027e455d95a6adc1b"
+      },
+      "experiments/model_quality_gpu_v1/tests/fixtures.py": {
+        "LF_normalized_sha256": "d2de27a58bd959c127747e8d99b6c6734fc82294428eef0a2bc327b91430bb36",
+        "bytes": 3931,
+        "raw_sha256": "d2de27a58bd959c127747e8d99b6c6734fc82294428eef0a2bc327b91430bb36"
+      },
+      "experiments/model_quality_gpu_v1/tests/test_mechanics.py": {
+        "LF_normalized_sha256": "21da91ea72004ea15ea8f6d1aa738118e6ee42554ecc86f837a093a0e22e000d",
+        "bytes": 21021,
+        "raw_sha256": "9a56ca3ca0539afb4bdecee18cc938430e64da36a133e16b21aafe006ad2fbf3"
+      },
+      "experiments/model_quality_gpu_v1/tests/test_native_optional.py": {
+        "LF_normalized_sha256": "d31ea03352aec0fe1415c1e2ce811f5c69362a3516e340710f0f077ff8f3afd9",
+        "bytes": 2486,
+        "raw_sha256": "d31ea03352aec0fe1415c1e2ce811f5c69362a3516e340710f0f077ff8f3afd9"
+      },
+      "experiments/model_quality_gpu_v1/tests/test_supervisor.py": {
+        "LF_normalized_sha256": "1170f016b792cfb9f5af8e2dde42d2f5aa5327b20d8e3de0a9fa9f32872459ae",
+        "bytes": 11561,
+        "raw_sha256": "1170f016b792cfb9f5af8e2dde42d2f5aa5327b20d8e3de0a9fa9f32872459ae"
+      },
+      "experiments/rineya_quality_sft_v1/AGENTS.md": {
+        "LF_normalized_sha256": "708aca11e10befa49ea76e04af8fd0b349cfb1d32460513fcdff10ce0f2a916e",
+        "bytes": 1448,
+        "raw_sha256": "708aca11e10befa49ea76e04af8fd0b349cfb1d32460513fcdff10ce0f2a916e"
+      },
+      "experiments/rineya_quality_sft_v1/PROTOCOL.md": {
+        "LF_normalized_sha256": "58d150164bb634d673119fa548007d814db33724659fd4c9087e2f21da797333",
+        "bytes": 5571,
+        "raw_sha256": "58d150164bb634d673119fa548007d814db33724659fd4c9087e2f21da797333"
+      },
+      "experiments/rineya_quality_sft_v1/README.md": {
+        "LF_normalized_sha256": "29e7e5507c191eeb102620a6cf10201af4338ecca66e03b1d7272651d17065e2",
+        "bytes": 1279,
+        "raw_sha256": "29e7e5507c191eeb102620a6cf10201af4338ecca66e03b1d7272651d17065e2"
+      },
+      "experiments/rineya_quality_sft_v1/RESEARCH_PATTERNS.md": {
+        "LF_normalized_sha256": "e25d9356031ee1dfc7296bab545b93de562064085ec30541556eb83a3e5357d6",
+        "bytes": 9883,
+        "raw_sha256": "e25d9356031ee1dfc7296bab545b93de562064085ec30541556eb83a3e5357d6"
+      },
+      "experiments/rineya_quality_sft_v1/RUNBOOK.md": {
+        "LF_normalized_sha256": "69ab5f6d720101efcd4514b35e478d8f8838b6113ca682f5fe83c1d256351f54",
+        "bytes": 10538,
+        "raw_sha256": "69ab5f6d720101efcd4514b35e478d8f8838b6113ca682f5fe83c1d256351f54"
+      },
+      "experiments/rineya_quality_sft_v1/STATUS.md": {
+        "LF_normalized_sha256": "d907b813ac81af9e1002dd91b09edb650dd9bef0626ba2491702014fd42c45e0",
+        "bytes": 4427,
+        "raw_sha256": "d907b813ac81af9e1002dd91b09edb650dd9bef0626ba2491702014fd42c45e0"
+      },
+      "experiments/rineya_quality_sft_v1/__init__.py": {
+        "LF_normalized_sha256": "4af8394aaec841a529f111b035b1a0cf3ef2ceda520a8feba771230f8c118245",
+        "bytes": 356,
+        "raw_sha256": "4af8394aaec841a529f111b035b1a0cf3ef2ceda520a8feba771230f8c118245"
+      },
+      "experiments/rineya_quality_sft_v1/__main__.py": {
+        "LF_normalized_sha256": "e1db44950e96e96cdf38c5aa2b9a523d1d492b58577b8c3edb4dc0aedc40bdd2",
+        "bytes": 79,
+        "raw_sha256": "e1db44950e96e96cdf38c5aa2b9a523d1d492b58577b8c3edb4dc0aedc40bdd2"
+      },
+      "experiments/rineya_quality_sft_v1/analysis.py": {
+        "LF_normalized_sha256": "69484d9015f49eb927016d425f219a07c78f2f29d7caa4d62cb7095c446bcfa5",
+        "bytes": 18191,
+        "raw_sha256": "69484d9015f49eb927016d425f219a07c78f2f29d7caa4d62cb7095c446bcfa5"
+      },
+      "experiments/rineya_quality_sft_v1/bank.py": {
+        "LF_normalized_sha256": "8c1808f0f9612478fe2a2262178cf6cad2c731add0cfd9ce6f82211ad8206597",
+        "bytes": 21576,
+        "raw_sha256": "8c1808f0f9612478fe2a2262178cf6cad2c731add0cfd9ce6f82211ad8206597"
+      },
+      "experiments/rineya_quality_sft_v1/campaign.py": {
+        "LF_normalized_sha256": "021218ce03db164dd7a78b2ab591bd3c69d73642abebc47e603e61fda2044954",
+        "bytes": 2083,
+        "raw_sha256": "021218ce03db164dd7a78b2ab591bd3c69d73642abebc47e603e61fda2044954"
+      },
+      "experiments/rineya_quality_sft_v1/compiler.py": {
+        "LF_normalized_sha256": "57eedf7873ec23dd3ace38b7f7820157be7348a90c485a1fed7c6fc2e9078651",
+        "bytes": 12753,
+        "raw_sha256": "57eedf7873ec23dd3ace38b7f7820157be7348a90c485a1fed7c6fc2e9078651"
+      },
+      "experiments/rineya_quality_sft_v1/contract.py": {
+        "LF_normalized_sha256": "ef75c8da6e5262ba734f03d4033b0eadc1d2ff4f9165ce35e5d96c817d5f2347",
+        "bytes": 2385,
+        "raw_sha256": "ef75c8da6e5262ba734f03d4033b0eadc1d2ff4f9165ce35e5d96c817d5f2347"
+      },
+      "experiments/rineya_quality_sft_v1/engine.py": {
+        "LF_normalized_sha256": "b57d8636f21bc746ca8eed3d5fc64ef1c0a8cb9bf71fe4c3d9b783a7f6407742",
+        "bytes": 26039,
+        "raw_sha256": "b57d8636f21bc746ca8eed3d5fc64ef1c0a8cb9bf71fe4c3d9b783a7f6407742"
+      },
+      "experiments/rineya_quality_sft_v1/evaluation.py": {
+        "LF_normalized_sha256": "6e10e8c0914983134914bc87a967a65a937f64ff7a6bf3147bb910132c88ab55",
+        "bytes": 19485,
+        "raw_sha256": "6e10e8c0914983134914bc87a967a65a937f64ff7a6bf3147bb910132c88ab55"
+      },
+      "experiments/rineya_quality_sft_v1/integrity.py": {
+        "LF_normalized_sha256": "d11cafbe3a0d3452b342afdcc90f3dd1a0d24102db659b112965a20ccac36c24",
+        "bytes": 5487,
+        "raw_sha256": "d11cafbe3a0d3452b342afdcc90f3dd1a0d24102db659b112965a20ccac36c24"
+      },
+      "experiments/rineya_quality_sft_v1/mechanism_witness.py": {
+        "LF_normalized_sha256": "24093928598a670780a5c5b332dc91915c5cb3e7576befbc18c030eb54d6ce56",
+        "bytes": 15397,
+        "raw_sha256": "24093928598a670780a5c5b332dc91915c5cb3e7576befbc18c030eb54d6ce56"
+      },
+      "experiments/rineya_quality_sft_v1/native.py": {
+        "LF_normalized_sha256": "941d1e5b2877f9a92dceafe9c08233a2a0186ed5566c2713e13c1595b0b38c73",
+        "bytes": 31979,
+        "raw_sha256": "941d1e5b2877f9a92dceafe9c08233a2a0186ed5566c2713e13c1595b0b38c73"
+      },
+      "experiments/rineya_quality_sft_v1/objective_geometry.py": {
+        "LF_normalized_sha256": "317863a6d30096bb4b5e73c05dd15881ed73eef91dda6636e426fe0336542f6b",
+        "bytes": 14121,
+        "raw_sha256": "317863a6d30096bb4b5e73c05dd15881ed73eef91dda6636e426fe0336542f6b"
+      },
+      "experiments/rineya_quality_sft_v1/pattern_audit.py": {
+        "LF_normalized_sha256": "679fd6496bcc84ad560bf8faa620865a775e92e33e3cab6a5bff3b9794274ee0",
+        "bytes": 26082,
+        "raw_sha256": "679fd6496bcc84ad560bf8faa620865a775e92e33e3cab6a5bff3b9794274ee0"
+      },
+      "experiments/rineya_quality_sft_v1/reuse.py": {
+        "LF_normalized_sha256": "46877d849ca531adae3084511cbd96b898f5fb79cdb3ba58bf2e5991baf8c135",
+        "bytes": 2030,
+        "raw_sha256": "46877d849ca531adae3084511cbd96b898f5fb79cdb3ba58bf2e5991baf8c135"
+      },
+      "experiments/rineya_quality_sft_v1/run.py": {
+        "LF_normalized_sha256": "9cf6e1aabccd4fe5077ef313e98e6d125a052f2feb81267d61495a554d0c8878",
+        "bytes": 28810,
+        "raw_sha256": "9cf6e1aabccd4fe5077ef313e98e6d125a052f2feb81267d61495a554d0c8878"
+      },
+      "experiments/rineya_quality_sft_v1/supervisor.py": {
+        "LF_normalized_sha256": "e91fe5eb84ebcf0350d0b56190bc696e24c110d087ebdd4190255ba99ef36df4",
+        "bytes": 6051,
+        "raw_sha256": "e91fe5eb84ebcf0350d0b56190bc696e24c110d087ebdd4190255ba99ef36df4"
+      },
+      "experiments/rineya_quality_sft_v1/tests/test_bank_compiler.py": {
+        "LF_normalized_sha256": "553e80979b9dd58c96a031cde61f0fea27188e1a38e8e249af1089702e89f011",
+        "bytes": 23524,
+        "raw_sha256": "553e80979b9dd58c96a031cde61f0fea27188e1a38e8e249af1089702e89f011"
+      },
+      "experiments/rineya_quality_sft_v1/tests/test_mechanism_witness.py": {
+        "LF_normalized_sha256": "5f9de2edb78360469b25d7f9d21fe00baacf71d49ce8fb3a6dc36d99090c372b",
+        "bytes": 7933,
+        "raw_sha256": "5f9de2edb78360469b25d7f9d21fe00baacf71d49ce8fb3a6dc36d99090c372b"
+      },
+      "experiments/rineya_quality_sft_v1/tests/test_native_engine.py": {
+        "LF_normalized_sha256": "4926c794e309dc7e1a7ae42cd3bbd16dedc35e3a1ad205b5c03a6caec9e894de",
+        "bytes": 13808,
+        "raw_sha256": "4926c794e309dc7e1a7ae42cd3bbd16dedc35e3a1ad205b5c03a6caec9e894de"
+      },
+      "experiments/rineya_quality_sft_v1/tests/test_objective_geometry.py": {
+        "LF_normalized_sha256": "84530ae8bd72aabe7f3606142f094a8aeedfb3e8fd91121693f0ab5c0b20ade2",
+        "bytes": 10141,
+        "raw_sha256": "84530ae8bd72aabe7f3606142f094a8aeedfb3e8fd91121693f0ab5c0b20ade2"
+      },
+      "experiments/rineya_quality_sft_v1/tests/test_pattern_audit.py": {
+        "LF_normalized_sha256": "13b82c2740467b967c0035e0c1c5a092c24cec38cf997e7899476e5a59072b64",
+        "bytes": 11173,
+        "raw_sha256": "13b82c2740467b967c0035e0c1c5a092c24cec38cf997e7899476e5a59072b64"
+      },
+      "experiments/rineya_quality_sft_v1/tests/test_quality_analysis.py": {
+        "LF_normalized_sha256": "de1311d363a80f06408043233ee16a9d251c4e6da0feffb146cc2f58918980cb",
+        "bytes": 17998,
+        "raw_sha256": "de1311d363a80f06408043233ee16a9d251c4e6da0feffb146cc2f58918980cb"
+      },
+      "experiments/rineya_quality_sft_v1/tests/test_run.py": {
+        "LF_normalized_sha256": "6a5d2c5dc51b4a78384adeadbdc7dc2dd9d39b3fc907589e0a4afd52a128c6dd",
+        "bytes": 6098,
+        "raw_sha256": "6a5d2c5dc51b4a78384adeadbdc7dc2dd9d39b3fc907589e0a4afd52a128c6dd"
+      }
+    },
+    "recipe": {
+      "beta1": 0.9,
+      "beta2": 0.95,
+      "ce_chunk": 64,
+      "checkpoint_every": 4,
+      "clip_norm": 1.0,
+      "decay_fraction": 0.2,
+      "epsilon": 1e-08,
+      "eval_sequence": 2048,
+      "max_dev_rows": 512,
+      "max_new_tokens": 64,
+      "max_sequence": 512,
+      "max_updates": 32,
+      "minimum_lr_fraction": 0.1,
+      "order_seed": 17,
+      "processed_budget": 25000,
+      "selection_seed": 17,
+      "timeout_seconds": 3600,
+      "trainable_tail": 20,
+      "update_tokens": 2048,
+      "warmup_fraction": 0.2,
+      "weight_decay": 0.0
+    },
+    "reviewed_pair_design_compatible_in_principle": true,
+    "runbook": {
+      "path": "<BusinessProject>/ChatBubble-rineya-quality-sft-v1/experiments/rineya_quality_sft_v1/RUNBOOK.md",
+      "sha256": "69ab5f6d720101efcd4514b35e478d8f8838b6113ca682f5fe83c1d256351f54"
+    },
+    "schema": "RQSFT_PREPARATION_PACKET_V3",
+    "source": {
+      "core_id": "rineya.core.supa.v1.7.0-devfreeze.28L.qwen3-nimbus-lcr-stage-a-step200-scale-0p8125",
+      "current_custody": {
+        "path": "<BusinessProject>/rineya-quality-sft-records/admission-interface-20261005-003/SOURCE_REHASH.json",
+        "sha256": "0d07273f4f25448e5c8fcb7136fb5c730186af9cccc4a817be83b623b5240773"
+      },
+      "parameters": 596049920,
+      "weight_sha256": "962abc5bcd5a83e3b7693bd278ae9215b6d83389a847913da9330b34dd5dd24b"
+    },
+    "status": "IMPLEMENTATION_REVIEWED_ACTUAL_BANK_AND_NATIVE_RESULTS_MISSING",
+    "tests": {
+      "errors": 0,
+      "failures": 0,
+      "log": {
+        "path": "<BusinessProject>/rineya-quality-sft-records/admission-interface-20261005-003/final-tests-v2.log",
+        "sha256": "90b4e75feb1f0545a09c4dd11c83e39117e49b0cc31fc048db87c9d8fcff8b54"
+      },
+      "scope": "CPU_SYNTHETIC_FIXTURES_ONLY",
+      "skipped": 0,
+      "tests": 152,
+      "warnings": 1,
+      "xml": {
+        "path": "<BusinessProject>/rineya-quality-sft-records/admission-interface-20261005-003/final-tests-v2.xml",
+        "sha256": "e53d6676513cb65739676234f35c2ef065b1f5a67065c6426b54ba9e326a11e3"
+      }
+    },
+    "train_counts": {
+      "grounded": 80,
+      "output_contract": 20,
+      "preservation_dialogue": 40,
+      "solving": 60
+    },
+    "whole_response_examples_order_groups_source_optimizer_matched": true
+  },
+  "execution_authority": false,
+  "original_bytes": 29082,
+  "original_raw_sha256": "96ac6ff56b230ab04da665e9ba9f025ee12875d7d4bfda7b43065732ba5cc2fc",
+  "original_source": "<BusinessProject>/rineya-quality-sft-records/admission-interface-20261005-003/PREPARATION_PACKET.json",
+  "publication_policy": "Portable historical evidence only, not an executable packet or admission/qualification permit. Local paths, chat UUIDs and XML hostnames are removed; original raw-file hashes are retained separately from hashes of these exports. No banks, predictions, weights, checkpoints, environments or raw process inventories are exported. Originals remain unchanged outside Git.",
+  "record_type": "PORTABLE_EVIDENCE_EXPORT"
+}

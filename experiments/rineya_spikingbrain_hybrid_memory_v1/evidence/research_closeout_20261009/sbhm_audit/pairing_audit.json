@@ -1,0 +1,1379 @@
+{
+  "C_to_D_lost_row_details": {
+    "distant_heldout": [
+      {
+        "id": "dev-lookup-world-010-distant_heldout-cf-0",
+        "predictions": {
+          "A": "\"914\".",
+          "B": "{\"v\":\"938\"}",
+          "C": "{\"v\":\"914\"}",
+          "D": "{\"v\":\"938\"}"
+        },
+        "target": "{\"v\":\"914\"}"
+      }
+    ],
+    "near_control": [
+      {
+        "id": "dev-update-world-005-near_control-cf-1",
+        "predictions": {
+          "A": "943",
+          "B": "{\"v\":\"943\"}",
+          "C": "{\"v\":\"943\"}",
+          "D": "{\"v\":\"289\"}"
+        },
+        "target": "{\"v\":\"943\"}"
+      }
+    ]
+  },
+  "assertions": 31564,
+  "checks": {
+    "DEV_aggregate_recomputed": 4,
+    "DEV_corpus_order": 4,
+    "DEV_group_matches_role": 512,
+    "DEV_groups_disjoint_cover": 1,
+    "DEV_prediction_coverage": 4,
+    "DEV_prompt_length_geometry": 2048,
+    "all_arms_identical_recorded_exposure": 2,
+    "answer_eos_input_arithmetic": 768,
+    "corpus_admitted": 1,
+    "corpus_counts": 1,
+    "corpus_hash_matches_admission": 2,
+    "counterfactual_changes_only_expected_field": 384,
+    "counterfactual_exactly_one_changed_record": 336,
+    "counterfactual_pair_count": 336,
+    "counterfactual_pair_ids": 336,
+    "counterfactual_same_filler_block_text": 336,
+    "counterfactual_same_query": 336,
+    "counterfactual_same_query_text": 336,
+    "counterfactual_same_template_id": 336,
+    "counterfactual_truth_changes": 336,
+    "evaluation_embeds_exact_recovery_record": 3,
+    "every_TRAIN_row_exactly_two_exposures": 1,
+    "facts_parsed_from_prompt_match_metadata": 672,
+    "family_metadata": 768,
+    "historical_token_geometry_corpus_hash": 2,
+    "historical_token_geometry_design_hash": 1,
+    "independent_actual_prompt_target_replay": 768,
+    "independent_shuffle_matches_frozen_geometry": 1,
+    "metadata_hash_matches_admission": 2,
+    "missing_pair_one_present_one_absent": 48,
+    "optimizer_recipe": 6,
+    "position_pair_count": 336,
+    "position_pair_only_block_order_changes": 336,
+    "position_pair_roles": 336,
+    "position_pair_same_counterfactual_id": 336,
+    "position_pair_same_events": 336,
+    "position_pair_same_evidence_block_text": 336,
+    "position_pair_same_filler_block_text": 336,
+    "position_pair_same_query": 336,
+    "position_pair_same_query_text": 336,
+    "position_pair_same_template_id": 336,
+    "position_pair_target_token_count": 336,
+    "prediction_score_flags_recomputed": 2048,
+    "prediction_target_family_identity": 2048,
+    "raw_prompt_block_span": 2016,
+    "raw_record_span": 1824,
+    "recorded_distance_consistency": 2016,
+    "recovery_parent_exact_distillation_record": 3,
+    "registered_distance_contract": 672,
+    "row_digest": 768,
+    "row_metadata_geometry_exact_coverage": 1,
+    "strict_normalized_same_cases": 4,
+    "subject_parsed_from_query_match_metadata": 672,
+    "token_geometry_metadata_consistency": 768,
+    "train_dev_separation_family_id": 1,
+    "train_dev_separation_id": 1,
+    "train_dev_separation_prompt": 1,
+    "train_dev_separation_template_id": 1,
+    "train_dev_separation_world_id": 1,
+    "training_completed_512": 6,
+    "training_config_hash": 6,
+    "training_length_label_count_contract": 3072,
+    "training_record_finite": 3072,
+    "training_step_row_order": 6,
+    "unprotected_explicit_split": 2,
+    "world_has_four_dependent_variants": 168
+  },
+  "corpus": {
+    "DEV_counterfactual_pairs": 224,
+    "DEV_distant_gap_range": [
+      145,
+      1058
+    ],
+    "DEV_position_pairs": 224,
+    "counterfactual_pairs": 336,
+    "dev": 512,
+    "near_required_to_answer_max": 81,
+    "position_pairs": 336,
+    "rows": 768,
+    "train": 256,
+    "worlds": {
+      "dev": 112,
+      "train": 56
+    }
+  },
+  "counterfactual_world_outcomes": {
+    "distant_heldout": {
+      "A": {
+        "both_counterfactuals_correct": 18,
+        "identical_predictions_across_truth_change": 17,
+        "neither_correct": 79,
+        "one_counterfactual_correct": 15,
+        "worlds": 112
+      },
+      "B": {
+        "both_counterfactuals_correct": 76,
+        "identical_predictions_across_truth_change": 18,
+        "neither_correct": 16,
+        "one_counterfactual_correct": 20,
+        "worlds": 112
+      },
+      "C": {
+        "both_counterfactuals_correct": 76,
+        "identical_predictions_across_truth_change": 32,
+        "neither_correct": 16,
+        "one_counterfactual_correct": 20,
+        "worlds": 112
+      },
+      "D": {
+        "both_counterfactuals_correct": 75,
+        "identical_predictions_across_truth_change": 32,
+        "neither_correct": 16,
+        "one_counterfactual_correct": 21,
+        "worlds": 112
+      }
+    },
+    "near_control": {
+      "A": {
+        "both_counterfactuals_correct": 38,
+        "identical_predictions_across_truth_change": 14,
+        "neither_correct": 46,
+        "one_counterfactual_correct": 28,
+        "worlds": 112
+      },
+      "B": {
+        "both_counterfactuals_correct": 80,
+        "identical_predictions_across_truth_change": 21,
+        "neither_correct": 13,
+        "one_counterfactual_correct": 19,
+        "worlds": 112
+      },
+      "C": {
+        "both_counterfactuals_correct": 75,
+        "identical_predictions_across_truth_change": 29,
+        "neither_correct": 15,
+        "one_counterfactual_correct": 22,
+        "worlds": 112
+      },
+      "D": {
+        "both_counterfactuals_correct": 75,
+        "identical_predictions_across_truth_change": 30,
+        "neither_correct": 16,
+        "one_counterfactual_correct": 21,
+        "worlds": 112
+      }
+    }
+  },
+  "created_utc": "2026-10-05T18:59:56.503149+00:00",
+  "exact_exposure_evidence_limit": "No per-stage token-ID/label-ID hashes are stored in training traces. Matching immutable row/prompt/target hashes, tokenizer/config/code bindings, common deterministic encode recipe and exact input/supervision counts support matched exposure; this offline audit does not freshly tokenize or reconstruct model inputs.",
+  "failures": [
+    {
+      "check": "counterfactual_exactly_one_changed_record",
+      "row": "('train', 'train-multiple_facts-world-007', 'near_control')"
+    },
+    {
+      "check": "counterfactual_exactly_one_changed_record",
+      "row": "('train', 'train-multiple_facts-world-003', 'near_control')"
+    },
+    {
+      "check": "counterfactual_exactly_one_changed_record",
+      "row": "('train', 'train-multiple_facts-world-001', 'distant_heldout')"
+    },
+    {
+      "check": "counterfactual_exactly_one_changed_record",
+      "row": "('train', 'train-multiple_facts-world-000', 'near_control')"
+    },
+    {
+      "check": "counterfactual_exactly_one_changed_record",
+      "row": "('train', 'train-multiple_facts-world-002', 'distant_heldout')"
+    },
+    {
+      "check": "counterfactual_exactly_one_changed_record",
+      "row": "('train', 'train-multiple_facts-world-001', 'near_control')"
+    },
+    {
+      "check": "counterfactual_exactly_one_changed_record",
+      "row": "('train', 'train-multiple_facts-world-006', 'distant_heldout')"
+    },
+    {
+      "check": "counterfactual_exactly_one_changed_record",
+      "row": "('train', 'train-multiple_facts-world-005', 'distant_heldout')"
+    },
+    {
+      "check": "counterfactual_exactly_one_changed_record",
+      "row": "('train', 'train-multiple_facts-world-004', 'near_control')"
+    },
+    {
+      "check": "counterfactual_exactly_one_changed_record",
+      "row": "('train', 'train-multiple_facts-world-006', 'near_control')"
+    },
+    {
+      "check": "counterfactual_exactly_one_changed_record",
+      "row": "('train', 'train-multiple_facts-world-000', 'distant_heldout')"
+    },
+    {
+      "check": "counterfactual_exactly_one_changed_record",
+      "row": "('train', 'train-multiple_facts-world-007', 'distant_heldout')"
+    },
+    {
+      "check": "counterfactual_exactly_one_changed_record",
+      "row": "('train', 'train-multiple_facts-world-002', 'near_control')"
+    },
+    {
+      "check": "counterfactual_exactly_one_changed_record",
+      "row": "('train', 'train-multiple_facts-world-004', 'distant_heldout')"
+    },
+    {
+      "check": "counterfactual_exactly_one_changed_record",
+      "row": "('train', 'train-multiple_facts-world-005', 'near_control')"
+    },
+    {
+      "check": "counterfactual_exactly_one_changed_record",
+      "row": "('train', 'train-multiple_facts-world-003', 'distant_heldout')"
+    },
+    {
+      "check": "counterfactual_exactly_one_changed_record",
+      "row": "('dev', 'dev-multiple_facts-world-004', 'near_control')"
+    },
+    {
+      "check": "counterfactual_exactly_one_changed_record",
+      "row": "('dev', 'dev-multiple_facts-world-002', 'distant_heldout')"
+    },
+    {
+      "check": "counterfactual_exactly_one_changed_record",
+      "row": "('dev', 'dev-multiple_facts-world-013', 'distant_heldout')"
+    },
+    {
+      "check": "counterfactual_exactly_one_changed_record",
+      "row": "('dev', 'dev-multiple_facts-world-015', 'distant_heldout')"
+    },
+    {
+      "check": "counterfactual_exactly_one_changed_record",
+      "row": "('dev', 'dev-multiple_facts-world-005', 'distant_heldout')"
+    },
+    {
+      "check": "counterfactual_exactly_one_changed_record",
+      "row": "('dev', 'dev-multiple_facts-world-010', 'distant_heldout')"
+    },
+    {
+      "check": "counterfactual_exactly_one_changed_record",
+      "row": "('dev', 'dev-multiple_facts-world-002', 'near_control')"
+    },
+    {
+      "check": "counterfactual_exactly_one_changed_record",
+      "row": "('dev', 'dev-multiple_facts-world-006', 'near_control')"
+    },
+    {
+      "check": "counterfactual_exactly_one_changed_record",
+      "row": "('dev', 'dev-multiple_facts-world-008', 'distant_heldout')"
+    },
+    {
+      "check": "counterfactual_exactly_one_changed_record",
+      "row": "('dev', 'dev-multiple_facts-world-003', 'distant_heldout')"
+    },
+    {
+      "check": "counterfactual_exactly_one_changed_record",
+      "row": "('dev', 'dev-multiple_facts-world-007', 'distant_heldout')"
+    },
+    {
+      "check": "counterfactual_exactly_one_changed_record",
+      "row": "('dev', 'dev-multiple_facts-world-005', 'near_control')"
+    },
+    {
+      "check": "counterfactual_exactly_one_changed_record",
+      "row": "('dev', 'dev-multiple_facts-world-011', 'distant_heldout')"
+    },
+    {
+      "check": "counterfactual_exactly_one_changed_record",
+      "row": "('dev', 'dev-multiple_facts-world-003', 'near_control')"
+    },
+    {
+      "check": "counterfactual_exactly_one_changed_record",
+      "row": "('dev', 'dev-multiple_facts-world-014', 'distant_heldout')"
+    },
+    {
+      "check": "counterfactual_exactly_one_changed_record",
+      "row": "('dev', 'dev-multiple_facts-world-012', 'near_control')"
+    },
+    {
+      "check": "counterfactual_exactly_one_changed_record",
+      "row": "('dev', 'dev-multiple_facts-world-001', 'distant_heldout')"
+    },
+    {
+      "check": "counterfactual_exactly_one_changed_record",
+      "row": "('dev', 'dev-multiple_facts-world-000', 'near_control')"
+    },
+    {
+      "check": "counterfactual_exactly_one_changed_record",
+      "row": "('dev', 'dev-multiple_facts-world-008', 'near_control')"
+    },
+    {
+      "check": "counterfactual_exactly_one_changed_record",
+      "row": "('dev', 'dev-multiple_facts-world-001', 'near_control')"
+    },
+    {
+      "check": "counterfactual_exactly_one_changed_record",
+      "row": "('dev', 'dev-multiple_facts-world-010', 'near_control')"
+    },
+    {
+      "check": "counterfactual_exactly_one_changed_record",
+      "row": "('dev', 'dev-multiple_facts-world-012', 'distant_heldout')"
+    },
+    {
+      "check": "counterfactual_exactly_one_changed_record",
+      "row": "('dev', 'dev-multiple_facts-world-004', 'distant_heldout')"
+    },
+    {
+      "check": "counterfactual_exactly_one_changed_record",
+      "row": "('dev', 'dev-multiple_facts-world-009', 'distant_heldout')"
+    },
+    {
+      "check": "counterfactual_exactly_one_changed_record",
+      "row": "('dev', 'dev-multiple_facts-world-000', 'distant_heldout')"
+    },
+    {
+      "check": "counterfactual_exactly_one_changed_record",
+      "row": "('dev', 'dev-multiple_facts-world-009', 'near_control')"
+    },
+    {
+      "check": "counterfactual_exactly_one_changed_record",
+      "row": "('dev', 'dev-multiple_facts-world-013', 'near_control')"
+    },
+    {
+      "check": "counterfactual_exactly_one_changed_record",
+      "row": "('dev', 'dev-multiple_facts-world-006', 'distant_heldout')"
+    },
+    {
+      "check": "counterfactual_exactly_one_changed_record",
+      "row": "('dev', 'dev-multiple_facts-world-015', 'near_control')"
+    },
+    {
+      "check": "counterfactual_exactly_one_changed_record",
+      "row": "('dev', 'dev-multiple_facts-world-011', 'near_control')"
+    },
+    {
+      "check": "counterfactual_exactly_one_changed_record",
+      "row": "('dev', 'dev-multiple_facts-world-007', 'near_control')"
+    },
+    {
+      "check": "counterfactual_exactly_one_changed_record",
+      "row": "('dev', 'dev-multiple_facts-world-014', 'near_control')"
+    },
+    {
+      "check": "training_config_hash",
+      "row": "Bdistill"
+    },
+    {
+      "check": "training_config_hash",
+      "row": "Cdistill"
+    },
+    {
+      "check": "training_config_hash",
+      "row": "Ddistill"
+    },
+    {
+      "check": "training_config_hash",
+      "row": "Brecover"
+    },
+    {
+      "check": "training_config_hash",
+      "row": "Crecover"
+    },
+    {
+      "check": "training_config_hash",
+      "row": "Drecover"
+    }
+  ],
+  "historical_manifest_note": "20261003 frozen geometry hashes the pre-admission manifest; review.json records that proposal hash. Current admitted manifest differs after review admission; exact train/dev/design bytes remain bound to the historical geometry.",
+  "input_hashes": {
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-spikingbrain-hybrid-memory-v1\\experiments\\rineya_spikingbrain_hybrid_memory_v1\\configs\\titan_transition.v2.memory_efficient.json": {
+      "bytes": 2632,
+      "sha256": "e105c6926f7f85efa93e3c01728526685b879908bc4a2fcd85ec8171fef95dd2"
+    },
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-spikingbrain-hybrid-memory-v1\\experiments\\rineya_spikingbrain_hybrid_memory_v1\\corpora\\distant_evidence_v2\\design.json": {
+      "bytes": 2833750,
+      "sha256": "fec0355ad0e6ee3d38fa0c3d38ef7b8ce83f402edae3da6262a0dc755e9769f1"
+    },
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-spikingbrain-hybrid-memory-v1\\experiments\\rineya_spikingbrain_hybrid_memory_v1\\corpora\\distant_evidence_v2\\dev.jsonl": {
+      "bytes": 819966,
+      "sha256": "72d85e135d2d368fd9817f36129d67373a4c7f3a4649491637e245cab1439d68"
+    },
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-spikingbrain-hybrid-memory-v1\\experiments\\rineya_spikingbrain_hybrid_memory_v1\\corpora\\distant_evidence_v2\\manifest.json": {
+      "bytes": 14342,
+      "sha256": "6f9c858b39c6c45d4fd5cd6bfa29d79b3c2f12773af7f392b44cfa171379105f"
+    },
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-spikingbrain-hybrid-memory-v1\\experiments\\rineya_spikingbrain_hybrid_memory_v1\\corpora\\distant_evidence_v2\\review.json": {
+      "bytes": 362030,
+      "sha256": "68d860e46178673723245c8807ee5b381766520259055b97d404fa7474d00ce1"
+    },
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-spikingbrain-hybrid-memory-v1\\experiments\\rineya_spikingbrain_hybrid_memory_v1\\corpora\\distant_evidence_v2\\train.jsonl": {
+      "bytes": 191491,
+      "sha256": "da714f244a2e9ff89b6019e55d9e1652b4779b24a0a2067496e3158fe2acbad1"
+    },
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-spikingbrain-hybrid-memory-v1\\experiments\\rineya_spikingbrain_hybrid_memory_v1\\evidence\\qualification_20261003\\corpus_v2_frozen_token_geometry.json": {
+      "bytes": 325791,
+      "sha256": "ed04656b84084aaaac66168e7c24c414157241402cbcb8dacf236114b5bc0856"
+    },
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-spikingbrain-hybrid-memory-v1\\experiments\\rineya_spikingbrain_hybrid_memory_v1\\runs\\titan_transition_v2_20261004_memory_efficient\\A-evaluation\\receipt.json": {
+      "bytes": 494103,
+      "sha256": "b66809d7ab64043661ea94fc79f00149bde024ec143dc0397ea0d4e057a2b948"
+    },
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-spikingbrain-hybrid-memory-v1\\experiments\\rineya_spikingbrain_hybrid_memory_v1\\runs\\titan_transition_v2_20261004_memory_efficient\\B-distill\\receipt.json": {
+      "bytes": 109083,
+      "sha256": "a3b233497a66c029e1317da188f960ee6193f139afa3c0167e537e0dadc61aa2"
+    },
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-spikingbrain-hybrid-memory-v1\\experiments\\rineya_spikingbrain_hybrid_memory_v1\\runs\\titan_transition_v2_20261004_memory_efficient\\B-evaluation\\receipt.json": {
+      "bytes": 764734,
+      "sha256": "0ceda58b5586e58f4db59cae9e9a46ac8e7b285831c059697a14476b383e95f5"
+    },
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-spikingbrain-hybrid-memory-v1\\experiments\\rineya_spikingbrain_hybrid_memory_v1\\runs\\titan_transition_v2_20261004_memory_efficient\\B-recover\\receipt.json": {
+      "bytes": 242503,
+      "sha256": "04dbe5f8249d6893383226546ba240dc72cf99099af82619e7978925361f779a"
+    },
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-spikingbrain-hybrid-memory-v1\\experiments\\rineya_spikingbrain_hybrid_memory_v1\\runs\\titan_transition_v2_20261004_memory_efficient\\C-distill\\receipt.json": {
+      "bytes": 125346,
+      "sha256": "088469bc2a227e71d4f99e42dee8effc45adebaa7524c77ae1f8a8547e8fa069"
+    },
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-spikingbrain-hybrid-memory-v1\\experiments\\rineya_spikingbrain_hybrid_memory_v1\\runs\\titan_transition_v2_20261004_memory_efficient\\C-evaluation\\receipt.json": {
+      "bytes": 791436,
+      "sha256": "4a1dc38e91f1a653f2b249f433312350252f5d3cd2c50575b404dbafc3bc5e46"
+    },
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-spikingbrain-hybrid-memory-v1\\experiments\\rineya_spikingbrain_hybrid_memory_v1\\runs\\titan_transition_v2_20261004_memory_efficient\\C-recover\\receipt.json": {
+      "bytes": 258760,
+      "sha256": "fa10aee72f986c91c41c175257d67f25a7e418b198e9e09b2990ea8d56ae2888"
+    },
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-spikingbrain-hybrid-memory-v1\\experiments\\rineya_spikingbrain_hybrid_memory_v1\\runs\\titan_transition_v2_20261004_memory_efficient\\D-distill\\receipt.json": {
+      "bytes": 125414,
+      "sha256": "30aa310abb46a38728844555afeabc309da2ccbf251a1aeb6fb9145ce15a0e17"
+    },
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-spikingbrain-hybrid-memory-v1\\experiments\\rineya_spikingbrain_hybrid_memory_v1\\runs\\titan_transition_v2_20261004_memory_efficient\\D-evaluation\\receipt.json": {
+      "bytes": 791662,
+      "sha256": "32f51c000b397577cd9461049709345768472be79a57f354cc03e8bacbab6d61"
+    },
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-spikingbrain-hybrid-memory-v1\\experiments\\rineya_spikingbrain_hybrid_memory_v1\\runs\\titan_transition_v2_20261004_memory_efficient\\D-recover\\receipt.json": {
+      "bytes": 259077,
+      "sha256": "43542c16a9325d050911ca016fb03f9e9ffa2686697610766405119c3999f6fd"
+    },
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-spikingbrain-hybrid-memory-v1\\experiments\\rineya_spikingbrain_hybrid_memory_v1\\runs\\titan_transition_v2_20261004_memory_efficient\\comparison.json": {
+      "bytes": 1023829,
+      "sha256": "983ad4922833fa4fe2be866fd27421ed1e0aef1befe01c7b67f38405b399084e"
+    },
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-spikingbrain-hybrid-memory-v1\\experiments\\rineya_spikingbrain_hybrid_memory_v1\\sbhm\\data.py": {
+      "bytes": 5846,
+      "sha256": "ded0427b69fcf2c70f9bc250ac522a5a79229301f61d38a4ab8151fc2a815f89"
+    },
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-spikingbrain-hybrid-memory-v1\\experiments\\rineya_spikingbrain_hybrid_memory_v1\\sbhm\\native.py": {
+      "bytes": 7522,
+      "sha256": "ed278b23436c91389a2f1e04556fe0842c65de287226bafbc93ff1852fc8edf6"
+    },
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-spikingbrain-hybrid-memory-v1\\experiments\\rineya_spikingbrain_hybrid_memory_v1\\sbhm\\pipeline.py": {
+      "bytes": 25357,
+      "sha256": "791a9e8176262e5b3f6e773a322640b8ae417956e1584b5de2724d6afa659c60"
+    }
+  },
+  "limitations": [
+    "One source, one converted site, one seed 17 and posthoc DEV inspection; no confirmation evidence or uncertainty/promotion claim.",
+    "112 DEV evidence worlds have four dependent counterfactual/position variants; rows are not independent samples.",
+    "768 corpus checks include 256 TRAIN rows; only 512 rows are native DEV measurements.",
+    "64 synthetic retention rows establish narrow source-correct retention/damage only; repaired source-incorrect cases do not negate damage.",
+    "Distances are cross-checked from historical exact-token geometry metadata, not freshly tokenized in this offline inspection.",
+    "Other 27 layers retain full attention; pairing does not demonstrate an exclusive recurrent route.",
+    "Compact JSON strict and outer-whitespace/case normalized exact match do not parse semantic JSON correctness."
+  ],
+  "method": "stdlib raw-prompt parser independently reconstructs all 768 targets; strict strings independently score 2048 predictions; no generator import, tokenizer execution or native execution",
+  "missing_answerability": {
+    "distant_heldout": {
+      "absent_rows": 16,
+      "arms": {
+        "A": {
+          "absent_correct": 0,
+          "null_predictions": 0,
+          "present_correct": 3
+        },
+        "B": {
+          "absent_correct": 0,
+          "null_predictions": 0,
+          "present_correct": 16
+        },
+        "C": {
+          "absent_correct": 16,
+          "null_predictions": 32,
+          "present_correct": 0
+        },
+        "D": {
+          "absent_correct": 16,
+          "null_predictions": 32,
+          "present_correct": 0
+        }
+      },
+      "present_rows": 16
+    },
+    "near_control": {
+      "absent_rows": 16,
+      "arms": {
+        "A": {
+          "absent_correct": 9,
+          "null_predictions": 13,
+          "present_correct": 0
+        },
+        "B": {
+          "absent_correct": 10,
+          "null_predictions": 18,
+          "present_correct": 7
+        },
+        "C": {
+          "absent_correct": 16,
+          "null_predictions": 32,
+          "present_correct": 0
+        },
+        "D": {
+          "absent_correct": 16,
+          "null_predictions": 32,
+          "present_correct": 0
+        }
+      },
+      "present_rows": 16
+    }
+  },
+  "retention_row_details": {
+    "damaged": {
+      "B": [
+        {
+          "id": "dev-retention-boolean-world-001",
+          "predictions": {
+            "A": "{\"v\":\"true\"}",
+            "B": "{\"v\":\"false\"}",
+            "C": "{\"v\":\"false\"}",
+            "D": "{\"v\":\"false\"}"
+          },
+          "target": "{\"v\":\"true\"}"
+        },
+        {
+          "id": "dev-retention-boolean-world-005",
+          "predictions": {
+            "A": "{\"v\":\"true\"}",
+            "B": "{\"v\":\"false\"}",
+            "C": "{\"v\":\"false\"}",
+            "D": "{\"v\":\"false\"}"
+          },
+          "target": "{\"v\":\"true\"}"
+        },
+        {
+          "id": "dev-retention-conditional-world-001",
+          "predictions": {
+            "A": "{\"v\":\"silver\"}",
+            "B": "{\"v\":\"amber\"}",
+            "C": "{\"v\":\"silver\"}",
+            "D": "{\"v\":\"silver\"}"
+          },
+          "target": "{\"v\":\"silver\"}"
+        },
+        {
+          "id": "dev-retention-temporal-world-000",
+          "predictions": {
+            "A": "{\"v\":\"blue\"}",
+            "B": "{\"v\":\"green\"}",
+            "C": "{\"v\":\"green\"}",
+            "D": "{\"v\":\"green\"}"
+          },
+          "target": "{\"v\":\"blue\"}"
+        },
+        {
+          "id": "dev-retention-unit_conversion-world-001",
+          "predictions": {
+            "A": "{\"v\":\"360\"}",
+            "B": "{\"v\":\"3600\"}",
+            "C": "{\"v\":\"3600\"}",
+            "D": "{\"v\":\"3600\"}"
+          },
+          "target": "{\"v\":\"360\"}"
+        }
+      ],
+      "C": [
+        {
+          "id": "dev-retention-boolean-world-001",
+          "predictions": {
+            "A": "{\"v\":\"true\"}",
+            "B": "{\"v\":\"false\"}",
+            "C": "{\"v\":\"false\"}",
+            "D": "{\"v\":\"false\"}"
+          },
+          "target": "{\"v\":\"true\"}"
+        },
+        {
+          "id": "dev-retention-boolean-world-005",
+          "predictions": {
+            "A": "{\"v\":\"true\"}",
+            "B": "{\"v\":\"false\"}",
+            "C": "{\"v\":\"false\"}",
+            "D": "{\"v\":\"false\"}"
+          },
+          "target": "{\"v\":\"true\"}"
+        },
+        {
+          "id": "dev-retention-temporal-world-000",
+          "predictions": {
+            "A": "{\"v\":\"blue\"}",
+            "B": "{\"v\":\"green\"}",
+            "C": "{\"v\":\"green\"}",
+            "D": "{\"v\":\"green\"}"
+          },
+          "target": "{\"v\":\"blue\"}"
+        },
+        {
+          "id": "dev-retention-unit_conversion-world-001",
+          "predictions": {
+            "A": "{\"v\":\"360\"}",
+            "B": "{\"v\":\"3600\"}",
+            "C": "{\"v\":\"3600\"}",
+            "D": "{\"v\":\"3600\"}"
+          },
+          "target": "{\"v\":\"360\"}"
+        }
+      ],
+      "D": [
+        {
+          "id": "dev-retention-boolean-world-001",
+          "predictions": {
+            "A": "{\"v\":\"true\"}",
+            "B": "{\"v\":\"false\"}",
+            "C": "{\"v\":\"false\"}",
+            "D": "{\"v\":\"false\"}"
+          },
+          "target": "{\"v\":\"true\"}"
+        },
+        {
+          "id": "dev-retention-boolean-world-005",
+          "predictions": {
+            "A": "{\"v\":\"true\"}",
+            "B": "{\"v\":\"false\"}",
+            "C": "{\"v\":\"false\"}",
+            "D": "{\"v\":\"false\"}"
+          },
+          "target": "{\"v\":\"true\"}"
+        },
+        {
+          "id": "dev-retention-temporal-world-000",
+          "predictions": {
+            "A": "{\"v\":\"blue\"}",
+            "B": "{\"v\":\"green\"}",
+            "C": "{\"v\":\"green\"}",
+            "D": "{\"v\":\"green\"}"
+          },
+          "target": "{\"v\":\"blue\"}"
+        },
+        {
+          "id": "dev-retention-unit_conversion-world-001",
+          "predictions": {
+            "A": "{\"v\":\"360\"}",
+            "B": "{\"v\":\"3600\"}",
+            "C": "{\"v\":\"3600\"}",
+            "D": "{\"v\":\"3600\"}"
+          },
+          "target": "{\"v\":\"360\"}"
+        }
+      ]
+    },
+    "repaired": {
+      "B": [
+        {
+          "id": "dev-retention-conditional-world-000",
+          "predictions": {
+            "A": "{\"v\":\"blue\"}",
+            "B": "{\"v\":\"amber\"}",
+            "C": "{\"v\":\"blue\"}",
+            "D": "{\"v\":\"blue\"}"
+          },
+          "target": "{\"v\":\"amber\"}"
+        },
+        {
+          "id": "dev-retention-conditional-world-002",
+          "predictions": {
+            "A": "{\"v\":\"amber\"}",
+            "B": "{\"v\":\"green\"}",
+            "C": "{\"v\":\"green\"}",
+            "D": "{\"v\":\"green\"}"
+          },
+          "target": "{\"v\":\"green\"}"
+        },
+        {
+          "id": "dev-retention-ordering-world-002",
+          "predictions": {
+            "A": "{\"v\":27}",
+            "B": "{\"v\":\"27\"}",
+            "C": "{\"v\":\"27\"}",
+            "D": "{\"v\":\"27\"}"
+          },
+          "target": "{\"v\":\"27\"}"
+        },
+        {
+          "id": "dev-retention-ordering-world-004",
+          "predictions": {
+            "A": "{\"v\":53}",
+            "B": "{\"v\":\"53\"}",
+            "C": "{\"v\":\"53\"}",
+            "D": "{\"v\":\"53\"}"
+          },
+          "target": "{\"v\":\"53\"}"
+        },
+        {
+          "id": "dev-retention-short_table-world-000",
+          "predictions": {
+            "A": "829",
+            "B": "{\"v\":\"492\"}",
+            "C": "{\"v\":\"492\"}",
+            "D": "{\"v\":\"492\"}"
+          },
+          "target": "{\"v\":\"492\"}"
+        },
+        {
+          "id": "dev-retention-short_table-world-001",
+          "predictions": {
+            "A": "354",
+            "B": "{\"v\":\"354\"}",
+            "C": "{\"v\":\"354\"}",
+            "D": "{\"v\":\"354\"}"
+          },
+          "target": "{\"v\":\"354\"}"
+        },
+        {
+          "id": "dev-retention-short_table-world-002",
+          "predictions": {
+            "A": "445",
+            "B": "{\"v\":\"445\"}",
+            "C": "{\"v\":\"445\"}",
+            "D": "{\"v\":\"445\"}"
+          },
+          "target": "{\"v\":\"445\"}"
+        },
+        {
+          "id": "dev-retention-short_table-world-005",
+          "predictions": {
+            "A": "766",
+            "B": "{\"v\":\"691\"}",
+            "C": "{\"v\":\"691\"}",
+            "D": "{\"v\":\"691\"}"
+          },
+          "target": "{\"v\":\"691\"}"
+        },
+        {
+          "id": "dev-retention-short_table-world-006",
+          "predictions": {
+            "A": "880",
+            "B": "{\"v\":\"880\"}",
+            "C": "{\"v\":\"880\"}",
+            "D": "{\"v\":\"880\"}"
+          },
+          "target": "{\"v\":\"880\"}"
+        },
+        {
+          "id": "dev-retention-short_table-world-007",
+          "predictions": {
+            "A": "639",
+            "B": "{\"v\":\"639\"}",
+            "C": "{\"v\":\"639\"}",
+            "D": "{\"v\":\"639\"}"
+          },
+          "target": "{\"v\":\"639\"}"
+        },
+        {
+          "id": "dev-retention-temporal-world-002",
+          "predictions": {
+            "A": "silver",
+            "B": "{\"v\":\"green\"}",
+            "C": "{\"v\":\"green\"}",
+            "D": "{\"v\":\"green\"}"
+          },
+          "target": "{\"v\":\"green\"}"
+        },
+        {
+          "id": "dev-retention-unit_conversion-world-007",
+          "predictions": {
+            "A": "{\"v\":\"162\"}",
+            "B": "{\"v\":\"1620\"}",
+            "C": "{\"v\":\"1620\"}",
+            "D": "{\"v\":\"1620\"}"
+          },
+          "target": "{\"v\":\"1620\"}"
+        }
+      ],
+      "C": [
+        {
+          "id": "dev-retention-conditional-world-002",
+          "predictions": {
+            "A": "{\"v\":\"amber\"}",
+            "B": "{\"v\":\"green\"}",
+            "C": "{\"v\":\"green\"}",
+            "D": "{\"v\":\"green\"}"
+          },
+          "target": "{\"v\":\"green\"}"
+        },
+        {
+          "id": "dev-retention-ordering-world-002",
+          "predictions": {
+            "A": "{\"v\":27}",
+            "B": "{\"v\":\"27\"}",
+            "C": "{\"v\":\"27\"}",
+            "D": "{\"v\":\"27\"}"
+          },
+          "target": "{\"v\":\"27\"}"
+        },
+        {
+          "id": "dev-retention-ordering-world-004",
+          "predictions": {
+            "A": "{\"v\":53}",
+            "B": "{\"v\":\"53\"}",
+            "C": "{\"v\":\"53\"}",
+            "D": "{\"v\":\"53\"}"
+          },
+          "target": "{\"v\":\"53\"}"
+        },
+        {
+          "id": "dev-retention-short_table-world-000",
+          "predictions": {
+            "A": "829",
+            "B": "{\"v\":\"492\"}",
+            "C": "{\"v\":\"492\"}",
+            "D": "{\"v\":\"492\"}"
+          },
+          "target": "{\"v\":\"492\"}"
+        },
+        {
+          "id": "dev-retention-short_table-world-001",
+          "predictions": {
+            "A": "354",
+            "B": "{\"v\":\"354\"}",
+            "C": "{\"v\":\"354\"}",
+            "D": "{\"v\":\"354\"}"
+          },
+          "target": "{\"v\":\"354\"}"
+        },
+        {
+          "id": "dev-retention-short_table-world-002",
+          "predictions": {
+            "A": "445",
+            "B": "{\"v\":\"445\"}",
+            "C": "{\"v\":\"445\"}",
+            "D": "{\"v\":\"445\"}"
+          },
+          "target": "{\"v\":\"445\"}"
+        },
+        {
+          "id": "dev-retention-short_table-world-005",
+          "predictions": {
+            "A": "766",
+            "B": "{\"v\":\"691\"}",
+            "C": "{\"v\":\"691\"}",
+            "D": "{\"v\":\"691\"}"
+          },
+          "target": "{\"v\":\"691\"}"
+        },
+        {
+          "id": "dev-retention-short_table-world-006",
+          "predictions": {
+            "A": "880",
+            "B": "{\"v\":\"880\"}",
+            "C": "{\"v\":\"880\"}",
+            "D": "{\"v\":\"880\"}"
+          },
+          "target": "{\"v\":\"880\"}"
+        },
+        {
+          "id": "dev-retention-short_table-world-007",
+          "predictions": {
+            "A": "639",
+            "B": "{\"v\":\"639\"}",
+            "C": "{\"v\":\"639\"}",
+            "D": "{\"v\":\"639\"}"
+          },
+          "target": "{\"v\":\"639\"}"
+        },
+        {
+          "id": "dev-retention-temporal-world-002",
+          "predictions": {
+            "A": "silver",
+            "B": "{\"v\":\"green\"}",
+            "C": "{\"v\":\"green\"}",
+            "D": "{\"v\":\"green\"}"
+          },
+          "target": "{\"v\":\"green\"}"
+        },
+        {
+          "id": "dev-retention-unit_conversion-world-007",
+          "predictions": {
+            "A": "{\"v\":\"162\"}",
+            "B": "{\"v\":\"1620\"}",
+            "C": "{\"v\":\"1620\"}",
+            "D": "{\"v\":\"1620\"}"
+          },
+          "target": "{\"v\":\"1620\"}"
+        }
+      ],
+      "D": [
+        {
+          "id": "dev-retention-conditional-world-002",
+          "predictions": {
+            "A": "{\"v\":\"amber\"}",
+            "B": "{\"v\":\"green\"}",
+            "C": "{\"v\":\"green\"}",
+            "D": "{\"v\":\"green\"}"
+          },
+          "target": "{\"v\":\"green\"}"
+        },
+        {
+          "id": "dev-retention-ordering-world-002",
+          "predictions": {
+            "A": "{\"v\":27}",
+            "B": "{\"v\":\"27\"}",
+            "C": "{\"v\":\"27\"}",
+            "D": "{\"v\":\"27\"}"
+          },
+          "target": "{\"v\":\"27\"}"
+        },
+        {
+          "id": "dev-retention-ordering-world-004",
+          "predictions": {
+            "A": "{\"v\":53}",
+            "B": "{\"v\":\"53\"}",
+            "C": "{\"v\":\"53\"}",
+            "D": "{\"v\":\"53\"}"
+          },
+          "target": "{\"v\":\"53\"}"
+        },
+        {
+          "id": "dev-retention-short_table-world-000",
+          "predictions": {
+            "A": "829",
+            "B": "{\"v\":\"492\"}",
+            "C": "{\"v\":\"492\"}",
+            "D": "{\"v\":\"492\"}"
+          },
+          "target": "{\"v\":\"492\"}"
+        },
+        {
+          "id": "dev-retention-short_table-world-001",
+          "predictions": {
+            "A": "354",
+            "B": "{\"v\":\"354\"}",
+            "C": "{\"v\":\"354\"}",
+            "D": "{\"v\":\"354\"}"
+          },
+          "target": "{\"v\":\"354\"}"
+        },
+        {
+          "id": "dev-retention-short_table-world-002",
+          "predictions": {
+            "A": "445",
+            "B": "{\"v\":\"445\"}",
+            "C": "{\"v\":\"445\"}",
+            "D": "{\"v\":\"445\"}"
+          },
+          "target": "{\"v\":\"445\"}"
+        },
+        {
+          "id": "dev-retention-short_table-world-005",
+          "predictions": {
+            "A": "766",
+            "B": "{\"v\":\"691\"}",
+            "C": "{\"v\":\"691\"}",
+            "D": "{\"v\":\"691\"}"
+          },
+          "target": "{\"v\":\"691\"}"
+        },
+        {
+          "id": "dev-retention-short_table-world-006",
+          "predictions": {
+            "A": "880",
+            "B": "{\"v\":\"880\"}",
+            "C": "{\"v\":\"880\"}",
+            "D": "{\"v\":\"880\"}"
+          },
+          "target": "{\"v\":\"880\"}"
+        },
+        {
+          "id": "dev-retention-short_table-world-007",
+          "predictions": {
+            "A": "639",
+            "B": "{\"v\":\"639\"}",
+            "C": "{\"v\":\"639\"}",
+            "D": "{\"v\":\"639\"}"
+          },
+          "target": "{\"v\":\"639\"}"
+        },
+        {
+          "id": "dev-retention-temporal-world-002",
+          "predictions": {
+            "A": "silver",
+            "B": "{\"v\":\"green\"}",
+            "C": "{\"v\":\"green\"}",
+            "D": "{\"v\":\"green\"}"
+          },
+          "target": "{\"v\":\"green\"}"
+        },
+        {
+          "id": "dev-retention-unit_conversion-world-007",
+          "predictions": {
+            "A": "{\"v\":\"162\"}",
+            "B": "{\"v\":\"1620\"}",
+            "C": "{\"v\":\"1620\"}",
+            "D": "{\"v\":\"1620\"}"
+          },
+          "target": "{\"v\":\"1620\"}"
+        }
+      ]
+    },
+    "source_correct_rows": [
+      "dev-retention-arithmetic-world-000",
+      "dev-retention-arithmetic-world-002",
+      "dev-retention-arithmetic-world-004",
+      "dev-retention-arithmetic-world-006",
+      "dev-retention-boolean-world-000",
+      "dev-retention-boolean-world-001",
+      "dev-retention-boolean-world-002",
+      "dev-retention-boolean-world-003",
+      "dev-retention-boolean-world-004",
+      "dev-retention-boolean-world-005",
+      "dev-retention-boolean-world-006",
+      "dev-retention-conditional-world-001",
+      "dev-retention-conditional-world-003",
+      "dev-retention-conditional-world-004",
+      "dev-retention-conditional-world-005",
+      "dev-retention-conditional-world-006",
+      "dev-retention-conditional-world-007",
+      "dev-retention-ordering-world-005",
+      "dev-retention-temporal-world-000",
+      "dev-retention-temporal-world-001",
+      "dev-retention-unit_conversion-world-001",
+      "dev-retention-unit_conversion-world-002"
+    ]
+  },
+  "schema": "SBHM-001-independent-pairing-closeout/v1",
+  "scores": {
+    "distant_heldout": {
+      "C_only": [
+        "dev-lookup-world-010-distant_heldout-cf-0"
+      ],
+      "D_minus_C_count": -1,
+      "D_only": [],
+      "counts": {
+        "A": 51,
+        "B": 172,
+        "C": 172,
+        "D": 171
+      },
+      "retention": {
+        "B": {
+          "damaged": 6,
+          "repaired": 127,
+          "retained": 45
+        },
+        "C": {
+          "damaged": 10,
+          "repaired": 131,
+          "retained": 41
+        },
+        "D": {
+          "damaged": 10,
+          "repaired": 130,
+          "retained": 41
+        }
+      },
+      "rows": 224,
+      "source_correct_cases": 51
+    },
+    "near_control": {
+      "C_only": [
+        "dev-update-world-005-near_control-cf-1"
+      ],
+      "D_minus_C_count": -1,
+      "D_only": [],
+      "counts": {
+        "A": 104,
+        "B": 179,
+        "C": 172,
+        "D": 171
+      },
+      "retention": {
+        "B": {
+          "damaged": 10,
+          "repaired": 85,
+          "retained": 94
+        },
+        "C": {
+          "damaged": 11,
+          "repaired": 79,
+          "retained": 93
+        },
+        "D": {
+          "damaged": 11,
+          "repaired": 78,
+          "retained": 93
+        }
+      },
+      "rows": 224,
+      "source_correct_cases": 104
+    },
+    "retention": {
+      "C_only": [],
+      "D_minus_C_count": 0,
+      "D_only": [],
+      "counts": {
+        "A": 22,
+        "B": 29,
+        "C": 29,
+        "D": 29
+      },
+      "retention": {
+        "B": {
+          "damaged": 5,
+          "repaired": 12,
+          "retained": 17
+        },
+        "C": {
+          "damaged": 4,
+          "repaired": 11,
+          "retained": 18
+        },
+        "D": {
+          "damaged": 4,
+          "repaired": 11,
+          "retained": 18
+        }
+      },
+      "rows": 64,
+      "source_correct_cases": 22
+    }
+  },
+  "script_sha256": "158aa222ee8e5738aecee447f36d42c87abeec0dbd4a9a09384ca82438d3121d",
+  "status": "FAIL",
+  "task_stratification": {
+    "distant_heldout": {
+      "identifier": {
+        "D_only": [],
+        "counts": {
+          "A": 3,
+          "B": 32,
+          "C": 32,
+          "D": 32
+        },
+        "rows": 32
+      },
+      "join": {
+        "D_only": [],
+        "counts": {
+          "A": 6,
+          "B": 26,
+          "C": 26,
+          "D": 26
+        },
+        "rows": 32
+      },
+      "lookup": {
+        "D_only": [],
+        "counts": {
+          "A": 3,
+          "B": 31,
+          "C": 31,
+          "D": 30
+        },
+        "rows": 32
+      },
+      "missing": {
+        "D_only": [],
+        "counts": {
+          "A": 3,
+          "B": 16,
+          "C": 16,
+          "D": 16
+        },
+        "rows": 32
+      },
+      "multiple_facts": {
+        "D_only": [],
+        "counts": {
+          "A": 28,
+          "B": 30,
+          "C": 30,
+          "D": 30
+        },
+        "rows": 32
+      },
+      "number": {
+        "D_only": [],
+        "counts": {
+          "A": 2,
+          "B": 32,
+          "C": 31,
+          "D": 31
+        },
+        "rows": 32
+      },
+      "update": {
+        "D_only": [],
+        "counts": {
+          "A": 6,
+          "B": 5,
+          "C": 6,
+          "D": 6
+        },
+        "rows": 32
+      }
+    },
+    "near_control": {
+      "identifier": {
+        "D_only": [],
+        "counts": {
+          "A": 15,
+          "B": 32,
+          "C": 32,
+          "D": 32
+        },
+        "rows": 32
+      },
+      "join": {
+        "D_only": [],
+        "counts": {
+          "A": 14,
+          "B": 32,
+          "C": 32,
+          "D": 32
+        },
+        "rows": 32
+      },
+      "lookup": {
+        "D_only": [],
+        "counts": {
+          "A": 27,
+          "B": 32,
+          "C": 29,
+          "D": 29
+        },
+        "rows": 32
+      },
+      "missing": {
+        "D_only": [],
+        "counts": {
+          "A": 9,
+          "B": 17,
+          "C": 16,
+          "D": 16
+        },
+        "rows": 32
+      },
+      "multiple_facts": {
+        "D_only": [],
+        "counts": {
+          "A": 22,
+          "B": 26,
+          "C": 26,
+          "D": 26
+        },
+        "rows": 32
+      },
+      "number": {
+        "D_only": [],
+        "counts": {
+          "A": 9,
+          "B": 32,
+          "C": 30,
+          "D": 30
+        },
+        "rows": 32
+      },
+      "update": {
+        "D_only": [],
+        "counts": {
+          "A": 8,
+          "B": 8,
+          "C": 7,
+          "D": 6
+        },
+        "rows": 32
+      }
+    }
+  },
+  "training_exposure": {
+    "B_distill": {
+      "input_tokens_max": 259,
+      "input_tokens_min": 42,
+      "input_tokens_total": 109120,
+      "learning_rate": 0.0001,
+      "optimizer": "AdamW(.9,.95), wd=0, eps=1e-8, clip=1",
+      "ordered_trace_sha256": "87e6bd01e471493857ec3933e02aed2438d19d60fa2873f56f95837d9037adc7",
+      "steps": 512,
+      "supervised_positions_total": 109120,
+      "trainable_parameters": 81920,
+      "unique_rows": 256
+    },
+    "B_recover": {
+      "input_tokens_max": 259,
+      "input_tokens_min": 42,
+      "input_tokens_total": 109120,
+      "learning_rate": 0.0001,
+      "optimizer": "AdamW(.9,.95), wd=0, eps=1e-8, clip=1",
+      "ordered_trace_sha256": "73ae0d0eede269c2d2846e85d552903106d499ffd85ac8a253fc317e7d6e6f69",
+      "steps": 512,
+      "supervised_positions_total": 4848,
+      "trainable_parameters": 81920,
+      "unique_rows": 256
+    },
+    "C_distill": {
+      "input_tokens_max": 259,
+      "input_tokens_min": 42,
+      "input_tokens_total": 109120,
+      "learning_rate": 0.0001,
+      "optimizer": "AdamW(.9,.95), wd=0, eps=1e-8, clip=1",
+      "ordered_trace_sha256": "87e6bd01e471493857ec3933e02aed2438d19d60fa2873f56f95837d9037adc7",
+      "steps": 512,
+      "supervised_positions_total": 109120,
+      "trainable_parameters": 81920,
+      "unique_rows": 256
+    },
+    "C_recover": {
+      "input_tokens_max": 259,
+      "input_tokens_min": 42,
+      "input_tokens_total": 109120,
+      "learning_rate": 0.0001,
+      "optimizer": "AdamW(.9,.95), wd=0, eps=1e-8, clip=1",
+      "ordered_trace_sha256": "73ae0d0eede269c2d2846e85d552903106d499ffd85ac8a253fc317e7d6e6f69",
+      "steps": 512,
+      "supervised_positions_total": 4848,
+      "trainable_parameters": 81920,
+      "unique_rows": 256
+    },
+    "D_distill": {
+      "input_tokens_max": 259,
+      "input_tokens_min": 42,
+      "input_tokens_total": 109120,
+      "learning_rate": 0.0001,
+      "optimizer": "AdamW(.9,.95), wd=0, eps=1e-8, clip=1",
+      "ordered_trace_sha256": "87e6bd01e471493857ec3933e02aed2438d19d60fa2873f56f95837d9037adc7",
+      "steps": 512,
+      "supervised_positions_total": 109120,
+      "trainable_parameters": 1131664,
+      "unique_rows": 256
+    },
+    "D_recover": {
+      "input_tokens_max": 259,
+      "input_tokens_min": 42,
+      "input_tokens_total": 109120,
+      "learning_rate": 0.0001,
+      "optimizer": "AdamW(.9,.95), wd=0, eps=1e-8, clip=1",
+      "ordered_trace_sha256": "73ae0d0eede269c2d2846e85d552903106d499ffd85ac8a253fc317e7d6e6f69",
+      "steps": 512,
+      "supervised_positions_total": 4848,
+      "trainable_parameters": 1131664,
+      "unique_rows": 256
+    }
+  }
+}

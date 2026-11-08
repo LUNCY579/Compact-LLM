@@ -1,0 +1,703 @@
+{
+  "audit_method_corrections": [
+    "Initial auditor script assumed the legacy v1 reset RNG; read exact imported campaign control.py and independently recomputed all1548 surviving per-case streams, zero differences. The mismatch was in the audit method; no native/scientific source or endpoints changed."
+  ],
+  "bindings": [
+    {
+      "path": "runs\\native-bulk-restart-001\\admission.json",
+      "sha256": "a6611ea9c493d314fbe47771ec59521440178153e0779be283128c6ae59e723c"
+    },
+    {
+      "path": "runs\\native-bulk-restart-001\\source_manifest.json",
+      "sha256": "cdc5a256d09c6d440bf40e69e932d0acc13d00138688e14b379b73b6a0584467"
+    },
+    {
+      "path": "runs\\native-bulk-restart-001\\terminal_receipt.json",
+      "sha256": "dc4d8c7a5895e846aee3c1b1b19b9e4f4909386779b313aa5693599ec9f2ded6"
+    },
+    {
+      "path": "runs\\native-bulk-restart-001\\resources.jsonl",
+      "sha256": "2eb3914b7fe0f05635c3fffd530950a27f2be0f8bfc5518a35c790b76fdedd7d"
+    },
+    {
+      "path": "runs\\native-bulk-restart-001\\result\\receipt.json",
+      "sha256": "d9c34a822d9bdaaac39d33820eaacf05d083974cd9191e43559307bd2258ff19"
+    },
+    {
+      "path": "runs\\native-bulk-restart-001\\result\\registration.json",
+      "sha256": "223dee72e8e41e2cbefdffe4677616a67cb26906604d4dcbe978c49462cf5588"
+    },
+    {
+      "path": "runs\\native-bulk-restart-001\\result\\qualification.json",
+      "sha256": "f5dcc3fd73bfba345b2b81fdee82bd66d931dd9fd619636106f50d88d85e955a"
+    },
+    {
+      "path": "runs\\native-bulk-restart-001\\result\\A5_qualification.json",
+      "sha256": "564b3faa455cf9841c1f8403efeda7fead0f06e562a2d6eb305575eeb008743a"
+    },
+    {
+      "path": "runs\\native-bulk-restart-001\\result\\frozen_development.json",
+      "sha256": "9a7269deeaf116666a45dba329e32adb2be41b0a3f67ad74e3f5ff9714250bf2"
+    },
+    {
+      "path": "runs\\native-bulk-restart-001\\result\\integrity_journal.jsonl",
+      "sha256": "e6caa0c310ec5c7bd52477dba29e52aacda5b8156386d6f804982c64c6340d8b"
+    },
+    {
+      "path": "runs\\native-bulk-restart-001\\result\\outcomes.jsonl",
+      "sha256": "858ba6c1b5105b460e600c93872575c78e2c3e43545538847e3d9eba30e01cd8"
+    },
+    {
+      "path": "runs\\native-bulk-restart-001\\result\\forwards.jsonl",
+      "sha256": "55e9219415b7e95d78778b7f9a9ba0bc178430fc38cd6735eb2059a687dfb9d6"
+    },
+    {
+      "path": "runs\\native-bulk-restart-001\\result\\trajectories.jsonl",
+      "sha256": "0b9a1266a33320eb765e9a27a65ddf7d2a49fae45af9ae78bd81b8b86257c0c3"
+    },
+    {
+      "path": "runs\\native-bulk-restart-001\\result\\readout_pairs.jsonl",
+      "sha256": "3018c732c22d45bab977e60aea49c3a800ba5ee6cd8e7ea4b2e37f51a63c4e75"
+    },
+    {
+      "path": "runs\\native-bulk-restart-001\\result\\DEV_DETERMINISTIC_INTEGRITY.json",
+      "sha256": "fb835e19fe5899365e05ff9970d055f9ec6492bc21cc5683e3f209b186f36efb"
+    },
+    {
+      "path": "runs\\native-bulk-restart-001\\result\\DEV_COMPLETE_INTEGRITY.json",
+      "sha256": "e2075fb439ca62b85630fcc7093eba331c95583273e1bc708663d43a3ef218a7"
+    },
+    {
+      "path": "runs\\native-bulk-restart-001\\result\\FINAL_INTEGRITY.json",
+      "sha256": "2e5347e577cc990a1ac7000c47a0c93d2f3e9945983e1283cf8f059d2a2ec5dc"
+    },
+    {
+      "path": "runs\\bulk-bank-apparatus-001\\bank.json",
+      "sha256": "862a63648caf7efb3d287c11bc5caaefc884e0ec6cb3130ce8f196526efc40cd"
+    },
+    {
+      "path": "BUDGET_LEDGER.jsonl",
+      "sha256": "86456fbf9cc0f673050fde2beb3a61114038eb10620a22c798031f517404b3d0"
+    },
+    {
+      "path": "analyses\\bulk-restart-manifest-reviewed-001\\REPORT.json",
+      "sha256": "67c7d5d9fc128b148afc6d056cb26f9ecef4e05dde78a7405358125250cb9d21"
+    },
+    {
+      "path": "BULK_RESTART_RESULT_001.md",
+      "sha256": "15d283662f4f0de6b6bf9d755d8b82b69d2c242d30e08a7bec8f66915f5abed5"
+    },
+    {
+      "path": "audits\\full_generation_restart_native_execution_001.json",
+      "sha256": "a8a9810e7c2993b653cc487e344453b446e73e1e120e1a3aa7573035bde84989"
+    },
+    {
+      "path": "audits\\bulk_restart_execution_math_001.json",
+      "sha256": "5d96663695af200f2a3875c84067825c557660d35214dcaa179613ca432adc3b"
+    },
+    {
+      "path": "reviews\\bulk_restart_manifest_reader_review_001.json",
+      "sha256": "6b76616f3a7a671a66f105b713b970c8ad502b63daa92375c287155486de2802"
+    },
+    {
+      "path": "bulk_restart_analysis_manifest_bound.py",
+      "sha256": "5bc14dc13371b1a13018943ad6b60bb83ea373f088129143084aa6c98cb34511"
+    },
+    {
+      "path": "bulk_restart_analysis.py",
+      "sha256": "9c95e00731525c34537696e79f4cc776ebfb2d5f560da0888da2feaf7b62c543"
+    },
+    {
+      "path": "bulk_restart_native.py",
+      "sha256": "899d88cf37fe2399cab445400934a12dff1eb997e9085352c82ec32ad663dd4f"
+    },
+    {
+      "path": "bulk_bank.py",
+      "sha256": "3242439231064fc81991e157c0da62833f4e4223ec71d60cf9ffd2851815b5eb"
+    },
+    {
+      "path": "open_bank.py",
+      "sha256": "25db8ad7b8bd4166188eccab4be73c9a430f696610dea5b8c83b380883f9d42a"
+    },
+    {
+      "path": "reviews\\bulk_restart_execution_review_001.json",
+      "sha256": "74a4aaa46a537bfbe798ea76c97b52c11f4c5d1b1ced55a8cae61ad19e465ad0"
+    },
+    {
+      "path": "control.py",
+      "sha256": "298d0a7064ff562c498ecc50d13c2f23cd9bdf1df6b1d616d7204bac24a49ed3"
+    },
+    {
+      "path": "REPRODUCIBILITY_INDEX_v20.json",
+      "sha256": "11155963defe78c4afbf7594ebeac4bdb48b63e25d7aa707350201ccd9d711aa"
+    },
+    {
+      "path": "STATE.json",
+      "sha256": "a6f1f818f4891fd30b5f39fcde1444cebe11c7161ebb2d4ea48044277e6b8874"
+    },
+    {
+      "path": "CONTINUE.md",
+      "sha256": "6a8303d052e85704b87e6ac8e8755c0a2480bd7356d8b4bb1543a9455387744d"
+    }
+  ],
+  "created_utc": "2026-10-05T19:44:18.123789+00:00",
+  "current_final_packet_targeted_check": {
+    "STATE_core": {
+      "active_native_run": "none; native-bulk-restart-001 terminal exit0",
+      "active_worker": false,
+      "native_seconds_remaining": 18018.767,
+      "native_worker_seconds_used": 3581.233,
+      "persistent_goal_status": "blocked",
+      "status": "SCIENTIFIC_RESULT_REVIEWED_PENDING_FINAL_MISSION_AUDIT"
+    },
+    "continue_has_complete288": true,
+    "continue_has_no_promotion": true,
+    "index_SHA": "11155963defe78c4afbf7594ebeac4bdb48b63e25d7aa707350201ccd9d711aa",
+    "latest_full_generation": {
+      "actual_API": 9200,
+      "cases": 288,
+      "charged_seconds": 743.39,
+      "grant_consumed": true,
+      "native_admission": "full_generation_restart_admission_v1.json",
+      "native_admission_sha256": "a6611ea9c493d314fbe47771ec59521440178153e0779be283128c6ae59e723c",
+      "parents": 144,
+      "physical_evaluations": 3296,
+      "post_terminal_reader": "bulk_restart_analysis_manifest_bound.py",
+      "promotion": false,
+      "reader_not_native_qualified": true,
+      "report": "analyses/bulk-restart-manifest-reviewed-001/REPORT.json",
+      "report_sha256": "67c7d5d9fc128b148afc6d056cb26f9ecef4e05dde78a7405358125250cb9d21",
+      "run": "runs/native-bulk-restart-001",
+      "scientific_review": {
+        "path": "reviews/bulk_restart_execution_review_001.json",
+        "sha256": "74a4aaa46a537bfbe798ea76c97b52c11f4c5d1b1ced55a8cae61ad19e465ad0"
+      },
+      "source_confirmation": false,
+      "status": "BULK_MATRIX_COMPLETE_NOT_CONFIRMATORY"
+    },
+    "lifecycle_observation": "At inspected epoch, STATE persistent_goal_status retained blocked while v20 goal_status was active. Scientific status is reviewed pending finalmission audit. Parent owns lifecycle completion reconciliation; this is not full-mission lifecycle acceptance.",
+    "live_worker": false,
+    "native_seconds": 3581.233,
+    "remaining_seconds": 18018.767,
+    "retry_available": false,
+    "scope": "Targeted metadata consistency only; no1156-entry full index rehash. Lifecycle completion remained pending at v20 epoch and is a parent-owned subsequent action.",
+    "state_keys": [
+      "CPU_H3_authority",
+      "CPU_H3_preflight",
+      "H3",
+      "H3_authority_audit",
+      "H3_last_gpu_free_MiB",
+      "H3_planned_deadline_not_reserved_seconds",
+      "H3_readiness_latest",
+      "H3_resource_blocker_goal_turn",
+      "OPEN",
+      "active_native_run",
+      "active_supervisor_session",
+      "active_worker",
+      "actual_runtime_debug_allowance",
+      "available_host_ram_bytes",
+      "blocked_resource_receipt",
+      "causal_replay_feasibility",
+      "causal_replay_proposed",
+      "cloud_spend",
+      "controller_revisions",
+      "corrected_attempt_result",
+      "corrected_causal_admission",
+      "current_completion_audit",
+      "current_debug_command",
+      "current_goal_turn_progress",
+      "current_goal_turn_verified_wait",
+      "explicit_goal_resume_required",
+      "extended_causal_admission",
+      "extended_readiness",
+      "final_consistency_receipt",
+      "full_generation_restart_actual_authority",
+      "full_generation_restart_admission",
+      "full_generation_restart_permission_question",
+      "full_generation_restart_proposed",
+      "full_generation_restart_readiness",
+      "goal_tool_receipt",
+      "host_resource_sample_utc",
+      "infrastructure_retries_used",
+      "larger_bank",
+      "latest_user_steering",
+      "live_preparation_agents",
+      "native_003_analysis",
+      "native_003_completed_cases",
+      "native_003_completed_targets",
+      "native_003_final_preservation",
+      "native_003_forecast_seconds",
+      "native_003_qualification",
+      "native_003_result",
+      "native_budget_reservation_seconds",
+      "native_seconds_remaining",
+      "native_worker_seconds_used",
+      "new_attempt_approval_blocker_goal_turn",
+      "next_gate",
+      "on_disk_asset_hash_mismatches_after_stop",
+      "optimizer_steps",
+      "original_fault_forensics",
+      "persistent_goal_status",
+      "post_failure_loaded_state_verification",
+      "previous_goal_turn_classification",
+      "provisional_DEV",
+      "reference_tables",
+      "reproducibility_index_current",
+      "required_parent_ram_bytes",
+      "research_policy_current",
+      "retry_boundary_blocker_goal_turn",
+      "runtime_debug_admission",
+      "runtime_debug_result",
+      "runtime_debug_review",
+      "scientific_goal",
+      "status",
+      "timestamp_utc",
+      "historical_final_consistency_receipt",
+      "index_snapshot_note",
+      "current_goal_turn_classification",
+      "current_authority_blocker_receipt",
+      "full_generation_restart_approval_record",
+      "human_resume_requested",
+      "native_worker_pid",
+      "native_parent_pid",
+      "full_generation_restart_actual_review",
+      "full_restart_native_qualification",
+      "full_restart_complete_forecast_seconds",
+      "full_restart_DEV_deterministic_checkpoint",
+      "full_restart_DEV_complete_checkpoint",
+      "full_restart_DEV_physical_evaluations",
+      "full_restart_final_integrity",
+      "full_restart_analysis",
+      "full_restart_analysis_native_completeness",
+      "full_restart_scientific_review",
+      "full_restart_math_review"
+    ]
+  },
+  "errors": [],
+  "independent_raw_checks": {
+    "A5_SHA_draws": 1548,
+    "A5_draw_disagreements": [],
+    "A5_draw_semantics": "Exact admitted campaign control.py seeds the full SHA256 of compact JSON [seed,A5,sample_id]. Per-case streams survive prefixes, while moments reset. force_unit consumes no random choice. Independently matched all1548 FP32 iteration1 alphas and draw indices.",
+    "API_attempts": 9200,
+    "DEV_selector_alpha": 1.0,
+    "SMOKE_pinned_scorer_disagreements": [],
+    "SMOKE_rows": 128,
+    "all3296_forward_row_cost_joins": true,
+    "asset_drift": [],
+    "cached_custom_b77_bytes": true,
+    "completed_forwards": 9197,
+    "completed_prefix_positions": 1144030,
+    "cumulative_native_seconds": 3581.232999999999,
+    "current_admitted_source_count": 107,
+    "current_checkpoint_asset_count": 10,
+    "current_source_drift": [],
+    "events": {
+      "CACHE_REJECTED": 2,
+      "CACHE_REJECTION_STARTED": 2,
+      "FORWARD_COMPLETED": 9180,
+      "FORWARD_STARTED": 9180,
+      "MAXIMUM_FORWARD_COMPLETED": 17,
+      "MAXIMUM_FORWARD_FAILED": 1,
+      "MAXIMUM_FORWARD_STARTED": 18
+    },
+    "family_scores": {
+      "DEVELOPMENT": {
+        "answerability_source_conflict": {
+          "A0": 16,
+          "A1": 17,
+          "A3": 16,
+          "A5": 16
+        },
+        "deduction_composition": {
+          "A0": 13,
+          "A1": 17,
+          "A3": 17,
+          "A5": 17
+        },
+        "dialogue_memory": {
+          "A0": 16,
+          "A1": 18,
+          "A3": 17,
+          "A5": 17
+        },
+        "document_retrieval_reconciliation": {
+          "A0": 16,
+          "A1": 16,
+          "A3": 16,
+          "A5": 16
+        },
+        "program_state": {
+          "A0": 2,
+          "A1": 1,
+          "A3": 1,
+          "A5": 1
+        },
+        "signed_ledgers": {
+          "A0": 0,
+          "A1": 0,
+          "A3": 0,
+          "A5": 0
+        }
+      },
+      "OPEN_VALIDATION": {
+        "answerability_source_conflict": {
+          "A0": 8,
+          "A1": 10,
+          "A3": 10,
+          "A5": 10
+        },
+        "deduction_composition": {
+          "A0": 9,
+          "A1": 8,
+          "A3": 8,
+          "A5": 8
+        },
+        "dialogue_memory": {
+          "A0": 8,
+          "A1": 8,
+          "A3": 9,
+          "A5": 9
+        },
+        "document_retrieval_reconciliation": {
+          "A0": 8,
+          "A1": 8,
+          "A3": 7,
+          "A5": 7
+        },
+        "program_state": {
+          "A0": 0,
+          "A1": 0,
+          "A3": 0,
+          "A5": 0
+        },
+        "signed_ledgers": {
+          "A0": 0,
+          "A1": 0,
+          "A3": 0,
+          "A5": 0
+        }
+      }
+    },
+    "firstVAL_parent_seconds": 510.36313940000036,
+    "four_offline_helper_membership": [
+      {
+        "name": "bulk_analysis.py",
+        "native107_member": false,
+        "parent_manifest_match": true,
+        "sha256": "3defe511cd8a189f75e0e0529a56b782b965f40095c139d3a0c603b2bbf0d3db"
+      },
+      {
+        "name": "analysis.py",
+        "native107_member": false,
+        "parent_manifest_match": true,
+        "sha256": "378a5e12b467a4fec0807e372d93d7869f44e8e557cf762177beda6975cfc026"
+      },
+      {
+        "name": "gpu_analysis.py",
+        "native107_member": false,
+        "parent_manifest_match": true,
+        "sha256": "30d12cff4ac343b98c492e5edfe1d9554fb87fc50d86e3029abd3236765def13"
+      },
+      {
+        "name": "open_analysis.py",
+        "native107_member": false,
+        "parent_manifest_match": true,
+        "sha256": "c072790ea7d5ee4864fbeef762509fb24c0b9f9c99f7481b47eee37c28695576"
+      }
+    ],
+    "full_forward_attempts": 9198,
+    "integrity_proofs": [
+      {
+        "pass": 424.8228104000009,
+        "path": "DEV_DETERMINISTIC_INTEGRITY.json",
+        "prefix_commitment_count": 4,
+        "seconds": 4.03081259999999,
+        "sha256": "fb835e19fe5899365e05ff9970d055f9ec6492bc21cc5683e3f209b186f36efb",
+        "start": 420.78374769999937
+      },
+      {
+        "pass": 510.353866200001,
+        "path": "DEV_COMPLETE_INTEGRITY.json",
+        "prefix_commitment_count": 6,
+        "seconds": 3.7249278999988746,
+        "sha256": "e2075fb439ca62b85630fcc7093eba331c95583273e1bc708663d43a3ef218a7",
+        "start": 506.61907650000103
+      },
+      {
+        "pass": 742.1811909999997,
+        "path": "FINAL_INTEGRITY.json",
+        "prefix_commitment_count": 6,
+        "seconds": 4.298041699999885,
+        "sha256": "2e5347e577cc990a1ac7000c47a0c93d2f3e9945983e1283cf8f059d2a2ec5dc",
+        "start": 737.8724770000008
+      }
+    ],
+    "integrity_seconds": 12.05378219999875,
+    "missing_controller_timings": {
+      "controller_logging_seconds": 16,
+      "controller_seconds": 16
+    },
+    "own_bank_floors": {
+      "DEVELOPMENT": {
+        "constant_0": 0,
+        "constant_1": 0,
+        "constant_NO": 16,
+        "constant_UNKNOWN": 48,
+        "constant_YES": 16,
+        "copy_first_number": 4,
+        "copy_full_prompt": 0,
+        "copy_last_entity": 0,
+        "copy_last_number": 11,
+        "last_printed_query_number": 32,
+        "memory_any_clear_else_max_skeleton": 16,
+        "memory_max_query_value_ignore_state": 12,
+        "query_blind_first_entity_solver": 60,
+        "query_blind_last_entity_solver": 71,
+        "rule_rhs_presence_skeleton": 16
+      },
+      "OPEN_VALIDATION": {
+        "constant_0": 0,
+        "constant_1": 0,
+        "constant_NO": 8,
+        "constant_UNKNOWN": 24,
+        "constant_YES": 8,
+        "copy_first_number": 0,
+        "copy_full_prompt": 0,
+        "copy_last_entity": 0,
+        "copy_last_number": 4,
+        "last_printed_query_number": 15,
+        "memory_any_clear_else_max_skeleton": 8,
+        "memory_max_query_value_ignore_state": 6,
+        "query_blind_first_entity_solver": 33,
+        "query_blind_last_entity_solver": 42,
+        "rule_rhs_presence_skeleton": 8
+      }
+    },
+    "paired_counts": {
+      "DEVELOPMENT": {
+        "A0": {
+          "comparator_correct": 63,
+          "gains": [
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:4:v1",
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:5:v0",
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:8:v0",
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:9:v0",
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:9:v1",
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:12:v0",
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:13:v0",
+            "BULK-TAPS-001:9463250d48f1:program_state:10:v0",
+            "BULK-TAPS-001:9463250d48f1:dialogue_memory:5:v0",
+            "BULK-TAPS-001:9463250d48f1:dialogue_memory:9:v0",
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:4:v0",
+            "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:2:v0"
+          ],
+          "losses": [
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:10:v1",
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:11:v0",
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:14:v1",
+            "BULK-TAPS-001:9463250d48f1:program_state:1:v1",
+            "BULK-TAPS-001:9463250d48f1:program_state:2:v1",
+            "BULK-TAPS-001:9463250d48f1:dialogue_memory:3:v0",
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:7:v1",
+            "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:1:v1"
+          ],
+          "retained": 55
+        },
+        "A1": {
+          "comparator_correct": 69,
+          "gains": [],
+          "losses": [
+            "BULK-TAPS-001:9463250d48f1:dialogue_memory:3:v0",
+            "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:1:v1"
+          ],
+          "retained": 67
+        },
+        "A2:1": {
+          "comparator_correct": 69,
+          "gains": [],
+          "losses": [
+            "BULK-TAPS-001:9463250d48f1:dialogue_memory:3:v0",
+            "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:1:v1"
+          ],
+          "retained": 67
+        },
+        "A5": {
+          "comparator_correct": 67,
+          "gains": [],
+          "losses": [],
+          "retained": 67
+        }
+      },
+      "OPEN_VALIDATION": {
+        "A0": {
+          "comparator_correct": 33,
+          "gains": [
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:16:v0",
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:21:v0",
+            "BULK-TAPS-001:9463250d48f1:dialogue_memory:20:v1",
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:16:v0",
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:17:v1",
+            "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:20:v0",
+            "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:22:v0"
+          ],
+          "losses": [
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:17:v1",
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:18:v1",
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:19:v0",
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:18:v0",
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:18:v1",
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:22:v0"
+          ],
+          "retained": 27
+        },
+        "A1": {
+          "comparator_correct": 34,
+          "gains": [
+            "BULK-TAPS-001:9463250d48f1:dialogue_memory:20:v1"
+          ],
+          "losses": [
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:18:v1"
+          ],
+          "retained": 33
+        },
+        "A2:1": {
+          "comparator_correct": 34,
+          "gains": [
+            "BULK-TAPS-001:9463250d48f1:dialogue_memory:20:v1"
+          ],
+          "losses": [
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:18:v1"
+          ],
+          "retained": 33
+        },
+        "A5": {
+          "comparator_correct": 34,
+          "gains": [],
+          "losses": [],
+          "retained": 34
+        }
+      }
+    },
+    "parent_charged_seconds": 743.3900000000012,
+    "parent_process_memory_samples": 468,
+    "partial_prefix_positions": null,
+    "periodic_GPU_inventory_samples": 68,
+    "physical_rows": 3296,
+    "pool_max": 1.1493278741836548,
+    "pool_mean": 1.1365496222271092,
+    "pool_min": 1.1202287673950195,
+    "pool_observations": 513,
+    "positive_prompt_solver_controls": 288,
+    "quality": {
+      "DEVELOPMENT": {
+        "A0": {
+          "EOS": 192,
+          "false_abstention_on_answerable": 48,
+          "format_valid": 192,
+          "terminations": {
+            "eos": 192
+          },
+          "unsupported_canonical_answer_on_unanswerable": 0
+        },
+        "A1": {
+          "EOS": 191,
+          "false_abstention_on_answerable": 42,
+          "format_valid": 191,
+          "terminations": {
+            "eos": 191,
+            "token_cap": 1
+          },
+          "unsupported_canonical_answer_on_unanswerable": 1
+        },
+        "A3": {
+          "EOS": 191,
+          "false_abstention_on_answerable": 42,
+          "format_valid": 191,
+          "terminations": {
+            "eos": 191,
+            "token_cap": 1
+          },
+          "unsupported_canonical_answer_on_unanswerable": 3
+        }
+      },
+      "OPEN_VALIDATION": {
+        "A0": {
+          "EOS": 96,
+          "false_abstention_on_answerable": 24,
+          "format_valid": 95,
+          "terminations": {
+            "eos": 96
+          },
+          "unsupported_canonical_answer_on_unanswerable": 0
+        },
+        "A1": {
+          "EOS": 96,
+          "false_abstention_on_answerable": 20,
+          "format_valid": 93,
+          "terminations": {
+            "eos": 96
+          },
+          "unsupported_canonical_answer_on_unanswerable": 2
+        },
+        "A3": {
+          "EOS": 95,
+          "false_abstention_on_answerable": 19,
+          "format_valid": 91,
+          "terminations": {
+            "eos": 95,
+            "token_cap": 1
+          },
+          "unsupported_canonical_answer_on_unanswerable": 3
+        }
+      }
+    },
+    "remaining_seconds": 18018.767,
+    "science_cells_unique_complete": 3168,
+    "split_scores": {
+      "DEVELOPMENT": {
+        "A0": 63,
+        "A1": 69,
+        "A2:0.8": 67,
+        "A2:0.9": 68,
+        "A2:1": 69,
+        "A2:1.1": 68,
+        "A2:1.14734": 67,
+        "A2:1.2": 66,
+        "A3": 67,
+        "A5": 67,
+        "oracle": 70
+      },
+      "OPEN_VALIDATION": {
+        "A0": 33,
+        "A1": 34,
+        "A2:0.8": 30,
+        "A2:0.9": 31,
+        "A2:1": 34,
+        "A2:1.1": 34,
+        "A2:1.14734": 34,
+        "A2:1.2": 34,
+        "A3": 34,
+        "A5": 34,
+        "oracle": 35
+      }
+    },
+    "strict_grading_disagreements": [],
+    "worker_parent_clock_seconds": 742.1874141999997
+  },
+  "model_calls_by_auditor": 0,
+  "native_TEST": "CLOSED",
+  "relied_on_checks_and_limits": [
+    "Recorded loaded state b23/gradients are source-bound proof receipts; no model reload was performed.",
+    "Pinned prompt-only bank solver/floor implementations and pure inherited SMOKE scorer were reused; scalar grading and aggregates were independently implemented. These are not an independent reimplementation of generator semantics.",
+    "Original runtime/operator/device qualification and earlier CPU causal replay/TDR-history findings rely on source-bound prior audits and source reviews; no2009-archive survey.",
+    "Reader5bc source acceptance relies on independent6b766, while exact four helper/CDC/native107/old reader/null bytes were independently checked.",
+    "Validation is exposed48 paired parents across six shared authored generators; no CI,p-value,noninferiority,source confirmation or broad intelligence claim.",
+    "Finite six-constant oracle is retrospective, not continuous/per-token upper bound. Instrumented costs and16 missing timing records establish no production or matched-quality speed.",
+    "CanonicalUNKNOWN does not adjudicate general semantic abstention. Single consumed grant gives no retry or universal driver stability."
+  ],
+  "role": "Independent final raw auditor; did not author native or scientific analysis/scorer sources.",
+  "schema": "bulk-restart-final-raw-audit-001",
+  "source_or_metadata_edits": false,
+  "status": "PASS_WITH_LIMITATIONS",
+  "synthesis_acceptance": "Matches raw negative comparison, format/EOS distinction, cost/null treatment, exact source-bound reporting correction and restricted inference; acceptance roles now explicit."
+}

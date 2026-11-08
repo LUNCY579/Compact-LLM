@@ -1,0 +1,11 @@
+{
+  "schema": "CE8-MIXED-INTERACTION-DECODING-SCOPE-CORRECTION-1",
+  "status": "REVIEWER_SCOPE_CORRECTION_PRESERVING_ORIGINALS",
+  "supersedes": ["CONDITIONAL_ANALYSIS.json conditional_retention_link.autoregressive_limit", "NUMERICAL_SCOPE_ADDENDUM.json implemented_margin_certificate sequence statement"],
+  "supported_sequence_certificate": "Prefix induction certifies greedy unique-argmax decoding. At each individual donor prefix, apply the drift bound and strict margin to the actual final finite decision scores, or to raw logits over a feasible-token mask that is identical for both models at that prefix. With identical greedy selection, masks, stopping and token-to-output policies, every next token and termination agree inductively.",
+  "additional_processor_requirement": "A raw-logit drift bound cannot automatically certify arbitrary processed scores. Any score-changing processor needs its own verified error transformation bound; adaptive masks must be shown identical. The smooth-function theorem does not automatically apply to discontinuous processors.",
+  "not_covered_by_this_induction": ["Beam search", "Other search decoders", "Stochastic sampling", "Arbitrary logit processing without a verified score bound"],
+  "logical_direction": "The strict margin condition is sufficient, not necessary. Failure to prove it is not evidence that behavior changed.",
+  "empirical_skill_or_model_qualification_claim": false,
+  "old_sources_and_receipts_preserved": true
+}

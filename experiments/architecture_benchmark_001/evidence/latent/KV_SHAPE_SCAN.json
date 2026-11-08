@@ -1,0 +1,121 @@
+{
+  "schema": 1,
+  "evidence_kind": "derived_from_config_shapes_only",
+  "note": "Arithmetic on weight shapes, not a measurement. free_exact_reduction is the cache reduction obtainable with zero training and zero quality loss, because rank(W_KV) <= min(2*n_kv*head_dim, hidden). At rank = hidden this is equivalent to caching the layer input instead of K and V, which is a known trick, not a finding. No weights loaded, no sealed data, no gate opened.",
+  "formula": "free_exact_reduction = 2*n_kv*head_dim / min(2*n_kv*head_dim, hidden)",
+  "cores": {
+    "Rineya-Aegis-1.1.0-devfreeze": {
+      "hidden_size": 1024,
+      "num_attention_heads": 16,
+      "num_key_value_heads": 8,
+      "head_dim": 128,
+      "layers": 19,
+      "cached_values_per_token_per_layer": 2048,
+      "max_useful_latent_rank": 1024,
+      "free_exact_reduction": 2.0,
+      "free_reduction_available": true
+    },
+    "Rineya-Baya-1.7.0-devfreeze": {
+      "hidden_size": 1024,
+      "num_attention_heads": 16,
+      "num_key_value_heads": 8,
+      "head_dim": 128,
+      "layers": 28,
+      "cached_values_per_token_per_layer": 2048,
+      "max_useful_latent_rank": 1024,
+      "free_exact_reduction": 2.0,
+      "free_reduction_available": true
+    },
+    "Rineya-Halo-1.2.0-devfreeze": {
+      "hidden_size": 1024,
+      "num_attention_heads": 16,
+      "num_key_value_heads": 8,
+      "head_dim": 128,
+      "layers": 28,
+      "cached_values_per_token_per_layer": 2048,
+      "max_useful_latent_rank": 1024,
+      "free_exact_reduction": 2.0,
+      "free_reduction_available": true
+    },
+    "Rineya-Halo-Uncensored-1.5.0-devfreeze": {
+      "hidden_size": 1024,
+      "num_attention_heads": 16,
+      "num_key_value_heads": 8,
+      "head_dim": 128,
+      "layers": 28,
+      "cached_values_per_token_per_layer": 2048,
+      "max_useful_latent_rank": 1024,
+      "free_exact_reduction": 2.0,
+      "free_reduction_available": true
+    },
+    "Rineya-Lyra-1.4.0-devfreeze": {
+      "hidden_size": 1024,
+      "num_attention_heads": 16,
+      "num_key_value_heads": 8,
+      "head_dim": 128,
+      "layers": 28,
+      "cached_values_per_token_per_layer": 2048,
+      "max_useful_latent_rank": 1024,
+      "free_exact_reduction": 2.0,
+      "free_reduction_available": true
+    },
+    "Rineya-Nimbus-1.6.0-devfreeze": {
+      "hidden_size": 1024,
+      "num_attention_heads": 16,
+      "num_key_value_heads": 8,
+      "head_dim": 128,
+      "layers": 28,
+      "cached_values_per_token_per_layer": 2048,
+      "max_useful_latent_rank": 1024,
+      "free_exact_reduction": 2.0,
+      "free_reduction_available": true
+    },
+    "Rineya-Pulse-1.6.0-devfreeze": {
+      "hidden_size": 1024,
+      "num_attention_heads": 16,
+      "num_key_value_heads": 8,
+      "head_dim": 128,
+      "layers": 28,
+      "cached_values_per_token_per_layer": 2048,
+      "max_useful_latent_rank": 1024,
+      "free_exact_reduction": 2.0,
+      "free_reduction_available": true
+    },
+    "Rineya-Supa-1.7.0-devfreeze": {
+      "hidden_size": 1024,
+      "num_attention_heads": 16,
+      "num_key_value_heads": 8,
+      "head_dim": 128,
+      "layers": 28,
+      "cached_values_per_token_per_layer": 2048,
+      "max_useful_latent_rank": 1024,
+      "free_exact_reduction": 2.0,
+      "free_reduction_available": true
+    },
+    "Rineya-Supa-A1-1.0.0-devfreeze": {
+      "hidden_size": 1024,
+      "num_attention_heads": 16,
+      "num_key_value_heads": 8,
+      "head_dim": 128,
+      "layers": 28,
+      "cached_values_per_token_per_layer": 2048,
+      "max_useful_latent_rank": 1024,
+      "free_exact_reduction": 2.0,
+      "free_reduction_available": true
+    },
+    "Rineya-Supa-A1.1-1.1.0-devfreeze": {
+      "hidden_size": 1024,
+      "num_attention_heads": 16,
+      "num_key_value_heads": 8,
+      "head_dim": 128,
+      "layers": 28,
+      "cached_values_per_token_per_layer": 2048,
+      "max_useful_latent_rank": 1024,
+      "free_exact_reduction": 2.0,
+      "free_reduction_available": true
+    }
+  },
+  "skipped": {},
+  "licenses_registered_training": false,
+  "licenses_efficacy_claim": false
+}

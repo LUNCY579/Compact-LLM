@@ -1,0 +1,4030 @@
+{
+  "DEV_only_cost_totals": {
+    "full_model_calls": 1552,
+    "generated_tokens": 1552,
+    "prefix_positions": 619216
+  },
+  "checks": [
+    {
+      "check": "exporter source exact hash",
+      "passed": true
+    },
+    {
+      "check": "approved report exact hash",
+      "passed": true
+    },
+    {
+      "check": "raw journal exact hash",
+      "passed": true
+    },
+    {
+      "check": "five expected tables",
+      "passed": true
+    },
+    {
+      "check": "CSV hash alpha_features.csv",
+      "passed": true
+    },
+    {
+      "check": "CSV hash instrumented_costs.csv",
+      "passed": true
+    },
+    {
+      "check": "CSV hash paired_cases.csv",
+      "passed": true
+    },
+    {
+      "check": "CSV hash paired_contrasts.csv",
+      "passed": true
+    },
+    {
+      "check": "CSV hash policy_accuracy.csv",
+      "passed": true
+    },
+    {
+      "check": "headroom zero and capture null",
+      "passed": true
+    },
+    {
+      "check": "manifest alpha mean from raw176prefixes",
+      "passed": true
+    },
+    {
+      "check": "nine policy accuracy rows",
+      "passed": true
+    },
+    {
+      "check": "accuracy from raw within-item means A0",
+      "passed": true
+    },
+    {
+      "check": "16 unique example units A0",
+      "passed": true
+    },
+    {
+      "check": "inherited format score A0",
+      "passed": true
+    },
+    {
+      "check": "literal UNKNOWN rate A0",
+      "passed": true
+    },
+    {
+      "check": "format caveat A0",
+      "passed": true
+    },
+    {
+      "check": "accuracy from raw within-item means A1",
+      "passed": true
+    },
+    {
+      "check": "16 unique example units A1",
+      "passed": true
+    },
+    {
+      "check": "inherited format score A1",
+      "passed": true
+    },
+    {
+      "check": "literal UNKNOWN rate A1",
+      "passed": true
+    },
+    {
+      "check": "format caveat A1",
+      "passed": true
+    },
+    {
+      "check": "accuracy from raw within-item means A3",
+      "passed": true
+    },
+    {
+      "check": "16 unique example units A3",
+      "passed": true
+    },
+    {
+      "check": "inherited format score A3",
+      "passed": true
+    },
+    {
+      "check": "literal UNKNOWN rate A3",
+      "passed": true
+    },
+    {
+      "check": "format caveat A3",
+      "passed": true
+    },
+    {
+      "check": "accuracy from raw within-item means A5",
+      "passed": true
+    },
+    {
+      "check": "16 unique example units A5",
+      "passed": true
+    },
+    {
+      "check": "inherited format score A5",
+      "passed": true
+    },
+    {
+      "check": "literal UNKNOWN rate A5",
+      "passed": true
+    },
+    {
+      "check": "format caveat A5",
+      "passed": true
+    },
+    {
+      "check": "accuracy from raw within-item means A2:0.8",
+      "passed": true
+    },
+    {
+      "check": "16 unique example units A2:0.8",
+      "passed": true
+    },
+    {
+      "check": "inherited format score A2:0.8",
+      "passed": true
+    },
+    {
+      "check": "literal UNKNOWN rate A2:0.8",
+      "passed": true
+    },
+    {
+      "check": "format caveat A2:0.8",
+      "passed": true
+    },
+    {
+      "check": "accuracy from raw within-item means A2:0.9",
+      "passed": true
+    },
+    {
+      "check": "16 unique example units A2:0.9",
+      "passed": true
+    },
+    {
+      "check": "inherited format score A2:0.9",
+      "passed": true
+    },
+    {
+      "check": "literal UNKNOWN rate A2:0.9",
+      "passed": true
+    },
+    {
+      "check": "format caveat A2:0.9",
+      "passed": true
+    },
+    {
+      "check": "accuracy from raw within-item means A2:1",
+      "passed": true
+    },
+    {
+      "check": "16 unique example units A2:1",
+      "passed": true
+    },
+    {
+      "check": "inherited format score A2:1",
+      "passed": true
+    },
+    {
+      "check": "literal UNKNOWN rate A2:1",
+      "passed": true
+    },
+    {
+      "check": "format caveat A2:1",
+      "passed": true
+    },
+    {
+      "check": "accuracy from raw within-item means A2:1.1",
+      "passed": true
+    },
+    {
+      "check": "16 unique example units A2:1.1",
+      "passed": true
+    },
+    {
+      "check": "inherited format score A2:1.1",
+      "passed": true
+    },
+    {
+      "check": "literal UNKNOWN rate A2:1.1",
+      "passed": true
+    },
+    {
+      "check": "format caveat A2:1.1",
+      "passed": true
+    },
+    {
+      "check": "accuracy from raw within-item means A2:1.2",
+      "passed": true
+    },
+    {
+      "check": "16 unique example units A2:1.2",
+      "passed": true
+    },
+    {
+      "check": "inherited format score A2:1.2",
+      "passed": true
+    },
+    {
+      "check": "literal UNKNOWN rate A2:1.2",
+      "passed": true
+    },
+    {
+      "check": "format caveat A2:1.2",
+      "passed": true
+    },
+    {
+      "check": "six contrasts and96 paired example rows",
+      "passed": true
+    },
+    {
+      "check": "contrast field H1_fixed_vs_unit:treatment",
+      "passed": true
+    },
+    {
+      "check": "contrast field H1_fixed_vs_unit:comparator",
+      "passed": true
+    },
+    {
+      "check": "contrast field H1_fixed_vs_unit:score_delta",
+      "passed": true
+    },
+    {
+      "check": "contrast field H1_fixed_vs_unit:source_correct",
+      "passed": true
+    },
+    {
+      "check": "contrast field H1_fixed_vs_unit:retained",
+      "passed": true
+    },
+    {
+      "check": "contrast gains losses H1_fixed_vs_unit",
+      "passed": true
+    },
+    {
+      "check": "null inference CSV blank fields H1_fixed_vs_unit",
+      "passed": true
+    },
+    {
+      "check": "uncertainty preserved H1_fixed_vs_unit",
+      "passed": true
+    },
+    {
+      "check": "contrast field corrected_A5:treatment",
+      "passed": true
+    },
+    {
+      "check": "contrast field corrected_A5:comparator",
+      "passed": true
+    },
+    {
+      "check": "contrast field corrected_A5:score_delta",
+      "passed": true
+    },
+    {
+      "check": "contrast field corrected_A5:source_correct",
+      "passed": true
+    },
+    {
+      "check": "contrast field corrected_A5:retained",
+      "passed": true
+    },
+    {
+      "check": "contrast gains losses corrected_A5",
+      "passed": true
+    },
+    {
+      "check": "null inference CSV blank fields corrected_A5",
+      "passed": true
+    },
+    {
+      "check": "uncertainty preserved corrected_A5",
+      "passed": true
+    },
+    {
+      "check": "contrast field fixed_1.2:treatment",
+      "passed": true
+    },
+    {
+      "check": "contrast field fixed_1.2:comparator",
+      "passed": true
+    },
+    {
+      "check": "contrast field fixed_1.2:score_delta",
+      "passed": true
+    },
+    {
+      "check": "contrast field fixed_1.2:source_correct",
+      "passed": true
+    },
+    {
+      "check": "contrast field fixed_1.2:retained",
+      "passed": true
+    },
+    {
+      "check": "contrast gains losses fixed_1.2",
+      "passed": true
+    },
+    {
+      "check": "null inference CSV blank fields fixed_1.2",
+      "passed": true
+    },
+    {
+      "check": "uncertainty preserved fixed_1.2",
+      "passed": true
+    },
+    {
+      "check": "contrast field frozen_fixed:treatment",
+      "passed": true
+    },
+    {
+      "check": "contrast field frozen_fixed:comparator",
+      "passed": true
+    },
+    {
+      "check": "contrast field frozen_fixed:score_delta",
+      "passed": true
+    },
+    {
+      "check": "contrast field frozen_fixed:source_correct",
+      "passed": true
+    },
+    {
+      "check": "contrast field frozen_fixed:retained",
+      "passed": true
+    },
+    {
+      "check": "contrast gains losses frozen_fixed",
+      "passed": true
+    },
+    {
+      "check": "null inference CSV blank fields frozen_fixed",
+      "passed": true
+    },
+    {
+      "check": "uncertainty preserved frozen_fixed",
+      "passed": true
+    },
+    {
+      "check": "contrast field intact:treatment",
+      "passed": true
+    },
+    {
+      "check": "contrast field intact:comparator",
+      "passed": true
+    },
+    {
+      "check": "contrast field intact:score_delta",
+      "passed": true
+    },
+    {
+      "check": "contrast field intact:source_correct",
+      "passed": true
+    },
+    {
+      "check": "contrast field intact:retained",
+      "passed": true
+    },
+    {
+      "check": "contrast gains losses intact",
+      "passed": true
+    },
+    {
+      "check": "null inference CSV blank fields intact",
+      "passed": true
+    },
+    {
+      "check": "uncertainty preserved intact",
+      "passed": true
+    },
+    {
+      "check": "contrast field unit:treatment",
+      "passed": true
+    },
+    {
+      "check": "contrast field unit:comparator",
+      "passed": true
+    },
+    {
+      "check": "contrast field unit:score_delta",
+      "passed": true
+    },
+    {
+      "check": "contrast field unit:source_correct",
+      "passed": true
+    },
+    {
+      "check": "contrast field unit:retained",
+      "passed": true
+    },
+    {
+      "check": "contrast gains losses unit",
+      "passed": true
+    },
+    {
+      "check": "null inference CSV blank fields unit",
+      "passed": true
+    },
+    {
+      "check": "uncertainty preserved unit",
+      "passed": true
+    },
+    {
+      "check": "paired cells unique",
+      "passed": true
+    },
+    {
+      "check": "paired exact report row H1_fixed_vs_unit:mergedev_common_sense_025ea65887df6a1b",
+      "passed": true
+    },
+    {
+      "check": "paired raw task delta H1_fixed_vs_unit:mergedev_common_sense_025ea65887df6a1b",
+      "passed": true
+    },
+    {
+      "check": "paired cluster/family metadata H1_fixed_vs_unit:mergedev_common_sense_025ea65887df6a1b",
+      "passed": true
+    },
+    {
+      "check": "semantic endpoint scope H1_fixed_vs_unit:mergedev_common_sense_025ea65887df6a1b",
+      "passed": true
+    },
+    {
+      "check": "paired exact report row H1_fixed_vs_unit:mergedev_counterfactual_reasoning_770aaf5dae0c1fb5",
+      "passed": true
+    },
+    {
+      "check": "paired raw task delta H1_fixed_vs_unit:mergedev_counterfactual_reasoning_770aaf5dae0c1fb5",
+      "passed": true
+    },
+    {
+      "check": "paired cluster/family metadata H1_fixed_vs_unit:mergedev_counterfactual_reasoning_770aaf5dae0c1fb5",
+      "passed": true
+    },
+    {
+      "check": "semantic endpoint scope H1_fixed_vs_unit:mergedev_counterfactual_reasoning_770aaf5dae0c1fb5",
+      "passed": true
+    },
+    {
+      "check": "paired exact report row H1_fixed_vs_unit:mergedev_general_reasoning_078451b6adf65710",
+      "passed": true
+    },
+    {
+      "check": "paired raw task delta H1_fixed_vs_unit:mergedev_general_reasoning_078451b6adf65710",
+      "passed": true
+    },
+    {
+      "check": "paired cluster/family metadata H1_fixed_vs_unit:mergedev_general_reasoning_078451b6adf65710",
+      "passed": true
+    },
+    {
+      "check": "semantic endpoint scope H1_fixed_vs_unit:mergedev_general_reasoning_078451b6adf65710",
+      "passed": true
+    },
+    {
+      "check": "paired exact report row H1_fixed_vs_unit:mergedev_grounded_qa_rag_10414013c88bdaac",
+      "passed": true
+    },
+    {
+      "check": "paired raw task delta H1_fixed_vs_unit:mergedev_grounded_qa_rag_10414013c88bdaac",
+      "passed": true
+    },
+    {
+      "check": "paired cluster/family metadata H1_fixed_vs_unit:mergedev_grounded_qa_rag_10414013c88bdaac",
+      "passed": true
+    },
+    {
+      "check": "semantic endpoint scope H1_fixed_vs_unit:mergedev_grounded_qa_rag_10414013c88bdaac",
+      "passed": true
+    },
+    {
+      "check": "paired exact report row H1_fixed_vs_unit:mergedev_instruction_following_7c4b4480b4835c0f",
+      "passed": true
+    },
+    {
+      "check": "paired raw task delta H1_fixed_vs_unit:mergedev_instruction_following_7c4b4480b4835c0f",
+      "passed": true
+    },
+    {
+      "check": "paired cluster/family metadata H1_fixed_vs_unit:mergedev_instruction_following_7c4b4480b4835c0f",
+      "passed": true
+    },
+    {
+      "check": "semantic endpoint scope H1_fixed_vs_unit:mergedev_instruction_following_7c4b4480b4835c0f",
+      "passed": true
+    },
+    {
+      "check": "paired exact report row H1_fixed_vs_unit:mergedev_long_context_retrieval_20550a305b3b2af6",
+      "passed": true
+    },
+    {
+      "check": "paired raw task delta H1_fixed_vs_unit:mergedev_long_context_retrieval_20550a305b3b2af6",
+      "passed": true
+    },
+    {
+      "check": "paired cluster/family metadata H1_fixed_vs_unit:mergedev_long_context_retrieval_20550a305b3b2af6",
+      "passed": true
+    },
+    {
+      "check": "semantic endpoint scope H1_fixed_vs_unit:mergedev_long_context_retrieval_20550a305b3b2af6",
+      "passed": true
+    },
+    {
+      "check": "paired exact report row H1_fixed_vs_unit:mergedev_lost_in_the_middle_e4e7cc76239741de",
+      "passed": true
+    },
+    {
+      "check": "paired raw task delta H1_fixed_vs_unit:mergedev_lost_in_the_middle_e4e7cc76239741de",
+      "passed": true
+    },
+    {
+      "check": "paired cluster/family metadata H1_fixed_vs_unit:mergedev_lost_in_the_middle_e4e7cc76239741de",
+      "passed": true
+    },
+    {
+      "check": "semantic endpoint scope H1_fixed_vs_unit:mergedev_lost_in_the_middle_e4e7cc76239741de",
+      "passed": true
+    },
+    {
+      "check": "paired exact report row H1_fixed_vs_unit:mergedev_mathematics_12cd1363c6e3df98",
+      "passed": true
+    },
+    {
+      "check": "paired raw task delta H1_fixed_vs_unit:mergedev_mathematics_12cd1363c6e3df98",
+      "passed": true
+    },
+    {
+      "check": "paired cluster/family metadata H1_fixed_vs_unit:mergedev_mathematics_12cd1363c6e3df98",
+      "passed": true
+    },
+    {
+      "check": "semantic endpoint scope H1_fixed_vs_unit:mergedev_mathematics_12cd1363c6e3df98",
+      "passed": true
+    },
+    {
+      "check": "paired exact report row H1_fixed_vs_unit:mergedev_multi_hop_binding_492bf31e1ae5deff",
+      "passed": true
+    },
+    {
+      "check": "paired raw task delta H1_fixed_vs_unit:mergedev_multi_hop_binding_492bf31e1ae5deff",
+      "passed": true
+    },
+    {
+      "check": "paired cluster/family metadata H1_fixed_vs_unit:mergedev_multi_hop_binding_492bf31e1ae5deff",
+      "passed": true
+    },
+    {
+      "check": "semantic endpoint scope H1_fixed_vs_unit:mergedev_multi_hop_binding_492bf31e1ae5deff",
+      "passed": true
+    },
+    {
+      "check": "paired exact report row H1_fixed_vs_unit:mergedev_normal_conversation_4a73375fc950bab7",
+      "passed": true
+    },
+    {
+      "check": "paired raw task delta H1_fixed_vs_unit:mergedev_normal_conversation_4a73375fc950bab7",
+      "passed": true
+    },
+    {
+      "check": "paired cluster/family metadata H1_fixed_vs_unit:mergedev_normal_conversation_4a73375fc950bab7",
+      "passed": true
+    },
+    {
+      "check": "semantic endpoint scope H1_fixed_vs_unit:mergedev_normal_conversation_4a73375fc950bab7",
+      "passed": true
+    },
+    {
+      "check": "paired exact report row H1_fixed_vs_unit:mergedev_paraphrase_robustness_0cfbf1026bf11fe7",
+      "passed": true
+    },
+    {
+      "check": "paired raw task delta H1_fixed_vs_unit:mergedev_paraphrase_robustness_0cfbf1026bf11fe7",
+      "passed": true
+    },
+    {
+      "check": "paired cluster/family metadata H1_fixed_vs_unit:mergedev_paraphrase_robustness_0cfbf1026bf11fe7",
+      "passed": true
+    },
+    {
+      "check": "semantic endpoint scope H1_fixed_vs_unit:mergedev_paraphrase_robustness_0cfbf1026bf11fe7",
+      "passed": true
+    },
+    {
+      "check": "paired exact report row H1_fixed_vs_unit:mergedev_paraphrase_robustness_44e3777f1aad20a2",
+      "passed": true
+    },
+    {
+      "check": "paired raw task delta H1_fixed_vs_unit:mergedev_paraphrase_robustness_44e3777f1aad20a2",
+      "passed": true
+    },
+    {
+      "check": "paired cluster/family metadata H1_fixed_vs_unit:mergedev_paraphrase_robustness_44e3777f1aad20a2",
+      "passed": true
+    },
+    {
+      "check": "semantic endpoint scope H1_fixed_vs_unit:mergedev_paraphrase_robustness_44e3777f1aad20a2",
+      "passed": true
+    },
+    {
+      "check": "paired exact report row H1_fixed_vs_unit:mergedev_paraphrase_robustness_c26fef498d2d9fd3",
+      "passed": true
+    },
+    {
+      "check": "paired raw task delta H1_fixed_vs_unit:mergedev_paraphrase_robustness_c26fef498d2d9fd3",
+      "passed": true
+    },
+    {
+      "check": "paired cluster/family metadata H1_fixed_vs_unit:mergedev_paraphrase_robustness_c26fef498d2d9fd3",
+      "passed": true
+    },
+    {
+      "check": "semantic endpoint scope H1_fixed_vs_unit:mergedev_paraphrase_robustness_c26fef498d2d9fd3",
+      "passed": true
+    },
+    {
+      "check": "paired exact report row H1_fixed_vs_unit:mergedev_science_0ac5af678b239ec5",
+      "passed": true
+    },
+    {
+      "check": "paired raw task delta H1_fixed_vs_unit:mergedev_science_0ac5af678b239ec5",
+      "passed": true
+    },
+    {
+      "check": "paired cluster/family metadata H1_fixed_vs_unit:mergedev_science_0ac5af678b239ec5",
+      "passed": true
+    },
+    {
+      "check": "semantic endpoint scope H1_fixed_vs_unit:mergedev_science_0ac5af678b239ec5",
+      "passed": true
+    },
+    {
+      "check": "paired exact report row H1_fixed_vs_unit:mergedev_short_response_30785feeb5a8abdf",
+      "passed": true
+    },
+    {
+      "check": "paired raw task delta H1_fixed_vs_unit:mergedev_short_response_30785feeb5a8abdf",
+      "passed": true
+    },
+    {
+      "check": "paired cluster/family metadata H1_fixed_vs_unit:mergedev_short_response_30785feeb5a8abdf",
+      "passed": true
+    },
+    {
+      "check": "semantic endpoint scope H1_fixed_vs_unit:mergedev_short_response_30785feeb5a8abdf",
+      "passed": true
+    },
+    {
+      "check": "paired exact report row H1_fixed_vs_unit:mergedev_unanswerable_abstention_22f9fcfd9ce716c8",
+      "passed": true
+    },
+    {
+      "check": "paired raw task delta H1_fixed_vs_unit:mergedev_unanswerable_abstention_22f9fcfd9ce716c8",
+      "passed": true
+    },
+    {
+      "check": "paired cluster/family metadata H1_fixed_vs_unit:mergedev_unanswerable_abstention_22f9fcfd9ce716c8",
+      "passed": true
+    },
+    {
+      "check": "semantic endpoint scope H1_fixed_vs_unit:mergedev_unanswerable_abstention_22f9fcfd9ce716c8",
+      "passed": true
+    },
+    {
+      "check": "paired exact report row corrected_A5:mergedev_common_sense_025ea65887df6a1b",
+      "passed": true
+    },
+    {
+      "check": "paired raw task delta corrected_A5:mergedev_common_sense_025ea65887df6a1b",
+      "passed": true
+    },
+    {
+      "check": "paired cluster/family metadata corrected_A5:mergedev_common_sense_025ea65887df6a1b",
+      "passed": true
+    },
+    {
+      "check": "semantic endpoint scope corrected_A5:mergedev_common_sense_025ea65887df6a1b",
+      "passed": true
+    },
+    {
+      "check": "paired exact report row corrected_A5:mergedev_counterfactual_reasoning_770aaf5dae0c1fb5",
+      "passed": true
+    },
+    {
+      "check": "paired raw task delta corrected_A5:mergedev_counterfactual_reasoning_770aaf5dae0c1fb5",
+      "passed": true
+    },
+    {
+      "check": "paired cluster/family metadata corrected_A5:mergedev_counterfactual_reasoning_770aaf5dae0c1fb5",
+      "passed": true
+    },
+    {
+      "check": "semantic endpoint scope corrected_A5:mergedev_counterfactual_reasoning_770aaf5dae0c1fb5",
+      "passed": true
+    },
+    {
+      "check": "paired exact report row corrected_A5:mergedev_general_reasoning_078451b6adf65710",
+      "passed": true
+    },
+    {
+      "check": "paired raw task delta corrected_A5:mergedev_general_reasoning_078451b6adf65710",
+      "passed": true
+    },
+    {
+      "check": "paired cluster/family metadata corrected_A5:mergedev_general_reasoning_078451b6adf65710",
+      "passed": true
+    },
+    {
+      "check": "semantic endpoint scope corrected_A5:mergedev_general_reasoning_078451b6adf65710",
+      "passed": true
+    },
+    {
+      "check": "paired exact report row corrected_A5:mergedev_grounded_qa_rag_10414013c88bdaac",
+      "passed": true
+    },
+    {
+      "check": "paired raw task delta corrected_A5:mergedev_grounded_qa_rag_10414013c88bdaac",
+      "passed": true
+    },
+    {
+      "check": "paired cluster/family metadata corrected_A5:mergedev_grounded_qa_rag_10414013c88bdaac",
+      "passed": true
+    },
+    {
+      "check": "semantic endpoint scope corrected_A5:mergedev_grounded_qa_rag_10414013c88bdaac",
+      "passed": true
+    },
+    {
+      "check": "paired exact report row corrected_A5:mergedev_instruction_following_7c4b4480b4835c0f",
+      "passed": true
+    },
+    {
+      "check": "paired raw task delta corrected_A5:mergedev_instruction_following_7c4b4480b4835c0f",
+      "passed": true
+    },
+    {
+      "check": "paired cluster/family metadata corrected_A5:mergedev_instruction_following_7c4b4480b4835c0f",
+      "passed": true
+    },
+    {
+      "check": "semantic endpoint scope corrected_A5:mergedev_instruction_following_7c4b4480b4835c0f",
+      "passed": true
+    },
+    {
+      "check": "paired exact report row corrected_A5:mergedev_long_context_retrieval_20550a305b3b2af6",
+      "passed": true
+    },
+    {
+      "check": "paired raw task delta corrected_A5:mergedev_long_context_retrieval_20550a305b3b2af6",
+      "passed": true
+    },
+    {
+      "check": "paired cluster/family metadata corrected_A5:mergedev_long_context_retrieval_20550a305b3b2af6",
+      "passed": true
+    },
+    {
+      "check": "semantic endpoint scope corrected_A5:mergedev_long_context_retrieval_20550a305b3b2af6",
+      "passed": true
+    },
+    {
+      "check": "paired exact report row corrected_A5:mergedev_lost_in_the_middle_e4e7cc76239741de",
+      "passed": true
+    },
+    {
+      "check": "paired raw task delta corrected_A5:mergedev_lost_in_the_middle_e4e7cc76239741de",
+      "passed": true
+    },
+    {
+      "check": "paired cluster/family metadata corrected_A5:mergedev_lost_in_the_middle_e4e7cc76239741de",
+      "passed": true
+    },
+    {
+      "check": "semantic endpoint scope corrected_A5:mergedev_lost_in_the_middle_e4e7cc76239741de",
+      "passed": true
+    },
+    {
+      "check": "paired exact report row corrected_A5:mergedev_mathematics_12cd1363c6e3df98",
+      "passed": true
+    },
+    {
+      "check": "paired raw task delta corrected_A5:mergedev_mathematics_12cd1363c6e3df98",
+      "passed": true
+    },
+    {
+      "check": "paired cluster/family metadata corrected_A5:mergedev_mathematics_12cd1363c6e3df98",
+      "passed": true
+    },
+    {
+      "check": "semantic endpoint scope corrected_A5:mergedev_mathematics_12cd1363c6e3df98",
+      "passed": true
+    },
+    {
+      "check": "paired exact report row corrected_A5:mergedev_multi_hop_binding_492bf31e1ae5deff",
+      "passed": true
+    },
+    {
+      "check": "paired raw task delta corrected_A5:mergedev_multi_hop_binding_492bf31e1ae5deff",
+      "passed": true
+    },
+    {
+      "check": "paired cluster/family metadata corrected_A5:mergedev_multi_hop_binding_492bf31e1ae5deff",
+      "passed": true
+    },
+    {
+      "check": "semantic endpoint scope corrected_A5:mergedev_multi_hop_binding_492bf31e1ae5deff",
+      "passed": true
+    },
+    {
+      "check": "paired exact report row corrected_A5:mergedev_normal_conversation_4a73375fc950bab7",
+      "passed": true
+    },
+    {
+      "check": "paired raw task delta corrected_A5:mergedev_normal_conversation_4a73375fc950bab7",
+      "passed": true
+    },
+    {
+      "check": "paired cluster/family metadata corrected_A5:mergedev_normal_conversation_4a73375fc950bab7",
+      "passed": true
+    },
+    {
+      "check": "semantic endpoint scope corrected_A5:mergedev_normal_conversation_4a73375fc950bab7",
+      "passed": true
+    },
+    {
+      "check": "paired exact report row corrected_A5:mergedev_paraphrase_robustness_0cfbf1026bf11fe7",
+      "passed": true
+    },
+    {
+      "check": "paired raw task delta corrected_A5:mergedev_paraphrase_robustness_0cfbf1026bf11fe7",
+      "passed": true
+    },
+    {
+      "check": "paired cluster/family metadata corrected_A5:mergedev_paraphrase_robustness_0cfbf1026bf11fe7",
+      "passed": true
+    },
+    {
+      "check": "semantic endpoint scope corrected_A5:mergedev_paraphrase_robustness_0cfbf1026bf11fe7",
+      "passed": true
+    },
+    {
+      "check": "paired exact report row corrected_A5:mergedev_paraphrase_robustness_44e3777f1aad20a2",
+      "passed": true
+    },
+    {
+      "check": "paired raw task delta corrected_A5:mergedev_paraphrase_robustness_44e3777f1aad20a2",
+      "passed": true
+    },
+    {
+      "check": "paired cluster/family metadata corrected_A5:mergedev_paraphrase_robustness_44e3777f1aad20a2",
+      "passed": true
+    },
+    {
+      "check": "semantic endpoint scope corrected_A5:mergedev_paraphrase_robustness_44e3777f1aad20a2",
+      "passed": true
+    },
+    {
+      "check": "paired exact report row corrected_A5:mergedev_paraphrase_robustness_c26fef498d2d9fd3",
+      "passed": true
+    },
+    {
+      "check": "paired raw task delta corrected_A5:mergedev_paraphrase_robustness_c26fef498d2d9fd3",
+      "passed": true
+    },
+    {
+      "check": "paired cluster/family metadata corrected_A5:mergedev_paraphrase_robustness_c26fef498d2d9fd3",
+      "passed": true
+    },
+    {
+      "check": "semantic endpoint scope corrected_A5:mergedev_paraphrase_robustness_c26fef498d2d9fd3",
+      "passed": true
+    },
+    {
+      "check": "paired exact report row corrected_A5:mergedev_science_0ac5af678b239ec5",
+      "passed": true
+    },
+    {
+      "check": "paired raw task delta corrected_A5:mergedev_science_0ac5af678b239ec5",
+      "passed": true
+    },
+    {
+      "check": "paired cluster/family metadata corrected_A5:mergedev_science_0ac5af678b239ec5",
+      "passed": true
+    },
+    {
+      "check": "semantic endpoint scope corrected_A5:mergedev_science_0ac5af678b239ec5",
+      "passed": true
+    },
+    {
+      "check": "paired exact report row corrected_A5:mergedev_short_response_30785feeb5a8abdf",
+      "passed": true
+    },
+    {
+      "check": "paired raw task delta corrected_A5:mergedev_short_response_30785feeb5a8abdf",
+      "passed": true
+    },
+    {
+      "check": "paired cluster/family metadata corrected_A5:mergedev_short_response_30785feeb5a8abdf",
+      "passed": true
+    },
+    {
+      "check": "semantic endpoint scope corrected_A5:mergedev_short_response_30785feeb5a8abdf",
+      "passed": true
+    },
+    {
+      "check": "paired exact report row corrected_A5:mergedev_unanswerable_abstention_22f9fcfd9ce716c8",
+      "passed": true
+    },
+    {
+      "check": "paired raw task delta corrected_A5:mergedev_unanswerable_abstention_22f9fcfd9ce716c8",
+      "passed": true
+    },
+    {
+      "check": "paired cluster/family metadata corrected_A5:mergedev_unanswerable_abstention_22f9fcfd9ce716c8",
+      "passed": true
+    },
+    {
+      "check": "semantic endpoint scope corrected_A5:mergedev_unanswerable_abstention_22f9fcfd9ce716c8",
+      "passed": true
+    },
+    {
+      "check": "paired exact report row fixed_1.2:mergedev_common_sense_025ea65887df6a1b",
+      "passed": true
+    },
+    {
+      "check": "paired raw task delta fixed_1.2:mergedev_common_sense_025ea65887df6a1b",
+      "passed": true
+    },
+    {
+      "check": "paired cluster/family metadata fixed_1.2:mergedev_common_sense_025ea65887df6a1b",
+      "passed": true
+    },
+    {
+      "check": "semantic endpoint scope fixed_1.2:mergedev_common_sense_025ea65887df6a1b",
+      "passed": true
+    },
+    {
+      "check": "paired exact report row fixed_1.2:mergedev_counterfactual_reasoning_770aaf5dae0c1fb5",
+      "passed": true
+    },
+    {
+      "check": "paired raw task delta fixed_1.2:mergedev_counterfactual_reasoning_770aaf5dae0c1fb5",
+      "passed": true
+    },
+    {
+      "check": "paired cluster/family metadata fixed_1.2:mergedev_counterfactual_reasoning_770aaf5dae0c1fb5",
+      "passed": true
+    },
+    {
+      "check": "semantic endpoint scope fixed_1.2:mergedev_counterfactual_reasoning_770aaf5dae0c1fb5",
+      "passed": true
+    },
+    {
+      "check": "paired exact report row fixed_1.2:mergedev_general_reasoning_078451b6adf65710",
+      "passed": true
+    },
+    {
+      "check": "paired raw task delta fixed_1.2:mergedev_general_reasoning_078451b6adf65710",
+      "passed": true
+    },
+    {
+      "check": "paired cluster/family metadata fixed_1.2:mergedev_general_reasoning_078451b6adf65710",
+      "passed": true
+    },
+    {
+      "check": "semantic endpoint scope fixed_1.2:mergedev_general_reasoning_078451b6adf65710",
+      "passed": true
+    },
+    {
+      "check": "paired exact report row fixed_1.2:mergedev_grounded_qa_rag_10414013c88bdaac",
+      "passed": true
+    },
+    {
+      "check": "paired raw task delta fixed_1.2:mergedev_grounded_qa_rag_10414013c88bdaac",
+      "passed": true
+    },
+    {
+      "check": "paired cluster/family metadata fixed_1.2:mergedev_grounded_qa_rag_10414013c88bdaac",
+      "passed": true
+    },
+    {
+      "check": "semantic endpoint scope fixed_1.2:mergedev_grounded_qa_rag_10414013c88bdaac",
+      "passed": true
+    },
+    {
+      "check": "paired exact report row fixed_1.2:mergedev_instruction_following_7c4b4480b4835c0f",
+      "passed": true
+    },
+    {
+      "check": "paired raw task delta fixed_1.2:mergedev_instruction_following_7c4b4480b4835c0f",
+      "passed": true
+    },
+    {
+      "check": "paired cluster/family metadata fixed_1.2:mergedev_instruction_following_7c4b4480b4835c0f",
+      "passed": true
+    },
+    {
+      "check": "semantic endpoint scope fixed_1.2:mergedev_instruction_following_7c4b4480b4835c0f",
+      "passed": true
+    },
+    {
+      "check": "paired exact report row fixed_1.2:mergedev_long_context_retrieval_20550a305b3b2af6",
+      "passed": true
+    },
+    {
+      "check": "paired raw task delta fixed_1.2:mergedev_long_context_retrieval_20550a305b3b2af6",
+      "passed": true
+    },
+    {
+      "check": "paired cluster/family metadata fixed_1.2:mergedev_long_context_retrieval_20550a305b3b2af6",
+      "passed": true
+    },
+    {
+      "check": "semantic endpoint scope fixed_1.2:mergedev_long_context_retrieval_20550a305b3b2af6",
+      "passed": true
+    },
+    {
+      "check": "paired exact report row fixed_1.2:mergedev_lost_in_the_middle_e4e7cc76239741de",
+      "passed": true
+    },
+    {
+      "check": "paired raw task delta fixed_1.2:mergedev_lost_in_the_middle_e4e7cc76239741de",
+      "passed": true
+    },
+    {
+      "check": "paired cluster/family metadata fixed_1.2:mergedev_lost_in_the_middle_e4e7cc76239741de",
+      "passed": true
+    },
+    {
+      "check": "semantic endpoint scope fixed_1.2:mergedev_lost_in_the_middle_e4e7cc76239741de",
+      "passed": true
+    },
+    {
+      "check": "paired exact report row fixed_1.2:mergedev_mathematics_12cd1363c6e3df98",
+      "passed": true
+    },
+    {
+      "check": "paired raw task delta fixed_1.2:mergedev_mathematics_12cd1363c6e3df98",
+      "passed": true
+    },
+    {
+      "check": "paired cluster/family metadata fixed_1.2:mergedev_mathematics_12cd1363c6e3df98",
+      "passed": true
+    },
+    {
+      "check": "semantic endpoint scope fixed_1.2:mergedev_mathematics_12cd1363c6e3df98",
+      "passed": true
+    },
+    {
+      "check": "paired exact report row fixed_1.2:mergedev_multi_hop_binding_492bf31e1ae5deff",
+      "passed": true
+    },
+    {
+      "check": "paired raw task delta fixed_1.2:mergedev_multi_hop_binding_492bf31e1ae5deff",
+      "passed": true
+    },
+    {
+      "check": "paired cluster/family metadata fixed_1.2:mergedev_multi_hop_binding_492bf31e1ae5deff",
+      "passed": true
+    },
+    {
+      "check": "semantic endpoint scope fixed_1.2:mergedev_multi_hop_binding_492bf31e1ae5deff",
+      "passed": true
+    },
+    {
+      "check": "paired exact report row fixed_1.2:mergedev_normal_conversation_4a73375fc950bab7",
+      "passed": true
+    },
+    {
+      "check": "paired raw task delta fixed_1.2:mergedev_normal_conversation_4a73375fc950bab7",
+      "passed": true
+    },
+    {
+      "check": "paired cluster/family metadata fixed_1.2:mergedev_normal_conversation_4a73375fc950bab7",
+      "passed": true
+    },
+    {
+      "check": "semantic endpoint scope fixed_1.2:mergedev_normal_conversation_4a73375fc950bab7",
+      "passed": true
+    },
+    {
+      "check": "paired exact report row fixed_1.2:mergedev_paraphrase_robustness_0cfbf1026bf11fe7",
+      "passed": true
+    },
+    {
+      "check": "paired raw task delta fixed_1.2:mergedev_paraphrase_robustness_0cfbf1026bf11fe7",
+      "passed": true
+    },
+    {
+      "check": "paired cluster/family metadata fixed_1.2:mergedev_paraphrase_robustness_0cfbf1026bf11fe7",
+      "passed": true
+    },
+    {
+      "check": "semantic endpoint scope fixed_1.2:mergedev_paraphrase_robustness_0cfbf1026bf11fe7",
+      "passed": true
+    },
+    {
+      "check": "paired exact report row fixed_1.2:mergedev_paraphrase_robustness_44e3777f1aad20a2",
+      "passed": true
+    },
+    {
+      "check": "paired raw task delta fixed_1.2:mergedev_paraphrase_robustness_44e3777f1aad20a2",
+      "passed": true
+    },
+    {
+      "check": "paired cluster/family metadata fixed_1.2:mergedev_paraphrase_robustness_44e3777f1aad20a2",
+      "passed": true
+    },
+    {
+      "check": "semantic endpoint scope fixed_1.2:mergedev_paraphrase_robustness_44e3777f1aad20a2",
+      "passed": true
+    },
+    {
+      "check": "paired exact report row fixed_1.2:mergedev_paraphrase_robustness_c26fef498d2d9fd3",
+      "passed": true
+    },
+    {
+      "check": "paired raw task delta fixed_1.2:mergedev_paraphrase_robustness_c26fef498d2d9fd3",
+      "passed": true
+    },
+    {
+      "check": "paired cluster/family metadata fixed_1.2:mergedev_paraphrase_robustness_c26fef498d2d9fd3",
+      "passed": true
+    },
+    {
+      "check": "semantic endpoint scope fixed_1.2:mergedev_paraphrase_robustness_c26fef498d2d9fd3",
+      "passed": true
+    },
+    {
+      "check": "paired exact report row fixed_1.2:mergedev_science_0ac5af678b239ec5",
+      "passed": true
+    },
+    {
+      "check": "paired raw task delta fixed_1.2:mergedev_science_0ac5af678b239ec5",
+      "passed": true
+    },
+    {
+      "check": "paired cluster/family metadata fixed_1.2:mergedev_science_0ac5af678b239ec5",
+      "passed": true
+    },
+    {
+      "check": "semantic endpoint scope fixed_1.2:mergedev_science_0ac5af678b239ec5",
+      "passed": true
+    },
+    {
+      "check": "paired exact report row fixed_1.2:mergedev_short_response_30785feeb5a8abdf",
+      "passed": true
+    },
+    {
+      "check": "paired raw task delta fixed_1.2:mergedev_short_response_30785feeb5a8abdf",
+      "passed": true
+    },
+    {
+      "check": "paired cluster/family metadata fixed_1.2:mergedev_short_response_30785feeb5a8abdf",
+      "passed": true
+    },
+    {
+      "check": "semantic endpoint scope fixed_1.2:mergedev_short_response_30785feeb5a8abdf",
+      "passed": true
+    },
+    {
+      "check": "paired exact report row fixed_1.2:mergedev_unanswerable_abstention_22f9fcfd9ce716c8",
+      "passed": true
+    },
+    {
+      "check": "paired raw task delta fixed_1.2:mergedev_unanswerable_abstention_22f9fcfd9ce716c8",
+      "passed": true
+    },
+    {
+      "check": "paired cluster/family metadata fixed_1.2:mergedev_unanswerable_abstention_22f9fcfd9ce716c8",
+      "passed": true
+    },
+    {
+      "check": "semantic endpoint scope fixed_1.2:mergedev_unanswerable_abstention_22f9fcfd9ce716c8",
+      "passed": true
+    },
+    {
+      "check": "paired exact report row frozen_fixed:mergedev_common_sense_025ea65887df6a1b",
+      "passed": true
+    },
+    {
+      "check": "paired raw task delta frozen_fixed:mergedev_common_sense_025ea65887df6a1b",
+      "passed": true
+    },
+    {
+      "check": "paired cluster/family metadata frozen_fixed:mergedev_common_sense_025ea65887df6a1b",
+      "passed": true
+    },
+    {
+      "check": "semantic endpoint scope frozen_fixed:mergedev_common_sense_025ea65887df6a1b",
+      "passed": true
+    },
+    {
+      "check": "paired exact report row frozen_fixed:mergedev_counterfactual_reasoning_770aaf5dae0c1fb5",
+      "passed": true
+    },
+    {
+      "check": "paired raw task delta frozen_fixed:mergedev_counterfactual_reasoning_770aaf5dae0c1fb5",
+      "passed": true
+    },
+    {
+      "check": "paired cluster/family metadata frozen_fixed:mergedev_counterfactual_reasoning_770aaf5dae0c1fb5",
+      "passed": true
+    },
+    {
+      "check": "semantic endpoint scope frozen_fixed:mergedev_counterfactual_reasoning_770aaf5dae0c1fb5",
+      "passed": true
+    },
+    {
+      "check": "paired exact report row frozen_fixed:mergedev_general_reasoning_078451b6adf65710",
+      "passed": true
+    },
+    {
+      "check": "paired raw task delta frozen_fixed:mergedev_general_reasoning_078451b6adf65710",
+      "passed": true
+    },
+    {
+      "check": "paired cluster/family metadata frozen_fixed:mergedev_general_reasoning_078451b6adf65710",
+      "passed": true
+    },
+    {
+      "check": "semantic endpoint scope frozen_fixed:mergedev_general_reasoning_078451b6adf65710",
+      "passed": true
+    },
+    {
+      "check": "paired exact report row frozen_fixed:mergedev_grounded_qa_rag_10414013c88bdaac",
+      "passed": true
+    },
+    {
+      "check": "paired raw task delta frozen_fixed:mergedev_grounded_qa_rag_10414013c88bdaac",
+      "passed": true
+    },
+    {
+      "check": "paired cluster/family metadata frozen_fixed:mergedev_grounded_qa_rag_10414013c88bdaac",
+      "passed": true
+    },
+    {
+      "check": "semantic endpoint scope frozen_fixed:mergedev_grounded_qa_rag_10414013c88bdaac",
+      "passed": true
+    },
+    {
+      "check": "paired exact report row frozen_fixed:mergedev_instruction_following_7c4b4480b4835c0f",
+      "passed": true
+    },
+    {
+      "check": "paired raw task delta frozen_fixed:mergedev_instruction_following_7c4b4480b4835c0f",
+      "passed": true
+    },
+    {
+      "check": "paired cluster/family metadata frozen_fixed:mergedev_instruction_following_7c4b4480b4835c0f",
+      "passed": true
+    },
+    {
+      "check": "semantic endpoint scope frozen_fixed:mergedev_instruction_following_7c4b4480b4835c0f",
+      "passed": true
+    },
+    {
+      "check": "paired exact report row frozen_fixed:mergedev_long_context_retrieval_20550a305b3b2af6",
+      "passed": true
+    },
+    {
+      "check": "paired raw task delta frozen_fixed:mergedev_long_context_retrieval_20550a305b3b2af6",
+      "passed": true
+    },
+    {
+      "check": "paired cluster/family metadata frozen_fixed:mergedev_long_context_retrieval_20550a305b3b2af6",
+      "passed": true
+    },
+    {
+      "check": "semantic endpoint scope frozen_fixed:mergedev_long_context_retrieval_20550a305b3b2af6",
+      "passed": true
+    },
+    {
+      "check": "paired exact report row frozen_fixed:mergedev_lost_in_the_middle_e4e7cc76239741de",
+      "passed": true
+    },
+    {
+      "check": "paired raw task delta frozen_fixed:mergedev_lost_in_the_middle_e4e7cc76239741de",
+      "passed": true
+    },
+    {
+      "check": "paired cluster/family metadata frozen_fixed:mergedev_lost_in_the_middle_e4e7cc76239741de",
+      "passed": true
+    },
+    {
+      "check": "semantic endpoint scope frozen_fixed:mergedev_lost_in_the_middle_e4e7cc76239741de",
+      "passed": true
+    },
+    {
+      "check": "paired exact report row frozen_fixed:mergedev_mathematics_12cd1363c6e3df98",
+      "passed": true
+    },
+    {
+      "check": "paired raw task delta frozen_fixed:mergedev_mathematics_12cd1363c6e3df98",
+      "passed": true
+    },
+    {
+      "check": "paired cluster/family metadata frozen_fixed:mergedev_mathematics_12cd1363c6e3df98",
+      "passed": true
+    },
+    {
+      "check": "semantic endpoint scope frozen_fixed:mergedev_mathematics_12cd1363c6e3df98",
+      "passed": true
+    },
+    {
+      "check": "paired exact report row frozen_fixed:mergedev_multi_hop_binding_492bf31e1ae5deff",
+      "passed": true
+    },
+    {
+      "check": "paired raw task delta frozen_fixed:mergedev_multi_hop_binding_492bf31e1ae5deff",
+      "passed": true
+    },
+    {
+      "check": "paired cluster/family metadata frozen_fixed:mergedev_multi_hop_binding_492bf31e1ae5deff",
+      "passed": true
+    },
+    {
+      "check": "semantic endpoint scope frozen_fixed:mergedev_multi_hop_binding_492bf31e1ae5deff",
+      "passed": true
+    },
+    {
+      "check": "paired exact report row frozen_fixed:mergedev_normal_conversation_4a73375fc950bab7",
+      "passed": true
+    },
+    {
+      "check": "paired raw task delta frozen_fixed:mergedev_normal_conversation_4a73375fc950bab7",
+      "passed": true
+    },
+    {
+      "check": "paired cluster/family metadata frozen_fixed:mergedev_normal_conversation_4a73375fc950bab7",
+      "passed": true
+    },
+    {
+      "check": "semantic endpoint scope frozen_fixed:mergedev_normal_conversation_4a73375fc950bab7",
+      "passed": true
+    },
+    {
+      "check": "paired exact report row frozen_fixed:mergedev_paraphrase_robustness_0cfbf1026bf11fe7",
+      "passed": true
+    },
+    {
+      "check": "paired raw task delta frozen_fixed:mergedev_paraphrase_robustness_0cfbf1026bf11fe7",
+      "passed": true
+    },
+    {
+      "check": "paired cluster/family metadata frozen_fixed:mergedev_paraphrase_robustness_0cfbf1026bf11fe7",
+      "passed": true
+    },
+    {
+      "check": "semantic endpoint scope frozen_fixed:mergedev_paraphrase_robustness_0cfbf1026bf11fe7",
+      "passed": true
+    },
+    {
+      "check": "paired exact report row frozen_fixed:mergedev_paraphrase_robustness_44e3777f1aad20a2",
+      "passed": true
+    },
+    {
+      "check": "paired raw task delta frozen_fixed:mergedev_paraphrase_robustness_44e3777f1aad20a2",
+      "passed": true
+    },
+    {
+      "check": "paired cluster/family metadata frozen_fixed:mergedev_paraphrase_robustness_44e3777f1aad20a2",
+      "passed": true
+    },
+    {
+      "check": "semantic endpoint scope frozen_fixed:mergedev_paraphrase_robustness_44e3777f1aad20a2",
+      "passed": true
+    },
+    {
+      "check": "paired exact report row frozen_fixed:mergedev_paraphrase_robustness_c26fef498d2d9fd3",
+      "passed": true
+    },
+    {
+      "check": "paired raw task delta frozen_fixed:mergedev_paraphrase_robustness_c26fef498d2d9fd3",
+      "passed": true
+    },
+    {
+      "check": "paired cluster/family metadata frozen_fixed:mergedev_paraphrase_robustness_c26fef498d2d9fd3",
+      "passed": true
+    },
+    {
+      "check": "semantic endpoint scope frozen_fixed:mergedev_paraphrase_robustness_c26fef498d2d9fd3",
+      "passed": true
+    },
+    {
+      "check": "paired exact report row frozen_fixed:mergedev_science_0ac5af678b239ec5",
+      "passed": true
+    },
+    {
+      "check": "paired raw task delta frozen_fixed:mergedev_science_0ac5af678b239ec5",
+      "passed": true
+    },
+    {
+      "check": "paired cluster/family metadata frozen_fixed:mergedev_science_0ac5af678b239ec5",
+      "passed": true
+    },
+    {
+      "check": "semantic endpoint scope frozen_fixed:mergedev_science_0ac5af678b239ec5",
+      "passed": true
+    },
+    {
+      "check": "paired exact report row frozen_fixed:mergedev_short_response_30785feeb5a8abdf",
+      "passed": true
+    },
+    {
+      "check": "paired raw task delta frozen_fixed:mergedev_short_response_30785feeb5a8abdf",
+      "passed": true
+    },
+    {
+      "check": "paired cluster/family metadata frozen_fixed:mergedev_short_response_30785feeb5a8abdf",
+      "passed": true
+    },
+    {
+      "check": "semantic endpoint scope frozen_fixed:mergedev_short_response_30785feeb5a8abdf",
+      "passed": true
+    },
+    {
+      "check": "paired exact report row frozen_fixed:mergedev_unanswerable_abstention_22f9fcfd9ce716c8",
+      "passed": true
+    },
+    {
+      "check": "paired raw task delta frozen_fixed:mergedev_unanswerable_abstention_22f9fcfd9ce716c8",
+      "passed": true
+    },
+    {
+      "check": "paired cluster/family metadata frozen_fixed:mergedev_unanswerable_abstention_22f9fcfd9ce716c8",
+      "passed": true
+    },
+    {
+      "check": "semantic endpoint scope frozen_fixed:mergedev_unanswerable_abstention_22f9fcfd9ce716c8",
+      "passed": true
+    },
+    {
+      "check": "paired exact report row intact:mergedev_common_sense_025ea65887df6a1b",
+      "passed": true
+    },
+    {
+      "check": "paired raw task delta intact:mergedev_common_sense_025ea65887df6a1b",
+      "passed": true
+    },
+    {
+      "check": "paired cluster/family metadata intact:mergedev_common_sense_025ea65887df6a1b",
+      "passed": true
+    },
+    {
+      "check": "semantic endpoint scope intact:mergedev_common_sense_025ea65887df6a1b",
+      "passed": true
+    },
+    {
+      "check": "paired exact report row intact:mergedev_counterfactual_reasoning_770aaf5dae0c1fb5",
+      "passed": true
+    },
+    {
+      "check": "paired raw task delta intact:mergedev_counterfactual_reasoning_770aaf5dae0c1fb5",
+      "passed": true
+    },
+    {
+      "check": "paired cluster/family metadata intact:mergedev_counterfactual_reasoning_770aaf5dae0c1fb5",
+      "passed": true
+    },
+    {
+      "check": "semantic endpoint scope intact:mergedev_counterfactual_reasoning_770aaf5dae0c1fb5",
+      "passed": true
+    },
+    {
+      "check": "paired exact report row intact:mergedev_general_reasoning_078451b6adf65710",
+      "passed": true
+    },
+    {
+      "check": "paired raw task delta intact:mergedev_general_reasoning_078451b6adf65710",
+      "passed": true
+    },
+    {
+      "check": "paired cluster/family metadata intact:mergedev_general_reasoning_078451b6adf65710",
+      "passed": true
+    },
+    {
+      "check": "semantic endpoint scope intact:mergedev_general_reasoning_078451b6adf65710",
+      "passed": true
+    },
+    {
+      "check": "paired exact report row intact:mergedev_grounded_qa_rag_10414013c88bdaac",
+      "passed": true
+    },
+    {
+      "check": "paired raw task delta intact:mergedev_grounded_qa_rag_10414013c88bdaac",
+      "passed": true
+    },
+    {
+      "check": "paired cluster/family metadata intact:mergedev_grounded_qa_rag_10414013c88bdaac",
+      "passed": true
+    },
+    {
+      "check": "semantic endpoint scope intact:mergedev_grounded_qa_rag_10414013c88bdaac",
+      "passed": true
+    },
+    {
+      "check": "paired exact report row intact:mergedev_instruction_following_7c4b4480b4835c0f",
+      "passed": true
+    },
+    {
+      "check": "paired raw task delta intact:mergedev_instruction_following_7c4b4480b4835c0f",
+      "passed": true
+    },
+    {
+      "check": "paired cluster/family metadata intact:mergedev_instruction_following_7c4b4480b4835c0f",
+      "passed": true
+    },
+    {
+      "check": "semantic endpoint scope intact:mergedev_instruction_following_7c4b4480b4835c0f",
+      "passed": true
+    },
+    {
+      "check": "paired exact report row intact:mergedev_long_context_retrieval_20550a305b3b2af6",
+      "passed": true
+    },
+    {
+      "check": "paired raw task delta intact:mergedev_long_context_retrieval_20550a305b3b2af6",
+      "passed": true
+    },
+    {
+      "check": "paired cluster/family metadata intact:mergedev_long_context_retrieval_20550a305b3b2af6",
+      "passed": true
+    },
+    {
+      "check": "semantic endpoint scope intact:mergedev_long_context_retrieval_20550a305b3b2af6",
+      "passed": true
+    },
+    {
+      "check": "paired exact report row intact:mergedev_lost_in_the_middle_e4e7cc76239741de",
+      "passed": true
+    },
+    {
+      "check": "paired raw task delta intact:mergedev_lost_in_the_middle_e4e7cc76239741de",
+      "passed": true
+    },
+    {
+      "check": "paired cluster/family metadata intact:mergedev_lost_in_the_middle_e4e7cc76239741de",
+      "passed": true
+    },
+    {
+      "check": "semantic endpoint scope intact:mergedev_lost_in_the_middle_e4e7cc76239741de",
+      "passed": true
+    },
+    {
+      "check": "paired exact report row intact:mergedev_mathematics_12cd1363c6e3df98",
+      "passed": true
+    },
+    {
+      "check": "paired raw task delta intact:mergedev_mathematics_12cd1363c6e3df98",
+      "passed": true
+    },
+    {
+      "check": "paired cluster/family metadata intact:mergedev_mathematics_12cd1363c6e3df98",
+      "passed": true
+    },
+    {
+      "check": "semantic endpoint scope intact:mergedev_mathematics_12cd1363c6e3df98",
+      "passed": true
+    },
+    {
+      "check": "paired exact report row intact:mergedev_multi_hop_binding_492bf31e1ae5deff",
+      "passed": true
+    },
+    {
+      "check": "paired raw task delta intact:mergedev_multi_hop_binding_492bf31e1ae5deff",
+      "passed": true
+    },
+    {
+      "check": "paired cluster/family metadata intact:mergedev_multi_hop_binding_492bf31e1ae5deff",
+      "passed": true
+    },
+    {
+      "check": "semantic endpoint scope intact:mergedev_multi_hop_binding_492bf31e1ae5deff",
+      "passed": true
+    },
+    {
+      "check": "paired exact report row intact:mergedev_normal_conversation_4a73375fc950bab7",
+      "passed": true
+    },
+    {
+      "check": "paired raw task delta intact:mergedev_normal_conversation_4a73375fc950bab7",
+      "passed": true
+    },
+    {
+      "check": "paired cluster/family metadata intact:mergedev_normal_conversation_4a73375fc950bab7",
+      "passed": true
+    },
+    {
+      "check": "semantic endpoint scope intact:mergedev_normal_conversation_4a73375fc950bab7",
+      "passed": true
+    },
+    {
+      "check": "paired exact report row intact:mergedev_paraphrase_robustness_0cfbf1026bf11fe7",
+      "passed": true
+    },
+    {
+      "check": "paired raw task delta intact:mergedev_paraphrase_robustness_0cfbf1026bf11fe7",
+      "passed": true
+    },
+    {
+      "check": "paired cluster/family metadata intact:mergedev_paraphrase_robustness_0cfbf1026bf11fe7",
+      "passed": true
+    },
+    {
+      "check": "semantic endpoint scope intact:mergedev_paraphrase_robustness_0cfbf1026bf11fe7",
+      "passed": true
+    },
+    {
+      "check": "paired exact report row intact:mergedev_paraphrase_robustness_44e3777f1aad20a2",
+      "passed": true
+    },
+    {
+      "check": "paired raw task delta intact:mergedev_paraphrase_robustness_44e3777f1aad20a2",
+      "passed": true
+    },
+    {
+      "check": "paired cluster/family metadata intact:mergedev_paraphrase_robustness_44e3777f1aad20a2",
+      "passed": true
+    },
+    {
+      "check": "semantic endpoint scope intact:mergedev_paraphrase_robustness_44e3777f1aad20a2",
+      "passed": true
+    },
+    {
+      "check": "paired exact report row intact:mergedev_paraphrase_robustness_c26fef498d2d9fd3",
+      "passed": true
+    },
+    {
+      "check": "paired raw task delta intact:mergedev_paraphrase_robustness_c26fef498d2d9fd3",
+      "passed": true
+    },
+    {
+      "check": "paired cluster/family metadata intact:mergedev_paraphrase_robustness_c26fef498d2d9fd3",
+      "passed": true
+    },
+    {
+      "check": "semantic endpoint scope intact:mergedev_paraphrase_robustness_c26fef498d2d9fd3",
+      "passed": true
+    },
+    {
+      "check": "paired exact report row intact:mergedev_science_0ac5af678b239ec5",
+      "passed": true
+    },
+    {
+      "check": "paired raw task delta intact:mergedev_science_0ac5af678b239ec5",
+      "passed": true
+    },
+    {
+      "check": "paired cluster/family metadata intact:mergedev_science_0ac5af678b239ec5",
+      "passed": true
+    },
+    {
+      "check": "semantic endpoint scope intact:mergedev_science_0ac5af678b239ec5",
+      "passed": true
+    },
+    {
+      "check": "paired exact report row intact:mergedev_short_response_30785feeb5a8abdf",
+      "passed": true
+    },
+    {
+      "check": "paired raw task delta intact:mergedev_short_response_30785feeb5a8abdf",
+      "passed": true
+    },
+    {
+      "check": "paired cluster/family metadata intact:mergedev_short_response_30785feeb5a8abdf",
+      "passed": true
+    },
+    {
+      "check": "semantic endpoint scope intact:mergedev_short_response_30785feeb5a8abdf",
+      "passed": true
+    },
+    {
+      "check": "paired exact report row intact:mergedev_unanswerable_abstention_22f9fcfd9ce716c8",
+      "passed": true
+    },
+    {
+      "check": "paired raw task delta intact:mergedev_unanswerable_abstention_22f9fcfd9ce716c8",
+      "passed": true
+    },
+    {
+      "check": "paired cluster/family metadata intact:mergedev_unanswerable_abstention_22f9fcfd9ce716c8",
+      "passed": true
+    },
+    {
+      "check": "semantic endpoint scope intact:mergedev_unanswerable_abstention_22f9fcfd9ce716c8",
+      "passed": true
+    },
+    {
+      "check": "paired exact report row unit:mergedev_common_sense_025ea65887df6a1b",
+      "passed": true
+    },
+    {
+      "check": "paired raw task delta unit:mergedev_common_sense_025ea65887df6a1b",
+      "passed": true
+    },
+    {
+      "check": "paired cluster/family metadata unit:mergedev_common_sense_025ea65887df6a1b",
+      "passed": true
+    },
+    {
+      "check": "semantic endpoint scope unit:mergedev_common_sense_025ea65887df6a1b",
+      "passed": true
+    },
+    {
+      "check": "paired exact report row unit:mergedev_counterfactual_reasoning_770aaf5dae0c1fb5",
+      "passed": true
+    },
+    {
+      "check": "paired raw task delta unit:mergedev_counterfactual_reasoning_770aaf5dae0c1fb5",
+      "passed": true
+    },
+    {
+      "check": "paired cluster/family metadata unit:mergedev_counterfactual_reasoning_770aaf5dae0c1fb5",
+      "passed": true
+    },
+    {
+      "check": "semantic endpoint scope unit:mergedev_counterfactual_reasoning_770aaf5dae0c1fb5",
+      "passed": true
+    },
+    {
+      "check": "paired exact report row unit:mergedev_general_reasoning_078451b6adf65710",
+      "passed": true
+    },
+    {
+      "check": "paired raw task delta unit:mergedev_general_reasoning_078451b6adf65710",
+      "passed": true
+    },
+    {
+      "check": "paired cluster/family metadata unit:mergedev_general_reasoning_078451b6adf65710",
+      "passed": true
+    },
+    {
+      "check": "semantic endpoint scope unit:mergedev_general_reasoning_078451b6adf65710",
+      "passed": true
+    },
+    {
+      "check": "paired exact report row unit:mergedev_grounded_qa_rag_10414013c88bdaac",
+      "passed": true
+    },
+    {
+      "check": "paired raw task delta unit:mergedev_grounded_qa_rag_10414013c88bdaac",
+      "passed": true
+    },
+    {
+      "check": "paired cluster/family metadata unit:mergedev_grounded_qa_rag_10414013c88bdaac",
+      "passed": true
+    },
+    {
+      "check": "semantic endpoint scope unit:mergedev_grounded_qa_rag_10414013c88bdaac",
+      "passed": true
+    },
+    {
+      "check": "paired exact report row unit:mergedev_instruction_following_7c4b4480b4835c0f",
+      "passed": true
+    },
+    {
+      "check": "paired raw task delta unit:mergedev_instruction_following_7c4b4480b4835c0f",
+      "passed": true
+    },
+    {
+      "check": "paired cluster/family metadata unit:mergedev_instruction_following_7c4b4480b4835c0f",
+      "passed": true
+    },
+    {
+      "check": "semantic endpoint scope unit:mergedev_instruction_following_7c4b4480b4835c0f",
+      "passed": true
+    },
+    {
+      "check": "paired exact report row unit:mergedev_long_context_retrieval_20550a305b3b2af6",
+      "passed": true
+    },
+    {
+      "check": "paired raw task delta unit:mergedev_long_context_retrieval_20550a305b3b2af6",
+      "passed": true
+    },
+    {
+      "check": "paired cluster/family metadata unit:mergedev_long_context_retrieval_20550a305b3b2af6",
+      "passed": true
+    },
+    {
+      "check": "semantic endpoint scope unit:mergedev_long_context_retrieval_20550a305b3b2af6",
+      "passed": true
+    },
+    {
+      "check": "paired exact report row unit:mergedev_lost_in_the_middle_e4e7cc76239741de",
+      "passed": true
+    },
+    {
+      "check": "paired raw task delta unit:mergedev_lost_in_the_middle_e4e7cc76239741de",
+      "passed": true
+    },
+    {
+      "check": "paired cluster/family metadata unit:mergedev_lost_in_the_middle_e4e7cc76239741de",
+      "passed": true
+    },
+    {
+      "check": "semantic endpoint scope unit:mergedev_lost_in_the_middle_e4e7cc76239741de",
+      "passed": true
+    },
+    {
+      "check": "paired exact report row unit:mergedev_mathematics_12cd1363c6e3df98",
+      "passed": true
+    },
+    {
+      "check": "paired raw task delta unit:mergedev_mathematics_12cd1363c6e3df98",
+      "passed": true
+    },
+    {
+      "check": "paired cluster/family metadata unit:mergedev_mathematics_12cd1363c6e3df98",
+      "passed": true
+    },
+    {
+      "check": "semantic endpoint scope unit:mergedev_mathematics_12cd1363c6e3df98",
+      "passed": true
+    },
+    {
+      "check": "paired exact report row unit:mergedev_multi_hop_binding_492bf31e1ae5deff",
+      "passed": true
+    },
+    {
+      "check": "paired raw task delta unit:mergedev_multi_hop_binding_492bf31e1ae5deff",
+      "passed": true
+    },
+    {
+      "check": "paired cluster/family metadata unit:mergedev_multi_hop_binding_492bf31e1ae5deff",
+      "passed": true
+    },
+    {
+      "check": "semantic endpoint scope unit:mergedev_multi_hop_binding_492bf31e1ae5deff",
+      "passed": true
+    },
+    {
+      "check": "paired exact report row unit:mergedev_normal_conversation_4a73375fc950bab7",
+      "passed": true
+    },
+    {
+      "check": "paired raw task delta unit:mergedev_normal_conversation_4a73375fc950bab7",
+      "passed": true
+    },
+    {
+      "check": "paired cluster/family metadata unit:mergedev_normal_conversation_4a73375fc950bab7",
+      "passed": true
+    },
+    {
+      "check": "semantic endpoint scope unit:mergedev_normal_conversation_4a73375fc950bab7",
+      "passed": true
+    },
+    {
+      "check": "paired exact report row unit:mergedev_paraphrase_robustness_0cfbf1026bf11fe7",
+      "passed": true
+    },
+    {
+      "check": "paired raw task delta unit:mergedev_paraphrase_robustness_0cfbf1026bf11fe7",
+      "passed": true
+    },
+    {
+      "check": "paired cluster/family metadata unit:mergedev_paraphrase_robustness_0cfbf1026bf11fe7",
+      "passed": true
+    },
+    {
+      "check": "semantic endpoint scope unit:mergedev_paraphrase_robustness_0cfbf1026bf11fe7",
+      "passed": true
+    },
+    {
+      "check": "paired exact report row unit:mergedev_paraphrase_robustness_44e3777f1aad20a2",
+      "passed": true
+    },
+    {
+      "check": "paired raw task delta unit:mergedev_paraphrase_robustness_44e3777f1aad20a2",
+      "passed": true
+    },
+    {
+      "check": "paired cluster/family metadata unit:mergedev_paraphrase_robustness_44e3777f1aad20a2",
+      "passed": true
+    },
+    {
+      "check": "semantic endpoint scope unit:mergedev_paraphrase_robustness_44e3777f1aad20a2",
+      "passed": true
+    },
+    {
+      "check": "paired exact report row unit:mergedev_paraphrase_robustness_c26fef498d2d9fd3",
+      "passed": true
+    },
+    {
+      "check": "paired raw task delta unit:mergedev_paraphrase_robustness_c26fef498d2d9fd3",
+      "passed": true
+    },
+    {
+      "check": "paired cluster/family metadata unit:mergedev_paraphrase_robustness_c26fef498d2d9fd3",
+      "passed": true
+    },
+    {
+      "check": "semantic endpoint scope unit:mergedev_paraphrase_robustness_c26fef498d2d9fd3",
+      "passed": true
+    },
+    {
+      "check": "paired exact report row unit:mergedev_science_0ac5af678b239ec5",
+      "passed": true
+    },
+    {
+      "check": "paired raw task delta unit:mergedev_science_0ac5af678b239ec5",
+      "passed": true
+    },
+    {
+      "check": "paired cluster/family metadata unit:mergedev_science_0ac5af678b239ec5",
+      "passed": true
+    },
+    {
+      "check": "semantic endpoint scope unit:mergedev_science_0ac5af678b239ec5",
+      "passed": true
+    },
+    {
+      "check": "paired exact report row unit:mergedev_short_response_30785feeb5a8abdf",
+      "passed": true
+    },
+    {
+      "check": "paired raw task delta unit:mergedev_short_response_30785feeb5a8abdf",
+      "passed": true
+    },
+    {
+      "check": "paired cluster/family metadata unit:mergedev_short_response_30785feeb5a8abdf",
+      "passed": true
+    },
+    {
+      "check": "semantic endpoint scope unit:mergedev_short_response_30785feeb5a8abdf",
+      "passed": true
+    },
+    {
+      "check": "paired exact report row unit:mergedev_unanswerable_abstention_22f9fcfd9ce716c8",
+      "passed": true
+    },
+    {
+      "check": "paired raw task delta unit:mergedev_unanswerable_abstention_22f9fcfd9ce716c8",
+      "passed": true
+    },
+    {
+      "check": "paired cluster/family metadata unit:mergedev_unanswerable_abstention_22f9fcfd9ce716c8",
+      "passed": true
+    },
+    {
+      "check": "semantic endpoint scope unit:mergedev_unanswerable_abstention_22f9fcfd9ce716c8",
+      "passed": true
+    },
+    {
+      "check": "eleven prefix-weighted feature rows",
+      "passed": true
+    },
+    {
+      "check": "raw feature moments alpha",
+      "passed": true
+    },
+    {
+      "check": "raw feature moments balance",
+      "passed": true
+    },
+    {
+      "check": "raw feature moments delta_cosine",
+      "passed": true
+    },
+    {
+      "check": "raw feature moments delta_norm",
+      "passed": true
+    },
+    {
+      "check": "raw feature moments fluctuation",
+      "passed": true
+    },
+    {
+      "check": "raw feature moments movement",
+      "passed": true
+    },
+    {
+      "check": "raw feature moments normalized_controlled_movement",
+      "passed": true
+    },
+    {
+      "check": "raw feature moments normalized_raw_update",
+      "passed": true
+    },
+    {
+      "check": "raw feature moments previous_ema_cosine",
+      "passed": true
+    },
+    {
+      "check": "raw feature moments progress",
+      "passed": true
+    },
+    {
+      "check": "raw feature moments state_norm",
+      "passed": true
+    },
+    {
+      "check": "all nine physical DEV cost policies",
+      "passed": true
+    },
+    {
+      "check": "32 charged physical repeats A0",
+      "passed": true
+    },
+    {
+      "check": "16 unique cases A0",
+      "passed": true
+    },
+    {
+      "check": "physical-only mean wall cost A0",
+      "passed": true
+    },
+    {
+      "check": "physical-only model call cost A0",
+      "passed": true
+    },
+    {
+      "check": "physical-only prefix cost A0",
+      "passed": true
+    },
+    {
+      "check": "physical-only token count A0",
+      "passed": true
+    },
+    {
+      "check": "instrumented timing caveat A0",
+      "passed": true
+    },
+    {
+      "check": "corrected clustering caution A0",
+      "passed": true
+    },
+    {
+      "check": "32 charged physical repeats A1",
+      "passed": true
+    },
+    {
+      "check": "16 unique cases A1",
+      "passed": true
+    },
+    {
+      "check": "physical-only mean wall cost A1",
+      "passed": true
+    },
+    {
+      "check": "physical-only model call cost A1",
+      "passed": true
+    },
+    {
+      "check": "physical-only prefix cost A1",
+      "passed": true
+    },
+    {
+      "check": "physical-only token count A1",
+      "passed": true
+    },
+    {
+      "check": "instrumented timing caveat A1",
+      "passed": true
+    },
+    {
+      "check": "corrected clustering caution A1",
+      "passed": true
+    },
+    {
+      "check": "32 charged physical repeats A2:0.8",
+      "passed": true
+    },
+    {
+      "check": "16 unique cases A2:0.8",
+      "passed": true
+    },
+    {
+      "check": "physical-only mean wall cost A2:0.8",
+      "passed": true
+    },
+    {
+      "check": "physical-only model call cost A2:0.8",
+      "passed": true
+    },
+    {
+      "check": "physical-only prefix cost A2:0.8",
+      "passed": true
+    },
+    {
+      "check": "physical-only token count A2:0.8",
+      "passed": true
+    },
+    {
+      "check": "instrumented timing caveat A2:0.8",
+      "passed": true
+    },
+    {
+      "check": "corrected clustering caution A2:0.8",
+      "passed": true
+    },
+    {
+      "check": "32 charged physical repeats A2:0.9",
+      "passed": true
+    },
+    {
+      "check": "16 unique cases A2:0.9",
+      "passed": true
+    },
+    {
+      "check": "physical-only mean wall cost A2:0.9",
+      "passed": true
+    },
+    {
+      "check": "physical-only model call cost A2:0.9",
+      "passed": true
+    },
+    {
+      "check": "physical-only prefix cost A2:0.9",
+      "passed": true
+    },
+    {
+      "check": "physical-only token count A2:0.9",
+      "passed": true
+    },
+    {
+      "check": "instrumented timing caveat A2:0.9",
+      "passed": true
+    },
+    {
+      "check": "corrected clustering caution A2:0.9",
+      "passed": true
+    },
+    {
+      "check": "32 charged physical repeats A2:1",
+      "passed": true
+    },
+    {
+      "check": "16 unique cases A2:1",
+      "passed": true
+    },
+    {
+      "check": "physical-only mean wall cost A2:1",
+      "passed": true
+    },
+    {
+      "check": "physical-only model call cost A2:1",
+      "passed": true
+    },
+    {
+      "check": "physical-only prefix cost A2:1",
+      "passed": true
+    },
+    {
+      "check": "physical-only token count A2:1",
+      "passed": true
+    },
+    {
+      "check": "instrumented timing caveat A2:1",
+      "passed": true
+    },
+    {
+      "check": "corrected clustering caution A2:1",
+      "passed": true
+    },
+    {
+      "check": "32 charged physical repeats A2:1.1",
+      "passed": true
+    },
+    {
+      "check": "16 unique cases A2:1.1",
+      "passed": true
+    },
+    {
+      "check": "physical-only mean wall cost A2:1.1",
+      "passed": true
+    },
+    {
+      "check": "physical-only model call cost A2:1.1",
+      "passed": true
+    },
+    {
+      "check": "physical-only prefix cost A2:1.1",
+      "passed": true
+    },
+    {
+      "check": "physical-only token count A2:1.1",
+      "passed": true
+    },
+    {
+      "check": "instrumented timing caveat A2:1.1",
+      "passed": true
+    },
+    {
+      "check": "corrected clustering caution A2:1.1",
+      "passed": true
+    },
+    {
+      "check": "32 charged physical repeats A2:1.2",
+      "passed": true
+    },
+    {
+      "check": "16 unique cases A2:1.2",
+      "passed": true
+    },
+    {
+      "check": "physical-only mean wall cost A2:1.2",
+      "passed": true
+    },
+    {
+      "check": "physical-only model call cost A2:1.2",
+      "passed": true
+    },
+    {
+      "check": "physical-only prefix cost A2:1.2",
+      "passed": true
+    },
+    {
+      "check": "physical-only token count A2:1.2",
+      "passed": true
+    },
+    {
+      "check": "instrumented timing caveat A2:1.2",
+      "passed": true
+    },
+    {
+      "check": "corrected clustering caution A2:1.2",
+      "passed": true
+    },
+    {
+      "check": "32 charged physical repeats A3",
+      "passed": true
+    },
+    {
+      "check": "16 unique cases A3",
+      "passed": true
+    },
+    {
+      "check": "physical-only mean wall cost A3",
+      "passed": true
+    },
+    {
+      "check": "physical-only model call cost A3",
+      "passed": true
+    },
+    {
+      "check": "physical-only prefix cost A3",
+      "passed": true
+    },
+    {
+      "check": "physical-only token count A3",
+      "passed": true
+    },
+    {
+      "check": "instrumented timing caveat A3",
+      "passed": true
+    },
+    {
+      "check": "corrected clustering caution A3",
+      "passed": true
+    },
+    {
+      "check": "32 charged physical repeats A5",
+      "passed": true
+    },
+    {
+      "check": "16 unique cases A5",
+      "passed": true
+    },
+    {
+      "check": "physical-only mean wall cost A5",
+      "passed": true
+    },
+    {
+      "check": "physical-only model call cost A5",
+      "passed": true
+    },
+    {
+      "check": "physical-only prefix cost A5",
+      "passed": true
+    },
+    {
+      "check": "physical-only token count A5",
+      "passed": true
+    },
+    {
+      "check": "instrumented timing caveat A5",
+      "passed": true
+    },
+    {
+      "check": "corrected clustering caution A5",
+      "passed": true
+    },
+    {
+      "check": "exact policy string joins",
+      "passed": true
+    },
+    {
+      "check": "raw paired format_delta H1_fixed_vs_unit:mergedev_common_sense_025ea65887df6a1b",
+      "passed": true
+    },
+    {
+      "check": "raw paired invalid_delta H1_fixed_vs_unit:mergedev_common_sense_025ea65887df6a1b",
+      "passed": true
+    },
+    {
+      "check": "raw paired treatment_literal_UNKNOWN_rate H1_fixed_vs_unit:mergedev_common_sense_025ea65887df6a1b",
+      "passed": true
+    },
+    {
+      "check": "raw paired comparator_literal_UNKNOWN_rate H1_fixed_vs_unit:mergedev_common_sense_025ea65887df6a1b",
+      "passed": true
+    },
+    {
+      "check": "raw paired format_delta H1_fixed_vs_unit:mergedev_counterfactual_reasoning_770aaf5dae0c1fb5",
+      "passed": true
+    },
+    {
+      "check": "raw paired invalid_delta H1_fixed_vs_unit:mergedev_counterfactual_reasoning_770aaf5dae0c1fb5",
+      "passed": true
+    },
+    {
+      "check": "raw paired treatment_literal_UNKNOWN_rate H1_fixed_vs_unit:mergedev_counterfactual_reasoning_770aaf5dae0c1fb5",
+      "passed": true
+    },
+    {
+      "check": "raw paired comparator_literal_UNKNOWN_rate H1_fixed_vs_unit:mergedev_counterfactual_reasoning_770aaf5dae0c1fb5",
+      "passed": true
+    },
+    {
+      "check": "raw paired format_delta H1_fixed_vs_unit:mergedev_general_reasoning_078451b6adf65710",
+      "passed": true
+    },
+    {
+      "check": "raw paired invalid_delta H1_fixed_vs_unit:mergedev_general_reasoning_078451b6adf65710",
+      "passed": true
+    },
+    {
+      "check": "raw paired treatment_literal_UNKNOWN_rate H1_fixed_vs_unit:mergedev_general_reasoning_078451b6adf65710",
+      "passed": true
+    },
+    {
+      "check": "raw paired comparator_literal_UNKNOWN_rate H1_fixed_vs_unit:mergedev_general_reasoning_078451b6adf65710",
+      "passed": true
+    },
+    {
+      "check": "raw paired format_delta H1_fixed_vs_unit:mergedev_grounded_qa_rag_10414013c88bdaac",
+      "passed": true
+    },
+    {
+      "check": "raw paired invalid_delta H1_fixed_vs_unit:mergedev_grounded_qa_rag_10414013c88bdaac",
+      "passed": true
+    },
+    {
+      "check": "raw paired treatment_literal_UNKNOWN_rate H1_fixed_vs_unit:mergedev_grounded_qa_rag_10414013c88bdaac",
+      "passed": true
+    },
+    {
+      "check": "raw paired comparator_literal_UNKNOWN_rate H1_fixed_vs_unit:mergedev_grounded_qa_rag_10414013c88bdaac",
+      "passed": true
+    },
+    {
+      "check": "raw paired format_delta H1_fixed_vs_unit:mergedev_instruction_following_7c4b4480b4835c0f",
+      "passed": true
+    },
+    {
+      "check": "raw paired invalid_delta H1_fixed_vs_unit:mergedev_instruction_following_7c4b4480b4835c0f",
+      "passed": true
+    },
+    {
+      "check": "raw paired treatment_literal_UNKNOWN_rate H1_fixed_vs_unit:mergedev_instruction_following_7c4b4480b4835c0f",
+      "passed": true
+    },
+    {
+      "check": "raw paired comparator_literal_UNKNOWN_rate H1_fixed_vs_unit:mergedev_instruction_following_7c4b4480b4835c0f",
+      "passed": true
+    },
+    {
+      "check": "raw paired format_delta H1_fixed_vs_unit:mergedev_long_context_retrieval_20550a305b3b2af6",
+      "passed": true
+    },
+    {
+      "check": "raw paired invalid_delta H1_fixed_vs_unit:mergedev_long_context_retrieval_20550a305b3b2af6",
+      "passed": true
+    },
+    {
+      "check": "raw paired treatment_literal_UNKNOWN_rate H1_fixed_vs_unit:mergedev_long_context_retrieval_20550a305b3b2af6",
+      "passed": true
+    },
+    {
+      "check": "raw paired comparator_literal_UNKNOWN_rate H1_fixed_vs_unit:mergedev_long_context_retrieval_20550a305b3b2af6",
+      "passed": true
+    },
+    {
+      "check": "raw paired format_delta H1_fixed_vs_unit:mergedev_lost_in_the_middle_e4e7cc76239741de",
+      "passed": true
+    },
+    {
+      "check": "raw paired invalid_delta H1_fixed_vs_unit:mergedev_lost_in_the_middle_e4e7cc76239741de",
+      "passed": true
+    },
+    {
+      "check": "raw paired treatment_literal_UNKNOWN_rate H1_fixed_vs_unit:mergedev_lost_in_the_middle_e4e7cc76239741de",
+      "passed": true
+    },
+    {
+      "check": "raw paired comparator_literal_UNKNOWN_rate H1_fixed_vs_unit:mergedev_lost_in_the_middle_e4e7cc76239741de",
+      "passed": true
+    },
+    {
+      "check": "raw paired format_delta H1_fixed_vs_unit:mergedev_mathematics_12cd1363c6e3df98",
+      "passed": true
+    },
+    {
+      "check": "raw paired invalid_delta H1_fixed_vs_unit:mergedev_mathematics_12cd1363c6e3df98",
+      "passed": true
+    },
+    {
+      "check": "raw paired treatment_literal_UNKNOWN_rate H1_fixed_vs_unit:mergedev_mathematics_12cd1363c6e3df98",
+      "passed": true
+    },
+    {
+      "check": "raw paired comparator_literal_UNKNOWN_rate H1_fixed_vs_unit:mergedev_mathematics_12cd1363c6e3df98",
+      "passed": true
+    },
+    {
+      "check": "raw paired format_delta H1_fixed_vs_unit:mergedev_multi_hop_binding_492bf31e1ae5deff",
+      "passed": true
+    },
+    {
+      "check": "raw paired invalid_delta H1_fixed_vs_unit:mergedev_multi_hop_binding_492bf31e1ae5deff",
+      "passed": true
+    },
+    {
+      "check": "raw paired treatment_literal_UNKNOWN_rate H1_fixed_vs_unit:mergedev_multi_hop_binding_492bf31e1ae5deff",
+      "passed": true
+    },
+    {
+      "check": "raw paired comparator_literal_UNKNOWN_rate H1_fixed_vs_unit:mergedev_multi_hop_binding_492bf31e1ae5deff",
+      "passed": true
+    },
+    {
+      "check": "raw paired format_delta H1_fixed_vs_unit:mergedev_normal_conversation_4a73375fc950bab7",
+      "passed": true
+    },
+    {
+      "check": "raw paired invalid_delta H1_fixed_vs_unit:mergedev_normal_conversation_4a73375fc950bab7",
+      "passed": true
+    },
+    {
+      "check": "raw paired treatment_literal_UNKNOWN_rate H1_fixed_vs_unit:mergedev_normal_conversation_4a73375fc950bab7",
+      "passed": true
+    },
+    {
+      "check": "raw paired comparator_literal_UNKNOWN_rate H1_fixed_vs_unit:mergedev_normal_conversation_4a73375fc950bab7",
+      "passed": true
+    },
+    {
+      "check": "raw paired format_delta H1_fixed_vs_unit:mergedev_paraphrase_robustness_0cfbf1026bf11fe7",
+      "passed": true
+    },
+    {
+      "check": "raw paired invalid_delta H1_fixed_vs_unit:mergedev_paraphrase_robustness_0cfbf1026bf11fe7",
+      "passed": true
+    },
+    {
+      "check": "raw paired treatment_literal_UNKNOWN_rate H1_fixed_vs_unit:mergedev_paraphrase_robustness_0cfbf1026bf11fe7",
+      "passed": true
+    },
+    {
+      "check": "raw paired comparator_literal_UNKNOWN_rate H1_fixed_vs_unit:mergedev_paraphrase_robustness_0cfbf1026bf11fe7",
+      "passed": true
+    },
+    {
+      "check": "raw paired format_delta H1_fixed_vs_unit:mergedev_paraphrase_robustness_44e3777f1aad20a2",
+      "passed": true
+    },
+    {
+      "check": "raw paired invalid_delta H1_fixed_vs_unit:mergedev_paraphrase_robustness_44e3777f1aad20a2",
+      "passed": true
+    },
+    {
+      "check": "raw paired treatment_literal_UNKNOWN_rate H1_fixed_vs_unit:mergedev_paraphrase_robustness_44e3777f1aad20a2",
+      "passed": true
+    },
+    {
+      "check": "raw paired comparator_literal_UNKNOWN_rate H1_fixed_vs_unit:mergedev_paraphrase_robustness_44e3777f1aad20a2",
+      "passed": true
+    },
+    {
+      "check": "raw paired format_delta H1_fixed_vs_unit:mergedev_paraphrase_robustness_c26fef498d2d9fd3",
+      "passed": true
+    },
+    {
+      "check": "raw paired invalid_delta H1_fixed_vs_unit:mergedev_paraphrase_robustness_c26fef498d2d9fd3",
+      "passed": true
+    },
+    {
+      "check": "raw paired treatment_literal_UNKNOWN_rate H1_fixed_vs_unit:mergedev_paraphrase_robustness_c26fef498d2d9fd3",
+      "passed": true
+    },
+    {
+      "check": "raw paired comparator_literal_UNKNOWN_rate H1_fixed_vs_unit:mergedev_paraphrase_robustness_c26fef498d2d9fd3",
+      "passed": true
+    },
+    {
+      "check": "raw paired format_delta H1_fixed_vs_unit:mergedev_science_0ac5af678b239ec5",
+      "passed": true
+    },
+    {
+      "check": "raw paired invalid_delta H1_fixed_vs_unit:mergedev_science_0ac5af678b239ec5",
+      "passed": true
+    },
+    {
+      "check": "raw paired treatment_literal_UNKNOWN_rate H1_fixed_vs_unit:mergedev_science_0ac5af678b239ec5",
+      "passed": true
+    },
+    {
+      "check": "raw paired comparator_literal_UNKNOWN_rate H1_fixed_vs_unit:mergedev_science_0ac5af678b239ec5",
+      "passed": true
+    },
+    {
+      "check": "raw paired format_delta H1_fixed_vs_unit:mergedev_short_response_30785feeb5a8abdf",
+      "passed": true
+    },
+    {
+      "check": "raw paired invalid_delta H1_fixed_vs_unit:mergedev_short_response_30785feeb5a8abdf",
+      "passed": true
+    },
+    {
+      "check": "raw paired treatment_literal_UNKNOWN_rate H1_fixed_vs_unit:mergedev_short_response_30785feeb5a8abdf",
+      "passed": true
+    },
+    {
+      "check": "raw paired comparator_literal_UNKNOWN_rate H1_fixed_vs_unit:mergedev_short_response_30785feeb5a8abdf",
+      "passed": true
+    },
+    {
+      "check": "raw paired format_delta H1_fixed_vs_unit:mergedev_unanswerable_abstention_22f9fcfd9ce716c8",
+      "passed": true
+    },
+    {
+      "check": "raw paired invalid_delta H1_fixed_vs_unit:mergedev_unanswerable_abstention_22f9fcfd9ce716c8",
+      "passed": true
+    },
+    {
+      "check": "raw paired treatment_literal_UNKNOWN_rate H1_fixed_vs_unit:mergedev_unanswerable_abstention_22f9fcfd9ce716c8",
+      "passed": true
+    },
+    {
+      "check": "raw paired comparator_literal_UNKNOWN_rate H1_fixed_vs_unit:mergedev_unanswerable_abstention_22f9fcfd9ce716c8",
+      "passed": true
+    },
+    {
+      "check": "raw paired format_delta corrected_A5:mergedev_common_sense_025ea65887df6a1b",
+      "passed": true
+    },
+    {
+      "check": "raw paired invalid_delta corrected_A5:mergedev_common_sense_025ea65887df6a1b",
+      "passed": true
+    },
+    {
+      "check": "raw paired treatment_literal_UNKNOWN_rate corrected_A5:mergedev_common_sense_025ea65887df6a1b",
+      "passed": true
+    },
+    {
+      "check": "raw paired comparator_literal_UNKNOWN_rate corrected_A5:mergedev_common_sense_025ea65887df6a1b",
+      "passed": true
+    },
+    {
+      "check": "raw paired format_delta corrected_A5:mergedev_counterfactual_reasoning_770aaf5dae0c1fb5",
+      "passed": true
+    },
+    {
+      "check": "raw paired invalid_delta corrected_A5:mergedev_counterfactual_reasoning_770aaf5dae0c1fb5",
+      "passed": true
+    },
+    {
+      "check": "raw paired treatment_literal_UNKNOWN_rate corrected_A5:mergedev_counterfactual_reasoning_770aaf5dae0c1fb5",
+      "passed": true
+    },
+    {
+      "check": "raw paired comparator_literal_UNKNOWN_rate corrected_A5:mergedev_counterfactual_reasoning_770aaf5dae0c1fb5",
+      "passed": true
+    },
+    {
+      "check": "raw paired format_delta corrected_A5:mergedev_general_reasoning_078451b6adf65710",
+      "passed": true
+    },
+    {
+      "check": "raw paired invalid_delta corrected_A5:mergedev_general_reasoning_078451b6adf65710",
+      "passed": true
+    },
+    {
+      "check": "raw paired treatment_literal_UNKNOWN_rate corrected_A5:mergedev_general_reasoning_078451b6adf65710",
+      "passed": true
+    },
+    {
+      "check": "raw paired comparator_literal_UNKNOWN_rate corrected_A5:mergedev_general_reasoning_078451b6adf65710",
+      "passed": true
+    },
+    {
+      "check": "raw paired format_delta corrected_A5:mergedev_grounded_qa_rag_10414013c88bdaac",
+      "passed": true
+    },
+    {
+      "check": "raw paired invalid_delta corrected_A5:mergedev_grounded_qa_rag_10414013c88bdaac",
+      "passed": true
+    },
+    {
+      "check": "raw paired treatment_literal_UNKNOWN_rate corrected_A5:mergedev_grounded_qa_rag_10414013c88bdaac",
+      "passed": true
+    },
+    {
+      "check": "raw paired comparator_literal_UNKNOWN_rate corrected_A5:mergedev_grounded_qa_rag_10414013c88bdaac",
+      "passed": true
+    },
+    {
+      "check": "raw paired format_delta corrected_A5:mergedev_instruction_following_7c4b4480b4835c0f",
+      "passed": true
+    },
+    {
+      "check": "raw paired invalid_delta corrected_A5:mergedev_instruction_following_7c4b4480b4835c0f",
+      "passed": true
+    },
+    {
+      "check": "raw paired treatment_literal_UNKNOWN_rate corrected_A5:mergedev_instruction_following_7c4b4480b4835c0f",
+      "passed": true
+    },
+    {
+      "check": "raw paired comparator_literal_UNKNOWN_rate corrected_A5:mergedev_instruction_following_7c4b4480b4835c0f",
+      "passed": true
+    },
+    {
+      "check": "raw paired format_delta corrected_A5:mergedev_long_context_retrieval_20550a305b3b2af6",
+      "passed": true
+    },
+    {
+      "check": "raw paired invalid_delta corrected_A5:mergedev_long_context_retrieval_20550a305b3b2af6",
+      "passed": true
+    },
+    {
+      "check": "raw paired treatment_literal_UNKNOWN_rate corrected_A5:mergedev_long_context_retrieval_20550a305b3b2af6",
+      "passed": true
+    },
+    {
+      "check": "raw paired comparator_literal_UNKNOWN_rate corrected_A5:mergedev_long_context_retrieval_20550a305b3b2af6",
+      "passed": true
+    },
+    {
+      "check": "raw paired format_delta corrected_A5:mergedev_lost_in_the_middle_e4e7cc76239741de",
+      "passed": true
+    },
+    {
+      "check": "raw paired invalid_delta corrected_A5:mergedev_lost_in_the_middle_e4e7cc76239741de",
+      "passed": true
+    },
+    {
+      "check": "raw paired treatment_literal_UNKNOWN_rate corrected_A5:mergedev_lost_in_the_middle_e4e7cc76239741de",
+      "passed": true
+    },
+    {
+      "check": "raw paired comparator_literal_UNKNOWN_rate corrected_A5:mergedev_lost_in_the_middle_e4e7cc76239741de",
+      "passed": true
+    },
+    {
+      "check": "raw paired format_delta corrected_A5:mergedev_mathematics_12cd1363c6e3df98",
+      "passed": true
+    },
+    {
+      "check": "raw paired invalid_delta corrected_A5:mergedev_mathematics_12cd1363c6e3df98",
+      "passed": true
+    },
+    {
+      "check": "raw paired treatment_literal_UNKNOWN_rate corrected_A5:mergedev_mathematics_12cd1363c6e3df98",
+      "passed": true
+    },
+    {
+      "check": "raw paired comparator_literal_UNKNOWN_rate corrected_A5:mergedev_mathematics_12cd1363c6e3df98",
+      "passed": true
+    },
+    {
+      "check": "raw paired format_delta corrected_A5:mergedev_multi_hop_binding_492bf31e1ae5deff",
+      "passed": true
+    },
+    {
+      "check": "raw paired invalid_delta corrected_A5:mergedev_multi_hop_binding_492bf31e1ae5deff",
+      "passed": true
+    },
+    {
+      "check": "raw paired treatment_literal_UNKNOWN_rate corrected_A5:mergedev_multi_hop_binding_492bf31e1ae5deff",
+      "passed": true
+    },
+    {
+      "check": "raw paired comparator_literal_UNKNOWN_rate corrected_A5:mergedev_multi_hop_binding_492bf31e1ae5deff",
+      "passed": true
+    },
+    {
+      "check": "raw paired format_delta corrected_A5:mergedev_normal_conversation_4a73375fc950bab7",
+      "passed": true
+    },
+    {
+      "check": "raw paired invalid_delta corrected_A5:mergedev_normal_conversation_4a73375fc950bab7",
+      "passed": true
+    },
+    {
+      "check": "raw paired treatment_literal_UNKNOWN_rate corrected_A5:mergedev_normal_conversation_4a73375fc950bab7",
+      "passed": true
+    },
+    {
+      "check": "raw paired comparator_literal_UNKNOWN_rate corrected_A5:mergedev_normal_conversation_4a73375fc950bab7",
+      "passed": true
+    },
+    {
+      "check": "raw paired format_delta corrected_A5:mergedev_paraphrase_robustness_0cfbf1026bf11fe7",
+      "passed": true
+    },
+    {
+      "check": "raw paired invalid_delta corrected_A5:mergedev_paraphrase_robustness_0cfbf1026bf11fe7",
+      "passed": true
+    },
+    {
+      "check": "raw paired treatment_literal_UNKNOWN_rate corrected_A5:mergedev_paraphrase_robustness_0cfbf1026bf11fe7",
+      "passed": true
+    },
+    {
+      "check": "raw paired comparator_literal_UNKNOWN_rate corrected_A5:mergedev_paraphrase_robustness_0cfbf1026bf11fe7",
+      "passed": true
+    },
+    {
+      "check": "raw paired format_delta corrected_A5:mergedev_paraphrase_robustness_44e3777f1aad20a2",
+      "passed": true
+    },
+    {
+      "check": "raw paired invalid_delta corrected_A5:mergedev_paraphrase_robustness_44e3777f1aad20a2",
+      "passed": true
+    },
+    {
+      "check": "raw paired treatment_literal_UNKNOWN_rate corrected_A5:mergedev_paraphrase_robustness_44e3777f1aad20a2",
+      "passed": true
+    },
+    {
+      "check": "raw paired comparator_literal_UNKNOWN_rate corrected_A5:mergedev_paraphrase_robustness_44e3777f1aad20a2",
+      "passed": true
+    },
+    {
+      "check": "raw paired format_delta corrected_A5:mergedev_paraphrase_robustness_c26fef498d2d9fd3",
+      "passed": true
+    },
+    {
+      "check": "raw paired invalid_delta corrected_A5:mergedev_paraphrase_robustness_c26fef498d2d9fd3",
+      "passed": true
+    },
+    {
+      "check": "raw paired treatment_literal_UNKNOWN_rate corrected_A5:mergedev_paraphrase_robustness_c26fef498d2d9fd3",
+      "passed": true
+    },
+    {
+      "check": "raw paired comparator_literal_UNKNOWN_rate corrected_A5:mergedev_paraphrase_robustness_c26fef498d2d9fd3",
+      "passed": true
+    },
+    {
+      "check": "raw paired format_delta corrected_A5:mergedev_science_0ac5af678b239ec5",
+      "passed": true
+    },
+    {
+      "check": "raw paired invalid_delta corrected_A5:mergedev_science_0ac5af678b239ec5",
+      "passed": true
+    },
+    {
+      "check": "raw paired treatment_literal_UNKNOWN_rate corrected_A5:mergedev_science_0ac5af678b239ec5",
+      "passed": true
+    },
+    {
+      "check": "raw paired comparator_literal_UNKNOWN_rate corrected_A5:mergedev_science_0ac5af678b239ec5",
+      "passed": true
+    },
+    {
+      "check": "raw paired format_delta corrected_A5:mergedev_short_response_30785feeb5a8abdf",
+      "passed": true
+    },
+    {
+      "check": "raw paired invalid_delta corrected_A5:mergedev_short_response_30785feeb5a8abdf",
+      "passed": true
+    },
+    {
+      "check": "raw paired treatment_literal_UNKNOWN_rate corrected_A5:mergedev_short_response_30785feeb5a8abdf",
+      "passed": true
+    },
+    {
+      "check": "raw paired comparator_literal_UNKNOWN_rate corrected_A5:mergedev_short_response_30785feeb5a8abdf",
+      "passed": true
+    },
+    {
+      "check": "raw paired format_delta corrected_A5:mergedev_unanswerable_abstention_22f9fcfd9ce716c8",
+      "passed": true
+    },
+    {
+      "check": "raw paired invalid_delta corrected_A5:mergedev_unanswerable_abstention_22f9fcfd9ce716c8",
+      "passed": true
+    },
+    {
+      "check": "raw paired treatment_literal_UNKNOWN_rate corrected_A5:mergedev_unanswerable_abstention_22f9fcfd9ce716c8",
+      "passed": true
+    },
+    {
+      "check": "raw paired comparator_literal_UNKNOWN_rate corrected_A5:mergedev_unanswerable_abstention_22f9fcfd9ce716c8",
+      "passed": true
+    },
+    {
+      "check": "raw paired format_delta fixed_1.2:mergedev_common_sense_025ea65887df6a1b",
+      "passed": true
+    },
+    {
+      "check": "raw paired invalid_delta fixed_1.2:mergedev_common_sense_025ea65887df6a1b",
+      "passed": true
+    },
+    {
+      "check": "raw paired treatment_literal_UNKNOWN_rate fixed_1.2:mergedev_common_sense_025ea65887df6a1b",
+      "passed": true
+    },
+    {
+      "check": "raw paired comparator_literal_UNKNOWN_rate fixed_1.2:mergedev_common_sense_025ea65887df6a1b",
+      "passed": true
+    },
+    {
+      "check": "raw paired format_delta fixed_1.2:mergedev_counterfactual_reasoning_770aaf5dae0c1fb5",
+      "passed": true
+    },
+    {
+      "check": "raw paired invalid_delta fixed_1.2:mergedev_counterfactual_reasoning_770aaf5dae0c1fb5",
+      "passed": true
+    },
+    {
+      "check": "raw paired treatment_literal_UNKNOWN_rate fixed_1.2:mergedev_counterfactual_reasoning_770aaf5dae0c1fb5",
+      "passed": true
+    },
+    {
+      "check": "raw paired comparator_literal_UNKNOWN_rate fixed_1.2:mergedev_counterfactual_reasoning_770aaf5dae0c1fb5",
+      "passed": true
+    },
+    {
+      "check": "raw paired format_delta fixed_1.2:mergedev_general_reasoning_078451b6adf65710",
+      "passed": true
+    },
+    {
+      "check": "raw paired invalid_delta fixed_1.2:mergedev_general_reasoning_078451b6adf65710",
+      "passed": true
+    },
+    {
+      "check": "raw paired treatment_literal_UNKNOWN_rate fixed_1.2:mergedev_general_reasoning_078451b6adf65710",
+      "passed": true
+    },
+    {
+      "check": "raw paired comparator_literal_UNKNOWN_rate fixed_1.2:mergedev_general_reasoning_078451b6adf65710",
+      "passed": true
+    },
+    {
+      "check": "raw paired format_delta fixed_1.2:mergedev_grounded_qa_rag_10414013c88bdaac",
+      "passed": true
+    },
+    {
+      "check": "raw paired invalid_delta fixed_1.2:mergedev_grounded_qa_rag_10414013c88bdaac",
+      "passed": true
+    },
+    {
+      "check": "raw paired treatment_literal_UNKNOWN_rate fixed_1.2:mergedev_grounded_qa_rag_10414013c88bdaac",
+      "passed": true
+    },
+    {
+      "check": "raw paired comparator_literal_UNKNOWN_rate fixed_1.2:mergedev_grounded_qa_rag_10414013c88bdaac",
+      "passed": true
+    },
+    {
+      "check": "raw paired format_delta fixed_1.2:mergedev_instruction_following_7c4b4480b4835c0f",
+      "passed": true
+    },
+    {
+      "check": "raw paired invalid_delta fixed_1.2:mergedev_instruction_following_7c4b4480b4835c0f",
+      "passed": true
+    },
+    {
+      "check": "raw paired treatment_literal_UNKNOWN_rate fixed_1.2:mergedev_instruction_following_7c4b4480b4835c0f",
+      "passed": true
+    },
+    {
+      "check": "raw paired comparator_literal_UNKNOWN_rate fixed_1.2:mergedev_instruction_following_7c4b4480b4835c0f",
+      "passed": true
+    },
+    {
+      "check": "raw paired format_delta fixed_1.2:mergedev_long_context_retrieval_20550a305b3b2af6",
+      "passed": true
+    },
+    {
+      "check": "raw paired invalid_delta fixed_1.2:mergedev_long_context_retrieval_20550a305b3b2af6",
+      "passed": true
+    },
+    {
+      "check": "raw paired treatment_literal_UNKNOWN_rate fixed_1.2:mergedev_long_context_retrieval_20550a305b3b2af6",
+      "passed": true
+    },
+    {
+      "check": "raw paired comparator_literal_UNKNOWN_rate fixed_1.2:mergedev_long_context_retrieval_20550a305b3b2af6",
+      "passed": true
+    },
+    {
+      "check": "raw paired format_delta fixed_1.2:mergedev_lost_in_the_middle_e4e7cc76239741de",
+      "passed": true
+    },
+    {
+      "check": "raw paired invalid_delta fixed_1.2:mergedev_lost_in_the_middle_e4e7cc76239741de",
+      "passed": true
+    },
+    {
+      "check": "raw paired treatment_literal_UNKNOWN_rate fixed_1.2:mergedev_lost_in_the_middle_e4e7cc76239741de",
+      "passed": true
+    },
+    {
+      "check": "raw paired comparator_literal_UNKNOWN_rate fixed_1.2:mergedev_lost_in_the_middle_e4e7cc76239741de",
+      "passed": true
+    },
+    {
+      "check": "raw paired format_delta fixed_1.2:mergedev_mathematics_12cd1363c6e3df98",
+      "passed": true
+    },
+    {
+      "check": "raw paired invalid_delta fixed_1.2:mergedev_mathematics_12cd1363c6e3df98",
+      "passed": true
+    },
+    {
+      "check": "raw paired treatment_literal_UNKNOWN_rate fixed_1.2:mergedev_mathematics_12cd1363c6e3df98",
+      "passed": true
+    },
+    {
+      "check": "raw paired comparator_literal_UNKNOWN_rate fixed_1.2:mergedev_mathematics_12cd1363c6e3df98",
+      "passed": true
+    },
+    {
+      "check": "raw paired format_delta fixed_1.2:mergedev_multi_hop_binding_492bf31e1ae5deff",
+      "passed": true
+    },
+    {
+      "check": "raw paired invalid_delta fixed_1.2:mergedev_multi_hop_binding_492bf31e1ae5deff",
+      "passed": true
+    },
+    {
+      "check": "raw paired treatment_literal_UNKNOWN_rate fixed_1.2:mergedev_multi_hop_binding_492bf31e1ae5deff",
+      "passed": true
+    },
+    {
+      "check": "raw paired comparator_literal_UNKNOWN_rate fixed_1.2:mergedev_multi_hop_binding_492bf31e1ae5deff",
+      "passed": true
+    },
+    {
+      "check": "raw paired format_delta fixed_1.2:mergedev_normal_conversation_4a73375fc950bab7",
+      "passed": true
+    },
+    {
+      "check": "raw paired invalid_delta fixed_1.2:mergedev_normal_conversation_4a73375fc950bab7",
+      "passed": true
+    },
+    {
+      "check": "raw paired treatment_literal_UNKNOWN_rate fixed_1.2:mergedev_normal_conversation_4a73375fc950bab7",
+      "passed": true
+    },
+    {
+      "check": "raw paired comparator_literal_UNKNOWN_rate fixed_1.2:mergedev_normal_conversation_4a73375fc950bab7",
+      "passed": true
+    },
+    {
+      "check": "raw paired format_delta fixed_1.2:mergedev_paraphrase_robustness_0cfbf1026bf11fe7",
+      "passed": true
+    },
+    {
+      "check": "raw paired invalid_delta fixed_1.2:mergedev_paraphrase_robustness_0cfbf1026bf11fe7",
+      "passed": true
+    },
+    {
+      "check": "raw paired treatment_literal_UNKNOWN_rate fixed_1.2:mergedev_paraphrase_robustness_0cfbf1026bf11fe7",
+      "passed": true
+    },
+    {
+      "check": "raw paired comparator_literal_UNKNOWN_rate fixed_1.2:mergedev_paraphrase_robustness_0cfbf1026bf11fe7",
+      "passed": true
+    },
+    {
+      "check": "raw paired format_delta fixed_1.2:mergedev_paraphrase_robustness_44e3777f1aad20a2",
+      "passed": true
+    },
+    {
+      "check": "raw paired invalid_delta fixed_1.2:mergedev_paraphrase_robustness_44e3777f1aad20a2",
+      "passed": true
+    },
+    {
+      "check": "raw paired treatment_literal_UNKNOWN_rate fixed_1.2:mergedev_paraphrase_robustness_44e3777f1aad20a2",
+      "passed": true
+    },
+    {
+      "check": "raw paired comparator_literal_UNKNOWN_rate fixed_1.2:mergedev_paraphrase_robustness_44e3777f1aad20a2",
+      "passed": true
+    },
+    {
+      "check": "raw paired format_delta fixed_1.2:mergedev_paraphrase_robustness_c26fef498d2d9fd3",
+      "passed": true
+    },
+    {
+      "check": "raw paired invalid_delta fixed_1.2:mergedev_paraphrase_robustness_c26fef498d2d9fd3",
+      "passed": true
+    },
+    {
+      "check": "raw paired treatment_literal_UNKNOWN_rate fixed_1.2:mergedev_paraphrase_robustness_c26fef498d2d9fd3",
+      "passed": true
+    },
+    {
+      "check": "raw paired comparator_literal_UNKNOWN_rate fixed_1.2:mergedev_paraphrase_robustness_c26fef498d2d9fd3",
+      "passed": true
+    },
+    {
+      "check": "raw paired format_delta fixed_1.2:mergedev_science_0ac5af678b239ec5",
+      "passed": true
+    },
+    {
+      "check": "raw paired invalid_delta fixed_1.2:mergedev_science_0ac5af678b239ec5",
+      "passed": true
+    },
+    {
+      "check": "raw paired treatment_literal_UNKNOWN_rate fixed_1.2:mergedev_science_0ac5af678b239ec5",
+      "passed": true
+    },
+    {
+      "check": "raw paired comparator_literal_UNKNOWN_rate fixed_1.2:mergedev_science_0ac5af678b239ec5",
+      "passed": true
+    },
+    {
+      "check": "raw paired format_delta fixed_1.2:mergedev_short_response_30785feeb5a8abdf",
+      "passed": true
+    },
+    {
+      "check": "raw paired invalid_delta fixed_1.2:mergedev_short_response_30785feeb5a8abdf",
+      "passed": true
+    },
+    {
+      "check": "raw paired treatment_literal_UNKNOWN_rate fixed_1.2:mergedev_short_response_30785feeb5a8abdf",
+      "passed": true
+    },
+    {
+      "check": "raw paired comparator_literal_UNKNOWN_rate fixed_1.2:mergedev_short_response_30785feeb5a8abdf",
+      "passed": true
+    },
+    {
+      "check": "raw paired format_delta fixed_1.2:mergedev_unanswerable_abstention_22f9fcfd9ce716c8",
+      "passed": true
+    },
+    {
+      "check": "raw paired invalid_delta fixed_1.2:mergedev_unanswerable_abstention_22f9fcfd9ce716c8",
+      "passed": true
+    },
+    {
+      "check": "raw paired treatment_literal_UNKNOWN_rate fixed_1.2:mergedev_unanswerable_abstention_22f9fcfd9ce716c8",
+      "passed": true
+    },
+    {
+      "check": "raw paired comparator_literal_UNKNOWN_rate fixed_1.2:mergedev_unanswerable_abstention_22f9fcfd9ce716c8",
+      "passed": true
+    },
+    {
+      "check": "raw paired format_delta frozen_fixed:mergedev_common_sense_025ea65887df6a1b",
+      "passed": true
+    },
+    {
+      "check": "raw paired invalid_delta frozen_fixed:mergedev_common_sense_025ea65887df6a1b",
+      "passed": true
+    },
+    {
+      "check": "raw paired treatment_literal_UNKNOWN_rate frozen_fixed:mergedev_common_sense_025ea65887df6a1b",
+      "passed": true
+    },
+    {
+      "check": "raw paired comparator_literal_UNKNOWN_rate frozen_fixed:mergedev_common_sense_025ea65887df6a1b",
+      "passed": true
+    },
+    {
+      "check": "raw paired format_delta frozen_fixed:mergedev_counterfactual_reasoning_770aaf5dae0c1fb5",
+      "passed": true
+    },
+    {
+      "check": "raw paired invalid_delta frozen_fixed:mergedev_counterfactual_reasoning_770aaf5dae0c1fb5",
+      "passed": true
+    },
+    {
+      "check": "raw paired treatment_literal_UNKNOWN_rate frozen_fixed:mergedev_counterfactual_reasoning_770aaf5dae0c1fb5",
+      "passed": true
+    },
+    {
+      "check": "raw paired comparator_literal_UNKNOWN_rate frozen_fixed:mergedev_counterfactual_reasoning_770aaf5dae0c1fb5",
+      "passed": true
+    },
+    {
+      "check": "raw paired format_delta frozen_fixed:mergedev_general_reasoning_078451b6adf65710",
+      "passed": true
+    },
+    {
+      "check": "raw paired invalid_delta frozen_fixed:mergedev_general_reasoning_078451b6adf65710",
+      "passed": true
+    },
+    {
+      "check": "raw paired treatment_literal_UNKNOWN_rate frozen_fixed:mergedev_general_reasoning_078451b6adf65710",
+      "passed": true
+    },
+    {
+      "check": "raw paired comparator_literal_UNKNOWN_rate frozen_fixed:mergedev_general_reasoning_078451b6adf65710",
+      "passed": true
+    },
+    {
+      "check": "raw paired format_delta frozen_fixed:mergedev_grounded_qa_rag_10414013c88bdaac",
+      "passed": true
+    },
+    {
+      "check": "raw paired invalid_delta frozen_fixed:mergedev_grounded_qa_rag_10414013c88bdaac",
+      "passed": true
+    },
+    {
+      "check": "raw paired treatment_literal_UNKNOWN_rate frozen_fixed:mergedev_grounded_qa_rag_10414013c88bdaac",
+      "passed": true
+    },
+    {
+      "check": "raw paired comparator_literal_UNKNOWN_rate frozen_fixed:mergedev_grounded_qa_rag_10414013c88bdaac",
+      "passed": true
+    },
+    {
+      "check": "raw paired format_delta frozen_fixed:mergedev_instruction_following_7c4b4480b4835c0f",
+      "passed": true
+    },
+    {
+      "check": "raw paired invalid_delta frozen_fixed:mergedev_instruction_following_7c4b4480b4835c0f",
+      "passed": true
+    },
+    {
+      "check": "raw paired treatment_literal_UNKNOWN_rate frozen_fixed:mergedev_instruction_following_7c4b4480b4835c0f",
+      "passed": true
+    },
+    {
+      "check": "raw paired comparator_literal_UNKNOWN_rate frozen_fixed:mergedev_instruction_following_7c4b4480b4835c0f",
+      "passed": true
+    },
+    {
+      "check": "raw paired format_delta frozen_fixed:mergedev_long_context_retrieval_20550a305b3b2af6",
+      "passed": true
+    },
+    {
+      "check": "raw paired invalid_delta frozen_fixed:mergedev_long_context_retrieval_20550a305b3b2af6",
+      "passed": true
+    },
+    {
+      "check": "raw paired treatment_literal_UNKNOWN_rate frozen_fixed:mergedev_long_context_retrieval_20550a305b3b2af6",
+      "passed": true
+    },
+    {
+      "check": "raw paired comparator_literal_UNKNOWN_rate frozen_fixed:mergedev_long_context_retrieval_20550a305b3b2af6",
+      "passed": true
+    },
+    {
+      "check": "raw paired format_delta frozen_fixed:mergedev_lost_in_the_middle_e4e7cc76239741de",
+      "passed": true
+    },
+    {
+      "check": "raw paired invalid_delta frozen_fixed:mergedev_lost_in_the_middle_e4e7cc76239741de",
+      "passed": true
+    },
+    {
+      "check": "raw paired treatment_literal_UNKNOWN_rate frozen_fixed:mergedev_lost_in_the_middle_e4e7cc76239741de",
+      "passed": true
+    },
+    {
+      "check": "raw paired comparator_literal_UNKNOWN_rate frozen_fixed:mergedev_lost_in_the_middle_e4e7cc76239741de",
+      "passed": true
+    },
+    {
+      "check": "raw paired format_delta frozen_fixed:mergedev_mathematics_12cd1363c6e3df98",
+      "passed": true
+    },
+    {
+      "check": "raw paired invalid_delta frozen_fixed:mergedev_mathematics_12cd1363c6e3df98",
+      "passed": true
+    },
+    {
+      "check": "raw paired treatment_literal_UNKNOWN_rate frozen_fixed:mergedev_mathematics_12cd1363c6e3df98",
+      "passed": true
+    },
+    {
+      "check": "raw paired comparator_literal_UNKNOWN_rate frozen_fixed:mergedev_mathematics_12cd1363c6e3df98",
+      "passed": true
+    },
+    {
+      "check": "raw paired format_delta frozen_fixed:mergedev_multi_hop_binding_492bf31e1ae5deff",
+      "passed": true
+    },
+    {
+      "check": "raw paired invalid_delta frozen_fixed:mergedev_multi_hop_binding_492bf31e1ae5deff",
+      "passed": true
+    },
+    {
+      "check": "raw paired treatment_literal_UNKNOWN_rate frozen_fixed:mergedev_multi_hop_binding_492bf31e1ae5deff",
+      "passed": true
+    },
+    {
+      "check": "raw paired comparator_literal_UNKNOWN_rate frozen_fixed:mergedev_multi_hop_binding_492bf31e1ae5deff",
+      "passed": true
+    },
+    {
+      "check": "raw paired format_delta frozen_fixed:mergedev_normal_conversation_4a73375fc950bab7",
+      "passed": true
+    },
+    {
+      "check": "raw paired invalid_delta frozen_fixed:mergedev_normal_conversation_4a73375fc950bab7",
+      "passed": true
+    },
+    {
+      "check": "raw paired treatment_literal_UNKNOWN_rate frozen_fixed:mergedev_normal_conversation_4a73375fc950bab7",
+      "passed": true
+    },
+    {
+      "check": "raw paired comparator_literal_UNKNOWN_rate frozen_fixed:mergedev_normal_conversation_4a73375fc950bab7",
+      "passed": true
+    },
+    {
+      "check": "raw paired format_delta frozen_fixed:mergedev_paraphrase_robustness_0cfbf1026bf11fe7",
+      "passed": true
+    },
+    {
+      "check": "raw paired invalid_delta frozen_fixed:mergedev_paraphrase_robustness_0cfbf1026bf11fe7",
+      "passed": true
+    },
+    {
+      "check": "raw paired treatment_literal_UNKNOWN_rate frozen_fixed:mergedev_paraphrase_robustness_0cfbf1026bf11fe7",
+      "passed": true
+    },
+    {
+      "check": "raw paired comparator_literal_UNKNOWN_rate frozen_fixed:mergedev_paraphrase_robustness_0cfbf1026bf11fe7",
+      "passed": true
+    },
+    {
+      "check": "raw paired format_delta frozen_fixed:mergedev_paraphrase_robustness_44e3777f1aad20a2",
+      "passed": true
+    },
+    {
+      "check": "raw paired invalid_delta frozen_fixed:mergedev_paraphrase_robustness_44e3777f1aad20a2",
+      "passed": true
+    },
+    {
+      "check": "raw paired treatment_literal_UNKNOWN_rate frozen_fixed:mergedev_paraphrase_robustness_44e3777f1aad20a2",
+      "passed": true
+    },
+    {
+      "check": "raw paired comparator_literal_UNKNOWN_rate frozen_fixed:mergedev_paraphrase_robustness_44e3777f1aad20a2",
+      "passed": true
+    },
+    {
+      "check": "raw paired format_delta frozen_fixed:mergedev_paraphrase_robustness_c26fef498d2d9fd3",
+      "passed": true
+    },
+    {
+      "check": "raw paired invalid_delta frozen_fixed:mergedev_paraphrase_robustness_c26fef498d2d9fd3",
+      "passed": true
+    },
+    {
+      "check": "raw paired treatment_literal_UNKNOWN_rate frozen_fixed:mergedev_paraphrase_robustness_c26fef498d2d9fd3",
+      "passed": true
+    },
+    {
+      "check": "raw paired comparator_literal_UNKNOWN_rate frozen_fixed:mergedev_paraphrase_robustness_c26fef498d2d9fd3",
+      "passed": true
+    },
+    {
+      "check": "raw paired format_delta frozen_fixed:mergedev_science_0ac5af678b239ec5",
+      "passed": true
+    },
+    {
+      "check": "raw paired invalid_delta frozen_fixed:mergedev_science_0ac5af678b239ec5",
+      "passed": true
+    },
+    {
+      "check": "raw paired treatment_literal_UNKNOWN_rate frozen_fixed:mergedev_science_0ac5af678b239ec5",
+      "passed": true
+    },
+    {
+      "check": "raw paired comparator_literal_UNKNOWN_rate frozen_fixed:mergedev_science_0ac5af678b239ec5",
+      "passed": true
+    },
+    {
+      "check": "raw paired format_delta frozen_fixed:mergedev_short_response_30785feeb5a8abdf",
+      "passed": true
+    },
+    {
+      "check": "raw paired invalid_delta frozen_fixed:mergedev_short_response_30785feeb5a8abdf",
+      "passed": true
+    },
+    {
+      "check": "raw paired treatment_literal_UNKNOWN_rate frozen_fixed:mergedev_short_response_30785feeb5a8abdf",
+      "passed": true
+    },
+    {
+      "check": "raw paired comparator_literal_UNKNOWN_rate frozen_fixed:mergedev_short_response_30785feeb5a8abdf",
+      "passed": true
+    },
+    {
+      "check": "raw paired format_delta frozen_fixed:mergedev_unanswerable_abstention_22f9fcfd9ce716c8",
+      "passed": true
+    },
+    {
+      "check": "raw paired invalid_delta frozen_fixed:mergedev_unanswerable_abstention_22f9fcfd9ce716c8",
+      "passed": true
+    },
+    {
+      "check": "raw paired treatment_literal_UNKNOWN_rate frozen_fixed:mergedev_unanswerable_abstention_22f9fcfd9ce716c8",
+      "passed": true
+    },
+    {
+      "check": "raw paired comparator_literal_UNKNOWN_rate frozen_fixed:mergedev_unanswerable_abstention_22f9fcfd9ce716c8",
+      "passed": true
+    },
+    {
+      "check": "raw paired format_delta intact:mergedev_common_sense_025ea65887df6a1b",
+      "passed": true
+    },
+    {
+      "check": "raw paired invalid_delta intact:mergedev_common_sense_025ea65887df6a1b",
+      "passed": true
+    },
+    {
+      "check": "raw paired treatment_literal_UNKNOWN_rate intact:mergedev_common_sense_025ea65887df6a1b",
+      "passed": true
+    },
+    {
+      "check": "raw paired comparator_literal_UNKNOWN_rate intact:mergedev_common_sense_025ea65887df6a1b",
+      "passed": true
+    },
+    {
+      "check": "raw paired format_delta intact:mergedev_counterfactual_reasoning_770aaf5dae0c1fb5",
+      "passed": true
+    },
+    {
+      "check": "raw paired invalid_delta intact:mergedev_counterfactual_reasoning_770aaf5dae0c1fb5",
+      "passed": true
+    },
+    {
+      "check": "raw paired treatment_literal_UNKNOWN_rate intact:mergedev_counterfactual_reasoning_770aaf5dae0c1fb5",
+      "passed": true
+    },
+    {
+      "check": "raw paired comparator_literal_UNKNOWN_rate intact:mergedev_counterfactual_reasoning_770aaf5dae0c1fb5",
+      "passed": true
+    },
+    {
+      "check": "raw paired format_delta intact:mergedev_general_reasoning_078451b6adf65710",
+      "passed": true
+    },
+    {
+      "check": "raw paired invalid_delta intact:mergedev_general_reasoning_078451b6adf65710",
+      "passed": true
+    },
+    {
+      "check": "raw paired treatment_literal_UNKNOWN_rate intact:mergedev_general_reasoning_078451b6adf65710",
+      "passed": true
+    },
+    {
+      "check": "raw paired comparator_literal_UNKNOWN_rate intact:mergedev_general_reasoning_078451b6adf65710",
+      "passed": true
+    },
+    {
+      "check": "raw paired format_delta intact:mergedev_grounded_qa_rag_10414013c88bdaac",
+      "passed": true
+    },
+    {
+      "check": "raw paired invalid_delta intact:mergedev_grounded_qa_rag_10414013c88bdaac",
+      "passed": true
+    },
+    {
+      "check": "raw paired treatment_literal_UNKNOWN_rate intact:mergedev_grounded_qa_rag_10414013c88bdaac",
+      "passed": true
+    },
+    {
+      "check": "raw paired comparator_literal_UNKNOWN_rate intact:mergedev_grounded_qa_rag_10414013c88bdaac",
+      "passed": true
+    },
+    {
+      "check": "raw paired format_delta intact:mergedev_instruction_following_7c4b4480b4835c0f",
+      "passed": true
+    },
+    {
+      "check": "raw paired invalid_delta intact:mergedev_instruction_following_7c4b4480b4835c0f",
+      "passed": true
+    },
+    {
+      "check": "raw paired treatment_literal_UNKNOWN_rate intact:mergedev_instruction_following_7c4b4480b4835c0f",
+      "passed": true
+    },
+    {
+      "check": "raw paired comparator_literal_UNKNOWN_rate intact:mergedev_instruction_following_7c4b4480b4835c0f",
+      "passed": true
+    },
+    {
+      "check": "raw paired format_delta intact:mergedev_long_context_retrieval_20550a305b3b2af6",
+      "passed": true
+    },
+    {
+      "check": "raw paired invalid_delta intact:mergedev_long_context_retrieval_20550a305b3b2af6",
+      "passed": true
+    },
+    {
+      "check": "raw paired treatment_literal_UNKNOWN_rate intact:mergedev_long_context_retrieval_20550a305b3b2af6",
+      "passed": true
+    },
+    {
+      "check": "raw paired comparator_literal_UNKNOWN_rate intact:mergedev_long_context_retrieval_20550a305b3b2af6",
+      "passed": true
+    },
+    {
+      "check": "raw paired format_delta intact:mergedev_lost_in_the_middle_e4e7cc76239741de",
+      "passed": true
+    },
+    {
+      "check": "raw paired invalid_delta intact:mergedev_lost_in_the_middle_e4e7cc76239741de",
+      "passed": true
+    },
+    {
+      "check": "raw paired treatment_literal_UNKNOWN_rate intact:mergedev_lost_in_the_middle_e4e7cc76239741de",
+      "passed": true
+    },
+    {
+      "check": "raw paired comparator_literal_UNKNOWN_rate intact:mergedev_lost_in_the_middle_e4e7cc76239741de",
+      "passed": true
+    },
+    {
+      "check": "raw paired format_delta intact:mergedev_mathematics_12cd1363c6e3df98",
+      "passed": true
+    },
+    {
+      "check": "raw paired invalid_delta intact:mergedev_mathematics_12cd1363c6e3df98",
+      "passed": true
+    },
+    {
+      "check": "raw paired treatment_literal_UNKNOWN_rate intact:mergedev_mathematics_12cd1363c6e3df98",
+      "passed": true
+    },
+    {
+      "check": "raw paired comparator_literal_UNKNOWN_rate intact:mergedev_mathematics_12cd1363c6e3df98",
+      "passed": true
+    },
+    {
+      "check": "raw paired format_delta intact:mergedev_multi_hop_binding_492bf31e1ae5deff",
+      "passed": true
+    },
+    {
+      "check": "raw paired invalid_delta intact:mergedev_multi_hop_binding_492bf31e1ae5deff",
+      "passed": true
+    },
+    {
+      "check": "raw paired treatment_literal_UNKNOWN_rate intact:mergedev_multi_hop_binding_492bf31e1ae5deff",
+      "passed": true
+    },
+    {
+      "check": "raw paired comparator_literal_UNKNOWN_rate intact:mergedev_multi_hop_binding_492bf31e1ae5deff",
+      "passed": true
+    },
+    {
+      "check": "raw paired format_delta intact:mergedev_normal_conversation_4a73375fc950bab7",
+      "passed": true
+    },
+    {
+      "check": "raw paired invalid_delta intact:mergedev_normal_conversation_4a73375fc950bab7",
+      "passed": true
+    },
+    {
+      "check": "raw paired treatment_literal_UNKNOWN_rate intact:mergedev_normal_conversation_4a73375fc950bab7",
+      "passed": true
+    },
+    {
+      "check": "raw paired comparator_literal_UNKNOWN_rate intact:mergedev_normal_conversation_4a73375fc950bab7",
+      "passed": true
+    },
+    {
+      "check": "raw paired format_delta intact:mergedev_paraphrase_robustness_0cfbf1026bf11fe7",
+      "passed": true
+    },
+    {
+      "check": "raw paired invalid_delta intact:mergedev_paraphrase_robustness_0cfbf1026bf11fe7",
+      "passed": true
+    },
+    {
+      "check": "raw paired treatment_literal_UNKNOWN_rate intact:mergedev_paraphrase_robustness_0cfbf1026bf11fe7",
+      "passed": true
+    },
+    {
+      "check": "raw paired comparator_literal_UNKNOWN_rate intact:mergedev_paraphrase_robustness_0cfbf1026bf11fe7",
+      "passed": true
+    },
+    {
+      "check": "raw paired format_delta intact:mergedev_paraphrase_robustness_44e3777f1aad20a2",
+      "passed": true
+    },
+    {
+      "check": "raw paired invalid_delta intact:mergedev_paraphrase_robustness_44e3777f1aad20a2",
+      "passed": true
+    },
+    {
+      "check": "raw paired treatment_literal_UNKNOWN_rate intact:mergedev_paraphrase_robustness_44e3777f1aad20a2",
+      "passed": true
+    },
+    {
+      "check": "raw paired comparator_literal_UNKNOWN_rate intact:mergedev_paraphrase_robustness_44e3777f1aad20a2",
+      "passed": true
+    },
+    {
+      "check": "raw paired format_delta intact:mergedev_paraphrase_robustness_c26fef498d2d9fd3",
+      "passed": true
+    },
+    {
+      "check": "raw paired invalid_delta intact:mergedev_paraphrase_robustness_c26fef498d2d9fd3",
+      "passed": true
+    },
+    {
+      "check": "raw paired treatment_literal_UNKNOWN_rate intact:mergedev_paraphrase_robustness_c26fef498d2d9fd3",
+      "passed": true
+    },
+    {
+      "check": "raw paired comparator_literal_UNKNOWN_rate intact:mergedev_paraphrase_robustness_c26fef498d2d9fd3",
+      "passed": true
+    },
+    {
+      "check": "raw paired format_delta intact:mergedev_science_0ac5af678b239ec5",
+      "passed": true
+    },
+    {
+      "check": "raw paired invalid_delta intact:mergedev_science_0ac5af678b239ec5",
+      "passed": true
+    },
+    {
+      "check": "raw paired treatment_literal_UNKNOWN_rate intact:mergedev_science_0ac5af678b239ec5",
+      "passed": true
+    },
+    {
+      "check": "raw paired comparator_literal_UNKNOWN_rate intact:mergedev_science_0ac5af678b239ec5",
+      "passed": true
+    },
+    {
+      "check": "raw paired format_delta intact:mergedev_short_response_30785feeb5a8abdf",
+      "passed": true
+    },
+    {
+      "check": "raw paired invalid_delta intact:mergedev_short_response_30785feeb5a8abdf",
+      "passed": true
+    },
+    {
+      "check": "raw paired treatment_literal_UNKNOWN_rate intact:mergedev_short_response_30785feeb5a8abdf",
+      "passed": true
+    },
+    {
+      "check": "raw paired comparator_literal_UNKNOWN_rate intact:mergedev_short_response_30785feeb5a8abdf",
+      "passed": true
+    },
+    {
+      "check": "raw paired format_delta intact:mergedev_unanswerable_abstention_22f9fcfd9ce716c8",
+      "passed": true
+    },
+    {
+      "check": "raw paired invalid_delta intact:mergedev_unanswerable_abstention_22f9fcfd9ce716c8",
+      "passed": true
+    },
+    {
+      "check": "raw paired treatment_literal_UNKNOWN_rate intact:mergedev_unanswerable_abstention_22f9fcfd9ce716c8",
+      "passed": true
+    },
+    {
+      "check": "raw paired comparator_literal_UNKNOWN_rate intact:mergedev_unanswerable_abstention_22f9fcfd9ce716c8",
+      "passed": true
+    },
+    {
+      "check": "raw paired format_delta unit:mergedev_common_sense_025ea65887df6a1b",
+      "passed": true
+    },
+    {
+      "check": "raw paired invalid_delta unit:mergedev_common_sense_025ea65887df6a1b",
+      "passed": true
+    },
+    {
+      "check": "raw paired treatment_literal_UNKNOWN_rate unit:mergedev_common_sense_025ea65887df6a1b",
+      "passed": true
+    },
+    {
+      "check": "raw paired comparator_literal_UNKNOWN_rate unit:mergedev_common_sense_025ea65887df6a1b",
+      "passed": true
+    },
+    {
+      "check": "raw paired format_delta unit:mergedev_counterfactual_reasoning_770aaf5dae0c1fb5",
+      "passed": true
+    },
+    {
+      "check": "raw paired invalid_delta unit:mergedev_counterfactual_reasoning_770aaf5dae0c1fb5",
+      "passed": true
+    },
+    {
+      "check": "raw paired treatment_literal_UNKNOWN_rate unit:mergedev_counterfactual_reasoning_770aaf5dae0c1fb5",
+      "passed": true
+    },
+    {
+      "check": "raw paired comparator_literal_UNKNOWN_rate unit:mergedev_counterfactual_reasoning_770aaf5dae0c1fb5",
+      "passed": true
+    },
+    {
+      "check": "raw paired format_delta unit:mergedev_general_reasoning_078451b6adf65710",
+      "passed": true
+    },
+    {
+      "check": "raw paired invalid_delta unit:mergedev_general_reasoning_078451b6adf65710",
+      "passed": true
+    },
+    {
+      "check": "raw paired treatment_literal_UNKNOWN_rate unit:mergedev_general_reasoning_078451b6adf65710",
+      "passed": true
+    },
+    {
+      "check": "raw paired comparator_literal_UNKNOWN_rate unit:mergedev_general_reasoning_078451b6adf65710",
+      "passed": true
+    },
+    {
+      "check": "raw paired format_delta unit:mergedev_grounded_qa_rag_10414013c88bdaac",
+      "passed": true
+    },
+    {
+      "check": "raw paired invalid_delta unit:mergedev_grounded_qa_rag_10414013c88bdaac",
+      "passed": true
+    },
+    {
+      "check": "raw paired treatment_literal_UNKNOWN_rate unit:mergedev_grounded_qa_rag_10414013c88bdaac",
+      "passed": true
+    },
+    {
+      "check": "raw paired comparator_literal_UNKNOWN_rate unit:mergedev_grounded_qa_rag_10414013c88bdaac",
+      "passed": true
+    },
+    {
+      "check": "raw paired format_delta unit:mergedev_instruction_following_7c4b4480b4835c0f",
+      "passed": true
+    },
+    {
+      "check": "raw paired invalid_delta unit:mergedev_instruction_following_7c4b4480b4835c0f",
+      "passed": true
+    },
+    {
+      "check": "raw paired treatment_literal_UNKNOWN_rate unit:mergedev_instruction_following_7c4b4480b4835c0f",
+      "passed": true
+    },
+    {
+      "check": "raw paired comparator_literal_UNKNOWN_rate unit:mergedev_instruction_following_7c4b4480b4835c0f",
+      "passed": true
+    },
+    {
+      "check": "raw paired format_delta unit:mergedev_long_context_retrieval_20550a305b3b2af6",
+      "passed": true
+    },
+    {
+      "check": "raw paired invalid_delta unit:mergedev_long_context_retrieval_20550a305b3b2af6",
+      "passed": true
+    },
+    {
+      "check": "raw paired treatment_literal_UNKNOWN_rate unit:mergedev_long_context_retrieval_20550a305b3b2af6",
+      "passed": true
+    },
+    {
+      "check": "raw paired comparator_literal_UNKNOWN_rate unit:mergedev_long_context_retrieval_20550a305b3b2af6",
+      "passed": true
+    },
+    {
+      "check": "raw paired format_delta unit:mergedev_lost_in_the_middle_e4e7cc76239741de",
+      "passed": true
+    },
+    {
+      "check": "raw paired invalid_delta unit:mergedev_lost_in_the_middle_e4e7cc76239741de",
+      "passed": true
+    },
+    {
+      "check": "raw paired treatment_literal_UNKNOWN_rate unit:mergedev_lost_in_the_middle_e4e7cc76239741de",
+      "passed": true
+    },
+    {
+      "check": "raw paired comparator_literal_UNKNOWN_rate unit:mergedev_lost_in_the_middle_e4e7cc76239741de",
+      "passed": true
+    },
+    {
+      "check": "raw paired format_delta unit:mergedev_mathematics_12cd1363c6e3df98",
+      "passed": true
+    },
+    {
+      "check": "raw paired invalid_delta unit:mergedev_mathematics_12cd1363c6e3df98",
+      "passed": true
+    },
+    {
+      "check": "raw paired treatment_literal_UNKNOWN_rate unit:mergedev_mathematics_12cd1363c6e3df98",
+      "passed": true
+    },
+    {
+      "check": "raw paired comparator_literal_UNKNOWN_rate unit:mergedev_mathematics_12cd1363c6e3df98",
+      "passed": true
+    },
+    {
+      "check": "raw paired format_delta unit:mergedev_multi_hop_binding_492bf31e1ae5deff",
+      "passed": true
+    },
+    {
+      "check": "raw paired invalid_delta unit:mergedev_multi_hop_binding_492bf31e1ae5deff",
+      "passed": true
+    },
+    {
+      "check": "raw paired treatment_literal_UNKNOWN_rate unit:mergedev_multi_hop_binding_492bf31e1ae5deff",
+      "passed": true
+    },
+    {
+      "check": "raw paired comparator_literal_UNKNOWN_rate unit:mergedev_multi_hop_binding_492bf31e1ae5deff",
+      "passed": true
+    },
+    {
+      "check": "raw paired format_delta unit:mergedev_normal_conversation_4a73375fc950bab7",
+      "passed": true
+    },
+    {
+      "check": "raw paired invalid_delta unit:mergedev_normal_conversation_4a73375fc950bab7",
+      "passed": true
+    },
+    {
+      "check": "raw paired treatment_literal_UNKNOWN_rate unit:mergedev_normal_conversation_4a73375fc950bab7",
+      "passed": true
+    },
+    {
+      "check": "raw paired comparator_literal_UNKNOWN_rate unit:mergedev_normal_conversation_4a73375fc950bab7",
+      "passed": true
+    },
+    {
+      "check": "raw paired format_delta unit:mergedev_paraphrase_robustness_0cfbf1026bf11fe7",
+      "passed": true
+    },
+    {
+      "check": "raw paired invalid_delta unit:mergedev_paraphrase_robustness_0cfbf1026bf11fe7",
+      "passed": true
+    },
+    {
+      "check": "raw paired treatment_literal_UNKNOWN_rate unit:mergedev_paraphrase_robustness_0cfbf1026bf11fe7",
+      "passed": true
+    },
+    {
+      "check": "raw paired comparator_literal_UNKNOWN_rate unit:mergedev_paraphrase_robustness_0cfbf1026bf11fe7",
+      "passed": true
+    },
+    {
+      "check": "raw paired format_delta unit:mergedev_paraphrase_robustness_44e3777f1aad20a2",
+      "passed": true
+    },
+    {
+      "check": "raw paired invalid_delta unit:mergedev_paraphrase_robustness_44e3777f1aad20a2",
+      "passed": true
+    },
+    {
+      "check": "raw paired treatment_literal_UNKNOWN_rate unit:mergedev_paraphrase_robustness_44e3777f1aad20a2",
+      "passed": true
+    },
+    {
+      "check": "raw paired comparator_literal_UNKNOWN_rate unit:mergedev_paraphrase_robustness_44e3777f1aad20a2",
+      "passed": true
+    },
+    {
+      "check": "raw paired format_delta unit:mergedev_paraphrase_robustness_c26fef498d2d9fd3",
+      "passed": true
+    },
+    {
+      "check": "raw paired invalid_delta unit:mergedev_paraphrase_robustness_c26fef498d2d9fd3",
+      "passed": true
+    },
+    {
+      "check": "raw paired treatment_literal_UNKNOWN_rate unit:mergedev_paraphrase_robustness_c26fef498d2d9fd3",
+      "passed": true
+    },
+    {
+      "check": "raw paired comparator_literal_UNKNOWN_rate unit:mergedev_paraphrase_robustness_c26fef498d2d9fd3",
+      "passed": true
+    },
+    {
+      "check": "raw paired format_delta unit:mergedev_science_0ac5af678b239ec5",
+      "passed": true
+    },
+    {
+      "check": "raw paired invalid_delta unit:mergedev_science_0ac5af678b239ec5",
+      "passed": true
+    },
+    {
+      "check": "raw paired treatment_literal_UNKNOWN_rate unit:mergedev_science_0ac5af678b239ec5",
+      "passed": true
+    },
+    {
+      "check": "raw paired comparator_literal_UNKNOWN_rate unit:mergedev_science_0ac5af678b239ec5",
+      "passed": true
+    },
+    {
+      "check": "raw paired format_delta unit:mergedev_short_response_30785feeb5a8abdf",
+      "passed": true
+    },
+    {
+      "check": "raw paired invalid_delta unit:mergedev_short_response_30785feeb5a8abdf",
+      "passed": true
+    },
+    {
+      "check": "raw paired treatment_literal_UNKNOWN_rate unit:mergedev_short_response_30785feeb5a8abdf",
+      "passed": true
+    },
+    {
+      "check": "raw paired comparator_literal_UNKNOWN_rate unit:mergedev_short_response_30785feeb5a8abdf",
+      "passed": true
+    },
+    {
+      "check": "raw paired format_delta unit:mergedev_unanswerable_abstention_22f9fcfd9ce716c8",
+      "passed": true
+    },
+    {
+      "check": "raw paired invalid_delta unit:mergedev_unanswerable_abstention_22f9fcfd9ce716c8",
+      "passed": true
+    },
+    {
+      "check": "raw paired treatment_literal_UNKNOWN_rate unit:mergedev_unanswerable_abstention_22f9fcfd9ce716c8",
+      "passed": true
+    },
+    {
+      "check": "raw paired comparator_literal_UNKNOWN_rate unit:mergedev_unanswerable_abstention_22f9fcfd9ce716c8",
+      "passed": true
+    },
+    {
+      "check": "raw paired contrast mean H1_fixed_vs_unit",
+      "passed": true
+    },
+    {
+      "check": "raw paired contrast win/loss H1_fixed_vs_unit",
+      "passed": true
+    },
+    {
+      "check": "raw source correct H1_fixed_vs_unit",
+      "passed": true
+    },
+    {
+      "check": "raw correct retention H1_fixed_vs_unit",
+      "passed": true
+    },
+    {
+      "check": "raw paired contrast mean corrected_A5",
+      "passed": true
+    },
+    {
+      "check": "raw paired contrast win/loss corrected_A5",
+      "passed": true
+    },
+    {
+      "check": "raw source correct corrected_A5",
+      "passed": true
+    },
+    {
+      "check": "raw correct retention corrected_A5",
+      "passed": true
+    },
+    {
+      "check": "raw paired contrast mean fixed_1.2",
+      "passed": true
+    },
+    {
+      "check": "raw paired contrast win/loss fixed_1.2",
+      "passed": true
+    },
+    {
+      "check": "raw source correct fixed_1.2",
+      "passed": true
+    },
+    {
+      "check": "raw correct retention fixed_1.2",
+      "passed": true
+    },
+    {
+      "check": "raw paired contrast mean frozen_fixed",
+      "passed": true
+    },
+    {
+      "check": "raw paired contrast win/loss frozen_fixed",
+      "passed": true
+    },
+    {
+      "check": "raw source correct frozen_fixed",
+      "passed": true
+    },
+    {
+      "check": "raw correct retention frozen_fixed",
+      "passed": true
+    },
+    {
+      "check": "raw paired contrast mean intact",
+      "passed": true
+    },
+    {
+      "check": "raw paired contrast win/loss intact",
+      "passed": true
+    },
+    {
+      "check": "raw source correct intact",
+      "passed": true
+    },
+    {
+      "check": "raw correct retention intact",
+      "passed": true
+    },
+    {
+      "check": "raw paired contrast mean unit",
+      "passed": true
+    },
+    {
+      "check": "raw paired contrast win/loss unit",
+      "passed": true
+    },
+    {
+      "check": "raw source correct unit",
+      "passed": true
+    },
+    {
+      "check": "raw correct retention unit",
+      "passed": true
+    },
+    {
+      "check": "unchanged predecessor hash policy_accuracy.csv",
+      "passed": true
+    },
+    {
+      "check": "unchanged predecessor hash paired_contrasts.csv",
+      "passed": true
+    },
+    {
+      "check": "unchanged predecessor hash paired_cases.csv",
+      "passed": true
+    },
+    {
+      "check": "unchanged predecessor hash alpha_features.csv",
+      "passed": true
+    }
+  ],
+  "created_utc": "2026-10-02T06:54:52.790839+00:00",
+  "direct_policy_string_joins": true,
+  "discrepancies": [],
+  "evidence_sha256": {
+    "approved_report": "7f6ceeb57c7666034d1049406232e6b21da801f93253db91ceea6f79f3f3f988",
+    "export_manifest": "db47b77f4f7c158ea394a571b45db0667981dcfb58ab7c0fdc6a6aa698f3dae8",
+    "exporter": "cc241817ad12f70a6ce638bdfc42151388d08bea24e176c7419ff0f498fc1b9d",
+    "metadata": "f4b5b21638bc2d8a8da4fac707072208d3a8a1aa2f1918c7574a326cc996bf7d",
+    "raw_forwards": "4d327b737995ec1c1cf805b333c0e180d40c2cca7f6c42f0ee3aaa287c46f669",
+    "raw_outcomes": "05827563ce0633a96d3831749b70f8cc8b74002ba7b692ed2d264f49ffac0a0c",
+    "raw_trajectories": "5745261d0eb11a2f80a47a8001e79fed2e3a223ae3f970ff3b4e272e8c96b156"
+  },
+  "existing_files_mutated": false,
+  "export": "analyses/reference-tables-002",
+  "limits": [
+    "Cost table covers physical DEV rollouts only; excludes SMOKE/mechanical/load costs and is not total worker cost.",
+    "176feature samples are generated prefixes across repeated seeds, not176 independent examples.",
+    "CSV empty p-value/CI fields mean null/unassessed; headroom zero/capture null remain exact JSON values.",
+    "Inherited format scores remain gold-coupled; semantic abstention/unsupported endpoints remain NOT_ASSESSED.",
+    "Small exposed shared-scenario bank and instrumented shared-GPU timing support no broad efficacy, independent confirmation, or deployable speed claim."
+  ],
+  "model_or_protected_data_read": false,
+  "native_calls": 0,
+  "native_model_loads": 0,
+  "reviewer": "/root/adversarial_review",
+  "schema_version": "1.0",
+  "status": "PASS_REFERENCE_TABLES",
+  "table_sha256": {
+    "alpha_features.csv": "489458663afaaaa503ccc1eded2a1796eeaa0d0a54488fc40b967b67300bb566",
+    "instrumented_costs.csv": "3781df57539101a109bae756d7604e5bd23d8974ac0b8895199a8bb09d6835c0",
+    "paired_cases.csv": "b9f414bf25882cab158667d6e5eb4707d64ac56905b2fa5096b61170d50ee8ec",
+    "paired_contrasts.csv": "99314383d8a307ca8af2499e9a12cf6d962bd72abbdf6a01a440d6bc7ed23f27",
+    "policy_accuracy.csv": "9711bf8ea0661f05853642c380f7258cf20ba8d5ad24d702d635ad147d5ecb0c"
+  },
+  "tests": {
+    "checks": 989,
+    "failed": 0,
+    "method": "independent standard-library CSV/JSON/hash/raw arithmetic recomputation; no exporter execution",
+    "passed": 989
+  },
+  "unexpected_numeric_or_hash_errors": [],
+  "verified_results": {
+    "A3_vs_fixed_or_random_or_unit_score_delta": 0,
+    "A3_vs_intact_losses": 0,
+    "A3_vs_intact_wins": 1,
+    "capture": null,
+    "confidence_intervals": null,
+    "confirmatory_p_values": null,
+    "every_recurrent_policy_accuracy": 0.8125,
+    "finite_grid_headroom": 0,
+    "intact_accuracy": 0.75
+  },
+  "verified_units": {
+    "DEV_cases": 16,
+    "independent_units": "NOT_ESTABLISHED",
+    "nonphysical_oracle_rows_excluded": 32,
+    "physical_DEV_rows": 288,
+    "physical_rows_total": 408,
+    "prefix_feature_observations": 176,
+    "provisional_scenario_ids": 13,
+    "seeds": [
+      17,
+      29
+    ]
+  }
+}

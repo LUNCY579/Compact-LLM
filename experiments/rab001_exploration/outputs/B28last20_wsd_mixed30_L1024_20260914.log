@@ -1,0 +1,15 @@
+free 5.61 / 15.2 GiB | committed 16.0 GiB (over physical by 0.8) | load 63% | VRAM free 6.90/8.00 GiB
+TF32 forced off: {'cuda_matmul_allow_tf32': False, 'cudnn_allow_tf32': False, 'float32_matmul_precision': 'highest'}
+frozen reference reproduced: {'permissive': 47, 'strict': 41}
+B28last20: B28 source, blocks 8..27 trainable (20 of 28); embeddings, final norm and all earlier blocks frozen | 596,049,920 params, 314,618,880 trainable | VRAM free 4.68 GiB
+Adam storage=memmap, GPU workspace reserve=0.6 GiB
+Adam moments 2.34 GiB: 2.34 on GPU, 0.00 on disk | VRAM free 2.32 GiB
+        0 tok | step   0 | devCE  5.5782 | kept 47/47 lost  0 gain  0 | correct  47/150 | changed   0/150 | PASS         | 176s
+  device-integrity control PASSED: 0/150 answers changed before training
+ABORTED: arm dose B28last20_lr1e-05_b26000_seed17_wsd0.2-0.2_b20.95_mixed30L1024 standing down: free physical memory 0.57 GiB is below the 1.0 GiB floor. free 0.57 / 15.2 GiB | committed 28.6 GiB (over physical by 13.3) | load 96%
+
+B28last20_lr1e-05_b26000_seed17_wsd0.2-0.2_b20.95_mixed30L1024: INTERRUPTED
+  No completed endpoint: last measured probe at 0 tokens; training reached 3751 tokens. Counts below describe that last probe.
+  correct 47/150 -> 47/150 (gained 0, lost 0, net +0)
+  devCE   5.5782 -> 5.5782 | gate PASS -> PASS
+  wrote C:\Users\clclc\BusinessProject\ChatBubble-ced-native-loader-qualification\experiments\architecture_benchmark_001\evidence\retention-design-v1\ARM_DOSE_B28last20_lr1e-05_b26000_seed17_wsd0.2-0.2_b20.95_mixed30L1024.json

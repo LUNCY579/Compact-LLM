@@ -1,0 +1,449 @@
+[wmi_runner] start 2026-09-24 16:57:56 target=C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\composition_confirmation_v1\run_confirm.py
+  RAM free 6.60 then 6.62 GiB (floor 3.5)
+  [gpu-lease] acquired rineya-gpu-0.lock label=confirm001:T_BANK_V3X token=1fe4e742
+  preflight BASE: OK
+  preflight SPARSE: OK
+  preflight AVG: OK
+  preflight ADD-100: OK
+  preflight SPARSE_ATTN: OK
+  preflight SCALAR_MATCHED: OK
+  scoring gates: ['BASE', 'SPARSE']
+startup checks
+  template self-test: 384 recorded prompts reproduced byte-exactly (negative control rejects a missing think block)
+  bank T_BANK_V3X.json n=864 sha256=173aa372466d5e3cc8efbebe4cc7e7ba09a8eb34de4598ce8f9d96a2b8e6557c
+  [gpu-lease] --no-lease: caller holds the lease for this window
+[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
+Loading weights:   0%|          | 0/310 [00:00<?, ?it/s]Loading weights:   0%|          | 1/310 [00:00<03:35,  1.44it/s]Loading weights:   5%|5         | 16/310 [00:00<00:11, 26.32it/s]Loading weights:  10%|#         | 31/310 [00:00<00:05, 50.10it/s]Loading weights:  15%|#5        | 48/310 [00:01<00:03, 74.00it/s]Loading weights:  20%|##        | 62/310 [00:01<00:02, 89.08it/s]Loading weights:  26%|##5       | 80/310 [00:01<00:02, 108.67it/s]Loading weights:  31%|###       | 95/310 [00:01<00:01, 110.17it/s]Loading weights:  35%|###5      | 110/310 [00:01<00:01, 118.14it/s]Loading weights:  40%|####      | 125/310 [00:01<00:01, 122.70it/s]Loading weights:  45%|####5     | 140/310 [00:01<00:01, 129.96it/s]Loading weights:  51%|#####     | 157/310 [00:01<00:01, 136.45it/s]Loading weights:  56%|#####5    | 173/310 [00:01<00:00, 141.47it/s]Loading weights:  61%|######    | 188/310 [00:02<00:00, 141.83it/s]Loading weights:  65%|######5   | 203/310 [00:02<00:00, 132.86it/s]Loading weights:  71%|#######   | 220/310 [00:02<00:00, 139.85it/s]Loading weights:  76%|#######5  | 235/310 [00:02<00:00, 141.11it/s]Loading weights:  81%|########  | 251/310 [00:02<00:00, 142.31it/s]Loading weights:  86%|########6 | 267/310 [00:02<00:00, 142.86it/s]Loading weights:  91%|######### | 282/310 [00:02<00:00, 139.67it/s]Loading weights:  96%|#########5| 297/310 [00:02<00:00, 142.33it/s]Loading weights: 100%|##########| 310/310 [00:02<00:00, 107.93it/s]
+{"arm": "BASE", "correct": 4, "n": 864, "copied_input_verbatim": 11, "by_family": {"ledger_replay": {"correct": 4, "n": 288}, "prerequisite_plan": {"correct": 0, "n": 288}, "register_machine": {"correct": 0, "n": 288}}, "seconds": 977.9}
+Loading weights:   0%|          | 0/310 [00:00<?, ?it/s]Loading weights:   0%|          | 1/310 [00:00<03:44,  1.38it/s]Loading weights:   5%|4         | 15/310 [00:00<00:12, 23.60it/s]Loading weights:  10%|#         | 31/310 [00:00<00:05, 48.67it/s]Loading weights:  15%|#5        | 47/310 [00:01<00:03, 69.82it/s]Loading weights:  19%|#9        | 60/310 [00:01<00:03, 81.51it/s]Loading weights:  25%|##4       | 77/310 [00:01<00:02, 101.97it/s]Loading weights:  30%|##9       | 92/310 [00:01<00:01, 109.86it/s]Loading weights:  35%|###4      | 107/310 [00:01<00:01, 119.77it/s]Loading weights:  40%|###9      | 123/310 [00:01<00:01, 127.05it/s]Loading weights:  45%|####4     | 138/310 [00:01<00:01, 131.53it/s]Loading weights:  50%|#####     | 155/310 [00:01<00:01, 139.67it/s]Loading weights:  55%|#####4    | 170/310 [00:01<00:01, 135.33it/s]Loading weights:  60%|######    | 187/310 [00:02<00:00, 143.08it/s]Loading weights:  65%|######5   | 202/310 [00:02<00:00, 140.75it/s]Loading weights:  70%|#######   | 218/310 [00:02<00:00, 145.58it/s]Loading weights:  75%|#######5  | 234/310 [00:02<00:00, 147.00it/s]Loading weights:  80%|########  | 249/310 [00:02<00:00, 140.33it/s]Loading weights:  85%|########5 | 264/310 [00:02<00:00, 138.81it/s]Loading weights:  90%|########9 | 278/310 [00:02<00:00, 136.73it/s]Loading weights:  94%|#########4| 292/310 [00:02<00:00, 127.86it/s]Loading weights:  99%|#########9| 307/310 [00:02<00:00, 126.58it/s]Loading weights: 100%|##########| 310/310 [00:02<00:00, 105.52it/s]
+{"arm": "SPARSE", "correct": 447, "n": 864, "copied_input_verbatim": 27, "by_family": {"ledger_replay": {"correct": 131, "n": 288}, "prerequisite_plan": {"correct": 155, "n": 288}, "register_machine": {"correct": 161, "n": 288}}, "seconds": 525.4}
+wrote C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\composition_confirmation_v1\CONF_GATES.json
+{
+  "instrument": "CONFIRM-001",
+  "bank": "T_BANK_V3X.json",
+  "bank_sha256": "173aa372466d5e3cc8efbebe4cc7e7ba09a8eb34de4598ce8f9d96a2b8e6557c",
+  "n": 864,
+  "rule_primary": "strip <=1 trailing '.'",
+  "governing": "full T_BANK_V3X (Amendment 1)",
+  "gates": {
+    "thresholds": {
+      "G1_max": 172,
+      "G2_min": 346,
+      "G3_min": 260
+    },
+    "G1_base_floor": true,
+    "G2_donor_ceiling": true,
+    "G3_separation": true,
+    "BASE_primary": 4,
+    "SPARSE_primary": 447,
+    "BASE_strict": 4,
+    "SPARSE_strict": 447,
+    "ALL_PASS": true
+  }
+}
+  p0=0.402012 realised norm 0.44009171 (error +6.854e-05)
+{
+  "p": 0.4020119624939054,
+  "realised_norm": 0.44009171453457285,
+  "relative_error": 6.853622488889322e-05,
+  "kept_nonzeros": 31625114,
+  "weight_sha256": "238801fd3e980421ed871969ac0c785ae4b568f2dc9d112c68f199260af75006"
+}
+  verify RAND_MASK: 444,467,200 elements re-derived, 0 mismatches
+{
+  "p": 0.4020119624939054,
+  "realised_norm": 0.2790184454631749,
+  "expected_norm": 0.2790184466775998,
+  "relative_error": -4.352489590964126e-09,
+  "weight_sha256": "2ae17f9ca51e83ba5b91e9e9fdd80b13180620cf3769ce17b118af56197caf27"
+}
+  verify SCALAR_P: 444,467,200 elements re-derived, 0 mismatches
+  scoring compose: ['AVG', 'ADD-100']
+startup checks
+  template self-test: 384 recorded prompts reproduced byte-exactly (negative control rejects a missing think block)
+  bank T_BANK_V3X.json n=864 sha256=173aa372466d5e3cc8efbebe4cc7e7ba09a8eb34de4598ce8f9d96a2b8e6557c
+  [gpu-lease] --no-lease: caller holds the lease for this window
+[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
+Loading weights:   0%|          | 0/310 [00:00<?, ?it/s]Loading weights:   0%|          | 1/310 [00:00<03:24,  1.51it/s]Loading weights:   5%|4         | 14/310 [00:00<00:12, 23.80it/s]Loading weights:   9%|8         | 27/310 [00:00<00:06, 43.64it/s]Loading weights:  14%|#3        | 42/310 [00:01<00:04, 64.97it/s]Loading weights:  18%|#8        | 56/310 [00:01<00:03, 80.43it/s]Loading weights:  22%|##2       | 69/310 [00:01<00:02, 89.55it/s]Loading weights:  26%|##6       | 82/310 [00:01<00:02, 97.04it/s]Loading weights:  31%|###       | 96/310 [00:01<00:01, 107.93it/s]Loading weights:  35%|###5      | 109/310 [00:01<00:01, 111.24it/s]Loading weights:  39%|###9      | 122/310 [00:01<00:01, 114.39it/s]Loading weights:  44%|####3     | 135/310 [00:01<00:01, 117.73it/s]Loading weights:  48%|####7     | 148/310 [00:01<00:01, 113.93it/s]Loading weights:  52%|#####2    | 162/310 [00:01<00:01, 120.40it/s]Loading weights:  57%|#####6    | 176/310 [00:02<00:01, 124.97it/s]Loading weights:  61%|######    | 189/310 [00:02<00:00, 124.83it/s]Loading weights:  65%|######5   | 202/310 [00:02<00:00, 120.16it/s]Loading weights:  69%|######9   | 215/310 [00:02<00:00, 118.13it/s]Loading weights:  74%|#######3  | 229/310 [00:02<00:00, 120.90it/s]Loading weights:  78%|#######8  | 243/310 [00:02<00:00, 125.01it/s]Loading weights:  83%|########2 | 256/310 [00:02<00:00, 123.24it/s]Loading weights:  87%|########6 | 269/310 [00:02<00:00, 116.59it/s]Loading weights:  92%|#########1| 284/310 [00:02<00:00, 120.79it/s]Loading weights:  96%|#########5| 297/310 [00:03<00:00, 121.72it/s]Loading weights: 100%|##########| 310/310 [00:03<00:00, 97.30it/s] 
+{"arm": "AVG", "correct": 331, "n": 864, "copied_input_verbatim": 76, "by_family": {"ledger_replay": {"correct": 58, "n": 288}, "prerequisite_plan": {"correct": 134, "n": 288}, "register_machine": {"correct": 139, "n": 288}}, "seconds": 474.5}
+Loading weights:   0%|          | 0/310 [00:00<?, ?it/s]Loading weights:   0%|          | 1/310 [00:00<03:01,  1.70it/s]Loading weights:   5%|5         | 16/310 [00:00<00:09, 30.17it/s]Loading weights:  11%|#         | 34/310 [00:00<00:04, 62.22it/s]Loading weights:  16%|#5        | 49/310 [00:00<00:03, 82.32it/s]Loading weights:  21%|##1       | 66/310 [00:01<00:02, 102.69it/s]Loading weights:  26%|##6       | 81/310 [00:01<00:02, 113.71it/s]Loading weights:  31%|###1      | 97/310 [00:01<00:01, 124.45it/s]Loading weights:  36%|###6      | 113/310 [00:01<00:01, 133.45it/s]Loading weights:  41%|####1     | 128/310 [00:01<00:01, 135.84it/s]Loading weights:  46%|####6     | 144/310 [00:01<00:01, 140.97it/s]Loading weights:  51%|#####1    | 159/310 [00:01<00:01, 138.04it/s]Loading weights:  58%|#####7    | 179/310 [00:01<00:00, 149.11it/s]Loading weights:  63%|######2   | 195/310 [00:01<00:00, 150.70it/s]Loading weights:  68%|######8   | 212/310 [00:01<00:00, 147.88it/s]Loading weights:  74%|#######3  | 229/310 [00:02<00:00, 152.99it/s]Loading weights:  79%|#######9  | 246/310 [00:02<00:00, 151.92it/s]Loading weights:  85%|########4 | 262/310 [00:02<00:00, 153.34it/s]Loading weights:  90%|########9 | 278/310 [00:02<00:00, 154.50it/s]Loading weights:  95%|#########4| 294/310 [00:02<00:00, 152.53it/s]Loading weights: 100%|##########| 310/310 [00:02<00:00, 118.84it/s]
+{"arm": "ADD-100", "correct": 13, "n": 864, "copied_input_verbatim": 1, "by_family": {"ledger_replay": {"correct": 6, "n": 288}, "prerequisite_plan": {"correct": 0, "n": 288}, "register_machine": {"correct": 7, "n": 288}}, "seconds": 515.0}
+wrote C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\composition_confirmation_v1\CONF_COMPOSE.json
+  scoring location: ['SPARSE_ATTN', 'SCALAR_MATCHED']
+startup checks
+  template self-test: 384 recorded prompts reproduced byte-exactly (negative control rejects a missing think block)
+  bank T_BANK_V3X.json n=864 sha256=173aa372466d5e3cc8efbebe4cc7e7ba09a8eb34de4598ce8f9d96a2b8e6557c
+  [gpu-lease] --no-lease: caller holds the lease for this window
+[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
+Loading weights:   0%|          | 0/310 [00:00<?, ?it/s]Loading weights:   0%|          | 1/310 [00:00<03:38,  1.41it/s]Loading weights:   5%|4         | 15/310 [00:00<00:12, 24.10it/s]Loading weights:  10%|9         | 30/310 [00:00<00:05, 47.60it/s]Loading weights:  15%|#5        | 47/310 [00:01<00:03, 71.63it/s]Loading weights:  19%|#9        | 60/310 [00:01<00:02, 84.53it/s]Loading weights:  25%|##4       | 77/310 [00:01<00:02, 103.54it/s]Loading weights:  29%|##9       | 91/310 [00:01<00:01, 110.69it/s]Loading weights:  35%|###4      | 107/310 [00:01<00:01, 120.63it/s]Loading weights:  40%|###9      | 123/310 [00:01<00:01, 126.81it/s]Loading weights:  44%|####4     | 137/310 [00:01<00:01, 129.97it/s]Loading weights:  50%|####9     | 154/310 [00:01<00:01, 140.26it/s]Loading weights:  55%|#####4    | 169/310 [00:01<00:01, 137.75it/s]Loading weights:  60%|#####9    | 185/310 [00:02<00:00, 140.32it/s]Loading weights:  65%|######4   | 200/310 [00:02<00:00, 141.60it/s]Loading weights:  69%|######9   | 215/310 [00:02<00:00, 142.94it/s]Loading weights:  75%|#######4  | 231/310 [00:02<00:00, 146.50it/s]Loading weights:  79%|#######9  | 246/310 [00:02<00:00, 139.07it/s]Loading weights:  84%|########4 | 261/310 [00:02<00:00, 136.46it/s]Loading weights:  89%|########9 | 276/310 [00:02<00:00, 138.41it/s]Loading weights:  94%|#########3| 290/310 [00:02<00:00, 136.08it/s]Loading weights:  98%|#########8| 305/310 [00:02<00:00, 139.34it/s]Loading weights: 100%|##########| 310/310 [00:02<00:00, 107.16it/s]
+{"arm": "SPARSE_ATTN", "correct": 323, "n": 864, "copied_input_verbatim": 106, "by_family": {"ledger_replay": {"correct": 61, "n": 288}, "prerequisite_plan": {"correct": 125, "n": 288}, "register_machine": {"correct": 137, "n": 288}}, "seconds": 483.9}
+Loading weights:   0%|          | 0/310 [00:00<?, ?it/s]Loading weights:   0%|          | 1/310 [00:00<03:22,  1.53it/s]Loading weights:   5%|5         | 16/310 [00:00<00:10, 27.36it/s]Loading weights:  10%|#         | 31/310 [00:00<00:05, 49.63it/s]Loading weights:  15%|#5        | 48/310 [00:01<00:03, 73.64it/s]Loading weights:  19%|#9        | 60/310 [00:01<00:03, 82.47it/s]Loading weights:  24%|##3       | 74/310 [00:01<00:02, 96.34it/s]Loading weights:  28%|##8       | 87/310 [00:01<00:02, 105.01it/s]Loading weights:  32%|###2      | 100/310 [00:01<00:01, 105.07it/s]Loading weights:  36%|###6      | 113/310 [00:01<00:01, 108.79it/s]Loading weights:  40%|####      | 125/310 [00:01<00:01, 111.81it/s]Loading weights:  45%|####5     | 141/310 [00:01<00:01, 121.51it/s]Loading weights:  50%|####9     | 154/310 [00:01<00:01, 123.81it/s]Loading weights:  54%|#####4    | 168/310 [00:01<00:01, 126.44it/s]Loading weights:  58%|#####8    | 181/310 [00:02<00:01, 118.30it/s]Loading weights:  64%|######3   | 198/310 [00:02<00:00, 128.44it/s]Loading weights:  68%|######8   | 212/310 [00:02<00:00, 128.24it/s]Loading weights:  73%|#######2  | 225/310 [00:02<00:00, 121.24it/s]Loading weights:  77%|#######7  | 240/310 [00:02<00:00, 128.38it/s]Loading weights:  82%|########1 | 254/310 [00:02<00:00, 126.94it/s]Loading weights:  86%|########6 | 268/310 [00:02<00:00, 124.17it/s]Loading weights:  91%|######### | 281/310 [00:02<00:00, 121.40it/s]Loading weights:  95%|#########5| 295/310 [00:02<00:00, 125.05it/s]Loading weights:  99%|#########9| 308/310 [00:03<00:00, 123.44it/s]Loading weights: 100%|##########| 310/310 [00:03<00:00, 100.18it/s]
+{"arm": "SCALAR_MATCHED", "correct": 373, "n": 864, "copied_input_verbatim": 67, "by_family": {"ledger_replay": {"correct": 78, "n": 288}, "prerequisite_plan": {"correct": 147, "n": 288}, "register_machine": {"correct": 148, "n": 288}}, "seconds": 435.4}
+wrote C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\composition_confirmation_v1\CONF_LOCATION.json
+  scoring randmask: ['RAND_MASK', 'SCALAR_P']
+startup checks
+  template self-test: 384 recorded prompts reproduced byte-exactly (negative control rejects a missing think block)
+  bank T_BANK_V3X.json n=864 sha256=173aa372466d5e3cc8efbebe4cc7e7ba09a8eb34de4598ce8f9d96a2b8e6557c
+  [gpu-lease] --no-lease: caller holds the lease for this window
+[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
+Loading weights:   0%|          | 0/310 [00:00<?, ?it/s]Loading weights:   0%|          | 1/310 [00:00<03:11,  1.61it/s]Loading weights:   5%|5         | 16/310 [00:00<00:10, 29.10it/s]Loading weights:  12%|#1        | 36/310 [00:00<00:04, 63.13it/s]Loading weights:  17%|#6        | 52/310 [00:00<00:03, 83.49it/s]Loading weights:  21%|##1       | 66/310 [00:01<00:02, 96.88it/s]Loading weights:  26%|##6       | 81/310 [00:01<00:02, 107.73it/s]Loading weights:  31%|###       | 96/310 [00:01<00:01, 118.34it/s]Loading weights:  36%|###5      | 111/310 [00:01<00:01, 119.33it/s]Loading weights:  40%|####      | 125/310 [00:01<00:01, 123.97it/s]Loading weights:  47%|####6     | 145/310 [00:01<00:01, 142.03it/s]Loading weights:  53%|#####2    | 163/310 [00:01<00:00, 149.89it/s]Loading weights:  58%|#####7    | 179/310 [00:01<00:00, 152.44it/s]Loading weights:  63%|######3   | 196/310 [00:01<00:00, 155.93it/s]Loading weights:  69%|######9   | 214/310 [00:02<00:00, 158.41it/s]Loading weights:  76%|#######5  | 235/310 [00:02<00:00, 168.29it/s]Loading weights:  83%|########2 | 256/310 [00:02<00:00, 178.78it/s]Loading weights:  89%|########8 | 275/310 [00:02<00:00, 178.92it/s]Loading weights:  95%|#########4| 294/310 [00:02<00:00, 176.50it/s]Loading weights: 100%|##########| 310/310 [00:02<00:00, 122.57it/s]
+{"arm": "RAND_MASK", "correct": 279, "n": 864, "copied_input_verbatim": 122, "by_family": {"ledger_replay": {"correct": 50, "n": 288}, "prerequisite_plan": {"correct": 110, "n": 288}, "register_machine": {"correct": 119, "n": 288}}, "seconds": 431.5}
+Loading weights:   0%|          | 0/310 [00:00<?, ?it/s]Loading weights:   0%|          | 1/310 [00:00<03:30,  1.47it/s]Loading weights:   5%|4         | 15/310 [00:00<00:11, 25.10it/s]Loading weights:   9%|8         | 27/310 [00:00<00:06, 43.03it/s]Loading weights:  12%|#2        | 38/310 [00:01<00:04, 56.89it/s]Loading weights:  17%|#6        | 52/310 [00:01<00:03, 75.74it/s]Loading weights:  21%|##        | 64/310 [00:01<00:02, 85.84it/s]Loading weights:  25%|##4       | 77/310 [00:01<00:02, 95.17it/s]Loading weights:  29%|##9       | 90/310 [00:01<00:02, 101.42it/s]Loading weights:  33%|###3      | 103/310 [00:01<00:01, 106.28it/s]Loading weights:  37%|###7      | 115/310 [00:01<00:01, 106.41it/s]Loading weights:  42%|####1     | 130/310 [00:01<00:01, 117.98it/s]Loading weights:  46%|####6     | 144/310 [00:01<00:01, 122.67it/s]Loading weights:  51%|#####     | 157/310 [00:01<00:01, 124.71it/s]Loading weights:  55%|#####4    | 170/310 [00:02<00:01, 121.54it/s]Loading weights:  59%|#####9    | 184/310 [00:02<00:00, 126.32it/s]Loading weights:  64%|######3   | 197/310 [00:02<00:00, 122.80it/s]Loading weights:  68%|######7   | 210/310 [00:02<00:00, 122.34it/s]Loading weights:  72%|#######1  | 223/310 [00:02<00:00, 116.06it/s]Loading weights:  76%|#######6  | 236/310 [00:02<00:00, 118.49it/s]Loading weights:  81%|########  | 250/310 [00:02<00:00, 121.93it/s]Loading weights:  85%|########4 | 263/310 [00:02<00:00, 119.95it/s]Loading weights:  89%|########9 | 276/310 [00:02<00:00, 116.12it/s]Loading weights:  93%|#########2| 288/310 [00:03<00:00, 116.23it/s]Loading weights:  97%|#########6| 300/310 [00:03<00:00, 116.26it/s]Loading weights: 100%|##########| 310/310 [00:03<00:00, 95.33it/s] 
+{"arm": "SCALAR_P", "correct": 279, "n": 864, "copied_input_verbatim": 121, "by_family": {"ledger_replay": {"correct": 50, "n": 288}, "prerequisite_plan": {"correct": 110, "n": 288}, "register_machine": {"correct": 119, "n": 288}}, "seconds": 429.2}
+wrote C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\composition_confirmation_v1\CONF_RANDMASK.json
+  [gpu-lease] released rineya-gpu-0.lock
+{
+  "instrument": "CONFIRM-001",
+  "bank": "T_BANK_V3X.json",
+  "bank_sha256": "173aa372466d5e3cc8efbebe4cc7e7ba09a8eb34de4598ce8f9d96a2b8e6557c",
+  "n": 864,
+  "rule_primary": "strip <=1 trailing '.'",
+  "governing": "full T_BANK_V3X (Amendment 1)",
+  "gates": {
+    "thresholds": {
+      "G1_max": 172,
+      "G2_min": 346,
+      "G3_min": 260
+    },
+    "G1_base_floor": true,
+    "G2_donor_ceiling": true,
+    "G3_separation": true,
+    "BASE_primary": 4,
+    "SPARSE_primary": 447,
+    "BASE_strict": 4,
+    "SPARSE_strict": 447,
+    "ALL_PASS": true
+  },
+  "governing_result": {
+    "n": 864,
+    "gates": {
+      "thresholds": {
+        "G1_max": 172,
+        "G2_min": 346,
+        "G3_min": 260
+      },
+      "G1_base_floor": true,
+      "G2_donor_ceiling": true,
+      "G3_separation": true,
+      "BASE_primary": 4,
+      "SPARSE_primary": 447,
+      "BASE_strict": 4,
+      "SPARSE_strict": 447,
+      "ALL_PASS": true
+    },
+    "confirmatory": {
+      "C1_attenuation": {
+        "x": 447,
+        "y": 331,
+        "net_y_minus_x": -116,
+        "lost": 139,
+        "gained": 23,
+        "p": 2.0212128777560007e-21,
+        "attenuation_rows": 116,
+        "magnitude_ok": true,
+        "holm": {
+          "p": 2.0212128777560007e-21,
+          "threshold": 0.016666666666666666,
+          "significant": true
+        },
+        "PASS": true
+      },
+      "C2_add100_beats_avg": {
+        "x": 331,
+        "y": 413,
+        "net_y_minus_x": 82,
+        "lost": 33,
+        "gained": 115,
+        "p": 7.838609724279185e-12,
+        "direction_ok": true,
+        "holm": {
+          "p": 7.838609724279185e-12,
+          "threshold": 0.025,
+          "significant": true
+        },
+        "PASS": true
+      },
+      "C3_interference_small": {
+        "diff_ADD_minus_SPARSE": -34,
+        "margin_rows": -44.7,
+        "retained_fraction": 0.9239373601789709,
+        "lower95": -49.0,
+        "lower97_5_descriptive": -51.0,
+        "one_sided_p": 0.1135,
+        "C3a_bound_ok": false,
+        "C3b_holm_ok": false,
+        "holm": {
+          "p": 0.1135,
+          "threshold": 0.05,
+          "significant": false
+        },
+        "PASS": false,
+        "governing_reading": "stricter of C3-a and C3-b (both must hold)"
+      }
+    },
+    "C4_convention_descriptive": {
+      "ADD-100_periods": 831,
+      "SPARSE_periods": 0,
+      "AVG_periods": 0,
+      "meets_registered_pattern": true
+    },
+    "C5_location": {
+      "x": 279,
+      "y": 323,
+      "net_y_minus_x": 44,
+      "lost": 4,
+      "gained": 48,
+      "p": 1.3065282189472782e-10,
+      "SPARSE_ATTN_minus_RAND_MASK": 44,
+      "verdict": "LOCATION EFFECT REPLICATES (attention carries more than random elements)",
+      "bands": {
+        "effect": 30,
+        "null": 18
+      },
+      "reference_SCALAR_MATCHED": 373
+    },
+    "C6_mask_vs_expectation": {
+      "x": 279,
+      "y": 279,
+      "net_y_minus_x": 0,
+      "lost": 1,
+      "gained": 1,
+      "p": 1.0,
+      "RAND_MASK_minus_SCALAR_P": 0,
+      "verdict": "MASK ACTS LIKE ITS EXPECTATION (|diff| <= 18)",
+      "bands": {
+        "effect": 30,
+        "null": 18
+      }
+    },
+    "per_arm_primary": {
+      "ADD-100": 413,
+      "AVG": 331,
+      "BASE": 4,
+      "RAND_MASK": 279,
+      "SCALAR_MATCHED": 373,
+      "SCALAR_P": 279,
+      "SPARSE": 447,
+      "SPARSE_ATTN": 323
+    },
+    "per_arm_strict": {
+      "ADD-100": 13,
+      "AVG": 331,
+      "BASE": 4,
+      "RAND_MASK": 279,
+      "SCALAR_MATCHED": 373,
+      "SCALAR_P": 279,
+      "SPARSE": 447,
+      "SPARSE_ATTN": 323
+    },
+    "per_arm_by_family_primary": {
+      "ADD-100": {
+        "ledger_replay": 116,
+        "prerequisite_plan": 138,
+        "register_machine": 159
+      },
+      "AVG": {
+        "ledger_replay": 58,
+        "prerequisite_plan": 134,
+        "register_machine": 139
+      },
+      "BASE": {
+        "ledger_replay": 4,
+        "prerequisite_plan": 0,
+        "register_machine": 0
+      },
+      "RAND_MASK": {
+        "ledger_replay": 50,
+        "prerequisite_plan": 110,
+        "register_machine": 119
+      },
+      "SCALAR_MATCHED": {
+        "ledger_replay": 78,
+        "prerequisite_plan": 147,
+        "register_machine": 148
+      },
+      "SCALAR_P": {
+        "ledger_replay": 50,
+        "prerequisite_plan": 110,
+        "register_machine": 119
+      },
+      "SPARSE": {
+        "ledger_replay": 131,
+        "prerequisite_plan": 155,
+        "register_machine": 161
+      },
+      "SPARSE_ATTN": {
+        "ledger_replay": 61,
+        "prerequisite_plan": 125,
+        "register_machine": 137
+      }
+    }
+  },
+  "secondary_original_v3_288_descriptive": {
+    "note": "T_BANK_V3's own 288 rows under the ORIGINAL thresholds. Reported regardless; does not govern.",
+    "n": 288,
+    "gates": {
+      "thresholds": {
+        "G1_max": 57,
+        "G2_min": 115,
+        "G3_min": 86
+      },
+      "G1_base_floor": true,
+      "G2_donor_ceiling": true,
+      "G3_separation": true,
+      "BASE_primary": 3,
+      "SPARSE_primary": 149,
+      "BASE_strict": 3,
+      "SPARSE_strict": 149,
+      "ALL_PASS": true
+    },
+    "confirmatory": {
+      "C1_attenuation": {
+        "x": 149,
+        "y": 112,
+        "net_y_minus_x": -37,
+        "lost": 46,
+        "gained": 9,
+        "p": 4.336383137015787e-07,
+        "attenuation_rows": 37,
+        "magnitude_ok": true,
+        "holm": {
+          "p": 4.336383137015787e-07,
+          "threshold": 0.016666666666666666,
+          "significant": true
+        },
+        "PASS": true
+      },
+      "C2_add100_beats_avg": {
+        "x": 112,
+        "y": 129,
+        "net_y_minus_x": 17,
+        "lost": 16,
+        "gained": 33,
+        "p": 0.021294114141387155,
+        "direction_ok": true,
+        "holm": {
+          "p": 0.021294114141387155,
+          "threshold": 0.025,
+          "significant": true
+        },
+        "PASS": true
+      },
+      "C3_interference_small": {
+        "diff_ADD_minus_SPARSE": -20,
+        "margin_rows": -14.9,
+        "retained_fraction": 0.8657718120805369,
+        "lower95": -30.0,
+        "lower97_5_descriptive": -32.0,
+        "one_sided_p": 0.8349,
+        "C3a_bound_ok": false,
+        "C3b_holm_ok": false,
+        "holm": {
+          "p": 0.8349,
+          "threshold": 0.05,
+          "significant": false
+        },
+        "PASS": false,
+        "governing_reading": "stricter of C3-a and C3-b (both must hold)"
+      }
+    },
+    "C4_convention_descriptive": {
+      "ADD-100_periods": 273,
+      "SPARSE_periods": 0,
+      "AVG_periods": 0,
+      "meets_registered_pattern": true
+    },
+    "C5_location": {
+      "x": 99,
+      "y": 112,
+      "net_y_minus_x": 13,
+      "lost": 2,
+      "gained": 15,
+      "p": 0.002349853515625,
+      "SPARSE_ATTN_minus_RAND_MASK": 13,
+      "verdict": "LOCATION EFFECT REPLICATES (attention carries more than random elements)",
+      "bands": {
+        "effect": 10,
+        "null": 6
+      },
+      "reference_SCALAR_MATCHED": 124
+    },
+    "C6_mask_vs_expectation": {
+      "x": 100,
+      "y": 99,
+      "net_y_minus_x": -1,
+      "lost": 1,
+      "gained": 0,
+      "p": 1.0,
+      "RAND_MASK_minus_SCALAR_P": -1,
+      "verdict": "MASK ACTS LIKE ITS EXPECTATION (|diff| <= 6)",
+      "bands": {
+        "effect": 10,
+        "null": 6
+      }
+    },
+    "per_arm_primary": {
+      "ADD-100": 129,
+      "AVG": 112,
+      "BASE": 3,
+      "RAND_MASK": 99,
+      "SCALAR_MATCHED": 124,
+      "SCALAR_P": 100,
+      "SPARSE": 149,
+      "SPARSE_ATTN": 112
+    },
+    "per_arm_strict": {
+      "ADD-100": 8,
+      "AVG": 112,
+      "BASE": 3,
+      "RAND_MASK": 99,
+      "SCALAR_MATCHED": 124,
+      "SCALAR_P": 100,
+      "SPARSE": 149,
+      "SPARSE_ATTN": 112
+    },
+    "per_arm_by_family_primary": {
+      "ADD-100": {
+        "ledger_replay": 32,
+        "prerequisite_plan": 45,
+        "register_machine": 52
+      },
+      "AVG": {
+        "ledger_replay": 19,
+        "prerequisite_plan": 49,
+        "register_machine": 44
+      },
+      "BASE": {
+        "ledger_replay": 3,
+        "prerequisite_plan": 0,
+        "register_machine": 0
+      },
+      "RAND_MASK": {
+        "ledger_replay": 20,
+        "prerequisite_plan": 41,
+        "register_machine": 38
+      },
+      "SCALAR_MATCHED": {
+        "ledger_replay": 24,
+        "prerequisite_plan": 50,
+        "register_machine": 50
+      },
+      "SCALAR_P": {
+        "ledger_replay": 21,
+        "prerequisite_plan": 41,
+        "register_machine": 38
+      },
+      "SPARSE": {
+        "ledger_replay": 40,
+        "prerequisite_plan": 54,
+        "register_machine": 55
+      },
+      "SPARSE_ATTN": {
+        "ledger_replay": 22,
+        "prerequisite_plan": 44,
+        "register_machine": 46
+      }
+    }
+  }
+}
+[wmi_runner] exit rc=0 after 4415s

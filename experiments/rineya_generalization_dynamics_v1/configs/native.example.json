@@ -1,0 +1,18 @@
+{
+  "trajectory_id": "REPLACE_WITH_ONE_REAL_06B_TRAINING_RUN",
+  "expected_base_parameters": 596049920,
+  "base_model": "/absolute/path/to/exact/rineya-06b-hf-export",
+  "tokenizer": "/absolute/path/to/exact/tokenizer-export",
+  "training_manifest": "/absolute/path/to/complete-training-prompts.jsonl",
+  "checkpoints": [
+    {"id": "reference", "step": 0, "kind": "base"},
+    {"id": "step_100", "step": 100, "kind": "peft", "path": "/absolute/path/to/adapter-step-100"},
+    {"id": "step_200", "step": 200, "kind": "peft", "path": "/absolute/path/to/adapter-step-200"}
+  ],
+  "runtime": {
+    "device": "cpu", "dtype": "float32", "cpu_threads": 2,
+    "prompt_format": "plain", "max_input_tokens": 512, "max_new_tokens": 16,
+    "max_native_wall_seconds": 1800, "max_native_forward_calls": 16000,
+    "min_free_ram_gib": 7.4, "min_free_vram_gib": 7.4, "min_free_disk_gib": 1.0
+  }
+}

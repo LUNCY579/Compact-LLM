@@ -1,0 +1,60 @@
+{
+  "schema_version": "rineya.historical-transfer-outcome.v1",
+  "trial_id": "historical-soup-a11-baya-midpoint-v1",
+  "historical_source_commits": [
+    "a07abdb99826072cff9079d986302b6cb4fa221e",
+    "8324995579f9c1273abedcbbb383a2e6dd024c2b"
+  ],
+  "registration_sha256": "7b6f242a5cb0f7e5390f07c2f12ccdcfeb2732b01449dac93996a1ce2aa4b4ba",
+  "runner_sha256": "cdf156ef08fe719e3d64dd588c11669563e082e656b8c01e8fd32f5ed6562022",
+  "evaluator_sha256": "92c9e17762ff5979ac6c0657be26ee0a99bfce0620453886a2e2bc81632af1b5",
+  "parent": {
+    "name": "Rineya-Supa-A1.1-1.1.0-devfreeze",
+    "weight_sha256": "a99f079d32212bbcbb703c2e2bad801ea32d43afea52004f38bf94eec5dc4026"
+  },
+  "candidate": {
+    "name": "Rineya-Supa-A1.1-BayaMid-Soup-0.5-transfer-v1",
+    "output_checkpoint_digest": "73312805252d10b903f6262d1d431fe7b97341dbdbbc183e0f9936ace5415767",
+    "weight_bytes": 1192134496,
+    "weight_shards": {
+      "model-00001-of-00005.safetensors": "55cffb17969c303013594a34c149757b84158b281c6c9500216940439affb4f9",
+      "model-00002-of-00005.safetensors": "b6660a249bf77c3a7b4d37c804af969236972b1b12cdb858a83e7946d9a72cf2",
+      "model-00003-of-00005.safetensors": "085d0c7791ff699a00dab70811a8ca87d78d6502d206a09ce070a657d355719d",
+      "model-00004-of-00005.safetensors": "06003203dd2d2c80d48a8a01b0d43f55f997b43146b957f6c96ee284599000c0",
+      "model-00005-of-00005.safetensors": "70f77a9ef82fd646a36879c496a484870330666b22a8cc90e7da8dccf21344a4"
+    },
+    "fresh_process_reload": "PASS",
+    "required_class": "Qwen3AbstainForCausalLM",
+    "portable_policy_equivalence": {
+      "fixtures": 4,
+      "matched": true,
+      "canonical_sha256": "3e96a9dd07dbbd50b1142db638b41e5da4522b2481afa5a0eea9aac21c91ab19"
+    }
+  },
+  "quality": {
+    "showcase64": {"parent": 45, "candidate": 44, "delta": -1},
+    "stability192": {"parent": 125, "candidate": 129, "delta": 4},
+    "all256": {"parent": 170, "candidate": 173, "delta": 3},
+    "all_four_packs": {"parent": 20, "candidate": 27, "delta": 7},
+    "base_paraphrase_both_correct_packs": {"parent": 51, "candidate": 42, "delta": -9},
+    "counterfactual_pair_packs": {"parent": 34, "candidate": 36, "delta": 2},
+    "unanswerable_hits": {"parent": 22, "candidate": 37, "delta": 15},
+    "base_hits_delta": -5,
+    "paraphrase_hits_delta": -6,
+    "counterfactual_hits_delta": -1
+  },
+  "transfer_gate": {
+    "strict_all256_gain": true,
+    "stability_preserved": true,
+    "all_four_packs_preserved": true,
+    "coverage_and_identity": true,
+    "candidate_generation_health": true,
+    "portable_policy_equivalence": true,
+    "fresh_process_reload": true,
+    "artifact_provenance_complete": true
+  },
+  "transfer_result": "TRANSFER_POSITIVE",
+  "production_regression_status": "FAIL",
+  "production_decision": "REJECT",
+  "reason": "The general quality-first profile forbids material answerable-capability regression. The aggregate +3 is driven by +15 unanswerable hits while base/paraphrase/counterfactual lose 5/6/1; the base/paraphrase both-correct pack metric falls by 9 and Showcase falls by 1."
+}

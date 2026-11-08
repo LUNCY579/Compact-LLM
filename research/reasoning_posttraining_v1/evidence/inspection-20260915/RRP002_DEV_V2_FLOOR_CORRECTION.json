@@ -1,0 +1,213 @@
+{
+  "record": "RRP002_DEV_V2_FLOOR_CORRECTION",
+  "schema": 1,
+  "supersedes": "RRP002_DEV_V2_FLOOR.json, whose `leak_check` assertion is FALSE and whose shortcut floor omitted the strongest honest predictor",
+  "what_was_wrong": {
+    "the_false_assertion": "RRP002_DEV_V2_FLOOR.json records that every row was 'asserted to contain neither its reference_text nor its id in the model-visible prompt'. For the 144 unanswerable rows that is false: the complete gold object is printed in the prompt's own rule text.",
+    "why_the_check_missed_it": "instrument.py compared the needle against json.dumps(prompt), which escapes the inner quotes, so a needle of {\"status\":\"UNKNOWN\"} could never match a haystack of {\\\"status\\\":\\\"UNKNOWN\\\"}.",
+    "measured_leaks_raw_text": 144,
+    "measured_leaks_caught_by_the_json_dumps_check": 0,
+    "unanswerable_rows": 144,
+    "is_the_bank_broken": "No. Forge v2 states the abstention contract in its rule text by design -- it is telling the model what to return. The bank is sound; the ERROR was asserting the absence of something present and then pricing the floor as if it were absent."
+  },
+  "the_missing_predictor": {
+    "name": "copy_prompt_sentinel",
+    "definition": "emit the single {\"status\":\"X\"} literal printed in this row's own prompt; if none is printed, emit {\"value\":0}",
+    "answer_agnostic": true,
+    "reads": "the model-visible prompt only",
+    "why_it_must_be_in_the_floor": "it is the direct v2 analogue of v1's copy_question_sentinel, which CL-022 already obliged the programme to compare abstention against. v2 simply never had one.",
+    "prompt_structure_measured": "288 of 336 prompts print exactly one status literal and 48 print none; for all 144 unanswerable rows the printed literal IS the gold. The two families that print none (ledger_replay, register_machine) contribute zero unanswerable rows."
+  },
+  "full_bank": {
+    "baselines": {
+      "constant_impossible": {
+        "correct": 96,
+        "accuracy": 0.2857,
+        "oracle_assisted": false,
+        "per_stratum": {
+          "ANSWER": 0,
+          "IMPOSSIBLE": 96,
+          "UNKNOWN": 0
+        }
+      },
+      "constant_train_majority": {
+        "correct": 96,
+        "accuracy": 0.2857,
+        "oracle_assisted": false,
+        "per_stratum": {
+          "ANSWER": 0,
+          "IMPOSSIBLE": 96,
+          "UNKNOWN": 0
+        }
+      },
+      "constant_unknown": {
+        "correct": 48,
+        "accuracy": 0.1429,
+        "oracle_assisted": false,
+        "per_stratum": {
+          "ANSWER": 0,
+          "IMPOSSIBLE": 0,
+          "UNKNOWN": 48
+        }
+      },
+      "copy_prompt_sentinel": {
+        "correct": 146,
+        "accuracy": 0.4345,
+        "oracle_assisted": false,
+        "per_stratum": {
+          "ANSWER": 2,
+          "IMPOSSIBLE": 96,
+          "UNKNOWN": 48
+        }
+      },
+      "copy_query_integer": {
+        "correct": 0,
+        "accuracy": 0.0,
+        "oracle_assisted": false,
+        "per_stratum": {
+          "ANSWER": 0,
+          "IMPOSSIBLE": 0,
+          "UNKNOWN": 0
+        }
+      },
+      "oracle_shape_empty_witness": {
+        "correct": 60,
+        "accuracy": 0.1786,
+        "oracle_assisted": true,
+        "per_stratum": {
+          "ANSWER": 12,
+          "IMPOSSIBLE": 0,
+          "UNKNOWN": 48
+        }
+      },
+      "prose_non_json": {
+        "correct": 0,
+        "accuracy": 0.0,
+        "oracle_assisted": false,
+        "per_stratum": {
+          "ANSWER": 0,
+          "IMPOSSIBLE": 0,
+          "UNKNOWN": 0
+        }
+      },
+      "zero_value": {
+        "correct": 2,
+        "accuracy": 0.006,
+        "oracle_assisted": false,
+        "per_stratum": {
+          "ANSWER": 2,
+          "IMPOSSIBLE": 0,
+          "UNKNOWN": 0
+        }
+      }
+    },
+    "shortcut_floor_predictor": "copy_prompt_sentinel",
+    "shortcut_floor": 0.4345,
+    "shortcut_floor_correct": 146
+  },
+  "evaluated_subset_4096": {
+    "baselines": {
+      "constant_impossible": {
+        "correct": 66,
+        "accuracy": 0.287,
+        "oracle_assisted": false,
+        "per_stratum": {
+          "ANSWER": 0,
+          "IMPOSSIBLE": 66,
+          "UNKNOWN": 0
+        }
+      },
+      "constant_train_majority": {
+        "correct": 66,
+        "accuracy": 0.287,
+        "oracle_assisted": false,
+        "per_stratum": {
+          "ANSWER": 0,
+          "IMPOSSIBLE": 66,
+          "UNKNOWN": 0
+        }
+      },
+      "constant_unknown": {
+        "correct": 33,
+        "accuracy": 0.1435,
+        "oracle_assisted": false,
+        "per_stratum": {
+          "ANSWER": 0,
+          "IMPOSSIBLE": 0,
+          "UNKNOWN": 33
+        }
+      },
+      "copy_prompt_sentinel": {
+        "correct": 101,
+        "accuracy": 0.4391,
+        "oracle_assisted": false,
+        "per_stratum": {
+          "ANSWER": 2,
+          "IMPOSSIBLE": 66,
+          "UNKNOWN": 33
+        }
+      },
+      "copy_query_integer": {
+        "correct": 0,
+        "accuracy": 0.0,
+        "oracle_assisted": false,
+        "per_stratum": {
+          "ANSWER": 0,
+          "IMPOSSIBLE": 0,
+          "UNKNOWN": 0
+        }
+      },
+      "oracle_shape_empty_witness": {
+        "correct": 42,
+        "accuracy": 0.1826,
+        "oracle_assisted": true,
+        "per_stratum": {
+          "ANSWER": 9,
+          "IMPOSSIBLE": 0,
+          "UNKNOWN": 33
+        }
+      },
+      "prose_non_json": {
+        "correct": 0,
+        "accuracy": 0.0,
+        "oracle_assisted": false,
+        "per_stratum": {
+          "ANSWER": 0,
+          "IMPOSSIBLE": 0,
+          "UNKNOWN": 0
+        }
+      },
+      "zero_value": {
+        "correct": 2,
+        "accuracy": 0.0087,
+        "oracle_assisted": false,
+        "per_stratum": {
+          "ANSWER": 2,
+          "IMPOSSIBLE": 0,
+          "UNKNOWN": 0
+        }
+      }
+    },
+    "shortcut_floor_predictor": "copy_prompt_sentinel",
+    "shortcut_floor": 0.4391,
+    "shortcut_floor_correct": 101
+  },
+  "model_on_evaluated_subset": {
+    "accuracy": 0.0174,
+    "correct": 4,
+    "rows": 230,
+    "unsupported_answer_on_unanswerable": 53,
+    "unparseable_on_unanswerable": 46,
+    "wrong_sentinel_on_unanswerable": 0,
+    "false_abstention_on_answerable": 0
+  },
+  "the_correction_that_matters": {
+    "floor_as_published": 0.287,
+    "floor_corrected": 0.4391,
+    "gap_as_published": -0.2696,
+    "gap_corrected": -0.4217,
+    "reading": "The headline accuracy 0.0174 is UNCHANGED -- nothing about the model's measurement was wrong. What changes is how far below trivial it sits: the source is worse than a prompt-copying shortcut by a wider margin than published. The negative result gets stronger, not weaker."
+  },
+  "model_calls_by_this_correction": 0,
+  "quality_claim": false
+}

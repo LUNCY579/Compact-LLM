@@ -1,0 +1,63 @@
+{
+  "schema_version": "1.0",
+  "reviewer": "/root/adversarial_review",
+  "created_utc": "2026-10-02T04:19:31.6642078Z",
+  "status": "PASS_CPU_CONTAINMENT_APPARATUS_NATIVE_NOT_DISPATCHED",
+  "source_sha256": {
+    "supervision.py": "894e7ffec1d7863d686cb82d410309a3a100d4fdb392892a4b534b989d4a4fcc",
+    "native_entry.py": "ab5b60f0ad72f719367490737d1c71173e5384db3a31246ca2ed751557c6725c",
+    "native_supervisor.py": "482e0876c5393a31620e02b9cc6b573d18c350977dd00faf82ee49061c5b6f16",
+    "tests/test_supervision.py": "146acab920cfd3e9eaa0033a4c12a4f8bbe64efe22e55e530496430bccde3199"
+  },
+  "native_model_loads": 0,
+  "native_inference_runs": 0,
+  "protected_or_test_reads": false,
+  "independently_run_command": [
+    "C:/Users/clclc/BusinessProject/Chat-Bubble/.venv/Scripts/python.exe",
+    "-B",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "experiments/rineya_taps_adaptive_recurrence_campaign_v2/tests/test_supervision.py",
+    "--junitxml=reviews/supervision_independent_junit.xml",
+    "--basetemp=reviews/supervision_independent_tmp"
+  ],
+  "independent_test_result": {
+    "exit_code": 0,
+    "failed": 0,
+    "pytest_seconds": 6.79,
+    "passed": 10,
+    "junit_sha256": "9be52eab0342a35c8f781f2ed086a32a3ef36430f2d687ef79bea3dc1c9a3610",
+    "skipped": 0
+  },
+  "checks": {
+    "real_venv_redirector_descendants_in_exact_job": true,
+    "unrelated_owned_sentinel_survives_campaign_job_kill": true,
+    "peak_rss_null_until_first_sample": true,
+    "job_handle_noninheritable": true,
+    "actual_supervisor_assignment_failure_kills_owned_unassigned_child_and_accounts_time": true,
+    "forced_actual_owner_death_closes_job": true,
+    "positive_barrier_preserves_original_v1_command_without_calling_model": true,
+    "false_or_absent_barrier_refuses_before_dispatch": true,
+    "create_suspended_before_assignment": true,
+    "resource_samples_include_descendants_exclude_sentinel": true,
+    "win64_job_thread_structure_layout": true,
+    "kill_on_close_and_terminate_only_owned_members": true
+  },
+  "references": [
+    "https://learn.microsoft.com/en-us/windows/win32/api/winnt/ns-winnt-jobobject_extended_limit_information",
+    "https://learn.microsoft.com/en-us/windows/win32/procthread/job-objects",
+    "https://learn.microsoft.com/en-us/windows/win32/api/jobapi2/nf-jobapi2-assignprocesstojobobject",
+    "https://learn.microsoft.com/en-us/windows/win32/api/tlhelp32/ns-tlhelp32-threadentry32",
+    "https://learn.microsoft.com/en-us/windows/win32/api/tlhelp32/nf-tlhelp32-createtoolhelp32snapshot",
+    "https://learn.microsoft.com/en-us/windows/win32/api/processthreadsapi/nf-processthreadsapi-resumethread"
+  ],
+  "unresolved": [
+    "Final concrete reference admission hash/source/resource binding must be independently reviewed",
+    "Hard deadline/RSS monitor branches source reviewed; CPU fixture tests establish containment and cleanup, not full native resource success",
+    "No fresh maximum-shape or forced native-exception success claim",
+    "New successor task measurements remain separately qualified"
+  ]
+}

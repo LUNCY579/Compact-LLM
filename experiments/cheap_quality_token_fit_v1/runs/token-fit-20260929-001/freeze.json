@@ -1,0 +1,268 @@
+{
+  "schema": 1,
+  "phase": "before_token_measurement",
+  "created_utc": "2026-09-30T04:21:12.709027+00:00",
+  "config": {
+    "schema": 1,
+    "experiment": "cheap_quality_token_fit_v1",
+    "source_revision": "ac9b79ac07ad650d8815c76eb4194a180f23e8d4",
+    "selection_seed": 20260929,
+    "counts": {
+      "TRAIN": 128,
+      "TRAIN_SELECTION": 0,
+      "DEV": 0,
+      "CHECK": 0,
+      "FINAL": 0
+    },
+    "parents_per_family": 32,
+    "variants": [
+      0,
+      1
+    ],
+    "context_profiles": [
+      512,
+      1024,
+      2048
+    ],
+    "completion_reserve": 128,
+    "max_supervised_completion": 128,
+    "system_message": "Solve the supplied deterministic task. Return only the requested JSON object. Do not show reasoning.",
+    "mode": "direct",
+    "resource_budget": {
+      "tree_rss_mib": 512,
+      "wall_seconds": 900,
+      "output_mib": 50
+    },
+    "runtime": {
+      "transformers": "4.57.1",
+      "tokenizers": "0.22.2"
+    },
+    "source_files": {
+      "bridge": {
+        "path": "experiments/post_training_mimo_centralized_v1/scripts/bridge_data.py",
+        "sha256": "d3a10f84713ae7164775e00514c5584bc4f03525b229f3afe4ebf05f52ea57f1"
+      },
+      "serialization": {
+        "path": "experiments/reasoning_posttraining_v1/serialization.py",
+        "sha256": "4be59f7d4022f1e0687a47a42be4949d6020516b697155245e6763dcb0aa1b40"
+      }
+    },
+    "tokenizer_directory": "C:/Users/clclc/BusinessProject/Chat-Bubble/Rineya_Published_Cores/Rineya-Titan-Experimental-1.0.0-devfreeze",
+    "tokenizer_class": "Qwen2Tokenizer",
+    "eos_token": "<|im_end|>",
+    "eos_id": 151645,
+    "chat_template_sha256": "a55ee1b1660128b7098723e0abcd92caa0788061051c62d51cbe87d9cf1974d8",
+    "tokenizer_assets": {
+      "tokenizer.json": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+      "tokenizer_config.json": "d5d09f07b48c3086c508b30d1c9114bd1189145b74e982a265350c923acd8101",
+      "vocab.json": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910",
+      "merges.txt": "8831e4f1a044471340f7c0a83d7bd71306a5b867e95fd870f74d0c5308a904d5"
+    }
+  },
+  "source_files": {
+    "bridge": {
+      "path": "experiments/post_training_mimo_centralized_v1/scripts/bridge_data.py",
+      "sha256": "d3a10f84713ae7164775e00514c5584bc4f03525b229f3afe4ebf05f52ea57f1",
+      "bytes": 32527
+    },
+    "serialization": {
+      "path": "experiments/reasoning_posttraining_v1/serialization.py",
+      "sha256": "4be59f7d4022f1e0687a47a42be4949d6020516b697155245e6763dcb0aa1b40",
+      "bytes": 5824
+    }
+  },
+  "tokenizer_assets": {
+    "tokenizer.json": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\Rineya_Published_Cores\\Rineya-Titan-Experimental-1.0.0-devfreeze\\tokenizer.json",
+      "sha256": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+      "bytes": 11422654
+    },
+    "tokenizer_config.json": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\Rineya_Published_Cores\\Rineya-Titan-Experimental-1.0.0-devfreeze\\tokenizer_config.json",
+      "sha256": "d5d09f07b48c3086c508b30d1c9114bd1189145b74e982a265350c923acd8101",
+      "bytes": 9732
+    },
+    "vocab.json": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\Rineya_Published_Cores\\Rineya-Titan-Experimental-1.0.0-devfreeze\\vocab.json",
+      "sha256": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910",
+      "bytes": 2776833
+    },
+    "merges.txt": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\Rineya_Published_Cores\\Rineya-Titan-Experimental-1.0.0-devfreeze\\merges.txt",
+      "sha256": "8831e4f1a044471340f7c0a83d7bd71306a5b867e95fd870f74d0c5308a904d5",
+      "bytes": 1671853
+    }
+  },
+  "chat_template_sha256": "a55ee1b1660128b7098723e0abcd92caa0788061051c62d51cbe87d9cf1974d8",
+  "implementation": {
+    "experiments/cheap_quality_token_fit_v1/.gitignore": "ccf58e28fccde6c0c37d6abe83e98be8db118e70e1d82214ccaceca4bcac7931",
+    "experiments/cheap_quality_token_fit_v1/audit.py": "704553d775698ebe2d52ca6f3c0a8ae2968be75e2fde726e35aaea6e49b488dc",
+    "experiments/cheap_quality_token_fit_v1/config.json": "3b25b8d70236c2327258c5fff3f5897716829a5c8588c8d40bf83e89422be11f",
+    "experiments/cheap_quality_token_fit_v1/PROTOCOL.md": "622b87469817d53c75d9a5adc7512d824c26de58e669008edc74a6b569f0b64b",
+    "experiments/cheap_quality_token_fit_v1/README.md": "756a19b79f9171fe005177b815ea5eb041a654a9ab785f64c49883ca6c77bd7a",
+    "experiments/cheap_quality_token_fit_v1/tests/test_audit.py": "91fde47350598b2ec75e5ef5e797f9b0c2a3c67271fea4e057412279150155de"
+  },
+  "runtime": {
+    "python": "3.11.15 (main, Jun  2 2026, 22:29:49) [MSC v.1944 64 bit (AMD64)]",
+    "executable": "C:\\Users\\clclc\\BusinessProject\\.venv-mq001\\Scripts\\python.exe",
+    "platform": "Windows-10-10.0.26200-SP0",
+    "dependencies": {
+      "transformers": "4.57.1",
+      "tokenizers": "0.22.2"
+    },
+    "disabled_backends_and_offline": {
+      "USE_TORCH": "0",
+      "USE_TF": "0",
+      "USE_FLAX": "0",
+      "HF_HUB_OFFLINE": "1",
+      "TRANSFORMERS_OFFLINE": "1",
+      "TOKENIZERS_PARALLELISM": "false"
+    }
+  },
+  "parents_sha256": "5dbc9d34708b7d1588a1ccb2e3bfd712ad959967267c5bf757fa4e3fa12b24d4",
+  "generated_train_sha256": "db9b259fd9ac42dcf3c0c3e76bda992b99c63c55946d70205325dbc04f15045e",
+  "parent_ids": [
+    "bridge-4672e4481c5db37afb071eece185818ce6c7909cd6b9ae80b198393042ac6205",
+    "bridge-dc6844aaaa9a561713cc3f8700e7d5c37018a1e721bcd9a7120340cd04ed7640",
+    "bridge-0ff17c33065a12f15c3d374496e9770e9c4142a230d36c39ae89b3d90aa792a6",
+    "bridge-1bbdfe11d95f9f7cab0b4f6b1bce4951d46fb74738d0b4e6dcae8e0db55ede79",
+    "bridge-f2b508af4cad1b0bf4b80a5e95eaacdee9734392a85c6f7540c1c8809a529e88",
+    "bridge-9076972c8834706d9af09dec4558bfd590e8740397beb21d66cbde82836d534b",
+    "bridge-0eb37df944f930463d88759a8855fcb59fe20fa15eccfadc5b735749fb0db3ee",
+    "bridge-1f1f60c64a16726bf14ac89d4b921f87b6e72f76e8f10116d45e479bbf98ad64",
+    "bridge-90eb5f036d96818938c28cbd5d63f5118406ecc88043f506ca64d9746dba42ca",
+    "bridge-001b52943ffda4cde6978ea51fb74e4c944897b7a99aef46bd6ed88290234ab4",
+    "bridge-1d40d5237c806aca5ea294745d8d4951787ce1eba5fcd2e5e85de01562ff764e",
+    "bridge-572ad03a41e04574ee3ee3bea63e7b8ae06b761f6909f6555314444698df5cda",
+    "bridge-4786b2c73ec0e138f44a6a3ec2fcba4b1f319b8d9534b93bc6bb1d04549f8439",
+    "bridge-967683890d7b7c58f45eea2199e6b7a8b79880d9209808122e5f4a8b98955313",
+    "bridge-73f0272cc4fb1c9767766c75cb60dde68ed13945207f0107feb201295cb74d74",
+    "bridge-024e7bda5890e3ce472595fa1c7ac7f9d676ab59f8c4858a64091b45dd20afce",
+    "bridge-696b834833598662f5352865bcec88f338843a58e77254cfe4ded646b1267ca1",
+    "bridge-ec123a19c0fde3baf91219d281af55fdacdb45342185f9cdd2808cd614fb764d",
+    "bridge-f624aa954aaee8661db21b151bfc8e4dd5252d625e9d58cece83bd74417d3c39",
+    "bridge-2c38b6a422884e7f6ac675524ac4cbe902627d7d0e9fb7eb1aaed59518cc32a5",
+    "bridge-b20606313aca3e8ef4f7090f08695797e574ffd9729a8cbab9f9a8ae3da08e74",
+    "bridge-3e938a5bb4154810d8f06e7cfa3b1267178cbf36dc723127f6f8c95e49543f43",
+    "bridge-333fd05ef996f5b0a96a3dce543ff200a676e21b8873b9fca9b51f72cecd59c5",
+    "bridge-ae69cd9c3349bb37715e5347cfe91970f0e0a5dda27535accdc89ec507d0c109",
+    "bridge-e1ea21ce9ee6c15ba3ab969d2a5605df63966148c2436c34f5b993bcd886f42e",
+    "bridge-efb327388ed25935911b44567fda8c231f867f5af1d8fcdff1b3c0dd7535be59",
+    "bridge-05068b650d7a8684f7f27153a46fbba813ef41bcccaaad1a614fbb4da1705454",
+    "bridge-72201385d778990224737a7d53c883e4491b95cb5971f73dc3a4fd7c3555118d",
+    "bridge-df8e5c8d237686dc25754d414899be44758ade4a5a63d7a3aced8f6b1b77623c",
+    "bridge-a6130465ace5176865177353b42bc043d21d40b08239a0aca26a9f2885b89c11",
+    "bridge-87d7863fd6739432187f6d5928daac89483fa8e2a3fb61c4e04d9b6cb81bbc83",
+    "bridge-f6eccfb7c6a1ac84a41cdb0ae8364cdf74a469e3432e104919caf5e480addec0",
+    "bridge-9777403e8913748a8e6e8230b9b58673725816d0990c5b463e77f1ae156b8c47",
+    "bridge-531a8938a488908606a34838160dd2409ba5c503d9d1fd16532c80b3fa73e47f",
+    "bridge-fa2228fbf7a882fd842b1dd8a72015cdcd2e77430f6caf2fb49edbbbffcfbe18",
+    "bridge-9b9a5db50bad2bad7d70f2789beda94f5855447eee127f5826962fb5e49f1f19",
+    "bridge-113bd37467aa293556becec660bd6dcbba8278fe1f4d2f971ee20be27f74641e",
+    "bridge-ec2b7fd89b1ead76439f48e45f67849f7175143985e815d5359b8ea808ec8c8a",
+    "bridge-5fea54990e8f5187ae45a3d9f0e51629fb0a2d4f6bf9756bbff57899d6033a27",
+    "bridge-56bb7968d7ea5854fdd84f630418b4ba313c5ac3d825401150d84f6f380bdbb8",
+    "bridge-33351bd1ad6642257d9877f069f98638f78c0285716e57b5f28a8a21b7bc62d4",
+    "bridge-2061e491316c9a13d4bc00c4d91b0419fae72810c4e1c6cad1d818ead83b1bd8",
+    "bridge-4226114794696705feaa035fbd51f0e492c14ed05c284b2a5a96d5d7e51fef05",
+    "bridge-514ed0ce8d898b39de5100c8d34275ed2d0bde94bf090b4ff91439aef3cb8879",
+    "bridge-07e98238db66f96a81c0e92bd51289c4096c53ce7f136ed7e6fe6e5a15875926",
+    "bridge-ffd6f06e7f368d2d11070a36d13576a556b823a36120d436dc3f7d1f6629bf09",
+    "bridge-d41ee0fbf9cbf0a7147c20a15dd3dd9c326a37ee7083e31063e7375bfb3336e5",
+    "bridge-2c8f107f34a7aa0fac6a7c8d420b4c8220e08c6a2f41aa119b1ee5a57a194873",
+    "bridge-493dd688eecb2dc39c453ab43f60b0945d76f40984bd1c105f391f4c7d9c4bf0",
+    "bridge-2edc3df8b00cbf45bf1d975ad518044b8484ee8a269b0b1b485981f0aed6c43d",
+    "bridge-b5ebf1dca429a9acbd6de27b03aea2b070bd21d8b3ae36a0bb03291f118d4391",
+    "bridge-1c0feefb2e22d6c43e3f54784ca70f2cdbe1cea9508f5086fa65eb228730ea29",
+    "bridge-9df21d354f49b16b0cec5fa1cab852cd19d239bfcf6b2d944054685f1bdae4a1",
+    "bridge-adf2f63e4969dc89bbdfd45b66442743007247ab715e12dd92e0c068bfde4201",
+    "bridge-6b4d3d63893aed83c5e833346f66cbfd6c0dce6b4b51f87966cce7625dc27539",
+    "bridge-58b7c54ca2456c2291279b62507de2d203f5ff99545cebae4ac526c68aca7526",
+    "bridge-c8d06cdaca502894f6896d08b041fb42fd97b8ac8291f17b3d405a70e551f7e3",
+    "bridge-ecf3056bd0cb2e1c19eff11386047399fdb88381a6abb15b7cf8de4e6282f8a6",
+    "bridge-4668efb7cc6e484c1218f293ffd44ffd2a632d7c94187ecfdfda1c1108272c01",
+    "bridge-d3dd79385c5cc1644d329ff7c2b2e31768760318d1e0b6f9f5b249c543e1b277",
+    "bridge-daec0d1d85c426cc6fdf24fced432f46d356cdb716948f634e9bbe7d57e7d00b",
+    "bridge-3141ff284413e02a6d380e8ef5720890256757693a9faea8a4d2b17a936416ef",
+    "bridge-cbf099b9c32cc179fe77cdb2e76759592f5fb8b3a16e5d9807689a83866a3d98",
+    "bridge-e9d82ce8f4a1856e4d16c89ff27b2b3b0104593f06c09a9828d23cfe24b673dc",
+    "bridge-efb816505aea96adbf03303b91b63ec6a0d83dd65c7915c23416094f1f2ebe0c",
+    "bridge-b4ed246c7fb83e1f14939a5a4cd41290d3f1b0a417a2e284e6eb69c2ba748511",
+    "bridge-e9d1a820d23a06cb21b26167cb74f42d20827bf5806ac20f035b81cc2701228a",
+    "bridge-408dd8813eee8abaf6ef7f1103501892fe7ac98e9ff6b879aaf5f2ab10ab0b79",
+    "bridge-47caf345bcfbeaab0e85f0aba234e7e07eeb922d50ec175c2bbf11f7291cddcb",
+    "bridge-6c9a1c3f6a6aea95480ecebc12f0143d63750407c098095e23793cb776667609",
+    "bridge-b3de7939ca83d7dee1ceedb3673e8d59e76a6e0e6832f12fd76c7f453c4e8c4a",
+    "bridge-3fa9f0fcbaa71fc262fdaf0b4a87a2f2e143eb5809c39a0408499216c8f796a3",
+    "bridge-a7e7dcc99d402d5b0102cd34dca14500e53d89efeb971362543aa7f807cc91f5",
+    "bridge-b3898c89441d841fe4302d2677d224e058d049af78f1dedd98acb90dbf4a8479",
+    "bridge-854972d37cb239721e2ec1a9a43c4f53cab791a2c3d4cf1e429c43a85111ccfe",
+    "bridge-63d904ae493746e79dae894b62d244c9bec4f0ea22e5e56e3620a75c5046e4b6",
+    "bridge-957197fc2840cd75a25ba08ee0773c3cd41eba33aa0b6b863a22a20121785c12",
+    "bridge-fdc6638e2ff7407eae76f28d318ef10e5b7a9f763646e9106594acc048b379c1",
+    "bridge-18c13ea1485b152728a2e6171dcdff715223f8ca557552188c64919529545164",
+    "bridge-9b74d0b7b322f3356ec45f9b69040699e3c349a26c5ba8a699d51bc0aceed264",
+    "bridge-9c2b8e19c9d690e9e3e5d07729a6155ca406bd5617f3df604afdf723ab9d21dc",
+    "bridge-cb5a31d28ba8a1fa7795af2665b926e7d60d24331d15bde1e46937a6d7169805",
+    "bridge-352362b98bdb9f3b08d50de0aeac5fa0d35df1b2a4bfc2c67f506d8df3c76c37",
+    "bridge-5f21b5b714d21c56fd976e81682547ebd9bd58c001faa3b5afd97a1e6a3ce92c",
+    "bridge-48cfbb80c3413975b7486dc7eaf8964bcd28425565379b2ab48a8d9c0a7fc4ae",
+    "bridge-00992c94bda1d9ac70271e962a41f571cd1bf96e1efeb98b3329e49e44016f61",
+    "bridge-c30831e846faaa707f416cd5fa3fd0d680c11b63c6af57640fe9059f9b5970a9",
+    "bridge-84e1bd445f7ebf3fd8352705dcb1f6d360dbb83457d941f7e36c686bdf57f8d7",
+    "bridge-f4219ed8e076dba7a8fd8169f6b92bbdeef28338aeec87da4ef9b09cda6bf044",
+    "bridge-3262c91f4a9aa1490881b648ac4e0002ce811c502b996ec29d86365c3f37c206",
+    "bridge-844b3410c3fe9e5d9f19a239a8d74994c98d30aaa8e3f04a5b312d9ad98eddc0",
+    "bridge-970aac2cd157094dfac340b7b20d51517fb55f3ed880cc3cf6e18e8765b75084",
+    "bridge-1a46f4632b904f6cfa4c00f4ae67b1b6a7f06a88b6129d9c84bf2acf5c44b4eb",
+    "bridge-3160dce242c44ce9e22067f667491a3917bcebdd6e493338219a3b4b9840a273",
+    "bridge-3df3036dec3c82659b0a65b3483e9416d4614fcd93270b050a20217d675f6926",
+    "bridge-3c0164046a723a0f65316d9e0868e79d3d9832024931daa92dc3a43cf867432f",
+    "bridge-695a69fd0ded6ed0236ee773267ff65325fc942d2d2c205f47249c6153fce5c3",
+    "bridge-972bb9c8d9a20d431082360f79fdbeee68980c48a00748beeaab6015890be4b3",
+    "bridge-392b7fded4ad1dc7daa6f04b1ab6cc1c9c9bc94c6fea4c6f91bb153ee0b363dc",
+    "bridge-f194fbd2cd35f5c130fe7a21691f0b3b830e6b698e22996ea5dee2aded2b2c2b",
+    "bridge-312d97ff24b48927f605c5327897d0aacebe949833ab1fb0fbe9879ff48410a4",
+    "bridge-202490fcfa35314da92475fea516090b6e1e2038342ca71a0afbc1b4d203bbbd",
+    "bridge-059630746a14cc4b26a471e9d9403822eb68623d99b17d6f7aac225978c9afa2",
+    "bridge-22e2106574e824b53d99f3fa23cf926ca3700364891c35464463a8ff39a0b981",
+    "bridge-7e0830e9a33ef57e7ec91707274a2cdcd58ae97e4439ff346b250488a7b10e88",
+    "bridge-029e21e8a424c4668e127e2abc0dc08caa82d8994c8ffd10533dab74d860d3c6",
+    "bridge-c5655f5775883e9cbb421ebdc2637451b29c32dd070988055451ffd17e93197c",
+    "bridge-e6b32974816e1f3c78b2446fe9ee83f3ed591665402841350331621f1fad810b",
+    "bridge-10d80a375f2d1379344957709f823e0b8d45290c9d30f6198985dec5b83aec60",
+    "bridge-3eff832405c482909d16939f718c9530682229a2ec02ed3aea1537fb012365a3",
+    "bridge-1593002fb4c0ff72ce05d6211ac4cfa0c9d460cf0344637bfbfc9bba06a180e2",
+    "bridge-e90af060dd191de66927f7851a3c65e4f027d0e6fea48908edee740dff8315ab",
+    "bridge-e9f479b888311f091ebfee88b85ac38753cab690447fa4bd3bb6ff80fa29dd42",
+    "bridge-68119fcf96da06c8213d8b09863077030169f20dc1f48d65a989b8d89a7dc7ff",
+    "bridge-042e6cf229ce21994f127a8c8fbdab079b556e9b67c4ebc9110ef6e9245cb77e",
+    "bridge-db2140e7d258105776fc16f8f22ddfd02f412eb64a9b8f0a5e2c21dfb49a9d19",
+    "bridge-a7d35fef72545302f14fbc8ce767ac5a73c269d89c8be6ce9867cd5a00822b66",
+    "bridge-6ef7c7553f87406418d9da08f449253214c6c5ad2129f564aec238f79bf0a8e7",
+    "bridge-2311a2a7c91ea0773ce2ebfde4fec01cb316893830cb41495db39e0387d472c7",
+    "bridge-4e0e4621115bdddd8a443701d7e57ed09fc45586d858a5ac652bf42065b76cf6",
+    "bridge-fc2f70df9347e3c42dca09dfa9c36b3ff8225374705ba91bf21544af993e14a3",
+    "bridge-a7c52f713f362405700ef1fe3b203adbc625b962a922bffd3b312972c7de0654",
+    "bridge-09f0ec2ff48dea4c801e5a0cfac23a1c55c94ee79d200270b0cbb149080e6399",
+    "bridge-f52f34b697816ed5ca2a0b6dc65054968976a689ec4fac4c780f657b31343302",
+    "bridge-6c1ed1633eff6dca438ceced061c416a6e15a4991c2829bf1df21ff0447a4003",
+    "bridge-0f7fb3c586ebb3bf847bdd369bfe3d58f252d0b0d2d8ad43f13164512b2e9b41",
+    "bridge-c1195fd3491b84c05e0cb44a4433f98820f5579dc9a2920504f50c9ed4e78a71",
+    "bridge-a6f766dc0cc520159fe5b3fab7e26f63a7c36912086a658417cd7ae5d7530628"
+  ],
+  "selection": {
+    "candidate_specifications": 194,
+    "duplicate_candidates_skipped": 0,
+    "selection_basis": "fixed generator order, role and structure quotas; no solver/model scoring"
+  },
+  "counts": {
+    "TRAIN": 128,
+    "TRAIN_SELECTION": 0,
+    "DEV": 0,
+    "CHECK": 0,
+    "FINAL": 0
+  },
+  "rendered_rows": 256,
+  "training_eligibility": false
+}

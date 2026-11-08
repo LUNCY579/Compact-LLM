@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "F-WANDA Rineya run manifest",
+  "type": "object",
+  "required": ["schema_version", "record", "experiment", "base_sha", "branch", "pruning", "data", "efficacy_run"],
+  "properties": {
+    "schema_version": {"type": "integer", "const": 1},
+    "record": {"type": "string"},
+    "experiment": {"const": "fwanda_delta_retention_v1"},
+    "status": {"type": "string"},
+    "repository": {"type": "string"},
+    "base_sha": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+    "implementation_head_sha": {"type": ["string", "null"], "pattern": "^[0-9a-f]{40}$"},
+    "final_branch_sha": {"type": ["string", "null"], "pattern": "^[0-9a-f]{40}$"},
+    "branch": {"type": "string"},
+    "target_branch_preexisted_at_base": {"type": "boolean"},
+    "source_delta": {"type": "object"},
+    "model": {"type": "object"},
+    "data": {"type": "object"},
+    "dtype": {"type": "string"},
+    "seed_plan": {"type": "array", "items": {"type": "integer"}},
+    "pruning": {"type": "object"},
+    "resources": {"type": "object"},
+    "efficacy_run": {
+      "type": "object",
+      "required": ["performed"],
+      "properties": {"performed": {"type": "boolean"}}
+    }
+  },
+  "additionalProperties": true
+}
