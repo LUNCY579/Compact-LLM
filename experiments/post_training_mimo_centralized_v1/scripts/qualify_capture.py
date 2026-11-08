@@ -243,6 +243,7 @@ def run(args):
         result["status"] = "BLOCKED_CAPTURE_QUALIFICATION"
         result["error"] = str(error); result["traceback"] = traceback.format_exc()
         event("failure", error=str(error))
+        result["call_accounting"] = accounting.snapshot()
         control.write(output / "FAILURE_RECEIPT.json", control.safe_numbers(result))
     finally:
         result["wall_seconds"] = time.monotonic() - started; result["call_accounting"] = accounting.snapshot()
