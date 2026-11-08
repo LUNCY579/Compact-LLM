@@ -2,7 +2,7 @@
 
 **Experimental research on useful capabilities, efficient adaptation, and reliable evaluation in compact language models.** The Rineya family primarily builds on Qwen3-0.6B (approximately 596 million parameters), with 19-layer and 28-layer derivatives, adapters, task-vector combinations, single-pass mechanisms, and routed systems.
 
-> **Repository status (8 November 2026):** `main` is a preserved historical baseline. This branch (`research/post-training-mimo-centralized-v1`) is the **integrated research history**. The default `main` remains a historical baseline with a reader-facing research index. Research results below come from recorded experiments, not a claim of production readiness or generalized superiority. The project contains both positive and negative findings.
+> **Repository status (8 November 2026):** `main` now contains the **integrated research history** formerly concentrated on `research/post-training-mimo-centralized-v1`; a pre-consolidation snapshot is retained at `archive/main-preconsolidation-20261108`. Distinct unresolved experiment branches and blocked PRs remain separate. Research results below come from recorded experiments, not a claim of production readiness or generalized superiority. The project contains both positive and negative findings.
 
 ## Selected measured findings
 
