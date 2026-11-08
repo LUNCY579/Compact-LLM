@@ -8,6 +8,7 @@ from pathlib import Path
 import subprocess
 import sys
 import tempfile
+from types import SimpleNamespace
 import unittest
 from unittest.mock import patch
 from experiments.post_training_mimo_centralized_v1.scripts import greedy_capture as control
@@ -168,6 +169,41 @@ class GreedyCaptureControls(unittest.TestCase):
             with patch.object(control.subprocess, "check_output", return_value="b" * 40), self.assertRaises(RuntimeError): control.recheck_sources(root, snap)
             file.write_bytes(b"changed")
             with patch.object(control.subprocess, "check_output", return_value="a" * 40), self.assertRaises(RuntimeError): control.recheck_sources(root, snap)
+
+    def test_failure_receipt_retains_returned_and_failed_call_accounting(self):
+        from experiments.post_training_mimo_centralized_v1.scripts import qualify_capture, qualify_native
+        constructor = qualify_native.CallAccounting; journals = []
+        def make_accounting(*args, **kwargs):
+            journal = constructor(*args, **kwargs); journals.append(journal)
+            return journal
+        def fail_cpu_controls():
+            journal = journals[0]
+            journal.call("forward", lambda: None, stage="synthetic_returned", input_positions=7)
+            def fail(): raise RuntimeError("synthetic CPU call failed")
+            journal.call("forward", fail, stage="synthetic_failed", input_positions=3)
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory); go = root / "GO.json"; output = root / "output"
+            go.write_bytes(control.canonical({"config_sha256": control.CONFIG_SHA256}))
+            args = SimpleNamespace(config=control.PACKAGE / control.CONFIG_RELATIVE, go_path=go, output=output)
+            with patch.object(control, "source_snapshot", return_value={"code_sha": "a" * 40, "dirty": False}), \
+                 patch.object(qualify_native, "CallAccounting", side_effect=make_accounting), \
+                 patch.object(control, "run_cpu_controls", side_effect=fail_cpu_controls):
+                self.assertEqual(qualify_capture.run(args), 2)
+            failure = control.parse((output / "FAILURE_RECEIPT.json").read_bytes())
+            result = control.parse((output / "CAPTURE_RESULT.json").read_bytes())
+            ledger = control.parse((output / "COST_LEDGER.json").read_bytes())
+            expected = journals[0].snapshot()
+            self.assertEqual(result["status"], "BLOCKED_CAPTURE_QUALIFICATION")
+            self.assertEqual(result["error"], "synthetic CPU call failed")
+            for receipt in (failure, result, ledger):
+                self.assertEqual(receipt["call_accounting"], expected)
+            self.assertEqual(expected["operations"]["forward"], {"attempted": 2, "returned": 1, "failed": 1, "pending": 0})
+            self.assertEqual(expected["last_call_id"], 2)
+            self.assertEqual(expected["forward_input_positions_attempted"], 10)
+            self.assertEqual(expected["forward_input_positions_returned"], 7)
+            events = [json.loads(line) for line in (output / "EVENTS.jsonl").read_text(encoding="utf-8").splitlines()]
+            self.assertEqual(qualify_native.verify_call_journal(events, expected, maximum_optimizer_calls=0), expected)
+            self.assertFalse(any(record["event"] == "runtime_import_start" for record in events))
 
     def test_all_new_modules_import_without_model_frameworks(self):
         code = "import sys; import experiments.post_training_mimo_centralized_v1.scripts.greedy_capture; import experiments.post_training_mimo_centralized_v1.scripts.qualify_capture; import experiments.post_training_mimo_centralized_v1.scripts.supervise_capture; assert not any(n == 'torch' or n.startswith('torch.') or n == 'transformers' or n.startswith('transformers.') for n in sys.modules)"
