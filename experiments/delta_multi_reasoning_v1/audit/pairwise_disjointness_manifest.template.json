@@ -1,0 +1,152 @@
+{
+  "schema": "DMRF-PCD-001",
+  "source_commit": "e9f7e9f9fbb8a6577c96ccc357ffe7048318a122",
+  "sources": {
+    "views": {
+      "path": null,
+      "sha256": "7dd53f2a751b54c349c2ef571e8f9c5153737f4a1ed3df5eafe25f95980e78a3",
+      "rows": 384,
+      "row_id_field": "id"
+    },
+    "delta_T_s23": {
+      "path": null,
+      "sha256": null,
+      "rows": 384,
+      "row_id_field": "id"
+    },
+    "delta_H": {
+      "path": null,
+      "sha256": null,
+      "rows": 648,
+      "row_id_field": "id"
+    },
+    "hskill_confirm002": {
+      "path": null,
+      "sha256": null,
+      "rows": 224,
+      "row_id_field": "id"
+    }
+  },
+  "checks": [
+    {
+      "id": "views_T_row_id",
+      "pair": "views__delta_T_s23",
+      "method": "rrfr2_row_v1",
+      "left": {
+        "source": "views",
+        "field": "id",
+        "prefix": "RRP-select:"
+      },
+      "right": {
+        "source": "delta_T_s23",
+        "field": "id",
+        "prefix": ""
+      }
+    },
+    {
+      "id": "views_T_stem",
+      "pair": "views__delta_T_s23",
+      "method": "rrfr2_stem_v1",
+      "left": {
+        "source": "views",
+        "field": "id",
+        "prefix": "RRP-select:"
+      },
+      "right": {
+        "source": "delta_T_s23",
+        "field": "id",
+        "prefix": ""
+      }
+    },
+    {
+      "id": "views_T_parent_id",
+      "pair": "views__delta_T_s23",
+      "method": "rrfr2_stem_v1",
+      "left": {
+        "source": "views",
+        "field": "parent_id",
+        "prefix": ""
+      },
+      "right": {
+        "source": "delta_T_s23",
+        "field": "id",
+        "prefix": ""
+      }
+    },
+    {
+      "id": "views_T_source_id",
+      "pair": "views__delta_T_s23",
+      "method": "rrfr2_stem_v1",
+      "left": {
+        "source": "views",
+        "field": "source_id",
+        "prefix": ""
+      },
+      "right": {
+        "source": "delta_T_s23",
+        "field": "id",
+        "prefix": ""
+      }
+    },
+    {
+      "id": "views_H_text_v1",
+      "pair": "views__delta_H",
+      "method": "text_v1",
+      "left": {
+        "source": "views",
+        "field": "BIND_USER_TEXT_FIELD",
+        "prefix": ""
+      },
+      "right": {
+        "source": "delta_H",
+        "field": "BIND_USER_TEXT_FIELD",
+        "prefix": ""
+      }
+    },
+    {
+      "id": "views_H_ngram20_v1",
+      "pair": "views__delta_H",
+      "method": "ngram20_v1",
+      "left": {
+        "source": "views",
+        "field": "BIND_USER_TEXT_FIELD",
+        "prefix": ""
+      },
+      "right": {
+        "source": "delta_H",
+        "field": "BIND_USER_TEXT_FIELD",
+        "prefix": ""
+      }
+    },
+    {
+      "id": "hskill_H_id",
+      "pair": "hskill_confirm002__delta_H",
+      "method": "srb_row_v1",
+      "left": {
+        "source": "hskill_confirm002",
+        "field": "id",
+        "prefix": "BIND_HSKILL_ID_PREFIX"
+      },
+      "right": {
+        "source": "delta_H",
+        "field": "id",
+        "prefix": "rehearsal:"
+      }
+    },
+    {
+      "id": "hskill_H_text",
+      "pair": "hskill_confirm002__delta_H",
+      "method": "text_v1",
+      "left": {
+        "source": "hskill_confirm002",
+        "field": "BIND_USER_TEXT_FIELD",
+        "prefix": ""
+      },
+      "right": {
+        "source": "delta_H",
+        "field": "BIND_USER_TEXT_FIELD",
+        "prefix": ""
+      }
+    }
+  ]
+}

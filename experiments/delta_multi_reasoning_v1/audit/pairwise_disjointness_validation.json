@@ -1,0 +1,52 @@
+{
+  "schema": "DMRF-PCD-001-DELIVERY",
+  "historical_base_commit": "e9f7e9f9fbb8a6577c96ccc357ffe7048318a122",
+  "new_branch": "research/dmrf-pairwise-disjointness-v1",
+  "validation": {
+    "classification": "SCOPED_CPU_MECHANICS_PASS_HISTORICAL_DATA_NOT_RUN",
+    "command": "python -m pytest -q experiments/delta_multi_reasoning_v1/tests/test_pairwise_disjointness.py",
+    "tests": 61,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "python": "3.13.5 (main, Jul 15 2026, 20:25:40) [GCC 14.2.0]",
+    "platform": "Linux-6.18.44-x86_64-with-glibc2.41",
+    "full_repository_suite_run": false,
+    "historical_source_jsonl_loaded": false,
+    "template_dry_run": "8 UNVERIFIED checks; aggregate REFUSED; exit 2"
+  },
+  "authority": {
+    "model_calls": 0,
+    "training_steps": 0,
+    "rescoring": false,
+    "historical_outcome_updates": false,
+    "new_execution_authorization": false
+  },
+  "source_files": [
+    {
+      "path": "experiments/delta_multi_reasoning_v1/audit/PAIRWISE_DISJOINTNESS.md",
+      "sha256": "d60d9c5c54eb330d9a40ba9f99f5898ea4419eea07645c657dae425c645dd514",
+      "git_blob_sha1": "8c094f710327a51c9f8021aba98577579e197c47"
+    },
+    {
+      "path": "experiments/delta_multi_reasoning_v1/audit/pairwise_disjointness.py",
+      "sha256": "3b038a6bdb0a301e3266c59a2104e4a0fa0356e50a5b1610ce1b8667c672c425",
+      "git_blob_sha1": "0b57df52b7150d0e923647d70a6ee03da193fe54"
+    },
+    {
+      "path": "experiments/delta_multi_reasoning_v1/audit/pairwise_disjointness_manifest.template.json",
+      "sha256": "c07e84e687e989b23583e4ee61af561289c25e65dadfea7dc626c08783221947",
+      "git_blob_sha1": "ae87bb03fcd4a875e7cb43da02fc89effed99359"
+    },
+    {
+      "path": "experiments/delta_multi_reasoning_v1/tests/test_pairwise_disjointness.py",
+      "sha256": "7be9dcea63a6a69150fa0d36045aae98b00656876fc71eb6fe2c824a879a39a5",
+      "git_blob_sha1": "6bdadf6d2100734f7a0dfc07a8b94ba63f003584"
+    }
+  ],
+  "limitations": [
+    "New enforceable command only; existing historical reporters remain unchanged.",
+    "CPU tests use synthetic rows, not external training/evaluation artifacts.",
+    "No native-model work, CI dispatch, or whole-bank scientific claim."
+  ]
+}

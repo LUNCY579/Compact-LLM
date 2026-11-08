@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "audit_id": "OBS-001",
+  "receipt_scope": "local prepublication CPU fixture execution only; not a remote publication or experiment receipt",
+  "date": "2026-09-19",
+  "base_commit": "2e5db22d0964fff3ca7a709bfe16fcffa9d1a1b5",
+  "python_version": "3.13.5",
+  "command": "python3 -m unittest discover -s experiments/delta_multi_reasoning_v1/tests -p test_observability.py -v",
+  "tests_run": 49,
+  "failures": 0,
+  "errors": 0,
+  "skips": 0,
+  "exit_code": 0,
+  "test_log_sha256": "0e5920e858ea3de03535b400da9017d482368083defb09c2a97800cc3a90de20",
+  "tested_artifact_sha256": {
+    ".github/workflows/dmrf-source-observability.yml": "fd6a79bd12668dba0b43a1e34ba9b1940c8f078b5e8264978f9e280c7576effa",
+    "experiments/delta_multi_reasoning_v1/SOURCE_OBSERVABILITY_AUDIT.md": "126a88d3dd7efd687c0d1f1006645a3364c6f453e440d3d3a139dbade1f308e5",
+    "experiments/delta_multi_reasoning_v1/audit/observability.py": "09347f686086699fc7d81c9b13d2d12c49fd3c5f2a6c67bdb256e08eb50b545e",
+    "experiments/delta_multi_reasoning_v1/audit/observability_claims.json": "04276a64c723e09eb056e627206ad9be24988c0f7bb59e17550ed4425627a874",
+    "experiments/delta_multi_reasoning_v1/audit/observability_findings.json": "2f34b1d351611407365462165e0fa1de589edc7295b479119871de23d04588d7",
+    "experiments/delta_multi_reasoning_v1/tests/test_observability.py": "841e72ed1913107779ad9bb29ee72e3c604aa90efd1be782d171909537c8511b"
+  },
+  "registry_review": {
+    "claims": [
+      {
+        "admissible_as_stated": false,
+        "claim_id": "OBS001-independent-vault-roundtrip",
+        "declaration_consistent": true,
+        "declared_status": "UNOBSERVABLE",
+        "reason": "SOURCE_IDENTITY_UNBOUND",
+        "schema_version": 1,
+        "status": "UNOBSERVABLE",
+        "subjects": []
+      }
+    ],
+    "note": "review consistency is not verification; unresolved claims remain unresolved",
+    "review_consistent": true,
+    "supported_claim_count": 0
+  },
+  "not_executed": [
+    "full legacy test suite",
+    "native or pretrained execution",
+    "training",
+    "experiment rescoring",
+    "private-vault access",
+    "remote CI",
+    "full-checkout source-binding CLI (source files inspected through GitHub; clone unavailable)"
+  ],
+  "outcome_edits": false
+}
