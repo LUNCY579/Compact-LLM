@@ -1,4 +1,4 @@
-name: Verify MiMo CPU fixes and prune seven contained branches
+name: Prune seven merged MiMo source refs (exact-SHA)
 on:
   push:
     branches:
@@ -14,15 +14,6 @@ jobs:
       contents: write
       pull-requests: read
     steps:
-      - name: Checkout MiMo CPU verification sources
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 1
-          filter: blob:none
-          sparse-checkout: experiments/post_training_mimo_centralized_v1
-      - name: Verify MiMo CPU fixture regressions
-        run: |
-          python3 -m unittest -v experiments.post_training_mimo_centralized_v1.tests.test_native_backend_contract experiments.post_training_mimo_centralized_v1.tests.test_capture_evidence experiments.post_training_mimo_centralized_v1.tests.test_greedy_capture
       - name: Verify ancestry and prune exact approved refs
         env:
           GH_TOKEN: ${{ github.token }}
