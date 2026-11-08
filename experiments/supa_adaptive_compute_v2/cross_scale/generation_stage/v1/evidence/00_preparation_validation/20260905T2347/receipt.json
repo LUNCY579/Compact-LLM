@@ -1,0 +1,35 @@
+{
+  "status": "PASS",
+  "utc": "2026-09-05T23:50:09.180839+00:00",
+  "python": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\.venv\\Scripts\\python.exe",
+  "command": [
+    "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\.venv\\Scripts\\python.exe",
+    "-m",
+    "pytest",
+    "experiments/supa_adaptive_compute_v2/cross_scale/generation_stage/v1/tests",
+    "-q",
+    "--junitxml=experiments/supa_adaptive_compute_v2/cross_scale/generation_stage/v1/evidence/00_preparation_validation/20260905T2347/junit.xml"
+  ],
+  "tests_passed": 56,
+  "subtests_passed": 6,
+  "wall_seconds": 21.86,
+  "stdout_sha256": "edaf91de1b65cd1bf36abf4245193ffd893af6a6ee0e8dc73f423b2cf3383208",
+  "junit_sha256": "18ea53edd84ef1f631d89da014ce33ef908c8ecbeee2a5e31342a780b1867546",
+  "stage_sources": {
+    "experiments/supa_adaptive_compute_v2/cross_scale/generation_stage/v1/src/operators.py": "8fb36765e0894450d3d69f16cd3c4b5fc31a5db52bd9bafd67b1acaaeae40bf9",
+    "experiments/supa_adaptive_compute_v2/cross_scale/generation_stage/v1/src/upstream.py": "6a9f15747f50ea122b250b3b835013ab1f3180a67881f66d21c71a50c8216f16",
+    "experiments/supa_adaptive_compute_v2/cross_scale/generation_stage/v1/tests/conftest.py": "580854a2909670b93527b99a24c80b079d62d844f761e83d84ca3ca137cf2204",
+    "experiments/supa_adaptive_compute_v2/cross_scale/generation_stage/v1/tests/test_operators.py": "8be79b0cea107817689805908134cbe442d9281f35551338e55535d5b21d796e",
+    "experiments/supa_adaptive_compute_v2/cross_scale/generation_stage/v1/tests/test_upstream.py": "3223cd458c70aec53a55f4819e50893892c69bb00d354ec77ff99e2dcd2b51e0",
+    "experiments/supa_adaptive_compute_v2/cross_scale/generation_stage/v1/README.md": "6db49f04bed50f9c21f1e8b5cd5a065c56069260dcd216fcfe6d64574c98db00"
+  },
+  "unchanged_old_source_counts": {
+    "cross_scale": 139,
+    "native_calibration": 143
+  },
+  "scope": "tiny CPU decoders and synthetic/mocked upstream receipts; no real checkpoint, bridge export, efficacy or GPU execution",
+  "limits": [
+    "No completed real mechanism matrix exists for an end-to-end upstream integration audit.",
+    "No generation-stage scientific configuration or runtime license was created."
+  ]
+}

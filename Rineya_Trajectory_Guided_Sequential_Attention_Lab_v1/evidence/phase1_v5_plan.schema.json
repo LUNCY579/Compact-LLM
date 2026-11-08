@@ -1,0 +1,561 @@
+{
+  "$defs": {
+    "capacityRung": {
+      "properties": {
+        "embed_dim": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "id": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "num_heads": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "num_layers": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "trajectory_rank": {
+          "minimum": 1,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "id",
+        "embed_dim",
+        "num_layers",
+        "num_heads",
+        "trajectory_rank"
+      ],
+      "type": "object"
+    },
+    "exposure": {
+      "properties": {
+        "batch_size": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "id": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "sample_presentations": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "unique_train_examples": {
+          "minimum": 1,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "id",
+        "unique_train_examples",
+        "sample_presentations",
+        "batch_size"
+      ],
+      "type": "object"
+    },
+    "pointerFamily": {
+      "properties": {
+        "max_hops": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "max_nodes": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "min_hops": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "min_nodes": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "reject_trivial": {
+          "const": true
+        }
+      },
+      "required": [
+        "min_nodes",
+        "max_nodes",
+        "min_hops",
+        "max_hops",
+        "reject_trivial"
+      ],
+      "type": "object"
+    }
+  },
+  "$id": "https://chatbubble.local/tgsa/phase1_v5_plan.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": true,
+  "properties": {
+    "capacity_ladder": {
+      "items": {
+        "$ref": "#/$defs/capacityRung"
+      },
+      "maxItems": 3,
+      "minItems": 1,
+      "type": "array",
+      "uniqueItems": true
+    },
+    "claim_ceiling": {
+      "minLength": 40,
+      "type": "string"
+    },
+    "confirmatory": {
+      "const": false
+    },
+    "dataset": {
+      "properties": {
+        "dev_examples": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "families": {
+          "properties": {
+            "direct_lookup": {
+              "$ref": "#/$defs/pointerFamily"
+            },
+            "pointer_chase": {
+              "$ref": "#/$defs/pointerFamily"
+            },
+            "state_update": {
+              "properties": {
+                "max_steps": {
+                  "minimum": 1,
+                  "type": "integer"
+                },
+                "min_steps": {
+                  "minimum": 1,
+                  "type": "integer"
+                },
+                "reject_trivial": {
+                  "const": true
+                }
+              },
+              "required": [
+                "min_steps",
+                "max_steps",
+                "reject_trivial"
+              ],
+              "type": "object"
+            }
+          },
+          "required": [
+            "pointer_chase",
+            "direct_lookup",
+            "state_update"
+          ],
+          "type": "object"
+        },
+        "family_weights": {
+          "additionalProperties": false,
+          "properties": {
+            "direct_lookup": {
+              "exclusiveMinimum": 0,
+              "type": "number"
+            },
+            "pointer_chase": {
+              "exclusiveMinimum": 0,
+              "type": "number"
+            },
+            "state_update": {
+              "exclusiveMinimum": 0,
+              "type": "number"
+            }
+          },
+          "required": [
+            "pointer_chase",
+            "direct_lookup",
+            "state_update"
+          ],
+          "type": "object"
+        },
+        "seed": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "split_generation_order": {
+          "const": [
+            "test",
+            "dev",
+            "train"
+          ]
+        },
+        "test_examples": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "vocabulary": {
+          "properties": {
+            "domain_size": {
+              "minimum": 4,
+              "type": "integer"
+            },
+            "max_abs_step": {
+              "minimum": 1,
+              "type": "integer"
+            },
+            "max_hops": {
+              "minimum": 3,
+              "type": "integer"
+            }
+          },
+          "required": [
+            "domain_size",
+            "max_hops",
+            "max_abs_step"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "seed",
+        "split_generation_order",
+        "vocabulary",
+        "families",
+        "family_weights",
+        "dev_examples",
+        "test_examples"
+      ],
+      "type": "object"
+    },
+    "development_only": {
+      "type": "boolean"
+    },
+    "expected_base_commit": {
+      "pattern": "^[0-9a-f]{40}$",
+      "type": "string"
+    },
+    "exposure_grid": {
+      "items": {
+        "$ref": "#/$defs/exposure"
+      },
+      "minItems": 1,
+      "type": "array",
+      "uniqueItems": true
+    },
+    "family_roles": {
+      "additionalProperties": false,
+      "properties": {
+        "canary": {
+          "const": [
+            "state_update"
+          ]
+        },
+        "guardrail": {
+          "const": [
+            "direct_lookup"
+          ]
+        },
+        "primary": {
+          "const": [
+            "pointer_chase"
+          ]
+        }
+      },
+      "required": [
+        "primary",
+        "guardrail",
+        "canary"
+      ],
+      "type": "object"
+    },
+    "mechanism_semantics": {
+      "const": "none"
+    },
+    "mechanism_test_authorized": {
+      "const": false
+    },
+    "mtp": {
+      "properties": {
+        "enabled": {
+          "const": false
+        }
+      },
+      "required": [
+        "enabled"
+      ],
+      "type": "object"
+    },
+    "phase": {
+      "const": "phase1_v5"
+    },
+    "probe": {
+      "properties": {
+        "arm": {
+          "const": "cascade"
+        },
+        "dataset_seed": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "dev_examples": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "exposure": {
+          "$ref": "#/$defs/exposure"
+        },
+        "family": {
+          "const": "pointer_chase"
+        },
+        "seeds": {
+          "items": {
+            "type": "integer"
+          },
+          "minItems": 3,
+          "type": "array",
+          "uniqueItems": true
+        },
+        "test_examples": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "thresholds": {
+          "properties": {
+            "maximum_generalization_gap": {
+              "maximum": 0.1,
+              "type": "number"
+            },
+            "maximum_mean_accuracy": {
+              "maximum": 0.95,
+              "type": "number"
+            },
+            "maximum_seed_coefficient_of_variation": {
+              "maximum": 0.35,
+              "type": "number"
+            },
+            "minimum_margin_over_family_null": {
+              "minimum": 0.15,
+              "type": "number"
+            },
+            "minimum_seed_runs": {
+              "minimum": 3,
+              "type": "integer"
+            }
+          },
+          "required": [
+            "minimum_margin_over_family_null",
+            "maximum_mean_accuracy",
+            "maximum_seed_coefficient_of_variation",
+            "maximum_generalization_gap",
+            "minimum_seed_runs"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "arm",
+        "family",
+        "seeds",
+        "dataset_seed",
+        "dev_examples",
+        "test_examples",
+        "exposure",
+        "thresholds"
+      ],
+      "type": "object"
+    },
+    "qualification": {
+      "properties": {
+        "evaluation_batch_size": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "guardrail_minimum_margin_over_null": {
+          "minimum": 0.15,
+          "type": "number"
+        },
+        "require_complete_exposure_grid": {
+          "const": true
+        },
+        "seeds": {
+          "items": {
+            "type": "integer"
+          },
+          "minItems": 3,
+          "type": "array",
+          "uniqueItems": true
+        },
+        "seen_examples": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "selection_policy": {
+          "const": [
+            "minimum_sample_presentations",
+            "maximum_unique_train_examples",
+            "lexicographic_exposure_id"
+          ]
+        },
+        "thresholds": {
+          "minProperties": 9,
+          "type": "object"
+        }
+      },
+      "required": [
+        "seeds",
+        "seen_examples",
+        "evaluation_batch_size",
+        "guardrail_minimum_margin_over_null",
+        "require_complete_exposure_grid",
+        "selection_policy",
+        "thresholds"
+      ],
+      "type": "object"
+    },
+    "registered_arms": {
+      "const": [
+        "cascade",
+        "history_control",
+        "learned_delta"
+      ]
+    },
+    "registration_status": {
+      "enum": [
+        "development_only",
+        "implementation_complete_not_registered",
+        "frozen_after_probe"
+      ]
+    },
+    "runtime": {
+      "properties": {
+        "deterministic_algorithms": {
+          "const": true
+        },
+        "device": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "num_threads": {
+          "minimum": 0,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "device",
+        "num_threads",
+        "deterministic_algorithms"
+      ],
+      "type": "object"
+    },
+    "schema_version": {
+      "const": "tgsa.phase1-v5-plan.v1"
+    },
+    "study_id": {
+      "pattern": "^tgsa-phase1-v5-",
+      "type": "string"
+    },
+    "study_kind": {
+      "const": "apparatus_qualification"
+    },
+    "training": {
+      "properties": {
+        "betas": {
+          "maxItems": 2,
+          "minItems": 2,
+          "prefixItems": [
+            {
+              "exclusiveMaximum": 1,
+              "exclusiveMinimum": 0,
+              "type": "number"
+            },
+            {
+              "exclusiveMaximum": 1,
+              "exclusiveMinimum": 0,
+              "type": "number"
+            }
+          ],
+          "type": "array"
+        },
+        "bias": {
+          "type": "boolean"
+        },
+        "checkpoint_interval_steps": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "dropout": {
+          "const": 0.0
+        },
+        "early_stopping": {
+          "const": false
+        },
+        "ffn_multiplier": {
+          "exclusiveMinimum": 0,
+          "type": "number"
+        },
+        "fixed_final_checkpoint": {
+          "const": true
+        },
+        "gradient_clip_norm": {
+          "exclusiveMinimum": 0,
+          "type": "number"
+        },
+        "learning_rate": {
+          "exclusiveMinimum": 0,
+          "type": "number"
+        },
+        "tie_embeddings": {
+          "type": "boolean"
+        },
+        "warmup_fraction": {
+          "exclusiveMaximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        "weight_decay": {
+          "minimum": 0,
+          "type": "number"
+        }
+      },
+      "required": [
+        "learning_rate",
+        "betas",
+        "weight_decay",
+        "warmup_fraction",
+        "gradient_clip_norm",
+        "checkpoint_interval_steps",
+        "ffn_multiplier",
+        "dropout",
+        "bias",
+        "tie_embeddings",
+        "fixed_final_checkpoint",
+        "early_stopping"
+      ],
+      "type": "object"
+    }
+  },
+  "required": [
+    "schema_version",
+    "study_id",
+    "phase",
+    "study_kind",
+    "mechanism_semantics",
+    "registration_status",
+    "development_only",
+    "confirmatory",
+    "mechanism_test_authorized",
+    "expected_base_commit",
+    "claim_ceiling",
+    "registered_arms",
+    "family_roles",
+    "dataset",
+    "capacity_ladder",
+    "probe",
+    "exposure_grid",
+    "qualification",
+    "training",
+    "runtime",
+    "mtp"
+  ],
+  "title": "TGSA Phase 1 v5 apparatus qualification plan",
+  "type": "object"
+}

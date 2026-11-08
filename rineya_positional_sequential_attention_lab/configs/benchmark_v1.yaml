@@ -1,0 +1,96 @@
+# Phase 2 - controlled positional benchmark, screening configuration.
+#
+# Item count with scale: 1.0 is 4896, inside the 4-6k bank the brief asks for.
+#   core_sweep            3 families x 3 lengths x 40 scenarios x 7 positions = 2520
+#   multi_hop_pairs       1 family   x 3 lengths x 40 scenarios x 6 pairs     =  720
+#   format_sweep          2 families x 1 length  x 24 scenarios x 3 formats
+#                                                x 3 positions               = 1296
+#   local_position_sweep  3 families x 1 length  x 20 scenarios x 2 locals
+#                                                x 3 positions               =  360
+#
+# `scale` multiplies every grid's scenario count (rounded, floor of 1), so a caller
+# can dial the whole bank down without editing the grid. Expect roughly 90 MB of
+# JSONL at scale 1.0 plus the same again in the three split copies.
+#
+# 16k and 32k are declared but not swept: add them to a grid's `lengths` to emit them.
+
+name: benchmark_v1
+version: 1
+seed: 20260828
+scale: 1.0
+
+# Tokenizer used for the length budget and for evidence-span measurement. All four
+# panel checkpoints share this vocabulary, so one budget serves the whole panel.
+tokenizer: qwen3
+
+# Paragraph size. Stable across the document except for one trailing ballast
+# paragraph, which the budget fitter is allowed to size in [3, 6] sentences.
+sentences_per_chunk: 3
+
+# Budget is on the full chat-templated prompt, not on the context alone.
+token_tolerance: 0.02
+
+length_tokens:
+  "2k": 2048
+  "4k": 4096
+  "8k": 8192
+  "16k": 16384
+  "32k": 32768
+
+screening_lengths: ["2k", "4k", "8k"]
+optional_lengths: ["16k", "32k"]
+
+# Brief section 6 screening grid.
+positions: [0.02, 0.17, 0.33, 0.50, 0.67, 0.83, 0.98]
+
+grids:
+  # The main position sweep: one factor moving, everything else pinned.
+  - name: core_sweep
+    families: [exact_retrieval, semantic_single_hop, state_constraint]
+    lengths: ["2k", "4k", "8k"]
+    formats: [natural]
+    local_positions: [middle]
+    positions: full
+    scenarios: 40
+
+  # Multi-hop needs two independently controlled positions, so it sweeps the six
+  # start/middle/end combinations instead of the seven-point grid.
+  - name: multi_hop_pairs
+    families: [multi_hop]
+    lengths: ["2k", "4k", "8k"]
+    formats: [natural]
+    local_positions: [middle]
+    positions: full
+    scenarios: 40
+
+  # The tractable multi-hop variant (SPEC 13.3). The hard grid above scored 0/36 on
+  # both accuracy scorers at NLL 4.4-5.1 in the Phase-2b pilot, which is a floor: no
+  # intervention could be shown to help or hurt against it, and the brief's section 41
+  # multi-hop criterion would be unmeasurable. Same two-hop structure and the same
+  # bridge reference; explicit signposting and fewer distractors. Both are reported.
+  - name: multi_hop_guided
+    families: [multi_hop]
+    family_kwargs: { guided: true }
+    lengths: ["2k", "4k", "8k"]
+    formats: [natural]
+    local_positions: [middle]
+    positions: full
+    scenarios: 40
+
+  # Surface-format contrast at fixed length, edges plus centre only.
+  - name: format_sweep
+    families: [exact_retrieval, semantic_single_hop]
+    lengths: ["4k"]
+    formats: [shuffled, list, json]
+    local_positions: [middle]
+    positions: [0.02, 0.50, 0.98]
+    scenarios: 24
+
+  # Local position inside the host paragraph, orthogonal to the global position.
+  - name: local_position_sweep
+    families: [exact_retrieval, semantic_single_hop, state_constraint]
+    lengths: ["4k"]
+    formats: [natural]
+    local_positions: [first, last]
+    positions: [0.02, 0.50, 0.98]
+    scenarios: 20

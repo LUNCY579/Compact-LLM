@@ -1,0 +1,95 @@
+schema_version: "1.0"
+experiment:
+  name: supa_a1_1_fwa_p2b_longctx
+  status: EXPLORATORY_NOT_CONFIRMATORY
+  phase: p2b
+  supersedes: p2_abcd
+  rationale: >
+    P2's NO-GO is withdrawn as unsupported. Measured: the fast memory's retention
+    half-life was 87.5 tokens with total overwrite on key collision, against ~990-token
+    contexts; every arm was already correct on every item; and one item per
+    (length, position) cell could not reach significance. See
+    reports/MECHANISM_DIAGNOSTIC.md and PREREGISTRATION.md Amendment 1.
+model:
+  key: supa_a11
+  path: Rineya_Published_Cores/Rineya-Supa-A1.1-1.1.0-devfreeze
+  dtype: float16
+  trust_remote_code: true
+  expected_arch: Qwen3AbstainForCausalLM
+  freeze_backbone: true
+fwa:
+  variant: falcon2_prefix_aligned
+  rank: 16
+  layers: [14]
+  n_kv_heads: 8
+  epsilon: 1.0e-6
+  # Honoured by the trainer from P2b onward and recorded in the training manifest.
+  # In P1/P2 train.py hardcoded 0.05 and never read this key.
+  init_alpha: 0.05
+  # Long-horizon plasticity/forgetting, MATCHED across arms B/C/D.
+  #   beta   = 2*sigmoid(-1.1) = 0.499  -> ~50% write, not the beta=1.0 deadbeat
+  #   lambda = softplus(-5.9)  = 2.74e-3 -> ridge decay 0.99991/token, half-life ~8100 tokens
+  beta_raw_init: -1.1
+  lambda_raw_init: -5.9
+  # Arm D only: symmetric multiplicative deviation about the arm-C base rates,
+  # so D reduces exactly to C at s_t = 0.5 (sig_gate is zero-initialised).
+  significance_span: 0.9
+training:
+  seeds: [11, 22]
+  learning_rate: 1.0e-3
+  max_steps: 100
+  per_device_batch_size: 1
+  gradient_accumulation_steps: 4
+  max_sequence_length: 1152
+  weight_decay: 0.01
+  nan_abort_factor: 10.0
+  # Adam movement bound = max_steps * lr = 0.10, vs 0.0024 in P2 where alpha was
+  # still ramping at 67-83% of its maximum rate when training stopped.
+data:
+  source: fwa_longctx_v2
+  filler: data/unsealed/  # official CC0 unsealed shard, already hashed and committed
+  train_rows: 512
+  train_lengths: [1024]
+  note: >
+    P1/P2 used data/synthetic/ (10 distinct gold answers, one repeated filler
+    sentence) via force_synthetic=True, and front-truncated long rows, which
+    removes the needle. P2b trains on a long-context split disjoint from eval.
+eval:
+  scorer: candidate_argmax_single_forward
+  positions: [0.05, 0.10, 0.25, 0.50, 0.75, 0.90, 0.95]
+  lengths: [1024, 2048, 4096]
+  n_per_cell: 8            # 168 position items, vs 14 total in P2
+  n_decoys: 24
+  n_candidates: 32
+  hops: 2                  # two-hop indirection: vault -> unit -> code
+  interference_length: 2048
+  n_per_category: 8        # 56 interference items, vs 7 total in P2
+  statistics: paired_two_sided_exact_mcnemar
+  intervals: wilson95
+hardware_envelope:
+  gpu: NVIDIA GeForce RTX 4070 Laptop GPU (8188 MiB)
+  measured:
+    "1024": {peak_vram_gib: 1.32, arm_a_tok_s: 5899, arm_c_tok_s: 1401}
+    "2048": {peak_vram_gib: 1.80, arm_a_tok_s: 3630, arm_c_tok_s: 1222}
+    "4096": {peak_vram_gib: 3.64, arm_a_tok_s: 1930, arm_c_tok_s: 925}
+    "8192": {peak_vram_gib: 10.79, note: "exceeds physical VRAM; host-memory spill, ~6x slowdown"}
+    "16384": {oom: true, note: "not measurable on this hardware"}
+arms:
+  A:      {recurrent: false, significance_gate: false, install: false}
+  B:      {recurrent: false, significance_gate: false, install: true}
+  C:      {recurrent: true,  significance_gate: false, install: true}
+  D:      {recurrent: true,  significance_gate: true,  install: true}
+  Cshort: {recurrent: true,  significance_gate: false, install: true,
+           beta_raw_init: 0.0, lambda_raw_init: -2.0,
+           note: "horizon ablation: arm C with the original P1/P2 short-horizon init"}
+paths:
+  output_dir: artifacts/supa_a1_1_fast_weight_attention_v1/p2b_longctx
+sealing:
+  closed:
+    - rineya_long_context_cc0_v1_main/sealed_eval
+    - Invisible-Limit TEST / TEST2
+    - demo showcase64 / stability192
+    - rineya_positional_sequential_attention_lab/data/sealed
+  note: >
+    The PSA benchmark generator was inspected but not invoked: it writes into
+    another lab's tree and owns a sealed split.

@@ -1,0 +1,50 @@
+experiment:
+  name: layer8_lora_puzzle_smoke
+  classification: EXPLORATORY_SINGLE_LAYER_ACTIVATION
+  hypothesis: >
+    LoRA on Supa-A1.1 layer 8 alone (strongest null under identity-skip)
+    can raise puzzle val exact and make L8 skip more catastrophic.
+  non_claim: >
+    Inference leave-one-out redundancy is not training importance.
+    No efficacy claim until dual metrics move and an all-layer control exists.
+
+model:
+  path: Rineya_Published_Cores/Rineya-Supa-A1.1-1.1.0-devfreeze
+  dtype: float16
+  trust_remote_code: true
+
+adapter:
+  method: lora
+  selected_layers: [8]
+  target_module_group: both
+  r: 16
+  alpha: 32
+  dropout: 0.05
+  # No QLoRA / DoRA for v1 — keep ablation re-compare clean.
+
+data:
+  puzzle_root: Rineya-Puzzle-Reasoning-51k
+  view: think_then_short
+  reasoning_tags: think
+  difficulty: [easy]
+  train_smoke_cap: 3000
+  val_eval_cap: 200
+  max_sequence_length: 1024
+  never_touch: [test, challenge]
+
+train:
+  learning_rate: 5.0e-5
+  epochs: 1.0
+  max_steps: -1
+  per_device_batch_size: 1
+  gradient_accumulation_steps: 8
+  warmup_ratio: 0.05
+  seed: 17
+  gradient_checkpointing: true
+  output_dir: artifacts/rineya_single_layer_ft_v1/layer8_lora_puzzle_smoke
+
+eval:
+  max_new_tokens: 128
+  ablation_layer: 8
+  ablation_max_new_tokens: 24
+  smoke_bank: data/supa_layer_ablation_smoke.jsonl

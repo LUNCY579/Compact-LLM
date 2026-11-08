@@ -1,0 +1,162 @@
+{
+  "schema_version": "tgsa.phase2-mtp-complementarity.v1",
+  "study_id": "tgsa-phase2a-trajectory-mechanism-smoke",
+  "study_kind": "mechanism_bridge",
+  "mtp_semantics": "sequential_teacher_forced_recursive_v1",
+  "confirmatory": false,
+  "development_only": true,
+  "phase1_regime_status": "rejected",
+  "obsolete_regime": true,
+  "expected_base_branch": "research/tgsa-phase1-v4-competence-first",
+  "expected_base_commit": "8b5737e260b5478427b8bb033cffa394a5f3fc5d",
+  "claim_scope": "Development/CI mechanics rehearsal on the rejected v4 band; never competence, mechanism, complementarity, quality, or speed evidence.",
+  "cells": [
+    {
+      "tgsa_arm": "cascade",
+      "mtp_mode": "dormant"
+    },
+    {
+      "tgsa_arm": "cascade",
+      "mtp_mode": "backbone"
+    },
+    {
+      "tgsa_arm": "history_control",
+      "mtp_mode": "dormant"
+    },
+    {
+      "tgsa_arm": "history_control",
+      "mtp_mode": "backbone"
+    },
+    {
+      "tgsa_arm": "history_control",
+      "mtp_mode": "trajectory"
+    },
+    {
+      "tgsa_arm": "learned_delta",
+      "mtp_mode": "dormant"
+    },
+    {
+      "tgsa_arm": "learned_delta",
+      "mtp_mode": "backbone"
+    },
+    {
+      "tgsa_arm": "learned_delta",
+      "mtp_mode": "trajectory"
+    }
+  ],
+  "seeds": [
+    7
+  ],
+  "dataset": {
+    "seed": 26083021,
+    "split_generation_order": [
+      "test",
+      "dev",
+      "train"
+    ],
+    "vocabulary": {
+      "domain_size": 16,
+      "max_hops": 4,
+      "max_abs_step": 4
+    },
+    "families": {
+      "direct_lookup": {
+        "min_nodes": 5,
+        "max_nodes": 8,
+        "min_hops": 1,
+        "max_hops": 1
+      },
+      "pointer_chase": {
+        "min_nodes": 5,
+        "max_nodes": 8,
+        "min_hops": 2,
+        "max_hops": 2,
+        "reject_trivial": true
+      },
+      "state_update": {
+        "min_steps": 2,
+        "max_steps": 3,
+        "reject_trivial": true
+      }
+    },
+    "splits": {
+      "train": {
+        "direct_lookup": 16,
+        "pointer_chase": 16,
+        "state_update": 16
+      },
+      "dev": {
+        "direct_lookup": 8,
+        "pointer_chase": 8,
+        "state_update": 8
+      },
+      "test": {
+        "direct_lookup": 8,
+        "pointer_chase": 8,
+        "state_update": 8
+      }
+    }
+  },
+  "model": {
+    "max_sequence_length": 64,
+    "embed_dim": 32,
+    "num_heads": 4,
+    "num_layers": 1,
+    "ffn_multiplier": 2.0,
+    "dropout": 0.0,
+    "bias": false,
+    "trajectory_rank": 8,
+    "tie_embeddings": true
+  },
+  "mtp": {
+    "max_horizon": 3,
+    "transition_rank": 8,
+    "loss_weight": 0.2,
+    "horizon_weights": [
+      1.0,
+      0.5
+    ],
+    "control_block_index": -1,
+    "pad_token_id": 0,
+    "bias": false
+  },
+  "training": {
+    "steps": 3,
+    "batch_size": 4,
+    "learning_rate": 0.001,
+    "beta1": 0.9,
+    "beta2": 0.95,
+    "epsilon": 1e-08,
+    "weight_decay": 0.0,
+    "gradient_clip_norm": 1.0,
+    "gradient_accumulation_steps": 1,
+    "fixed_final_checkpoint": true,
+    "early_stopping": false
+  },
+  "evaluation": {
+    "split": "dev",
+    "batch_size": 8,
+    "test_bank_sealed": true,
+    "efficiency_is_gating": false
+  },
+  "runtime": {
+    "device": "cpu",
+    "deterministic_algorithms": true,
+    "num_threads": 1,
+    "world_size": 1
+  },
+  "registration": {
+    "status": "draft",
+    "design": "PHASE2_TGSA_MTP_DESIGN.md",
+    "runbook": "PHASE2_TGSA_MTP_RUNBOOK.md",
+    "canonical_path": "TGSA_MTP_CANONICAL_PATH.md",
+    "program_contract": "configs/phase2_program_contract.json",
+    "phase1_competence_report": null,
+    "confirmatory_thresholds_frozen": false,
+    "phase1_v4_result_commit": "8b5737e260b5478427b8bb033cffa394a5f3fc5d",
+    "phase1_regime_status": "rejected",
+    "obsolete_regime": true,
+    "within_study_qualification_required_for_future_confirmatory": true,
+    "cross_stage_evidence_pooling_allowed": false
+  }
+}

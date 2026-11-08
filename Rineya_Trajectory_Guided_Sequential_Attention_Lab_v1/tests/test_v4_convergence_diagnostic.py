@@ -1,0 +1,195 @@
+"""The diagnostic must separate a truncated transition from a stochastic one."""
+
+from __future__ import annotations
+
+import json
+import sys
+from pathlib import Path
+
+LAB = Path(__file__).resolve().parents[1]
+if str(LAB / "scripts") not in sys.path:
+    sys.path.insert(0, str(LAB / "scripts"))
+
+from phase1_v4_convergence_diagnostic import (  # noqa: E402
+    describe,
+    split_point,
+    still_descending,
+)
+
+
+def _curve(start: float, end: float, points: int = 11, flat_tail: bool = False):
+    if flat_tail:
+        body = [start + (end - start) * i / (points - 3) for i in range(points - 2)]
+        return [[i * 1000, v] for i, v in enumerate(body + [end, end])]
+    return [[i * 1000, start + (end - start) * i / (points - 1)] for i in range(points)]
+
+
+def test_a_clear_bimodal_split_is_found() -> None:
+    assert split_point([1.3, 1.5, 1.6, 2.2, 2.3]) == pytest_approx(1.9)
+
+
+def pytest_approx(value: float, tol: float = 1e-9):
+    class _A:
+        def __eq__(self, other): return abs(other - value) < tol
+        def __repr__(self): return f"~{value}"
+    return _A()
+
+
+def test_a_unimodal_population_has_no_split() -> None:
+    """Returning None is the answer, not a failure to answer."""
+
+    assert split_point([1.30, 1.35, 1.42, 1.48, 1.51]) is None
+
+
+def test_too_few_runs_has_no_split() -> None:
+    assert split_point([1.3, 2.3]) is None
+
+
+def test_a_truncated_run_is_still_descending() -> None:
+    assert still_descending(_curve(4.6, 2.2)) is True
+
+
+def test_a_plateaued_run_is_not() -> None:
+    assert still_descending(_curve(4.6, 2.2, flat_tail=True)) is False
+
+
+def _report(tmp_path: Path, spec: list[tuple[str, int, float, float, bool]]) -> Path:
+    tmp_path.mkdir(parents=True, exist_ok=True)
+    runs = []
+    for arm, seed, loss, holdout, descending in spec:
+        runs.append({
+            "arm": arm, "seed": seed, "final_train_loss": loss,
+            "holdout": {"accuracy": holdout},
+            "loss_curve": _curve(4.6, loss, flat_tail=not descending),
+        })
+    path = tmp_path / "competence.json"
+    path.write_text(json.dumps({
+        "runs": runs, "regime": {"train_examples": 50000, "steps": 20000},
+    }), encoding="utf-8")
+    return path
+
+
+def test_truncation_signature_is_reported(tmp_path: Path) -> None:
+    """Stalled runs still descending => the budget is the problem."""
+
+    path = _report(tmp_path, [
+        ("cascade", 1, 1.40, 0.44, False), ("cascade", 2, 2.30, 0.12, True),
+        ("history_control", 1, 1.45, 0.43, False), ("history_control", 2, 2.25, 0.13, True),
+        ("learned_delta", 1, 1.38, 0.45, False), ("learned_delta", 2, 1.42, 0.44, False),
+    ])
+    summary = describe(path)
+    assert summary["transitioned_fraction"] == 4 / 6
+    assert summary["stalled_still_descending"] == 2
+    assert summary["stalled_plateaued"] == 0
+
+
+def test_stochastic_signature_is_reported(tmp_path: Path) -> None:
+    """Stalled runs plateaued => more updates will not fix it."""
+
+    path = _report(tmp_path, [
+        ("cascade", 1, 1.40, 0.44, False), ("cascade", 2, 2.60, 0.12, False),
+        ("history_control", 1, 1.45, 0.43, False), ("history_control", 2, 2.55, 0.13, False),
+        ("learned_delta", 1, 1.38, 0.45, False), ("learned_delta", 2, 2.62, 0.12, False),
+    ])
+    summary = describe(path)
+    assert summary["stalled_plateaued"] == 3
+    assert summary["stalled_still_descending"] == 0
+
+
+def test_a_report_without_loss_is_refused(tmp_path: Path) -> None:
+    import pytest
+
+    path = tmp_path / "competence.json"
+    path.write_text(json.dumps({
+        "runs": [{"arm": "cascade", "seed": 1, "holdout": {"accuracy": 0.4}}],
+        "regime": {},
+    }), encoding="utf-8")
+    with pytest.raises(ValueError, match="final_train_loss"):
+        describe(path)
+
+
+def _report_with_families(tmp_path: Path, spec) -> Path:
+    runs = []
+    for arm, seed, loss, families, descending in spec:
+        runs.append({
+            "arm": arm, "seed": seed, "final_train_loss": loss,
+            "holdout": {
+                "accuracy": sum(families.values()) / len(families),
+                "per_family_accuracy": families,
+            },
+            "loss_curve": _curve(4.6, loss, flat_tail=not descending),
+        })
+    path = tmp_path / "competence.json"
+    path.write_text(json.dumps({
+        "runs": runs, "regime": {"train_examples": 200000, "steps": 20000},
+    }), encoding="utf-8")
+    return path
+
+
+def test_the_transition_is_localized_to_the_composed_families(tmp_path: Path) -> None:
+    """A stalled run that already solves the one-hop family points at depth.
+
+    If only the composed families move across the transition, the model is
+    discovering a composition circuit rather than gaining general competence --
+    and neither more data nor more updates is the indicated response.
+    """
+
+    high = {"direct_lookup": 0.92, "pointer_chase": 0.30, "state_update": 0.28}
+    low = {"direct_lookup": 0.90, "pointer_chase": 0.03, "state_update": 0.04}
+    path = _report_with_families(tmp_path, [
+        ("cascade", 1, 1.35, high, False), ("cascade", 2, 2.45, low, False),
+        ("history_control", 1, 1.40, high, False), ("history_control", 2, 2.50, low, False),
+        ("learned_delta", 1, 1.33, high, False), ("learned_delta", 2, 2.47, low, False),
+    ])
+    modes = describe(path)["per_family_by_mode"]
+    assert set(modes) == {"transitioned", "stalled"}
+    assert modes["transitioned"]["direct_lookup"] - modes["stalled"]["direct_lookup"] < 0.05
+    assert modes["transitioned"]["pointer_chase"] - modes["stalled"]["pointer_chase"] > 0.20
+
+
+def test_per_family_modes_are_absent_when_nothing_is_bimodal(tmp_path: Path) -> None:
+    same = {"direct_lookup": 0.9, "pointer_chase": 0.3, "state_update": 0.3}
+    path = _report_with_families(tmp_path, [
+        ("cascade", s, 1.40 + s * 0.01, same, False) for s in (1, 2, 3)
+    ])
+    summary = describe(path)
+    assert summary["split_point"] is None
+    assert len(summary["per_family_by_mode"]) <= 1
+
+
+def test_epochs_are_computed_from_the_regime(tmp_path: Path) -> None:
+    """steps x batch / examples. The fraction tracks this, not steps alone."""
+
+    path = _report(tmp_path, [
+        ("cascade", 1, 1.40, 0.44, False), ("cascade", 2, 2.30, 0.12, True),
+        ("cascade", 3, 1.42, 0.43, False),
+    ])
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    payload["regime"] = {"train_examples": 50_000, "steps": 20_000, "batch_size": 64}
+    path.write_text(json.dumps(payload), encoding="utf-8")
+    assert describe(path)["epochs"] == pytest_approx(25.6, tol=0.05)
+
+
+def test_more_data_at_fixed_steps_lowers_epochs(tmp_path: Path) -> None:
+    """The comparison that would read as a contradiction if reported in steps."""
+
+    summaries = []
+    for examples in (50_000, 200_000):
+        path = _report(tmp_path / str(examples), [
+            ("cascade", 1, 1.40, 0.44, False), ("cascade", 2, 2.30, 0.12, True),
+            ("cascade", 3, 1.42, 0.43, False),
+        ])
+        payload = json.loads(path.read_text(encoding="utf-8"))
+        payload["regime"] = {"train_examples": examples, "steps": 20_000, "batch_size": 64}
+        path.write_text(json.dumps(payload), encoding="utf-8")
+        summaries.append(describe(path))
+    assert summaries[0]["steps"] == summaries[1]["steps"]
+    assert summaries[0]["epochs"] > summaries[1]["epochs"] * 3
+
+
+def test_a_missing_batch_size_defaults_rather_than_crashing(tmp_path: Path) -> None:
+    path = _report(tmp_path, [("cascade", s, 1.4, 0.44, False) for s in (1, 2, 3)])
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    payload["regime"] = {"train_examples": 50_000, "steps": 20_000}
+    path.write_text(json.dumps(payload), encoding="utf-8")
+    assert describe(path)["epochs"] == pytest_approx(25.6, tol=0.05)

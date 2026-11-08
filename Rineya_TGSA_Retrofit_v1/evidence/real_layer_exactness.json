@@ -1,0 +1,350 @@
+{
+  "schema_version": "rineya.tgsa-real-layer-exactness.v1",
+  "model_dir": "C:\\Users\\clclc\\.cache\\huggingface\\hub\\models--Luncy1978--rineya-published-cores\\snapshots\\d11707ee75481c245ef44491079737fde1f6b910\\Rineya-Supa-A1-1.0.0-devfreeze",
+  "batch": 2,
+  "seq": 32,
+  "results": [
+    {
+      "dtype": "float64",
+      "attn_implementation": "eager",
+      "layer": 0,
+      "reused_tensor_count": 6,
+      "reused_tensors": [
+        "k_norm.weight",
+        "k_proj.weight",
+        "o_proj.weight",
+        "q_norm.weight",
+        "q_proj.weight",
+        "v_proj.weight"
+      ],
+      "max_abs_diff": 0.0,
+      "mean_abs_diff": 0.0,
+      "relative_max": 0.0,
+      "bitwise_identical": true,
+      "native_output_rms": 0.9912479519844055
+    },
+    {
+      "dtype": "float64",
+      "attn_implementation": "eager",
+      "layer": 14,
+      "reused_tensor_count": 6,
+      "reused_tensors": [
+        "k_norm.weight",
+        "k_proj.weight",
+        "o_proj.weight",
+        "q_norm.weight",
+        "q_proj.weight",
+        "v_proj.weight"
+      ],
+      "max_abs_diff": 0.0,
+      "mean_abs_diff": 0.0,
+      "relative_max": 0.0,
+      "bitwise_identical": true,
+      "native_output_rms": 0.5361846089363098
+    },
+    {
+      "dtype": "float64",
+      "attn_implementation": "eager",
+      "layer": 27,
+      "reused_tensor_count": 6,
+      "reused_tensors": [
+        "k_norm.weight",
+        "k_proj.weight",
+        "o_proj.weight",
+        "q_norm.weight",
+        "q_proj.weight",
+        "v_proj.weight"
+      ],
+      "max_abs_diff": 0.0,
+      "mean_abs_diff": 0.0,
+      "relative_max": 0.0,
+      "bitwise_identical": true,
+      "native_output_rms": 0.8709486722946167
+    },
+    {
+      "dtype": "float64",
+      "attn_implementation": "sdpa",
+      "layer": 0,
+      "reused_tensor_count": 6,
+      "reused_tensors": [
+        "k_norm.weight",
+        "k_proj.weight",
+        "o_proj.weight",
+        "q_norm.weight",
+        "q_proj.weight",
+        "v_proj.weight"
+      ],
+      "max_abs_diff": 9.5367431640625e-07,
+      "mean_abs_diff": 5.9377683214734134e-08,
+      "relative_max": 1.1794697485356664e-07,
+      "bitwise_identical": false,
+      "native_output_rms": 0.9912479519844055
+    },
+    {
+      "dtype": "float64",
+      "attn_implementation": "sdpa",
+      "layer": 14,
+      "reused_tensor_count": 6,
+      "reused_tensors": [
+        "k_norm.weight",
+        "k_proj.weight",
+        "o_proj.weight",
+        "q_norm.weight",
+        "q_proj.weight",
+        "v_proj.weight"
+      ],
+      "max_abs_diff": 4.76837158203125e-07,
+      "mean_abs_diff": 3.444049667677973e-08,
+      "relative_max": 8.593590195005163e-08,
+      "bitwise_identical": false,
+      "native_output_rms": 0.5361846089363098
+    },
+    {
+      "dtype": "float64",
+      "attn_implementation": "sdpa",
+      "layer": 27,
+      "reused_tensor_count": 6,
+      "reused_tensors": [
+        "k_norm.weight",
+        "k_proj.weight",
+        "o_proj.weight",
+        "q_norm.weight",
+        "q_proj.weight",
+        "v_proj.weight"
+      ],
+      "max_abs_diff": 4.76837158203125e-07,
+      "mean_abs_diff": 5.529969371309562e-08,
+      "relative_max": 8.08750471037456e-08,
+      "bitwise_identical": false,
+      "native_output_rms": 0.8709486722946167
+    },
+    {
+      "dtype": "float32",
+      "attn_implementation": "eager",
+      "layer": 0,
+      "reused_tensor_count": 6,
+      "reused_tensors": [
+        "k_norm.weight",
+        "k_proj.weight",
+        "o_proj.weight",
+        "q_norm.weight",
+        "q_proj.weight",
+        "v_proj.weight"
+      ],
+      "max_abs_diff": 0.0,
+      "mean_abs_diff": 0.0,
+      "relative_max": 0.0,
+      "bitwise_identical": true,
+      "native_output_rms": 0.9965542554855347
+    },
+    {
+      "dtype": "float32",
+      "attn_implementation": "eager",
+      "layer": 14,
+      "reused_tensor_count": 6,
+      "reused_tensors": [
+        "k_norm.weight",
+        "k_proj.weight",
+        "o_proj.weight",
+        "q_norm.weight",
+        "q_proj.weight",
+        "v_proj.weight"
+      ],
+      "max_abs_diff": 0.0,
+      "mean_abs_diff": 0.0,
+      "relative_max": 0.0,
+      "bitwise_identical": true,
+      "native_output_rms": 0.5491755604743958
+    },
+    {
+      "dtype": "float32",
+      "attn_implementation": "eager",
+      "layer": 27,
+      "reused_tensor_count": 6,
+      "reused_tensors": [
+        "k_norm.weight",
+        "k_proj.weight",
+        "o_proj.weight",
+        "q_norm.weight",
+        "q_proj.weight",
+        "v_proj.weight"
+      ],
+      "max_abs_diff": 0.0,
+      "mean_abs_diff": 0.0,
+      "relative_max": 0.0,
+      "bitwise_identical": true,
+      "native_output_rms": 0.8726590871810913
+    },
+    {
+      "dtype": "float32",
+      "attn_implementation": "sdpa",
+      "layer": 0,
+      "reused_tensor_count": 6,
+      "reused_tensors": [
+        "k_norm.weight",
+        "k_proj.weight",
+        "o_proj.weight",
+        "q_norm.weight",
+        "q_proj.weight",
+        "v_proj.weight"
+      ],
+      "max_abs_diff": 1.430511474609375e-06,
+      "mean_abs_diff": 1.121270472026481e-07,
+      "relative_max": 1.5825816035430762e-07,
+      "bitwise_identical": false,
+      "native_output_rms": 0.9965542554855347
+    },
+    {
+      "dtype": "float32",
+      "attn_implementation": "sdpa",
+      "layer": 14,
+      "reused_tensor_count": 6,
+      "reused_tensors": [
+        "k_norm.weight",
+        "k_proj.weight",
+        "o_proj.weight",
+        "q_norm.weight",
+        "q_proj.weight",
+        "v_proj.weight"
+      ],
+      "max_abs_diff": 9.5367431640625e-07,
+      "mean_abs_diff": 7.935447143836427e-08,
+      "relative_max": 1.7565449184075987e-07,
+      "bitwise_identical": false,
+      "native_output_rms": 0.5491755604743958
+    },
+    {
+      "dtype": "float32",
+      "attn_implementation": "sdpa",
+      "layer": 27,
+      "reused_tensor_count": 6,
+      "reused_tensors": [
+        "k_norm.weight",
+        "k_proj.weight",
+        "o_proj.weight",
+        "q_norm.weight",
+        "q_proj.weight",
+        "v_proj.weight"
+      ],
+      "max_abs_diff": 1.1920928955078125e-06,
+      "mean_abs_diff": 1.385263601605402e-07,
+      "relative_max": 2.4892082706173824e-07,
+      "bitwise_identical": false,
+      "native_output_rms": 0.8726590871810913
+    },
+    {
+      "dtype": "bfloat16",
+      "attn_implementation": "eager",
+      "layer": 0,
+      "reused_tensor_count": 6,
+      "reused_tensors": [
+        "k_norm.weight",
+        "k_proj.weight",
+        "o_proj.weight",
+        "q_norm.weight",
+        "q_proj.weight",
+        "v_proj.weight"
+      ],
+      "max_abs_diff": 0.0,
+      "mean_abs_diff": 0.0,
+      "relative_max": 0.0,
+      "bitwise_identical": true,
+      "native_output_rms": 0.9963096976280212
+    },
+    {
+      "dtype": "bfloat16",
+      "attn_implementation": "eager",
+      "layer": 14,
+      "reused_tensor_count": 6,
+      "reused_tensors": [
+        "k_norm.weight",
+        "k_proj.weight",
+        "o_proj.weight",
+        "q_norm.weight",
+        "q_proj.weight",
+        "v_proj.weight"
+      ],
+      "max_abs_diff": 0.0,
+      "mean_abs_diff": 0.0,
+      "relative_max": 0.0,
+      "bitwise_identical": true,
+      "native_output_rms": 0.5490952134132385
+    },
+    {
+      "dtype": "bfloat16",
+      "attn_implementation": "eager",
+      "layer": 27,
+      "reused_tensor_count": 6,
+      "reused_tensors": [
+        "k_norm.weight",
+        "k_proj.weight",
+        "o_proj.weight",
+        "q_norm.weight",
+        "q_proj.weight",
+        "v_proj.weight"
+      ],
+      "max_abs_diff": 0.0,
+      "mean_abs_diff": 0.0,
+      "relative_max": 0.0,
+      "bitwise_identical": true,
+      "native_output_rms": 0.8726305961608887
+    },
+    {
+      "dtype": "bfloat16",
+      "attn_implementation": "sdpa",
+      "layer": 0,
+      "reused_tensor_count": 6,
+      "reused_tensors": [
+        "k_norm.weight",
+        "k_proj.weight",
+        "o_proj.weight",
+        "q_norm.weight",
+        "q_proj.weight",
+        "v_proj.weight"
+      ],
+      "max_abs_diff": 0.0546875,
+      "mean_abs_diff": 0.003291235538199544,
+      "relative_max": 0.00603448273614049,
+      "bitwise_identical": false,
+      "native_output_rms": 0.9965605139732361
+    },
+    {
+      "dtype": "bfloat16",
+      "attn_implementation": "sdpa",
+      "layer": 14,
+      "reused_tensor_count": 6,
+      "reused_tensors": [
+        "k_norm.weight",
+        "k_proj.weight",
+        "o_proj.weight",
+        "q_norm.weight",
+        "q_proj.weight",
+        "v_proj.weight"
+      ],
+      "max_abs_diff": 0.03125,
+      "mean_abs_diff": 0.0019555981270968914,
+      "relative_max": 0.005747126415371895,
+      "bitwise_identical": false,
+      "native_output_rms": 0.5491442680358887
+    },
+    {
+      "dtype": "bfloat16",
+      "attn_implementation": "sdpa",
+      "layer": 27,
+      "reused_tensor_count": 6,
+      "reused_tensors": [
+        "k_norm.weight",
+        "k_proj.weight",
+        "o_proj.weight",
+        "q_norm.weight",
+        "q_proj.weight",
+        "v_proj.weight"
+      ],
+      "max_abs_diff": 0.03125,
+      "mean_abs_diff": 0.0036352057941257954,
+      "relative_max": 0.006535947788506746,
+      "bitwise_identical": false,
+      "native_output_rms": 0.8724761009216309
+    }
+  ]
+}

@@ -1,0 +1,356 @@
+{
+  "decision": "NO-GO",
+  "seeds_completed": [
+    11,
+    22
+  ],
+  "seed_33": "not_run_oom",
+  "eval": [
+    {
+      "path": "arm_A",
+      "arm": "A",
+      "seed": null,
+      "position_exact": 0.9285714285714286,
+      "position_n": 14,
+      "middle_edge_gap": 0.125,
+      "interference_exact": 0.8571428571428571,
+      "interference_labels": {
+        "INT-A": "retained",
+        "INT-B": "retained",
+        "INT-C": "retained",
+        "INT-D": "wrong",
+        "INT-E": "retained",
+        "INT-F": "retained",
+        "INT-G": "overwritten"
+      },
+      "trainable_parameters": 0,
+      "resources": [
+        {
+          "seq_len": 256,
+          "tokens_per_sec": 3626.8,
+          "peak_vram_bytes": 1278952448,
+          "recurrent_state_bytes": 0,
+          "kv_cache_bytes_if_used": 29360128
+        },
+        {
+          "seq_len": 512,
+          "tokens_per_sec": 6927.0,
+          "peak_vram_bytes": 1357270016,
+          "recurrent_state_bytes": 0,
+          "kv_cache_bytes_if_used": 58720256
+        },
+        {
+          "seq_len": 1024,
+          "tokens_per_sec": 5623.9,
+          "peak_vram_bytes": 1513905152,
+          "recurrent_state_bytes": 0,
+          "kv_cache_bytes_if_used": 117440512
+        }
+      ]
+    },
+    {
+      "path": "arm_B/seed_11",
+      "arm": "B",
+      "seed": 11,
+      "position_exact": 1.0,
+      "position_n": 14,
+      "middle_edge_gap": 0.0,
+      "interference_exact": 0.8571428571428571,
+      "interference_labels": {
+        "INT-A": "retained",
+        "INT-B": "retained",
+        "INT-C": "retained",
+        "INT-D": "wrong",
+        "INT-E": "retained",
+        "INT-F": "retained",
+        "INT-G": "overwritten"
+      },
+      "trainable_parameters": 524593,
+      "resources": [
+        {
+          "seq_len": 256,
+          "tokens_per_sec": 1035.8,
+          "peak_vram_bytes": 1281052672,
+          "recurrent_state_bytes": 0,
+          "kv_cache_bytes_if_used": 29360128
+        },
+        {
+          "seq_len": 512,
+          "tokens_per_sec": 1119.5,
+          "peak_vram_bytes": 1359370240,
+          "recurrent_state_bytes": 0,
+          "kv_cache_bytes_if_used": 58720256
+        },
+        {
+          "seq_len": 1024,
+          "tokens_per_sec": 874.8,
+          "peak_vram_bytes": 1516005376,
+          "recurrent_state_bytes": 0,
+          "kv_cache_bytes_if_used": 117440512
+        }
+      ]
+    },
+    {
+      "path": "arm_B/seed_22",
+      "arm": "B",
+      "seed": 22,
+      "position_exact": 1.0,
+      "position_n": 14,
+      "middle_edge_gap": 0.0,
+      "interference_exact": 0.8571428571428571,
+      "interference_labels": {
+        "INT-A": "retained",
+        "INT-B": "retained",
+        "INT-C": "retained",
+        "INT-D": "wrong",
+        "INT-E": "retained",
+        "INT-F": "retained",
+        "INT-G": "overwritten"
+      },
+      "trainable_parameters": 524593,
+      "resources": [
+        {
+          "seq_len": 256,
+          "tokens_per_sec": 856.1,
+          "peak_vram_bytes": 1290197504,
+          "recurrent_state_bytes": 0,
+          "kv_cache_bytes_if_used": 29360128
+        },
+        {
+          "seq_len": 512,
+          "tokens_per_sec": 972.5,
+          "peak_vram_bytes": 1368515072,
+          "recurrent_state_bytes": 0,
+          "kv_cache_bytes_if_used": 58720256
+        },
+        {
+          "seq_len": 1024,
+          "tokens_per_sec": 911.8,
+          "peak_vram_bytes": 1525150208,
+          "recurrent_state_bytes": 0,
+          "kv_cache_bytes_if_used": 117440512
+        }
+      ]
+    },
+    {
+      "path": "arm_C/seed_11",
+      "arm": "C",
+      "seed": 11,
+      "position_exact": 1.0,
+      "position_n": 14,
+      "middle_edge_gap": 0.0,
+      "interference_exact": 0.8571428571428571,
+      "interference_labels": {
+        "INT-A": "retained",
+        "INT-B": "retained",
+        "INT-C": "retained",
+        "INT-D": "wrong",
+        "INT-E": "retained",
+        "INT-F": "retained",
+        "INT-G": "overwritten"
+      },
+      "trainable_parameters": 524593,
+      "resources": [
+        {
+          "seq_len": 256,
+          "tokens_per_sec": 838.9,
+          "peak_vram_bytes": 1290197504,
+          "recurrent_state_bytes": 8192,
+          "kv_cache_bytes_if_used": 29360128
+        },
+        {
+          "seq_len": 512,
+          "tokens_per_sec": 989.4,
+          "peak_vram_bytes": 1368515072,
+          "recurrent_state_bytes": 8192,
+          "kv_cache_bytes_if_used": 58720256
+        },
+        {
+          "seq_len": 1024,
+          "tokens_per_sec": 919.1,
+          "peak_vram_bytes": 1525150208,
+          "recurrent_state_bytes": 8192,
+          "kv_cache_bytes_if_used": 117440512
+        }
+      ]
+    },
+    {
+      "path": "arm_C/seed_22",
+      "arm": "C",
+      "seed": 22,
+      "position_exact": 1.0,
+      "position_n": 14,
+      "middle_edge_gap": 0.0,
+      "interference_exact": 0.8571428571428571,
+      "interference_labels": {
+        "INT-A": "retained",
+        "INT-B": "retained",
+        "INT-C": "retained",
+        "INT-D": "wrong",
+        "INT-E": "retained",
+        "INT-F": "retained",
+        "INT-G": "overwritten"
+      },
+      "trainable_parameters": 524593,
+      "resources": [
+        {
+          "seq_len": 256,
+          "tokens_per_sec": 1074.6,
+          "peak_vram_bytes": 1290197504,
+          "recurrent_state_bytes": 8192,
+          "kv_cache_bytes_if_used": 29360128
+        },
+        {
+          "seq_len": 512,
+          "tokens_per_sec": 1347.0,
+          "peak_vram_bytes": 1368515072,
+          "recurrent_state_bytes": 8192,
+          "kv_cache_bytes_if_used": 58720256
+        },
+        {
+          "seq_len": 1024,
+          "tokens_per_sec": 1259.2,
+          "peak_vram_bytes": 1525150208,
+          "recurrent_state_bytes": 8192,
+          "kv_cache_bytes_if_used": 117440512
+        }
+      ]
+    },
+    {
+      "path": "arm_D/seed_11",
+      "arm": "D",
+      "seed": 11,
+      "position_exact": 1.0,
+      "position_n": 14,
+      "middle_edge_gap": 0.0,
+      "interference_exact": 0.8571428571428571,
+      "interference_labels": {
+        "INT-A": "retained",
+        "INT-B": "retained",
+        "INT-C": "retained",
+        "INT-D": "wrong",
+        "INT-E": "retained",
+        "INT-F": "retained",
+        "INT-G": "overwritten"
+      },
+      "trainable_parameters": 525618,
+      "resources": [
+        {
+          "seq_len": 256,
+          "tokens_per_sec": 1083.1,
+          "peak_vram_bytes": 1290202112,
+          "recurrent_state_bytes": 8192,
+          "kv_cache_bytes_if_used": 29360128
+        },
+        {
+          "seq_len": 512,
+          "tokens_per_sec": 1263.4,
+          "peak_vram_bytes": 1368519680,
+          "recurrent_state_bytes": 8192,
+          "kv_cache_bytes_if_used": 58720256
+        },
+        {
+          "seq_len": 1024,
+          "tokens_per_sec": 1134.2,
+          "peak_vram_bytes": 1525154816,
+          "recurrent_state_bytes": 8192,
+          "kv_cache_bytes_if_used": 117440512
+        }
+      ]
+    },
+    {
+      "path": "arm_D/seed_22",
+      "arm": "D",
+      "seed": 22,
+      "position_exact": 1.0,
+      "position_n": 14,
+      "middle_edge_gap": 0.0,
+      "interference_exact": 0.8571428571428571,
+      "interference_labels": {
+        "INT-A": "retained",
+        "INT-B": "retained",
+        "INT-C": "retained",
+        "INT-D": "wrong",
+        "INT-E": "retained",
+        "INT-F": "retained",
+        "INT-G": "overwritten"
+      },
+      "trainable_parameters": 525618,
+      "resources": [
+        {
+          "seq_len": 256,
+          "tokens_per_sec": 809.9,
+          "peak_vram_bytes": 1290202112,
+          "recurrent_state_bytes": 8192,
+          "kv_cache_bytes_if_used": 29360128
+        },
+        {
+          "seq_len": 512,
+          "tokens_per_sec": 969.6,
+          "peak_vram_bytes": 1368519680,
+          "recurrent_state_bytes": 8192,
+          "kv_cache_bytes_if_used": 58720256
+        },
+        {
+          "seq_len": 1024,
+          "tokens_per_sec": 929.2,
+          "peak_vram_bytes": 1525154816,
+          "recurrent_state_bytes": 8192,
+          "kv_cache_bytes_if_used": 117440512
+        }
+      ]
+    }
+  ],
+  "p2_training": [
+    {
+      "arm": "B",
+      "seed": 11,
+      "optimizer_steps": 24,
+      "gpu_hours": 0.093910245722222,
+      "peak_vram_bytes": 3013319680,
+      "last_loss": 0.000388389453291893
+    },
+    {
+      "arm": "B",
+      "seed": 22,
+      "optimizer_steps": 24,
+      "gpu_hours": 0.08355505602777864,
+      "peak_vram_bytes": 3015762432,
+      "last_loss": 0.0002899187966249883
+    },
+    {
+      "arm": "C",
+      "seed": 11,
+      "optimizer_steps": 24,
+      "gpu_hours": 0.0983154017222225,
+      "peak_vram_bytes": 3009031168,
+      "last_loss": 0.00022514935699291527
+    },
+    {
+      "arm": "C",
+      "seed": 22,
+      "optimizer_steps": 24,
+      "gpu_hours": 0.09200464511111123,
+      "peak_vram_bytes": 3012099072,
+      "last_loss": 0.0002315537421964109
+    },
+    {
+      "arm": "D",
+      "seed": 11,
+      "optimizer_steps": 24,
+      "gpu_hours": 0.09187669755555462,
+      "peak_vram_bytes": 3016098816,
+      "last_loss": 4.6041037421673536e-05
+    },
+    {
+      "arm": "D",
+      "seed": 22,
+      "optimizer_steps": 24,
+      "gpu_hours": 0.08241893138888877,
+      "peak_vram_bytes": 3016098816,
+      "last_loss": 0.000249541801167652
+    }
+  ],
+  "p1_gpu_hours": 0.09341530397222211,
+  "training_gpu_hours_completed": 0.6354962814999999
+}

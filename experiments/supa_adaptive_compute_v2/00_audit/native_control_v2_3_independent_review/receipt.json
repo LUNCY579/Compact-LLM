@@ -1,0 +1,2221 @@
+{
+  "aggregate_and_alpha_comparisons": "exact Python float equality; no matching tolerance or clipping",
+  "architecture_accuracy_inspected": false,
+  "audit_utc": "2026-09-05T22:41:56.875540+00:00",
+  "bound_files_checked": 146,
+  "case_count": 128,
+  "case_file_snapshot": [
+    {
+      "example_id": "native_armr_calibration_symbolic_logic_bb536d97fbaa_0003_original",
+      "last_write_ns": 1788647840500365900,
+      "last_write_utc": "2026-09-05T22:37:20.500366+00:00",
+      "partition": "holdout",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/01cce2e9411387e226a01494baa302b6718c87ceac6cd3d9b8f6e13dbbb6b3a8.json",
+      "sha256": "eec567cc0e7be370abf4ea5a163cd99391902e7dbf0f2e1e1e0142c39863c413",
+      "windows_creation_ns": 1788647840500365900,
+      "windows_creation_utc": "2026-09-05T22:37:20.500366+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_symbolic_logic_af07be43c480_0010_original",
+      "last_write_ns": 1788647837844719800,
+      "last_write_utc": "2026-09-05T22:37:17.844720+00:00",
+      "partition": "fit",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/04ef48c4e52d4d96ebdb41c0cf9988ce5d011650a7683d356800f9990a395b75.json",
+      "sha256": "94b7ae77db9bc234837b12657b3502c3cebcd6ea3df9141f7eae67949a218870",
+      "windows_creation_ns": 1788647837844719800,
+      "windows_creation_utc": "2026-09-05T22:37:17.844720+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_mathematical_9c1816101e7c_0003_original",
+      "last_write_ns": 1788647839359367000,
+      "last_write_utc": "2026-09-05T22:37:19.359367+00:00",
+      "partition": "holdout",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/066ad9ecd3ebc8bb6c6144dc9836d680409e84d56d5ad32769ddb0a59b1522b2.json",
+      "sha256": "55b35864577286a147146992b6ac8746de97e3bf2069b18d2e34712dde94f6f6",
+      "windows_creation_ns": 1788647839358367100,
+      "windows_creation_utc": "2026-09-05T22:37:19.358367+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_counterfactual_0e63e74bce48_0004_original",
+      "last_write_ns": 1788647830720232300,
+      "last_write_utc": "2026-09-05T22:37:10.720232+00:00",
+      "partition": "fit",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/0698999177cdda3958518462fc8d305dc216ba39a17ec23602bde030aa0bc511.json",
+      "sha256": "2094ab01f9e3eb57a9db85d11dde23e6792ccc242507d9d9f956c5149d4b93f5",
+      "windows_creation_ns": 1788647830720232300,
+      "windows_creation_utc": "2026-09-05T22:37:10.720232+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_counterfactual_b27885d4a0b1_0010_original",
+      "last_write_ns": 1788647831520296000,
+      "last_write_utc": "2026-09-05T22:37:11.520296+00:00",
+      "partition": "fit",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/086a52c60fe6ae6446ec9061f3045a86fbc35ab51d1db5097b35d6a61ff75bf6.json",
+      "sha256": "a565c09bd6b5244661d57f33d05ca7b4eec2ad4802a3ca1d149e96b9f839e63d",
+      "windows_creation_ns": 1788647831520296000,
+      "windows_creation_utc": "2026-09-05T22:37:11.520296+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_ordinary_qa_preservation_b39484542f58_0007_original",
+      "last_write_ns": 1788647839543455500,
+      "last_write_utc": "2026-09-05T22:37:19.543456+00:00",
+      "partition": "holdout",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/092aa2a34cea7c853b63909b5cb404b45e23274514d5804511e6525819297058.json",
+      "sha256": "6bc5efdcf924aa7aa7d80e574aae5bfa82d421ffe0bfaeebe6c2a5e8ac06bd2c",
+      "windows_creation_ns": 1788647839543455500,
+      "windows_creation_utc": "2026-09-05T22:37:19.543456+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_ordinary_qa_preservation_0d0affbf94ed_0002_original",
+      "last_write_ns": 1788647833804685400,
+      "last_write_utc": "2026-09-05T22:37:13.804685+00:00",
+      "partition": "fit",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/0e83a7a0738fc088612c64a55cebcb412d42925e214033ae545f3321b085abf1.json",
+      "sha256": "3c1c957b19b6b98f2de91c9298a01046f7c863b7e8089c14467d4b648eb161ff",
+      "windows_creation_ns": 1788647833804685400,
+      "windows_creation_utc": "2026-09-05T22:37:13.804685+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_relational_4350d8eb8204_0007_original",
+      "last_write_ns": 1788647839693383000,
+      "last_write_utc": "2026-09-05T22:37:19.693383+00:00",
+      "partition": "holdout",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/10b31626b4495ea445536f26580ba8430206cd918436635e709ffc1f55d8e9f7.json",
+      "sha256": "64fd62ce6311f0a87fd5805783f53b092540df6e0641b8380c1b5a286cb6ecc2",
+      "windows_creation_ns": 1788647839693383000,
+      "windows_creation_utc": "2026-09-05T22:37:19.693383+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_compositional_5094f6659c68_0014_original",
+      "last_write_ns": 1788647830027425800,
+      "last_write_utc": "2026-09-05T22:37:10.027426+00:00",
+      "partition": "fit",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/1cca1861885a567025775d4aa7985fa987b687543a0715690b7fc92f859c6c11.json",
+      "sha256": "8437a10309f0e4c7ebf90fdb64254013ef90d6b481ba1d4fc9474099ce44fb18",
+      "windows_creation_ns": 1788647830027425800,
+      "windows_creation_utc": "2026-09-05T22:37:10.027426+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_instruction_evidence_7c9477115e6e_0014_original",
+      "last_write_ns": 1788647831950087600,
+      "last_write_utc": "2026-09-05T22:37:11.950088+00:00",
+      "partition": "fit",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/204aeb87c2769ae2d5eaf8bea02aef799ebf95e4011149e610bcd8636131ebe8.json",
+      "sha256": "a4aed5d99149f55601444d2fabc9ed09cf5b3135b94587b175652ff3e4389b7e",
+      "windows_creation_ns": 1788647831949087100,
+      "windows_creation_utc": "2026-09-05T22:37:11.949087+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_instruction_evidence_ead60c0c718b_0015_original",
+      "last_write_ns": 1788647839119529400,
+      "last_write_utc": "2026-09-05T22:37:19.119529+00:00",
+      "partition": "holdout",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/22f5367e9d4665cd25d21508f9fafa7810f38450e323ff51bbb6119574b33dbe.json",
+      "sha256": "dc1d41648dec03bdca026d66ca53f3b206b47ca084ac0c00ebd082d53e99550e",
+      "windows_creation_ns": 1788647839119529400,
+      "windows_creation_utc": "2026-09-05T22:37:19.119529+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_instruction_evidence_fc6a855358c5_0000_original",
+      "last_write_ns": 1788647832533139900,
+      "last_write_utc": "2026-09-05T22:37:12.533140+00:00",
+      "partition": "fit",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/27a3699f3ee55d1b7129029e98636c7d2f3a6dc69fb26f64d8dd2f8fc4f66c7d.json",
+      "sha256": "0ccbd2d9c55414591ad887e52f9a4b9fbe9a1ca3a3b1e0624fe0ac79a46e4379",
+      "windows_creation_ns": 1788647832533139900,
+      "windows_creation_utc": "2026-09-05T22:37:12.533140+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_mathematical_d41c1afee831_0000_original",
+      "last_write_ns": 1788647833476531600,
+      "last_write_utc": "2026-09-05T22:37:13.476532+00:00",
+      "partition": "fit",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/2815d488fc877eb1b251ded07ca793f509d6e7b264003fcfadb0c7ccef7d60dd.json",
+      "sha256": "db2e5b3b6498c10ab844169742101ca9b133190c569e4cd8a9c3aacaf7771e04",
+      "windows_creation_ns": 1788647833475531200,
+      "windows_creation_utc": "2026-09-05T22:37:13.475531+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_symbolic_logic_05a1ea50559e_0013_original",
+      "last_write_ns": 1788647837338505500,
+      "last_write_utc": "2026-09-05T22:37:17.338506+00:00",
+      "partition": "fit",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/295235956af40605496e8b4666b76e25985ca057cbc7f973cf785d8b07aabf0e.json",
+      "sha256": "4016ce6bcce467e5f05016d46f44ab3d6c5f6dbcc4d474c9776d3db635781dea",
+      "windows_creation_ns": 1788647837338505500,
+      "windows_creation_utc": "2026-09-05T22:37:17.338506+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_compositional_7c53bdf2959c_0011_original",
+      "last_write_ns": 1788647838527613400,
+      "last_write_utc": "2026-09-05T22:37:18.527613+00:00",
+      "partition": "holdout",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/29e82244de8b2dfd3f9a573345afd1303c1deee8719df513eb2da59545639fa8.json",
+      "sha256": "a6c7e8536c21f46d9ade6df295bb20883dc236af394a33a9bc733f6f9e1e8abe",
+      "windows_creation_ns": 1788647838527613400,
+      "windows_creation_utc": "2026-09-05T22:37:18.527613+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_ordinary_qa_preservation_9b1151e7594f_0004_original",
+      "last_write_ns": 1788647834155308900,
+      "last_write_utc": "2026-09-05T22:37:14.155309+00:00",
+      "partition": "fit",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/2a85fccdfc1e6650f0e73f8c1881b4905e4dc99ce85a3b4f9213d1ea11afefef.json",
+      "sha256": "95e423bcb63614d583a928537551f4f861bff665e92e9585262a8343cf491be8",
+      "windows_creation_ns": 1788647834155308900,
+      "windows_creation_utc": "2026-09-05T22:37:14.155309+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_ordinary_qa_preservation_3b2e5c7250a0_0000_original",
+      "last_write_ns": 1788647833980670700,
+      "last_write_utc": "2026-09-05T22:37:13.980671+00:00",
+      "partition": "fit",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/2c5959b8c18e0d14ef6f5243879d40572626cd8e2774d927866169bf710ad81d.json",
+      "sha256": "a95370afa5e8aff8d4d8be189c720e4210e819697c3d2ed76a52626f762f4472",
+      "windows_creation_ns": 1788647833979668800,
+      "windows_creation_utc": "2026-09-05T22:37:13.979669+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_mathematical_3555a97d9853_0015_original",
+      "last_write_ns": 1788647839178427200,
+      "last_write_utc": "2026-09-05T22:37:19.178427+00:00",
+      "partition": "holdout",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/2ce150ae2302863fdcbe17970514f2ff7fae7d3f18e8de1053372d866f0d8983.json",
+      "sha256": "c7c09934bfa8076521c067cc45b9d4e86dfed317747f400e6be71ddee4e2fc55",
+      "windows_creation_ns": 1788647839178427200,
+      "windows_creation_utc": "2026-09-05T22:37:19.178427+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_mathematical_b79966e8bcd9_0012_original",
+      "last_write_ns": 1788647833405177600,
+      "last_write_utc": "2026-09-05T22:37:13.405178+00:00",
+      "partition": "fit",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/3020d41286c247ae45fb8ecbbeaf6552330f1d501ee942e083b4650a7f286ace.json",
+      "sha256": "cb9fac32d2e4fc38e0b0b595e9b5e711d2a8e93c9d2ff3110c54b1315b99c813",
+      "windows_creation_ns": 1788647833405177600,
+      "windows_creation_utc": "2026-09-05T22:37:13.405178+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_counterfactual_35be28d5fdee_0012_original",
+      "last_write_ns": 1788647830807325600,
+      "last_write_utc": "2026-09-05T22:37:10.807326+00:00",
+      "partition": "fit",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/3297541d794e4f6f56229956e035df532c170ec56c9bb3b522b22c8ff69b310b.json",
+      "sha256": "0fa15804749bce9de42ce2770c351987b2d05644f7bbb25c8af99c17572e2dcd",
+      "windows_creation_ns": 1788647830807325600,
+      "windows_creation_utc": "2026-09-05T22:37:10.807326+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_counterfactual_248fa71f95bb_0007_original",
+      "last_write_ns": 1788647838655666500,
+      "last_write_utc": "2026-09-05T22:37:18.655666+00:00",
+      "partition": "holdout",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/376827b3b5dcedb80d46735f2be6b40e805f1c973329ce0e85ab279eb6371f0d.json",
+      "sha256": "cc787790921ef6a373a6ef6a76d5c8e498357f9fc73bcb4b368117be9b449807",
+      "windows_creation_ns": 1788647838654665100,
+      "windows_creation_utc": "2026-09-05T22:37:18.654665+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_symbolic_logic_5b1a4239f987_0015_original",
+      "last_write_ns": 1788647840360360600,
+      "last_write_utc": "2026-09-05T22:37:20.360361+00:00",
+      "partition": "holdout",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/3770b5894b303d86c21b84a8582b23a777d099cb7c786135652a19f5fffe94c5.json",
+      "sha256": "8f33dd246d6fa941a9bfcec094c9bb1cf94aa4b0396a59393581b8829e4cf8b6",
+      "windows_creation_ns": 1788647840359227900,
+      "windows_creation_utc": "2026-09-05T22:37:20.359228+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_relational_11a5401f206d_0008_original",
+      "last_write_ns": 1788647834926471900,
+      "last_write_utc": "2026-09-05T22:37:14.926472+00:00",
+      "partition": "fit",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/3af6cdc120e735ed9d11fff86a11cbde49a494882449356babb4caa055c74816.json",
+      "sha256": "23e837c6c821cdb183ddcd4c7006b49da30e30ca2596f8a7850cb4f778417342",
+      "windows_creation_ns": 1788647834926471900,
+      "windows_creation_utc": "2026-09-05T22:37:14.926472+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_symbolic_logic_c9058a98469f_0000_original",
+      "last_write_ns": 1788647837995069600,
+      "last_write_utc": "2026-09-05T22:37:17.995070+00:00",
+      "partition": "fit",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/3bc4cb267cc9627d5250cf9d99090832c246f4ff008a47b373f6297826c86766.json",
+      "sha256": "3ca8259ff8b0fe65d35abffc5a8f6a14d8353660d5d98180713a0ab7b8db29b1",
+      "windows_creation_ns": 1788647837995069600,
+      "windows_creation_utc": "2026-09-05T22:37:17.995070+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_relational_a012f4d9afdb_0013_original",
+      "last_write_ns": 1788647835589027100,
+      "last_write_utc": "2026-09-05T22:37:15.589027+00:00",
+      "partition": "fit",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/3c0d1e6162b8faf730ef02fba2fe93f206aad242b4c199e9eb1e883f6a0606f5.json",
+      "sha256": "576efaad62c862405151bf8b0e97a661054243c57c8a1c06461088a36cae6eea",
+      "windows_creation_ns": 1788647835588031500,
+      "windows_creation_utc": "2026-09-05T22:37:15.588032+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_mathematical_9aa9de8df3d2_0007_original",
+      "last_write_ns": 1788647839300196700,
+      "last_write_utc": "2026-09-05T22:37:19.300197+00:00",
+      "partition": "holdout",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/3cf302dc311ee1308eeb71e05df99a83f361a8b15a0f60d3554b1b9ff3cfc63e.json",
+      "sha256": "80f8fd56feca301c67a1d2c3465467f54b980b2c905cf9c980bd933a1ce120e0",
+      "windows_creation_ns": 1788647839300196700,
+      "windows_creation_utc": "2026-09-05T22:37:19.300197+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_mathematical_3be2a9127091_0008_original",
+      "last_write_ns": 1788647832875288400,
+      "last_write_utc": "2026-09-05T22:37:12.875288+00:00",
+      "partition": "fit",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/403b41b870c131341c1154696c1b6f037197f47e2cc44833529bce105034a6b3.json",
+      "sha256": "446de9782b6535fe70d727fafc8b22cb49a300871da5fe8062b0638c27ac3097",
+      "windows_creation_ns": 1788647832875288400,
+      "windows_creation_utc": "2026-09-05T22:37:12.875288+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_relational_b66aaeec6e77_0011_original",
+      "last_write_ns": 1788647839839575900,
+      "last_write_utc": "2026-09-05T22:37:19.839576+00:00",
+      "partition": "holdout",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/4089ef4695264d123a5c7790d6575817c4c939281b34d639b72593183eaf4181.json",
+      "sha256": "98fa21fa1a798f85dbeaf5026c5bbb55ca0b847b5b1ac93488a30f06265430b8",
+      "windows_creation_ns": 1788647839838125900,
+      "windows_creation_utc": "2026-09-05T22:37:19.838126+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_ordinary_qa_preservation_cb79e035fd15_0014_original",
+      "last_write_ns": 1788647834476785600,
+      "last_write_utc": "2026-09-05T22:37:14.476786+00:00",
+      "partition": "fit",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/429f87e05bce4d1f2aaee8ad5aff309fe093852a5765500fea2d7eea28ddeb3f.json",
+      "sha256": "a88289a26bfa7153ecf8d7ed658927d79e0f47b732b745fb3380a6bb2423e170",
+      "windows_creation_ns": 1788647834476785600,
+      "windows_creation_utc": "2026-09-05T22:37:14.476786+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_compositional_b9fb67d03cbd_0007_original",
+      "last_write_ns": 1788647838587061800,
+      "last_write_utc": "2026-09-05T22:37:18.587062+00:00",
+      "partition": "holdout",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/44b7a9edd1587e257be8f8e618dfd4dfbb24d147ff11aa4f2f05ab8f9dc0c683.json",
+      "sha256": "860c7521dc190e923a88cef574278a1dd57284ebc18dedddbc116516bbbd2e9e",
+      "windows_creation_ns": 1788647838587061800,
+      "windows_creation_utc": "2026-09-05T22:37:18.587062+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_compositional_b528ec78a034_0002_original",
+      "last_write_ns": 1788647830493670300,
+      "last_write_utc": "2026-09-05T22:37:10.493670+00:00",
+      "partition": "fit",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/46c06e1a9829a39016c82b900b0d6fe522d27a975dd4d8d477a7a41ab3daf6c3.json",
+      "sha256": "129a7bb766118c636aedea992b48dcda54da7c18dc2c6654e0658e044dc3c2ea",
+      "windows_creation_ns": 1788647830492663600,
+      "windows_creation_utc": "2026-09-05T22:37:10.492664+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_mathematical_6a76a569508e_0002_original",
+      "last_write_ns": 1788647833257218000,
+      "last_write_utc": "2026-09-05T22:37:13.257218+00:00",
+      "partition": "fit",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/479ccaefbb3812ed6ba32ca6dc82c4c248e0a7ea9736e5e6a96f748c680d3440.json",
+      "sha256": "de95f32d71dc8068bcbfd478f041259e7608283f9841cc25df966ff1c41c97e0",
+      "windows_creation_ns": 1788647833257218000,
+      "windows_creation_utc": "2026-09-05T22:37:13.257218+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_relational_ed3b81cdcca8_0000_original",
+      "last_write_ns": 1788647835898836300,
+      "last_write_utc": "2026-09-05T22:37:15.898836+00:00",
+      "partition": "fit",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/4a09b315fb2d60d7e4d42b4f173d5c106d962c4b022ff76be4d128447da7cf19.json",
+      "sha256": "d806d17dbc6711808a86d876cc470ed0538b2641a8d5861fe50f5466fb51b545",
+      "windows_creation_ns": 1788647835898836300,
+      "windows_creation_utc": "2026-09-05T22:37:15.898836+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_counterfactual_0043d6875912_0013_original",
+      "last_write_ns": 1788647830630598800,
+      "last_write_utc": "2026-09-05T22:37:10.630599+00:00",
+      "partition": "fit",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/4cf7d2ac8bf759a44004783cc412594d3c8b22d3545b54a43b37de7d4d70ece4.json",
+      "sha256": "fe2ea12b6c2c264e399802cb685ea6194aac598f6833681f84a20f735c1f279f",
+      "windows_creation_ns": 1788647830630598800,
+      "windows_creation_utc": "2026-09-05T22:37:10.630599+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_mathematical_59655239626e_0005_original",
+      "last_write_ns": 1788647833105011600,
+      "last_write_utc": "2026-09-05T22:37:13.105012+00:00",
+      "partition": "fit",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/4ea3e4f49c54bb7bd03cb06753aa822b22bf32d36fe9aa0c217d98b3f57c7028.json",
+      "sha256": "d626328d6c34f24ec0d6bbb519d2e3a1971cb282e5e5b1f68d43bd9a122e8052",
+      "windows_creation_ns": 1788647833105011600,
+      "windows_creation_utc": "2026-09-05T22:37:13.105012+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_counterfactual_ed434e4bb25b_0002_original",
+      "last_write_ns": 1788647831612296200,
+      "last_write_utc": "2026-09-05T22:37:11.612296+00:00",
+      "partition": "fit",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/50e67bd3472485e972de404c20cd3b0d45da6370f5f812ca069dc02992d1e1a7.json",
+      "sha256": "756875bf6de3b7fa76db084077ce5b6680753917b5e51f996025f5989618e23e",
+      "windows_creation_ns": 1788647831611295300,
+      "windows_creation_utc": "2026-09-05T22:37:11.611295+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_retrieval_multihop_0353fdc140b8_0005_original",
+      "last_write_ns": 1788647836024351300,
+      "last_write_utc": "2026-09-05T22:37:16.024351+00:00",
+      "partition": "fit",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/52a29a0a09c5bea906d8c74a8c4b300259334aa4e9247ee5f811d1574130853f.json",
+      "sha256": "4d03c6143af06e73e7b7b49e712576f3e8f374bab9624520f62e20ae83795f2d",
+      "windows_creation_ns": 1788647836024351300,
+      "windows_creation_utc": "2026-09-05T22:37:16.024351+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_mathematical_727948e490ff_0001_original",
+      "last_write_ns": 1788647833332500700,
+      "last_write_utc": "2026-09-05T22:37:13.332501+00:00",
+      "partition": "fit",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/53755f74857787bb433fc01725a86a35598710882b1cf928badbecc16f3b52d2.json",
+      "sha256": "324cf8c1248c13a265dab02aa1f00d0b7fd70d7c6fe9de38451d00517fea9eb1",
+      "windows_creation_ns": 1788647833332500700,
+      "windows_creation_utc": "2026-09-05T22:37:13.332501+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_counterfactual_afb4a470580c_0003_original",
+      "last_write_ns": 1788647838857381700,
+      "last_write_utc": "2026-09-05T22:37:18.857382+00:00",
+      "partition": "holdout",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/54abb36698dcab7cf4cfab339dc8ac04fc1dd634b10b4e60f71570782fa70cc7.json",
+      "sha256": "2aa94fcd26185e8a1437f1708f20586041255308007f6f3edbfd9abe3c6bac33",
+      "windows_creation_ns": 1788647838857381700,
+      "windows_creation_utc": "2026-09-05T22:37:18.857382+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_ordinary_qa_preservation_9e4712b884f8_0001_original",
+      "last_write_ns": 1788647834245593200,
+      "last_write_utc": "2026-09-05T22:37:14.245593+00:00",
+      "partition": "fit",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/56e431dd1807e07b9345aac2a9603c29beaff193d7402a869fc1b5e9c34e199d.json",
+      "sha256": "a253e24ee9ad7f51d84f47647dbabb90c2fb66ab39905d4b4bd0faaba7f1d5ac",
+      "windows_creation_ns": 1788647834244589300,
+      "windows_creation_utc": "2026-09-05T22:37:14.244589+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_retrieval_multihop_f228bea74c3e_0015_original",
+      "last_write_ns": 1788647840302617500,
+      "last_write_utc": "2026-09-05T22:37:20.302618+00:00",
+      "partition": "holdout",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/585fd604b24b13a4791dd5980ea6b772f999c830079c675bad566535ca60d785.json",
+      "sha256": "bf7de3eceb64346f354d5efc56163ddebc8a08620218063a4e4abb9839aff194",
+      "windows_creation_ns": 1788647840302617500,
+      "windows_creation_utc": "2026-09-05T22:37:20.302618+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_relational_01cf57fd73da_0002_original",
+      "last_write_ns": 1788647834799078700,
+      "last_write_utc": "2026-09-05T22:37:14.799079+00:00",
+      "partition": "fit",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/5e0e5fc3863f668efc948a87b13a04ed0de4bcb85ff2e2b77d131c00f90275e3.json",
+      "sha256": "3fb929c2bd3fdb82c6c572e2c5062c741e0b124af636614b7fe2964c58e11e32",
+      "windows_creation_ns": 1788647834799078700,
+      "windows_creation_utc": "2026-09-05T22:37:14.799079+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_compositional_00ef13b90b3e_0006_original",
+      "last_write_ns": 1788647829626299000,
+      "last_write_utc": "2026-09-05T22:37:09.626299+00:00",
+      "partition": "fit",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/608d8054bb57f447c95a23b362023a9ff499e4e663f996f3a21691469cf81859.json",
+      "sha256": "c2fc535b12127551389635317bd7972cab36ed8a7900e0107422bc095cd9fca4",
+      "windows_creation_ns": 1788647829626299000,
+      "windows_creation_utc": "2026-09-05T22:37:09.626299+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_ordinary_qa_preservation_c2843d2dbdea_0006_original",
+      "last_write_ns": 1788647834396295700,
+      "last_write_utc": "2026-09-05T22:37:14.396296+00:00",
+      "partition": "fit",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/60e3bad0590b5a1e0100b81e941b80b6c082184c0143f45fddf239dc163a1824.json",
+      "sha256": "c8b7acf82336cdc7b18eb5f8b6a317a056beae22fa2df43a32700968535cd0f9",
+      "windows_creation_ns": 1788647834396295700,
+      "windows_creation_utc": "2026-09-05T22:37:14.396296+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_symbolic_logic_45a59e988011_0001_original",
+      "last_write_ns": 1788647837561797400,
+      "last_write_utc": "2026-09-05T22:37:17.561797+00:00",
+      "partition": "fit",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/61b6be323f63f451e1ad709bc00801478f2f4aff75a9ce61a0000f1bda890968.json",
+      "sha256": "c061c1af98c38d8e34ea329da981bc79cd161c71a621197bfdf5b6717332cf8f",
+      "windows_creation_ns": 1788647837560798400,
+      "windows_creation_utc": "2026-09-05T22:37:17.560798+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_retrieval_multihop_e669004f6942_0006_original",
+      "last_write_ns": 1788647837015142200,
+      "last_write_utc": "2026-09-05T22:37:17.015142+00:00",
+      "partition": "fit",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/6383080660dd1e3aea2c3d10ea27b9df2bcebdffb2cdaeeb528ae4ccb82c0eb7.json",
+      "sha256": "11a688da1424452346be084c52b009f364f69e91ea8c414dea1716218a3f242b",
+      "windows_creation_ns": 1788647837014137700,
+      "windows_creation_utc": "2026-09-05T22:37:17.014138+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_retrieval_multihop_3eecc89e93ef_0002_original",
+      "last_write_ns": 1788647836391866400,
+      "last_write_utc": "2026-09-05T22:37:16.391866+00:00",
+      "partition": "fit",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/6401ef181622fa159a9cb35408d2abf89d5f687aaadd9a18bd812f7321a1a204.json",
+      "sha256": "60fef16cfca568f63215680d1a41d2737f20d5c994ea5e413cedf27a48c85c2b",
+      "windows_creation_ns": 1788647836391866400,
+      "windows_creation_utc": "2026-09-05T22:37:16.391866+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_compositional_09c1a2f5395f_0008_original",
+      "last_write_ns": 1788647829703270900,
+      "last_write_utc": "2026-09-05T22:37:09.703271+00:00",
+      "partition": "fit",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/675876b6342032648f71adbde3757b370f656cb7c53fde70e8e0f0c85b0dbdb5.json",
+      "sha256": "995a7b62314dddee2c8223702a74311324454c1652c02aba2360cff3e3457de1",
+      "windows_creation_ns": 1788647829703270900,
+      "windows_creation_utc": "2026-09-05T22:37:09.703271+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_instruction_evidence_581b41f7541e_0004_original",
+      "last_write_ns": 1788647831697563900,
+      "last_write_utc": "2026-09-05T22:37:11.697564+00:00",
+      "partition": "fit",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/6a4804471906b3f82d83109241aeaaae372116fc9bbd2d5822497af095d4c17c.json",
+      "sha256": "ffbcc03c71dc0446f173d23f7abda7fde080ec042c87cf05e94192514b3b4734",
+      "windows_creation_ns": 1788647831697563900,
+      "windows_creation_utc": "2026-09-05T22:37:11.697564+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_relational_eb3851d22a64_0014_original",
+      "last_write_ns": 1788647835798928800,
+      "last_write_utc": "2026-09-05T22:37:15.798929+00:00",
+      "partition": "fit",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/6cae8dca3bdfd3fb47beefe406992f3c59dbe607b7594c8cd2a703020b155982.json",
+      "sha256": "8f2ebbdd5b7c0e758affb6c84af1f31de86facb47769a37354bb2bb4877ae1b5",
+      "windows_creation_ns": 1788647835798928800,
+      "windows_creation_utc": "2026-09-05T22:37:15.798929+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_compositional_573d8ff54387_0001_original",
+      "last_write_ns": 1788647830108234800,
+      "last_write_utc": "2026-09-05T22:37:10.108235+00:00",
+      "partition": "fit",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/6d7340eee9475dd854452db35a86df462a290d96708327046e17d30008635a25.json",
+      "sha256": "a33f1627a5e5f9393f87eb8d74158337b3c4fa2f25fcb886fbfb637eacbb4cc6",
+      "windows_creation_ns": 1788647830108234800,
+      "windows_creation_utc": "2026-09-05T22:37:10.108235+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_symbolic_logic_c8158351858f_0014_original",
+      "last_write_ns": 1788647837920989400,
+      "last_write_utc": "2026-09-05T22:37:17.920990+00:00",
+      "partition": "fit",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/6e874cccc45874247cf160d056286e18d6e99e995709df009cabf09229c99402.json",
+      "sha256": "4504270ac7fc271e06aefed9f7d129613ca742e6cf16be1f696930284c4d3f86",
+      "windows_creation_ns": 1788647837919989800,
+      "windows_creation_utc": "2026-09-05T22:37:17.919990+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_counterfactual_4f8b3e1c5f37_0008_original",
+      "last_write_ns": 1788647830901278700,
+      "last_write_utc": "2026-09-05T22:37:10.901279+00:00",
+      "partition": "fit",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/6f5bb75be5e8a49fb13fe49d0f0a5f9fbae9a113cc2702cb1eedcdd03d45aa62.json",
+      "sha256": "d944d6f590e5fb31365caa6c2b531b9a0df1e8fcacd0486ad12e3061ce9e538f",
+      "windows_creation_ns": 1788647830901278700,
+      "windows_creation_utc": "2026-09-05T22:37:10.901279+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_instruction_evidence_48ca22776054_0011_original",
+      "last_write_ns": 1788647839056912800,
+      "last_write_utc": "2026-09-05T22:37:19.056913+00:00",
+      "partition": "holdout",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/73dd9f763652db3f04bbdd61e81b9b5af90abb0289511d8d16d10821a1d49503.json",
+      "sha256": "a3015488afa4cb62fd008bc6b2aef4da572bd67dc53055956275bce3e21bbcba",
+      "windows_creation_ns": 1788647839055907700,
+      "windows_creation_utc": "2026-09-05T22:37:19.055907+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_relational_d50c33700de7_0015_original",
+      "last_write_ns": 1788647839918508500,
+      "last_write_utc": "2026-09-05T22:37:19.918509+00:00",
+      "partition": "holdout",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/74a0984a4378a8b56466a69c576670a3153616ff4e2937bb968edd201bf8ad01.json",
+      "sha256": "d1902e03f1826cd6569647725d2c70688f8480da78138f5c7a057581cfcb316a",
+      "windows_creation_ns": 1788647839917509100,
+      "windows_creation_utc": "2026-09-05T22:37:19.917509+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_retrieval_multihop_36b8c6c67bb4_0001_original",
+      "last_write_ns": 1788647836305356200,
+      "last_write_utc": "2026-09-05T22:37:16.305356+00:00",
+      "partition": "fit",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/76314a3fa41ea7804a44fa218c7064b0cf63226fceb287092e511611705d21d4.json",
+      "sha256": "a803d7e805b827fb151aefb272f28950e9d7afba1ab33787c38075edd8ddc471",
+      "windows_creation_ns": 1788647836305356200,
+      "windows_creation_utc": "2026-09-05T22:37:16.305356+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_instruction_evidence_683b705fd4ea_0012_original",
+      "last_write_ns": 1788647831771563400,
+      "last_write_utc": "2026-09-05T22:37:11.771564+00:00",
+      "partition": "fit",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/76a57ca04762ec717056b93f7d441c59f5d36077ba987992c59a463a8e232134.json",
+      "sha256": "3174896aabb5f15b1d26d2acf58bbdec5137b9bc8968e95dbf5609f46c982e93",
+      "windows_creation_ns": 1788647831771563400,
+      "windows_creation_utc": "2026-09-05T22:37:11.771564+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_retrieval_multihop_45d0f70ea1b5_0008_original",
+      "last_write_ns": 1788647836494351600,
+      "last_write_utc": "2026-09-05T22:37:16.494352+00:00",
+      "partition": "fit",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/775c7e6e07cec900b750c69c8c2df5a45687450f0ca9e5d20407e1faf9757c40.json",
+      "sha256": "5b2ea8e359c47f4dc73e5b7eb474ea5f3b686ade5098ca555b21ced243142a7e",
+      "windows_creation_ns": 1788647836494351600,
+      "windows_creation_utc": "2026-09-05T22:37:16.494352+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_ordinary_qa_preservation_185014b0b6a7_0011_original",
+      "last_write_ns": 1788647839420277300,
+      "last_write_utc": "2026-09-05T22:37:19.420277+00:00",
+      "partition": "holdout",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/79fbc71dc7131ec805de6242980a6fcbc9adfcb64436949a6779063ca223d2dc.json",
+      "sha256": "d64654ead3552737ea1b1d46296fb5a937160e54ff8e7fee392bd93d4dcc72b0",
+      "windows_creation_ns": 1788647839419309000,
+      "windows_creation_utc": "2026-09-05T22:37:19.419309+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_ordinary_qa_preservation_ad81166dfb02_0012_original",
+      "last_write_ns": 1788647834325833800,
+      "last_write_utc": "2026-09-05T22:37:14.325834+00:00",
+      "partition": "fit",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/7b750364947c222b5cb368f17435965e94a82afa4ce5fde6676192c932aaf910.json",
+      "sha256": "e6f1f74d9ffd9b127e905723602206ecf3cc901ce08046171b01d7d0652aca78",
+      "windows_creation_ns": 1788647834324829700,
+      "windows_creation_utc": "2026-09-05T22:37:14.324830+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_relational_7d2ef5bf814e_0010_original",
+      "last_write_ns": 1788647835374997200,
+      "last_write_utc": "2026-09-05T22:37:15.374997+00:00",
+      "partition": "fit",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/7bdb64643d1032b8deeb335931260293de0328ae9e350b4a929b56c139463e2b.json",
+      "sha256": "bf49549d7828686438a3dcef77aa3038f6de12446ef07e549cd01a68bc79af62",
+      "windows_creation_ns": 1788647835373996100,
+      "windows_creation_utc": "2026-09-05T22:37:15.373996+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_retrieval_multihop_e7a1f7d2684a_0012_original",
+      "last_write_ns": 1788647837109150100,
+      "last_write_utc": "2026-09-05T22:37:17.109150+00:00",
+      "partition": "fit",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/7da6bd7f6e112e56da31e378ab81446ce42ea960c4729685873c79e04b1d2b57.json",
+      "sha256": "ab76e20cc95a3bb93e8063f72ea4fdfef98ee935991dde45db3ebb7118592141",
+      "windows_creation_ns": 1788647837108148300,
+      "windows_creation_utc": "2026-09-05T22:37:17.108148+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_relational_85ab4c0dd54c_0009_original",
+      "last_write_ns": 1788647835478217100,
+      "last_write_utc": "2026-09-05T22:37:15.478217+00:00",
+      "partition": "fit",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/7e27dd81be7ed7d225761ce745dc5de2c3feab3302b51b8675771514ba55c0b5.json",
+      "sha256": "4cc30716887e1d7a9fbffc28461ca8763fffada8a3a926ae933a459cd759c7cf",
+      "windows_creation_ns": 1788647835478217100,
+      "windows_creation_utc": "2026-09-05T22:37:15.478217+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_counterfactual_4fad7690b02c_0006_original",
+      "last_write_ns": 1788647830988104600,
+      "last_write_utc": "2026-09-05T22:37:10.988105+00:00",
+      "partition": "fit",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/7fc38fd675fc33f59a38bec9da0c8191d605ac47a5fe004f16594a9cde7ac9e5.json",
+      "sha256": "5ae2e5cb2ac84959e4d88bfbaa0f70d7647e0af46c539c02593f7420a6d8571a",
+      "windows_creation_ns": 1788647830988104600,
+      "windows_creation_utc": "2026-09-05T22:37:10.988105+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_ordinary_qa_preservation_ebac777df799_0005_original",
+      "last_write_ns": 1788647834556831400,
+      "last_write_utc": "2026-09-05T22:37:14.556832+00:00",
+      "partition": "fit",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/8011946176b11d62ad08fa22a7f6fef17446f9283d205d98ba3703c2bf83a288.json",
+      "sha256": "f07ddeb9caf76e0d23063d53f1656424983a60ad41a0d8a671367d7f1925caac",
+      "windows_creation_ns": 1788647834555831200,
+      "windows_creation_utc": "2026-09-05T22:37:14.555831+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_compositional_0f1556d6f2a4_0009_original",
+      "last_write_ns": 1788647829840011600,
+      "last_write_utc": "2026-09-05T22:37:09.840012+00:00",
+      "partition": "fit",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/8288127a7988dc1061ce6ce27e2bed544ab4182e22921613c2e3fde9c6a42b2b.json",
+      "sha256": "b945d8c362f5a766c7552d161798cdd528f2edc93733884db3cf3af4d34d470c",
+      "windows_creation_ns": 1788647829840011600,
+      "windows_creation_utc": "2026-09-05T22:37:09.840012+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_instruction_evidence_f12f2a4c5196_0005_original",
+      "last_write_ns": 1788647832276947900,
+      "last_write_utc": "2026-09-05T22:37:12.276948+00:00",
+      "partition": "fit",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/831b875bdbc58bc1d20d11d7153d19a1d75b3f923dd188041701452290c63fdc.json",
+      "sha256": "313af2b102e336e99ac910b35681796bc715256d709fd2d406b976f42516fbf2",
+      "windows_creation_ns": 1788647832276947900,
+      "windows_creation_utc": "2026-09-05T22:37:12.276948+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_mathematical_1365ba73067d_0004_original",
+      "last_write_ns": 1788647832710593200,
+      "last_write_utc": "2026-09-05T22:37:12.710593+00:00",
+      "partition": "fit",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/838a51d208b8b14c8cf7f0b8e55bd34da83f6763e49b71ae0d9752c8365e7f9b.json",
+      "sha256": "9592c0fccec9eae883b561595ade0014e987da2703208c2263af1911a2008397",
+      "windows_creation_ns": 1788647832709591500,
+      "windows_creation_utc": "2026-09-05T22:37:12.709592+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_ordinary_qa_preservation_011ecf034ea6_0009_original",
+      "last_write_ns": 1788647833638418000,
+      "last_write_utc": "2026-09-05T22:37:13.638418+00:00",
+      "partition": "fit",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/84d837f9799f757ca8dd761f9131a2420a267d33a86b0e4a2a79065d1d33d045.json",
+      "sha256": "a303bdf969b6f28601552f7ad79963452e5c6bae18676af4017c99e9d2e1c6cd",
+      "windows_creation_ns": 1788647833638418000,
+      "windows_creation_utc": "2026-09-05T22:37:13.638418+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_mathematical_48e4035a2153_0010_original",
+      "last_write_ns": 1788647833025792900,
+      "last_write_utc": "2026-09-05T22:37:13.025793+00:00",
+      "partition": "fit",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/89b3d439c2eeb5d5376d399e1fb61953080a4712f9c03ed28b6b268957b3c9d1.json",
+      "sha256": "3f8525ff05e6b337fd6a83fcc4e08316d7bad0575fec6960c9b8a9841dc5ad7d",
+      "windows_creation_ns": 1788647833024792100,
+      "windows_creation_utc": "2026-09-05T22:37:13.024792+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_mathematical_5da29527f31b_0009_original",
+      "last_write_ns": 1788647833176420200,
+      "last_write_utc": "2026-09-05T22:37:13.176420+00:00",
+      "partition": "fit",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/8d26c6c15fa34cc920ef60692064e4b6ed256b761093bf7bafbbe53c76b2a66f.json",
+      "sha256": "14436c28248d9d51bb8fcf07d99a79b0003387d626fcfaccbefe0b9254e12c9f",
+      "windows_creation_ns": 1788647833176420200,
+      "windows_creation_utc": "2026-09-05T22:37:13.176420+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_retrieval_multihop_e3003d3e5646_0010_original",
+      "last_write_ns": 1788647836917140100,
+      "last_write_utc": "2026-09-05T22:37:16.917140+00:00",
+      "partition": "fit",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/8f0b31893a0ed4605fd47ae7297ae429580f75fa98084ffa7d4bcc5ffe073b7a.json",
+      "sha256": "efc182a2a10ce7bf62d9c69ea0a233392699ba6e543e5bf2abdb54d0ac213a36",
+      "windows_creation_ns": 1788647836917140100,
+      "windows_creation_utc": "2026-09-05T22:37:16.917140+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_instruction_evidence_3c320a2ed7e4_0003_original",
+      "last_write_ns": 1788647838977597900,
+      "last_write_utc": "2026-09-05T22:37:18.977598+00:00",
+      "partition": "holdout",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/8f9dc11f143946f0c6619d496665a5cb54a3ffd3cd633993dcc16b04a6800258.json",
+      "sha256": "3caf539b6d57592b8c9527485484000f68f80c4da6b430b82200b9c248536a14",
+      "windows_creation_ns": 1788647838976596500,
+      "windows_creation_utc": "2026-09-05T22:37:18.976597+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_retrieval_multihop_5efd178ecba1_0011_original",
+      "last_write_ns": 1788647840201658400,
+      "last_write_utc": "2026-09-05T22:37:20.201658+00:00",
+      "partition": "holdout",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/9131216d8612eb9bc98d3e451ddad95058fbc55ee5304058d06f65d9b19406ca.json",
+      "sha256": "98f0569306a2e6fd066ebdc8df524703d16c4664e0c4413100e67da6d14aef69",
+      "windows_creation_ns": 1788647840201658400,
+      "windows_creation_utc": "2026-09-05T22:37:20.201658+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_counterfactual_96dbfb604643_0014_original",
+      "last_write_ns": 1788647831346055000,
+      "last_write_utc": "2026-09-05T22:37:11.346055+00:00",
+      "partition": "fit",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/94fccd1c8c301d50d568e2ca885ea8b814f877fd06ef510d682d5bad4bed9730.json",
+      "sha256": "593d9bb399d3acca2842e1867cbecbcd88cddc8038993c93ec66943acb244a68",
+      "windows_creation_ns": 1788647831346055000,
+      "windows_creation_utc": "2026-09-05T22:37:11.346055+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_instruction_evidence_e0135a00f01f_0013_original",
+      "last_write_ns": 1788647832180364000,
+      "last_write_utc": "2026-09-05T22:37:12.180364+00:00",
+      "partition": "fit",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/95123c15cc522e37a1b36842b6003770284731acd6c8d36570554c2e120dd156.json",
+      "sha256": "2d6a16ac119798051cca4d57c6472c99bb4e4d57ca265c621a01d1673daa59f3",
+      "windows_creation_ns": 1788647832179360200,
+      "windows_creation_utc": "2026-09-05T22:37:12.179360+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_counterfactual_aed1365bd0eb_0009_original",
+      "last_write_ns": 1788647831431144800,
+      "last_write_utc": "2026-09-05T22:37:11.431145+00:00",
+      "partition": "fit",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/965ef5fe595fb1db89d530156fb737c086d50743763c910b3cfb694fb04f650e.json",
+      "sha256": "8c7e9cbd17479f2ff9d19c3a6d487c3d17d98f58758d3b4c3af2256be0e7469a",
+      "windows_creation_ns": 1788647831431144800,
+      "windows_creation_utc": "2026-09-05T22:37:11.431145+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_retrieval_multihop_707bf80600f3_0000_original",
+      "last_write_ns": 1788647836703153100,
+      "last_write_utc": "2026-09-05T22:37:16.703153+00:00",
+      "partition": "fit",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/976ee68b92aad06542d4d7d0eb86de31ae1beaf08cc27b89cb64c64c8f1cba9a.json",
+      "sha256": "c2e80e5180a00b9c828e14df0e12fb51fcc64fac4e7f75f0eb5c91c78fac0b64",
+      "windows_creation_ns": 1788647836702148300,
+      "windows_creation_utc": "2026-09-05T22:37:16.702148+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_instruction_evidence_defaf68f62e4_0010_original",
+      "last_write_ns": 1788647832098124100,
+      "last_write_utc": "2026-09-05T22:37:12.098124+00:00",
+      "partition": "fit",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/9b15ae039dd6af717daa67b472bc7ab21f44edc5b63bd5752f4d3cd8ec45584e.json",
+      "sha256": "99f9f7daa0287e0e08a2d30c0649518abdfd6447a304470e15ee9733e46bbfba",
+      "windows_creation_ns": 1788647832098124100,
+      "windows_creation_utc": "2026-09-05T22:37:12.098124+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_instruction_evidence_f515c8e93890_0002_original",
+      "last_write_ns": 1788647832381025000,
+      "last_write_utc": "2026-09-05T22:37:12.381025+00:00",
+      "partition": "fit",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/9dfc6eecc71ae11c9d26fcd9d88260023d03de48a7af57e914e60d036cf425ad.json",
+      "sha256": "e5eaae4e1c2571471a9a918b30aa897d1982f4e59f5de2ef5e4c7947ad3ca6c9",
+      "windows_creation_ns": 1788647832381025000,
+      "windows_creation_utc": "2026-09-05T22:37:12.381025+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_mathematical_f50d2e870dd2_0006_original",
+      "last_write_ns": 1788647833550245700,
+      "last_write_utc": "2026-09-05T22:37:13.550246+00:00",
+      "partition": "fit",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/a1984d60d3369be26b614f4a83c1f21d7d24e9ed768c3b217be15bcd99493218.json",
+      "sha256": "7d0cee5012d05db42ef595a984b17e06426a1bfe2cd1b8b344e8b905ef58b382",
+      "windows_creation_ns": 1788647833550245700,
+      "windows_creation_utc": "2026-09-05T22:37:13.550246+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_retrieval_multihop_61d76bef0f69_0013_original",
+      "last_write_ns": 1788647836599000800,
+      "last_write_utc": "2026-09-05T22:37:16.599001+00:00",
+      "partition": "fit",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/a22b4125850662951e61603290034bef601ef42bd094e3c02bd7e9ce0f4c6e82.json",
+      "sha256": "dcefb60c9af3e50541125794a20b1b5b4276ca6cd8f8f9ac73b5636996c2e5e3",
+      "windows_creation_ns": 1788647836599000800,
+      "windows_creation_utc": "2026-09-05T22:37:16.599001+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_relational_c6dc09204fc5_0012_original",
+      "last_write_ns": 1788647835689938400,
+      "last_write_utc": "2026-09-05T22:37:15.689939+00:00",
+      "partition": "fit",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/a42c7f70e298183ae3b4f268990e6e4bccf14380700bb134d662483594c1ac28.json",
+      "sha256": "04d4a8834c5bbfb0c103cfe7c3655e854784609bce5edd0a550afc8896d6c4ee",
+      "windows_creation_ns": 1788647835689938400,
+      "windows_creation_utc": "2026-09-05T22:37:15.689939+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_compositional_3ba0ccc6f884_0012_original",
+      "last_write_ns": 1788647829953835900,
+      "last_write_utc": "2026-09-05T22:37:09.953836+00:00",
+      "partition": "fit",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/a47dfab7ec780863fb52a4722c14a7d8452850d48f56c8294aa1738d46e39ad8.json",
+      "sha256": "b94924fde072ceb62c489bba890b190f393923d0607499cca5b2b6c10340b478",
+      "windows_creation_ns": 1788647829952835600,
+      "windows_creation_utc": "2026-09-05T22:37:09.952836+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_compositional_5bc35562579f_0005_original",
+      "last_write_ns": 1788647830165457900,
+      "last_write_utc": "2026-09-05T22:37:10.165458+00:00",
+      "partition": "fit",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/a65892c26987573bd1ab6e34bf35751a892d7f4703aeb69a63875ebd26584eac.json",
+      "sha256": "aa5baf8b8c610caa9eb3897d5b2f59c45c2fd9d0ed1bab98462055880541e8cd",
+      "windows_creation_ns": 1788647830165457900,
+      "windows_creation_utc": "2026-09-05T22:37:10.165458+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_symbolic_logic_c8c22f977dbb_0011_original",
+      "last_write_ns": 1788647840562581900,
+      "last_write_utc": "2026-09-05T22:37:20.562582+00:00",
+      "partition": "holdout",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/a79ea8971de57b3846df817df92510a86a4132caffe8563b06cd999e51770af8.json",
+      "sha256": "25c43e5b4f47c14950b40738894ad0c35af11bbb28cd0cf988561ee3ddb67ce6",
+      "windows_creation_ns": 1788647840562581900,
+      "windows_creation_utc": "2026-09-05T22:37:20.562582+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_relational_21776a8ab8f2_0001_original",
+      "last_write_ns": 1788647835042149900,
+      "last_write_utc": "2026-09-05T22:37:15.042150+00:00",
+      "partition": "fit",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/a89c93370a86603e7e4fff7f5e4f8da285bbb2f04ff1aad0103cef5a360d9d15.json",
+      "sha256": "a332a9b7590dcea31d753aa221ecca26e79a611e468137533ad52b9cbab7c03e",
+      "windows_creation_ns": 1788647835041146100,
+      "windows_creation_utc": "2026-09-05T22:37:15.041146+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_counterfactual_5289f0de7bf6_0001_original",
+      "last_write_ns": 1788647831078323600,
+      "last_write_utc": "2026-09-05T22:37:11.078324+00:00",
+      "partition": "fit",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/ab92724ad7d4a70bac4d58d828036fb1805a0b940bf48312d54c5244f619a83f.json",
+      "sha256": "1837893fa8d6d96deb4515d1074335c0d5025030a87820bf2ef36fc812aea696",
+      "windows_creation_ns": 1788647831078323600,
+      "windows_creation_utc": "2026-09-05T22:37:11.078324+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_instruction_evidence_fcf85aec3c38_0008_original",
+      "last_write_ns": 1788647832635966500,
+      "last_write_utc": "2026-09-05T22:37:12.635967+00:00",
+      "partition": "fit",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/ade6748679cd8e951a49de8bc96f112257e1440961afccfe50ce0b2dd95bbf01.json",
+      "sha256": "4ec8e7d037b2ebdb7a2de3dad206ec2fd3d134475a7ddfcf3ba075d3adc4b9ba",
+      "windows_creation_ns": 1788647832634470400,
+      "windows_creation_utc": "2026-09-05T22:37:12.634470+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_relational_4111cb6f4d83_0006_original",
+      "last_write_ns": 1788647835143003000,
+      "last_write_utc": "2026-09-05T22:37:15.143003+00:00",
+      "partition": "fit",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/b0b90ae7b3477b0b0a5bd89e94150b4b9a56eadcf463c3b5dfcd215fef0d729b.json",
+      "sha256": "7d36f81188ee0cfea1e232e8e02ebf69b5b6ef402d09e3e2326188c27bdd5e32",
+      "windows_creation_ns": 1788647835143003000,
+      "windows_creation_utc": "2026-09-05T22:37:15.143003+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_relational_709a269ddd0f_0005_original",
+      "last_write_ns": 1788647835264308500,
+      "last_write_utc": "2026-09-05T22:37:15.264308+00:00",
+      "partition": "fit",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/b3545fa32cb4913cb3964e8a40f3525c9670740969d057b3b1adcd726db89796.json",
+      "sha256": "f64e922bece278dca20f5df0921998d9fdd8e6379f99dbb2061f6b66e459881f",
+      "windows_creation_ns": 1788647835263305000,
+      "windows_creation_utc": "2026-09-05T22:37:15.263305+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_compositional_39eaf8957d0b_0015_original",
+      "last_write_ns": 1788647838324358000,
+      "last_write_utc": "2026-09-05T22:37:18.324358+00:00",
+      "partition": "holdout",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/b558674920df7e46fe8a58cb4e4db5baa9c52223876b79633b860b46df03e096.json",
+      "sha256": "c02f9a7c3394180f32d71ab567e34b9045141559204f5722f5fd9b4767a9e1f9",
+      "windows_creation_ns": 1788647838323358700,
+      "windows_creation_utc": "2026-09-05T22:37:18.323359+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_instruction_evidence_303ea820e58e_0007_original",
+      "last_write_ns": 1788647838920511800,
+      "last_write_utc": "2026-09-05T22:37:18.920512+00:00",
+      "partition": "holdout",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/b677206b038e84fee8cd203337eacaf004fc0815ef0cf61b465c4a61afe2c69e.json",
+      "sha256": "8e2603ffd3a93d4b6ab17f5250a2334139abdc12895b870cff68e9aa523aadfe",
+      "windows_creation_ns": 1788647838920511800,
+      "windows_creation_utc": "2026-09-05T22:37:18.920512+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_compositional_5e2b21f3dd4e_0010_original",
+      "last_write_ns": 1788647830240232200,
+      "last_write_utc": "2026-09-05T22:37:10.240232+00:00",
+      "partition": "fit",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/b6e166fe2f7525128e85530d1281c394d8ad62f7222cafa64dfbe22f1040a045.json",
+      "sha256": "ecfc2fa0032093adc9ea781abe374c7e39c01615094afd1b6e2381d3947bf366",
+      "windows_creation_ns": 1788647830240232200,
+      "windows_creation_utc": "2026-09-05T22:37:10.240232+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_symbolic_logic_3f4ed4cee54d_0012_original",
+      "last_write_ns": 1788647837457141400,
+      "last_write_utc": "2026-09-05T22:37:17.457141+00:00",
+      "partition": "fit",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/bb3f773c64647356cbfa2d4329b3df98d2af71d43f7718e28403cc4922815b72.json",
+      "sha256": "70b53f6d251ef9de5a9397f2b9024513070ee73a6ec573af190dd89e1e657d07",
+      "windows_creation_ns": 1788647837456141900,
+      "windows_creation_utc": "2026-09-05T22:37:17.456142+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_retrieval_multihop_fed8436e5df9_0009_original",
+      "last_write_ns": 1788647837234143200,
+      "last_write_utc": "2026-09-05T22:37:17.234143+00:00",
+      "partition": "fit",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/c035f8dad9838b580b11619cbdb2dd417f0c98f31a4d450f3a83c11908a9691e.json",
+      "sha256": "ccf60c9dbdc0039fb216ad393859e687d905647ee212c5028608ca306fc5c229",
+      "windows_creation_ns": 1788647837234143200,
+      "windows_creation_utc": "2026-09-05T22:37:17.234143+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_compositional_6bf1af34b4a0_0003_original",
+      "last_write_ns": 1788647838454573100,
+      "last_write_utc": "2026-09-05T22:37:18.454573+00:00",
+      "partition": "holdout",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/c290b8fa7c76644363ed5cb1a6dfbd8697459d78241b9e91f55c9d4f31ff7088.json",
+      "sha256": "8a776bc2d13484c0c984780ef90951ec0d873d2b93d0406ab6bbab924cb3df35",
+      "windows_creation_ns": 1788647838454573100,
+      "windows_creation_utc": "2026-09-05T22:37:18.454573+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_symbolic_logic_05a96f267611_0008_original",
+      "last_write_ns": 1788647837401778100,
+      "last_write_utc": "2026-09-05T22:37:17.401778+00:00",
+      "partition": "fit",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/c35280982c749483029e198fe650b8038a5a37be9c6795e69ed108ecfaf3e8b6.json",
+      "sha256": "6387685251318f1129ad86317c015a2aabdb7db3b85e0f1f55bb1e453845ba9e",
+      "windows_creation_ns": 1788647837401778100,
+      "windows_creation_utc": "2026-09-05T22:37:17.401778+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_counterfactual_9057ba005cba_0005_original",
+      "last_write_ns": 1788647831256764800,
+      "last_write_utc": "2026-09-05T22:37:11.256765+00:00",
+      "partition": "fit",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/c4afbbd50da0cf903a9813ccfe014abb4d33f440928a10762a0d0f9f1c3586a3.json",
+      "sha256": "a5123c167c0ebe9f2c6580706f89859fe797a60306279cc13e6e84dd504fce52",
+      "windows_creation_ns": 1788647831256764800,
+      "windows_creation_utc": "2026-09-05T22:37:11.256765+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_symbolic_logic_d3408abad631_0004_original",
+      "last_write_ns": 1788647838102363800,
+      "last_write_utc": "2026-09-05T22:37:18.102364+00:00",
+      "partition": "fit",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/c9123f06bfb89701b259aae6006d2c335b719dc61b775d42dc5a5408dce824e7.json",
+      "sha256": "24f350b6d01d76c589a0d7ccc02bf9aeb539396fddfcda8caf5909a390fe02af",
+      "windows_creation_ns": 1788647838101363300,
+      "windows_creation_utc": "2026-09-05T22:37:18.101363+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_mathematical_2b789be97d48_0014_original",
+      "last_write_ns": 1788647832792631500,
+      "last_write_utc": "2026-09-05T22:37:12.792632+00:00",
+      "partition": "fit",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/cb7460794373562aa828b6d6e8dc8cfe209626c82b47fe8e3fdcfbeb4715fdba.json",
+      "sha256": "4ffb6a66271853ed03266eded8f29b4ec4d7aa55f2f7eb19fc8ba9dcaaa29f09",
+      "windows_creation_ns": 1788647832791631100,
+      "windows_creation_utc": "2026-09-05T22:37:12.791631+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_ordinary_qa_preservation_97c7cedb108f_0010_original",
+      "last_write_ns": 1788647834065938000,
+      "last_write_utc": "2026-09-05T22:37:14.065938+00:00",
+      "partition": "fit",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/cb847d730ea9087f74eb3f14b85b8bad450e7de39bc061559dbabe1c679eee4e.json",
+      "sha256": "45d724fde47f03cc1f41a1dc1ff7eae866e9d2182a74547d89e2d7b38a48331e",
+      "windows_creation_ns": 1788647834065938000,
+      "windows_creation_utc": "2026-09-05T22:37:14.065938+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_ordinary_qa_preservation_08fcdad8cd61_0013_original",
+      "last_write_ns": 1788647833722702500,
+      "last_write_utc": "2026-09-05T22:37:13.722703+00:00",
+      "partition": "fit",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/cd8dd124476519cf528957973ad43a25b328a341f85f8eae1ced56fc602652ee.json",
+      "sha256": "3919767c2a759ae029580710610037f9b9a1540c50dde5e09253f2b23dd716ff",
+      "windows_creation_ns": 1788647833722702500,
+      "windows_creation_utc": "2026-09-05T22:37:13.722703+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_symbolic_logic_5fff7b89851d_0007_original",
+      "last_write_ns": 1788647840438177300,
+      "last_write_utc": "2026-09-05T22:37:20.438177+00:00",
+      "partition": "holdout",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/cf1ac9f8521ea26ea6b61d259395b7f2e96f6aae7341e64f1cb7c9cef1fd41ef.json",
+      "sha256": "1ebecdcdcbff3de44367e978cf8572440def324956a5a6de18730b5b41cf51cc",
+      "windows_creation_ns": 1788647840438177300,
+      "windows_creation_utc": "2026-09-05T22:37:20.438177+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_compositional_9c88a37049cd_0013_original",
+      "last_write_ns": 1788647830437346400,
+      "last_write_utc": "2026-09-05T22:37:10.437346+00:00",
+      "partition": "fit",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/d0d6bd6c199b5daaec3a65b7bb7367cfd91e18667da8edf82c8f41f9ef101c68.json",
+      "sha256": "9cc12b037f12a0b4d5b33a6da271847391fb8c5e89060cdf289e07919faf9287",
+      "windows_creation_ns": 1788647830437346400,
+      "windows_creation_utc": "2026-09-05T22:37:10.437346+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_retrieval_multihop_49dd76091e8f_0007_original",
+      "last_write_ns": 1788647840114963300,
+      "last_write_utc": "2026-09-05T22:37:20.114963+00:00",
+      "partition": "holdout",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/d3066d99701524bfda3550764de7329e651195e3516cd6481ca75b2ba450fdf1.json",
+      "sha256": "9ebc59fb16fdb0c5ccd6da1541631b99836f93019990446b1b6aec680861b0e4",
+      "windows_creation_ns": 1788647840114963300,
+      "windows_creation_utc": "2026-09-05T22:37:20.114963+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_ordinary_qa_preservation_38f648cbc3de_0003_original",
+      "last_write_ns": 1788647839483297100,
+      "last_write_utc": "2026-09-05T22:37:19.483297+00:00",
+      "partition": "holdout",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/d3536f96fa354a23205be51707b3f55dd80bd925dc3ed42d04d835670f89e786.json",
+      "sha256": "5ea6583cf7c8bace9aef33410ee3d819b47aafd3abd86875e424eb5cfd1f18c5",
+      "windows_creation_ns": 1788647839483297100,
+      "windows_creation_utc": "2026-09-05T22:37:19.483297+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_counterfactual_7df501209f8a_0000_original",
+      "last_write_ns": 1788647831166791700,
+      "last_write_utc": "2026-09-05T22:37:11.166792+00:00",
+      "partition": "fit",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/d4bfd1b5a15e9f0949539d7d3571b766bfac085aacf13152d227f4f9eea0f7c0.json",
+      "sha256": "ebff61b51c7795623a49ac416a1240e17570adef10ba6f17552eb1e182d5dcf6",
+      "windows_creation_ns": 1788647831166791700,
+      "windows_creation_utc": "2026-09-05T22:37:11.166792+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_compositional_c9dcf376ca73_0004_original",
+      "last_write_ns": 1788647830550113800,
+      "last_write_utc": "2026-09-05T22:37:10.550114+00:00",
+      "partition": "fit",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/d99bd8b75647c8db38d97f275abc73a71b67e83ea422ffde1b06e25e167656d5.json",
+      "sha256": "4d07ec4d6a10fa90f03d7293a9c0a4e014e1e10373d461e1c5c688f2bf1f3b8e",
+      "windows_creation_ns": 1788647830549113600,
+      "windows_creation_utc": "2026-09-05T22:37:10.549114+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_mathematical_632f6252c838_0011_original",
+      "last_write_ns": 1788647839240243100,
+      "last_write_utc": "2026-09-05T22:37:19.240243+00:00",
+      "partition": "holdout",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/da1e87fc39dd9955156d9879b577b652da640f042423bc2eed36716b5063ab55.json",
+      "sha256": "335e728670f0d16c93527106f05d315b6694fe21755346bed7e09a41bb65b583",
+      "windows_creation_ns": 1788647839240243100,
+      "windows_creation_utc": "2026-09-05T22:37:19.240243+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_compositional_6161890179bc_0000_original",
+      "last_write_ns": 1788647830379896000,
+      "last_write_utc": "2026-09-05T22:37:10.379896+00:00",
+      "partition": "fit",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/dc0492e3d82297a3eba4d00e02e40e0449dafa2fbdb39b718ae457ceb572095e.json",
+      "sha256": "d430f2c226077dd98932e97480808a7eb482263940d76cd308336b7894025648",
+      "windows_creation_ns": 1788647830379896000,
+      "windows_creation_utc": "2026-09-05T22:37:10.379896+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_symbolic_logic_ac12704675b2_0009_original",
+      "last_write_ns": 1788647837769671400,
+      "last_write_utc": "2026-09-05T22:37:17.769671+00:00",
+      "partition": "fit",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/df83cc1cd642cbb327e9a3270c7e943a3181e84d55943b38495da6874726e517.json",
+      "sha256": "4438497ab00388190e9cf6d15b0d1df9564b6d4b6e53fb755c32368ed3fb5b8f",
+      "windows_creation_ns": 1788647837769671400,
+      "windows_creation_utc": "2026-09-05T22:37:17.769671+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_symbolic_logic_d3892f0051c2_0005_original",
+      "last_write_ns": 1788647838187780300,
+      "last_write_utc": "2026-09-05T22:37:18.187780+00:00",
+      "partition": "fit",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/e01716ee294a32fb3efd9937dc64ed3be43fd61f396667ddf09456325947ec29.json",
+      "sha256": "055758825e47eb92d33de58930d5db8a852967acf3633a1519022b98d409e329",
+      "windows_creation_ns": 1788647838187780300,
+      "windows_creation_utc": "2026-09-05T22:37:18.187780+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_symbolic_logic_a434c9390a0a_0002_original",
+      "last_write_ns": 1788647837715424300,
+      "last_write_utc": "2026-09-05T22:37:17.715424+00:00",
+      "partition": "fit",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/e405f0e69c4ccfc3c5a47b3c88b2c0e6e90bbe29898b08db3394e62b708c88d9.json",
+      "sha256": "d0b6b4d083e61d9446a5df3f9500343529cd4428a40a0e2cf5db8d9fca385a42",
+      "windows_creation_ns": 1788647837715424300,
+      "windows_creation_utc": "2026-09-05T22:37:17.715424+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_counterfactual_5e59134254d8_0011_original",
+      "last_write_ns": 1788647838790856700,
+      "last_write_utc": "2026-09-05T22:37:18.790857+00:00",
+      "partition": "holdout",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/e92577e16f873a9a8d75b27bc653662c1c787c2f86aa326e3b8a8a8cf3643bb3.json",
+      "sha256": "6535c47725ef4c6b3cdff79faaf2aa6ba52826a42707eb3eb6c27a2c28325307",
+      "windows_creation_ns": 1788647838790856700,
+      "windows_creation_utc": "2026-09-05T22:37:18.790857+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_relational_005e5c8ce93b_0004_original",
+      "last_write_ns": 1788647834676904400,
+      "last_write_utc": "2026-09-05T22:37:14.676904+00:00",
+      "partition": "fit",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/e966938934f84058e517cf8c1fc7eeb88b2292a61b7dccbb92c44f920601c6b0.json",
+      "sha256": "9cf6d80ad7e7d73dc91cb8dbe32f5d95da20c6cd547d7a878ae5dcf0ca103d7e",
+      "windows_creation_ns": 1788647834676904400,
+      "windows_creation_utc": "2026-09-05T22:37:14.676904+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_retrieval_multihop_10e3440e65f6_0003_original",
+      "last_write_ns": 1788647840021669000,
+      "last_write_utc": "2026-09-05T22:37:20.021669+00:00",
+      "partition": "holdout",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/eb7c0e183a5731a85e468f705b176de12490beec8a31901ad53a4d3954a0a71b.json",
+      "sha256": "1adbf24c8a5629b5e01d070a318daec37020d396745ce8afe29ca2af0b55d09f",
+      "windows_creation_ns": 1788647840020668600,
+      "windows_creation_utc": "2026-09-05T22:37:20.020669+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_relational_a71f7af5f9d1_0003_original",
+      "last_write_ns": 1788647839764359300,
+      "last_write_utc": "2026-09-05T22:37:19.764359+00:00",
+      "partition": "holdout",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/ede9c352aa74ea24c35a6ba84940f2724948b70d8da21e362b572606c95c5d0b.json",
+      "sha256": "aa7ec8dc0f4f517a43d1174164ca68784dfc48de59098169b53c67a4e26ae297",
+      "windows_creation_ns": 1788647839763360300,
+      "windows_creation_utc": "2026-09-05T22:37:19.763360+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_symbolic_logic_94a7c27d1bce_0006_original",
+      "last_write_ns": 1788647837636558500,
+      "last_write_utc": "2026-09-05T22:37:17.636559+00:00",
+      "partition": "fit",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/ee14271e97830d9b9e6fcbfab2fc064fe84d6724fb6be64bff5c17b602613ce3.json",
+      "sha256": "2785173d12ad9f39001ae54da4f4e241df50322a15f6f7e9a781da20a8064de2",
+      "windows_creation_ns": 1788647837636558500,
+      "windows_creation_utc": "2026-09-05T22:37:17.636559+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_mathematical_430cf43d62f7_0013_original",
+      "last_write_ns": 1788647832950560800,
+      "last_write_utc": "2026-09-05T22:37:12.950561+00:00",
+      "partition": "fit",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/ef460a63c57b67e4e237efa415826e7f6e225037dad8f4f507677adc8c7cd950.json",
+      "sha256": "3eb26ba727f8304ecb99354dbacc8edd09081475912cf8826e710b78416d3ef2",
+      "windows_creation_ns": 1788647832950560800,
+      "windows_creation_utc": "2026-09-05T22:37:12.950561+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_retrieval_multihop_c776c8ef907b_0014_original",
+      "last_write_ns": 1788647836809473900,
+      "last_write_utc": "2026-09-05T22:37:16.809474+00:00",
+      "partition": "fit",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/f35561455201dfddcdbd819cd2e9115343275922949dd87feadd91f50a448a00.json",
+      "sha256": "4849b70b2c6fc5c4ae0a2652ecb44c353d3f39560aa3770d3500a7d44ce35d28",
+      "windows_creation_ns": 1788647836809473900,
+      "windows_creation_utc": "2026-09-05T22:37:16.809474+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_retrieval_multihop_2fc9308c907d_0004_original",
+      "last_write_ns": 1788647836160349600,
+      "last_write_utc": "2026-09-05T22:37:16.160350+00:00",
+      "partition": "fit",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/f386f74b09c1f5f9cf065d458fbcad6da6a14c8ad4f00fc609d500b32ed7df85.json",
+      "sha256": "6fdfd0e6c12502d23f7bf8c38e14176099aba2f334f35dc1426608f54a526dda",
+      "windows_creation_ns": 1788647836160349600,
+      "windows_creation_utc": "2026-09-05T22:37:16.160350+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_instruction_evidence_9893ff52910f_0009_original",
+      "last_write_ns": 1788647832023684000,
+      "last_write_utc": "2026-09-05T22:37:12.023684+00:00",
+      "partition": "fit",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/f4a7230cb147abce0c1eb59be25234a03ec192a7f846c464b0daac2a06f10ae7.json",
+      "sha256": "bc926d17c1fc3d9d960032a48dd4643365800980e1c5d98475db26209ec098e7",
+      "windows_creation_ns": 1788647832022681800,
+      "windows_creation_utc": "2026-09-05T22:37:12.022682+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_instruction_evidence_f59a9dd54c5e_0006_original",
+      "last_write_ns": 1788647832456565800,
+      "last_write_utc": "2026-09-05T22:37:12.456566+00:00",
+      "partition": "fit",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/f65dc9f50de18fffc6eb74a4a4b76946e1adc7df0080127eb4aae742a1bda4f8.json",
+      "sha256": "21109589c761e12621439fd63c75e5ce047ba45abdb4142fa98806574233e9f7",
+      "windows_creation_ns": 1788647832455565800,
+      "windows_creation_utc": "2026-09-05T22:37:12.455566+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_counterfactual_373dfc3a45b3_0015_original",
+      "last_write_ns": 1788647838721843000,
+      "last_write_utc": "2026-09-05T22:37:18.721843+00:00",
+      "partition": "holdout",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/f7478dcad823286b4d713663317d1f67ec7846d1af8212dc5cdc1a6ad1c879fc.json",
+      "sha256": "204645f7d3a6a31b527bae11cd8e485be3058d9b1eea3a07f27ffe3eda2ff582",
+      "windows_creation_ns": 1788647838720842000,
+      "windows_creation_utc": "2026-09-05T22:37:18.720842+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_instruction_evidence_69edb0200908_0001_original",
+      "last_write_ns": 1788647831847920500,
+      "last_write_utc": "2026-09-05T22:37:11.847920+00:00",
+      "partition": "fit",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/f81d281b7ecd5324795d5383caf7d14d56bec58b08c234819ee4661db3a83f82.json",
+      "sha256": "822bf0ca093c10e6ba5408f5ad5a21ad85aedee664620627b2902dde6a481ac4",
+      "windows_creation_ns": 1788647831847920500,
+      "windows_creation_utc": "2026-09-05T22:37:11.847920+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_ordinary_qa_preservation_c79694f8597a_0015_original",
+      "last_write_ns": 1788647839608141500,
+      "last_write_utc": "2026-09-05T22:37:19.608142+00:00",
+      "partition": "holdout",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/fc736bf6ceec78ae9b7de7e73228225b25ab0312aa35898276109b7f05a4d97e.json",
+      "sha256": "f2f809c3726bf9c95ab3fcb7e1b1830ab6320ae073d7e922d8e763622ab78493",
+      "windows_creation_ns": 1788647839608141500,
+      "windows_creation_utc": "2026-09-05T22:37:19.608142+00:00"
+    },
+    {
+      "example_id": "native_armr_calibration_ordinary_qa_preservation_387dabed9762_0008_original",
+      "last_write_ns": 1788647833887589700,
+      "last_write_utc": "2026-09-05T22:37:13.887590+00:00",
+      "partition": "fit",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/cases/fec14d4d229b2236d64520155a97b1895d646b3a609f49defc9a9504130823b2.json",
+      "sha256": "7683557bf3491080eaba7ed759bc544f01fd095e911912d9d5e7f3300d5b92d4",
+      "windows_creation_ns": 1788647833887589700,
+      "windows_creation_utc": "2026-09-05T22:37:13.887590+00:00"
+    }
+  ],
+  "checkpoint_reference_file": "experiments/anchor_routed_middle_recurrence_v1/evidence/02c_fixed_cpu_budget_v2/20260905T132743_802018Z/run_manifest.json",
+  "checkpoint_reference_sha256": "daa5bc8e947602a4ed3d7fb19076ec6000e27f7afcc2a1426e544491bff95dfe",
+  "checkpoint_weight_bytes_reread": false,
+  "checks_run": 3012,
+  "chronology": {
+    "all_fit_writes_precede_fit_scale_creation": true,
+    "first_holdout_creation_utc": "2026-09-05T22:37:18.323359+00:00",
+    "first_holdout_write_utc": "2026-09-05T22:37:18.324358+00:00",
+    "fit_scale": {
+      "last_write_ns": 1788647838190781200,
+      "last_write_utc": "2026-09-05T22:37:18.190781+00:00",
+      "path": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/fit_scale.json",
+      "windows_creation_ns": 1788647838190781200,
+      "windows_creation_utc": "2026-09-05T22:37:18.190781+00:00"
+    },
+    "fit_scale_write_precedes_every_holdout_creation": true,
+    "fit_scale_write_precedes_every_holdout_write": true,
+    "last_fit_write_utc": "2026-09-05T22:37:18.187780+00:00",
+    "qualification": "Filesystem times corroborate the registered source order. They are mutable and are not cryptographic timestamps; hashes bind contents, not historical chronology."
+  },
+  "control_state_sha256": "eedbc0ca788ee8a1193b455f7cf2c94cd1b5eeab288f1f2df448fa9ae208584c",
+  "evidence_directory": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00",
+  "failed_checks": [],
+  "fit_scale_sha256": "59d157281ad3f69fbd084149685c108f2efb5eb3eca98fb4a586a12a284ff897",
+  "git_commit_status_checked": false,
+  "gpu_execution": false,
+  "high_precision_crosscheck": {
+    "absolute_difference_from_report": 2.220446049250313e-16,
+    "alpha": "1.0913695544617787950157044832568796217046986688008121373734736207604387866271374",
+    "alpha_rounded_float": 1.0913695544617787,
+    "control_energy": "0.080259264197115658297232432261125723016448318958282470703125",
+    "native_energy": "0.095595806698012465140353495958909964732204874356587727864583333333333333333333333"
+  },
+  "limitations": [
+    "Raw hidden/native-delta/control-delta tensors, embeddings, masks, positions and RoPE tensors are represented by hashes, not stored tensor bytes. Per-token energy construction cannot be independently rerun from these artifacts.",
+    "Scalar aggregates and alpha were independently recomputed from recorded per-scenario measurements, without model rerun. Stratum checks reconcile reported scalars but do not recover the underlying tensors.",
+    "Checkpoint/control/layer/buffer hashes and zero parameter-gradient inventories were reconciled from saved receipts. No weights were loaded and no live gradient or state inspection occurred. Separate buffer-gradient fields are not present; buffer preservation is evidenced by before/after digests.",
+    "Filesystem times only corroborate ordering. The fit-scale receipt has no cryptographic timestamp.",
+    "This is engineering calibration designed after an architecture failure. It is neither efficacy evidence nor GPU requalification and does not rehabilitate original v2.2 failures."
+  ],
+  "max_stratum_scalar_reconciliation_error": 1.4210854715202004e-14,
+  "models_loaded": 0,
+  "programme_helpers_imported": false,
+  "recomputed_aggregates": {
+    "fit": {
+      "control_delta_rms": 0.45905299515372716,
+      "control_energy": 0.08025926419711565,
+      "example_ids": [
+        "native_armr_calibration_compositional_00ef13b90b3e_0006_original",
+        "native_armr_calibration_compositional_09c1a2f5395f_0008_original",
+        "native_armr_calibration_compositional_0f1556d6f2a4_0009_original",
+        "native_armr_calibration_compositional_3ba0ccc6f884_0012_original",
+        "native_armr_calibration_compositional_5094f6659c68_0014_original",
+        "native_armr_calibration_compositional_573d8ff54387_0001_original",
+        "native_armr_calibration_compositional_5bc35562579f_0005_original",
+        "native_armr_calibration_compositional_5e2b21f3dd4e_0010_original",
+        "native_armr_calibration_compositional_6161890179bc_0000_original",
+        "native_armr_calibration_compositional_9c88a37049cd_0013_original",
+        "native_armr_calibration_compositional_b528ec78a034_0002_original",
+        "native_armr_calibration_compositional_c9dcf376ca73_0004_original",
+        "native_armr_calibration_counterfactual_0043d6875912_0013_original",
+        "native_armr_calibration_counterfactual_0e63e74bce48_0004_original",
+        "native_armr_calibration_counterfactual_35be28d5fdee_0012_original",
+        "native_armr_calibration_counterfactual_4f8b3e1c5f37_0008_original",
+        "native_armr_calibration_counterfactual_4fad7690b02c_0006_original",
+        "native_armr_calibration_counterfactual_5289f0de7bf6_0001_original",
+        "native_armr_calibration_counterfactual_7df501209f8a_0000_original",
+        "native_armr_calibration_counterfactual_9057ba005cba_0005_original",
+        "native_armr_calibration_counterfactual_96dbfb604643_0014_original",
+        "native_armr_calibration_counterfactual_aed1365bd0eb_0009_original",
+        "native_armr_calibration_counterfactual_b27885d4a0b1_0010_original",
+        "native_armr_calibration_counterfactual_ed434e4bb25b_0002_original",
+        "native_armr_calibration_instruction_evidence_581b41f7541e_0004_original",
+        "native_armr_calibration_instruction_evidence_683b705fd4ea_0012_original",
+        "native_armr_calibration_instruction_evidence_69edb0200908_0001_original",
+        "native_armr_calibration_instruction_evidence_7c9477115e6e_0014_original",
+        "native_armr_calibration_instruction_evidence_9893ff52910f_0009_original",
+        "native_armr_calibration_instruction_evidence_defaf68f62e4_0010_original",
+        "native_armr_calibration_instruction_evidence_e0135a00f01f_0013_original",
+        "native_armr_calibration_instruction_evidence_f12f2a4c5196_0005_original",
+        "native_armr_calibration_instruction_evidence_f515c8e93890_0002_original",
+        "native_armr_calibration_instruction_evidence_f59a9dd54c5e_0006_original",
+        "native_armr_calibration_instruction_evidence_fc6a855358c5_0000_original",
+        "native_armr_calibration_instruction_evidence_fcf85aec3c38_0008_original",
+        "native_armr_calibration_mathematical_1365ba73067d_0004_original",
+        "native_armr_calibration_mathematical_2b789be97d48_0014_original",
+        "native_armr_calibration_mathematical_3be2a9127091_0008_original",
+        "native_armr_calibration_mathematical_430cf43d62f7_0013_original",
+        "native_armr_calibration_mathematical_48e4035a2153_0010_original",
+        "native_armr_calibration_mathematical_59655239626e_0005_original",
+        "native_armr_calibration_mathematical_5da29527f31b_0009_original",
+        "native_armr_calibration_mathematical_6a76a569508e_0002_original",
+        "native_armr_calibration_mathematical_727948e490ff_0001_original",
+        "native_armr_calibration_mathematical_b79966e8bcd9_0012_original",
+        "native_armr_calibration_mathematical_d41c1afee831_0000_original",
+        "native_armr_calibration_mathematical_f50d2e870dd2_0006_original",
+        "native_armr_calibration_ordinary_qa_preservation_011ecf034ea6_0009_original",
+        "native_armr_calibration_ordinary_qa_preservation_08fcdad8cd61_0013_original",
+        "native_armr_calibration_ordinary_qa_preservation_0d0affbf94ed_0002_original",
+        "native_armr_calibration_ordinary_qa_preservation_387dabed9762_0008_original",
+        "native_armr_calibration_ordinary_qa_preservation_3b2e5c7250a0_0000_original",
+        "native_armr_calibration_ordinary_qa_preservation_97c7cedb108f_0010_original",
+        "native_armr_calibration_ordinary_qa_preservation_9b1151e7594f_0004_original",
+        "native_armr_calibration_ordinary_qa_preservation_9e4712b884f8_0001_original",
+        "native_armr_calibration_ordinary_qa_preservation_ad81166dfb02_0012_original",
+        "native_armr_calibration_ordinary_qa_preservation_c2843d2dbdea_0006_original",
+        "native_armr_calibration_ordinary_qa_preservation_cb79e035fd15_0014_original",
+        "native_armr_calibration_ordinary_qa_preservation_ebac777df799_0005_original",
+        "native_armr_calibration_relational_005e5c8ce93b_0004_original",
+        "native_armr_calibration_relational_01cf57fd73da_0002_original",
+        "native_armr_calibration_relational_11a5401f206d_0008_original",
+        "native_armr_calibration_relational_21776a8ab8f2_0001_original",
+        "native_armr_calibration_relational_4111cb6f4d83_0006_original",
+        "native_armr_calibration_relational_709a269ddd0f_0005_original",
+        "native_armr_calibration_relational_7d2ef5bf814e_0010_original",
+        "native_armr_calibration_relational_85ab4c0dd54c_0009_original",
+        "native_armr_calibration_relational_a012f4d9afdb_0013_original",
+        "native_armr_calibration_relational_c6dc09204fc5_0012_original",
+        "native_armr_calibration_relational_eb3851d22a64_0014_original",
+        "native_armr_calibration_relational_ed3b81cdcca8_0000_original",
+        "native_armr_calibration_retrieval_multihop_0353fdc140b8_0005_original",
+        "native_armr_calibration_retrieval_multihop_2fc9308c907d_0004_original",
+        "native_armr_calibration_retrieval_multihop_36b8c6c67bb4_0001_original",
+        "native_armr_calibration_retrieval_multihop_3eecc89e93ef_0002_original",
+        "native_armr_calibration_retrieval_multihop_45d0f70ea1b5_0008_original",
+        "native_armr_calibration_retrieval_multihop_61d76bef0f69_0013_original",
+        "native_armr_calibration_retrieval_multihop_707bf80600f3_0000_original",
+        "native_armr_calibration_retrieval_multihop_c776c8ef907b_0014_original",
+        "native_armr_calibration_retrieval_multihop_e3003d3e5646_0010_original",
+        "native_armr_calibration_retrieval_multihop_e669004f6942_0006_original",
+        "native_armr_calibration_retrieval_multihop_e7a1f7d2684a_0012_original",
+        "native_armr_calibration_retrieval_multihop_fed8436e5df9_0009_original",
+        "native_armr_calibration_symbolic_logic_05a1ea50559e_0013_original",
+        "native_armr_calibration_symbolic_logic_05a96f267611_0008_original",
+        "native_armr_calibration_symbolic_logic_3f4ed4cee54d_0012_original",
+        "native_armr_calibration_symbolic_logic_45a59e988011_0001_original",
+        "native_armr_calibration_symbolic_logic_94a7c27d1bce_0006_original",
+        "native_armr_calibration_symbolic_logic_a434c9390a0a_0002_original",
+        "native_armr_calibration_symbolic_logic_ac12704675b2_0009_original",
+        "native_armr_calibration_symbolic_logic_af07be43c480_0010_original",
+        "native_armr_calibration_symbolic_logic_c8158351858f_0014_original",
+        "native_armr_calibration_symbolic_logic_c9058a98469f_0000_original",
+        "native_armr_calibration_symbolic_logic_d3408abad631_0004_original",
+        "native_armr_calibration_symbolic_logic_d3892f0051c2_0005_original"
+      ],
+      "hidden_rms": 1.6454591564225136,
+      "native_delta_rms": 0.5062978624073765,
+      "native_energy": 0.09559580669801247,
+      "ordinary_tokens": 7069,
+      "scaled_control_energy": 0.0955958066980125,
+      "scenario_ids": [
+        "native_armr_calibration_compositional_00ef13b90b3e_0006",
+        "native_armr_calibration_compositional_09c1a2f5395f_0008",
+        "native_armr_calibration_compositional_0f1556d6f2a4_0009",
+        "native_armr_calibration_compositional_3ba0ccc6f884_0012",
+        "native_armr_calibration_compositional_5094f6659c68_0014",
+        "native_armr_calibration_compositional_573d8ff54387_0001",
+        "native_armr_calibration_compositional_5bc35562579f_0005",
+        "native_armr_calibration_compositional_5e2b21f3dd4e_0010",
+        "native_armr_calibration_compositional_6161890179bc_0000",
+        "native_armr_calibration_compositional_9c88a37049cd_0013",
+        "native_armr_calibration_compositional_b528ec78a034_0002",
+        "native_armr_calibration_compositional_c9dcf376ca73_0004",
+        "native_armr_calibration_counterfactual_0043d6875912_0013",
+        "native_armr_calibration_counterfactual_0e63e74bce48_0004",
+        "native_armr_calibration_counterfactual_35be28d5fdee_0012",
+        "native_armr_calibration_counterfactual_4f8b3e1c5f37_0008",
+        "native_armr_calibration_counterfactual_4fad7690b02c_0006",
+        "native_armr_calibration_counterfactual_5289f0de7bf6_0001",
+        "native_armr_calibration_counterfactual_7df501209f8a_0000",
+        "native_armr_calibration_counterfactual_9057ba005cba_0005",
+        "native_armr_calibration_counterfactual_96dbfb604643_0014",
+        "native_armr_calibration_counterfactual_aed1365bd0eb_0009",
+        "native_armr_calibration_counterfactual_b27885d4a0b1_0010",
+        "native_armr_calibration_counterfactual_ed434e4bb25b_0002",
+        "native_armr_calibration_instruction_evidence_581b41f7541e_0004",
+        "native_armr_calibration_instruction_evidence_683b705fd4ea_0012",
+        "native_armr_calibration_instruction_evidence_69edb0200908_0001",
+        "native_armr_calibration_instruction_evidence_7c9477115e6e_0014",
+        "native_armr_calibration_instruction_evidence_9893ff52910f_0009",
+        "native_armr_calibration_instruction_evidence_defaf68f62e4_0010",
+        "native_armr_calibration_instruction_evidence_e0135a00f01f_0013",
+        "native_armr_calibration_instruction_evidence_f12f2a4c5196_0005",
+        "native_armr_calibration_instruction_evidence_f515c8e93890_0002",
+        "native_armr_calibration_instruction_evidence_f59a9dd54c5e_0006",
+        "native_armr_calibration_instruction_evidence_fc6a855358c5_0000",
+        "native_armr_calibration_instruction_evidence_fcf85aec3c38_0008",
+        "native_armr_calibration_mathematical_1365ba73067d_0004",
+        "native_armr_calibration_mathematical_2b789be97d48_0014",
+        "native_armr_calibration_mathematical_3be2a9127091_0008",
+        "native_armr_calibration_mathematical_430cf43d62f7_0013",
+        "native_armr_calibration_mathematical_48e4035a2153_0010",
+        "native_armr_calibration_mathematical_59655239626e_0005",
+        "native_armr_calibration_mathematical_5da29527f31b_0009",
+        "native_armr_calibration_mathematical_6a76a569508e_0002",
+        "native_armr_calibration_mathematical_727948e490ff_0001",
+        "native_armr_calibration_mathematical_b79966e8bcd9_0012",
+        "native_armr_calibration_mathematical_d41c1afee831_0000",
+        "native_armr_calibration_mathematical_f50d2e870dd2_0006",
+        "native_armr_calibration_ordinary_qa_preservation_011ecf034ea6_0009",
+        "native_armr_calibration_ordinary_qa_preservation_08fcdad8cd61_0013",
+        "native_armr_calibration_ordinary_qa_preservation_0d0affbf94ed_0002",
+        "native_armr_calibration_ordinary_qa_preservation_387dabed9762_0008",
+        "native_armr_calibration_ordinary_qa_preservation_3b2e5c7250a0_0000",
+        "native_armr_calibration_ordinary_qa_preservation_97c7cedb108f_0010",
+        "native_armr_calibration_ordinary_qa_preservation_9b1151e7594f_0004",
+        "native_armr_calibration_ordinary_qa_preservation_9e4712b884f8_0001",
+        "native_armr_calibration_ordinary_qa_preservation_ad81166dfb02_0012",
+        "native_armr_calibration_ordinary_qa_preservation_c2843d2dbdea_0006",
+        "native_armr_calibration_ordinary_qa_preservation_cb79e035fd15_0014",
+        "native_armr_calibration_ordinary_qa_preservation_ebac777df799_0005",
+        "native_armr_calibration_relational_005e5c8ce93b_0004",
+        "native_armr_calibration_relational_01cf57fd73da_0002",
+        "native_armr_calibration_relational_11a5401f206d_0008",
+        "native_armr_calibration_relational_21776a8ab8f2_0001",
+        "native_armr_calibration_relational_4111cb6f4d83_0006",
+        "native_armr_calibration_relational_709a269ddd0f_0005",
+        "native_armr_calibration_relational_7d2ef5bf814e_0010",
+        "native_armr_calibration_relational_85ab4c0dd54c_0009",
+        "native_armr_calibration_relational_a012f4d9afdb_0013",
+        "native_armr_calibration_relational_c6dc09204fc5_0012",
+        "native_armr_calibration_relational_eb3851d22a64_0014",
+        "native_armr_calibration_relational_ed3b81cdcca8_0000",
+        "native_armr_calibration_retrieval_multihop_0353fdc140b8_0005",
+        "native_armr_calibration_retrieval_multihop_2fc9308c907d_0004",
+        "native_armr_calibration_retrieval_multihop_36b8c6c67bb4_0001",
+        "native_armr_calibration_retrieval_multihop_3eecc89e93ef_0002",
+        "native_armr_calibration_retrieval_multihop_45d0f70ea1b5_0008",
+        "native_armr_calibration_retrieval_multihop_61d76bef0f69_0013",
+        "native_armr_calibration_retrieval_multihop_707bf80600f3_0000",
+        "native_armr_calibration_retrieval_multihop_c776c8ef907b_0014",
+        "native_armr_calibration_retrieval_multihop_e3003d3e5646_0010",
+        "native_armr_calibration_retrieval_multihop_e669004f6942_0006",
+        "native_armr_calibration_retrieval_multihop_e7a1f7d2684a_0012",
+        "native_armr_calibration_retrieval_multihop_fed8436e5df9_0009",
+        "native_armr_calibration_symbolic_logic_05a1ea50559e_0013",
+        "native_armr_calibration_symbolic_logic_05a96f267611_0008",
+        "native_armr_calibration_symbolic_logic_3f4ed4cee54d_0012",
+        "native_armr_calibration_symbolic_logic_45a59e988011_0001",
+        "native_armr_calibration_symbolic_logic_94a7c27d1bce_0006",
+        "native_armr_calibration_symbolic_logic_a434c9390a0a_0002",
+        "native_armr_calibration_symbolic_logic_ac12704675b2_0009",
+        "native_armr_calibration_symbolic_logic_af07be43c480_0010",
+        "native_armr_calibration_symbolic_logic_c8158351858f_0014",
+        "native_armr_calibration_symbolic_logic_c9058a98469f_0000",
+        "native_armr_calibration_symbolic_logic_d3408abad631_0004",
+        "native_armr_calibration_symbolic_logic_d3892f0051c2_0005"
+      ],
+      "scenarios": 96
+    },
+    "holdout": {
+      "control_delta_rms": 0.4588259766463031,
+      "control_energy": 0.08041215831685194,
+      "example_ids": [
+        "native_armr_calibration_compositional_39eaf8957d0b_0015_original",
+        "native_armr_calibration_compositional_6bf1af34b4a0_0003_original",
+        "native_armr_calibration_compositional_7c53bdf2959c_0011_original",
+        "native_armr_calibration_compositional_b9fb67d03cbd_0007_original",
+        "native_armr_calibration_counterfactual_248fa71f95bb_0007_original",
+        "native_armr_calibration_counterfactual_373dfc3a45b3_0015_original",
+        "native_armr_calibration_counterfactual_5e59134254d8_0011_original",
+        "native_armr_calibration_counterfactual_afb4a470580c_0003_original",
+        "native_armr_calibration_instruction_evidence_303ea820e58e_0007_original",
+        "native_armr_calibration_instruction_evidence_3c320a2ed7e4_0003_original",
+        "native_armr_calibration_instruction_evidence_48ca22776054_0011_original",
+        "native_armr_calibration_instruction_evidence_ead60c0c718b_0015_original",
+        "native_armr_calibration_mathematical_3555a97d9853_0015_original",
+        "native_armr_calibration_mathematical_632f6252c838_0011_original",
+        "native_armr_calibration_mathematical_9aa9de8df3d2_0007_original",
+        "native_armr_calibration_mathematical_9c1816101e7c_0003_original",
+        "native_armr_calibration_ordinary_qa_preservation_185014b0b6a7_0011_original",
+        "native_armr_calibration_ordinary_qa_preservation_38f648cbc3de_0003_original",
+        "native_armr_calibration_ordinary_qa_preservation_b39484542f58_0007_original",
+        "native_armr_calibration_ordinary_qa_preservation_c79694f8597a_0015_original",
+        "native_armr_calibration_relational_4350d8eb8204_0007_original",
+        "native_armr_calibration_relational_a71f7af5f9d1_0003_original",
+        "native_armr_calibration_relational_b66aaeec6e77_0011_original",
+        "native_armr_calibration_relational_d50c33700de7_0015_original",
+        "native_armr_calibration_retrieval_multihop_10e3440e65f6_0003_original",
+        "native_armr_calibration_retrieval_multihop_49dd76091e8f_0007_original",
+        "native_armr_calibration_retrieval_multihop_5efd178ecba1_0011_original",
+        "native_armr_calibration_retrieval_multihop_f228bea74c3e_0015_original",
+        "native_armr_calibration_symbolic_logic_5b1a4239f987_0015_original",
+        "native_armr_calibration_symbolic_logic_5fff7b89851d_0007_original",
+        "native_armr_calibration_symbolic_logic_bb536d97fbaa_0003_original",
+        "native_armr_calibration_symbolic_logic_c8c22f977dbb_0011_original"
+      ],
+      "hidden_rms": 1.6434243123753633,
+      "native_delta_rms": 0.5068794462647589,
+      "native_energy": 0.09606493426847566,
+      "ordinary_tokens": 2338,
+      "scaled_control_energy": 0.09577791697352757,
+      "scenario_ids": [
+        "native_armr_calibration_compositional_39eaf8957d0b_0015",
+        "native_armr_calibration_compositional_6bf1af34b4a0_0003",
+        "native_armr_calibration_compositional_7c53bdf2959c_0011",
+        "native_armr_calibration_compositional_b9fb67d03cbd_0007",
+        "native_armr_calibration_counterfactual_248fa71f95bb_0007",
+        "native_armr_calibration_counterfactual_373dfc3a45b3_0015",
+        "native_armr_calibration_counterfactual_5e59134254d8_0011",
+        "native_armr_calibration_counterfactual_afb4a470580c_0003",
+        "native_armr_calibration_instruction_evidence_303ea820e58e_0007",
+        "native_armr_calibration_instruction_evidence_3c320a2ed7e4_0003",
+        "native_armr_calibration_instruction_evidence_48ca22776054_0011",
+        "native_armr_calibration_instruction_evidence_ead60c0c718b_0015",
+        "native_armr_calibration_mathematical_3555a97d9853_0015",
+        "native_armr_calibration_mathematical_632f6252c838_0011",
+        "native_armr_calibration_mathematical_9aa9de8df3d2_0007",
+        "native_armr_calibration_mathematical_9c1816101e7c_0003",
+        "native_armr_calibration_ordinary_qa_preservation_185014b0b6a7_0011",
+        "native_armr_calibration_ordinary_qa_preservation_38f648cbc3de_0003",
+        "native_armr_calibration_ordinary_qa_preservation_b39484542f58_0007",
+        "native_armr_calibration_ordinary_qa_preservation_c79694f8597a_0015",
+        "native_armr_calibration_relational_4350d8eb8204_0007",
+        "native_armr_calibration_relational_a71f7af5f9d1_0003",
+        "native_armr_calibration_relational_b66aaeec6e77_0011",
+        "native_armr_calibration_relational_d50c33700de7_0015",
+        "native_armr_calibration_retrieval_multihop_10e3440e65f6_0003",
+        "native_armr_calibration_retrieval_multihop_49dd76091e8f_0007",
+        "native_armr_calibration_retrieval_multihop_5efd178ecba1_0011",
+        "native_armr_calibration_retrieval_multihop_f228bea74c3e_0015",
+        "native_armr_calibration_symbolic_logic_5b1a4239f987_0015",
+        "native_armr_calibration_symbolic_logic_5fff7b89851d_0007",
+        "native_armr_calibration_symbolic_logic_bb536d97fbaa_0003",
+        "native_armr_calibration_symbolic_logic_c8c22f977dbb_0011"
+      ],
+      "scenarios": 32
+    }
+  },
+  "recomputed_alpha": 1.091369554461779,
+  "recorded_execution_commit": "4791635ac1a1ad22511c355bc59ab42956407dee",
+  "registration_file": "experiments/supa_adaptive_compute_v2/native_armr/evidence/00_control_calibration_registration/cf1440a9bbf3344bcc0cca316a1d5f9cb172a448b06bf1696b27646fc673fe57/registration.json",
+  "registration_id": "cf1440a9bbf3344bcc0cca316a1d5f9cb172a448b06bf1696b27646fc673fe57",
+  "registration_sha256": "629857b141fe7729b8f95c8d6f09ddd1d7c8b4ee9ac37e1688ab5ff71822950f",
+  "report_sha256": "20a552138f91ee37c3df261f576fc7ae4f0ff6214ddc9cdb8b383ff4d2e2789c",
+  "run_manifest_sha256": "7dc2641160138247840be5775b3b1dbde5fa98a89724206c7b5cc0abb571abd6",
+  "script_sha256": "1f5c724d5fde0bcbe7d293cc627d431279ffe462021631bd85d17baf82d12e86",
+  "source_file_snapshot": {
+    "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/__init__.py": {
+      "observed_sha256": "e3ed1f5eebc49d142de7f909ab08b4141678290bd538568a65cf83940a75e444",
+      "registered_sha256": "e3ed1f5eebc49d142de7f909ab08b4141678290bd538568a65cf83940a75e444"
+    },
+    "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/advanced.py": {
+      "observed_sha256": "e07a97bda1862544578cc3347a663816262e6a40c5063dd90147c946d98efb7c",
+      "registered_sha256": "e07a97bda1862544578cc3347a663816262e6a40c5063dd90147c946d98efb7c"
+    },
+    "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/aligned_projection.py": {
+      "observed_sha256": "36c41abd48aa0e6d5327c030909fbedb7fb7ecd7da50daaa3cd1d9a043f22d59",
+      "registered_sha256": "36c41abd48aa0e6d5327c030909fbedb7fb7ecd7da50daaa3cd1d9a043f22d59"
+    },
+    "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/architecture.py": {
+      "observed_sha256": "ff94015b9b11417dfa7208e7ce90fd4448a734757f69b4e46276c0b4cf6f2d50",
+      "registered_sha256": "ff94015b9b11417dfa7208e7ce90fd4448a734757f69b4e46276c0b4cf6f2d50"
+    },
+    "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/checkpoint.py": {
+      "observed_sha256": "408edf877c6459ccf9072a6d92be145762a6535cd76bc168b30e33930b3e44ad",
+      "registered_sha256": "408edf877c6459ccf9072a6d92be145762a6535cd76bc168b30e33930b3e44ad"
+    },
+    "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/cka.py": {
+      "observed_sha256": "7c26ac61d731de1c83d1069ccc00f5b96505271de7e23499b7a1b5f75ca69798",
+      "registered_sha256": "7c26ac61d731de1c83d1069ccc00f5b96505271de7e23499b7a1b5f75ca69798"
+    },
+    "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/comparison.py": {
+      "observed_sha256": "6806172940354da8583a3a119207377171bf4620b2c9178ce317bc4b4844e0ca",
+      "registered_sha256": "6806172940354da8583a3a119207377171bf4620b2c9178ce317bc4b4844e0ca"
+    },
+    "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/consensus_target_basis.py": {
+      "observed_sha256": "90de43e21ffbe4684634bbe95391bcc9791af9d4eb052963ef71e90460ee151a",
+      "registered_sha256": "90de43e21ffbe4684634bbe95391bcc9791af9d4eb052963ef71e90460ee151a"
+    },
+    "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/delta_analysis.py": {
+      "observed_sha256": "b5db6232a86c8ad2215ee2f6c6af62a010b2208eb88ee5b429a17bc7469aac4f",
+      "registered_sha256": "b5db6232a86c8ad2215ee2f6c6af62a010b2208eb88ee5b429a17bc7469aac4f"
+    },
+    "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/diagnostics.py": {
+      "observed_sha256": "cd91c30c7d794878312026858b3108313e8771d4cd4533ed61371234cffca0f2",
+      "registered_sha256": "cd91c30c7d794878312026858b3108313e8771d4cd4533ed61371234cffca0f2"
+    },
+    "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/direction_transfer.py": {
+      "observed_sha256": "457972fd01d5690717bea73a7c7c28da539c87d0d7ede53049490753c6564a95",
+      "registered_sha256": "457972fd01d5690717bea73a7c7c28da539c87d0d7ede53049490753c6564a95"
+    },
+    "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/evaluation/__init__.py": {
+      "observed_sha256": "b5e59b71df7529a9dc842358f6852a4ae6e983bfb98a9efca39f0c320498f012",
+      "registered_sha256": "b5e59b71df7529a9dc842358f6852a4ae6e983bfb98a9efca39f0c320498f012"
+    },
+    "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/evaluation/banks.py": {
+      "observed_sha256": "d13b3699b49c15aaccdb26837bddc4541d59dc08bddc2290dd5edd4759e8fc1c",
+      "registered_sha256": "d13b3699b49c15aaccdb26837bddc4541d59dc08bddc2290dd5edd4759e8fc1c"
+    },
+    "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/evaluation/runner.py": {
+      "observed_sha256": "a3b475dfea308f02ee745ba2794f4e43059b62250554117af62f21b4703f2a26",
+      "registered_sha256": "a3b475dfea308f02ee745ba2794f4e43059b62250554117af62f21b4703f2a26"
+    },
+    "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/evaluation/scoring.py": {
+      "observed_sha256": "5a22e1c1ff7b0a56623931c0782f81dd2b3a9df83ccfe77ce3724d37cf320086",
+      "registered_sha256": "5a22e1c1ff7b0a56623931c0782f81dd2b3a9df83ccfe77ce3724d37cf320086"
+    },
+    "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/evidence.py": {
+      "observed_sha256": "fdf528727bd269b89ab431ceb9e301dc3ad14d827c18be21944c56c99e820c6b",
+      "registered_sha256": "fdf528727bd269b89ab431ceb9e301dc3ad14d827c18be21944c56c99e820c6b"
+    },
+    "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/fisher.py": {
+      "observed_sha256": "e097ecdc41a61466e3bab98d74c6d342aa871c155f2b7fb2ff6f393c6b139997",
+      "registered_sha256": "e097ecdc41a61466e3bab98d74c6d342aa871c155f2b7fb2ff6f393c6b139997"
+    },
+    "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/functional_atlas.py": {
+      "observed_sha256": "3e60791f8b55b30c74c801ddfba6145576828dd01c62083247eeb842aa516df8",
+      "registered_sha256": "3e60791f8b55b30c74c801ddfba6145576828dd01c62083247eeb842aa516df8"
+    },
+    "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/functional_localization.py": {
+      "observed_sha256": "5f4049dc25d0446c356c9556e0390a58b32241f2ed557c4be6dfcecd13b059f7",
+      "registered_sha256": "5f4049dc25d0446c356c9556e0390a58b32241f2ed557c4be6dfcecd13b059f7"
+    },
+    "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/functional_translator.py": {
+      "observed_sha256": "e0a10a826653f5bf122c1dff11fab89de06f96240f28e8f17df03da2bc3a0bd3",
+      "registered_sha256": "e0a10a826653f5bf122c1dff11fab89de06f96240f28e8f17df03da2bc3a0bd3"
+    },
+    "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/hashing.py": {
+      "observed_sha256": "68116088fbfbc68e3775bfe5be89b95ecb6a3742098a51bed1f7fec048dc87a0",
+      "registered_sha256": "68116088fbfbc68e3775bfe5be89b95ecb6a3742098a51bed1f7fec048dc87a0"
+    },
+    "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/interventions.py": {
+      "observed_sha256": "0cd82c5ba6d9c7a6badea8f05c6ebc98717ae7e266a0811b3ded6332101b0c17",
+      "registered_sha256": "0cd82c5ba6d9c7a6badea8f05c6ebc98717ae7e266a0811b3ded6332101b0c17"
+    },
+    "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/layer_ablation.py": {
+      "observed_sha256": "a003d6bfe0ff980715a589fa85206e96a48710b112defc8d6c55a85673658fd7",
+      "registered_sha256": "a003d6bfe0ff980715a589fa85206e96a48710b112defc8d6c55a85673658fd7"
+    },
+    "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/leakage.py": {
+      "observed_sha256": "a4e18801cd6f1cf9f1dde2ef040de63b9e845bd04d285b88f43929c7e462c215",
+      "registered_sha256": "a4e18801cd6f1cf9f1dde2ef040de63b9e845bd04d285b88f43929c7e462c215"
+    },
+    "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/operations.py": {
+      "observed_sha256": "c27ccef6ad5e16eb1c9f4517e900cdcd6011f048930eef1e18a1b4723ec0d112",
+      "registered_sha256": "c27ccef6ad5e16eb1c9f4517e900cdcd6011f048930eef1e18a1b4723ec0d112"
+    },
+    "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/projection.py": {
+      "observed_sha256": "5814db9766715507bcbfe70e5e17a15f15b448154ae3976ec553ef1abeecfa2e",
+      "registered_sha256": "5814db9766715507bcbfe70e5e17a15f15b448154ae3976ec553ef1abeecfa2e"
+    },
+    "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/promotion.py": {
+      "observed_sha256": "c19b0f66f13c18c19860bb7f6211c429344f6e5b8c045e224929d5f9a110846f",
+      "registered_sha256": "c19b0f66f13c18c19860bb7f6211c429344f6e5b8c045e224929d5f9a110846f"
+    },
+    "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/registry.py": {
+      "observed_sha256": "e52791d8d2f0ca4c158ecb863323f60054c5a272b4f358d2df9a98b177260d50",
+      "registered_sha256": "e52791d8d2f0ca4c158ecb863323f60054c5a272b4f358d2df9a98b177260d50"
+    },
+    "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/resource_trace.py": {
+      "observed_sha256": "9ee4af7b2dad19991349f3887b103aac568c16abba7b43ee44bd062dadd4665a",
+      "registered_sha256": "9ee4af7b2dad19991349f3887b103aac568c16abba7b43ee44bd062dadd4665a"
+    },
+    "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/sequential_runner.py": {
+      "observed_sha256": "9d10265a107893df76ccadb51d05a85934b3c8c9bc193f60a4427f6fc60f025b",
+      "registered_sha256": "9d10265a107893df76ccadb51d05a85934b3c8c9bc193f60a4427f6fc60f025b"
+    },
+    "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/spectral_projection.py": {
+      "observed_sha256": "0379c0f3c14e05824f3c12efa340bff95aa328cd8b8a7cb33f4315eccd95ad22",
+      "registered_sha256": "0379c0f3c14e05824f3c12efa340bff95aa328cd8b8a7cb33f4315eccd95ad22"
+    },
+    "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/streaming_forward.py": {
+      "observed_sha256": "3ff342ab403ac866622fc8faa1ca63bfb2f193dfd97ec5f098bfd8d03366961e",
+      "registered_sha256": "3ff342ab403ac866622fc8faa1ca63bfb2f193dfd97ec5f098bfd8d03366961e"
+    },
+    "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/transport_sanity.py": {
+      "observed_sha256": "3f3089ced6cdb091bf071335add28d1da0c5852bb84afef093b4ab1c1a9d6e31",
+      "registered_sha256": "3f3089ced6cdb091bf071335add28d1da0c5852bb84afef093b4ab1c1a9d6e31"
+    },
+    "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/v2.py": {
+      "observed_sha256": "4d6f942e3dc5fbbc9570538d22027df3614183450461d796ff1b6a880bb155ed",
+      "registered_sha256": "4d6f942e3dc5fbbc9570538d22027df3614183450461d796ff1b6a880bb155ed"
+    },
+    "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/v3_transport.py": {
+      "observed_sha256": "cadf2ccb3723e16f3919fc5401ed25c9f9c83c87573fc0c82074ca56f1f94555",
+      "registered_sha256": "cadf2ccb3723e16f3919fc5401ed25c9f9c83c87573fc0c82074ca56f1f94555"
+    },
+    "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/validation.py": {
+      "observed_sha256": "c3b43df9a0e3c3a21f8b47cc66dd85316ee8e20500eb808e67d9478bb6d245c6",
+      "registered_sha256": "c3b43df9a0e3c3a21f8b47cc66dd85316ee8e20500eb808e67d9478bb6d245c6"
+    },
+    "experiments/anchor_routed_middle_recurrence_v1/evidence/02c_fixed_cpu_budget_v2/20260905T132743_802018Z/run_manifest.json": {
+      "observed_sha256": "daa5bc8e947602a4ed3d7fb19076ec6000e27f7afcc2a1426e544491bff95dfe",
+      "registered_sha256": "daa5bc8e947602a4ed3d7fb19076ec6000e27f7afcc2a1426e544491bff95dfe"
+    },
+    "experiments/anchor_routed_middle_recurrence_v1/scripts/run_experiment.py": {
+      "observed_sha256": "170e5b0a9e49a9867ae847c2ddbc26f306013f7c44402fdfbc65fd28d73a3c98",
+      "registered_sha256": "170e5b0a9e49a9867ae847c2ddbc26f306013f7c44402fdfbc65fd28d73a3c98"
+    },
+    "experiments/anchor_routed_middle_recurrence_v1/src/armr/__init__.py": {
+      "observed_sha256": "45bf40eb692379c12c31d90c5e6fe4a78358f28b23783f24a0bf658893ba5065",
+      "registered_sha256": "45bf40eb692379c12c31d90c5e6fe4a78358f28b23783f24a0bf658893ba5065"
+    },
+    "experiments/anchor_routed_middle_recurrence_v1/src/armr/evaluation.py": {
+      "observed_sha256": "e262761b45105d6586221c2c99b6f56ecc7d3aba2fe276b392e9b1e13cd80bfa",
+      "registered_sha256": "e262761b45105d6586221c2c99b6f56ecc7d3aba2fe276b392e9b1e13cd80bfa"
+    },
+    "experiments/anchor_routed_middle_recurrence_v1/src/armr/hooks.py": {
+      "observed_sha256": "a73baf73515ca905c39a631feb576caad232bec60bb05f0150204e952e0d36a3",
+      "registered_sha256": "a73baf73515ca905c39a631feb576caad232bec60bb05f0150204e952e0d36a3"
+    },
+    "experiments/anchor_routed_middle_recurrence_v1/src/armr/metrics.py": {
+      "observed_sha256": "c2653a5129f4cf03b3c7081d0c99f6540fcefd0d17a717c7132b8c1ccf50ed67",
+      "registered_sha256": "c2653a5129f4cf03b3c7081d0c99f6540fcefd0d17a717c7132b8c1ccf50ed67"
+    },
+    "experiments/anchor_routed_middle_recurrence_v1/src/armr/preregistration.py": {
+      "observed_sha256": "baf03fd503db38270afb8d63d7080007b1a973c6f5faf0c00d55161581e80dad",
+      "registered_sha256": "baf03fd503db38270afb8d63d7080007b1a973c6f5faf0c00d55161581e80dad"
+    },
+    "experiments/anchor_routed_middle_recurrence_v1/src/armr/provenance.py": {
+      "observed_sha256": "3f84bc41851a4709ff123217b0f781e6d1ec93e3f40dc7c911a95f44c1ee9018",
+      "registered_sha256": "3f84bc41851a4709ff123217b0f781e6d1ec93e3f40dc7c911a95f44c1ee9018"
+    },
+    "experiments/anchor_routed_middle_recurrence_v1/src/armr/recurrence.py": {
+      "observed_sha256": "88ab4c791b1871dc3765a85f89dbd857023bcf5e4dfa55b6c24142aaee0edea9",
+      "registered_sha256": "88ab4c791b1871dc3765a85f89dbd857023bcf5e4dfa55b6c24142aaee0edea9"
+    },
+    "experiments/anchor_routed_middle_recurrence_v1/src/armr/reporting.py": {
+      "observed_sha256": "99ca41eed1da02d7ef5a3d3a7a43c004c60f18cccaa328267ba41b980cfd2021",
+      "registered_sha256": "99ca41eed1da02d7ef5a3d3a7a43c004c60f18cccaa328267ba41b980cfd2021"
+    },
+    "experiments/cross_scale_layer_graft_v1/graft.py": {
+      "observed_sha256": "56f9c609ce43ece7579adba4fea689bdfffe3d8dca4ec7c970d1cfd1a64bf57d",
+      "registered_sha256": "56f9c609ce43ece7579adba4fea689bdfffe3d8dca4ec7c970d1cfd1a64bf57d"
+    },
+    "experiments/supa_adaptive_compute_v2/data/generated/v2/native_armr/calibration.jsonl": {
+      "observed_sha256": "fc326f86683f1faea5e8a3c8f281f05fe1d455f819c4a01a7087002e8c34e6ec",
+      "registered_sha256": "fc326f86683f1faea5e8a3c8f281f05fe1d455f819c4a01a7087002e8c34e6ec"
+    },
+    "experiments/supa_adaptive_compute_v2/data/generated/v2/native_armr/manifest.json": {
+      "observed_sha256": "a6245d8667715460b2845d5fcbbd1b38e9d54e33a6d4eda12cf7ce2c19c9054b",
+      "registered_sha256": "a6245d8667715460b2845d5fcbbd1b38e9d54e33a6d4eda12cf7ce2c19c9054b"
+    },
+    "experiments/supa_adaptive_compute_v2/native_armr/configs/control_calibration_v2_3.json": {
+      "observed_sha256": "abddd1de7b8bd85fefe07ff0a3af5c66724d93be6408d93495c52c869d0f9484",
+      "registered_sha256": "abddd1de7b8bd85fefe07ff0a3af5c66724d93be6408d93495c52c869d0f9484"
+    },
+    "experiments/supa_adaptive_compute_v2/native_armr/protocol/control_calibration_v2_3.md": {
+      "observed_sha256": "975626fb2d77c59b5bbb1e67ae08e86f4919f12428d112a4b939fe9160cb93e1",
+      "registered_sha256": "975626fb2d77c59b5bbb1e67ae08e86f4919f12428d112a4b939fe9160cb93e1"
+    },
+    "experiments/supa_adaptive_compute_v2/native_armr/protocol/gpu_fp32_v2_2_amendment.md": {
+      "observed_sha256": "bc717c04caa42bf93cded91df8e6866e2191ab2614fe78014c8a4bb553ba867e",
+      "registered_sha256": "bc717c04caa42bf93cded91df8e6866e2191ab2614fe78014c8a4bb553ba867e"
+    },
+    "experiments/supa_adaptive_compute_v2/native_armr/protocol/gpu_fp32_v2_3_amendment.md": {
+      "observed_sha256": "985b8bd98af44ce189dd41282428749402cb63368aeafb86e08e6dd88f336977",
+      "registered_sha256": "985b8bd98af44ce189dd41282428749402cb63368aeafb86e08e6dd88f336977"
+    },
+    "experiments/supa_adaptive_compute_v2/native_armr/protocol/preregistration.md": {
+      "observed_sha256": "56f960b242bdf3f7d18057b526df15240904db587cc199a2c0258fc6cf6e37a4",
+      "registered_sha256": "56f960b242bdf3f7d18057b526df15240904db587cc199a2c0258fc6cf6e37a4"
+    },
+    "experiments/supa_adaptive_compute_v2/native_armr/scripts/aggregate.py": {
+      "observed_sha256": "2a7c9c919955c59b0c4353b0bb56ebc8794cb6556919ca3ae183ed84e893d8e4",
+      "registered_sha256": "2a7c9c919955c59b0c4353b0bb56ebc8794cb6556919ca3ae183ed84e893d8e4"
+    },
+    "experiments/supa_adaptive_compute_v2/native_armr/scripts/audit_results.py": {
+      "observed_sha256": "34510a6f80422adde0147d9e23d01ceb69337a9cba32a57134c5c6dc4c3d405d",
+      "registered_sha256": "34510a6f80422adde0147d9e23d01ceb69337a9cba32a57134c5c6dc4c3d405d"
+    },
+    "experiments/supa_adaptive_compute_v2/native_armr/scripts/calibrate_control.py": {
+      "observed_sha256": "1d6a8a82ea3f9e0871d457c7a1b65b5561fd48d961bed4a84f8fd3ad31ae6725",
+      "registered_sha256": "1d6a8a82ea3f9e0871d457c7a1b65b5561fd48d961bed4a84f8fd3ad31ae6725"
+    },
+    "experiments/supa_adaptive_compute_v2/native_armr/scripts/freeze_calibrated_control.py": {
+      "observed_sha256": "47a6860b0615ef2cf9fd674d2395ecd624a9bf2da732663c9bf2e344238ad33e",
+      "registered_sha256": "47a6860b0615ef2cf9fd674d2395ecd624a9bf2da732663c9bf2e344238ad33e"
+    },
+    "experiments/supa_adaptive_compute_v2/native_armr/scripts/run_large_eval.py": {
+      "observed_sha256": "5b7ae4c29ae84d64cbdc17cdf90fc7ebfb473665b18499d22c9c7f6f8ae979b3",
+      "registered_sha256": "5b7ae4c29ae84d64cbdc17cdf90fc7ebfb473665b18499d22c9c7f6f8ae979b3"
+    },
+    "experiments/supa_adaptive_compute_v2/native_armr/src/__init__.py": {
+      "observed_sha256": "4feebf4449884ffbc4c6097d56e809f2888c5c4bbfcbcc3b0773ee413e852005",
+      "registered_sha256": "4feebf4449884ffbc4c6097d56e809f2888c5c4bbfcbcc3b0773ee413e852005"
+    },
+    "experiments/supa_adaptive_compute_v2/native_armr/src/analysis.py": {
+      "observed_sha256": "9c5e0243d6bd3f1b940f24005dfd269fec64687ce99302d97eb4c803776aa359",
+      "registered_sha256": "9c5e0243d6bd3f1b940f24005dfd269fec64687ce99302d97eb4c803776aa359"
+    },
+    "experiments/supa_adaptive_compute_v2/native_armr/src/audit.py": {
+      "observed_sha256": "2930ae0755e4301c7487921f495eea9504172f65b345438c6eb1bdc3712ae962",
+      "registered_sha256": "2930ae0755e4301c7487921f495eea9504172f65b345438c6eb1bdc3712ae962"
+    },
+    "experiments/supa_adaptive_compute_v2/native_armr/src/control_calibration.py": {
+      "observed_sha256": "006478e8bc472c4790eec9ebe337781d955d1f8933a5524f78a81d048c4819d6",
+      "registered_sha256": "006478e8bc472c4790eec9ebe337781d955d1f8933a5524f78a81d048c4819d6"
+    },
+    "experiments/supa_adaptive_compute_v2/native_armr/src/operators.py": {
+      "observed_sha256": "e26ffaae43ee0ab2f54624df2f89cd369232559e8adf8fcb0c3c674d1aeb0e3c",
+      "registered_sha256": "e26ffaae43ee0ab2f54624df2f89cd369232559e8adf8fcb0c3c674d1aeb0e3c"
+    },
+    "experiments/supa_adaptive_compute_v2/native_armr/src/protocol.py": {
+      "observed_sha256": "f77688bbc3d3580d5a98ca8cc15782ca6e982f687df5381ac9f0ab1398b312b9",
+      "registered_sha256": "f77688bbc3d3580d5a98ca8cc15782ca6e982f687df5381ac9f0ab1398b312b9"
+    },
+    "experiments/supa_adaptive_compute_v2/native_armr/tests/test_control_calibration.py": {
+      "observed_sha256": "55bfbef0f43a10e421f8661944d5fd4e6bf682288f6488ab7972241648938f4b",
+      "registered_sha256": "55bfbef0f43a10e421f8661944d5fd4e6bf682288f6488ab7972241648938f4b"
+    },
+    "experiments/supa_adaptive_compute_v2/scripts/audit_history.py": {
+      "observed_sha256": "701b0dabc6353934c138f2cd02a5fbf35016a3697bc6249a2d7aee8bcf167727",
+      "registered_sha256": "701b0dabc6353934c138f2cd02a5fbf35016a3697bc6249a2d7aee8bcf167727"
+    },
+    "experiments/supa_adaptive_compute_v2/scripts/build_banks.py": {
+      "observed_sha256": "ec7f65be2dbd729ef44f6b758448555f538d7fba2aff1a894ec4a5ad5dfe567c",
+      "registered_sha256": "ec7f65be2dbd729ef44f6b758448555f538d7fba2aff1a894ec4a5ad5dfe567c"
+    },
+    "experiments/supa_adaptive_compute_v2/scripts/freeze_protocols.py": {
+      "observed_sha256": "ab96de44fe42e8d754e698dc7af9563ceb450db08ea2c1d09201599bfdfef030",
+      "registered_sha256": "ab96de44fe42e8d754e698dc7af9563ceb450db08ea2c1d09201599bfdfef030"
+    },
+    "experiments/supa_adaptive_compute_v2/scripts/qualify_native_gpu.py": {
+      "observed_sha256": "0520e1634bc0eca6a9c8a00ad99e64e61221012c12a79e543a2e0b8f04dc248b",
+      "registered_sha256": "0520e1634bc0eca6a9c8a00ad99e64e61221012c12a79e543a2e0b8f04dc248b"
+    },
+    "experiments/supa_adaptive_compute_v2/scripts/run_native_campaign.py": {
+      "observed_sha256": "fc4468a1f3990cb68fe5846f9c944e4a31d476847b88b5392adf67afa981055c",
+      "registered_sha256": "fc4468a1f3990cb68fe5846f9c944e4a31d476847b88b5392adf67afa981055c"
+    },
+    "experiments/supa_adaptive_compute_v2/scripts/validate_inputs.py": {
+      "observed_sha256": "6aa7f55ac5ae22946f1c130a5da2ef878436383c9191aea9ce8569a0d3a33745",
+      "registered_sha256": "6aa7f55ac5ae22946f1c130a5da2ef878436383c9191aea9ce8569a0d3a33745"
+    },
+    "experiments/supa_adaptive_compute_v2/shared/__init__.py": {
+      "observed_sha256": "d32dafa69f56e5a9578679372f786efe9796b0a7654fbf7babde0c405ce6c9b4",
+      "registered_sha256": "d32dafa69f56e5a9578679372f786efe9796b0a7654fbf7babde0c405ce6c9b4"
+    },
+    "experiments/supa_adaptive_compute_v2/shared/datasets.py": {
+      "observed_sha256": "a36051907e6bd246211eeeddb37acdec22144b74573f744300338749b58f6a01",
+      "registered_sha256": "a36051907e6bd246211eeeddb37acdec22144b74573f744300338749b58f6a01"
+    },
+    "experiments/supa_adaptive_compute_v2/shared/evaluation.py": {
+      "observed_sha256": "358ba7d64eefff458672db7bb55e7f65f6fa80f11bbb4999cd108a9a9f29e69b",
+      "registered_sha256": "358ba7d64eefff458672db7bb55e7f65f6fa80f11bbb4999cd108a9a9f29e69b"
+    },
+    "experiments/supa_adaptive_compute_v2/shared/generation.py": {
+      "observed_sha256": "a5973ab9aa330bfeec1cc5c0bc51613c7475c0e70680551e150ef605dac4dbdf",
+      "registered_sha256": "a5973ab9aa330bfeec1cc5c0bc51613c7475c0e70680551e150ef605dac4dbdf"
+    },
+    "experiments/supa_adaptive_compute_v2/shared/guards.py": {
+      "observed_sha256": "9b66fb381fb4c05659c85418af97f05511f1d62a1eee9aae054cd559954b017d",
+      "registered_sha256": "9b66fb381fb4c05659c85418af97f05511f1d62a1eee9aae054cd559954b017d"
+    },
+    "experiments/supa_adaptive_compute_v2/shared/hashing.py": {
+      "observed_sha256": "c1d1987d81a242eef634032659fa633227bb925902e6a957effabcf479c6f771",
+      "registered_sha256": "c1d1987d81a242eef634032659fa633227bb925902e6a957effabcf479c6f771"
+    },
+    "experiments/supa_adaptive_compute_v2/shared/hidden_capture.py": {
+      "observed_sha256": "d72a173976e91df80c4a65aaafa9b3d0c73929c2c5992894b0480ac610ec8e3f",
+      "registered_sha256": "d72a173976e91df80c4a65aaafa9b3d0c73929c2c5992894b0480ac610ec8e3f"
+    },
+    "experiments/supa_adaptive_compute_v2/shared/integrity.py": {
+      "observed_sha256": "5dc7cada032e26b6eea9bbf8cbfc68b9b9a5ea88167b8c93b53be52cc7b6f981",
+      "registered_sha256": "5dc7cada032e26b6eea9bbf8cbfc68b9b9a5ea88167b8c93b53be52cc7b6f981"
+    },
+    "experiments/supa_adaptive_compute_v2/shared/legacy.py": {
+      "observed_sha256": "624e4156ba91dcc9ffb8738b161fdfe74b8920a97c0c355e61bbbf089c8bb776",
+      "registered_sha256": "624e4156ba91dcc9ffb8738b161fdfe74b8920a97c0c355e61bbbf089c8bb776"
+    },
+    "experiments/supa_adaptive_compute_v2/shared/manifests.py": {
+      "observed_sha256": "ed7c27f2b6c763ef326aa3a5dc0f620d0ac3252eed69decc816fc08919b48e4e",
+      "registered_sha256": "ed7c27f2b6c763ef326aa3a5dc0f620d0ac3252eed69decc816fc08919b48e4e"
+    },
+    "experiments/supa_adaptive_compute_v2/shared/model_loading.py": {
+      "observed_sha256": "1e07c1117d9ef1b492fd0a464d7aaa5046460d0e89644d08e13cd9382eaaf95b",
+      "registered_sha256": "1e07c1117d9ef1b492fd0a464d7aaa5046460d0e89644d08e13cd9382eaaf95b"
+    },
+    "experiments/supa_adaptive_compute_v2/shared/qualifications.py": {
+      "observed_sha256": "82cc7d8b7785531dd20a60f2e635357643cb2e162260b9f60041cb12c9fb07fb",
+      "registered_sha256": "82cc7d8b7785531dd20a60f2e635357643cb2e162260b9f60041cb12c9fb07fb"
+    },
+    "experiments/supa_adaptive_compute_v2/shared/reporting.py": {
+      "observed_sha256": "2ec507e0f735141c7c73bfa4189af13107df9e591b7dec16d010f0707eec2407",
+      "registered_sha256": "2ec507e0f735141c7c73bfa4189af13107df9e591b7dec16d010f0707eec2407"
+    },
+    "experiments/supa_adaptive_compute_v2/shared/runtime.py": {
+      "observed_sha256": "749183b9e766b6979aee4e42631abd9f6e0355f361bd9a55b3519897d737d1e2",
+      "registered_sha256": "749183b9e766b6979aee4e42631abd9f6e0355f361bd9a55b3519897d737d1e2"
+    },
+    "experiments/supa_adaptive_compute_v2/shared/scoring.py": {
+      "observed_sha256": "6f7a7381cd5761b404ff1c17bc44b1afcdc2efb5a5a07bbcc6ecea12da34a642",
+      "registered_sha256": "6f7a7381cd5761b404ff1c17bc44b1afcdc2efb5a5a07bbcc6ecea12da34a642"
+    },
+    "experiments/supa_adaptive_compute_v2/shared/statistics.py": {
+      "observed_sha256": "86655657ef1e42148bf3226353e9e616ae3c26e0e83ecddc2d7404163331e0f7",
+      "registered_sha256": "86655657ef1e42148bf3226353e9e616ae3c26e0e83ecddc2d7404163331e0f7"
+    },
+    "experiments/supa_adaptive_compute_v2/shared/timing.py": {
+      "observed_sha256": "d795b951ad21ea002c48404775bdb119952b50715869c09766238c0eb0bd3293",
+      "registered_sha256": "d795b951ad21ea002c48404775bdb119952b50715869c09766238c0eb0bd3293"
+    },
+    "rineya_significance_native_architecture_lab/src/rineya_significance_lab/__init__.py": {
+      "observed_sha256": "c32a80ac75160792e3adfd8e2f506abc39dddb2b5f041f78d82a50f65ff8298d",
+      "registered_sha256": "c32a80ac75160792e3adfd8e2f506abc39dddb2b5f041f78d82a50f65ff8298d"
+    },
+    "rineya_significance_native_architecture_lab/src/rineya_significance_lab/benchmarks/__init__.py": {
+      "observed_sha256": "d4d90cf8e590b8dcefe1f5312e6ebc2887bc2d6b1623505b9c106e074ecfb779",
+      "registered_sha256": "d4d90cf8e590b8dcefe1f5312e6ebc2887bc2d6b1623505b9c106e074ecfb779"
+    },
+    "rineya_significance_native_architecture_lab/src/rineya_significance_lab/benchmarks/advanced.py": {
+      "observed_sha256": "427ba2b5c87a30ece09bbde87dc9ee5424177a76aeb7d76e6e713177ff09f70b",
+      "registered_sha256": "427ba2b5c87a30ece09bbde87dc9ee5424177a76aeb7d76e6e713177ff09f70b"
+    },
+    "rineya_significance_native_architecture_lab/src/rineya_significance_lab/benchmarks/evidence.py": {
+      "observed_sha256": "44c7f405be570df55ed1ddc2124f7864a46573b9b5bbb4f6827119f8d819b82d",
+      "registered_sha256": "44c7f405be570df55ed1ddc2124f7864a46573b9b5bbb4f6827119f8d819b82d"
+    },
+    "rineya_significance_native_architecture_lab/src/rineya_significance_lab/benchmarks/r7_v2.py": {
+      "observed_sha256": "960b2ab247b26e836380d1016242682a2bf6cb2b000001c6773f13d24580ebf3",
+      "registered_sha256": "960b2ab247b26e836380d1016242682a2bf6cb2b000001c6773f13d24580ebf3"
+    },
+    "rineya_significance_native_architecture_lab/src/rineya_significance_lab/benchmarks/schema.py": {
+      "observed_sha256": "d3cd6cc1a14a8d209bc858c54b7bbdb466b0e88b7813e5babbb606c9dee095db",
+      "registered_sha256": "d3cd6cc1a14a8d209bc858c54b7bbdb466b0e88b7813e5babbb606c9dee095db"
+    },
+    "rineya_significance_native_architecture_lab/src/rineya_significance_lab/benchmarks/synthetic.py": {
+      "observed_sha256": "3ec8a1b7f717df659d70a8b1248da8e6bf79b1902ecebcf9deadae3133c4c832",
+      "registered_sha256": "3ec8a1b7f717df659d70a8b1248da8e6bf79b1902ecebcf9deadae3133c4c832"
+    },
+    "rineya_significance_native_architecture_lab/src/rineya_significance_lab/benchmarks/synthetic_traces.py": {
+      "observed_sha256": "ff8f37ceb57b2697cb1b3ab74ef4f19057fd60c44cfabd80c361baa5f7e7cddf",
+      "registered_sha256": "ff8f37ceb57b2697cb1b3ab74ef4f19057fd60c44cfabd80c361baa5f7e7cddf"
+    },
+    "rineya_significance_native_architecture_lab/src/rineya_significance_lab/cli.py": {
+      "observed_sha256": "0be9edd77c41fc184e0c69a12d00c86fd9c0d40f678385b3edfa158191c12055",
+      "registered_sha256": "0be9edd77c41fc184e0c69a12d00c86fd9c0d40f678385b3edfa158191c12055"
+    },
+    "rineya_significance_native_architecture_lab/src/rineya_significance_lab/config.py": {
+      "observed_sha256": "9afeb64419a269f1ca69b3437109cef4c8d763c9eb16ec31d35a1d325a6012e7",
+      "registered_sha256": "9afeb64419a269f1ca69b3437109cef4c8d763c9eb16ec31d35a1d325a6012e7"
+    },
+    "rineya_significance_native_architecture_lab/src/rineya_significance_lab/core/__init__.py": {
+      "observed_sha256": "63f0ff68c4ada2f2fca756850d79afa254f05cd7f2ee9af428219a658518fc0d",
+      "registered_sha256": "63f0ff68c4ada2f2fca756850d79afa254f05cd7f2ee9af428219a658518fc0d"
+    },
+    "rineya_significance_native_architecture_lab/src/rineya_significance_lab/core/allocation.py": {
+      "observed_sha256": "b8cba06057a535d7e2816fc56a3b4cd28fa9e2f7765c4c43f6393a573d1bd6ce",
+      "registered_sha256": "b8cba06057a535d7e2816fc56a3b4cd28fa9e2f7765c4c43f6393a573d1bd6ce"
+    },
+    "rineya_significance_native_architecture_lab/src/rineya_significance_lab/core/budget.py": {
+      "observed_sha256": "69445ff530f613d8744d8a37683923154fa846ff8c0e6323765325db31561021",
+      "registered_sha256": "69445ff530f613d8744d8a37683923154fa846ff8c0e6323765325db31561021"
+    },
+    "rineya_significance_native_architecture_lab/src/rineya_significance_lab/core/counts.py": {
+      "observed_sha256": "83978aecfb9edf3ed51108c1d191decf204f34410834d7c0b066fe41ecbfa84b",
+      "registered_sha256": "83978aecfb9edf3ed51108c1d191decf204f34410834d7c0b066fe41ecbfa84b"
+    },
+    "rineya_significance_native_architecture_lab/src/rineya_significance_lab/core/randomness.py": {
+      "observed_sha256": "4ca05fa05dbb230e0debc4a8aa82773c5ed83f6bfd1671b1844ad8f13059171c",
+      "registered_sha256": "4ca05fa05dbb230e0debc4a8aa82773c5ed83f6bfd1671b1844ad8f13059171c"
+    },
+    "rineya_significance_native_architecture_lab/src/rineya_significance_lab/core/ranking.py": {
+      "observed_sha256": "a9334c1bf4e704d1c9be1c6d65d1f3fd2c219b7b39738647aab791b82b1034cc",
+      "registered_sha256": "a9334c1bf4e704d1c9be1c6d65d1f3fd2c219b7b39738647aab791b82b1034cc"
+    },
+    "rineya_significance_native_architecture_lab/src/rineya_significance_lab/core/scoring.py": {
+      "observed_sha256": "666f698519ab9d41b815392f8b7e890e3d1efb2967f76146482b00baecb83702",
+      "registered_sha256": "666f698519ab9d41b815392f8b7e890e3d1efb2967f76146482b00baecb83702"
+    },
+    "rineya_significance_native_architecture_lab/src/rineya_significance_lab/core/state.py": {
+      "observed_sha256": "609ea93466088343070f0d034d406afc86177d5197737d0f4c2647df659da790",
+      "registered_sha256": "609ea93466088343070f0d034d406afc86177d5197737d0f4c2647df659da790"
+    },
+    "rineya_significance_native_architecture_lab/src/rineya_significance_lab/evaluation/__init__.py": {
+      "observed_sha256": "84105db4f2f488f8be3d260ea9b89b952d7439f6ad3cba5d0ac645b5e3090b8d",
+      "registered_sha256": "84105db4f2f488f8be3d260ea9b89b952d7439f6ad3cba5d0ac645b5e3090b8d"
+    },
+    "rineya_significance_native_architecture_lab/src/rineya_significance_lab/evaluation/adaptive_budget_screen.py": {
+      "observed_sha256": "b1ad7e085e512b79dfc0bceaa04a9a305127aa8de2793486da86b5b8bae66794",
+      "registered_sha256": "b1ad7e085e512b79dfc0bceaa04a9a305127aa8de2793486da86b5b8bae66794"
+    },
+    "rineya_significance_native_architecture_lab/src/rineya_significance_lab/evaluation/attention_prior_quality.py": {
+      "observed_sha256": "48c6d67fb2dba90d75787f2f12afb236d2632f53cb5bcab85c7a04c7cb84908d",
+      "registered_sha256": "48c6d67fb2dba90d75787f2f12afb236d2632f53cb5bcab85c7a04c7cb84908d"
+    },
+    "rineya_significance_native_architecture_lab/src/rineya_significance_lab/evaluation/boundary_evidence.py": {
+      "observed_sha256": "2033c592c6ae7bfe7b62e96d29f52d058154a12c3ebb144666e6740b607cb264",
+      "registered_sha256": "2033c592c6ae7bfe7b62e96d29f52d058154a12c3ebb144666e6740b607cb264"
+    },
+    "rineya_significance_native_architecture_lab/src/rineya_significance_lab/evaluation/clustered.py": {
+      "observed_sha256": "cba67f98400ecd9b70c2f33a9fba1f51e9792bbf81be4c756adb2937c231c5a5",
+      "registered_sha256": "cba67f98400ecd9b70c2f33a9fba1f51e9792bbf81be4c756adb2937c231c5a5"
+    },
+    "rineya_significance_native_architecture_lab/src/rineya_significance_lab/evaluation/count_causal.py": {
+      "observed_sha256": "ff6c0c03f87f95017f0af8b9f26283fcd281836f62b1486f35744e67c63a7e88",
+      "registered_sha256": "ff6c0c03f87f95017f0af8b9f26283fcd281836f62b1486f35744e67c63a7e88"
+    },
+    "rineya_significance_native_architecture_lab/src/rineya_significance_lab/evaluation/evidence_endpoints.py": {
+      "observed_sha256": "d262e8de503693313871efa1b2e028a0531ad14abc885159329f31401ee8ee87",
+      "registered_sha256": "d262e8de503693313871efa1b2e028a0531ad14abc885159329f31401ee8ee87"
+    },
+    "rineya_significance_native_architecture_lab/src/rineya_significance_lab/evaluation/failure_taxonomy.py": {
+      "observed_sha256": "c9dddeffeafcd27719af0724cad3b0b21a4e0b9ab3a6e2ef605588060e69f503",
+      "registered_sha256": "c9dddeffeafcd27719af0724cad3b0b21a4e0b9ab3a6e2ef605588060e69f503"
+    },
+    "rineya_significance_native_architecture_lab/src/rineya_significance_lab/evaluation/metrics.py": {
+      "observed_sha256": "23affbd133ef8cdb9f88bce7daebfe0f6eb8f66f44d030cdff92705f330678bc",
+      "registered_sha256": "23affbd133ef8cdb9f88bce7daebfe0f6eb8f66f44d030cdff92705f330678bc"
+    },
+    "rineya_significance_native_architecture_lab/src/rineya_significance_lab/evaluation/recovery.py": {
+      "observed_sha256": "43ade7eaaeb29df36b609f16585a43a90de994d83fc16743dc15d546be40d685",
+      "registered_sha256": "43ade7eaaeb29df36b609f16585a43a90de994d83fc16743dc15d546be40d685"
+    },
+    "rineya_significance_native_architecture_lab/src/rineya_significance_lab/evaluation/schedule_interaction.py": {
+      "observed_sha256": "14903feac344c732d33e1c62adab6fb754c59ab39c528bc89282f186c85fe39d",
+      "registered_sha256": "14903feac344c732d33e1c62adab6fb754c59ab39c528bc89282f186c85fe39d"
+    },
+    "rineya_significance_native_architecture_lab/src/rineya_significance_lab/evaluation/statistics.py": {
+      "observed_sha256": "a97d81e99b3d8bf2fc25b79f7f27a704c87970621bb965c26271d143f2f2689c",
+      "registered_sha256": "a97d81e99b3d8bf2fc25b79f7f27a704c87970621bb965c26271d143f2f2689c"
+    },
+    "rineya_significance_native_architecture_lab/src/rineya_significance_lab/evaluation/tiny_controller.py": {
+      "observed_sha256": "48eb5aeb20c3369fa2508863a1e7349d614551bd4cd13732693a86c67e821d72",
+      "registered_sha256": "48eb5aeb20c3369fa2508863a1e7349d614551bd4cd13732693a86c67e821d72"
+    },
+    "rineya_significance_native_architecture_lab/src/rineya_significance_lab/integrity.py": {
+      "observed_sha256": "7d4b88f8148b169a231084af25a844c7fa460dc2283ddd0a32f26bf6e51aee47",
+      "registered_sha256": "7d4b88f8148b169a231084af25a844c7fa460dc2283ddd0a32f26bf6e51aee47"
+    },
+    "rineya_significance_native_architecture_lab/src/rineya_significance_lab/manifest.py": {
+      "observed_sha256": "d30b59ca5f4f2f3983a7548af7a0875f59d84b86136a09d65db39e6606901a1c",
+      "registered_sha256": "d30b59ca5f4f2f3983a7548af7a0875f59d84b86136a09d65db39e6606901a1c"
+    },
+    "rineya_significance_native_architecture_lab/src/rineya_significance_lab/policies/__init__.py": {
+      "observed_sha256": "ce244cbcf69f930c21030fe1cd6e18b6f06cfbcf5d0943e3bb95382a071dc389",
+      "registered_sha256": "ce244cbcf69f930c21030fe1cd6e18b6f06cfbcf5d0943e3bb95382a071dc389"
+    },
+    "rineya_significance_native_architecture_lab/src/rineya_significance_lab/policies/baselines.py": {
+      "observed_sha256": "e9dd4c5681df44d9ba857fcea37cecad99de10f3d61ee4a0c2c83e7ec0e8755b",
+      "registered_sha256": "e9dd4c5681df44d9ba857fcea37cecad99de10f3d61ee4a0c2c83e7ec0e8755b"
+    },
+    "rineya_significance_native_architecture_lab/src/rineya_significance_lab/recovery.py": {
+      "observed_sha256": "cba2a65ca06e6c72b8c1e64ed066d2edf86db1fc1c09e5c991180ace8ed5091d",
+      "registered_sha256": "cba2a65ca06e6c72b8c1e64ed066d2edf86db1fc1c09e5c991180ace8ed5091d"
+    },
+    "rineya_significance_native_architecture_lab/src/rineya_significance_lab/runtime/__init__.py": {
+      "observed_sha256": "7b9a93b2dbe89aa632290d7469d4c41ba03cfabe89de46bd1e03f7f355d0a94f",
+      "registered_sha256": "7b9a93b2dbe89aa632290d7469d4c41ba03cfabe89de46bd1e03f7f355d0a94f"
+    },
+    "rineya_significance_native_architecture_lab/src/rineya_significance_lab/runtime/attention_prior.py": {
+      "observed_sha256": "411c23b64eceb4d3ff73defde3354e79d78b97e790e5c536a1a3f094d812a8d9",
+      "registered_sha256": "411c23b64eceb4d3ff73defde3354e79d78b97e790e5c536a1a3f094d812a8d9"
+    },
+    "rineya_significance_native_architecture_lab/src/rineya_significance_lab/runtime/cache.py": {
+      "observed_sha256": "bfd3ed841bb5761880a8876a9489c28a41b9c1e8dec646543cedd734043d050f",
+      "registered_sha256": "bfd3ed841bb5761880a8876a9489c28a41b9c1e8dec646543cedd734043d050f"
+    },
+    "rineya_significance_native_architecture_lab/src/rineya_significance_lab/runtime/count_controls.py": {
+      "observed_sha256": "4f79edb560c9a9a9fc4c99cbf0077e2a6de85b3da1cfad76e4555ee2692385f0",
+      "registered_sha256": "4f79edb560c9a9a9fc4c99cbf0077e2a6de85b3da1cfad76e4555ee2692385f0"
+    },
+    "rineya_significance_native_architecture_lab/src/rineya_significance_lab/runtime/heterogeneous_attention.py": {
+      "observed_sha256": "f676b65915128e84b1547487d0e5878660262281675ca60ed32281c4b9ae2d62",
+      "registered_sha256": "f676b65915128e84b1547487d0e5878660262281675ca60ed32281c4b9ae2d62"
+    },
+    "rineya_significance_native_architecture_lab/src/rineya_significance_lab/runtime/heterogeneous_budget.py": {
+      "observed_sha256": "2814efb54a6effc98ad291fd898565a18fb9328eee8db6c9f62ba2eefe1e166d",
+      "registered_sha256": "2814efb54a6effc98ad291fd898565a18fb9328eee8db6c9f62ba2eefe1e166d"
+    },
+    "rineya_significance_native_architecture_lab/src/rineya_significance_lab/runtime/heterogeneous_cache.py": {
+      "observed_sha256": "f56179a075d0b681d6a3d8d40f9c21f1e9325d97adf2289534bc24da8ee18671",
+      "registered_sha256": "f56179a075d0b681d6a3d8d40f9c21f1e9325d97adf2289534bc24da8ee18671"
+    },
+    "rineya_significance_native_architecture_lab/src/rineya_significance_lab/runtime/heterogeneous_runtime.py": {
+      "observed_sha256": "41b491e845a330d057170ebbc1940edcd5d25c41904c6d9254ce4d7f022a12a4",
+      "registered_sha256": "41b491e845a330d057170ebbc1940edcd5d25c41904c6d9254ce4d7f022a12a4"
+    },
+    "rineya_significance_native_architecture_lab/src/rineya_significance_lab/runtime/masks.py": {
+      "observed_sha256": "d1511f6ac53667e9d04e712d2076167b84d8b47ea618845368f0daadf5e98f50",
+      "registered_sha256": "d1511f6ac53667e9d04e712d2076167b84d8b47ea618845368f0daadf5e98f50"
+    },
+    "rineya_significance_native_architecture_lab/src/rineya_significance_lab/runtime/memory.py": {
+      "observed_sha256": "b8734c5994bd364244ea82bda1c8c725b428ad24aaf362b3a6a687570f40c461",
+      "registered_sha256": "b8734c5994bd364244ea82bda1c8c725b428ad24aaf362b3a6a687570f40c461"
+    },
+    "rineya_significance_native_architecture_lab/src/rineya_significance_lab/runtime/memory_runtime.py": {
+      "observed_sha256": "1ce0a4b2ab027e37fb85fd4c92d371e1b5c047dc92615c6f6051f69ff23554dd",
+      "registered_sha256": "1ce0a4b2ab027e37fb85fd4c92d371e1b5c047dc92615c6f6051f69ff23554dd"
+    },
+    "rineya_significance_native_architecture_lab/src/rineya_significance_lab/runtime/policy.py": {
+      "observed_sha256": "be7100cd7b57d3f8256b6ae82b52b71f6aad715840bda9d4e140c2ef8e83b1e6",
+      "registered_sha256": "be7100cd7b57d3f8256b6ae82b52b71f6aad715840bda9d4e140c2ef8e83b1e6"
+    },
+    "rineya_significance_native_architecture_lab/src/rineya_significance_lab/runtime/scheduled_prefill.py": {
+      "observed_sha256": "c50e9b301f7010df262ced2000481aa6935ade389cb2825863b8d16d8a4e82d3",
+      "registered_sha256": "c50e9b301f7010df262ced2000481aa6935ade389cb2825863b8d16d8a4e82d3"
+    },
+    "rineya_significance_native_architecture_lab/src/rineya_significance_lab/runtime/scoring.py": {
+      "observed_sha256": "3de7380744833cdad06558c0c044caa1bafee567f40f2b13dc967930eb31b629",
+      "registered_sha256": "3de7380744833cdad06558c0c044caa1bafee567f40f2b13dc967930eb31b629"
+    },
+    "rineya_significance_native_architecture_lab/src/rineya_significance_lab/runtime/transformers_runtime.py": {
+      "observed_sha256": "a3ebad47a91793b8d304ebbfb81f8c8d7e5e9c2d57a5f48c8739e31324c42ca1",
+      "registered_sha256": "a3ebad47a91793b8d304ebbfb81f8c8d7e5e9c2d57a5f48c8739e31324c42ca1"
+    },
+    "rineya_significance_native_architecture_lab/src/rineya_significance_lab/torch_state.py": {
+      "observed_sha256": "eb188d46d635cad7c20d8a3dc768805e74e72df2ca2577a3fbb13c02b9bc4336",
+      "registered_sha256": "eb188d46d635cad7c20d8a3dc768805e74e72df2ca2577a3fbb13c02b9bc4336"
+    },
+    "rineya_significance_native_architecture_lab/src/rineya_significance_lab/traces/__init__.py": {
+      "observed_sha256": "00a6c7b07f143b3f89edc2533689cc6e1ff5cd9ce466f8aa4a00ff95437d81ca",
+      "registered_sha256": "00a6c7b07f143b3f89edc2533689cc6e1ff5cd9ce466f8aa4a00ff95437d81ca"
+    },
+    "rineya_significance_native_architecture_lab/src/rineya_significance_lab/traces/io.py": {
+      "observed_sha256": "668051ea836652725f44ecc3f295cfa207fc5087832fa9d8604b42642ade9943",
+      "registered_sha256": "668051ea836652725f44ecc3f295cfa207fc5087832fa9d8604b42642ade9943"
+    },
+    "rineya_significance_native_architecture_lab/src/rineya_significance_lab/traces/replay.py": {
+      "observed_sha256": "35c7b231568960f3cbc89c7cd535aa143718baadba4cc137508a625be466d37f",
+      "registered_sha256": "35c7b231568960f3cbc89c7cd535aa143718baadba4cc137508a625be466d37f"
+    },
+    "rineya_significance_native_architecture_lab/src/rineya_significance_lab/traces/schema.py": {
+      "observed_sha256": "7b7c19a3405d290f2d02605bf19e4bbae4d50add00cb56e28d31eb325f2b73fb",
+      "registered_sha256": "7b7c19a3405d290f2d02605bf19e4bbae4d50add00cb56e28d31eb325f2b73fb"
+    },
+    "short-response-adapter-consensus-lab/src/consensus_lab/analysis/statistics.py": {
+      "observed_sha256": "21f7130f3e5080ea73e3ba18188905211cc00d0bec17bb0939f1dfac58327f54",
+      "registered_sha256": "21f7130f3e5080ea73e3ba18188905211cc00d0bec17bb0939f1dfac58327f54"
+    }
+  },
+  "source_files_checked": 143,
+  "started_manifest_sha256": "62db101123224898eddd97d4ace61fce16e97a5b09771c6a7d11e9c1b3fab8ed",
+  "state_receipts_checked": 18,
+  "status": "PASS",
+  "stratum_reconciliation_tolerance": {
+    "absolute": 1e-14,
+    "relative": 1e-12
+  },
+  "torch_imported": false
+}

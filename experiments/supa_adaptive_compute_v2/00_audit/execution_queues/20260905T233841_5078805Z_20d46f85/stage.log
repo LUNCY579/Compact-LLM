@@ -1,0 +1,83 @@
+QUALIFICATION_DIR=C:\Users\clclc\BusinessProject\ChatBubble-cross-scale\experiments\supa_adaptive_compute_v2\native_armr\evidence\00_runtime_qualification\20260905T233921_233855Z_41832612
+
+Loading weights:   0%|          | 0/310 [00:00<?, ?it/s]
+Loading weights:   0%|          | 1/310 [00:00<01:45,  2.93it/s]
+Loading weights:  60%|######    | 187/310 [00:00<00:00, 535.97it/s]
+Loading weights:  93%|#########2| 288/310 [00:00<00:00, 586.65it/s]
+Loading weights: 100%|##########| 310/310 [00:00<00:00, 481.94it/s]
+QUAL cpu A0 native_armr_calibration_compositional_00ef13b90b3e_0006_original 7.468s
+QUAL cpu A0 native_armr_calibration_counterfactual_0043d6875912_0013_original 2.724s
+QUAL cpu A0 native_armr_calibration_instruction_evidence_303ea820e58e_0007_original 9.182s
+QUAL cpu A0 native_armr_calibration_mathematical_1365ba73067d_0004_original 1.755s
+QUAL cpu A0 native_armr_calibration_ordinary_qa_preservation_011ecf034ea6_0009_original 3.143s
+QUAL cpu A0 native_armr_calibration_relational_005e5c8ce93b_0004_original 4.222s
+QUAL cpu A0 native_armr_calibration_retrieval_multihop_0353fdc140b8_0005_original 2.903s
+QUAL cpu A0 native_armr_calibration_symbolic_logic_05a1ea50559e_0013_original 7.588s
+QUAL cpu A1 native_armr_calibration_compositional_00ef13b90b3e_0006_original 8.127s
+QUAL cpu A1 native_armr_calibration_counterfactual_0043d6875912_0013_original 2.503s
+QUAL cpu A1 native_armr_calibration_instruction_evidence_303ea820e58e_0007_original 7.776s
+QUAL cpu A1 native_armr_calibration_mathematical_1365ba73067d_0004_original 1.641s
+QUAL cpu A1 native_armr_calibration_ordinary_qa_preservation_011ecf034ea6_0009_original 2.787s
+QUAL cpu A1 native_armr_calibration_relational_005e5c8ce93b_0004_original 4.586s
+QUAL cpu A1 native_armr_calibration_retrieval_multihop_0353fdc140b8_0005_original 3.080s
+QUAL cpu A1 native_armr_calibration_symbolic_logic_05a1ea50559e_0013_original 13.140s
+QUAL cpu A3 native_armr_calibration_compositional_00ef13b90b3e_0006_original 8.418s
+QUAL cpu A3 native_armr_calibration_counterfactual_0043d6875912_0013_original 3.728s
+QUAL cpu A3 native_armr_calibration_instruction_evidence_303ea820e58e_0007_original 10.813s
+QUAL cpu A3 native_armr_calibration_mathematical_1365ba73067d_0004_original 2.631s
+QUAL cpu A3 native_armr_calibration_ordinary_qa_preservation_011ecf034ea6_0009_original 3.802s
+QUAL cpu A3 native_armr_calibration_relational_005e5c8ce93b_0004_original 5.076s
+QUAL cpu A3 native_armr_calibration_retrieval_multihop_0353fdc140b8_0005_original 3.603s
+QUAL cpu A3 native_armr_calibration_symbolic_logic_05a1ea50559e_0013_original 18.252s
+QUAL cpu A16 native_armr_calibration_compositional_00ef13b90b3e_0006_original 9.566s
+QUAL cpu A16 native_armr_calibration_counterfactual_0043d6875912_0013_original 4.155s
+QUAL cpu A16 native_armr_calibration_instruction_evidence_303ea820e58e_0007_original 11.735s
+QUAL cpu A16 native_armr_calibration_mathematical_1365ba73067d_0004_original 2.449s
+QUAL cpu A16 native_armr_calibration_ordinary_qa_preservation_011ecf034ea6_0009_original 3.765s
+QUAL cpu A16 native_armr_calibration_relational_005e5c8ce93b_0004_original 5.134s
+QUAL cpu A16 native_armr_calibration_retrieval_multihop_0353fdc140b8_0005_original 2.610s
+QUAL cpu A16 native_armr_calibration_symbolic_logic_05a1ea50559e_0013_original 9.250s
+QUAL cpu AM native_armr_calibration_compositional_00ef13b90b3e_0006_original 8.588s
+QUAL cpu AM native_armr_calibration_counterfactual_0043d6875912_0013_original 2.951s
+QUAL cpu AM native_armr_calibration_instruction_evidence_303ea820e58e_0007_original 5.666s
+QUAL cpu AM native_armr_calibration_mathematical_1365ba73067d_0004_original 1.972s
+QUAL cpu AM native_armr_calibration_ordinary_qa_preservation_011ecf034ea6_0009_original 3.389s
+QUAL cpu AM native_armr_calibration_relational_005e5c8ce93b_0004_original 3.780s
+QUAL cpu AM native_armr_calibration_retrieval_multihop_0353fdc140b8_0005_original 3.166s
+QUAL cpu AM native_armr_calibration_symbolic_logic_05a1ea50559e_0013_original 16.237s
+Traceback (most recent call last):
+  File "C:\Users\clclc\BusinessProject\ChatBubble-cross-scale\experiments\supa_adaptive_compute_v2\scripts\qualify_native_gpu.py", line 220, in <module>
+    main()
+  File "C:\Users\clclc\BusinessProject\ChatBubble-cross-scale\experiments\supa_adaptive_compute_v2\scripts\qualify_native_gpu.py", line 185, in main
+    gpu,gpu_identity,gpu_artifacts = run_phase(config,cases,output,True)
+                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\clclc\BusinessProject\ChatBubble-cross-scale\experiments\supa_adaptive_compute_v2\scripts\qualify_native_gpu.py", line 79, in run_phase
+    model,tokenizer,identity = load_supa(config)
+                               ^^^^^^^^^^^^^^^^^
+  File "C:\Users\clclc\BusinessProject\ChatBubble-cross-scale\experiments\supa_adaptive_compute_v2\shared\model_loading.py", line 45, in load_supa
+    configure_runtime(config)
+  File "C:\Users\clclc\BusinessProject\ChatBubble-cross-scale\experiments\supa_adaptive_compute_v2\shared\runtime.py", line 25, in configure_runtime
+    torch.manual_seed(config['seed'])
+  File "C:\Users\clclc\BusinessProject\Chat-Bubble\.venv\Lib\site-packages\torch\_compile.py", line 54, in inner
+    return disable_fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\clclc\BusinessProject\Chat-Bubble\.venv\Lib\site-packages\torch\_dynamo\eval_frame.py", line 1298, in _fn
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\clclc\BusinessProject\Chat-Bubble\.venv\Lib\site-packages\torch\random.py", line 59, in manual_seed
+    return _manual_seed_impl(seed)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\clclc\BusinessProject\Chat-Bubble\.venv\Lib\site-packages\torch\random.py", line 67, in _manual_seed_impl
+    torch.cuda.manual_seed_all(seed)
+  File "C:\Users\clclc\BusinessProject\Chat-Bubble\.venv\Lib\site-packages\torch\cuda\random.py", line 128, in manual_seed_all
+    _lazy_call(cb, seed_all=True)
+  File "C:\Users\clclc\BusinessProject\Chat-Bubble\.venv\Lib\site-packages\torch\cuda\__init__.py", line 422, in _lazy_call
+    callable()
+  File "C:\Users\clclc\BusinessProject\Chat-Bubble\.venv\Lib\site-packages\torch\cuda\random.py", line 126, in cb
+    default_generator.manual_seed(seed)
+torch.AcceleratorError: CUDA error: unknown error
+Search for `cudaErrorUnknown' in https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__TYPES.html for more information.
+CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+

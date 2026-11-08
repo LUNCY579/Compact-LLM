@@ -1,0 +1,143 @@
+{
+  "protocol_version": "native_armr_v2.2_gpu_fp32",
+  "track": "native_armr",
+  "seed": 17,
+  "threads": 4,
+  "dtype": "float32",
+  "device": "cuda:0",
+  "attention_implementation": "eager",
+  "use_cache": false,
+  "max_new_tokens": 48,
+  "max_prompt_seconds": 900,
+  "max_rss_gib": 8,
+  "min_available_gib": 0.5,
+  "top_k": 10,
+  "hidden_rms_ratio_bounds": [
+    0.25,
+    4.0
+  ],
+  "checkpoint_sha256": "a99f079d32212bbcbb703c2e2bad801ea32d43afea52004f38bf94eec5dc4026",
+  "model_class": "Qwen3AbstainForCausalLM",
+  "num_hidden_layers": 28,
+  "default_shard_count": 32,
+  "baseline_arm": "A0",
+  "arms": {
+    "A0": {
+      "operator": "intact",
+      "extra_layer_applications": 0
+    },
+    "A1": {
+      "operator": "native_single",
+      "layer": 12,
+      "applications": 2
+    },
+    "A3": {
+      "operator": "native_block",
+      "layers": [
+        12,
+        13
+      ],
+      "applications": 2
+    },
+    "A16": {
+      "operator": "native_single",
+      "layer": 16,
+      "applications": 2
+    },
+    "AM": {
+      "operator": "independent_frozen_swiglu",
+      "insertion_layer": 13
+    }
+  },
+  "control": {
+    "insertion_layer": 13,
+    "seed": 7301,
+    "std": 0.02,
+    "alpha": 1.0,
+    "hidden_size": 1024,
+    "intermediate_size": 10240,
+    "normalization": "unit_scale_rms_norm_model_epsilon",
+    "additional_matrix_parameters": 31457280,
+    "additional_matmul_flops_per_token": 62914560,
+    "training": false,
+    "selection": "fixed_without_efficiency_or_efficacy_tuning"
+  },
+  "data": {
+    "track": "native_armr",
+    "allowed_roles": [
+      "architecture_dev",
+      "confirmatory_dev",
+      "confirmatory_diagnostics"
+    ],
+    "primary_variant": "original",
+    "target_primary_examples": 1024,
+    "diagnostic_variants_separate": true,
+    "target_diagnostic_examples": 128,
+    "unit_of_inference": "scenario_id",
+    "sealed": false
+  },
+  "analysis": {
+    "designation": "confirmatory_development",
+    "primary_candidate": "A3",
+    "primary_comparisons_hierarchical": [
+      [
+        "A3",
+        "A0"
+      ],
+      [
+        "A3",
+        "AM"
+      ]
+    ],
+    "secondary_comparisons_holm": [
+      [
+        "A1",
+        "A0"
+      ],
+      [
+        "A16",
+        "A0"
+      ]
+    ],
+    "alpha_two_sided": 0.05,
+    "bootstrap_replicates": 10000,
+    "bootstrap_seed": 9107,
+    "minimum_absolute_accuracy_gain": 0.02,
+    "minimum_relative_error_reduction": 0.05,
+    "minimum_confidence_interval_lower_bound_exclusive": 0.0,
+    "preservation_noninferiority_margin": 0.02,
+    "preservation_families": [
+      "ordinary_qa_preservation",
+      "instruction_evidence",
+      "retrieval_multihop"
+    ],
+    "maximum_additional_invalid_outputs": 0,
+    "maximum_safety_stops": 0,
+    "family_analyses": "exploratory_with_scenario_bootstrap_no_family_discovery_claim",
+    "diagnostic_analysis": "paired_with_original_separate_from_primary_accuracy"
+  },
+  "closed_gates": [
+    "routing",
+    "MLA",
+    "MHA",
+    "MTP",
+    "PEFT",
+    "backbone_training",
+    "sealed_evaluation"
+  ],
+  "min_available_vram_gib": 3.0,
+  "max_cuda_memory_gib": 6.5,
+  "tf32": false,
+  "runtime_qualification": "native_gpu_fp32_v1",
+  "qualification": {
+    "examples_per_family": 1,
+    "max_abs_logit_error": 0.002,
+    "max_relative_logit_l2": 0.0002,
+    "minimum_logit_cosine": 0.999999,
+    "max_abs_nll_error": 0.002,
+    "max_relative_hidden_l2": 0.0002,
+    "minimum_hidden_cosine": 0.999999,
+    "require_greedy_identity": true,
+    "require_gpu_repeat_identity": true
+  }
+}

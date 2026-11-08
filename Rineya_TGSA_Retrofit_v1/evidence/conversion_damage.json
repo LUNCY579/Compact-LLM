@@ -1,0 +1,242 @@
+{
+  "schema_version": "rineya.tgsa-conversion-damage.v1",
+  "context": {
+    "architecture": "hidden=1024 heads=16 kv=8 head_dim=128 rope_theta=1e+06",
+    "converted_layers": [
+      0,
+      2,
+      4
+    ],
+    "conditioning": [
+      "q"
+    ],
+    "total_layers": 6
+  },
+  "reports": [
+    {
+      "dtype": "float64",
+      "sequence_length": 64,
+      "batch_examples": 4,
+      "token_kl_divergence": {
+        "min": 0.0,
+        "median": 0.0,
+        "p90": 0.0,
+        "p99": 0.0,
+        "max": 0.0,
+        "mean": 0.0
+      },
+      "nll_native": 6.476274490356445,
+      "nll_retrofit": 6.476274490356445,
+      "nll_delta": 0.0,
+      "top1_agreement": 1.0,
+      "top5_agreement": 1.0,
+      "greedy_generation_agreement": 1.0,
+      "output_absolute_drift": {
+        "min": 0.0,
+        "median": 0.0,
+        "p90": 0.0,
+        "p99": 0.0,
+        "max": 0.0,
+        "mean": 0.0
+      },
+      "output_relative_drift": {
+        "min": 0.0,
+        "median": 0.0,
+        "p90": 0.0,
+        "p99": 0.0,
+        "max": 0.0,
+        "mean": 0.0
+      },
+      "output_norm_ratio": 1.0,
+      "per_layer_hidden_drift": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "exact_in_float64": true
+    },
+    {
+      "dtype": "float32",
+      "sequence_length": 64,
+      "batch_examples": 4,
+      "token_kl_divergence": {
+        "min": 0.0,
+        "median": 0.0,
+        "p90": 0.0,
+        "p99": 0.0,
+        "max": 0.0,
+        "mean": 0.0
+      },
+      "nll_native": 6.476274490356445,
+      "nll_retrofit": 6.476274490356445,
+      "nll_delta": 0.0,
+      "top1_agreement": 1.0,
+      "top5_agreement": 1.0,
+      "greedy_generation_agreement": 1.0,
+      "output_absolute_drift": {
+        "min": 0.0,
+        "median": 0.0,
+        "p90": 0.0,
+        "p99": 0.0,
+        "max": 0.0,
+        "mean": 0.0
+      },
+      "output_relative_drift": {
+        "min": 0.0,
+        "median": 0.0,
+        "p90": 0.0,
+        "p99": 0.0,
+        "max": 0.0,
+        "mean": 0.0
+      },
+      "output_norm_ratio": 1.0,
+      "per_layer_hidden_drift": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "exact_in_float64": false
+    },
+    {
+      "dtype": "float32",
+      "sequence_length": 256,
+      "batch_examples": 4,
+      "token_kl_divergence": {
+        "min": 0.0,
+        "median": 0.0,
+        "p90": 0.0,
+        "p99": 0.0,
+        "max": 0.0,
+        "mean": 0.0
+      },
+      "nll_native": 6.384167671203613,
+      "nll_retrofit": 6.384167671203613,
+      "nll_delta": 0.0,
+      "top1_agreement": 1.0,
+      "top5_agreement": 1.0,
+      "greedy_generation_agreement": 1.0,
+      "output_absolute_drift": {
+        "min": 0.0,
+        "median": 0.0,
+        "p90": 0.0,
+        "p99": 0.0,
+        "max": 0.0,
+        "mean": 0.0
+      },
+      "output_relative_drift": {
+        "min": 0.0,
+        "median": 0.0,
+        "p90": 0.0,
+        "p99": 0.0,
+        "max": 0.0,
+        "mean": 0.0
+      },
+      "output_norm_ratio": 1.0,
+      "per_layer_hidden_drift": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "exact_in_float64": false
+    },
+    {
+      "dtype": "bfloat16",
+      "sequence_length": 64,
+      "batch_examples": 4,
+      "token_kl_divergence": {
+        "min": 0.0,
+        "median": 0.0,
+        "p90": 0.0,
+        "p99": 0.0,
+        "max": 0.0,
+        "mean": 0.0
+      },
+      "nll_native": 6.476005554199219,
+      "nll_retrofit": 6.476005554199219,
+      "nll_delta": 0.0,
+      "top1_agreement": 1.0,
+      "top5_agreement": 1.0,
+      "greedy_generation_agreement": 1.0,
+      "output_absolute_drift": {
+        "min": 0.0,
+        "median": 0.0,
+        "p90": 0.0,
+        "p99": 0.0,
+        "max": 0.0,
+        "mean": 0.0
+      },
+      "output_relative_drift": {
+        "min": 0.0,
+        "median": 0.0,
+        "p90": 0.0,
+        "p99": 0.0,
+        "max": 0.0,
+        "mean": 0.0
+      },
+      "output_norm_ratio": 1.0,
+      "per_layer_hidden_drift": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "exact_in_float64": false
+    },
+    {
+      "dtype": "bfloat16",
+      "sequence_length": 256,
+      "batch_examples": 4,
+      "token_kl_divergence": {
+        "min": 0.0,
+        "median": 0.0,
+        "p90": 0.0,
+        "p99": 0.0,
+        "max": 0.0,
+        "mean": 0.0
+      },
+      "nll_native": 6.384158611297607,
+      "nll_retrofit": 6.384158611297607,
+      "nll_delta": 0.0,
+      "top1_agreement": 1.0,
+      "top5_agreement": 1.0,
+      "greedy_generation_agreement": 1.0,
+      "output_absolute_drift": {
+        "min": 0.0,
+        "median": 0.0,
+        "p90": 0.0,
+        "p99": 0.0,
+        "max": 0.0,
+        "mean": 0.0
+      },
+      "output_relative_drift": {
+        "min": 0.0,
+        "median": 0.0,
+        "p90": 0.0,
+        "p99": 0.0,
+        "max": 0.0,
+        "mean": 0.0
+      },
+      "output_norm_ratio": 1.0,
+      "per_layer_hidden_drift": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "exact_in_float64": false
+    }
+  ]
+}
