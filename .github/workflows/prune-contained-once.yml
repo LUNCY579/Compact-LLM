@@ -7,7 +7,7 @@ on:
       - ".github/workflows/prune-contained-once.yml"
 jobs:
   prune:
-    if: ${{ github.event.head_commit.message == 'chore: run one-time verified branch prune' }}
+    if: "${{ github.event.head_commit.message == 'chore: run one-time verified branch prune' }}"
     runs-on: ubuntu-latest
     timeout-minutes: 8
     permissions:
