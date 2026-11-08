@@ -23,6 +23,10 @@ The results are intentionally presented with their limitations. In particular, t
 - [State-transition and retention continuation](CONTINUATION.md) — acquisition, dose, rehearsal, and independent retention failures.
 - [Multi-reasoning frozen-scout evidence](research/multi_reasoning_scout_v1/CURRENT_CANDIDATE_RESULTS.md) — an instructive schema-smoke failure, not a positive benchmark claim.
 
+## November 2026 additive research imports
+
+The [bulk import source manifest](docs/repository-consolidation/2026-11-08/BULK_IMPORT.md) records 14 exact non-overlapping experiment/research subtrees that were missing from this branch. They include the Fast-Weight Attention lab, TGSA and retrofit programmes, adaptive-compute experiments, Halo/positional experiments, and the MRS-2 reasoning successor. This is a **structural preservation import**, not fresh model qualification, and does **not** resolve outstanding shared-path branch conflicts or blocked scientific gates.
+
 ## Research directions
 
 1. **Efficient model composition:** kept-layer/weight interpolation, LoRA scaling, task-vector arithmetic, model soups, and separating dense single-pass cores from multi-arm routing.
