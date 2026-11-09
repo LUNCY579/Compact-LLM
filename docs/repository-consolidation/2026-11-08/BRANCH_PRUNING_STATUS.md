@@ -2,7 +2,42 @@
 
 > This is a **branch-ref and source-preservation receipt**, not a claim that all experiments are compatible, tests passed, or data/model results are release-qualified. The snapshot can become stale if new changes are pushed.
 
-**Starting live branches: 49. Branch refs deleted: 21. Remaining: 28 (including `main`), with 27 divergent non-main heads.** No new branches were created. Latest checked head before writing this report: `507722f25fcd97d8a13fb71f17873c7f9c0a4097`.
+**Current verified status: 49 starting branches → 4 remaining, 45 source refs successfully pruned.** The remaining four are `main` plus three independent research-track refs. No new branches were created. Last verified default-branch head before this report commit: `cb9622bdc59bb782c74d7ca9e1bda127377b3440`. Earlier historical snapshots and the initial 21-deletion table below are retained for audit; they are NOT a current inventory.
+
+## Final branch state and pruning verification
+
+| Remaining ref | Verified tip | Disposition |
+| --- | --- | --- |
+| `main` | `cb9622bdc59bb782c74d7ca9e1bda127377b3440` (before documentation update) | Active default branch |
+| `research/rineya-centralized-reasoning-system-v1` | `1f5e72df4d609b3af70f60b3677d09c32a36455a` | Preserve enduring CRS research; scope014 exhausted, native gates closed |
+| `research/rineya-ppt-centralized-reasoning-v1` | `c27c9ed0a6d0343a34173adc5be04fd6d95c2d8f` | Preserve complementary PPT CPU sampler; native scoring unqualified |
+| `research/rineya-synth-centralized-reasoning-v1` | `d1ec44e723784e9a393cd9a460bb5576acb56d71` | Preserve separate Synth-CRS research, datasets and independent validation scope |
+
+**Most recent completed prune:** [GitHub Actions run 42560515833](https://github.com/LUNCY579/Compact-LLM/actions/runs/42560515833), which successfully deleted four previously merged historical/CRS snapshot branches after exact SHA, open-PR, protection and ancestry checks. All four deleted refs returned 404 on independent post-run verification; the [temporary pruning workflow was removed](https://github.com/LUNCY579/Compact-LLM/commit/cb9622bdc59bb782c74d7ca9e1bda127377b3440) after the run.
+
+### Later verified deletion batches (24 refs after the initial 21)
+
+| Batch | Branches deleted | Successful Actions run |
+| --- | ---: | --- |
+| MRS Phase II, RTG-1, and DMRF source | 4 | [42540124918](https://github.com/LUNCY579/Compact-LLM/actions/runs/42540124918) |
+| FWA, TGSA and adaptive-compute source | 6 | [42540715285](https://github.com/LUNCY579/Compact-LLM/actions/runs/42540715285) |
+| Binding/retention worktrees and foundry publication | 6 | [42541684484](https://github.com/LUNCY579/Compact-LLM/actions/runs/42541684484) |
+| Historical CED/FWA/cross-scale worktree snapshots | 4 | [42542350330](https://github.com/LUNCY579/Compact-LLM/actions/runs/42542350330) |
+| Two historical-main and two CRS snapshots | 4 | [42560515833](https://github.com/LUNCY579/Compact-LLM/actions/runs/42560515833) |
+
+**Final four deleted refs**, with retained source commits:
+
+- `codex/archive-20261004/historical-main-snapshots-24` @ `6b539d9abf3a71e0c60c7b8342a3c79871205f0a`
+- `codex/archive-20261004/historical-main-snapshots-27` @ `4f273e4efc443d422ed5c151bb00938d7fa65ccb`
+- `codex/crs-owner-exception-001` @ `e47796f1e9b198f9c3213f471f0151ce517a183b`
+- `codex/worktree-save-20261002/detached-crs-native-desktop-v2` @ `f9e5e11997bc7e23bdb0378574fe447dc3c3ee8b`
+
+These source commits remain reachable as extra merge parents of [`185d1b86`](https://github.com/LUNCY579/Compact-LLM/commit/185d1b8639c319e34a54daf510e24f794e5f29a4). The current experiment trees were not overwritten. See [CRS/PPT/Synth disposition](CRS_AND_HISTORICAL_SNAPSHOT_DISPOSITION.md) for the separate authorization boundaries and recovery method.
+
+---
+### Earlier 21-ref audit snapshot (historical, not current)
+
+
 
 ## Exact verified deletion batches
 
@@ -76,7 +111,7 @@ Earlier direct integrations remain intact: Titan Stage A, Titan geometric and qu
 
 The one-time pruning workflow was removed in commit [`507722f2`](https://github.com/LUNCY579/Compact-LLM/commit/507722f25fcd97d8a13fb71f17873c7f9c0a4097). It is not a standing deletion automation.
 
-## Remaining 27 branches (pinned snapshot)
+## Earlier remaining 27 branches (historical pinned snapshot — superseded)
 
 These heads were checked against `main` after the merges and remained **diverged**; none qualified for ancestry-only deletion. Preserve them until each has a path/commit-level content reconciliation and its own original source SHA is verified. This includes separate CRS/not-ready authorization boundaries, old worktree and historical snapshots, runtime variants, and dataset custody evidence. For a branch with published source history, use narrow additive imports or clearly scoped alternative archives rather than silently replacing current experiment gates.
 

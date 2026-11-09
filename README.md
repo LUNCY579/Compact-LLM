@@ -4,6 +4,8 @@
 
 > **Repository status (8 November 2026):** `main` now contains the **integrated research history** formerly concentrated on `research/post-training-mimo-centralized-v1`; a pre-consolidation snapshot is retained at `archive/main-preconsolidation-20261108`. Distinct unresolved experiment branches and blocked PRs remain separate. Research results below come from recorded experiments, not a claim of production readiness or generalized superiority. The project contains both positive and negative findings.
 
+**Branch consolidation status:** As of November 8, 2026, **45 of the initial 49 branch refs have been safely retired**, preserving their original commit histories. Only `main` and three explicitly separate CRS/PPT/Synth research branches remain. The [verified pruning report](docs/repository-consolidation/2026-11-08/BRANCH_PRUNING_STATUS.md) records GitHub Actions receipts, source tips, research boundaries and historical CI limits. No native training or model-quality gains are claimed through branch consolidation alone.
+
 ## Selected measured findings
 
 | Question | Recorded result | What it does **not** establish |
