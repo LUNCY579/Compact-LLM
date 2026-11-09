@@ -77,6 +77,12 @@ The [MRS Phase II dataset-repair contract](research/mrs_phase2_dataset_selection
 
 The [RTG-1.0.0 reasoning corpus](research/rineya_reasoning_corpus_v1/CORPUS_DESIGN.md) contains **24,000 generated examples** across register-state, counterfactual-state, prerequisite-schedule and evidence-chain tasks, with 19,157 TRAIN, 2,395 DEV and 2,448 holdout rows. The report records 24,000 distinct structural fingerprints, zero cross-split structure collisions, two independent solvers, and systematic shortcut tests. It also discloses **non-isolated semantic equivalence classes** for two families and residual surface cues. This corpus is **open-development candidate training material, not model-evaluated or newly approved training data**; a separate acceptance and custody decision is required before any training. Its immutable [manifest](research/rineya_reasoning_corpus_v1/MANIFEST.json) pins data files, source and tokenizer hashes.
 
+## Abstention-gate off / FWA / TGSA follow-up
+
+A [matched Supa-A1.1 abstention-gate diagnostic](rineya_single_layer_ft_v1/evidence/00_abstention_gate_diagnostic/diagnostic.json) scored **1,060 previously inspected validation rows** with the bias active and forced to zero. The gate-on baseline and layer-8 QLoRA adapter tied at **280/1,060**, but the adapter **gained 13 abstention successes and lost 13 real-answer successes**. With the gate removed, the baseline scored **206/1,060** versus **194/1,060** for the adapter; neither emitted `UNKNOWN`. These are *diagnostic development results*, not evidence about training with the gate disabled or general superiority.
+
+The FWA, adaptive-compute, TGSA v5.1 and pretrained-retrofit experiment trees were previously imported at their original source hashes. This consolidation retains their source histories while leaving newer shared-path implementations unchanged. Older FWA provenance/statistics and TGSA workflow variants are archived as [inert research files](docs/repository-consolidation/2026-11-08/family_variant_sources/) rather than enabling historical CI/training workflows under `.github/workflows/`. These preserved source variants do not establish native model improvement or renewed experiment authorization.
+
 ## Research directions
 
 1. **Efficient model composition:** kept-layer/weight interpolation, LoRA scaling, task-vector arithmetic, model soups, and separating dense single-pass cores from multi-arm routing.

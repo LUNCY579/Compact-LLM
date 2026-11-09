@@ -1,0 +1,160 @@
+{
+  "schema": "abstention_gate_disabled_diagnostic_v1",
+  "classification": "DIAGNOSTIC_NOT_CONFIRMATORY",
+  "question": "Does the already-saved layer-8 QLoRA adapter evaluate cleanly with the Supa-A1.1 abstention logit bias fully disabled, and does that yield a valid matched comparison?",
+  "answer": "Yes. All 1060 frozen val rows completed in both gate-off arms with the gate verified at exactly 0.0, over inputs byte-identical to the gate-on runs.",
+  "gate": {
+    "abstain_token_id": 51378,
+    "published_bias": 5.156249985098839,
+    "gate_off_effective_bias": 0.0,
+    "mechanism": "load-time abstain_logit_bias override; canonical config.json never modified",
+    "measured_logit_delta_at_abstain_token": 5.15625,
+    "measured_logit_delta_all_other_tokens": 0.0
+  },
+  "design": {
+    "split": "val",
+    "rows_common_to_all_four_arms": 1060,
+    "gold_unknown_rows": 91,
+    "gold_real_answer_rows": 969,
+    "gold_unknown_fraction": 0.08584905660377358,
+    "gate_off_accuracy_ceiling": 0.9141509433962264
+  },
+  "arms": {
+    "gate_on/baseline": {
+      "overall_correct": 280,
+      "overall_total": 1060,
+      "overall_accuracy": 0.2641509433962264,
+      "abstention_rows_correct": 74,
+      "abstention_rows_total": 91,
+      "real_answer_correct": 206,
+      "real_answer_total": 969,
+      "real_answer_accuracy": 0.21259029927760578,
+      "emitted_unknown": 125
+    },
+    "gate_on/layer8_qlora": {
+      "overall_correct": 280,
+      "overall_total": 1060,
+      "overall_accuracy": 0.2641509433962264,
+      "abstention_rows_correct": 87,
+      "abstention_rows_total": 91,
+      "real_answer_correct": 193,
+      "real_answer_total": 969,
+      "real_answer_accuracy": 0.19917440660474717,
+      "emitted_unknown": 157
+    },
+    "gate_off/baseline": {
+      "overall_correct": 206,
+      "overall_total": 1060,
+      "overall_accuracy": 0.19433962264150945,
+      "abstention_rows_correct": 0,
+      "abstention_rows_total": 91,
+      "real_answer_correct": 206,
+      "real_answer_total": 969,
+      "real_answer_accuracy": 0.21259029927760578,
+      "emitted_unknown": 0
+    },
+    "gate_off/layer8_qlora": {
+      "overall_correct": 194,
+      "overall_total": 1060,
+      "overall_accuracy": 0.1830188679245283,
+      "abstention_rows_correct": 0,
+      "abstention_rows_total": 91,
+      "real_answer_correct": 194,
+      "real_answer_total": 969,
+      "real_answer_accuracy": 0.2002063983488132,
+      "emitted_unknown": 0
+    }
+  },
+  "paired_adapter_vs_baseline": {
+    "gate_on/all_rows": {
+      "adapter_wins": 32,
+      "adapter_losses": 32,
+      "net": 0,
+      "n": 1060
+    },
+    "gate_on/real_answer_rows": {
+      "adapter_wins": 18,
+      "adapter_losses": 31,
+      "net": -13,
+      "n": 969
+    },
+    "gate_off/all_rows": {
+      "adapter_wins": 19,
+      "adapter_losses": 31,
+      "net": -12,
+      "n": 1060
+    },
+    "gate_off/real_answer_rows": {
+      "adapter_wins": 19,
+      "adapter_losses": 31,
+      "net": -12,
+      "n": 969
+    }
+  },
+  "response_identity": {
+    "baseline_gate_on_vs_off_identical": 935,
+    "adapter_gate_on_vs_off_identical": 903,
+    "of_total": 1060
+  },
+  "findings": [
+    "The abstention bias has NO measurable effect on real-answer rows: baseline scores 206/969 both gated and ungated, with 935/1060 responses byte-identical.",
+    "Its entire benchmark effect is abstention credit. Gate-off emits UNKNOWN zero times in 1060 rows, forfeiting all 91 gold-UNKNOWN rows.",
+    "The gate-on adapter-vs-baseline dead heat (280 vs 280) was a coincidental cancellation, not an absence of effect: the adapter gained +13 on abstention rows (74->87) and lost -13 on real-answer rows (206->193).",
+    "With the abstention channel removed, the adapter's real-answer regression is directly visible: 206 -> 194, paired 19 wins against 31 losses, net -12, consistent with the gate-on real-answer net of -13.",
+    "The adapter is more abstention-prone than the baseline: it emitted UNKNOWN 157 times versus 125 under the gate."
+  ],
+  "limitations": [
+    "This adapter was TRAINED with the gate active. Evaluating it gate-off is a clean matched contrast on the same frozen rows, but it is NOT evidence about gate-off training; that requires a retrain.",
+    "8.6% of val gold labels are literally UNKNOWN, so gate-off accuracy is capped at 91.4% unless a model learns to emit UNKNOWN unprompted. Gate-on and gate-off overall accuracies are therefore NOT comparable as capability measures.",
+    "val is a development split, previously inspected. No sealed or test data was read.",
+    "Exact-match scoring only; no bootstrap or McNemar is claimed here.",
+    "Single frozen adapter, single seed, one split."
+  ],
+  "inputs": {
+    "view_val_all_strata_sha256": "68010b5386e2b4c25ef409d70183afb079b8a2059a1b5d17814ecc73180ea5d3",
+    "adapter_model_sha256": "a0ba144a63d7af964b1a88238f20a324a949ac16a4676037dc1d7f57daf4bef9",
+    "adapter_config_sha256": "5ff0bf1268a089ee65c27687bf13b74dedc23db97f84f7dbc4471fde75bfc38c",
+    "core_config_json_sha256": "89c4ae7398449895d044750c858614584b07db8d67130074920ef524c6eb5705",
+    "core_modeling_sha256": "b77b7d709fac3690d86f5978d46de409fd7ad3548c66a9d400188c225d99fa3d",
+    "core_path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\Rineya_Published_Cores\\Rineya-Supa-A1.1-1.1.0-devfreeze",
+    "adapter_path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\artifacts\\rineya_single_layer_ft_v1\\layer8_qlora_cc0_8k\\adapter",
+    "gate_on_reports": {
+      "baseline": "18cc2e64b129c565322474a594114414fede9210de2274cd9fdedce315b0e457",
+      "layer8_qlora": "b1aa2e436723c9e342a11c593151aea7a96fce664d346fc5a3aea2b0b6db9360"
+    },
+    "gate_off_reports": {
+      "baseline": "e49e6cce3b431c9767317a57c1a8581da21339281e968d608f3bef2823432a57",
+      "layer8_qlora": "b2501313a1939fc60c74889ac1888879340f92c210a0bcb8c778641c9c856c76"
+    }
+  },
+  "environment": {
+    "python": "3.11.15",
+    "torch": "2.12.1+cu126",
+    "transformers": "5.14.1",
+    "os": "Windows-10-10.0.26200-SP0"
+  },
+  "by_stratum": {
+    "unknown": {
+      "gate_on/baseline": {
+        "correct": 280,
+        "total": 1060,
+        "accuracy": 0.2641509433962264
+      },
+      "gate_on/layer8_qlora": {
+        "correct": 280,
+        "total": 1060,
+        "accuracy": 0.2641509433962264
+      },
+      "gate_off/baseline": {
+        "correct": 206,
+        "total": 1060,
+        "accuracy": 0.19433962264150945
+      },
+      "gate_off/layer8_qlora": {
+        "correct": 194,
+        "total": 1060,
+        "accuracy": 0.1830188679245283
+      }
+    }
+  }
+}
