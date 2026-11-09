@@ -1,4 +1,4 @@
-name: Prune six merged binding and foundry refs
+name: Prune four archived worktree source refs
 on:
   push:
     branches:
@@ -7,7 +7,7 @@ on:
       - ".github/workflows/prune-merged-research-once.yml"
 jobs:
   prune:
-    if: "${{ github.event.head_commit.message == 'chore: prune six binding and foundry refs' }}"
+    if: "${{ github.event.head_commit.message == 'chore: prune four archived worktree refs' }}"
     runs-on: ubuntu-latest
     timeout-minutes: 8
     permissions:
@@ -24,7 +24,7 @@ jobs:
           token = os.environ["GH_TOKEN"]
           repo = os.environ["GITHUB_REPOSITORY"]
           base = f"https://api.github.com/repos/{repo}"
-          candidates = [["codex/worktree-save-20261002/chatbubble-binding-integration-pilot-20260920","8e9e4ba9420ab3dc650d247bba36d47329b12ccd"],["codex/worktree-save-20261002/chatbubble-binding-mixture-pilot-20260920","f0a32c916a935852017d62846b46b080deed5c59"],["codex/worktree-save-20261002/chatbubble-compose-lane-20260918","dc511f919ce0b57dc8b20b254ce11ae0150e5316"],["codex/worktree-save-20261002/chatbubble-retention-doselora-resume-20260920","621d09ccccd82f7f16d2c13eb4c5b70643e5c961"],["codex/worktree-save-20261002/chatbubble-retention-pilot-20260917","fae9f3fed9a1387400e35b721c708b87cda27262"],["codex/rineya-dataset-evidence-20261009","01b6ae89277319a45f2f1d209a8bdc0917f5bea4"]]
+          candidates = [["codex/worktree-save-20261002/chat-bubble-rineya-retrofit","6647eabf3bac9c3f08fce9dfa4998cc07bac3d16"],["codex/worktree-save-20261002/rineyabeta-supa-fwa-v1","96c3931eb51c1b272951d4ddbc60b8c863c17257"],["codex/worktree-save-20261002/chatbubble-ced-native-loader-qualification","840714fa269db8d5d3382b00b0aaf302b3bf1bf4"],["codex/worktree-save-20261002/chatbubble-cross-scale","174ee4fecd7a69b3746d8c2e6107220685047dc9"]]
           headers = {"Authorization": f"Bearer {token}", "Accept": "application/vnd.github+json", "X-GitHub-Api-Version": "2022-11-28"}
           def api(method, path, missing_ok=False):
               req = urllib.request.Request(base + path, headers=headers, method=method)
