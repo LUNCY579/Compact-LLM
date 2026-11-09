@@ -85,6 +85,7 @@ The [CS-PILOT-001 independent old-input KL study](research/composable_skills_v1/
 | [`lineage.md`](lineage.md) | Weight ancestry, donors, adapter recipes, and names |
 | [`announcement.md`](announcement.md) | Historical limits on public claims |
 | [Integrated main research tree](https://github.com/LUNCY579/Compact-LLM/tree/main/experiments) | Consolidated later experiments and evidence |
+| [2026-11-08 verified pruning status](docs/repository-consolidation/2026-11-08/BRANCH_PRUNING_STATUS.md) | 21 exact-ref retirements, source hashes, remaining 27 divergent refs and CI limits |
 | [2026-11-08 branch-tip audit](docs/repository-consolidation/2026-11-08/README.md) | Live-branch ancestry, safe-merge boundaries, and remaining work |
 | [Consolidation record](https://github.com/LUNCY579/Compact-LLM/tree/main/docs/repository-consolidation/2026-10-22) | Preserved source histories, blockers, and manual branch-pruning safeguards |
 
