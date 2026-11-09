@@ -63,6 +63,10 @@ Two independent source-evidence hardening packages are also retained: a [pairwis
 
 **CLARe Phase 4 scoped execution:** the [runner](experiments/clare_sparse_composition_v1/run_phase4.py) requires an explicit `runs/clare-rineya-001/SCOPE.json` with integer `max_tier` from 0 to 4 **before any step or output write**. Missing, invalid and out-of-range grants fail closed; [focused scope tests](experiments/clare_sparse_composition_v1/tests/test_run_phase4_scope.py) were added. This is an execution safety guard, not evidence that the sparse-training experiment has acquired a skill.
 
+## Composable-skills retention pilot
+
+The [CS-PILOT-001 independent old-input KL study](research/composable_skills_v1/RESULTS_PILOT001.md) compared an ordinary LoRA cross-entropy arm with a matched old-input KL anchor while acquiring a transition skill. The two development arms scored **194/384** and **193/384** acquisition, both **below the preregistered ≥200 and all-three-family-floor requirement**. The KL arm preserved **146/148** previously correct old-development answers versus **144/148** for ordinary LoRA, but **both lost clock-time successes**, and the two restored binding rows came from one world rather than independent replications. The study is a negative/limited result, not a no-forgetting solution; artifacts are experimental and **not production-qualified**. A separate [dose-parameterization evidence snapshot](experiments/architecture_benchmark_001/evidence/retention-design-v1/) and [recovered binding cost-report checks](research/binding_integration_v1/) are also preserved for audit and continuation.
+
 ## Research directions
 
 1. **Efficient model composition:** kept-layer/weight interpolation, LoRA scaling, task-vector arithmetic, model soups, and separating dense single-pass cores from multi-arm routing.

@@ -1,0 +1,3474 @@
+[
+  {
+    "id": "CS1-anchor-301-0000-b0-u0",
+    "world_id": "CS1-anchor-301-0000",
+    "split": "anchor",
+    "family": "binding",
+    "template": "roster_is",
+    "answerable": true,
+    "long": false,
+    "reference": "Rosa",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "Rosa is the driver. Iris is the baker. Hugo is the courier. Ada is the painter.\nWho is the driver?"
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Iris\"], [\"courier\", \"Hugo\"], [\"driver\", \"Rosa\"], [\"painter\", \"Ada\"]], \"driver\"]"
+  },
+  {
+    "id": "CS1-anchor-301-0000-b0-u1",
+    "world_id": "CS1-anchor-301-0000",
+    "split": "anchor",
+    "family": "binding",
+    "template": "roster_is",
+    "answerable": false,
+    "long": false,
+    "reference": "UNKNOWN",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "Rosa is the clerk. Iris is the baker. Hugo is the courier. Ada is the painter.\nWho is the driver?"
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Iris\"], [\"clerk\", \"Rosa\"], [\"courier\", \"Hugo\"], [\"painter\", \"Ada\"]], \"driver\"]"
+  },
+  {
+    "id": "CS1-anchor-301-0000-b1-u0",
+    "world_id": "CS1-anchor-301-0000",
+    "split": "anchor",
+    "family": "binding",
+    "template": "roster_is",
+    "answerable": true,
+    "long": false,
+    "reference": "Iris",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "Iris is the driver. Rosa is the baker. Hugo is the courier. Ada is the painter.\nWho is the driver?"
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Rosa\"], [\"courier\", \"Hugo\"], [\"driver\", \"Iris\"], [\"painter\", \"Ada\"]], \"driver\"]"
+  },
+  {
+    "id": "CS1-anchor-301-0000-b1-u1",
+    "world_id": "CS1-anchor-301-0000",
+    "split": "anchor",
+    "family": "binding",
+    "template": "roster_is",
+    "answerable": false,
+    "long": false,
+    "reference": "UNKNOWN",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "Iris is the clerk. Rosa is the baker. Hugo is the courier. Ada is the painter.\nWho is the driver?"
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Rosa\"], [\"clerk\", \"Iris\"], [\"courier\", \"Hugo\"], [\"painter\", \"Ada\"]], \"driver\"]"
+  },
+  {
+    "id": "CS1-anchor-301-0000-arithmetic",
+    "world_id": "CS1-anchor-301-0000-arithmetic",
+    "split": "anchor",
+    "family": "arithmetic",
+    "template": "anchor_arithmetic",
+    "reference": "22",
+    "answerable": true,
+    "semantic_key": "arithmetic:27-5",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Return only the integer answer."
+      },
+      {
+        "role": "user",
+        "content": "Calculate 27 - 5."
+      }
+    ]
+  },
+  {
+    "id": "CS1-anchor-301-0000-time",
+    "world_id": "CS1-anchor-301-0000-time",
+    "split": "anchor",
+    "family": "time",
+    "template": "anchor_time",
+    "reference": "16:25",
+    "answerable": true,
+    "semantic_key": "time:16:8:17",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Use 24-hour HH:MM format only."
+      },
+      {
+        "role": "user",
+        "content": "A clock shows 16:08. What time is it 17 minutes later?"
+      }
+    ]
+  },
+  {
+    "id": "CS1-anchor-301-0001-b0-u0",
+    "world_id": "CS1-anchor-301-0001",
+    "split": "anchor",
+    "family": "binding",
+    "template": "roster_is",
+    "answerable": true,
+    "long": true,
+    "reference": "Ada",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. Hugo is the clerk. Ada is the driver. Lena is the painter. Nora is the singer.\nWho is the driver?"
+      }
+    ],
+    "semantic_key": "[[[\"clerk\", \"Hugo\"], [\"driver\", \"Ada\"], [\"painter\", \"Lena\"], [\"singer\", \"Nora\"]], \"driver\"]"
+  },
+  {
+    "id": "CS1-anchor-301-0001-b0-u1",
+    "world_id": "CS1-anchor-301-0001",
+    "split": "anchor",
+    "family": "binding",
+    "template": "roster_is",
+    "answerable": false,
+    "long": true,
+    "reference": "UNKNOWN",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. Hugo is the clerk. Ada is the editor. Lena is the painter. Nora is the singer.\nWho is the driver?"
+      }
+    ],
+    "semantic_key": "[[[\"clerk\", \"Hugo\"], [\"editor\", \"Ada\"], [\"painter\", \"Lena\"], [\"singer\", \"Nora\"]], \"driver\"]"
+  },
+  {
+    "id": "CS1-anchor-301-0001-b1-u0",
+    "world_id": "CS1-anchor-301-0001",
+    "split": "anchor",
+    "family": "binding",
+    "template": "roster_is",
+    "answerable": true,
+    "long": true,
+    "reference": "Lena",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. Hugo is the clerk. Lena is the driver. Ada is the painter. Nora is the singer.\nWho is the driver?"
+      }
+    ],
+    "semantic_key": "[[[\"clerk\", \"Hugo\"], [\"driver\", \"Lena\"], [\"painter\", \"Ada\"], [\"singer\", \"Nora\"]], \"driver\"]"
+  },
+  {
+    "id": "CS1-anchor-301-0001-b1-u1",
+    "world_id": "CS1-anchor-301-0001",
+    "split": "anchor",
+    "family": "binding",
+    "template": "roster_is",
+    "answerable": false,
+    "long": true,
+    "reference": "UNKNOWN",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. Hugo is the clerk. Lena is the editor. Ada is the painter. Nora is the singer.\nWho is the driver?"
+      }
+    ],
+    "semantic_key": "[[[\"clerk\", \"Hugo\"], [\"editor\", \"Lena\"], [\"painter\", \"Ada\"], [\"singer\", \"Nora\"]], \"driver\"]"
+  },
+  {
+    "id": "CS1-anchor-301-0001-arithmetic",
+    "world_id": "CS1-anchor-301-0001-arithmetic",
+    "split": "anchor",
+    "family": "arithmetic",
+    "template": "anchor_arithmetic",
+    "reference": "49",
+    "answerable": true,
+    "semantic_key": "arithmetic:40+9",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Return only the integer answer."
+      },
+      {
+        "role": "user",
+        "content": "Calculate 40 + 9."
+      }
+    ]
+  },
+  {
+    "id": "CS1-anchor-301-0001-time",
+    "world_id": "CS1-anchor-301-0001-time",
+    "split": "anchor",
+    "family": "time",
+    "template": "anchor_time",
+    "reference": "08:56",
+    "answerable": true,
+    "semantic_key": "time:8:49:7",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Use 24-hour HH:MM format only."
+      },
+      {
+        "role": "user",
+        "content": "A clock shows 08:49. What time is it 7 minutes later?"
+      }
+    ]
+  },
+  {
+    "id": "CS1-anchor-301-0002-b0-u0",
+    "world_id": "CS1-anchor-301-0002",
+    "split": "anchor",
+    "family": "binding",
+    "template": "roster_is",
+    "answerable": true,
+    "long": false,
+    "reference": "Lena",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "Theo is the baker. Hugo is the courier. Lena is the painter. Omar is the driver.\nWho is the painter?"
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Theo\"], [\"courier\", \"Hugo\"], [\"driver\", \"Omar\"], [\"painter\", \"Lena\"]], \"painter\"]"
+  },
+  {
+    "id": "CS1-anchor-301-0002-b0-u1",
+    "world_id": "CS1-anchor-301-0002",
+    "split": "anchor",
+    "family": "binding",
+    "template": "roster_is",
+    "answerable": false,
+    "long": false,
+    "reference": "UNKNOWN",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "Theo is the baker. Hugo is the courier. Lena is the keeper. Omar is the driver.\nWho is the painter?"
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Theo\"], [\"courier\", \"Hugo\"], [\"driver\", \"Omar\"], [\"keeper\", \"Lena\"]], \"painter\"]"
+  },
+  {
+    "id": "CS1-anchor-301-0002-b1-u0",
+    "world_id": "CS1-anchor-301-0002",
+    "split": "anchor",
+    "family": "binding",
+    "template": "roster_is",
+    "answerable": true,
+    "long": false,
+    "reference": "Omar",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "Theo is the baker. Hugo is the courier. Omar is the painter. Lena is the driver.\nWho is the painter?"
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Theo\"], [\"courier\", \"Hugo\"], [\"driver\", \"Lena\"], [\"painter\", \"Omar\"]], \"painter\"]"
+  },
+  {
+    "id": "CS1-anchor-301-0002-b1-u1",
+    "world_id": "CS1-anchor-301-0002",
+    "split": "anchor",
+    "family": "binding",
+    "template": "roster_is",
+    "answerable": false,
+    "long": false,
+    "reference": "UNKNOWN",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "Theo is the baker. Hugo is the courier. Omar is the keeper. Lena is the driver.\nWho is the painter?"
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Theo\"], [\"courier\", \"Hugo\"], [\"driver\", \"Lena\"], [\"keeper\", \"Omar\"]], \"painter\"]"
+  },
+  {
+    "id": "CS1-anchor-301-0002-arithmetic",
+    "world_id": "CS1-anchor-301-0002-arithmetic",
+    "split": "anchor",
+    "family": "arithmetic",
+    "template": "anchor_arithmetic",
+    "reference": "50",
+    "answerable": true,
+    "semantic_key": "arithmetic:52-2",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Return only the integer answer."
+      },
+      {
+        "role": "user",
+        "content": "Calculate 52 - 2."
+      }
+    ]
+  },
+  {
+    "id": "CS1-anchor-301-0002-time",
+    "world_id": "CS1-anchor-301-0002-time",
+    "split": "anchor",
+    "family": "time",
+    "template": "anchor_time",
+    "reference": "09:48",
+    "answerable": true,
+    "semantic_key": "time:9:22:26",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Use 24-hour HH:MM format only."
+      },
+      {
+        "role": "user",
+        "content": "A clock shows 09:22. What time is it 26 minutes later?"
+      }
+    ]
+  },
+  {
+    "id": "CS1-anchor-301-0003-b0-u0",
+    "world_id": "CS1-anchor-301-0003",
+    "split": "anchor",
+    "family": "binding",
+    "template": "roster_is",
+    "answerable": true,
+    "long": true,
+    "reference": "Hugo",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. Rosa is the painter. Theo is the singer. Nora is the editor. Hugo is the keeper.\nWho is the keeper?"
+      }
+    ],
+    "semantic_key": "[[[\"editor\", \"Nora\"], [\"keeper\", \"Hugo\"], [\"painter\", \"Rosa\"], [\"singer\", \"Theo\"]], \"keeper\"]"
+  },
+  {
+    "id": "CS1-anchor-301-0003-b0-u1",
+    "world_id": "CS1-anchor-301-0003",
+    "split": "anchor",
+    "family": "binding",
+    "template": "roster_is",
+    "answerable": false,
+    "long": true,
+    "reference": "UNKNOWN",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. Rosa is the painter. Theo is the singer. Nora is the editor. Hugo is the driver.\nWho is the keeper?"
+      }
+    ],
+    "semantic_key": "[[[\"driver\", \"Hugo\"], [\"editor\", \"Nora\"], [\"painter\", \"Rosa\"], [\"singer\", \"Theo\"]], \"keeper\"]"
+  },
+  {
+    "id": "CS1-anchor-301-0003-b1-u0",
+    "world_id": "CS1-anchor-301-0003",
+    "split": "anchor",
+    "family": "binding",
+    "template": "roster_is",
+    "answerable": true,
+    "long": true,
+    "reference": "Rosa",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. Hugo is the painter. Theo is the singer. Nora is the editor. Rosa is the keeper.\nWho is the keeper?"
+      }
+    ],
+    "semantic_key": "[[[\"editor\", \"Nora\"], [\"keeper\", \"Rosa\"], [\"painter\", \"Hugo\"], [\"singer\", \"Theo\"]], \"keeper\"]"
+  },
+  {
+    "id": "CS1-anchor-301-0003-b1-u1",
+    "world_id": "CS1-anchor-301-0003",
+    "split": "anchor",
+    "family": "binding",
+    "template": "roster_is",
+    "answerable": false,
+    "long": true,
+    "reference": "UNKNOWN",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. Hugo is the painter. Theo is the singer. Nora is the editor. Rosa is the driver.\nWho is the keeper?"
+      }
+    ],
+    "semantic_key": "[[[\"driver\", \"Rosa\"], [\"editor\", \"Nora\"], [\"painter\", \"Hugo\"], [\"singer\", \"Theo\"]], \"keeper\"]"
+  },
+  {
+    "id": "CS1-anchor-301-0003-arithmetic",
+    "world_id": "CS1-anchor-301-0003-arithmetic",
+    "split": "anchor",
+    "family": "arithmetic",
+    "template": "anchor_arithmetic",
+    "reference": "31",
+    "answerable": true,
+    "semantic_key": "arithmetic:25+6",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Return only the integer answer."
+      },
+      {
+        "role": "user",
+        "content": "Calculate 25 + 6."
+      }
+    ]
+  },
+  {
+    "id": "CS1-anchor-301-0003-time",
+    "world_id": "CS1-anchor-301-0003-time",
+    "split": "anchor",
+    "family": "time",
+    "template": "anchor_time",
+    "reference": "15:03",
+    "answerable": true,
+    "semantic_key": "time:14:48:15",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Use 24-hour HH:MM format only."
+      },
+      {
+        "role": "user",
+        "content": "A clock shows 14:48. What time is it 15 minutes later?"
+      }
+    ]
+  },
+  {
+    "id": "CS1-anchor-301-0004-b0-u0",
+    "world_id": "CS1-anchor-301-0004",
+    "split": "anchor",
+    "family": "binding",
+    "template": "roster_is",
+    "answerable": true,
+    "long": false,
+    "reference": "Noah",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "Lena is the driver. Leon is the editor. Omar is the clerk. Noah is the painter.\nWho is the painter?"
+      }
+    ],
+    "semantic_key": "[[[\"clerk\", \"Omar\"], [\"driver\", \"Lena\"], [\"editor\", \"Leon\"], [\"painter\", \"Noah\"]], \"painter\"]"
+  },
+  {
+    "id": "CS1-anchor-301-0004-b0-u1",
+    "world_id": "CS1-anchor-301-0004",
+    "split": "anchor",
+    "family": "binding",
+    "template": "roster_is",
+    "answerable": false,
+    "long": false,
+    "reference": "UNKNOWN",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "Lena is the driver. Leon is the editor. Omar is the clerk. Noah is the courier.\nWho is the painter?"
+      }
+    ],
+    "semantic_key": "[[[\"clerk\", \"Omar\"], [\"courier\", \"Noah\"], [\"driver\", \"Lena\"], [\"editor\", \"Leon\"]], \"painter\"]"
+  },
+  {
+    "id": "CS1-anchor-301-0004-b1-u0",
+    "world_id": "CS1-anchor-301-0004",
+    "split": "anchor",
+    "family": "binding",
+    "template": "roster_is",
+    "answerable": true,
+    "long": false,
+    "reference": "Lena",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "Noah is the driver. Leon is the editor. Omar is the clerk. Lena is the painter.\nWho is the painter?"
+      }
+    ],
+    "semantic_key": "[[[\"clerk\", \"Omar\"], [\"driver\", \"Noah\"], [\"editor\", \"Leon\"], [\"painter\", \"Lena\"]], \"painter\"]"
+  },
+  {
+    "id": "CS1-anchor-301-0004-b1-u1",
+    "world_id": "CS1-anchor-301-0004",
+    "split": "anchor",
+    "family": "binding",
+    "template": "roster_is",
+    "answerable": false,
+    "long": false,
+    "reference": "UNKNOWN",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "Noah is the driver. Leon is the editor. Omar is the clerk. Lena is the courier.\nWho is the painter?"
+      }
+    ],
+    "semantic_key": "[[[\"clerk\", \"Omar\"], [\"courier\", \"Lena\"], [\"driver\", \"Noah\"], [\"editor\", \"Leon\"]], \"painter\"]"
+  },
+  {
+    "id": "CS1-anchor-301-0004-arithmetic",
+    "world_id": "CS1-anchor-301-0004-arithmetic",
+    "split": "anchor",
+    "family": "arithmetic",
+    "template": "anchor_arithmetic",
+    "reference": "82",
+    "answerable": true,
+    "semantic_key": "arithmetic:86-4",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Return only the integer answer."
+      },
+      {
+        "role": "user",
+        "content": "Calculate 86 - 4."
+      }
+    ]
+  },
+  {
+    "id": "CS1-anchor-301-0004-time",
+    "world_id": "CS1-anchor-301-0004-time",
+    "split": "anchor",
+    "family": "time",
+    "template": "anchor_time",
+    "reference": "15:42",
+    "answerable": true,
+    "semantic_key": "time:14:49:53",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Use 24-hour HH:MM format only."
+      },
+      {
+        "role": "user",
+        "content": "A clock shows 14:49. What time is it 53 minutes later?"
+      }
+    ]
+  },
+  {
+    "id": "CS1-anchor-301-0005-b0-u0",
+    "world_id": "CS1-anchor-301-0005",
+    "split": "anchor",
+    "family": "binding",
+    "template": "roster_is",
+    "answerable": true,
+    "long": true,
+    "reference": "Theo",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. Theo is the painter. Hugo is the baker. Iris is the driver. Omar is the courier.\nWho is the painter?"
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Hugo\"], [\"courier\", \"Omar\"], [\"driver\", \"Iris\"], [\"painter\", \"Theo\"]], \"painter\"]"
+  },
+  {
+    "id": "CS1-anchor-301-0005-b0-u1",
+    "world_id": "CS1-anchor-301-0005",
+    "split": "anchor",
+    "family": "binding",
+    "template": "roster_is",
+    "answerable": false,
+    "long": true,
+    "reference": "UNKNOWN",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. Theo is the keeper. Hugo is the baker. Iris is the driver. Omar is the courier.\nWho is the painter?"
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Hugo\"], [\"courier\", \"Omar\"], [\"driver\", \"Iris\"], [\"keeper\", \"Theo\"]], \"painter\"]"
+  },
+  {
+    "id": "CS1-anchor-301-0005-b1-u0",
+    "world_id": "CS1-anchor-301-0005",
+    "split": "anchor",
+    "family": "binding",
+    "template": "roster_is",
+    "answerable": true,
+    "long": true,
+    "reference": "Hugo",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. Hugo is the painter. Theo is the baker. Iris is the driver. Omar is the courier.\nWho is the painter?"
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Theo\"], [\"courier\", \"Omar\"], [\"driver\", \"Iris\"], [\"painter\", \"Hugo\"]], \"painter\"]"
+  },
+  {
+    "id": "CS1-anchor-301-0005-b1-u1",
+    "world_id": "CS1-anchor-301-0005",
+    "split": "anchor",
+    "family": "binding",
+    "template": "roster_is",
+    "answerable": false,
+    "long": true,
+    "reference": "UNKNOWN",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. Hugo is the keeper. Theo is the baker. Iris is the driver. Omar is the courier.\nWho is the painter?"
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Theo\"], [\"courier\", \"Omar\"], [\"driver\", \"Iris\"], [\"keeper\", \"Hugo\"]], \"painter\"]"
+  },
+  {
+    "id": "CS1-anchor-301-0005-arithmetic",
+    "world_id": "CS1-anchor-301-0005-arithmetic",
+    "split": "anchor",
+    "family": "arithmetic",
+    "template": "anchor_arithmetic",
+    "reference": "56",
+    "answerable": true,
+    "semantic_key": "arithmetic:50+6",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Return only the integer answer."
+      },
+      {
+        "role": "user",
+        "content": "Calculate 50 + 6."
+      }
+    ]
+  },
+  {
+    "id": "CS1-anchor-301-0005-time",
+    "world_id": "CS1-anchor-301-0005-time",
+    "split": "anchor",
+    "family": "time",
+    "template": "anchor_time",
+    "reference": "14:09",
+    "answerable": true,
+    "semantic_key": "time:12:45:84",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Use 24-hour HH:MM format only."
+      },
+      {
+        "role": "user",
+        "content": "A clock shows 12:45. What time is it 84 minutes later?"
+      }
+    ]
+  },
+  {
+    "id": "CS1-anchor-301-0006-b0-u0",
+    "world_id": "CS1-anchor-301-0006",
+    "split": "anchor",
+    "family": "binding",
+    "template": "roster_is",
+    "answerable": true,
+    "long": false,
+    "reference": "Nora",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "Lena is the editor. Nora is the driver. Rosa is the courier. Leon is the baker.\nWho is the driver?"
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Leon\"], [\"courier\", \"Rosa\"], [\"driver\", \"Nora\"], [\"editor\", \"Lena\"]], \"driver\"]"
+  },
+  {
+    "id": "CS1-anchor-301-0006-b0-u1",
+    "world_id": "CS1-anchor-301-0006",
+    "split": "anchor",
+    "family": "binding",
+    "template": "roster_is",
+    "answerable": false,
+    "long": false,
+    "reference": "UNKNOWN",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "Lena is the editor. Nora is the clerk. Rosa is the courier. Leon is the baker.\nWho is the driver?"
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Leon\"], [\"clerk\", \"Nora\"], [\"courier\", \"Rosa\"], [\"editor\", \"Lena\"]], \"driver\"]"
+  },
+  {
+    "id": "CS1-anchor-301-0006-b1-u0",
+    "world_id": "CS1-anchor-301-0006",
+    "split": "anchor",
+    "family": "binding",
+    "template": "roster_is",
+    "answerable": true,
+    "long": false,
+    "reference": "Rosa",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "Lena is the editor. Rosa is the driver. Nora is the courier. Leon is the baker.\nWho is the driver?"
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Leon\"], [\"courier\", \"Nora\"], [\"driver\", \"Rosa\"], [\"editor\", \"Lena\"]], \"driver\"]"
+  },
+  {
+    "id": "CS1-anchor-301-0006-b1-u1",
+    "world_id": "CS1-anchor-301-0006",
+    "split": "anchor",
+    "family": "binding",
+    "template": "roster_is",
+    "answerable": false,
+    "long": false,
+    "reference": "UNKNOWN",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "Lena is the editor. Rosa is the clerk. Nora is the courier. Leon is the baker.\nWho is the driver?"
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Leon\"], [\"clerk\", \"Rosa\"], [\"courier\", \"Nora\"], [\"editor\", \"Lena\"]], \"driver\"]"
+  },
+  {
+    "id": "CS1-anchor-301-0006-arithmetic",
+    "world_id": "CS1-anchor-301-0006-arithmetic",
+    "split": "anchor",
+    "family": "arithmetic",
+    "template": "anchor_arithmetic",
+    "reference": "45",
+    "answerable": true,
+    "semantic_key": "arithmetic:49-4",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Return only the integer answer."
+      },
+      {
+        "role": "user",
+        "content": "Calculate 49 - 4."
+      }
+    ]
+  },
+  {
+    "id": "CS1-anchor-301-0006-time",
+    "world_id": "CS1-anchor-301-0006-time",
+    "split": "anchor",
+    "family": "time",
+    "template": "anchor_time",
+    "reference": "13:48",
+    "answerable": true,
+    "semantic_key": "time:13:22:26",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Use 24-hour HH:MM format only."
+      },
+      {
+        "role": "user",
+        "content": "A clock shows 13:22. What time is it 26 minutes later?"
+      }
+    ]
+  },
+  {
+    "id": "CS1-anchor-301-0007-b0-u0",
+    "world_id": "CS1-anchor-301-0007",
+    "split": "anchor",
+    "family": "binding",
+    "template": "roster_is",
+    "answerable": true,
+    "long": true,
+    "reference": "Iris",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. Hugo is the baker. Mira is the singer. Iris is the courier. Ivan is the clerk.\nWho is the courier?"
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Hugo\"], [\"clerk\", \"Ivan\"], [\"courier\", \"Iris\"], [\"singer\", \"Mira\"]], \"courier\"]"
+  },
+  {
+    "id": "CS1-anchor-301-0007-b0-u1",
+    "world_id": "CS1-anchor-301-0007",
+    "split": "anchor",
+    "family": "binding",
+    "template": "roster_is",
+    "answerable": false,
+    "long": true,
+    "reference": "UNKNOWN",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. Hugo is the baker. Mira is the singer. Iris is the editor. Ivan is the clerk.\nWho is the courier?"
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Hugo\"], [\"clerk\", \"Ivan\"], [\"editor\", \"Iris\"], [\"singer\", \"Mira\"]], \"courier\"]"
+  },
+  {
+    "id": "CS1-anchor-301-0007-b1-u0",
+    "world_id": "CS1-anchor-301-0007",
+    "split": "anchor",
+    "family": "binding",
+    "template": "roster_is",
+    "answerable": true,
+    "long": true,
+    "reference": "Ivan",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. Hugo is the baker. Mira is the singer. Ivan is the courier. Iris is the clerk.\nWho is the courier?"
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Hugo\"], [\"clerk\", \"Iris\"], [\"courier\", \"Ivan\"], [\"singer\", \"Mira\"]], \"courier\"]"
+  },
+  {
+    "id": "CS1-anchor-301-0007-b1-u1",
+    "world_id": "CS1-anchor-301-0007",
+    "split": "anchor",
+    "family": "binding",
+    "template": "roster_is",
+    "answerable": false,
+    "long": true,
+    "reference": "UNKNOWN",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. Hugo is the baker. Mira is the singer. Ivan is the editor. Iris is the clerk.\nWho is the courier?"
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Hugo\"], [\"clerk\", \"Iris\"], [\"editor\", \"Ivan\"], [\"singer\", \"Mira\"]], \"courier\"]"
+  },
+  {
+    "id": "CS1-anchor-301-0007-arithmetic",
+    "world_id": "CS1-anchor-301-0007-arithmetic",
+    "split": "anchor",
+    "family": "arithmetic",
+    "template": "anchor_arithmetic",
+    "reference": "82",
+    "answerable": true,
+    "semantic_key": "arithmetic:79+3",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Return only the integer answer."
+      },
+      {
+        "role": "user",
+        "content": "Calculate 79 + 3."
+      }
+    ]
+  },
+  {
+    "id": "CS1-anchor-301-0007-time",
+    "world_id": "CS1-anchor-301-0007-time",
+    "split": "anchor",
+    "family": "time",
+    "template": "anchor_time",
+    "reference": "17:25",
+    "answerable": true,
+    "semantic_key": "time:17:3:22",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Use 24-hour HH:MM format only."
+      },
+      {
+        "role": "user",
+        "content": "A clock shows 17:03. What time is it 22 minutes later?"
+      }
+    ]
+  },
+  {
+    "id": "CS1-anchor-301-0008-b0-u0",
+    "world_id": "CS1-anchor-301-0008",
+    "split": "anchor",
+    "family": "binding",
+    "template": "roster_is",
+    "answerable": true,
+    "long": false,
+    "reference": "Nora",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "Rosa is the clerk. Ada is the driver. Nora is the editor. Noah is the painter.\nWho is the editor?"
+      }
+    ],
+    "semantic_key": "[[[\"clerk\", \"Rosa\"], [\"driver\", \"Ada\"], [\"editor\", \"Nora\"], [\"painter\", \"Noah\"]], \"editor\"]"
+  },
+  {
+    "id": "CS1-anchor-301-0008-b0-u1",
+    "world_id": "CS1-anchor-301-0008",
+    "split": "anchor",
+    "family": "binding",
+    "template": "roster_is",
+    "answerable": false,
+    "long": false,
+    "reference": "UNKNOWN",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "Rosa is the clerk. Ada is the driver. Nora is the baker. Noah is the painter.\nWho is the editor?"
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Nora\"], [\"clerk\", \"Rosa\"], [\"driver\", \"Ada\"], [\"painter\", \"Noah\"]], \"editor\"]"
+  },
+  {
+    "id": "CS1-anchor-301-0008-b1-u0",
+    "world_id": "CS1-anchor-301-0008",
+    "split": "anchor",
+    "family": "binding",
+    "template": "roster_is",
+    "answerable": true,
+    "long": false,
+    "reference": "Noah",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "Rosa is the clerk. Ada is the driver. Noah is the editor. Nora is the painter.\nWho is the editor?"
+      }
+    ],
+    "semantic_key": "[[[\"clerk\", \"Rosa\"], [\"driver\", \"Ada\"], [\"editor\", \"Noah\"], [\"painter\", \"Nora\"]], \"editor\"]"
+  },
+  {
+    "id": "CS1-anchor-301-0008-b1-u1",
+    "world_id": "CS1-anchor-301-0008",
+    "split": "anchor",
+    "family": "binding",
+    "template": "roster_is",
+    "answerable": false,
+    "long": false,
+    "reference": "UNKNOWN",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "Rosa is the clerk. Ada is the driver. Noah is the baker. Nora is the painter.\nWho is the editor?"
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Noah\"], [\"clerk\", \"Rosa\"], [\"driver\", \"Ada\"], [\"painter\", \"Nora\"]], \"editor\"]"
+  },
+  {
+    "id": "CS1-anchor-301-0008-arithmetic",
+    "world_id": "CS1-anchor-301-0008-arithmetic",
+    "split": "anchor",
+    "family": "arithmetic",
+    "template": "anchor_arithmetic",
+    "reference": "57",
+    "answerable": true,
+    "semantic_key": "arithmetic:62-5",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Return only the integer answer."
+      },
+      {
+        "role": "user",
+        "content": "Calculate 62 - 5."
+      }
+    ]
+  },
+  {
+    "id": "CS1-anchor-301-0008-time",
+    "world_id": "CS1-anchor-301-0008-time",
+    "split": "anchor",
+    "family": "time",
+    "template": "anchor_time",
+    "reference": "14:59",
+    "answerable": true,
+    "semantic_key": "time:13:33:86",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Use 24-hour HH:MM format only."
+      },
+      {
+        "role": "user",
+        "content": "A clock shows 13:33. What time is it 86 minutes later?"
+      }
+    ]
+  },
+  {
+    "id": "CS1-anchor-301-0009-b0-u0",
+    "world_id": "CS1-anchor-301-0009",
+    "split": "anchor",
+    "family": "binding",
+    "template": "roster_is",
+    "answerable": true,
+    "long": true,
+    "reference": "Hugo",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. Ivan is the keeper. Ada is the painter. Mira is the singer. Hugo is the driver.\nWho is the driver?"
+      }
+    ],
+    "semantic_key": "[[[\"driver\", \"Hugo\"], [\"keeper\", \"Ivan\"], [\"painter\", \"Ada\"], [\"singer\", \"Mira\"]], \"driver\"]"
+  },
+  {
+    "id": "CS1-anchor-301-0009-b0-u1",
+    "world_id": "CS1-anchor-301-0009",
+    "split": "anchor",
+    "family": "binding",
+    "template": "roster_is",
+    "answerable": false,
+    "long": true,
+    "reference": "UNKNOWN",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. Ivan is the keeper. Ada is the painter. Mira is the singer. Hugo is the editor.\nWho is the driver?"
+      }
+    ],
+    "semantic_key": "[[[\"editor\", \"Hugo\"], [\"keeper\", \"Ivan\"], [\"painter\", \"Ada\"], [\"singer\", \"Mira\"]], \"driver\"]"
+  },
+  {
+    "id": "CS1-anchor-301-0009-b1-u0",
+    "world_id": "CS1-anchor-301-0009",
+    "split": "anchor",
+    "family": "binding",
+    "template": "roster_is",
+    "answerable": true,
+    "long": true,
+    "reference": "Ivan",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. Hugo is the keeper. Ada is the painter. Mira is the singer. Ivan is the driver.\nWho is the driver?"
+      }
+    ],
+    "semantic_key": "[[[\"driver\", \"Ivan\"], [\"keeper\", \"Hugo\"], [\"painter\", \"Ada\"], [\"singer\", \"Mira\"]], \"driver\"]"
+  },
+  {
+    "id": "CS1-anchor-301-0009-b1-u1",
+    "world_id": "CS1-anchor-301-0009",
+    "split": "anchor",
+    "family": "binding",
+    "template": "roster_is",
+    "answerable": false,
+    "long": true,
+    "reference": "UNKNOWN",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. Hugo is the keeper. Ada is the painter. Mira is the singer. Ivan is the editor.\nWho is the driver?"
+      }
+    ],
+    "semantic_key": "[[[\"editor\", \"Ivan\"], [\"keeper\", \"Hugo\"], [\"painter\", \"Ada\"], [\"singer\", \"Mira\"]], \"driver\"]"
+  },
+  {
+    "id": "CS1-anchor-301-0009-arithmetic",
+    "world_id": "CS1-anchor-301-0009-arithmetic",
+    "split": "anchor",
+    "family": "arithmetic",
+    "template": "anchor_arithmetic",
+    "reference": "66",
+    "answerable": true,
+    "semantic_key": "arithmetic:64+2",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Return only the integer answer."
+      },
+      {
+        "role": "user",
+        "content": "Calculate 64 + 2."
+      }
+    ]
+  },
+  {
+    "id": "CS1-anchor-301-0009-time",
+    "world_id": "CS1-anchor-301-0009-time",
+    "split": "anchor",
+    "family": "time",
+    "template": "anchor_time",
+    "reference": "10:28",
+    "answerable": true,
+    "semantic_key": "time:9:34:54",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Use 24-hour HH:MM format only."
+      },
+      {
+        "role": "user",
+        "content": "A clock shows 09:34. What time is it 54 minutes later?"
+      }
+    ]
+  },
+  {
+    "id": "CS1-anchor-301-0010-b0-u0",
+    "world_id": "CS1-anchor-301-0010",
+    "split": "anchor",
+    "family": "binding",
+    "template": "roster_is",
+    "answerable": true,
+    "long": false,
+    "reference": "Theo",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "Theo is the courier. Ada is the clerk. Lena is the keeper. Noah is the singer.\nWho is the courier?"
+      }
+    ],
+    "semantic_key": "[[[\"clerk\", \"Ada\"], [\"courier\", \"Theo\"], [\"keeper\", \"Lena\"], [\"singer\", \"Noah\"]], \"courier\"]"
+  },
+  {
+    "id": "CS1-anchor-301-0010-b0-u1",
+    "world_id": "CS1-anchor-301-0010",
+    "split": "anchor",
+    "family": "binding",
+    "template": "roster_is",
+    "answerable": false,
+    "long": false,
+    "reference": "UNKNOWN",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "Theo is the baker. Ada is the clerk. Lena is the keeper. Noah is the singer.\nWho is the courier?"
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Theo\"], [\"clerk\", \"Ada\"], [\"keeper\", \"Lena\"], [\"singer\", \"Noah\"]], \"courier\"]"
+  },
+  {
+    "id": "CS1-anchor-301-0010-b1-u0",
+    "world_id": "CS1-anchor-301-0010",
+    "split": "anchor",
+    "family": "binding",
+    "template": "roster_is",
+    "answerable": true,
+    "long": false,
+    "reference": "Ada",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "Ada is the courier. Theo is the clerk. Lena is the keeper. Noah is the singer.\nWho is the courier?"
+      }
+    ],
+    "semantic_key": "[[[\"clerk\", \"Theo\"], [\"courier\", \"Ada\"], [\"keeper\", \"Lena\"], [\"singer\", \"Noah\"]], \"courier\"]"
+  },
+  {
+    "id": "CS1-anchor-301-0010-b1-u1",
+    "world_id": "CS1-anchor-301-0010",
+    "split": "anchor",
+    "family": "binding",
+    "template": "roster_is",
+    "answerable": false,
+    "long": false,
+    "reference": "UNKNOWN",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "Ada is the baker. Theo is the clerk. Lena is the keeper. Noah is the singer.\nWho is the courier?"
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Ada\"], [\"clerk\", \"Theo\"], [\"keeper\", \"Lena\"], [\"singer\", \"Noah\"]], \"courier\"]"
+  },
+  {
+    "id": "CS1-anchor-301-0010-arithmetic",
+    "world_id": "CS1-anchor-301-0010-arithmetic",
+    "split": "anchor",
+    "family": "arithmetic",
+    "template": "anchor_arithmetic",
+    "reference": "62",
+    "answerable": true,
+    "semantic_key": "arithmetic:70-8",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Return only the integer answer."
+      },
+      {
+        "role": "user",
+        "content": "Calculate 70 - 8."
+      }
+    ]
+  },
+  {
+    "id": "CS1-anchor-301-0010-time",
+    "world_id": "CS1-anchor-301-0010-time",
+    "split": "anchor",
+    "family": "time",
+    "template": "anchor_time",
+    "reference": "14:29",
+    "answerable": true,
+    "semantic_key": "time:14:21:8",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Use 24-hour HH:MM format only."
+      },
+      {
+        "role": "user",
+        "content": "A clock shows 14:21. What time is it 8 minutes later?"
+      }
+    ]
+  },
+  {
+    "id": "CS1-anchor-301-0011-b0-u0",
+    "world_id": "CS1-anchor-301-0011",
+    "split": "anchor",
+    "family": "binding",
+    "template": "roster_is",
+    "answerable": true,
+    "long": true,
+    "reference": "Noah",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. Omar is the clerk. Noah is the painter. Ivan is the baker. Theo is the courier.\nWho is the painter?"
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Ivan\"], [\"clerk\", \"Omar\"], [\"courier\", \"Theo\"], [\"painter\", \"Noah\"]], \"painter\"]"
+  },
+  {
+    "id": "CS1-anchor-301-0011-b0-u1",
+    "world_id": "CS1-anchor-301-0011",
+    "split": "anchor",
+    "family": "binding",
+    "template": "roster_is",
+    "answerable": false,
+    "long": true,
+    "reference": "UNKNOWN",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. Omar is the clerk. Noah is the singer. Ivan is the baker. Theo is the courier.\nWho is the painter?"
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Ivan\"], [\"clerk\", \"Omar\"], [\"courier\", \"Theo\"], [\"singer\", \"Noah\"]], \"painter\"]"
+  },
+  {
+    "id": "CS1-anchor-301-0011-b1-u0",
+    "world_id": "CS1-anchor-301-0011",
+    "split": "anchor",
+    "family": "binding",
+    "template": "roster_is",
+    "answerable": true,
+    "long": true,
+    "reference": "Ivan",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. Omar is the clerk. Ivan is the painter. Noah is the baker. Theo is the courier.\nWho is the painter?"
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Noah\"], [\"clerk\", \"Omar\"], [\"courier\", \"Theo\"], [\"painter\", \"Ivan\"]], \"painter\"]"
+  },
+  {
+    "id": "CS1-anchor-301-0011-b1-u1",
+    "world_id": "CS1-anchor-301-0011",
+    "split": "anchor",
+    "family": "binding",
+    "template": "roster_is",
+    "answerable": false,
+    "long": true,
+    "reference": "UNKNOWN",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. Omar is the clerk. Ivan is the singer. Noah is the baker. Theo is the courier.\nWho is the painter?"
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Noah\"], [\"clerk\", \"Omar\"], [\"courier\", \"Theo\"], [\"singer\", \"Ivan\"]], \"painter\"]"
+  },
+  {
+    "id": "CS1-anchor-301-0011-arithmetic",
+    "world_id": "CS1-anchor-301-0011-arithmetic",
+    "split": "anchor",
+    "family": "arithmetic",
+    "template": "anchor_arithmetic",
+    "reference": "23",
+    "answerable": true,
+    "semantic_key": "arithmetic:17+6",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Return only the integer answer."
+      },
+      {
+        "role": "user",
+        "content": "Calculate 17 + 6."
+      }
+    ]
+  },
+  {
+    "id": "CS1-anchor-301-0011-time",
+    "world_id": "CS1-anchor-301-0011-time",
+    "split": "anchor",
+    "family": "time",
+    "template": "anchor_time",
+    "reference": "08:50",
+    "answerable": true,
+    "semantic_key": "time:8:16:34",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Use 24-hour HH:MM format only."
+      },
+      {
+        "role": "user",
+        "content": "A clock shows 08:16. What time is it 34 minutes later?"
+      }
+    ]
+  },
+  {
+    "id": "CS1-anchor-301-0012-b0-u0",
+    "world_id": "CS1-anchor-301-0012",
+    "split": "anchor",
+    "family": "binding",
+    "template": "roster_is",
+    "answerable": true,
+    "long": false,
+    "reference": "Ivan",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "Nora is the singer. Ivan is the editor. Lena is the driver. Mira is the keeper.\nWho is the editor?"
+      }
+    ],
+    "semantic_key": "[[[\"driver\", \"Lena\"], [\"editor\", \"Ivan\"], [\"keeper\", \"Mira\"], [\"singer\", \"Nora\"]], \"editor\"]"
+  },
+  {
+    "id": "CS1-anchor-301-0012-b0-u1",
+    "world_id": "CS1-anchor-301-0012",
+    "split": "anchor",
+    "family": "binding",
+    "template": "roster_is",
+    "answerable": false,
+    "long": false,
+    "reference": "UNKNOWN",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "Nora is the singer. Ivan is the baker. Lena is the driver. Mira is the keeper.\nWho is the editor?"
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Ivan\"], [\"driver\", \"Lena\"], [\"keeper\", \"Mira\"], [\"singer\", \"Nora\"]], \"editor\"]"
+  },
+  {
+    "id": "CS1-anchor-301-0012-b1-u0",
+    "world_id": "CS1-anchor-301-0012",
+    "split": "anchor",
+    "family": "binding",
+    "template": "roster_is",
+    "answerable": true,
+    "long": false,
+    "reference": "Lena",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "Nora is the singer. Lena is the editor. Ivan is the driver. Mira is the keeper.\nWho is the editor?"
+      }
+    ],
+    "semantic_key": "[[[\"driver\", \"Ivan\"], [\"editor\", \"Lena\"], [\"keeper\", \"Mira\"], [\"singer\", \"Nora\"]], \"editor\"]"
+  },
+  {
+    "id": "CS1-anchor-301-0012-b1-u1",
+    "world_id": "CS1-anchor-301-0012",
+    "split": "anchor",
+    "family": "binding",
+    "template": "roster_is",
+    "answerable": false,
+    "long": false,
+    "reference": "UNKNOWN",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "Nora is the singer. Lena is the baker. Ivan is the driver. Mira is the keeper.\nWho is the editor?"
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Lena\"], [\"driver\", \"Ivan\"], [\"keeper\", \"Mira\"], [\"singer\", \"Nora\"]], \"editor\"]"
+  },
+  {
+    "id": "CS1-anchor-301-0012-arithmetic",
+    "world_id": "CS1-anchor-301-0012-arithmetic",
+    "split": "anchor",
+    "family": "arithmetic",
+    "template": "anchor_arithmetic",
+    "reference": "68",
+    "answerable": true,
+    "semantic_key": "arithmetic:77-9",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Return only the integer answer."
+      },
+      {
+        "role": "user",
+        "content": "Calculate 77 - 9."
+      }
+    ]
+  },
+  {
+    "id": "CS1-anchor-301-0012-time",
+    "world_id": "CS1-anchor-301-0012-time",
+    "split": "anchor",
+    "family": "time",
+    "template": "anchor_time",
+    "reference": "16:54",
+    "answerable": true,
+    "semantic_key": "time:16:10:44",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Use 24-hour HH:MM format only."
+      },
+      {
+        "role": "user",
+        "content": "A clock shows 16:10. What time is it 44 minutes later?"
+      }
+    ]
+  },
+  {
+    "id": "CS1-anchor-301-0013-b0-u0",
+    "world_id": "CS1-anchor-301-0013",
+    "split": "anchor",
+    "family": "binding",
+    "template": "roster_is",
+    "answerable": true,
+    "long": true,
+    "reference": "Omar",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. Theo is the baker. Hugo is the editor. Omar is the clerk. Iris is the painter.\nWho is the clerk?"
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Theo\"], [\"clerk\", \"Omar\"], [\"editor\", \"Hugo\"], [\"painter\", \"Iris\"]], \"clerk\"]"
+  },
+  {
+    "id": "CS1-anchor-301-0013-b0-u1",
+    "world_id": "CS1-anchor-301-0013",
+    "split": "anchor",
+    "family": "binding",
+    "template": "roster_is",
+    "answerable": false,
+    "long": true,
+    "reference": "UNKNOWN",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. Theo is the baker. Hugo is the editor. Omar is the courier. Iris is the painter.\nWho is the clerk?"
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Theo\"], [\"courier\", \"Omar\"], [\"editor\", \"Hugo\"], [\"painter\", \"Iris\"]], \"clerk\"]"
+  },
+  {
+    "id": "CS1-anchor-301-0013-b1-u0",
+    "world_id": "CS1-anchor-301-0013",
+    "split": "anchor",
+    "family": "binding",
+    "template": "roster_is",
+    "answerable": true,
+    "long": true,
+    "reference": "Iris",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. Theo is the baker. Hugo is the editor. Iris is the clerk. Omar is the painter.\nWho is the clerk?"
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Theo\"], [\"clerk\", \"Iris\"], [\"editor\", \"Hugo\"], [\"painter\", \"Omar\"]], \"clerk\"]"
+  },
+  {
+    "id": "CS1-anchor-301-0013-b1-u1",
+    "world_id": "CS1-anchor-301-0013",
+    "split": "anchor",
+    "family": "binding",
+    "template": "roster_is",
+    "answerable": false,
+    "long": true,
+    "reference": "UNKNOWN",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. Theo is the baker. Hugo is the editor. Iris is the courier. Omar is the painter.\nWho is the clerk?"
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Theo\"], [\"courier\", \"Iris\"], [\"editor\", \"Hugo\"], [\"painter\", \"Omar\"]], \"clerk\"]"
+  },
+  {
+    "id": "CS1-anchor-301-0013-arithmetic",
+    "world_id": "CS1-anchor-301-0013-arithmetic",
+    "split": "anchor",
+    "family": "arithmetic",
+    "template": "anchor_arithmetic",
+    "reference": "65",
+    "answerable": true,
+    "semantic_key": "arithmetic:63+2",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Return only the integer answer."
+      },
+      {
+        "role": "user",
+        "content": "Calculate 63 + 2."
+      }
+    ]
+  },
+  {
+    "id": "CS1-anchor-301-0013-time",
+    "world_id": "CS1-anchor-301-0013-time",
+    "split": "anchor",
+    "family": "time",
+    "template": "anchor_time",
+    "reference": "15:04",
+    "answerable": true,
+    "semantic_key": "time:13:51:73",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Use 24-hour HH:MM format only."
+      },
+      {
+        "role": "user",
+        "content": "A clock shows 13:51. What time is it 73 minutes later?"
+      }
+    ]
+  },
+  {
+    "id": "CS1-anchor-301-0014-b0-u0",
+    "world_id": "CS1-anchor-301-0014",
+    "split": "anchor",
+    "family": "binding",
+    "template": "roster_is",
+    "answerable": true,
+    "long": false,
+    "reference": "Ada",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "Mira is the editor. Iris is the keeper. Noah is the driver. Ada is the painter.\nWho is the painter?"
+      }
+    ],
+    "semantic_key": "[[[\"driver\", \"Noah\"], [\"editor\", \"Mira\"], [\"keeper\", \"Iris\"], [\"painter\", \"Ada\"]], \"painter\"]"
+  },
+  {
+    "id": "CS1-anchor-301-0014-b0-u1",
+    "world_id": "CS1-anchor-301-0014",
+    "split": "anchor",
+    "family": "binding",
+    "template": "roster_is",
+    "answerable": false,
+    "long": false,
+    "reference": "UNKNOWN",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "Mira is the editor. Iris is the keeper. Noah is the driver. Ada is the clerk.\nWho is the painter?"
+      }
+    ],
+    "semantic_key": "[[[\"clerk\", \"Ada\"], [\"driver\", \"Noah\"], [\"editor\", \"Mira\"], [\"keeper\", \"Iris\"]], \"painter\"]"
+  },
+  {
+    "id": "CS1-anchor-301-0014-b1-u0",
+    "world_id": "CS1-anchor-301-0014",
+    "split": "anchor",
+    "family": "binding",
+    "template": "roster_is",
+    "answerable": true,
+    "long": false,
+    "reference": "Mira",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "Ada is the editor. Iris is the keeper. Noah is the driver. Mira is the painter.\nWho is the painter?"
+      }
+    ],
+    "semantic_key": "[[[\"driver\", \"Noah\"], [\"editor\", \"Ada\"], [\"keeper\", \"Iris\"], [\"painter\", \"Mira\"]], \"painter\"]"
+  },
+  {
+    "id": "CS1-anchor-301-0014-b1-u1",
+    "world_id": "CS1-anchor-301-0014",
+    "split": "anchor",
+    "family": "binding",
+    "template": "roster_is",
+    "answerable": false,
+    "long": false,
+    "reference": "UNKNOWN",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "Ada is the editor. Iris is the keeper. Noah is the driver. Mira is the clerk.\nWho is the painter?"
+      }
+    ],
+    "semantic_key": "[[[\"clerk\", \"Mira\"], [\"driver\", \"Noah\"], [\"editor\", \"Ada\"], [\"keeper\", \"Iris\"]], \"painter\"]"
+  },
+  {
+    "id": "CS1-anchor-301-0014-arithmetic",
+    "world_id": "CS1-anchor-301-0014-arithmetic",
+    "split": "anchor",
+    "family": "arithmetic",
+    "template": "anchor_arithmetic",
+    "reference": "9",
+    "answerable": true,
+    "semantic_key": "arithmetic:15-6",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Return only the integer answer."
+      },
+      {
+        "role": "user",
+        "content": "Calculate 15 - 6."
+      }
+    ]
+  },
+  {
+    "id": "CS1-anchor-301-0014-time",
+    "world_id": "CS1-anchor-301-0014-time",
+    "split": "anchor",
+    "family": "time",
+    "template": "anchor_time",
+    "reference": "16:37",
+    "answerable": true,
+    "semantic_key": "time:15:19:78",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Use 24-hour HH:MM format only."
+      },
+      {
+        "role": "user",
+        "content": "A clock shows 15:19. What time is it 78 minutes later?"
+      }
+    ]
+  },
+  {
+    "id": "CS1-anchor-301-0015-b0-u0",
+    "world_id": "CS1-anchor-301-0015",
+    "split": "anchor",
+    "family": "binding",
+    "template": "roster_is",
+    "answerable": true,
+    "long": true,
+    "reference": "Theo",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. Theo is the courier. Ivan is the clerk. Lena is the singer. Noah is the baker.\nWho is the courier?"
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Noah\"], [\"clerk\", \"Ivan\"], [\"courier\", \"Theo\"], [\"singer\", \"Lena\"]], \"courier\"]"
+  },
+  {
+    "id": "CS1-anchor-301-0015-b0-u1",
+    "world_id": "CS1-anchor-301-0015",
+    "split": "anchor",
+    "family": "binding",
+    "template": "roster_is",
+    "answerable": false,
+    "long": true,
+    "reference": "UNKNOWN",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. Theo is the driver. Ivan is the clerk. Lena is the singer. Noah is the baker.\nWho is the courier?"
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Noah\"], [\"clerk\", \"Ivan\"], [\"driver\", \"Theo\"], [\"singer\", \"Lena\"]], \"courier\"]"
+  },
+  {
+    "id": "CS1-anchor-301-0015-b1-u0",
+    "world_id": "CS1-anchor-301-0015",
+    "split": "anchor",
+    "family": "binding",
+    "template": "roster_is",
+    "answerable": true,
+    "long": true,
+    "reference": "Ivan",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. Ivan is the courier. Theo is the clerk. Lena is the singer. Noah is the baker.\nWho is the courier?"
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Noah\"], [\"clerk\", \"Theo\"], [\"courier\", \"Ivan\"], [\"singer\", \"Lena\"]], \"courier\"]"
+  },
+  {
+    "id": "CS1-anchor-301-0015-b1-u1",
+    "world_id": "CS1-anchor-301-0015",
+    "split": "anchor",
+    "family": "binding",
+    "template": "roster_is",
+    "answerable": false,
+    "long": true,
+    "reference": "UNKNOWN",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. Ivan is the driver. Theo is the clerk. Lena is the singer. Noah is the baker.\nWho is the courier?"
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Noah\"], [\"clerk\", \"Theo\"], [\"driver\", \"Ivan\"], [\"singer\", \"Lena\"]], \"courier\"]"
+  },
+  {
+    "id": "CS1-anchor-301-0015-arithmetic",
+    "world_id": "CS1-anchor-301-0015-arithmetic",
+    "split": "anchor",
+    "family": "arithmetic",
+    "template": "anchor_arithmetic",
+    "reference": "60",
+    "answerable": true,
+    "semantic_key": "arithmetic:52+8",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Return only the integer answer."
+      },
+      {
+        "role": "user",
+        "content": "Calculate 52 + 8."
+      }
+    ]
+  },
+  {
+    "id": "CS1-anchor-301-0015-time",
+    "world_id": "CS1-anchor-301-0015-time",
+    "split": "anchor",
+    "family": "time",
+    "template": "anchor_time",
+    "reference": "14:55",
+    "answerable": true,
+    "semantic_key": "time:13:35:80",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Use 24-hour HH:MM format only."
+      },
+      {
+        "role": "user",
+        "content": "A clock shows 13:35. What time is it 80 minutes later?"
+      }
+    ]
+  },
+  {
+    "id": "CS1-anchor-301-0016-b0-u0",
+    "world_id": "CS1-anchor-301-0016",
+    "split": "anchor",
+    "family": "binding",
+    "template": "roster_is",
+    "answerable": true,
+    "long": false,
+    "reference": "Hugo",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "Hugo is the keeper. Nora is the baker. Noah is the driver. Leon is the courier.\nWho is the keeper?"
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Nora\"], [\"courier\", \"Leon\"], [\"driver\", \"Noah\"], [\"keeper\", \"Hugo\"]], \"keeper\"]"
+  },
+  {
+    "id": "CS1-anchor-301-0016-b0-u1",
+    "world_id": "CS1-anchor-301-0016",
+    "split": "anchor",
+    "family": "binding",
+    "template": "roster_is",
+    "answerable": false,
+    "long": false,
+    "reference": "UNKNOWN",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "Hugo is the editor. Nora is the baker. Noah is the driver. Leon is the courier.\nWho is the keeper?"
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Nora\"], [\"courier\", \"Leon\"], [\"driver\", \"Noah\"], [\"editor\", \"Hugo\"]], \"keeper\"]"
+  },
+  {
+    "id": "CS1-anchor-301-0016-b1-u0",
+    "world_id": "CS1-anchor-301-0016",
+    "split": "anchor",
+    "family": "binding",
+    "template": "roster_is",
+    "answerable": true,
+    "long": false,
+    "reference": "Nora",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "Nora is the keeper. Hugo is the baker. Noah is the driver. Leon is the courier.\nWho is the keeper?"
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Hugo\"], [\"courier\", \"Leon\"], [\"driver\", \"Noah\"], [\"keeper\", \"Nora\"]], \"keeper\"]"
+  },
+  {
+    "id": "CS1-anchor-301-0016-b1-u1",
+    "world_id": "CS1-anchor-301-0016",
+    "split": "anchor",
+    "family": "binding",
+    "template": "roster_is",
+    "answerable": false,
+    "long": false,
+    "reference": "UNKNOWN",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "Nora is the editor. Hugo is the baker. Noah is the driver. Leon is the courier.\nWho is the keeper?"
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Hugo\"], [\"courier\", \"Leon\"], [\"driver\", \"Noah\"], [\"editor\", \"Nora\"]], \"keeper\"]"
+  },
+  {
+    "id": "CS1-anchor-301-0016-arithmetic",
+    "world_id": "CS1-anchor-301-0016-arithmetic",
+    "split": "anchor",
+    "family": "arithmetic",
+    "template": "anchor_arithmetic",
+    "reference": "71",
+    "answerable": true,
+    "semantic_key": "arithmetic:75-4",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Return only the integer answer."
+      },
+      {
+        "role": "user",
+        "content": "Calculate 75 - 4."
+      }
+    ]
+  },
+  {
+    "id": "CS1-anchor-301-0016-time",
+    "world_id": "CS1-anchor-301-0016-time",
+    "split": "anchor",
+    "family": "time",
+    "template": "anchor_time",
+    "reference": "12:37",
+    "answerable": true,
+    "semantic_key": "time:11:13:84",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Use 24-hour HH:MM format only."
+      },
+      {
+        "role": "user",
+        "content": "A clock shows 11:13. What time is it 84 minutes later?"
+      }
+    ]
+  },
+  {
+    "id": "CS1-anchor-301-0017-b0-u0",
+    "world_id": "CS1-anchor-301-0017",
+    "split": "anchor",
+    "family": "binding",
+    "template": "roster_is",
+    "answerable": true,
+    "long": true,
+    "reference": "Ada",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. Ivan is the clerk. Ada is the keeper. Iris is the singer. Noah is the editor.\nWho is the keeper?"
+      }
+    ],
+    "semantic_key": "[[[\"clerk\", \"Ivan\"], [\"editor\", \"Noah\"], [\"keeper\", \"Ada\"], [\"singer\", \"Iris\"]], \"keeper\"]"
+  },
+  {
+    "id": "CS1-anchor-301-0017-b0-u1",
+    "world_id": "CS1-anchor-301-0017",
+    "split": "anchor",
+    "family": "binding",
+    "template": "roster_is",
+    "answerable": false,
+    "long": true,
+    "reference": "UNKNOWN",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. Ivan is the clerk. Ada is the painter. Iris is the singer. Noah is the editor.\nWho is the keeper?"
+      }
+    ],
+    "semantic_key": "[[[\"clerk\", \"Ivan\"], [\"editor\", \"Noah\"], [\"painter\", \"Ada\"], [\"singer\", \"Iris\"]], \"keeper\"]"
+  },
+  {
+    "id": "CS1-anchor-301-0017-b1-u0",
+    "world_id": "CS1-anchor-301-0017",
+    "split": "anchor",
+    "family": "binding",
+    "template": "roster_is",
+    "answerable": true,
+    "long": true,
+    "reference": "Iris",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. Ivan is the clerk. Iris is the keeper. Ada is the singer. Noah is the editor.\nWho is the keeper?"
+      }
+    ],
+    "semantic_key": "[[[\"clerk\", \"Ivan\"], [\"editor\", \"Noah\"], [\"keeper\", \"Iris\"], [\"singer\", \"Ada\"]], \"keeper\"]"
+  },
+  {
+    "id": "CS1-anchor-301-0017-b1-u1",
+    "world_id": "CS1-anchor-301-0017",
+    "split": "anchor",
+    "family": "binding",
+    "template": "roster_is",
+    "answerable": false,
+    "long": true,
+    "reference": "UNKNOWN",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. Ivan is the clerk. Iris is the painter. Ada is the singer. Noah is the editor.\nWho is the keeper?"
+      }
+    ],
+    "semantic_key": "[[[\"clerk\", \"Ivan\"], [\"editor\", \"Noah\"], [\"painter\", \"Iris\"], [\"singer\", \"Ada\"]], \"keeper\"]"
+  },
+  {
+    "id": "CS1-anchor-301-0017-arithmetic",
+    "world_id": "CS1-anchor-301-0017-arithmetic",
+    "split": "anchor",
+    "family": "arithmetic",
+    "template": "anchor_arithmetic",
+    "reference": "57",
+    "answerable": true,
+    "semantic_key": "arithmetic:53+4",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Return only the integer answer."
+      },
+      {
+        "role": "user",
+        "content": "Calculate 53 + 4."
+      }
+    ]
+  },
+  {
+    "id": "CS1-anchor-301-0017-time",
+    "world_id": "CS1-anchor-301-0017-time",
+    "split": "anchor",
+    "family": "time",
+    "template": "anchor_time",
+    "reference": "13:12",
+    "answerable": true,
+    "semantic_key": "time:12:55:17",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Use 24-hour HH:MM format only."
+      },
+      {
+        "role": "user",
+        "content": "A clock shows 12:55. What time is it 17 minutes later?"
+      }
+    ]
+  },
+  {
+    "id": "CS1-anchor-301-0018-b0-u0",
+    "world_id": "CS1-anchor-301-0018",
+    "split": "anchor",
+    "family": "binding",
+    "template": "roster_is",
+    "answerable": true,
+    "long": false,
+    "reference": "Leon",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "Ivan is the editor. Ada is the clerk. Leon is the singer. Noah is the keeper.\nWho is the singer?"
+      }
+    ],
+    "semantic_key": "[[[\"clerk\", \"Ada\"], [\"editor\", \"Ivan\"], [\"keeper\", \"Noah\"], [\"singer\", \"Leon\"]], \"singer\"]"
+  },
+  {
+    "id": "CS1-anchor-301-0018-b0-u1",
+    "world_id": "CS1-anchor-301-0018",
+    "split": "anchor",
+    "family": "binding",
+    "template": "roster_is",
+    "answerable": false,
+    "long": false,
+    "reference": "UNKNOWN",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "Ivan is the editor. Ada is the clerk. Leon is the baker. Noah is the keeper.\nWho is the singer?"
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Leon\"], [\"clerk\", \"Ada\"], [\"editor\", \"Ivan\"], [\"keeper\", \"Noah\"]], \"singer\"]"
+  },
+  {
+    "id": "CS1-anchor-301-0018-b1-u0",
+    "world_id": "CS1-anchor-301-0018",
+    "split": "anchor",
+    "family": "binding",
+    "template": "roster_is",
+    "answerable": true,
+    "long": false,
+    "reference": "Noah",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "Ivan is the editor. Ada is the clerk. Noah is the singer. Leon is the keeper.\nWho is the singer?"
+      }
+    ],
+    "semantic_key": "[[[\"clerk\", \"Ada\"], [\"editor\", \"Ivan\"], [\"keeper\", \"Leon\"], [\"singer\", \"Noah\"]], \"singer\"]"
+  },
+  {
+    "id": "CS1-anchor-301-0018-b1-u1",
+    "world_id": "CS1-anchor-301-0018",
+    "split": "anchor",
+    "family": "binding",
+    "template": "roster_is",
+    "answerable": false,
+    "long": false,
+    "reference": "UNKNOWN",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "Ivan is the editor. Ada is the clerk. Noah is the baker. Leon is the keeper.\nWho is the singer?"
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Noah\"], [\"clerk\", \"Ada\"], [\"editor\", \"Ivan\"], [\"keeper\", \"Leon\"]], \"singer\"]"
+  },
+  {
+    "id": "CS1-anchor-301-0018-arithmetic",
+    "world_id": "CS1-anchor-301-0018-arithmetic",
+    "split": "anchor",
+    "family": "arithmetic",
+    "template": "anchor_arithmetic",
+    "reference": "30",
+    "answerable": true,
+    "semantic_key": "arithmetic:32-2",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Return only the integer answer."
+      },
+      {
+        "role": "user",
+        "content": "Calculate 32 - 2."
+      }
+    ]
+  },
+  {
+    "id": "CS1-anchor-301-0018-time",
+    "world_id": "CS1-anchor-301-0018-time",
+    "split": "anchor",
+    "family": "time",
+    "template": "anchor_time",
+    "reference": "17:51",
+    "answerable": true,
+    "semantic_key": "time:16:43:68",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Use 24-hour HH:MM format only."
+      },
+      {
+        "role": "user",
+        "content": "A clock shows 16:43. What time is it 68 minutes later?"
+      }
+    ]
+  },
+  {
+    "id": "CS1-anchor-301-0019-b0-u0",
+    "world_id": "CS1-anchor-301-0019",
+    "split": "anchor",
+    "family": "binding",
+    "template": "roster_is",
+    "answerable": true,
+    "long": true,
+    "reference": "Rosa",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. Lena is the driver. Leon is the keeper. Omar is the courier. Rosa is the singer.\nWho is the singer?"
+      }
+    ],
+    "semantic_key": "[[[\"courier\", \"Omar\"], [\"driver\", \"Lena\"], [\"keeper\", \"Leon\"], [\"singer\", \"Rosa\"]], \"singer\"]"
+  },
+  {
+    "id": "CS1-anchor-301-0019-b0-u1",
+    "world_id": "CS1-anchor-301-0019",
+    "split": "anchor",
+    "family": "binding",
+    "template": "roster_is",
+    "answerable": false,
+    "long": true,
+    "reference": "UNKNOWN",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. Lena is the driver. Leon is the keeper. Omar is the courier. Rosa is the editor.\nWho is the singer?"
+      }
+    ],
+    "semantic_key": "[[[\"courier\", \"Omar\"], [\"driver\", \"Lena\"], [\"editor\", \"Rosa\"], [\"keeper\", \"Leon\"]], \"singer\"]"
+  },
+  {
+    "id": "CS1-anchor-301-0019-b1-u0",
+    "world_id": "CS1-anchor-301-0019",
+    "split": "anchor",
+    "family": "binding",
+    "template": "roster_is",
+    "answerable": true,
+    "long": true,
+    "reference": "Lena",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. Rosa is the driver. Leon is the keeper. Omar is the courier. Lena is the singer.\nWho is the singer?"
+      }
+    ],
+    "semantic_key": "[[[\"courier\", \"Omar\"], [\"driver\", \"Rosa\"], [\"keeper\", \"Leon\"], [\"singer\", \"Lena\"]], \"singer\"]"
+  },
+  {
+    "id": "CS1-anchor-301-0019-b1-u1",
+    "world_id": "CS1-anchor-301-0019",
+    "split": "anchor",
+    "family": "binding",
+    "template": "roster_is",
+    "answerable": false,
+    "long": true,
+    "reference": "UNKNOWN",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. Rosa is the driver. Leon is the keeper. Omar is the courier. Lena is the editor.\nWho is the singer?"
+      }
+    ],
+    "semantic_key": "[[[\"courier\", \"Omar\"], [\"driver\", \"Rosa\"], [\"editor\", \"Lena\"], [\"keeper\", \"Leon\"]], \"singer\"]"
+  },
+  {
+    "id": "CS1-anchor-301-0019-arithmetic",
+    "world_id": "CS1-anchor-301-0019-arithmetic",
+    "split": "anchor",
+    "family": "arithmetic",
+    "template": "anchor_arithmetic",
+    "reference": "61",
+    "answerable": true,
+    "semantic_key": "arithmetic:53+8",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Return only the integer answer."
+      },
+      {
+        "role": "user",
+        "content": "Calculate 53 + 8."
+      }
+    ]
+  },
+  {
+    "id": "CS1-anchor-301-0019-time",
+    "world_id": "CS1-anchor-301-0019-time",
+    "split": "anchor",
+    "family": "time",
+    "template": "anchor_time",
+    "reference": "13:58",
+    "answerable": true,
+    "semantic_key": "time:12:34:84",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Use 24-hour HH:MM format only."
+      },
+      {
+        "role": "user",
+        "content": "A clock shows 12:34. What time is it 84 minutes later?"
+      }
+    ]
+  },
+  {
+    "id": "CS1-anchor-301-0020-b0-u0",
+    "world_id": "CS1-anchor-301-0020",
+    "split": "anchor",
+    "family": "binding",
+    "template": "roster_is",
+    "answerable": true,
+    "long": false,
+    "reference": "Mira",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "Iris is the painter. Nora is the singer. Noah is the keeper. Mira is the clerk.\nWho is the clerk?"
+      }
+    ],
+    "semantic_key": "[[[\"clerk\", \"Mira\"], [\"keeper\", \"Noah\"], [\"painter\", \"Iris\"], [\"singer\", \"Nora\"]], \"clerk\"]"
+  },
+  {
+    "id": "CS1-anchor-301-0020-b0-u1",
+    "world_id": "CS1-anchor-301-0020",
+    "split": "anchor",
+    "family": "binding",
+    "template": "roster_is",
+    "answerable": false,
+    "long": false,
+    "reference": "UNKNOWN",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "Iris is the painter. Nora is the singer. Noah is the keeper. Mira is the driver.\nWho is the clerk?"
+      }
+    ],
+    "semantic_key": "[[[\"driver\", \"Mira\"], [\"keeper\", \"Noah\"], [\"painter\", \"Iris\"], [\"singer\", \"Nora\"]], \"clerk\"]"
+  },
+  {
+    "id": "CS1-anchor-301-0020-b1-u0",
+    "world_id": "CS1-anchor-301-0020",
+    "split": "anchor",
+    "family": "binding",
+    "template": "roster_is",
+    "answerable": true,
+    "long": false,
+    "reference": "Iris",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "Mira is the painter. Nora is the singer. Noah is the keeper. Iris is the clerk.\nWho is the clerk?"
+      }
+    ],
+    "semantic_key": "[[[\"clerk\", \"Iris\"], [\"keeper\", \"Noah\"], [\"painter\", \"Mira\"], [\"singer\", \"Nora\"]], \"clerk\"]"
+  },
+  {
+    "id": "CS1-anchor-301-0020-b1-u1",
+    "world_id": "CS1-anchor-301-0020",
+    "split": "anchor",
+    "family": "binding",
+    "template": "roster_is",
+    "answerable": false,
+    "long": false,
+    "reference": "UNKNOWN",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "Mira is the painter. Nora is the singer. Noah is the keeper. Iris is the driver.\nWho is the clerk?"
+      }
+    ],
+    "semantic_key": "[[[\"driver\", \"Iris\"], [\"keeper\", \"Noah\"], [\"painter\", \"Mira\"], [\"singer\", \"Nora\"]], \"clerk\"]"
+  },
+  {
+    "id": "CS1-anchor-301-0020-arithmetic",
+    "world_id": "CS1-anchor-301-0020-arithmetic",
+    "split": "anchor",
+    "family": "arithmetic",
+    "template": "anchor_arithmetic",
+    "reference": "81",
+    "answerable": true,
+    "semantic_key": "arithmetic:85-4",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Return only the integer answer."
+      },
+      {
+        "role": "user",
+        "content": "Calculate 85 - 4."
+      }
+    ]
+  },
+  {
+    "id": "CS1-anchor-301-0020-time",
+    "world_id": "CS1-anchor-301-0020-time",
+    "split": "anchor",
+    "family": "time",
+    "template": "anchor_time",
+    "reference": "11:35",
+    "answerable": true,
+    "semantic_key": "time:10:11:84",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Use 24-hour HH:MM format only."
+      },
+      {
+        "role": "user",
+        "content": "A clock shows 10:11. What time is it 84 minutes later?"
+      }
+    ]
+  },
+  {
+    "id": "CS1-anchor-301-0021-b0-u0",
+    "world_id": "CS1-anchor-301-0021",
+    "split": "anchor",
+    "family": "binding",
+    "template": "roster_is",
+    "answerable": true,
+    "long": true,
+    "reference": "Leon",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. Leon is the painter. Rosa is the courier. Noah is the driver. Iris is the editor.\nWho is the painter?"
+      }
+    ],
+    "semantic_key": "[[[\"courier\", \"Rosa\"], [\"driver\", \"Noah\"], [\"editor\", \"Iris\"], [\"painter\", \"Leon\"]], \"painter\"]"
+  },
+  {
+    "id": "CS1-anchor-301-0021-b0-u1",
+    "world_id": "CS1-anchor-301-0021",
+    "split": "anchor",
+    "family": "binding",
+    "template": "roster_is",
+    "answerable": false,
+    "long": true,
+    "reference": "UNKNOWN",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. Leon is the baker. Rosa is the courier. Noah is the driver. Iris is the editor.\nWho is the painter?"
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Leon\"], [\"courier\", \"Rosa\"], [\"driver\", \"Noah\"], [\"editor\", \"Iris\"]], \"painter\"]"
+  },
+  {
+    "id": "CS1-anchor-301-0021-b1-u0",
+    "world_id": "CS1-anchor-301-0021",
+    "split": "anchor",
+    "family": "binding",
+    "template": "roster_is",
+    "answerable": true,
+    "long": true,
+    "reference": "Rosa",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. Rosa is the painter. Leon is the courier. Noah is the driver. Iris is the editor.\nWho is the painter?"
+      }
+    ],
+    "semantic_key": "[[[\"courier\", \"Leon\"], [\"driver\", \"Noah\"], [\"editor\", \"Iris\"], [\"painter\", \"Rosa\"]], \"painter\"]"
+  },
+  {
+    "id": "CS1-anchor-301-0021-b1-u1",
+    "world_id": "CS1-anchor-301-0021",
+    "split": "anchor",
+    "family": "binding",
+    "template": "roster_is",
+    "answerable": false,
+    "long": true,
+    "reference": "UNKNOWN",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. Rosa is the baker. Leon is the courier. Noah is the driver. Iris is the editor.\nWho is the painter?"
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Rosa\"], [\"courier\", \"Leon\"], [\"driver\", \"Noah\"], [\"editor\", \"Iris\"]], \"painter\"]"
+  },
+  {
+    "id": "CS1-anchor-301-0021-arithmetic",
+    "world_id": "CS1-anchor-301-0021-arithmetic",
+    "split": "anchor",
+    "family": "arithmetic",
+    "template": "anchor_arithmetic",
+    "reference": "77",
+    "answerable": true,
+    "semantic_key": "arithmetic:71+6",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Return only the integer answer."
+      },
+      {
+        "role": "user",
+        "content": "Calculate 71 + 6."
+      }
+    ]
+  },
+  {
+    "id": "CS1-anchor-301-0021-time",
+    "world_id": "CS1-anchor-301-0021-time",
+    "split": "anchor",
+    "family": "time",
+    "template": "anchor_time",
+    "reference": "14:54",
+    "answerable": true,
+    "semantic_key": "time:13:31:83",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Use 24-hour HH:MM format only."
+      },
+      {
+        "role": "user",
+        "content": "A clock shows 13:31. What time is it 83 minutes later?"
+      }
+    ]
+  },
+  {
+    "id": "CS1-anchor-301-0022-b0-u0",
+    "world_id": "CS1-anchor-301-0022",
+    "split": "anchor",
+    "family": "binding",
+    "template": "roster_is",
+    "answerable": true,
+    "long": false,
+    "reference": "Mira",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "Theo is the baker. Mira is the keeper. Lena is the driver. Noah is the painter.\nWho is the keeper?"
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Theo\"], [\"driver\", \"Lena\"], [\"keeper\", \"Mira\"], [\"painter\", \"Noah\"]], \"keeper\"]"
+  },
+  {
+    "id": "CS1-anchor-301-0022-b0-u1",
+    "world_id": "CS1-anchor-301-0022",
+    "split": "anchor",
+    "family": "binding",
+    "template": "roster_is",
+    "answerable": false,
+    "long": false,
+    "reference": "UNKNOWN",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "Theo is the baker. Mira is the clerk. Lena is the driver. Noah is the painter.\nWho is the keeper?"
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Theo\"], [\"clerk\", \"Mira\"], [\"driver\", \"Lena\"], [\"painter\", \"Noah\"]], \"keeper\"]"
+  },
+  {
+    "id": "CS1-anchor-301-0022-b1-u0",
+    "world_id": "CS1-anchor-301-0022",
+    "split": "anchor",
+    "family": "binding",
+    "template": "roster_is",
+    "answerable": true,
+    "long": false,
+    "reference": "Lena",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "Theo is the baker. Lena is the keeper. Mira is the driver. Noah is the painter.\nWho is the keeper?"
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Theo\"], [\"driver\", \"Mira\"], [\"keeper\", \"Lena\"], [\"painter\", \"Noah\"]], \"keeper\"]"
+  },
+  {
+    "id": "CS1-anchor-301-0022-b1-u1",
+    "world_id": "CS1-anchor-301-0022",
+    "split": "anchor",
+    "family": "binding",
+    "template": "roster_is",
+    "answerable": false,
+    "long": false,
+    "reference": "UNKNOWN",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "Theo is the baker. Lena is the clerk. Mira is the driver. Noah is the painter.\nWho is the keeper?"
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Theo\"], [\"clerk\", \"Lena\"], [\"driver\", \"Mira\"], [\"painter\", \"Noah\"]], \"keeper\"]"
+  },
+  {
+    "id": "CS1-anchor-301-0022-arithmetic",
+    "world_id": "CS1-anchor-301-0022-arithmetic",
+    "split": "anchor",
+    "family": "arithmetic",
+    "template": "anchor_arithmetic",
+    "reference": "14",
+    "answerable": true,
+    "semantic_key": "arithmetic:23-9",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Return only the integer answer."
+      },
+      {
+        "role": "user",
+        "content": "Calculate 23 - 9."
+      }
+    ]
+  },
+  {
+    "id": "CS1-anchor-301-0022-time",
+    "world_id": "CS1-anchor-301-0022-time",
+    "split": "anchor",
+    "family": "time",
+    "template": "anchor_time",
+    "reference": "12:29",
+    "answerable": true,
+    "semantic_key": "time:11:9:80",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Use 24-hour HH:MM format only."
+      },
+      {
+        "role": "user",
+        "content": "A clock shows 11:09. What time is it 80 minutes later?"
+      }
+    ]
+  },
+  {
+    "id": "CS1-anchor-301-0023-b0-u0",
+    "world_id": "CS1-anchor-301-0023",
+    "split": "anchor",
+    "family": "binding",
+    "template": "roster_is",
+    "answerable": true,
+    "long": true,
+    "reference": "Omar",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. Ivan is the keeper. Nora is the baker. Omar is the clerk. Rosa is the painter.\nWho is the clerk?"
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Nora\"], [\"clerk\", \"Omar\"], [\"keeper\", \"Ivan\"], [\"painter\", \"Rosa\"]], \"clerk\"]"
+  },
+  {
+    "id": "CS1-anchor-301-0023-b0-u1",
+    "world_id": "CS1-anchor-301-0023",
+    "split": "anchor",
+    "family": "binding",
+    "template": "roster_is",
+    "answerable": false,
+    "long": true,
+    "reference": "UNKNOWN",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. Ivan is the keeper. Nora is the baker. Omar is the driver. Rosa is the painter.\nWho is the clerk?"
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Nora\"], [\"driver\", \"Omar\"], [\"keeper\", \"Ivan\"], [\"painter\", \"Rosa\"]], \"clerk\"]"
+  },
+  {
+    "id": "CS1-anchor-301-0023-b1-u0",
+    "world_id": "CS1-anchor-301-0023",
+    "split": "anchor",
+    "family": "binding",
+    "template": "roster_is",
+    "answerable": true,
+    "long": true,
+    "reference": "Rosa",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. Ivan is the keeper. Nora is the baker. Rosa is the clerk. Omar is the painter.\nWho is the clerk?"
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Nora\"], [\"clerk\", \"Rosa\"], [\"keeper\", \"Ivan\"], [\"painter\", \"Omar\"]], \"clerk\"]"
+  },
+  {
+    "id": "CS1-anchor-301-0023-b1-u1",
+    "world_id": "CS1-anchor-301-0023",
+    "split": "anchor",
+    "family": "binding",
+    "template": "roster_is",
+    "answerable": false,
+    "long": true,
+    "reference": "UNKNOWN",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. Ivan is the keeper. Nora is the baker. Rosa is the driver. Omar is the painter.\nWho is the clerk?"
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Nora\"], [\"driver\", \"Rosa\"], [\"keeper\", \"Ivan\"], [\"painter\", \"Omar\"]], \"clerk\"]"
+  },
+  {
+    "id": "CS1-anchor-301-0023-arithmetic",
+    "world_id": "CS1-anchor-301-0023-arithmetic",
+    "split": "anchor",
+    "family": "arithmetic",
+    "template": "anchor_arithmetic",
+    "reference": "87",
+    "answerable": true,
+    "semantic_key": "arithmetic:85+2",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Return only the integer answer."
+      },
+      {
+        "role": "user",
+        "content": "Calculate 85 + 2."
+      }
+    ]
+  },
+  {
+    "id": "CS1-anchor-301-0023-time",
+    "world_id": "CS1-anchor-301-0023-time",
+    "split": "anchor",
+    "family": "time",
+    "template": "anchor_time",
+    "reference": "09:51",
+    "answerable": true,
+    "semantic_key": "time:9:43:8",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Use 24-hour HH:MM format only."
+      },
+      {
+        "role": "user",
+        "content": "A clock shows 09:43. What time is it 8 minutes later?"
+      }
+    ]
+  },
+  {
+    "id": "CS1-anchor-301-0024-b0-u0",
+    "world_id": "CS1-anchor-301-0024",
+    "split": "anchor",
+    "family": "binding",
+    "template": "roster_is",
+    "answerable": true,
+    "long": false,
+    "reference": "Omar",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "Theo is the courier. Lena is the keeper. Omar is the clerk. Ivan is the baker.\nWho is the clerk?"
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Ivan\"], [\"clerk\", \"Omar\"], [\"courier\", \"Theo\"], [\"keeper\", \"Lena\"]], \"clerk\"]"
+  },
+  {
+    "id": "CS1-anchor-301-0024-b0-u1",
+    "world_id": "CS1-anchor-301-0024",
+    "split": "anchor",
+    "family": "binding",
+    "template": "roster_is",
+    "answerable": false,
+    "long": false,
+    "reference": "UNKNOWN",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "Theo is the courier. Lena is the keeper. Omar is the editor. Ivan is the baker.\nWho is the clerk?"
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Ivan\"], [\"courier\", \"Theo\"], [\"editor\", \"Omar\"], [\"keeper\", \"Lena\"]], \"clerk\"]"
+  },
+  {
+    "id": "CS1-anchor-301-0024-b1-u0",
+    "world_id": "CS1-anchor-301-0024",
+    "split": "anchor",
+    "family": "binding",
+    "template": "roster_is",
+    "answerable": true,
+    "long": false,
+    "reference": "Ivan",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "Theo is the courier. Lena is the keeper. Ivan is the clerk. Omar is the baker.\nWho is the clerk?"
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Omar\"], [\"clerk\", \"Ivan\"], [\"courier\", \"Theo\"], [\"keeper\", \"Lena\"]], \"clerk\"]"
+  },
+  {
+    "id": "CS1-anchor-301-0024-b1-u1",
+    "world_id": "CS1-anchor-301-0024",
+    "split": "anchor",
+    "family": "binding",
+    "template": "roster_is",
+    "answerable": false,
+    "long": false,
+    "reference": "UNKNOWN",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "Theo is the courier. Lena is the keeper. Ivan is the editor. Omar is the baker.\nWho is the clerk?"
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Omar\"], [\"courier\", \"Theo\"], [\"editor\", \"Ivan\"], [\"keeper\", \"Lena\"]], \"clerk\"]"
+  },
+  {
+    "id": "CS1-anchor-301-0024-arithmetic",
+    "world_id": "CS1-anchor-301-0024-arithmetic",
+    "split": "anchor",
+    "family": "arithmetic",
+    "template": "anchor_arithmetic",
+    "reference": "21",
+    "answerable": true,
+    "semantic_key": "arithmetic:29-8",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Return only the integer answer."
+      },
+      {
+        "role": "user",
+        "content": "Calculate 29 - 8."
+      }
+    ]
+  },
+  {
+    "id": "CS1-anchor-301-0024-time",
+    "world_id": "CS1-anchor-301-0024-time",
+    "split": "anchor",
+    "family": "time",
+    "template": "anchor_time",
+    "reference": "12:18",
+    "answerable": true,
+    "semantic_key": "time:12:10:8",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Use 24-hour HH:MM format only."
+      },
+      {
+        "role": "user",
+        "content": "A clock shows 12:10. What time is it 8 minutes later?"
+      }
+    ]
+  },
+  {
+    "id": "CS1-anchor-301-0025-b0-u0",
+    "world_id": "CS1-anchor-301-0025",
+    "split": "anchor",
+    "family": "binding",
+    "template": "roster_is",
+    "answerable": true,
+    "long": true,
+    "reference": "Rosa",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. Mira is the keeper. Omar is the driver. Iris is the editor. Rosa is the singer.\nWho is the singer?"
+      }
+    ],
+    "semantic_key": "[[[\"driver\", \"Omar\"], [\"editor\", \"Iris\"], [\"keeper\", \"Mira\"], [\"singer\", \"Rosa\"]], \"singer\"]"
+  },
+  {
+    "id": "CS1-anchor-301-0025-b0-u1",
+    "world_id": "CS1-anchor-301-0025",
+    "split": "anchor",
+    "family": "binding",
+    "template": "roster_is",
+    "answerable": false,
+    "long": true,
+    "reference": "UNKNOWN",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. Mira is the keeper. Omar is the driver. Iris is the editor. Rosa is the baker.\nWho is the singer?"
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Rosa\"], [\"driver\", \"Omar\"], [\"editor\", \"Iris\"], [\"keeper\", \"Mira\"]], \"singer\"]"
+  },
+  {
+    "id": "CS1-anchor-301-0025-b1-u0",
+    "world_id": "CS1-anchor-301-0025",
+    "split": "anchor",
+    "family": "binding",
+    "template": "roster_is",
+    "answerable": true,
+    "long": true,
+    "reference": "Mira",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. Rosa is the keeper. Omar is the driver. Iris is the editor. Mira is the singer.\nWho is the singer?"
+      }
+    ],
+    "semantic_key": "[[[\"driver\", \"Omar\"], [\"editor\", \"Iris\"], [\"keeper\", \"Rosa\"], [\"singer\", \"Mira\"]], \"singer\"]"
+  },
+  {
+    "id": "CS1-anchor-301-0025-b1-u1",
+    "world_id": "CS1-anchor-301-0025",
+    "split": "anchor",
+    "family": "binding",
+    "template": "roster_is",
+    "answerable": false,
+    "long": true,
+    "reference": "UNKNOWN",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. Rosa is the keeper. Omar is the driver. Iris is the editor. Mira is the baker.\nWho is the singer?"
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Mira\"], [\"driver\", \"Omar\"], [\"editor\", \"Iris\"], [\"keeper\", \"Rosa\"]], \"singer\"]"
+  },
+  {
+    "id": "CS1-anchor-301-0025-arithmetic",
+    "world_id": "CS1-anchor-301-0025-arithmetic",
+    "split": "anchor",
+    "family": "arithmetic",
+    "template": "anchor_arithmetic",
+    "reference": "21",
+    "answerable": true,
+    "semantic_key": "arithmetic:13+8",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Return only the integer answer."
+      },
+      {
+        "role": "user",
+        "content": "Calculate 13 + 8."
+      }
+    ]
+  },
+  {
+    "id": "CS1-anchor-301-0025-time",
+    "world_id": "CS1-anchor-301-0025-time",
+    "split": "anchor",
+    "family": "time",
+    "template": "anchor_time",
+    "reference": "10:57",
+    "answerable": true,
+    "semantic_key": "time:10:51:6",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Use 24-hour HH:MM format only."
+      },
+      {
+        "role": "user",
+        "content": "A clock shows 10:51. What time is it 6 minutes later?"
+      }
+    ]
+  },
+  {
+    "id": "CS1-anchor-301-0026-b0-u0",
+    "world_id": "CS1-anchor-301-0026",
+    "split": "anchor",
+    "family": "binding",
+    "template": "roster_is",
+    "answerable": true,
+    "long": false,
+    "reference": "Hugo",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "Hugo is the courier. Mira is the painter. Iris is the keeper. Omar is the driver.\nWho is the courier?"
+      }
+    ],
+    "semantic_key": "[[[\"courier\", \"Hugo\"], [\"driver\", \"Omar\"], [\"keeper\", \"Iris\"], [\"painter\", \"Mira\"]], \"courier\"]"
+  },
+  {
+    "id": "CS1-anchor-301-0026-b0-u1",
+    "world_id": "CS1-anchor-301-0026",
+    "split": "anchor",
+    "family": "binding",
+    "template": "roster_is",
+    "answerable": false,
+    "long": false,
+    "reference": "UNKNOWN",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "Hugo is the editor. Mira is the painter. Iris is the keeper. Omar is the driver.\nWho is the courier?"
+      }
+    ],
+    "semantic_key": "[[[\"driver\", \"Omar\"], [\"editor\", \"Hugo\"], [\"keeper\", \"Iris\"], [\"painter\", \"Mira\"]], \"courier\"]"
+  },
+  {
+    "id": "CS1-anchor-301-0026-b1-u0",
+    "world_id": "CS1-anchor-301-0026",
+    "split": "anchor",
+    "family": "binding",
+    "template": "roster_is",
+    "answerable": true,
+    "long": false,
+    "reference": "Mira",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "Mira is the courier. Hugo is the painter. Iris is the keeper. Omar is the driver.\nWho is the courier?"
+      }
+    ],
+    "semantic_key": "[[[\"courier\", \"Mira\"], [\"driver\", \"Omar\"], [\"keeper\", \"Iris\"], [\"painter\", \"Hugo\"]], \"courier\"]"
+  },
+  {
+    "id": "CS1-anchor-301-0026-b1-u1",
+    "world_id": "CS1-anchor-301-0026",
+    "split": "anchor",
+    "family": "binding",
+    "template": "roster_is",
+    "answerable": false,
+    "long": false,
+    "reference": "UNKNOWN",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "Mira is the editor. Hugo is the painter. Iris is the keeper. Omar is the driver.\nWho is the courier?"
+      }
+    ],
+    "semantic_key": "[[[\"driver\", \"Omar\"], [\"editor\", \"Mira\"], [\"keeper\", \"Iris\"], [\"painter\", \"Hugo\"]], \"courier\"]"
+  },
+  {
+    "id": "CS1-anchor-301-0026-arithmetic",
+    "world_id": "CS1-anchor-301-0026-arithmetic",
+    "split": "anchor",
+    "family": "arithmetic",
+    "template": "anchor_arithmetic",
+    "reference": "30",
+    "answerable": true,
+    "semantic_key": "arithmetic:36-6",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Return only the integer answer."
+      },
+      {
+        "role": "user",
+        "content": "Calculate 36 - 6."
+      }
+    ]
+  },
+  {
+    "id": "CS1-anchor-301-0026-time",
+    "world_id": "CS1-anchor-301-0026-time",
+    "split": "anchor",
+    "family": "time",
+    "template": "anchor_time",
+    "reference": "13:31",
+    "answerable": true,
+    "semantic_key": "time:13:4:27",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Use 24-hour HH:MM format only."
+      },
+      {
+        "role": "user",
+        "content": "A clock shows 13:04. What time is it 27 minutes later?"
+      }
+    ]
+  },
+  {
+    "id": "CS1-anchor-301-0027-b0-u0",
+    "world_id": "CS1-anchor-301-0027",
+    "split": "anchor",
+    "family": "binding",
+    "template": "roster_is",
+    "answerable": true,
+    "long": true,
+    "reference": "Hugo",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. Leon is the clerk. Hugo is the driver. Mira is the painter. Noah is the editor.\nWho is the driver?"
+      }
+    ],
+    "semantic_key": "[[[\"clerk\", \"Leon\"], [\"driver\", \"Hugo\"], [\"editor\", \"Noah\"], [\"painter\", \"Mira\"]], \"driver\"]"
+  },
+  {
+    "id": "CS1-anchor-301-0027-b0-u1",
+    "world_id": "CS1-anchor-301-0027",
+    "split": "anchor",
+    "family": "binding",
+    "template": "roster_is",
+    "answerable": false,
+    "long": true,
+    "reference": "UNKNOWN",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. Leon is the clerk. Hugo is the courier. Mira is the painter. Noah is the editor.\nWho is the driver?"
+      }
+    ],
+    "semantic_key": "[[[\"clerk\", \"Leon\"], [\"courier\", \"Hugo\"], [\"editor\", \"Noah\"], [\"painter\", \"Mira\"]], \"driver\"]"
+  },
+  {
+    "id": "CS1-anchor-301-0027-b1-u0",
+    "world_id": "CS1-anchor-301-0027",
+    "split": "anchor",
+    "family": "binding",
+    "template": "roster_is",
+    "answerable": true,
+    "long": true,
+    "reference": "Mira",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. Leon is the clerk. Mira is the driver. Hugo is the painter. Noah is the editor.\nWho is the driver?"
+      }
+    ],
+    "semantic_key": "[[[\"clerk\", \"Leon\"], [\"driver\", \"Mira\"], [\"editor\", \"Noah\"], [\"painter\", \"Hugo\"]], \"driver\"]"
+  },
+  {
+    "id": "CS1-anchor-301-0027-b1-u1",
+    "world_id": "CS1-anchor-301-0027",
+    "split": "anchor",
+    "family": "binding",
+    "template": "roster_is",
+    "answerable": false,
+    "long": true,
+    "reference": "UNKNOWN",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. Leon is the clerk. Mira is the courier. Hugo is the painter. Noah is the editor.\nWho is the driver?"
+      }
+    ],
+    "semantic_key": "[[[\"clerk\", \"Leon\"], [\"courier\", \"Mira\"], [\"editor\", \"Noah\"], [\"painter\", \"Hugo\"]], \"driver\"]"
+  },
+  {
+    "id": "CS1-anchor-301-0027-arithmetic",
+    "world_id": "CS1-anchor-301-0027-arithmetic",
+    "split": "anchor",
+    "family": "arithmetic",
+    "template": "anchor_arithmetic",
+    "reference": "86",
+    "answerable": true,
+    "semantic_key": "arithmetic:82+4",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Return only the integer answer."
+      },
+      {
+        "role": "user",
+        "content": "Calculate 82 + 4."
+      }
+    ]
+  },
+  {
+    "id": "CS1-anchor-301-0027-time",
+    "world_id": "CS1-anchor-301-0027-time",
+    "split": "anchor",
+    "family": "time",
+    "template": "anchor_time",
+    "reference": "10:46",
+    "answerable": true,
+    "semantic_key": "time:10:32:14",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Use 24-hour HH:MM format only."
+      },
+      {
+        "role": "user",
+        "content": "A clock shows 10:32. What time is it 14 minutes later?"
+      }
+    ]
+  }
+]
