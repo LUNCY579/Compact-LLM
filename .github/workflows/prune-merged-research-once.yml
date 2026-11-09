@@ -1,4 +1,4 @@
-name: Prune six merged FWA TGSA adaptation source branches
+name: Prune six merged binding and foundry refs
 on:
   push:
     branches:
@@ -7,7 +7,7 @@ on:
       - ".github/workflows/prune-merged-research-once.yml"
 jobs:
   prune:
-    if: "${{ github.event.head_commit.message == 'chore: prune six merged research refs' }}"
+    if: "${{ github.event.head_commit.message == 'chore: prune six binding and foundry refs' }}"
     runs-on: ubuntu-latest
     timeout-minutes: 8
     permissions:
@@ -24,7 +24,7 @@ jobs:
           token = os.environ["GH_TOKEN"]
           repo = os.environ["GITHUB_REPOSITORY"]
           base = f"https://api.github.com/repos/{repo}"
-          candidates = [["research/supa-a1.1-fast-weight-attention-v1","d0b417632930170a08d471be2629ed44d76f225c"],["research/tgsa-v5-1-unified-programme","b60d4703fc546581998bd06e64d67c3a0e3067c5"],["research/tgsa-rineya-pretrained-retrofit","927405ab1b35a42cf7a5acb16fd42d2123ded567"],["codex/supa-adaptive-compute-v2","3a16214b028b8f6fd34828f82f1e233d9da132f4"],["research/supa-abstention-gate-off-v1","fefabf086888295690b9ba8eb9d4eb7d0441810e"],["research/fwanda-delta-retention-v1","80fe326f6620d3d084165929637230c6b3620239"]]
+          candidates = [["codex/worktree-save-20261002/chatbubble-binding-integration-pilot-20260920","8e9e4ba9420ab3dc650d247bba36d47329b12ccd"],["codex/worktree-save-20261002/chatbubble-binding-mixture-pilot-20260920","f0a32c916a935852017d62846b46b080deed5c59"],["codex/worktree-save-20261002/chatbubble-compose-lane-20260918","dc511f919ce0b57dc8b20b254ce11ae0150e5316"],["codex/worktree-save-20261002/chatbubble-retention-doselora-resume-20260920","621d09ccccd82f7f16d2c13eb4c5b70643e5c961"],["codex/worktree-save-20261002/chatbubble-retention-pilot-20260917","fae9f3fed9a1387400e35b721c708b87cda27262"],["codex/rineya-dataset-evidence-20261009","01b6ae89277319a45f2f1d209a8bdc0917f5bea4"]]
           headers = {"Authorization": f"Bearer {token}", "Accept": "application/vnd.github+json", "X-GitHub-Api-Version": "2022-11-28"}
           def api(method, path, missing_ok=False):
               req = urllib.request.Request(base + path, headers=headers, method=method)
