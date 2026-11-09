@@ -1,0 +1,652 @@
+{
+  "audit_date": "2026-10-09",
+  "scope": "All origin/research/* refs with no equally named refs/heads branch; no checkouts created, no source/model/bank execution, no deletion/tag/push performed",
+  "branch_count": 15,
+  "newly_fetched_eight_result": "Seven distinct implemented CPU/reference research packages plus one exact origin/main alias (id-balancing). No newer package establishes retirement of an older track.",
+  "recommendation": "Retain remote research branches. These refs occupy no local checkout space. Archive release/tag may serve source provenance, but CPU implementation evidence is not a trained-model release.",
+  "branches": [
+    {
+      "branch": "research/cross-scale-stitch-graft-framework-v1",
+      "ref": "origin/research/cross-scale-stitch-graft-framework-v1",
+      "head": "3059e576555afbeb735d79e129435c12caaf4359",
+      "head_date": "2026-09-15 11:51:21 -0500",
+      "local_branch_present": false,
+      "local_worktree_present": false,
+      "exact_head_aliases": [
+        "origin/research/cross-scale-stitch-graft-framework-v1"
+      ],
+      "remote_descendant_refs": [
+        "origin/research/cross-scale-stitch-graft-framework-v1"
+      ],
+      "integrated_into_origin_post_training_Mimo": false,
+      "source_documents": [
+        {
+          "path": "experiments/cross_scale_stitch_graft_v1/README.md",
+          "git_blob": "9c250da6416f091c3e01ce2220fb30f51d9115ad"
+        }
+      ],
+      "analysis": {
+        "experiment": "XSG-001",
+        "state": "OFFLINE_MECHANICS_NATIVE_UNQUALIFIED",
+        "evidence": "CPU bridge fitting, FFN graft/stitch controls, native adapter candidate already-loaded stock Qwen3 only. Historical custom Supa-A1.1 requires independent integration; no pretrained result.",
+        "source_docs": [
+          "experiments/cross_scale_stitch_graft_v1/README.md"
+        ],
+        "recommendation": "KEEP_REMOTE_METHODS_AND_SOURCE_PROVENANCE"
+      }
+    },
+    {
+      "branch": "research/deferred-diffusion-context-hci-notes-v1",
+      "ref": "origin/research/deferred-diffusion-context-hci-notes-v1",
+      "head": "451ef168ce9521a538b4e31c8ab46d0009b6f5f5",
+      "head_date": "2026-09-28 22:41:10 -0500",
+      "local_branch_present": false,
+      "local_worktree_present": false,
+      "exact_head_aliases": [
+        "origin/research/deferred-diffusion-context-hci-notes-v1"
+      ],
+      "remote_descendant_refs": [
+        "origin/research/deferred-diffusion-context-hci-notes-v1"
+      ],
+      "integrated_into_origin_post_training_Mimo": false,
+      "source_documents": [
+        {
+          "path": "docs/research_backlog/deferred_diffusion_context_hci_v1/README.md",
+          "git_blob": "5945e96445d3f9bafa1e3f2cb5dd4f5d179e5310"
+        }
+      ],
+      "analysis": {
+        "experiment": "BP-FUT / CSBP-FUT / HCI-FUT backlog",
+        "state": "DEFERRED_DOCS_ONLY_ARCHIVAL_BACKLOG",
+        "evidence": "Explicitly deferred outside active RSD/CLARE programme. Documentation only, manual new implementation branch required for reactivation; no executable placeholder or scheduled task.",
+        "source_docs": [
+          "docs/research_backlog/deferred_diffusion_context_hci_v1/README.md"
+        ],
+        "recommendation": "KEEP_REMOTE_ARCHIVAL_NOTES_NO_LOCAL_CHECKOUT_NEEDED"
+      }
+    },
+    {
+      "branch": "research/dmrf-pairwise-disjointness-v1",
+      "ref": "origin/research/dmrf-pairwise-disjointness-v1",
+      "head": "11f42f6bc11b8f9e235cb5951ca96a263259434a",
+      "head_date": "2026-09-20 23:21:28 -0500",
+      "local_branch_present": false,
+      "local_worktree_present": false,
+      "exact_head_aliases": [
+        "origin/research/dmrf-pairwise-disjointness-v1"
+      ],
+      "remote_descendant_refs": [
+        "origin/research/dmrf-pairwise-disjointness-v1"
+      ],
+      "integrated_into_origin_post_training_Mimo": false,
+      "source_documents": [
+        {
+          "path": "experiments/delta_multi_reasoning_v1/audit/PAIRWISE_DISJOINTNESS.md",
+          "git_blob": "8c094f710327a51c9f8021aba98577579e197c47"
+        }
+      ],
+      "analysis": {
+        "experiment": "DMRF-PCD-001",
+        "state": "ENGINEERING_AUDIT_DELIVERED_REAL_DATA_BINDING_PENDING",
+        "evidence": "Per-pair source/row/namespace coverage and fresh injected-collision controls. Preserves earlier delta_H namespace correction; fixture tests are not actual-data qualification.",
+        "source_docs": [
+          "experiments/delta_multi_reasoning_v1/audit/PAIRWISE_DISJOINTNESS.md"
+        ],
+        "recommendation": "KEEP_REMOTE_INDEPENDENT_AUDIT_AND_NEGATIVE_EVIDENCE"
+      }
+    },
+    {
+      "branch": "research/dmrf-source-observability-v1",
+      "ref": "origin/research/dmrf-source-observability-v1",
+      "head": "3c76199fb28fb55f0022aa25d93cf876a566f5db",
+      "head_date": "2026-09-19 14:42:05 -0500",
+      "local_branch_present": false,
+      "local_worktree_present": false,
+      "exact_head_aliases": [
+        "origin/research/dmrf-source-observability-v1"
+      ],
+      "remote_descendant_refs": [
+        "origin/research/dmrf-source-observability-v1"
+      ],
+      "integrated_into_origin_post_training_Mimo": false,
+      "source_documents": [
+        {
+          "path": "experiments/delta_multi_reasoning_v1/SOURCE_OBSERVABILITY_AUDIT.md",
+          "git_blob": "e89d73855b4db7f8b25a70743dd2a7c5aaff4dcd"
+        }
+      ],
+      "analysis": {
+        "experiment": "OBS-001",
+        "state": "SOURCE_AUDIT_AND_ADMISSION_GUARDS_DELIVERED",
+        "evidence": "Eight targeted observable-source gaps and read-only evidence admission/preflight tools. Historical private-vault correction preserved; no rerun or outcome revision. Distinct branch tip, not equal to pairwise audit.",
+        "source_docs": [
+          "experiments/delta_multi_reasoning_v1/SOURCE_OBSERVABILITY_AUDIT.md"
+        ],
+        "recommendation": "KEEP_REMOTE_INDEPENDENT_AUDIT_AND_NEGATIVE_EVIDENCE"
+      }
+    },
+    {
+      "branch": "research/maxrl-comp002-pretraining-qualification-v1",
+      "ref": "origin/research/maxrl-comp002-pretraining-qualification-v1",
+      "head": "21532b765269b19e6aabf8d596e7409be51b37ea",
+      "head_date": "2026-09-22 11:11:22 -0500",
+      "local_branch_present": false,
+      "local_worktree_present": false,
+      "exact_head_aliases": [
+        "origin/research/maxrl-comp002-pretraining-qualification-v1"
+      ],
+      "remote_descendant_refs": [
+        "origin/codex/archive-20261004/codex-cheap-quality-abstention-20260929",
+        "origin/codex/archive-20261004/codex-cheap-quality-complementarity-20260929",
+        "origin/codex/archive-20261004/codex-cheap-quality-retrieval-20260929",
+        "origin/codex/archive-20261004/codex-cheap-quality-shortcuts-20260929",
+        "origin/codex/archive-20261004/codex-cheap-quality-stability-20260929",
+        "origin/codex/archive-20261004/codex-cheap-quality-token-fit-20260929",
+        "origin/codex/archive-20261004/codex-confirm002-paired-correctness-audit-20260930",
+        "origin/codex/archive-20261004/codex-data-admission-001-20260930",
+        "origin/codex/archive-20261004/codex-mimo-artifact-stream-budget-20260930",
+        "origin/codex/archive-20261004/codex-mimo-capture-failure-accounting-20261001",
+        "origin/codex/archive-20261004/codex-mimo-capture-fixed-input-audit-20260930",
+        "origin/codex/archive-20261004/codex-mimo-exact-prefix-capture-20261001",
+        "origin/codex/archive-20261004/codex-mimo-job-containment-20261001",
+        "origin/codex/archive-20261004/codex-mimo-job-handle-fix-20261001",
+        "origin/codex/archive-20261004/codex-mimo-supervisor-death-cpu-20261001",
+        "origin/codex/archive-20261004/codex-mimo-suspended-job-launch-20261001",
+        "origin/codex/ce8-production-dev-20261002",
+        "origin/codex/cheap-quality-abstention-20260929",
+        "origin/codex/cheap-quality-complementarity-20260929",
+        "origin/codex/cheap-quality-retrieval-20260929",
+        "origin/codex/cheap-quality-shortcuts-20260929",
+        "origin/codex/cheap-quality-stability-20260929",
+        "origin/codex/cheap-quality-token-fit-20260929",
+        "origin/codex/comp-rs-methods-warmstart-20260930",
+        "origin/codex/comp-rs-native-q1",
+        "origin/codex/comp-rs-s1-dev-20260930",
+        "origin/codex/confirm002-paired-correctness-audit-20260930",
+        "origin/codex/data-admission-001-20260930",
+        "origin/codex/efe-func001-fresh-validation",
+        "origin/codex/mimo-artifact-stream-budget-20260930",
+        "origin/codex/mimo-capture-failure-accounting-20261001",
+        "origin/codex/mimo-capture-fixed-input-audit-20260930",
+        "origin/codex/mimo-exact-prefix-capture-20261001",
+        "origin/codex/mimo-job-containment-20261001",
+        "origin/codex/mimo-job-handle-fix-20261001",
+        "origin/codex/mimo-supervisor-death-cpu-20261001",
+        "origin/codex/mimo-supervisor-death-review-fix-20261002",
+        "origin/codex/mimo-suspended-job-launch-20261001",
+        "origin/codex/rineya-taps-adaptation-loop",
+        "origin/codex/rvs001-inference-pilot-20260929",
+        "origin/codex/worktree-save-20261002/detached-crs-native-desktop-v2",
+        "origin/post-training-Mimo",
+        "origin/research/comp-rs-001-amendment-1",
+        "origin/research/maxrl-comp002-pretraining-qualification-v1",
+        "origin/research/post-training-mimo-centralized-v1",
+        "origin/research/rineya-bf16-attention-gproj-v1",
+        "origin/research/rineya-centralized-reasoning-system-v1",
+        "origin/research/rineya-compute-depth-elasticity-v1",
+        "origin/research/rineya-distillation-dynamics-v1",
+        "origin/research/rineya-evidence-function-equilibrium-v1",
+        "origin/research/rineya-generalization-dynamics-v1",
+        "origin/research/rineya-hebbian-fact-memory-v1",
+        "origin/research/rineya-layered-post-training-v1",
+        "origin/research/rineya-length-generalization-regularization-v1",
+        "origin/research/rineya-ppt-centralized-reasoning-v1",
+        "origin/research/rineya-recursive-self-distillation-v1",
+        "origin/research/rineya-recursive-self-rewrite-v1",
+        "origin/research/rineya-relative-generalization-invariance-v1",
+        "origin/research/rineya-self-distillation-axes-v1",
+        "origin/research/rineya-synth-centralized-reasoning-v1",
+        "origin/research/rineya-taps-adaptive-recurrence-v1",
+        "origin/research/rineya-triadic-working-memory-v1",
+        "origin/research/rineya-tropical-verified-composition-v1",
+        "origin/research/rineya-useful-fixed-point-recurrence-v1",
+        "origin/research/rineya-verified-resampling-v1"
+      ],
+      "integrated_into_origin_post_training_Mimo": true,
+      "source_documents": [
+        {
+          "path": "experiments/maxrl_comp002_pretraining_v1/QUALIFICATION.md",
+          "git_blob": "c3f6a23fe77dc7349db6923d0b320a07f4f0b732"
+        }
+      ],
+      "analysis": {
+        "experiment": "MAXRL-COMP-002 Q0",
+        "state": "SOURCE_DATA_BINDING_COMPLETE_NATIVE_BLOCKED_INTEGRATED_ANCESTOR",
+        "evidence": "462 original and 46 new tests in separate completed suites. Archive/data/source identities verified; actual native source/tokenizer/runtime/data/budget binding still required. Tip is already ancestor of origin/post-training-Mimo.",
+        "source_docs": [
+          "experiments/maxrl_comp002_pretraining_v1/QUALIFICATION.md"
+        ],
+        "recommendation": "KEEP_REMOTE_QUALIFICATION_PROVENANCE_ARCHIVAL_SOURCE_ALREADY_INTEGRATED"
+      }
+    },
+    {
+      "branch": "research/rineya-evidence-function-equilibrium-v1",
+      "ref": "origin/research/rineya-evidence-function-equilibrium-v1",
+      "head": "c934589026f7456352d62a83bb102c453e15519a",
+      "head_date": "2026-09-29 15:39:46 -0500",
+      "local_branch_present": false,
+      "local_worktree_present": false,
+      "exact_head_aliases": [
+        "origin/research/rineya-evidence-function-equilibrium-v1"
+      ],
+      "remote_descendant_refs": [
+        "origin/codex/efe-func001-fresh-validation",
+        "origin/research/rineya-evidence-function-equilibrium-v1"
+      ],
+      "integrated_into_origin_post_training_Mimo": false,
+      "source_documents": [
+        {
+          "path": "experiments/rineya_evidence_function_equilibrium_v1/README.md",
+          "git_blob": "4ca44f6ee62656f8c23e7809ef2a9a39b10face9"
+        },
+        {
+          "path": "experiments/rineya_evidence_function_equilibrium_v1/VALIDATION.md",
+          "git_blob": "d492bb5d4e9426d5ad77019ffdd62ee89b625ff1"
+        }
+      ],
+      "analysis": {
+        "experiment": "EFE-001",
+        "state": "CPU_REFERENCE_PROGRAMME_NATIVE_NOT_RUN",
+        "evidence": "Three-track function composition, generated-KV selection and DEQ programme; native adapters intentionally unimplemented. Function branch has separate later successor owner work; original source/evidence should remain durable.",
+        "source_docs": [
+          "experiments/rineya_evidence_function_equilibrium_v1/README.md",
+          "experiments/rineya_evidence_function_equilibrium_v1/VALIDATION.md"
+        ],
+        "recommendation": "KEEP_REMOTE_ORIGINAL_PROGRAMME_AND_PROVENANCE"
+      }
+    },
+    {
+      "branch": "research/rineya-hebbian-fact-memory-v1",
+      "ref": "origin/research/rineya-hebbian-fact-memory-v1",
+      "head": "a4f38244cb875e5f8691ce19563eb9517d5c24a8",
+      "head_date": "2026-10-07 18:07:28 -0500",
+      "local_branch_present": false,
+      "local_worktree_present": false,
+      "exact_head_aliases": [
+        "origin/research/rineya-hebbian-fact-memory-v1"
+      ],
+      "remote_descendant_refs": [
+        "origin/research/rineya-hebbian-fact-memory-v1"
+      ],
+      "integrated_into_origin_post_training_Mimo": false,
+      "source_documents": [
+        {
+          "path": "experiments/rineya_hebbian_fact_memory_v1/README.md",
+          "git_blob": "a18d5190500b54527fddf44a4a7f1e5005043e06"
+        },
+        {
+          "path": "experiments/rineya_hebbian_fact_memory_v1/AGENTS.md",
+          "git_blob": "fa662f62aef623326805ce5f811bb827a662ad6e"
+        },
+        {
+          "path": "experiments/rineya_hebbian_fact_memory_v1/evidence/VALIDATION.md",
+          "git_blob": "f6a9a731e567bd05cfaf76576a8017f9516404c0"
+        }
+      ],
+      "analysis": {
+        "experiment": "RHF-001",
+        "state": "IMPLEMENTED_CPU_EVIDENCE_NATIVE_UNQUALIFIED",
+        "evidence": "76 tests; synthetic fact-memory sweeps and tagged SSFR. Data-dependent CG blocked 6/8 development cells, retained as failures. No pretrained Rineya run or confirmation.",
+        "source_docs": [
+          "experiments/rineya_hebbian_fact_memory_v1/README.md",
+          "experiments/rineya_hebbian_fact_memory_v1/AGENTS.md",
+          "experiments/rineya_hebbian_fact_memory_v1/evidence/VALIDATION.md"
+        ],
+        "recommendation": "KEEP_REMOTE_COMPLEMENTARY_TRACK_NO_LOCAL_CHECKOUT_NEEDED"
+      }
+    },
+    {
+      "branch": "research/rineya-id-balancing-skill-routing-v1",
+      "ref": "origin/research/rineya-id-balancing-skill-routing-v1",
+      "head": "b0ca54bdc1b69e2b19d7baeca2e3fdde3ff0a7b2",
+      "head_date": "2026-09-26 10:33:59 -0500",
+      "local_branch_present": false,
+      "local_worktree_present": false,
+      "exact_head_aliases": [
+        "origin",
+        "origin/main",
+        "origin/research/rineya-id-balancing-skill-routing-v1"
+      ],
+      "remote_descendant_refs": [
+        "origin",
+        "origin/codex/archive-20261004/codex-cheap-quality-abstention-20260929",
+        "origin/codex/archive-20261004/codex-cheap-quality-complementarity-20260929",
+        "origin/codex/archive-20261004/codex-cheap-quality-retrieval-20260929",
+        "origin/codex/archive-20261004/codex-cheap-quality-shortcuts-20260929",
+        "origin/codex/archive-20261004/codex-cheap-quality-stability-20260929",
+        "origin/codex/archive-20261004/codex-cheap-quality-token-fit-20260929",
+        "origin/codex/archive-20261004/codex-confirm002-paired-correctness-audit-20260930",
+        "origin/codex/archive-20261004/codex-data-admission-001-20260930",
+        "origin/codex/archive-20261004/codex-mimo-artifact-stream-budget-20260930",
+        "origin/codex/archive-20261004/codex-mimo-capture-failure-accounting-20261001",
+        "origin/codex/archive-20261004/codex-mimo-capture-fixed-input-audit-20260930",
+        "origin/codex/archive-20261004/codex-mimo-exact-prefix-capture-20261001",
+        "origin/codex/archive-20261004/codex-mimo-job-containment-20261001",
+        "origin/codex/archive-20261004/codex-mimo-job-handle-fix-20261001",
+        "origin/codex/archive-20261004/codex-mimo-supervisor-death-cpu-20261001",
+        "origin/codex/archive-20261004/codex-mimo-suspended-job-launch-20261001",
+        "origin/codex/cheap-quality-abstention-20260929",
+        "origin/codex/cheap-quality-complementarity-20260929",
+        "origin/codex/cheap-quality-retrieval-20260929",
+        "origin/codex/cheap-quality-shortcuts-20260929",
+        "origin/codex/cheap-quality-stability-20260929",
+        "origin/codex/cheap-quality-token-fit-20260929",
+        "origin/codex/confirm002-paired-correctness-audit-20260930",
+        "origin/codex/data-admission-001-20260930",
+        "origin/codex/efe-func001-fresh-validation",
+        "origin/codex/mimo-artifact-stream-budget-20260930",
+        "origin/codex/mimo-capture-failure-accounting-20261001",
+        "origin/codex/mimo-capture-fixed-input-audit-20260930",
+        "origin/codex/mimo-exact-prefix-capture-20261001",
+        "origin/codex/mimo-job-containment-20261001",
+        "origin/codex/mimo-job-handle-fix-20261001",
+        "origin/codex/mimo-supervisor-death-cpu-20261001",
+        "origin/codex/mimo-supervisor-death-review-fix-20261002",
+        "origin/codex/mimo-suspended-job-launch-20261001",
+        "origin/codex/rineya-taps-adaptation-loop",
+        "origin/codex/rvs001-inference-pilot-20260929",
+        "origin/codex/worktree-save-20261002/detached-crs-native-desktop-v2",
+        "origin/main",
+        "origin/post-training-Mimo",
+        "origin/research/deferred-diffusion-context-hci-notes-v1",
+        "origin/research/post-training-mimo-centralized-v1",
+        "origin/research/rineya-bf16-attention-gproj-v1",
+        "origin/research/rineya-centralized-reasoning-system-v1",
+        "origin/research/rineya-compute-depth-elasticity-v1",
+        "origin/research/rineya-distillation-dynamics-v1",
+        "origin/research/rineya-evidence-function-equilibrium-v1",
+        "origin/research/rineya-generalization-dynamics-v1",
+        "origin/research/rineya-hebbian-fact-memory-v1",
+        "origin/research/rineya-id-balancing-skill-routing-v1",
+        "origin/research/rineya-layered-post-training-v1",
+        "origin/research/rineya-length-generalization-regularization-v1",
+        "origin/research/rineya-ppt-centralized-reasoning-v1",
+        "origin/research/rineya-recursive-self-distillation-v1",
+        "origin/research/rineya-recursive-self-rewrite-v1",
+        "origin/research/rineya-relative-generalization-invariance-v1",
+        "origin/research/rineya-self-distillation-axes-v1",
+        "origin/research/rineya-spikingbrain-hybrid-memory-v1",
+        "origin/research/rineya-synth-centralized-reasoning-v1",
+        "origin/research/rineya-taps-adaptive-recurrence-v1",
+        "origin/research/rineya-triadic-working-memory-v1",
+        "origin/research/rineya-tropical-verified-composition-v1",
+        "origin/research/rineya-useful-fixed-point-recurrence-v1",
+        "origin/research/rineya-verified-resampling-v1"
+      ],
+      "integrated_into_origin_post_training_Mimo": true,
+      "source_documents": [],
+      "analysis": {
+        "experiment": "Unimplemented branch alias",
+        "state": "EXACT_MAIN_HEAD_ALIAS_NO_UNIQUE_EXPERIMENT",
+        "evidence": "Head b0ca54bdc1b69e2b19d7baeca2e3fdde3ff0a7b2 equals origin/main and origin/HEAD. No id_balancing/skill_routing paths found in tree; head is historical main PR6 merge.",
+        "source_docs": [],
+        "recommendation": "KEEP_REMOTE_AS_ALIAS_IF_DESIRED_NO_UNIQUE_SOURCE_TO_PRESERVE_NO_LOCAL_SPACE_TO_RECLAIM"
+      }
+    },
+    {
+      "branch": "research/rineya-layered-post-training-v1",
+      "ref": "origin/research/rineya-layered-post-training-v1",
+      "head": "54f82501c14f3968a3bfdf4af0a657cbfd0b2421",
+      "head_date": "2026-10-07 17:54:13 -0500",
+      "local_branch_present": false,
+      "local_worktree_present": false,
+      "exact_head_aliases": [
+        "origin/research/rineya-layered-post-training-v1"
+      ],
+      "remote_descendant_refs": [
+        "origin/research/rineya-layered-post-training-v1"
+      ],
+      "integrated_into_origin_post_training_Mimo": false,
+      "source_documents": [
+        {
+          "path": "experiments/rineya_layered_post_training_v1/README.md",
+          "git_blob": "0d66397e29f0e5ef769d9b40d43d89a09c6ad0b6"
+        },
+        {
+          "path": "experiments/rineya_layered_post_training_v1/AGENTS.md",
+          "git_blob": "81a786e1abdc02d1ed7d692f2b6330c61443f865"
+        },
+        {
+          "path": "experiments/rineya_layered_post_training_v1/VERIFICATION.md",
+          "git_blob": "2e487cac31cf364f32dde919a58edc68da2d080b"
+        }
+      ],
+      "analysis": {
+        "experiment": "RLP-001",
+        "state": "IMPLEMENTED_CPU_EVIDENCE_NATIVE_BLOCKED",
+        "evidence": "89 tests; 18 tiny causal-GRU smoke runs and 18 fixture confirmations. No pretrained Rineya. Only 1/6 critic smoke audits passed; other 5 synthetic bypasses cannot qualify native.",
+        "source_docs": [
+          "experiments/rineya_layered_post_training_v1/README.md",
+          "experiments/rineya_layered_post_training_v1/AGENTS.md",
+          "experiments/rineya_layered_post_training_v1/VERIFICATION.md"
+        ],
+        "recommendation": "KEEP_REMOTE_COMPLEMENTARY_TRACK_NO_LOCAL_CHECKOUT_NEEDED"
+      }
+    },
+    {
+      "branch": "research/rineya-length-generalization-regularization-v1",
+      "ref": "origin/research/rineya-length-generalization-regularization-v1",
+      "head": "8b78e49fc976b86c12a4ac4e54c98cdf74aea97b",
+      "head_date": "2026-10-06 23:45:06 -0500",
+      "local_branch_present": false,
+      "local_worktree_present": false,
+      "exact_head_aliases": [
+        "origin/research/rineya-length-generalization-regularization-v1"
+      ],
+      "remote_descendant_refs": [
+        "origin/research/rineya-length-generalization-regularization-v1"
+      ],
+      "integrated_into_origin_post_training_Mimo": false,
+      "source_documents": [
+        {
+          "path": "experiments/rineya_length_generalization_regularization_v1/README.md",
+          "git_blob": "2cd5a8c8301de2a109fe0052ee1e20c5ea50c284"
+        },
+        {
+          "path": "experiments/rineya_length_generalization_regularization_v1/VALIDATION.json",
+          "git_blob": "9972222edfab8cfda5d8525ec0bc1daacd1202fe"
+        }
+      ],
+      "analysis": {
+        "experiment": "LGR-001",
+        "state": "IMPLEMENTED_CPU_FIXTURE_NATIVE_UNQUALIFIED",
+        "evidence": "98 tests, 6 CPU fixture optimizer steps and three-arm smoke. Local Qwen3-style 0.6B loader/LoRA/norm regularization exist but pretrained efficacy/context retention and GPU resource fit unmeasured.",
+        "source_docs": [
+          "experiments/rineya_length_generalization_regularization_v1/README.md",
+          "experiments/rineya_length_generalization_regularization_v1/VALIDATION.json"
+        ],
+        "recommendation": "KEEP_REMOTE_COMPLEMENTARY_TRACK_NO_LOCAL_CHECKOUT_NEEDED"
+      }
+    },
+    {
+      "branch": "research/rineya-recursive-self-rewrite-v1",
+      "ref": "origin/research/rineya-recursive-self-rewrite-v1",
+      "head": "8d3ee140accb054273580adb4291384e0dd88e0f",
+      "head_date": "2026-10-07 18:05:18 -0500",
+      "local_branch_present": false,
+      "local_worktree_present": false,
+      "exact_head_aliases": [
+        "origin/research/rineya-recursive-self-rewrite-v1"
+      ],
+      "remote_descendant_refs": [
+        "origin/research/rineya-recursive-self-rewrite-v1"
+      ],
+      "integrated_into_origin_post_training_Mimo": false,
+      "source_documents": [
+        {
+          "path": "experiments/rineya_recursive_self_rewrite_v1/README.md",
+          "git_blob": "e291e39c3b77cd2206f36eca02b75cde4dccda74"
+        },
+        {
+          "path": "experiments/rineya_recursive_self_rewrite_v1/AGENTS.md",
+          "git_blob": "13d57ee360c61bb525ea28b520b359c9ad8e5002"
+        },
+        {
+          "path": "experiments/rineya_recursive_self_rewrite_v1/VALIDATION.json",
+          "git_blob": "be554d711a7b121c46dd0b3dce77feeadb16dced"
+        }
+      ],
+      "analysis": {
+        "experiment": "RSR-001",
+        "state": "IMPLEMENTED_CPU_QUALIFIED_NATIVE_NOT_RUN",
+        "evidence": "86 tests; RHD-bound student-first planner/critic/rewrite/replay pipeline exercised with fixtures only. 144 source and 96 rewrite attempts in fixture demo. No Rineya model load/inference/training/retention/confirmation.",
+        "source_docs": [
+          "experiments/rineya_recursive_self_rewrite_v1/README.md",
+          "experiments/rineya_recursive_self_rewrite_v1/AGENTS.md",
+          "experiments/rineya_recursive_self_rewrite_v1/VALIDATION.json"
+        ],
+        "recommendation": "KEEP_REMOTE_COMPLEMENTARY_TRACK_NO_LOCAL_CHECKOUT_NEEDED"
+      }
+    },
+    {
+      "branch": "research/rineya-relative-generalization-invariance-v1",
+      "ref": "origin/research/rineya-relative-generalization-invariance-v1",
+      "head": "53b2155b2c54137891ea98a24f9e79892e658527",
+      "head_date": "2026-10-09 10:02:42 -0500",
+      "local_branch_present": false,
+      "local_worktree_present": false,
+      "exact_head_aliases": [
+        "origin/research/rineya-relative-generalization-invariance-v1"
+      ],
+      "remote_descendant_refs": [
+        "origin/research/rineya-relative-generalization-invariance-v1"
+      ],
+      "integrated_into_origin_post_training_Mimo": false,
+      "source_documents": [
+        {
+          "path": "experiments/rineya_relative_generalization_invariance_v1/README.md",
+          "git_blob": "b70d94a75c9c1cee604323437c5a4c4520a5124a"
+        },
+        {
+          "path": "experiments/rineya_relative_generalization_invariance_v1/VALIDATION.md",
+          "git_blob": "6eae671d1ea4f8945e67fe000c9995e6035d1e30"
+        }
+      ],
+      "analysis": {
+        "experiment": "RGI-001",
+        "state": "IMPLEMENTED_CPU_DIAGNOSTICS_NATIVE_UNQUALIFIED",
+        "evidence": "October 9 delivery; 141 tests passed, 2 optional real Qwen3/PEFT tests skipped. Loss-profile/token importer/dose controls/three-seed plans/LoRA backend and bookkeeping; Transformers/PEFT/CUDA and native scientific efficacy unqualified.",
+        "source_docs": [
+          "experiments/rineya_relative_generalization_invariance_v1/README.md",
+          "experiments/rineya_relative_generalization_invariance_v1/VALIDATION.md"
+        ],
+        "recommendation": "KEEP_REMOTE_RECENT_COMPLEMENTARY_TRACK_NO_LOCAL_CHECKOUT_NEEDED"
+      }
+    },
+    {
+      "branch": "research/rineya-triadic-working-memory-v1",
+      "ref": "origin/research/rineya-triadic-working-memory-v1",
+      "head": "879006c14173e987012499eb8e7a1a8df8456b14",
+      "head_date": "2026-10-05 12:20:36 -0500",
+      "local_branch_present": false,
+      "local_worktree_present": false,
+      "exact_head_aliases": [
+        "origin/research/rineya-triadic-working-memory-v1"
+      ],
+      "remote_descendant_refs": [
+        "origin/research/rineya-triadic-working-memory-v1"
+      ],
+      "integrated_into_origin_post_training_Mimo": false,
+      "source_documents": [
+        {
+          "path": "experiments/rineya_triadic_working_memory_v1/README.md",
+          "git_blob": "126aa0b4756f7df009cb5b59ae794fbebd514467"
+        },
+        {
+          "path": "experiments/rineya_triadic_working_memory_v1/evidence/TEST_REPORT.md",
+          "git_blob": "0ef31d1668bcde5c9546a524d939d114543ec2a8"
+        }
+      ],
+      "analysis": {
+        "experiment": "TWM-001",
+        "state": "IMPLEMENTED_REFERENCE_NATIVE_CHECKPOINT_CUDA_UNQUALIFIED",
+        "evidence": "70 tests passed, 4 real tiny-Qwen3 tests skipped. Frozen-host triadic-memory sidecar/cache/trainer implementations plus tensor/reference mechanics. Real checkpoint gains, parity, multi-seed retention, GPU fit unknown; 512-token pilot cannot support long-context claims.",
+        "source_docs": [
+          "experiments/rineya_triadic_working_memory_v1/README.md",
+          "experiments/rineya_triadic_working_memory_v1/evidence/TEST_REPORT.md"
+        ],
+        "recommendation": "KEEP_REMOTE_COMPLEMENTARY_TRACK_NO_LOCAL_CHECKOUT_NEEDED"
+      }
+    },
+    {
+      "branch": "research/rineya-tropical-verified-composition-v1",
+      "ref": "origin/research/rineya-tropical-verified-composition-v1",
+      "head": "3fb76cb8f7027b643293752fc08c5c288ca8b01f",
+      "head_date": "2026-10-07 16:11:28 -0500",
+      "local_branch_present": false,
+      "local_worktree_present": false,
+      "exact_head_aliases": [
+        "origin/research/rineya-tropical-verified-composition-v1"
+      ],
+      "remote_descendant_refs": [
+        "origin/research/rineya-tropical-verified-composition-v1"
+      ],
+      "integrated_into_origin_post_training_Mimo": false,
+      "source_documents": [
+        {
+          "path": "experiments/rineya_tropical_verified_composition_v1/README.md",
+          "git_blob": "cfce7e9de4809921122be37031fb0a99adbdd556"
+        },
+        {
+          "path": "experiments/rineya_tropical_verified_composition_v1/AGENTS.md",
+          "git_blob": "609f2506f17fa5720aa75a39543bfeb69a8317d4"
+        },
+        {
+          "path": "experiments/rineya_tropical_verified_composition_v1/RESULTS.md",
+          "git_blob": "b69bd1933abc5086f3a9ad50701b0929954651cb"
+        }
+      ],
+      "analysis": {
+        "experiment": "TRVC-001",
+        "state": "IMPLEMENTED_CPU_TOY_EVIDENCE_NATIVE_BLOCKED",
+        "evidence": "129 tests. 230-parameter symbolic actor, 21 conditions/168 optimizer updates; verified graph/restart composition and objectives. Native preflight BLOCKED_NATIVE_UNQUALIFIED, no Rineya tokenizer/LM/GPU/resume efficacy.",
+        "source_docs": [
+          "experiments/rineya_tropical_verified_composition_v1/README.md",
+          "experiments/rineya_tropical_verified_composition_v1/AGENTS.md",
+          "experiments/rineya_tropical_verified_composition_v1/RESULTS.md"
+        ],
+        "recommendation": "KEEP_REMOTE_COMPLEMENTARY_TRACK_NO_LOCAL_CHECKOUT_NEEDED"
+      }
+    },
+    {
+      "branch": "research/rineya-useful-fixed-point-recurrence-v1",
+      "ref": "origin/research/rineya-useful-fixed-point-recurrence-v1",
+      "head": "f1861c85c6ba1f64b9aa72dc000bea7da1d9b8c1",
+      "head_date": "2026-10-03 18:30:57 -0500",
+      "local_branch_present": false,
+      "local_worktree_present": false,
+      "exact_head_aliases": [
+        "origin/research/rineya-useful-fixed-point-recurrence-v1"
+      ],
+      "remote_descendant_refs": [
+        "origin/research/rineya-useful-fixed-point-recurrence-v1"
+      ],
+      "integrated_into_origin_post_training_Mimo": false,
+      "source_documents": [
+        {
+          "path": "experiments/rineya_useful_fixed_point_recurrence_v1/README.md",
+          "git_blob": "15778891dcf54e6118ca2cfdcaeea13bb2e368c1"
+        },
+        {
+          "path": "experiments/rineya_useful_fixed_point_recurrence_v1/AGENTS.md",
+          "git_blob": "aa98f9689dcc08847eb585613392e97f9136730b"
+        },
+        {
+          "path": "experiments/rineya_useful_fixed_point_recurrence_v1/VALIDATION.md",
+          "git_blob": "49b735088383bf2782b83e049ba79f4e1d82a1c8"
+        }
+      ],
+      "analysis": {
+        "experiment": "FP-RINEYA-001",
+        "state": "IMPLEMENTED_CPU_REFERENCE_NATIVE_NOT_RUN",
+        "evidence": "57 tests and deterministic repeated fixtures; 96 synthetic optimizer steps, default preflight blocked. Exact custom-Supa CPU FP32 inference-only zero-start bridge, no real checkpoint screen/native train; AGENTS says newer recurrence/TAPS/CDE branches do not obsolete this track.",
+        "source_docs": [
+          "experiments/rineya_useful_fixed_point_recurrence_v1/README.md",
+          "experiments/rineya_useful_fixed_point_recurrence_v1/AGENTS.md",
+          "experiments/rineya_useful_fixed_point_recurrence_v1/VALIDATION.md"
+        ],
+        "recommendation": "KEEP_REMOTE_ENDURING_COMPLEMENTARY_TRACK_NO_LOCAL_CHECKOUT_NEEDED"
+      }
+    }
+  ]
+}

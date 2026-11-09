@@ -1,0 +1,100 @@
+Audited data/sft/train/shard-000-of-022.jsonl
+Audited data/sft/train/shard-001-of-022.jsonl
+Audited data/sft/train/shard-002-of-022.jsonl
+Audited data/sft/train/shard-003-of-022.jsonl
+Audited data/sft/train/shard-004-of-022.jsonl
+Audited data/sft/train/shard-005-of-022.jsonl
+Audited data/sft/train/shard-006-of-022.jsonl
+Audited data/sft/train/shard-007-of-022.jsonl
+Audited data/sft/train/shard-008-of-022.jsonl
+Audited data/sft/train/shard-009-of-022.jsonl
+Audited data/sft/train/shard-010-of-022.jsonl
+Audited data/sft/train/shard-011-of-022.jsonl
+Audited data/sft/train/shard-012-of-022.jsonl
+Audited data/sft/train/shard-013-of-022.jsonl
+Audited data/sft/train/shard-014-of-022.jsonl
+Audited data/sft/train/shard-015-of-022.jsonl
+Audited data/sft/train/shard-016-of-022.jsonl
+Audited data/sft/train/shard-017-of-022.jsonl
+Audited data/sft/train/shard-018-of-022.jsonl
+Audited data/sft/train/shard-019-of-022.jsonl
+Audited data/sft/train/shard-020-of-022.jsonl
+Audited data/sft/train/shard-021-of-022.jsonl
+Audited data/sft/validation/shard-000-of-005.jsonl
+Audited data/sft/validation/shard-001-of-005.jsonl
+Audited data/sft/validation/shard-002-of-005.jsonl
+Audited data/sft/validation/shard-003-of-005.jsonl
+Audited data/sft/validation/shard-004-of-005.jsonl
+All 47016 permitted rows audited; tokenizing 118 frozen samples.
+None of PyTorch, TensorFlow >= 2.0, or Flax have been found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+{
+  "status": "P0_STOP_FATAL_SHORTCUT_VERIFIED",
+  "question_only": {
+    "train": {
+      "TP": 3668,
+      "FP": 0,
+      "FN": 0,
+      "TN": 40348,
+      "rows": 44016,
+      "balanced_accuracy": 1.0,
+      "accuracy": 1.0
+    },
+    "validation": {
+      "TP": 250,
+      "FP": 0,
+      "FN": 0,
+      "TN": 2750,
+      "rows": 3000,
+      "balanced_accuracy": 1.0,
+      "accuracy": 1.0
+    }
+  },
+  "exceptions": {
+    "train": {
+      "isolate": 3668
+    },
+    "validation": {
+      "isolate": 250
+    }
+  },
+  "constraints": {
+    "train": {
+      "rows": 3668,
+      "parsed": 3668,
+      "first_registry_name_correct": 3668
+    },
+    "validation": {
+      "rows": 250,
+      "parsed": 250,
+      "first_registry_name_correct": 250
+    }
+  },
+  "native_sample": {
+    "selection": "Four shortest-character prompts per shard (tie ID), plus two smallest SHA256(cc0-native-sample-v1:ID) per declared stratum; union deduplicated.",
+    "rows": 118,
+    "is_census": false,
+    "not_representative": true,
+    "scope": "Native tokenizer counts only. No full token census because fatal shortcut blocks acceptance.",
+    "prompt_min": 2658,
+    "prompt_max": 51699,
+    "prompt_over_1920": 118,
+    "total_over_2048": 118,
+    "enable_thinking": false,
+    "trust_remote_code": false,
+    "truncations": 0
+  },
+  "isolation": {
+    "id_overlap": 0,
+    "source_family_overlap": 0,
+    "semantic_origin_overlap": 0,
+    "family_counts": {
+      "train": 1834,
+      "validation": 125
+    },
+    "origin_counts": {
+      "train": 500,
+      "validation": 100
+    }
+  },
+  "peak_rss_mib": 146.8125
+}

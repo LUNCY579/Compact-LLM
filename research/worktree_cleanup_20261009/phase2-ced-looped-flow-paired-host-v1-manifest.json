@@ -1,0 +1,268 @@
+{
+  "schema": "rineya.retired-checkout-preservation/2",
+  "source_root": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-ced-looped-flow-paired-host-v1",
+  "branch": "research/ced-looped-flow-paired-host-v1",
+  "source_head": "627253edde9a0e67334034d252e5d9dd9daead9a",
+  "remote_source_tag": "archive/2026-10-09/worktrees/ced-looped-flow-paired-host-v1",
+  "archived_utc": "2026-10-09T17:35:06.057755+00:00",
+  "retirement": "Remove dormant checkout after exact remote source tag and downloaded artifact verification; retain study, open questions, original branch and negative evidence.",
+  "restoration": "Add source worktree at original path from source_head/tag. Extract archive at checkout root; material files restore exact bytes. Apply recorded deleted_tracked_files only if restoring deleted working-tree paths. HEAD.patch records complete tracked difference.",
+  "status_porcelain": "?? experiments/titan_looped_flow_v1/PREREG.md\n?? experiments/titan_looped_flow_v1/PREREG_AMENDMENT_1.md\n?? experiments/titan_looped_flow_v1/PREREG_AMENDMENT_2.md\n?? experiments/titan_looped_flow_v1/REPORT.md\n?? experiments/titan_looped_flow_v1/__init__.py\n?? experiments/titan_looped_flow_v1/analysis.py\n?? experiments/titan_looped_flow_v1/analyze_readers.py\n?? experiments/titan_looped_flow_v1/audit_bank.py\n?? experiments/titan_looped_flow_v1/bank.py\n?? experiments/titan_looped_flow_v1/base_probe.py\n?? experiments/titan_looped_flow_v1/capture.py\n?? experiments/titan_looped_flow_v1/capture_final.py\n?? experiments/titan_looped_flow_v1/capture_memory.py\n?? experiments/titan_looped_flow_v1/diag_carry.py\n?? experiments/titan_looped_flow_v1/diag_toy.py\n?? experiments/titan_looped_flow_v1/features.py\n?? experiments/titan_looped_flow_v1/gate_synthetic.py\n?? experiments/titan_looped_flow_v1/gate_toy.py\n?? experiments/titan_looped_flow_v1/guard.py\n?? experiments/titan_looped_flow_v1/launch_loop.sh\n?? experiments/titan_looped_flow_v1/native.py\n?? experiments/titan_looped_flow_v1/native_data.py\n?? experiments/titan_looped_flow_v1/pathdata.py\n?? experiments/titan_looped_flow_v1/pathreader.py\n?? experiments/titan_looped_flow_v1/pathtrain.py\n?? experiments/titan_looped_flow_v1/queue_pilot.sh\n?? experiments/titan_looped_flow_v1/queue_stage_p.sh\n?? experiments/titan_looped_flow_v1/queue_stage_r.sh\n?? experiments/titan_looped_flow_v1/reader.py\n?? experiments/titan_looped_flow_v1/run_readers.py\n?? experiments/titan_looped_flow_v1/stage1.py\n?? experiments/titan_looped_flow_v1/supervise.py\n?? experiments/titan_looped_flow_v1/synthetic.py\n?? experiments/titan_looped_flow_v1/tests/fixture_worker.py\n?? experiments/titan_looped_flow_v1/toy.py\n?? experiments/titan_looped_flow_v1/train.py",
+  "diff_name_status": "",
+  "deleted_tracked_files": [],
+  "files": [
+    {
+      "path": "experiments/titan_looped_flow_v1/PREREG.md",
+      "bytes": 9337,
+      "sha256": "67b23003c43df8402fc1a0198ad136a052276169a75a4d5bc8331ce8258e7f23",
+      "category": "untracked source/evidence"
+    },
+    {
+      "path": "experiments/titan_looped_flow_v1/PREREG_AMENDMENT_1.md",
+      "bytes": 4084,
+      "sha256": "28ecd110b7aae6dd87c5275eca2d30e78ca98e0d22eb2f5ae27e42349d690e6a",
+      "category": "untracked source/evidence"
+    },
+    {
+      "path": "experiments/titan_looped_flow_v1/PREREG_AMENDMENT_2.md",
+      "bytes": 4487,
+      "sha256": "083a2728dd80249004b18969c5fb91359f35ed629c580e2337027cb0abd8337b",
+      "category": "untracked source/evidence"
+    },
+    {
+      "path": "experiments/titan_looped_flow_v1/REPORT.md",
+      "bytes": 5513,
+      "sha256": "8b73353585fcb72953be358cb626b01bb1d1b26d4a69e8696d3ae2b0dd500970",
+      "category": "untracked source/evidence"
+    },
+    {
+      "path": "experiments/titan_looped_flow_v1/__init__.py",
+      "bytes": 110,
+      "sha256": "24b98f4934e0f62e3ff69826fe62e189afbf6a8a90ef3cd34cbc93b30b51744f",
+      "category": "untracked source/evidence"
+    },
+    {
+      "path": "experiments/titan_looped_flow_v1/analysis.py",
+      "bytes": 2841,
+      "sha256": "7ab17084b7b2afe9abe6d889ca5f3485380bc2f28055c6a349460e097d6cc920",
+      "category": "untracked source/evidence"
+    },
+    {
+      "path": "experiments/titan_looped_flow_v1/analyze_readers.py",
+      "bytes": 11039,
+      "sha256": "76422a6931c4a1bb9f35afc8c87ff385ece0158b43a5912fb54a4f7b12717ce2",
+      "category": "untracked source/evidence"
+    },
+    {
+      "path": "experiments/titan_looped_flow_v1/audit_bank.py",
+      "bytes": 8765,
+      "sha256": "6cd97fa4f776ff1d998d8feebee5379f9fd66417762f68a9e5c716fa4f96c530",
+      "category": "untracked source/evidence"
+    },
+    {
+      "path": "experiments/titan_looped_flow_v1/bank.py",
+      "bytes": 13090,
+      "sha256": "54cde26c92b2d39c02f2ff1b588581e4fe017960ab630be77fd35443756a872f",
+      "category": "untracked source/evidence"
+    },
+    {
+      "path": "experiments/titan_looped_flow_v1/base_probe.py",
+      "bytes": 9644,
+      "sha256": "6025a327293ed7c269fa3357e1770ae4053f4bfa401cf1335c5209d8067b2215",
+      "category": "untracked source/evidence"
+    },
+    {
+      "path": "experiments/titan_looped_flow_v1/capture.py",
+      "bytes": 9726,
+      "sha256": "038892500cd1b9f594838cff69ede7213693d208accebcd42c966b6d85d48b21",
+      "category": "untracked source/evidence"
+    },
+    {
+      "path": "experiments/titan_looped_flow_v1/capture_final.py",
+      "bytes": 10256,
+      "sha256": "28fc6bc2f5006a8ddf397dc4ecf1b359b28a305988fa56cd8047552fe7fd9356",
+      "category": "untracked source/evidence"
+    },
+    {
+      "path": "experiments/titan_looped_flow_v1/capture_memory.py",
+      "bytes": 8505,
+      "sha256": "2b02aa5c90e5e04b2e2759305dc78c31d23df04744602615edd93655a73ce420",
+      "category": "untracked source/evidence"
+    },
+    {
+      "path": "experiments/titan_looped_flow_v1/diag_carry.py",
+      "bytes": 2516,
+      "sha256": "72b9d1cb40d3ce53f5fb25179e534c2ec5f724396b3af8cb7187231f4b5b3c13",
+      "category": "untracked source/evidence"
+    },
+    {
+      "path": "experiments/titan_looped_flow_v1/diag_toy.py",
+      "bytes": 4767,
+      "sha256": "ed0aeed5d0378bc7f6338b075f2c3f2f2620d55977f78d0665bc70206c8f08c1",
+      "category": "untracked source/evidence"
+    },
+    {
+      "path": "experiments/titan_looped_flow_v1/features.py",
+      "bytes": 2827,
+      "sha256": "f866e2d991cb5cf28352df472a60cef96d1cc8a96661dafe687bbc96d2de5d93",
+      "category": "untracked source/evidence"
+    },
+    {
+      "path": "experiments/titan_looped_flow_v1/gate_synthetic.py",
+      "bytes": 3457,
+      "sha256": "3a7111825d317e8db7c9034f0fb267917244b02106a8b67c694a97b647eae74b",
+      "category": "untracked source/evidence"
+    },
+    {
+      "path": "experiments/titan_looped_flow_v1/gate_toy.py",
+      "bytes": 9154,
+      "sha256": "e5f585a40bab9c832e01f26fd8a2cb9a60b19d943c0629e90211866309bf1a8d",
+      "category": "untracked source/evidence"
+    },
+    {
+      "path": "experiments/titan_looped_flow_v1/guard.py",
+      "bytes": 522,
+      "sha256": "95a572188f92609ad1f32467226e28981403454abdb263764926cf673d1ab698",
+      "category": "untracked source/evidence"
+    },
+    {
+      "path": "experiments/titan_looped_flow_v1/launch_loop.sh",
+      "bytes": 2705,
+      "sha256": "16d5232a6ec57d245b93644e4ad441eb623e84edc8b6985add238f4b401dcbda",
+      "category": "untracked source/evidence"
+    },
+    {
+      "path": "experiments/titan_looped_flow_v1/native.py",
+      "bytes": 4688,
+      "sha256": "1d408f3d57cc7eb14dd2c1b9a62d702a4b58d1aa2797641c0799c53fdda5eee4",
+      "category": "untracked source/evidence"
+    },
+    {
+      "path": "experiments/titan_looped_flow_v1/native_data.py",
+      "bytes": 3416,
+      "sha256": "2387a1bcbe35ab9ad600fe375f517c6b8174d8925093705b8e3e18c2c58ce79c",
+      "category": "untracked source/evidence"
+    },
+    {
+      "path": "experiments/titan_looped_flow_v1/pathdata.py",
+      "bytes": 3660,
+      "sha256": "1135ee9e345d1f367592f21d39d38c82fedda43e6848403b994b82c22f031ded",
+      "category": "untracked source/evidence"
+    },
+    {
+      "path": "experiments/titan_looped_flow_v1/pathreader.py",
+      "bytes": 9012,
+      "sha256": "d7842acbd05df751636bdec537676ec37ef4a9d638be00675a9353e48a18d221",
+      "category": "untracked source/evidence"
+    },
+    {
+      "path": "experiments/titan_looped_flow_v1/pathtrain.py",
+      "bytes": 12575,
+      "sha256": "c1a7742f2d14dbf959507352d55c64965f7a64abbed9d38691e59a99c37b0b6f",
+      "category": "untracked source/evidence"
+    },
+    {
+      "path": "experiments/titan_looped_flow_v1/queue_pilot.sh",
+      "bytes": 946,
+      "sha256": "4eea8686c1c9a2c4bb9ff116dddc8f778d59286629fe108c5a175ce583172178",
+      "category": "untracked source/evidence"
+    },
+    {
+      "path": "experiments/titan_looped_flow_v1/queue_stage_p.sh",
+      "bytes": 1891,
+      "sha256": "744eea2c5ff63cfdd82383dfea3d43beebe8f8b6c3ed10c23fe49a3983e2f52b",
+      "category": "untracked source/evidence"
+    },
+    {
+      "path": "experiments/titan_looped_flow_v1/queue_stage_r.sh",
+      "bytes": 1442,
+      "sha256": "03cddd9540ecbfd23cd9aa9d5fc5a34c02838b6e5425dc6fafbcf205159059e5",
+      "category": "untracked source/evidence"
+    },
+    {
+      "path": "experiments/titan_looped_flow_v1/reader.py",
+      "bytes": 6271,
+      "sha256": "ef7b550bb129eb6fed21be7c9e41b807b82e9ea0764a33df9c3eb46b3c3f444c",
+      "category": "untracked source/evidence"
+    },
+    {
+      "path": "experiments/titan_looped_flow_v1/run_readers.py",
+      "bytes": 5579,
+      "sha256": "746ce5f201b4601062427f3283b1412e1052f6e3d38128d500ad1af4c3d03a60",
+      "category": "untracked source/evidence"
+    },
+    {
+      "path": "experiments/titan_looped_flow_v1/stage1.py",
+      "bytes": 11088,
+      "sha256": "ae89e5c9037a330f246933a4f998945695f081b9cd7058c8403cba98b35f43c9",
+      "category": "untracked source/evidence"
+    },
+    {
+      "path": "experiments/titan_looped_flow_v1/supervise.py",
+      "bytes": 19554,
+      "sha256": "314b1662862a0ac7b1ab4ae8f323973dcb6ed3f8df09a55543e06b2ea682e51a",
+      "category": "untracked source/evidence"
+    },
+    {
+      "path": "experiments/titan_looped_flow_v1/synthetic.py",
+      "bytes": 2833,
+      "sha256": "4eff6f3d7497196976ba207632c6cd6a50d92a307394a9989e96fde717c2828a",
+      "category": "untracked source/evidence"
+    },
+    {
+      "path": "experiments/titan_looped_flow_v1/tests/fixture_worker.py",
+      "bytes": 635,
+      "sha256": "0252b38d9455b2378b494e4808e2edccfce2871eefbe9beca60774a44a4d847a",
+      "category": "untracked source/evidence"
+    },
+    {
+      "path": "experiments/titan_looped_flow_v1/toy.py",
+      "bytes": 4847,
+      "sha256": "0ac810029b54e4925563e9ab1cea053200f177171b29c54837505fba2ced364f",
+      "category": "untracked source/evidence"
+    },
+    {
+      "path": "experiments/titan_looped_flow_v1/train.py",
+      "bytes": 5694,
+      "sha256": "1cdf4991ff696a5cfab72e7ab76b3708e0c576e0e31db87a4f999824a190d136",
+      "category": "untracked source/evidence"
+    }
+  ],
+  "material_bytes": 217476,
+  "excluded_disposable_cache_files": [
+    "experiments/titan_looped_flow_v1/__pycache__/__init__.cpython-311.pyc",
+    "experiments/titan_looped_flow_v1/__pycache__/analysis.cpython-311.pyc",
+    "experiments/titan_looped_flow_v1/__pycache__/analyze_readers.cpython-311.pyc",
+    "experiments/titan_looped_flow_v1/__pycache__/bank.cpython-311.pyc",
+    "experiments/titan_looped_flow_v1/__pycache__/base_probe.cpython-311.pyc",
+    "experiments/titan_looped_flow_v1/__pycache__/capture.cpython-311.pyc",
+    "experiments/titan_looped_flow_v1/__pycache__/capture_final.cpython-311.pyc",
+    "experiments/titan_looped_flow_v1/__pycache__/capture_memory.cpython-311.pyc",
+    "experiments/titan_looped_flow_v1/__pycache__/diag_carry.cpython-311.pyc",
+    "experiments/titan_looped_flow_v1/__pycache__/diag_toy.cpython-311.pyc",
+    "experiments/titan_looped_flow_v1/__pycache__/features.cpython-311.pyc",
+    "experiments/titan_looped_flow_v1/__pycache__/gate_synthetic.cpython-311.pyc",
+    "experiments/titan_looped_flow_v1/__pycache__/gate_toy.cpython-311.pyc",
+    "experiments/titan_looped_flow_v1/__pycache__/guard.cpython-311.pyc",
+    "experiments/titan_looped_flow_v1/__pycache__/native.cpython-311.pyc",
+    "experiments/titan_looped_flow_v1/__pycache__/native_data.cpython-311.pyc",
+    "experiments/titan_looped_flow_v1/__pycache__/pathdata.cpython-311.pyc",
+    "experiments/titan_looped_flow_v1/__pycache__/pathreader.cpython-311.pyc",
+    "experiments/titan_looped_flow_v1/__pycache__/pathtrain.cpython-311.pyc",
+    "experiments/titan_looped_flow_v1/__pycache__/reader.cpython-311.pyc",
+    "experiments/titan_looped_flow_v1/__pycache__/run_readers.cpython-311.pyc",
+    "experiments/titan_looped_flow_v1/__pycache__/stage1.cpython-311.pyc",
+    "experiments/titan_looped_flow_v1/__pycache__/supervise.cpython-311.pyc",
+    "experiments/titan_looped_flow_v1/__pycache__/synthetic.cpython-311.pyc",
+    "experiments/titan_looped_flow_v1/__pycache__/toy.cpython-311.pyc",
+    "experiments/titan_looped_flow_v1/__pycache__/train.cpython-311.pyc"
+  ],
+  "patch_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "hardware_policy": {
+    "priority": "BelowNormal",
+    "compression_level": 1,
+    "workers": 1,
+    "stream_buffer_bytes": 1048576,
+    "model_or_gpu_imports": false
+  }
+}

@@ -1,0 +1,595 @@
+{
+  "schema": "rineya.retired-checkout-preservation/2",
+  "source_root": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rvs001",
+  "branch": "codex/rvs001-inference-pilot-20260929",
+  "source_head": "ac9b79ac07ad650d8815c76eb4194a180f23e8d4",
+  "remote_source_tag": "archive/2026-10-09/worktrees/rvs001-frozen-pilot",
+  "archived_utc": "2026-10-09T17:35:07.404632+00:00",
+  "retirement": "Remove dormant checkout after exact remote source tag and downloaded artifact verification; retain study, open questions, original branch and negative evidence.",
+  "restoration": "Add source worktree at original path from source_head/tag. Extract archive at checkout root; material files restore exact bytes. Apply recorded deleted_tracked_files only if restoring deleted working-tree paths. HEAD.patch records complete tracked difference.",
+  "status_porcelain": "",
+  "diff_name_status": "",
+  "deleted_tracked_files": [],
+  "files": [
+    {
+      "path": "experiments/rineya_verified_resampling_v1/runs/pilot-validation-20260929/CPU_FIXTURE_CURVES.csv",
+      "bytes": 4809,
+      "sha256": "328131e0245ea1555bd79866de4f2c47a0990bd4377df234158d5fccb4c50c82",
+      "category": "ignored scientific evidence"
+    },
+    {
+      "path": "experiments/rineya_verified_resampling_v1/runs/pilot-validation-20260929/EVIDENCE_MANIFEST.json",
+      "bytes": 11621,
+      "sha256": "07c3bd59e77833b68f98b639a11a803c3dd2b3bbc943df620caf737da6efc978",
+      "category": "ignored scientific evidence"
+    },
+    {
+      "path": "experiments/rineya_verified_resampling_v1/runs/pilot-validation-20260929/EVIDENCE_MANIFEST_FINAL.json",
+      "bytes": 12009,
+      "sha256": "6e9508bfc7ab4e6cd27edf2cfe59065b15f77d82eb6298c671a881f3f2ee08e6",
+      "category": "ignored scientific evidence"
+    },
+    {
+      "path": "experiments/rineya_verified_resampling_v1/runs/pilot-validation-20260929/VALIDATION_REPORT.html",
+      "bytes": 8801,
+      "sha256": "55bf20237b133cc3ac887cbe3fa1d7b79fb4ac2d4f239b0fb5b6c5399a9c0189",
+      "category": "ignored scientific evidence"
+    },
+    {
+      "path": "experiments/rineya_verified_resampling_v1/runs/pilot-validation-20260929/VALIDATION_SUMMARY.json",
+      "bytes": 40026,
+      "sha256": "cad502a8f6857d9c5cc4495f3d115a3904b6fc6d3437dc73ecca280f608ad9dd",
+      "category": "ignored scientific evidence"
+    },
+    {
+      "path": "experiments/rineya_verified_resampling_v1/runs/pilot-validation-20260929/evidence/ASSET_HASHES.json",
+      "bytes": 1868,
+      "sha256": "12bf0cd9ec7841563c9adf0653b2316f8a4b0879773d98ea685c793514d3edea",
+      "category": "ignored scientific evidence"
+    },
+    {
+      "path": "experiments/rineya_verified_resampling_v1/runs/pilot-validation-20260929/evidence/CPU_EXECUTION.json",
+      "bytes": 7194,
+      "sha256": "ecdb25c736f6e82a07c67581c51797e1f41bb53be2f8f22b9b6e0d84bcc31c72",
+      "category": "ignored scientific evidence"
+    },
+    {
+      "path": "experiments/rineya_verified_resampling_v1/runs/pilot-validation-20260929/evidence/CPU_TEST_RESULTS.json",
+      "bytes": 9296,
+      "sha256": "bc677e4db6fe58f07cbd534d0e06ee6b880721d762a59a73d9fe9f46ef247c86",
+      "category": "ignored scientific evidence"
+    },
+    {
+      "path": "experiments/rineya_verified_resampling_v1/runs/pilot-validation-20260929/evidence/FINAL_AUDIT.json",
+      "bytes": 863,
+      "sha256": "60bb31dad3cb0c0c0275174ac75587f3da9eb4c32ddb4af32fd8eb5d81718b4b",
+      "category": "ignored scientific evidence"
+    },
+    {
+      "path": "experiments/rineya_verified_resampling_v1/runs/pilot-validation-20260929/evidence/FREEZE_REVIEW.json",
+      "bytes": 1066,
+      "sha256": "413cbe65fea1857bc78b724509b4f93917a691ac62ba1620c349117f275e3eb5",
+      "category": "ignored scientific evidence"
+    },
+    {
+      "path": "experiments/rineya_verified_resampling_v1/runs/pilot-validation-20260929/evidence/GOAL_USAGE.json",
+      "bytes": 504,
+      "sha256": "9196d34454e3d7df6757de32fbd767f670096440b06ea9b2e5864f857f43d57d",
+      "category": "ignored scientific evidence"
+    },
+    {
+      "path": "experiments/rineya_verified_resampling_v1/runs/pilot-validation-20260929/evidence/METADATA_CLARIFICATION_COST.json",
+      "bytes": 205,
+      "sha256": "691155fe020ae5da944f7f99fd425e8f4a2d44a517b3a90b9a190219332cc21a",
+      "category": "ignored scientific evidence"
+    },
+    {
+      "path": "experiments/rineya_verified_resampling_v1/runs/pilot-validation-20260929/evidence/NATIVE_STATUS.json",
+      "bytes": 1265,
+      "sha256": "fb068b04a9ae9426a7083edd44dfb9cc5cdb3b8951d900fdfe85b4dc9dd1ed88",
+      "category": "ignored scientific evidence"
+    },
+    {
+      "path": "experiments/rineya_verified_resampling_v1/runs/pilot-validation-20260929/evidence/PRELAUNCH_ADMISSION.json",
+      "bytes": 2809,
+      "sha256": "9e5734863ddb7fcc2acba8940046eae9cd756577d689acf1e0310fe2fbea26a5",
+      "category": "ignored scientific evidence"
+    },
+    {
+      "path": "experiments/rineya_verified_resampling_v1/runs/pilot-validation-20260929/evidence/REPORT_AGGREGATION_FAILURE.json",
+      "bytes": 454,
+      "sha256": "9e86d6301c0fb00ee98903a1c14cb4d5aed307041dbe1730bc7a734b22fa63b9",
+      "category": "ignored scientific evidence"
+    },
+    {
+      "path": "experiments/rineya_verified_resampling_v1/runs/pilot-validation-20260929/evidence/SOURCE_IDENTITY.json",
+      "bytes": 1810,
+      "sha256": "58a7caac54eceea92333922dcae29582fd264145145d276f627b47530b21d91e",
+      "category": "ignored scientific evidence"
+    },
+    {
+      "path": "experiments/rineya_verified_resampling_v1/runs/pilot-validation-20260929/evidence/VALIDATION_SUMMARY_PRE_ORACLE_WORDING_CLARIFICATION.json",
+      "bytes": 39840,
+      "sha256": "eb96813e69a2c50d61fab3487b2e7b064d8c7833d6e8a0a8e494f68d0c0ec199",
+      "category": "ignored scientific evidence"
+    },
+    {
+      "path": "experiments/rineya_verified_resampling_v1/runs/pilot-validation-20260929/evidence/WORKTREE_IDENTITY.json",
+      "bytes": 5013,
+      "sha256": "98244d200d21976ad0c15e5e29b62b05e423d0e16bec5db7eb716664868ec9b2",
+      "category": "ignored scientific evidence"
+    },
+    {
+      "path": "experiments/rineya_verified_resampling_v1/runs/pilot-validation-20260929/evidence/demo_all_correct.json",
+      "bytes": 786,
+      "sha256": "f3d2301d7607c3c4bc7d92baebe0852585ec30b7034d6625f2a1ee8f30646253",
+      "category": "ignored scientific evidence"
+    },
+    {
+      "path": "experiments/rineya_verified_resampling_v1/runs/pilot-validation-20260929/evidence/demo_all_correct.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "category": "ignored scientific evidence"
+    },
+    {
+      "path": "experiments/rineya_verified_resampling_v1/runs/pilot-validation-20260929/evidence/demo_all_correct.stdout.log",
+      "bytes": 558,
+      "sha256": "bc78b2489f14859bbeacd7f2a19095d642d285fec0813df30363d1b7ff443f9c",
+      "category": "ignored scientific evidence"
+    },
+    {
+      "path": "experiments/rineya_verified_resampling_v1/runs/pilot-validation-20260929/evidence/demo_flat.json",
+      "bytes": 765,
+      "sha256": "219390ae85571d76a4da13ff16fb8a00e235bb2bc180fd45cc7bf11c8b682c4d",
+      "category": "ignored scientific evidence"
+    },
+    {
+      "path": "experiments/rineya_verified_resampling_v1/runs/pilot-validation-20260929/evidence/demo_flat.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "category": "ignored scientific evidence"
+    },
+    {
+      "path": "experiments/rineya_verified_resampling_v1/runs/pilot-validation-20260929/evidence/demo_flat.stdout.log",
+      "bytes": 558,
+      "sha256": "bc78b2489f14859bbeacd7f2a19095d642d285fec0813df30363d1b7ff443f9c",
+      "category": "ignored scientific evidence"
+    },
+    {
+      "path": "experiments/rineya_verified_resampling_v1/runs/pilot-validation-20260929/evidence/demo_minority.json",
+      "bytes": 765,
+      "sha256": "f66cdd34806de9078eb9691b92926924424f8a3a99328a5a03794cab735fa9e8",
+      "category": "ignored scientific evidence"
+    },
+    {
+      "path": "experiments/rineya_verified_resampling_v1/runs/pilot-validation-20260929/evidence/demo_minority.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "category": "ignored scientific evidence"
+    },
+    {
+      "path": "experiments/rineya_verified_resampling_v1/runs/pilot-validation-20260929/evidence/demo_minority.stdout.log",
+      "bytes": 541,
+      "sha256": "33689154f95af18ca48755084e154335d9ca6ee869771a13d9835cb6fa3bb436",
+      "category": "ignored scientific evidence"
+    },
+    {
+      "path": "experiments/rineya_verified_resampling_v1/runs/pilot-validation-20260929/evidence/demo_vote_gain.json",
+      "bytes": 780,
+      "sha256": "e213e609af6c2c6b12f2164695492ceead794298c495c9a8a99848880bf17821",
+      "category": "ignored scientific evidence"
+    },
+    {
+      "path": "experiments/rineya_verified_resampling_v1/runs/pilot-validation-20260929/evidence/demo_vote_gain.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "category": "ignored scientific evidence"
+    },
+    {
+      "path": "experiments/rineya_verified_resampling_v1/runs/pilot-validation-20260929/evidence/demo_vote_gain.stdout.log",
+      "bytes": 541,
+      "sha256": "33689154f95af18ca48755084e154335d9ca6ee869771a13d9835cb6fa3bb436",
+      "category": "ignored scientific evidence"
+    },
+    {
+      "path": "experiments/rineya_verified_resampling_v1/runs/pilot-validation-20260929/evidence/doctor.json",
+      "bytes": 537,
+      "sha256": "b3b0844fdabe39c48fbac11616ff1b45bd1c0b36a4221f48d770500ef118721a",
+      "category": "ignored scientific evidence"
+    },
+    {
+      "path": "experiments/rineya_verified_resampling_v1/runs/pilot-validation-20260929/evidence/doctor.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "category": "ignored scientific evidence"
+    },
+    {
+      "path": "experiments/rineya_verified_resampling_v1/runs/pilot-validation-20260929/evidence/doctor.stdout.log",
+      "bytes": 384,
+      "sha256": "7edc5fe4246aca39293aa7e67f39eba3edd7199e5320a7944584a97b01d4e9d6",
+      "category": "ignored scientific evidence"
+    },
+    {
+      "path": "experiments/rineya_verified_resampling_v1/runs/pilot-validation-20260929/evidence/finalize_validation.py",
+      "bytes": 19242,
+      "sha256": "ff295c01b870d49b6714a172a205541af0903e2a93e288349b7b856ff54e7df7",
+      "category": "ignored scientific evidence"
+    },
+    {
+      "path": "experiments/rineya_verified_resampling_v1/runs/pilot-validation-20260929/evidence/finalize_validation_attempt1.py",
+      "bytes": 19242,
+      "sha256": "ff295c01b870d49b6714a172a205541af0903e2a93e288349b7b856ff54e7df7",
+      "category": "ignored scientific evidence"
+    },
+    {
+      "path": "experiments/rineya_verified_resampling_v1/runs/pilot-validation-20260929/evidence/finish_validation.py",
+      "bytes": 2140,
+      "sha256": "d088d0bfc4a0ab3a98584129c40081c05ad04994f3830ed3da5268ca602857d1",
+      "category": "ignored scientific evidence"
+    },
+    {
+      "path": "experiments/rineya_verified_resampling_v1/runs/pilot-validation-20260929/evidence/freeze_dev.json",
+      "bytes": 858,
+      "sha256": "d7e5bbc31ae5bdf6c42f89784cb45f9573636b4593275f1d64d632ffc13e3d1e",
+      "category": "ignored scientific evidence"
+    },
+    {
+      "path": "experiments/rineya_verified_resampling_v1/runs/pilot-validation-20260929/evidence/freeze_dev.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "category": "ignored scientific evidence"
+    },
+    {
+      "path": "experiments/rineya_verified_resampling_v1/runs/pilot-validation-20260929/evidence/freeze_dev.stdout.log",
+      "bytes": 452,
+      "sha256": "0818f7e3689d2a2af23a69fb1640d050fc1402d50edf27ccdf340a300db0aa11",
+      "category": "ignored scientific evidence"
+    },
+    {
+      "path": "experiments/rineya_verified_resampling_v1/runs/pilot-validation-20260929/evidence/prepare_dev.json",
+      "bytes": 779,
+      "sha256": "253b5c57688651d9e9d46e55b0b7fb9e8d53b363aefbdeaf2afa584bc4a1b62e",
+      "category": "ignored scientific evidence"
+    },
+    {
+      "path": "experiments/rineya_verified_resampling_v1/runs/pilot-validation-20260929/evidence/prepare_dev.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "category": "ignored scientific evidence"
+    },
+    {
+      "path": "experiments/rineya_verified_resampling_v1/runs/pilot-validation-20260929/evidence/prepare_dev.stdout.log",
+      "bytes": 1038,
+      "sha256": "c7f575d9aea1dc865221e7c0f28dc2349d6c76f0de535ceadce7a44c95ddeefd",
+      "category": "ignored scientific evidence"
+    },
+    {
+      "path": "experiments/rineya_verified_resampling_v1/runs/pilot-validation-20260929/evidence/run_cpu_validation.py",
+      "bytes": 3956,
+      "sha256": "6041229f203b6caa34d68ee90ad4b070de5843f36191ef119c370e8693b46605",
+      "category": "ignored scientific evidence"
+    },
+    {
+      "path": "experiments/rineya_verified_resampling_v1/runs/pilot-validation-20260929/evidence/unittest.json",
+      "bytes": 586,
+      "sha256": "6f3270b0b5d20e239ee407f98362aee899a6488484c8ed2a4b3d39e3f19ea79f",
+      "category": "ignored scientific evidence"
+    },
+    {
+      "path": "experiments/rineya_verified_resampling_v1/runs/pilot-validation-20260929/evidence/unittest.stderr.log",
+      "bytes": 7758,
+      "sha256": "9179dc85038be377c345c9fb3f13d66e9b0d022f94c7812fb6a3beeb11c421b3",
+      "category": "ignored scientific evidence"
+    },
+    {
+      "path": "experiments/rineya_verified_resampling_v1/runs/pilot-validation-20260929/evidence/unittest.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "category": "ignored scientific evidence"
+    },
+    {
+      "path": "experiments/rineya_verified_resampling_v1/runs/pilot-validation-20260929/fixture_all_correct/data/manifest.json",
+      "bytes": 418,
+      "sha256": "2be244d67696f76127341ec47c996b1b5c93ec1b32b892a8687b31c9cda7b384",
+      "category": "ignored scientific evidence"
+    },
+    {
+      "path": "experiments/rineya_verified_resampling_v1/runs/pilot-validation-20260929/fixture_all_correct/data/oracle.private.jsonl",
+      "bytes": 43570,
+      "sha256": "574e67501ea0cbd05c9a5128b3a572fb56472d85cc099dc37eb4a1cc16b4b995",
+      "category": "ignored scientific evidence"
+    },
+    {
+      "path": "experiments/rineya_verified_resampling_v1/runs/pilot-validation-20260929/fixture_all_correct/data/public.jsonl",
+      "bytes": 19378,
+      "sha256": "d821adb7a77b04f9a50aaa18e8ad6818c793aa2c237a3270a62d18c8ada583a2",
+      "category": "ignored scientific evidence"
+    },
+    {
+      "path": "experiments/rineya_verified_resampling_v1/runs/pilot-validation-20260929/fixture_all_correct/report/REPORT.md",
+      "bytes": 1149,
+      "sha256": "ec0378ccfed9a1bf0d84e901e4bc02d0eb8ca49470bcd5ca3f5a846373cc5d92",
+      "category": "ignored scientific evidence"
+    },
+    {
+      "path": "experiments/rineya_verified_resampling_v1/runs/pilot-validation-20260929/fixture_all_correct/report/cases.private.jsonl",
+      "bytes": 221000,
+      "sha256": "0c4853694705fe2d278e976311bf7dac063bfbc1bee7ca17fcc7690ddc536aa0",
+      "category": "ignored scientific evidence"
+    },
+    {
+      "path": "experiments/rineya_verified_resampling_v1/runs/pilot-validation-20260929/fixture_all_correct/report/curves.csv",
+      "bytes": 1321,
+      "sha256": "1adb4cb495df63f5db440f61c050cec93fe52f1114d42de917991e530eae9ac5",
+      "category": "ignored scientific evidence"
+    },
+    {
+      "path": "experiments/rineya_verified_resampling_v1/runs/pilot-validation-20260929/fixture_all_correct/report/report.json",
+      "bytes": 5552,
+      "sha256": "e14d1c0f2dd2d7d3234a40a4e396df443e2bb441862e6d1b5cb7d26e07c27ccc",
+      "category": "ignored scientific evidence"
+    },
+    {
+      "path": "experiments/rineya_verified_resampling_v1/runs/pilot-validation-20260929/fixture_all_correct/run/events.jsonl",
+      "bytes": 2380554,
+      "sha256": "efcb81e20f3d7aa2466f6b2dbbcad398adaf7474765c0925a2dee38df9e83d23",
+      "category": "ignored scientific evidence"
+    },
+    {
+      "path": "experiments/rineya_verified_resampling_v1/runs/pilot-validation-20260929/fixture_all_correct/run/run.json",
+      "bytes": 2118,
+      "sha256": "4e209086d22ba1cea376a433c0dc6067a6cf2c772e68e1f57769dc5e82214c24",
+      "category": "ignored scientific evidence"
+    },
+    {
+      "path": "experiments/rineya_verified_resampling_v1/runs/pilot-validation-20260929/fixture_all_correct/study/public.jsonl",
+      "bytes": 19378,
+      "sha256": "d821adb7a77b04f9a50aaa18e8ad6818c793aa2c237a3270a62d18c8ada583a2",
+      "category": "ignored scientific evidence"
+    },
+    {
+      "path": "experiments/rineya_verified_resampling_v1/runs/pilot-validation-20260929/fixture_all_correct/study/study.json",
+      "bytes": 1202,
+      "sha256": "f09350e833e4ecd65fd8af925036a52fd0236b02dd4783dd3e9fe00d1d20b699",
+      "category": "ignored scientific evidence"
+    },
+    {
+      "path": "experiments/rineya_verified_resampling_v1/runs/pilot-validation-20260929/fixture_flat/data/manifest.json",
+      "bytes": 418,
+      "sha256": "2be244d67696f76127341ec47c996b1b5c93ec1b32b892a8687b31c9cda7b384",
+      "category": "ignored scientific evidence"
+    },
+    {
+      "path": "experiments/rineya_verified_resampling_v1/runs/pilot-validation-20260929/fixture_flat/data/oracle.private.jsonl",
+      "bytes": 43570,
+      "sha256": "574e67501ea0cbd05c9a5128b3a572fb56472d85cc099dc37eb4a1cc16b4b995",
+      "category": "ignored scientific evidence"
+    },
+    {
+      "path": "experiments/rineya_verified_resampling_v1/runs/pilot-validation-20260929/fixture_flat/data/public.jsonl",
+      "bytes": 19378,
+      "sha256": "d821adb7a77b04f9a50aaa18e8ad6818c793aa2c237a3270a62d18c8ada583a2",
+      "category": "ignored scientific evidence"
+    },
+    {
+      "path": "experiments/rineya_verified_resampling_v1/runs/pilot-validation-20260929/fixture_flat/report/REPORT.md",
+      "bytes": 1149,
+      "sha256": "2676521dc8cef6d3e2a263d450e60bec85c8f26aa57f68b76dba7a88ed3ec738",
+      "category": "ignored scientific evidence"
+    },
+    {
+      "path": "experiments/rineya_verified_resampling_v1/runs/pilot-validation-20260929/fixture_flat/report/cases.private.jsonl",
+      "bytes": 221000,
+      "sha256": "6bba9dd80076551e6c444330977d17e085e21bf8afde816ed2fda5ed3e33c49c",
+      "category": "ignored scientific evidence"
+    },
+    {
+      "path": "experiments/rineya_verified_resampling_v1/runs/pilot-validation-20260929/fixture_flat/report/curves.csv",
+      "bytes": 1277,
+      "sha256": "2a37490d3a010575c6825a3430e73e7b9fe462c63cd59a4abc0f06d1ad84429d",
+      "category": "ignored scientific evidence"
+    },
+    {
+      "path": "experiments/rineya_verified_resampling_v1/runs/pilot-validation-20260929/fixture_flat/report/report.json",
+      "bytes": 5533,
+      "sha256": "e86aca7b4ff3fa240f387b68e595f16a5d1e23710cf96315e6c9c2657139ce2c",
+      "category": "ignored scientific evidence"
+    },
+    {
+      "path": "experiments/rineya_verified_resampling_v1/runs/pilot-validation-20260929/fixture_flat/run/events.jsonl",
+      "bytes": 2380010,
+      "sha256": "21d3e352d6d45636434bddd170b0ef581a8ef97b1cb3fff6899959d50223efb4",
+      "category": "ignored scientific evidence"
+    },
+    {
+      "path": "experiments/rineya_verified_resampling_v1/runs/pilot-validation-20260929/fixture_flat/run/run.json",
+      "bytes": 2111,
+      "sha256": "3d6aa5b321eab009c41c55471c427c8cfa24ab5068479d4e2aa9de2b2f5e91ab",
+      "category": "ignored scientific evidence"
+    },
+    {
+      "path": "experiments/rineya_verified_resampling_v1/runs/pilot-validation-20260929/fixture_flat/study/public.jsonl",
+      "bytes": 19378,
+      "sha256": "d821adb7a77b04f9a50aaa18e8ad6818c793aa2c237a3270a62d18c8ada583a2",
+      "category": "ignored scientific evidence"
+    },
+    {
+      "path": "experiments/rineya_verified_resampling_v1/runs/pilot-validation-20260929/fixture_flat/study/study.json",
+      "bytes": 1202,
+      "sha256": "f09350e833e4ecd65fd8af925036a52fd0236b02dd4783dd3e9fe00d1d20b699",
+      "category": "ignored scientific evidence"
+    },
+    {
+      "path": "experiments/rineya_verified_resampling_v1/runs/pilot-validation-20260929/fixture_minority/data/manifest.json",
+      "bytes": 418,
+      "sha256": "2be244d67696f76127341ec47c996b1b5c93ec1b32b892a8687b31c9cda7b384",
+      "category": "ignored scientific evidence"
+    },
+    {
+      "path": "experiments/rineya_verified_resampling_v1/runs/pilot-validation-20260929/fixture_minority/data/oracle.private.jsonl",
+      "bytes": 43570,
+      "sha256": "574e67501ea0cbd05c9a5128b3a572fb56472d85cc099dc37eb4a1cc16b4b995",
+      "category": "ignored scientific evidence"
+    },
+    {
+      "path": "experiments/rineya_verified_resampling_v1/runs/pilot-validation-20260929/fixture_minority/data/public.jsonl",
+      "bytes": 19378,
+      "sha256": "d821adb7a77b04f9a50aaa18e8ad6818c793aa2c237a3270a62d18c8ada583a2",
+      "category": "ignored scientific evidence"
+    },
+    {
+      "path": "experiments/rineya_verified_resampling_v1/runs/pilot-validation-20260929/fixture_minority/report/REPORT.md",
+      "bytes": 1132,
+      "sha256": "a542d6abdabf1ba0a1428116cd73ef8e9807bc0fd58bd82539335339a5410ebf",
+      "category": "ignored scientific evidence"
+    },
+    {
+      "path": "experiments/rineya_verified_resampling_v1/runs/pilot-validation-20260929/fixture_minority/report/cases.private.jsonl",
+      "bytes": 225661,
+      "sha256": "153ed1eb57d917c772c57340a346da176fdc27f4ac33f99ebb272d43750096e5",
+      "category": "ignored scientific evidence"
+    },
+    {
+      "path": "experiments/rineya_verified_resampling_v1/runs/pilot-validation-20260929/fixture_minority/report/curves.csv",
+      "bytes": 1738,
+      "sha256": "e67a9e1d16aa7470598a854f097b10c6df58f7f308f00e29af0c62b6ebb8d73d",
+      "category": "ignored scientific evidence"
+    },
+    {
+      "path": "experiments/rineya_verified_resampling_v1/runs/pilot-validation-20260929/fixture_minority/report/report.json",
+      "bytes": 5948,
+      "sha256": "2841960b9b342383ed71c8d8496f700aa60a8e8c30501d32457cb945d8927f59",
+      "category": "ignored scientific evidence"
+    },
+    {
+      "path": "experiments/rineya_verified_resampling_v1/runs/pilot-validation-20260929/fixture_minority/run/events.jsonl",
+      "bytes": 2380111,
+      "sha256": "d41c719bb6b8a21d989eef708fe9cb55aa72d285586a2f3ada7f01d9250bef18",
+      "category": "ignored scientific evidence"
+    },
+    {
+      "path": "experiments/rineya_verified_resampling_v1/runs/pilot-validation-20260929/fixture_minority/run/run.json",
+      "bytes": 2115,
+      "sha256": "8c6e1f5c6643cd39e618c7b61b052cf4daa1718416d2e9f62708260b8b6251b2",
+      "category": "ignored scientific evidence"
+    },
+    {
+      "path": "experiments/rineya_verified_resampling_v1/runs/pilot-validation-20260929/fixture_minority/study/public.jsonl",
+      "bytes": 19378,
+      "sha256": "d821adb7a77b04f9a50aaa18e8ad6818c793aa2c237a3270a62d18c8ada583a2",
+      "category": "ignored scientific evidence"
+    },
+    {
+      "path": "experiments/rineya_verified_resampling_v1/runs/pilot-validation-20260929/fixture_minority/study/study.json",
+      "bytes": 1202,
+      "sha256": "f09350e833e4ecd65fd8af925036a52fd0236b02dd4783dd3e9fe00d1d20b699",
+      "category": "ignored scientific evidence"
+    },
+    {
+      "path": "experiments/rineya_verified_resampling_v1/runs/pilot-validation-20260929/fixture_vote_gain/data/manifest.json",
+      "bytes": 418,
+      "sha256": "2be244d67696f76127341ec47c996b1b5c93ec1b32b892a8687b31c9cda7b384",
+      "category": "ignored scientific evidence"
+    },
+    {
+      "path": "experiments/rineya_verified_resampling_v1/runs/pilot-validation-20260929/fixture_vote_gain/data/oracle.private.jsonl",
+      "bytes": 43570,
+      "sha256": "574e67501ea0cbd05c9a5128b3a572fb56472d85cc099dc37eb4a1cc16b4b995",
+      "category": "ignored scientific evidence"
+    },
+    {
+      "path": "experiments/rineya_verified_resampling_v1/runs/pilot-validation-20260929/fixture_vote_gain/data/public.jsonl",
+      "bytes": 19378,
+      "sha256": "d821adb7a77b04f9a50aaa18e8ad6818c793aa2c237a3270a62d18c8ada583a2",
+      "category": "ignored scientific evidence"
+    },
+    {
+      "path": "experiments/rineya_verified_resampling_v1/runs/pilot-validation-20260929/fixture_vote_gain/report/REPORT.md",
+      "bytes": 1132,
+      "sha256": "0fa19b19168edd119fc19253d5cd98d8bcda92510038b24fa5d808e39f275ad2",
+      "category": "ignored scientific evidence"
+    },
+    {
+      "path": "experiments/rineya_verified_resampling_v1/runs/pilot-validation-20260929/fixture_vote_gain/report/cases.private.jsonl",
+      "bytes": 223005,
+      "sha256": "f7e4c7862181acdd94ed5b8146187d5c5991669f7daecba786a0e3641d37469a",
+      "category": "ignored scientific evidence"
+    },
+    {
+      "path": "experiments/rineya_verified_resampling_v1/runs/pilot-validation-20260929/fixture_vote_gain/report/curves.csv",
+      "bytes": 1693,
+      "sha256": "b20653d2ff9bc0eed37573a619aefcedd1c9e75ed55c47a6dcdfbbe5eb0e80c8",
+      "category": "ignored scientific evidence"
+    },
+    {
+      "path": "experiments/rineya_verified_resampling_v1/runs/pilot-validation-20260929/fixture_vote_gain/report/report.json",
+      "bytes": 5903,
+      "sha256": "e808fa45a6b1ceb4ceb7b2eef47517eb5fbe3d08d3e0334537b40a948ae9ec67",
+      "category": "ignored scientific evidence"
+    },
+    {
+      "path": "experiments/rineya_verified_resampling_v1/runs/pilot-validation-20260929/fixture_vote_gain/run/events.jsonl",
+      "bytes": 2380421,
+      "sha256": "a3c3cd82ec6eb82a339d250af913c0471d32845c867170308364255a48f65316",
+      "category": "ignored scientific evidence"
+    },
+    {
+      "path": "experiments/rineya_verified_resampling_v1/runs/pilot-validation-20260929/fixture_vote_gain/run/run.json",
+      "bytes": 2116,
+      "sha256": "58a0463b49fc39b628a20c07aef64b36baae2bcd6539eaaf234cf518bd6821d1",
+      "category": "ignored scientific evidence"
+    },
+    {
+      "path": "experiments/rineya_verified_resampling_v1/runs/pilot-validation-20260929/fixture_vote_gain/study/public.jsonl",
+      "bytes": 19378,
+      "sha256": "d821adb7a77b04f9a50aaa18e8ad6818c793aa2c237a3270a62d18c8ada583a2",
+      "category": "ignored scientific evidence"
+    },
+    {
+      "path": "experiments/rineya_verified_resampling_v1/runs/pilot-validation-20260929/fixture_vote_gain/study/study.json",
+      "bytes": 1202,
+      "sha256": "f09350e833e4ecd65fd8af925036a52fd0236b02dd4783dd3e9fe00d1d20b699",
+      "category": "ignored scientific evidence"
+    },
+    {
+      "path": "experiments/rineya_verified_resampling_v1/runs/pilot-validation-20260929/titan/data/manifest.json",
+      "bytes": 869,
+      "sha256": "686cb27934e88890124e30241f54fb445e1b15ad2e5d51d4332503a967754311",
+      "category": "ignored scientific evidence"
+    },
+    {
+      "path": "experiments/rineya_verified_resampling_v1/runs/pilot-validation-20260929/titan/data/oracle.private.jsonl",
+      "bytes": 52756,
+      "sha256": "ddb0a45c5b2a3d14530d26d81837734ddc7ece91cad02fdd94abc9aa95aecb24",
+      "category": "ignored scientific evidence"
+    },
+    {
+      "path": "experiments/rineya_verified_resampling_v1/runs/pilot-validation-20260929/titan/data/public.jsonl",
+      "bytes": 54108,
+      "sha256": "04d73d257383679b9f8ec1a7cb36c7fb4e80033502ca633ad803e24b572576ff",
+      "category": "ignored scientific evidence"
+    },
+    {
+      "path": "experiments/rineya_verified_resampling_v1/runs/pilot-validation-20260929/titan/study/public.jsonl",
+      "bytes": 54108,
+      "sha256": "04d73d257383679b9f8ec1a7cb36c7fb4e80033502ca633ad803e24b572576ff",
+      "category": "ignored scientific evidence"
+    },
+    {
+      "path": "experiments/rineya_verified_resampling_v1/runs/pilot-validation-20260929/titan/study/study.json",
+      "bytes": 1653,
+      "sha256": "266b0cad9ec8a6237c37281ce6d11f6c74ea297c3afa115d8d4b5e9a864813c3",
+      "category": "ignored scientific evidence"
+    }
+  ],
+  "material_bytes": 11164746,
+  "excluded_disposable_cache_files": [],
+  "patch_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "hardware_policy": {
+    "priority": "BelowNormal",
+    "compression_level": 1,
+    "workers": 1,
+    "stream_buffer_bytes": 1048576,
+    "model_or_gpu_imports": false
+  }
+}

@@ -1,0 +1,427 @@
+{
+  "audit_date": "2026-10-09",
+  "phase": "Additional thorough cleanup reassessment",
+  "resource_scope": "Read-only metadata, Git status/refs, small source hashes, cached 51-KiB audit and bounded executable-source grep across 17 retained active Git checkouts. No model imports, training, tensor loads, test suites, recursive model/dataset scans or source mutations.",
+  "recommendation": "All four can be retired as local checkouts after preservation. Small-vocab additionally requires one live parser path handoff. Retain active/blocked/paused owner studies and external research evidence.",
+  "dependency_scan_count": 17,
+  "executable_dependency": {
+    "consumer": "C:/Users/clclc/BusinessProject/ChatBubble-rineya-pruning-retention-confirm-v1/research/rineya_quality_patterns_v1/recompute_behavior.py",
+    "line": 88,
+    "function": "historical_typed_parser",
+    "current_target": "C:/Users/clclc/BusinessProject/ChatBubble-small-vocab-depth/experiments/architecture_benchmark_001/retention.py",
+    "replacement_target": "C:/Users/clclc/BusinessProject/ChatBubble-ced-native-loader-qualification/experiments/architecture_benchmark_001/retention.py",
+    "bytes": 33056,
+    "required_sha256": "c52b6a48cb811e3c272793a66765e82152fe170e8307eea153c3b1b6c5c58322",
+    "candidate_replacement_bytes_verified": true,
+    "action": "Single executable path rebind in active consumer; unchanged byte hash and grammar. No model imports, experiment rerun or historical receipt alteration required.",
+    "source_identity_assessment": {
+      "path_is": "Local file-location lookup; content identity independently enforced by SHA assertion",
+      "original_script_bytes": 18213,
+      "original_script_sha256": "5e07d30e47e5af8387ec17bdc87d57db12eb0e17201a145476ddb7c52f633228",
+      "old_behavior_recount_sha256": "5f4565ca21fdcc7efb37cb1292e75e024b2514d6b1f15c31a06c8f3834e6134f",
+      "historical_receipt_capture": "behavior_recount.json evidence_files_sha256 records original script hash and old parser path. It must stay unchanged; archive original script bytes before relocation.",
+      "current_frozen_protocol_check": "Bounded search of nearby pruning/pilot/source-freeze/prereg files finds no required original recount-script hash/location binding. Recount script is retrospective offline evidence tooling outside frozen native pilot package. Neighboring annotation recount already uses CED parser with same SHA.",
+      "scientific_change": "None: same parser bytes, scorer, cohorts, thresholds, selection, expected results and old receipts",
+      "prospective_metadata_change": "Future recount ledger naturally reports a new script hash and parser location. Do not overwrite/re-sign old receipt or claim historical byte-identical output JSON.",
+      "exact_proposed_line": "    path = Path(\"C:/Users/clclc/BusinessProject/ChatBubble-ced-native-loader-qualification/experiments/architecture_benchmark_001/retention.py\")",
+      "unchanged_guard": "    assert sha(path) == \"c52b6a48cb811e3c272793a66765e82152fe170e8307eea153c3b1b6c5c58322\"",
+      "preservation_before_edit": "Archive exact current recompute_behavior.py plus its SHA in phase2 audit/release; retain behavior_recount.json/behavior_claims.json and scientific prereg/receipts unchanged; add dated path-migration receipt",
+      "sparse_fallback": "If current owner prefers preserving original helper file identity in place, keep a sparse original-path small-vocab checkout containing parser and audit-required contract instead of deleting; this is unnecessary if the documented same-byte path migration is accepted."
+    }
+  },
+  "other_path_hits": "Inherited, completed September RRP launch receipts and historical spent ABST/HLCC launch entrypoints. Preserve unchanged via exact tags; future recreation requires restoring the checkout from the archived ref.",
+  "candidates": [
+    {
+      "name": "ChatBubble-rineya-ppt-centralized-reasoning-v1",
+      "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-ppt-centralized-reasoning-v1",
+      "branch": "research/rineya-ppt-centralized-reasoning-v1",
+      "head": "ff7bdac1fc8eed5c3b00de5edca2082f44df15bd",
+      "scientific_state": "ACTIVE_COMPLEMENTARY_CPU_SAMPLER_NATIVE_UNQUALIFIED",
+      "previous_hold_reason": "Enduring owner-directed track with no automatic sunset. Cleanup is not evidence of scientific retirement.",
+      "new_authorization_interpretation": "Owner now explicitly authorizes additional thorough checkout cleanup. Open question or old status ACTIVE_NOT_COMPLETE does not by itself require a checkout; exact source/evidence retention and current dependency/owner state govern.",
+      "recommendation": "RETIRE_CHECKOUT_AFTER_REMOTE_TAG_AND_SCIENTIFIC_SNAPSHOT_RELEASE",
+      "conditions": [
+        "Verify exact remote source tag resolves to current HEAD",
+        "Keep research branch and hypotheses remotely",
+        "Retain external owner records/checkpoints in place",
+        "Recheck clean/dirt bytes and live worker ownership immediately before deletion",
+        "Publish exact tracked modifications and untracked files in hashed scientific snapshot; tag alone is insufficient"
+      ],
+      "dirty_count": 7,
+      "overlay_preservation_files": [
+        {
+          "path": "experiments/rineya_ppt_centralized_reasoning_v1/README.md",
+          "status": " M",
+          "bytes": 2459,
+          "sha256": "329bd82dfc65da1aad1772e4f61d0a97aa51cf82fd165707156d746d7301fe49",
+          "preserve": "Scientific source/document/receipt; include exact bytes in phase2 snapshot release"
+        },
+        {
+          "path": "experiments/rineya_ppt_centralized_reasoning_v1/STATUS.md",
+          "status": " M",
+          "bytes": 3420,
+          "sha256": "0e7cc760b8c4a427cf23716f74b79228de447cba963bea5355d55961c6090f4f",
+          "preserve": "Scientific source/document/receipt; include exact bytes in phase2 snapshot release"
+        },
+        {
+          "path": "experiments/rineya_ppt_centralized_reasoning_v1/evidence/CPU_SAMPLER_2026-10-03.md",
+          "status": "??",
+          "bytes": 8405,
+          "sha256": "a25d36dada457d2ff70f8c828dd6f7877f0c26a90601399d65e71f8660b53eb4",
+          "preserve": "Scientific source/document/receipt; include exact bytes in phase2 snapshot release"
+        },
+        {
+          "path": "experiments/rineya_ppt_centralized_reasoning_v1/evidence/cpu_sampler_2026-10-03.json",
+          "status": "??",
+          "bytes": 6350,
+          "sha256": "a0e2416fe644de1e0b5dd6d294efa5b430afd9ba22a4777f905609f7b177bc60",
+          "preserve": "Scientific source/document/receipt; include exact bytes in phase2 snapshot release"
+        },
+        {
+          "path": "experiments/rineya_ppt_centralized_reasoning_v1/qualify_cpu.py",
+          "status": "??",
+          "bytes": 7009,
+          "sha256": "5b5642c669740f31b16a0b9e375b2d4e9b825c47f3d4935dcb5e5eef0af3dba3",
+          "preserve": "Scientific source/document/receipt; include exact bytes in phase2 snapshot release"
+        },
+        {
+          "path": "experiments/rineya_ppt_centralized_reasoning_v1/tests/test_tiny_sampler.py",
+          "status": "??",
+          "bytes": 21522,
+          "sha256": "e216cbbf3885bf39aaafdd0c2d9a53d0791fb2d029b2ed50f899d9919fb0532f",
+          "preserve": "Scientific source/document/receipt; include exact bytes in phase2 snapshot release"
+        },
+        {
+          "path": "experiments/rineya_ppt_centralized_reasoning_v1/tiny_sampler.py",
+          "status": "??",
+          "bytes": 10308,
+          "sha256": "fca3596cdc068cc6f7e99f273473a7a511ff0842bea70299b6e93462b6d21e07",
+          "preserve": "Scientific source/document/receipt; include exact bytes in phase2 snapshot release"
+        }
+      ],
+      "overlay_bytes": 59473,
+      "ignored_files": [
+        {
+          "path": "experiments/rineya_ppt_centralized_reasoning_v1/__pycache__/tiny_sampler.cpython-311.pyc",
+          "size_bytes": 21796,
+          "mtime": "2026-10-03T00:22:27.6846012-05:00"
+        },
+        {
+          "path": "experiments/rineya_ppt_centralized_reasoning_v1/tests/__pycache__/test_tiny_sampler.cpython-311.pyc",
+          "size_bytes": 46272,
+          "mtime": "2026-10-03T00:22:41.4616557-05:00"
+        }
+      ],
+      "ignored_disposition": "Only disposable Python bytecode/pytest cache; no scientific tensor, dataset, native receipt or environment payload",
+      "exact_local_tags": [],
+      "remote_exact_refs": [
+        "origin/research/rineya-ppt-centralized-reasoning-v1"
+      ],
+      "source_release_should_include": [
+        "AGENTS.md",
+        "RINEYA_PPT_CENTRALIZED_REASONING.md",
+        "experiments/rineya_ppt_centralized_reasoning_v1/AGENTS.md",
+        "experiments/rineya_ppt_centralized_reasoning_v1/README.md",
+        "experiments/rineya_ppt_centralized_reasoning_v1/STATUS.md"
+      ],
+      "external_preservation_paths": [],
+      "external_disposition": "Retain in place; these are independent owner records/checkpoints/environments, not cleanup targets",
+      "native_model_release_allowed": false
+    },
+    {
+      "name": "ChatBubble-small-vocab-depth",
+      "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-small-vocab-depth",
+      "branch": "research/rineya-small-vocab-depth-distill-v1",
+      "head": "52430ac6c5b74f1bad5f06e9227af9959595ff0f",
+      "scientific_state": "HISTORICAL_RESULTS_WITH_ACTIVE_UNPUBLISHED_FOLLOWUP",
+      "previous_hold_reason": "Older registered studies have results; new LCACC follow-up remains prepared and unpreserved.",
+      "new_authorization_interpretation": "Owner now explicitly authorizes additional thorough checkout cleanup. Open question or old status ACTIVE_NOT_COMPLETE does not by itself require a checkout; exact source/evidence retention and current dependency/owner state govern.",
+      "recommendation": "CONDITIONAL_RETIRE_AFTER_SNAPSHOT_AND_SINGLE_DEPENDENCY_REBIND",
+      "conditions": [
+        "Verify exact remote source tag resolves to current HEAD",
+        "Keep research branch and hypotheses remotely",
+        "Retain external owner records/checkpoints in place",
+        "Recheck clean/dirt bytes and live worker ownership immediately before deletion",
+        "Publish exact tracked modifications and untracked files in hashed scientific snapshot; tag alone is insufficient",
+        "Rebind pruning quality-pattern recount parser path to kept CED exact-byte retention.py with unchanged asserted SHA; record this handoff",
+        "Archive original pruning recount script bytes before one-line location change; preserve all historical JSON claims/receipts unchanged"
+      ],
+      "dirty_count": 17,
+      "overlay_preservation_files": [
+        {
+          "path": "research/rineya_small_vocab_depth_v1/LCACC001_PREREG.md",
+          "status": "??",
+          "bytes": 48949,
+          "sha256": "55be9990c18d025e91c4c20df8d099c65f7dd6443651125f6ac38a5b4fcc49f2",
+          "preserve": "Scientific source/document/receipt; include exact bytes in phase2 snapshot release"
+        },
+        {
+          "path": "research/rineya_small_vocab_depth_v1/build_lcacc_panel.py",
+          "status": "??",
+          "bytes": 53403,
+          "sha256": "12c7c8ec05c7a3efee0cc752660fd015637f5d51fd8c8aecd83892f65fa240d7",
+          "preserve": "Scientific source/document/receipt; include exact bytes in phase2 snapshot release"
+        },
+        {
+          "path": "research/rineya_small_vocab_depth_v1/design/LCACC_CONSTANTS.json",
+          "status": "??",
+          "bytes": 2648,
+          "sha256": "1c197d15d13691b955e3a69f1c75440f772058ef2f0e9e8679a27ba65b481020",
+          "preserve": "Scientific source/document/receipt; include exact bytes in phase2 snapshot release"
+        },
+        {
+          "path": "research/rineya_small_vocab_depth_v1/design/LCACC_NULL_SIM.json",
+          "status": "??",
+          "bytes": 82320,
+          "sha256": "86b91bccf11b4c5e6b50bdb1f6eec6fd0d313c980f82aeb62b3e1a131e9c5d74",
+          "preserve": "Scientific source/document/receipt; include exact bytes in phase2 snapshot release"
+        },
+        {
+          "path": "research/rineya_small_vocab_depth_v1/design/freeze_lcacc_constants.py",
+          "status": "??",
+          "bytes": 3404,
+          "sha256": "715eab5fa25c663c84865a05f76d775c4d77c9fd8412ac090d46deb9014536de",
+          "preserve": "Scientific source/document/receipt; include exact bytes in phase2 snapshot release"
+        },
+        {
+          "path": "research/rineya_small_vocab_depth_v1/design/lcacc_harness.py",
+          "status": "??",
+          "bytes": 67231,
+          "sha256": "95883aa0355ab9c8265cfbc0dbc591e63d9876979eb9a2b731155c0c8fa2aa4c",
+          "preserve": "Scientific source/document/receipt; include exact bytes in phase2 snapshot release"
+        },
+        {
+          "path": "research/rineya_small_vocab_depth_v1/design/lcacc_null_sim.py",
+          "status": "??",
+          "bytes": 40618,
+          "sha256": "69003d82782fe7740f443394426fd54537122474ab18f5b05b36b87553519bd0",
+          "preserve": "Scientific source/document/receipt; include exact bytes in phase2 snapshot release"
+        },
+        {
+          "path": "research/rineya_small_vocab_depth_v1/launch/finalize_lcacc_gate.py",
+          "status": "??",
+          "bytes": 7635,
+          "sha256": "afb234dc41ab06efe68f9029140837ce0ddd69e2b071049e6693c8888c154aa4",
+          "preserve": "Scientific source/document/receipt; include exact bytes in phase2 snapshot release"
+        },
+        {
+          "path": "research/rineya_small_vocab_depth_v1/launch/launch_lcacc.ps1",
+          "status": "??",
+          "bytes": 1968,
+          "sha256": "32fcf4d332e95191bf374895bef473829d147b8a5ac5523aa3c7fb880ce47f0e",
+          "preserve": "Scientific source/document/receipt; include exact bytes in phase2 snapshot release"
+        },
+        {
+          "path": "research/rineya_small_vocab_depth_v1/launch/lcacc_run.sh",
+          "status": "??",
+          "bytes": 3212,
+          "sha256": "e12109191f5d111a626b9d97ad92bcdabeee9b0df76081c104934b5592339aae",
+          "preserve": "Scientific source/document/receipt; include exact bytes in phase2 snapshot release"
+        },
+        {
+          "path": "research/rineya_small_vocab_depth_v1/launch/prove_lcacc_gate.py",
+          "status": "??",
+          "bytes": 5968,
+          "sha256": "6dfc4d2c08f48ede1e78a4427a1a64e20c518f6b5e016b84c5bba173c880c177",
+          "preserve": "Scientific source/document/receipt; include exact bytes in phase2 snapshot release"
+        },
+        {
+          "path": "research/rineya_small_vocab_depth_v1/lcacc_describe.py",
+          "status": "??",
+          "bytes": 32084,
+          "sha256": "cfd97f2c97a4ea34c1795c4d2888d595fc38185047b5e335cf604f439b2bb35d",
+          "preserve": "Scientific source/document/receipt; include exact bytes in phase2 snapshot release"
+        },
+        {
+          "path": "research/rineya_small_vocab_depth_v1/lcacc_verdict.py",
+          "status": "??",
+          "bytes": 20574,
+          "sha256": "887abc544bd245f8d5367b858a2d3251f170b517abc7882a04e08cbf7eaf4a50",
+          "preserve": "Scientific source/document/receipt; include exact bytes in phase2 snapshot release"
+        },
+        {
+          "path": "research/rineya_small_vocab_depth_v1/run_lcacc.py",
+          "status": "??",
+          "bytes": 55792,
+          "sha256": "b5e4ad21e2ed9025a8894e53726ea2cf8818add5c384016497e99701bc18143f",
+          "preserve": "Scientific source/document/receipt; include exact bytes in phase2 snapshot release"
+        },
+        {
+          "path": "research/rineya_small_vocab_depth_v1/score_lcacc_raw.py",
+          "status": "??",
+          "bytes": 4092,
+          "sha256": "ebfdfe003fdd92e2f0245227fb0204d22fa66632d5fa23e1fde5fbd318ad88b5",
+          "preserve": "Scientific source/document/receipt; include exact bytes in phase2 snapshot release"
+        },
+        {
+          "path": "research/rineya_small_vocab_depth_v1/tests/test_lcacc_describe.py",
+          "status": "??",
+          "bytes": 41081,
+          "sha256": "95586dc7a536222a78de8e8f60b03e88e5c084509186a6cb393b8cf5b2040ace",
+          "preserve": "Scientific source/document/receipt; include exact bytes in phase2 snapshot release"
+        },
+        {
+          "path": "research/rineya_small_vocab_depth_v1/tests/test_lcacc_verdict.py",
+          "status": "??",
+          "bytes": 42457,
+          "sha256": "eea533be80f8f9c2cc06adc69e8e7fe3fbbad856e8e9b791e5b9699818281ba1",
+          "preserve": "Scientific source/document/receipt; include exact bytes in phase2 snapshot release"
+        }
+      ],
+      "overlay_bytes": 513436,
+      "ignored_files": [
+        {
+          "path": "experiments/rab001_exploration/__pycache__/hostbudget.cpython-311.pyc",
+          "size_bytes": 6910,
+          "mtime": "2026-09-25T09:56:06.2449447-05:00"
+        },
+        {
+          "path": "research/rineya_small_vocab_depth_v1/.pytest_cache/.gitignore",
+          "size_bytes": 37,
+          "mtime": "2026-09-25T10:26:09.5771157-05:00"
+        },
+        {
+          "path": "research/rineya_small_vocab_depth_v1/.pytest_cache/CACHEDIR.TAG",
+          "size_bytes": 191,
+          "mtime": "2026-09-25T10:26:09.5771157-05:00"
+        },
+        {
+          "path": "research/rineya_small_vocab_depth_v1/.pytest_cache/README.md",
+          "size_bytes": 302,
+          "mtime": "2026-09-25T10:26:09.5771157-05:00"
+        },
+        {
+          "path": "research/rineya_small_vocab_depth_v1/.pytest_cache/v/cache/nodeids",
+          "size_bytes": 2053,
+          "mtime": "2026-09-26T00:12:31.8839936-05:00"
+        },
+        {
+          "path": "research/rineya_small_vocab_depth_v1/__pycache__/build_calibration.cpython-311.pyc",
+          "size_bytes": 44441,
+          "mtime": "2026-09-25T09:56:06.2232217-05:00"
+        },
+        {
+          "path": "research/rineya_small_vocab_depth_v1/__pycache__/hlcc_verdict.cpython-311.pyc",
+          "size_bytes": 11580,
+          "mtime": "2026-09-25T10:26:01.523613-05:00"
+        },
+        {
+          "path": "research/rineya_small_vocab_depth_v1/__pycache__/layer_select.cpython-311.pyc",
+          "size_bytes": 7893,
+          "mtime": "2026-09-24T15:52:44.4849578-05:00"
+        },
+        {
+          "path": "research/rineya_small_vocab_depth_v1/__pycache__/lc_verdict.cpython-311.pyc",
+          "size_bytes": 7748,
+          "mtime": "2026-09-24T17:13:26.965701-05:00"
+        },
+        {
+          "path": "research/rineya_small_vocab_depth_v1/__pycache__/synthetic_text.cpython-311.pyc",
+          "size_bytes": 15423,
+          "mtime": "2026-09-25T09:56:06.2580374-05:00"
+        },
+        {
+          "path": "research/rineya_small_vocab_depth_v1/tests/__pycache__/test_hlcc_verdict.cpython-311-pytest-9.1.1.pyc",
+          "size_bytes": 54435,
+          "mtime": "2026-09-25T10:26:01.523613-05:00"
+        }
+      ],
+      "ignored_disposition": "Only disposable Python bytecode/pytest cache; no scientific tensor, dataset, native receipt or environment payload",
+      "exact_local_tags": [],
+      "remote_exact_refs": [
+        "origin/research/rineya-small-vocab-depth-distill-v1"
+      ],
+      "source_release_should_include": [
+        "research/rineya_small_vocab_depth_v1/HLCC001_RESULT.md",
+        "research/rineya_small_vocab_depth_v1/ABST001_RESULT.md",
+        "research/rineya_small_vocab_depth_v1/LCACC001_PREREG.md"
+      ],
+      "external_preservation_paths": [
+        "C:/Users/clclc/BusinessProject/rineya-dataset-retention-records/lcacc001-20260926",
+        "C:/Users/clclc/BusinessProject/rineya-dataset-retention-records/abst001-20260925",
+        "C:/Users/clclc/BusinessProject/rineya-dataset-retention-records/hlcc001-20260925"
+      ],
+      "external_disposition": "Retain in place; these are independent owner records/checkpoints/environments, not cleanup targets",
+      "native_model_release_allowed": false
+    },
+    {
+      "name": "ChatBubble-rineya-quality-sft-v1",
+      "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-quality-sft-v1",
+      "branch": "codex/rineya-quality-sft-v1",
+      "head": "b96683586956cfd5b6f7ff690c4f9fffcce4cedb",
+      "scientific_state": "ACTIVE_CONSUMER_NATIVE_DATA_ADMISSION_PENDING",
+      "previous_hold_reason": "Research goal explicitly active; no broad quality improvement established.",
+      "new_authorization_interpretation": "Owner now explicitly authorizes additional thorough checkout cleanup. Open question or old status ACTIVE_NOT_COMPLETE does not by itself require a checkout; exact source/evidence retention and current dependency/owner state govern.",
+      "recommendation": "RETIRE_CHECKOUT_AFTER_EXACT_REMOTE_TAG",
+      "conditions": [
+        "Verify exact remote source tag resolves to current HEAD",
+        "Keep research branch and hypotheses remotely",
+        "Retain external owner records/checkpoints in place",
+        "Recheck clean/dirt bytes and live worker ownership immediately before deletion"
+      ],
+      "dirty_count": 0,
+      "overlay_preservation_files": [],
+      "overlay_bytes": 0,
+      "ignored_files": [],
+      "ignored_disposition": "Only disposable Python bytecode/pytest cache; no scientific tensor, dataset, native receipt or environment payload",
+      "exact_local_tags": [
+        "archive/2026-10-09/local-source/rineya-quality-sft-v1"
+      ],
+      "remote_exact_refs": [],
+      "source_release_should_include": [
+        "experiments/rineya_quality_sft_v1/AGENTS.md",
+        "experiments/rineya_quality_sft_v1/README.md",
+        "experiments/rineya_quality_sft_v1/STATUS.md",
+        "experiments/rineya_quality_sft_v1/RUNBOOK.md"
+      ],
+      "external_preservation_paths": [
+        "C:/Users/clclc/BusinessProject/rineya-quality-sft-records/rqsft001-preparation-20261005"
+      ],
+      "external_disposition": "Retain in place; these are independent owner records/checkpoints/environments, not cleanup targets",
+      "native_model_release_allowed": false
+    },
+    {
+      "name": "ChatBubble-rineya-reasoning-posttraining-v1",
+      "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-reasoning-posttraining-v1",
+      "branch": "research/rineya-reasoning-posttraining-v1",
+      "head": "11da2c23927764b47148fd7c9300b1a60ac8ae57",
+      "scientific_state": "EARLIER_MICROFIT_COMPLETE_RESEARCH_GOAL_ACTIVE",
+      "previous_hold_reason": "Status says ACTIVE_NOT_COMPLETE. Latest tip adds TRISKILL/CLOCKFIX/GEN2 lane registrations; no documented retirement.",
+      "new_authorization_interpretation": "Owner now explicitly authorizes additional thorough checkout cleanup. Open question or old status ACTIVE_NOT_COMPLETE does not by itself require a checkout; exact source/evidence retention and current dependency/owner state govern.",
+      "recommendation": "RETIRE_CHECKOUT_AFTER_EXACT_REMOTE_TAG",
+      "conditions": [
+        "Verify exact remote source tag resolves to current HEAD",
+        "Keep research branch and hypotheses remotely",
+        "Retain external owner records/checkpoints in place",
+        "Recheck clean/dirt bytes and live worker ownership immediately before deletion"
+      ],
+      "dirty_count": 0,
+      "overlay_preservation_files": [],
+      "overlay_bytes": 0,
+      "ignored_files": [],
+      "ignored_disposition": "Only disposable Python bytecode/pytest cache; no scientific tensor, dataset, native receipt or environment payload",
+      "exact_local_tags": [],
+      "remote_exact_refs": [
+        "origin/research/rineya-reasoning-posttraining-v1"
+      ],
+      "source_release_should_include": [
+        "experiments/reasoning_posttraining_v1/AGENTS.md",
+        "research/reasoning_posttraining_v1/STATUS.json",
+        "research/reasoning_posttraining_v1/CONTINUE.md",
+        "research/reasoning_posttraining_v1/RESULTS.md"
+      ],
+      "external_preservation_paths": [
+        "C:/Users/clclc/BusinessProject/rineya-reasoning-posttraining-records/rrp001-journal",
+        "C:/Users/clclc/BusinessProject/.venv-mq001"
+      ],
+      "external_disposition": "Retain in place; these are independent owner records/checkpoints/environments, not cleanup targets",
+      "native_model_release_allowed": false
+    }
+  ],
+  "dependency_scan_file": "phase2-research-active-dependency-scan.json",
+  "unconditional_after_preservation_candidates": [
+    "ChatBubble-rineya-ppt-centralized-reasoning-v1",
+    "ChatBubble-rineya-quality-sft-v1",
+    "ChatBubble-rineya-reasoning-posttraining-v1"
+  ]
+}

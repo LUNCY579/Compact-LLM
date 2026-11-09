@@ -1,0 +1,25 @@
+{
+  "schema": "mrs_phase2.cc0_software_tests/1",
+  "status": "PASS",
+  "command": "C:/Users/clclc/BusinessProject/.venv-mq001/Scripts/python.exe -B -m unittest discover -s experiments/mrs_phase2_dataset_selection_v1 -p test_cc0_audit.py -v",
+  "working_directory": "C:/Users/clclc/BusinessProject/ChatBubble-mrs-phase2-dataset-selection-v1",
+  "tests": 7,
+  "failures": 0,
+  "errors": 0,
+  "skips": 0,
+  "reported_test_seconds": 0.010,
+  "audit_source_sha256": "a229118134c98e971c2d901652a1f6ad8624a4cd00222c7191916ed5e49a50cc",
+  "test_source_sha256": "4dcfb2347f5fec5016ceb9f17530d774cd199f6420fa9b17e15435ebb0104a17",
+  "test_cases": [
+    "test_create_only_receipt",
+    "test_exact_shard_population",
+    "test_first_registry_does_not_return_later_member",
+    "test_imbalanced_accuracy_not_balanced_accuracy",
+    "test_multiturn_cue_uses_final_user_only",
+    "test_protected_paths_rejected_before_open",
+    "test_selection_ties_are_id_stable"
+  ],
+  "evidence_basis": "Observed successful unittest execution in this agent tool session before the bounded corpus run; no target model was loaded.",
+  "corpus_acceptance": false,
+  "model_efficacy_claim": false
+}

@@ -69,6 +69,10 @@ The [CS-PILOT-001 independent old-input KL study](research/composable_skills_v1/
 
 **TGSA ledger provenance:** the unrelated-history [TGSA programme ledger](TGSA_PROGRAMME/) was already imported at its exact Git tree identity; its independent commit lineage is now included in `main`. Its distinct historical root attributes are preserved in the [consolidation archive](docs/repository-consolidation/2026-11-08/tgsa_ledger_source/), not applied to the current repository. This is provenance preservation, not an additional native experiment or quality claim.
 
+## MRS Phase II research and custody evidence
+
+The [MRS Phase II dataset-repair contract](research/mrs_phase2_dataset_selection_v1/PHASE_II_DATASET_REPAIR_CONTRACT.md) records why a candidate 6,000-row long-context corpus remains **rejected**, including a short-band tokenizer violation, allocation mismatch and unresolved structural partitioning. Its audit scripts and receipts are preserved as research, **not** authorized training data. The [October worktree cleanup archive](research/worktree_cleanup_20261009/README.md) preserves historical source/hardware custody and recovery records, and the [quality-pattern recount utility](research/rineya_quality_patterns_v1/recompute_behavior.py) is an offline diagnostic. None establishes new model capability or authorizes GPU runs.
+
 ## Research directions
 
 1. **Efficient model composition:** kept-layer/weight interpolation, LoRA scaling, task-vector arithmetic, model soups, and separating dense single-pass cores from multi-arm routing.

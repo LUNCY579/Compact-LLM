@@ -1,0 +1,129 @@
+Explicit all-6000 open payload integrity passed.
+Text-only rederivation completed.
+Shortcut and split checks completed.
+Tokenized 1000 permitted rows.
+Tokenized 2000 permitted rows.
+Tokenized 3000 permitted rows.
+Tokenized 4000 permitted rows.
+Tokenized 5000 permitted rows.
+Tokenized 6000 permitted rows.
+{
+  "status": "P0_STOP_MEASURED_BAND_FAILURES_AND_UNRESOLVED_EXTERNAL_EXCLUSION",
+  "rows": 6000,
+  "seconds": 35.685240268707275,
+  "native": {
+    "status": "MEASURED_ALL_6000_OPEN_ROWS",
+    "rows": 6000,
+    "rows_truncated": 0,
+    "rows_filtered": 0,
+    "holdout_rows_read": 600,
+    "band_policy": "Literal inclusive endpoints; shared-endpoint ambiguity separately counted, no new policy adopted.",
+    "prompt_tokens": {
+      "min": 434,
+      "max": 1472,
+      "mean": 895.18,
+      "p50": 839
+    },
+    "total_tokens": {
+      "min": 437,
+      "max": 1478,
+      "mean": 899.4268333333333,
+      "p50": 843
+    },
+    "prompt_over_1920": 0,
+    "total_over_2048": 0,
+    "outside_intended_band": 98,
+    "at_shared_endpoint": 4,
+    "by_split": {
+      "train": {
+        "rows": 4800,
+        "prompt_over_1920": 0,
+        "total_over_2048": 0,
+        "outside_intended_band": 4
+      },
+      "dev": {
+        "rows": 600,
+        "prompt_over_1920": 0,
+        "total_over_2048": 0,
+        "outside_intended_band": 37
+      },
+      "holdout": {
+        "rows": 600,
+        "prompt_over_1920": 0,
+        "total_over_2048": 0,
+        "outside_intended_band": 57
+      }
+    }
+  },
+  "semantic_errors": 0,
+  "structural_pairs": {
+    "train__dev": {
+      "ids": 0,
+      "groups": 0,
+      "templates": 0,
+      "context_exact": 0,
+      "context_nfkc": 0,
+      "context_digit_blinded": 0,
+      "question_exact": 0,
+      "question_nfkc": 0,
+      "question_digit_blinded": 0,
+      "entity_name_intersection": 0,
+      "local_sentence_form_intersection": 392,
+      "registered_typed_graph_invariant_intersection": 0,
+      "whole_actual_symbolic_case_invariant_intersection": 0,
+      "full_symbolic_entity_renamed_hash_intersection": 0,
+      "full_entity_renamed_user_template_intersection": 0
+    },
+    "train__holdout": {
+      "ids": 0,
+      "groups": 0,
+      "templates": 0,
+      "context_exact": 0,
+      "context_nfkc": 0,
+      "context_digit_blinded": 0,
+      "question_exact": 0,
+      "question_nfkc": 0,
+      "question_digit_blinded": 0,
+      "entity_name_intersection": 0,
+      "local_sentence_form_intersection": 352,
+      "registered_typed_graph_invariant_intersection": 0,
+      "whole_actual_symbolic_case_invariant_intersection": 0,
+      "full_symbolic_entity_renamed_hash_intersection": 0,
+      "full_entity_renamed_user_template_intersection": 0
+    },
+    "dev__holdout": {
+      "ids": 0,
+      "groups": 0,
+      "templates": 0,
+      "context_exact": 0,
+      "context_nfkc": 0,
+      "context_digit_blinded": 0,
+      "question_exact": 0,
+      "question_nfkc": 0,
+      "question_digit_blinded": 0,
+      "entity_name_intersection": 0,
+      "local_sentence_form_intersection": 467,
+      "registered_typed_graph_invariant_intersection": 0,
+      "whole_actual_symbolic_case_invariant_intersection": 0,
+      "full_symbolic_entity_renamed_hash_intersection": 0,
+      "full_entity_renamed_user_template_intersection": 0
+    }
+  },
+  "balance_max": 0.05263157894736836,
+  "integer_infeasible": 0,
+  "semantic_checker_category": "not automatic surface violation",
+  "scout_overlap": {
+    "status": "PASS_EXACT_IDS_TEXT_AND_FULL_SCHEMA_CANONICAL_COMPARISON_ONLY",
+    "bank_manifest_sha256": "c6b98cb5e8ffd35828fb4634f9f2c69a977a02fe426bce0061b70fe8aab8d156",
+    "public_sha256": "0e899f8c7d59842ab33a0cb82757c21fe9569454e41b2c4ea8e86d4fcfae8f91",
+    "worlds_sha256": "3fa651980d33ec6018c39d3cd182b18e101718054e3b2e7650e5573b28fc5332",
+    "scout_rows": 120,
+    "dataset_rows": 6000,
+    "id_group_overlap": 0,
+    "normalized_context_problem_overlap": 0,
+    "normalized_question_overlap": 0,
+    "full_entity_renamed_world_overlap": 0,
+    "canonicalization": "Complete declared world for scout versus complete query/cases for LCR; remove lexical entity identities and ID/split/depth annotations, preserve semantic fields and list order.",
+    "limits": "Different world schemas mean zero full-canonical collisions is not universal semantic graph-isomorphism proof. Both contain shared generic reasoning primitives. Protected evaluation banks remain unread and unverified."
+  }
+}
