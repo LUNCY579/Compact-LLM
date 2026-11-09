@@ -67,6 +67,8 @@ Two independent source-evidence hardening packages are also retained: a [pairwis
 
 The [CS-PILOT-001 independent old-input KL study](research/composable_skills_v1/RESULTS_PILOT001.md) compared an ordinary LoRA cross-entropy arm with a matched old-input KL anchor while acquiring a transition skill. The two development arms scored **194/384** and **193/384** acquisition, both **below the preregistered ≥200 and all-three-family-floor requirement**. The KL arm preserved **146/148** previously correct old-development answers versus **144/148** for ordinary LoRA, but **both lost clock-time successes**, and the two restored binding rows came from one world rather than independent replications. The study is a negative/limited result, not a no-forgetting solution; artifacts are experimental and **not production-qualified**. A separate [dose-parameterization evidence snapshot](experiments/architecture_benchmark_001/evidence/retention-design-v1/) and [recovered binding cost-report checks](research/binding_integration_v1/) are also preserved for audit and continuation.
 
+**TGSA ledger provenance:** the unrelated-history [TGSA programme ledger](TGSA_PROGRAMME/) was already imported at its exact Git tree identity; its independent commit lineage is now included in `main`. Its distinct historical root attributes are preserved in the [consolidation archive](docs/repository-consolidation/2026-11-08/tgsa_ledger_source/), not applied to the current repository. This is provenance preservation, not an additional native experiment or quality claim.
+
 ## Research directions
 
 1. **Efficient model composition:** kept-layer/weight interpolation, LoRA scaling, task-vector arithmetic, model soups, and separating dense single-pass cores from multi-arm routing.
