@@ -61,6 +61,8 @@ The [DMRF magnitude review](experiments/delta_multi_reasoning_v1/MAGNITUDE_IS_TH
 
 Two independent source-evidence hardening packages are also retained: a [pairwise disjointness auditor](experiments/delta_multi_reasoning_v1/audit/PAIRWISE_DISJOINTNESS.md) that refuses unsupported zero-overlap claims, and a [source observability audit](experiments/delta_multi_reasoning_v1/SOURCE_OBSERVABILITY_AUDIT.md) that distinguishes unobserved data from a verified absence. Both are CPU evidence/validation mechanics, **not** new model-capability measurements. Conflicting historical report versions remain preserved in [source-variant archives](docs/repository-consolidation/2026-11-08/dmrf_variants/), not silently overwritten.
 
+**CLARe Phase 4 scoped execution:** the [runner](experiments/clare_sparse_composition_v1/run_phase4.py) requires an explicit `runs/clare-rineya-001/SCOPE.json` with integer `max_tier` from 0 to 4 **before any step or output write**. Missing, invalid and out-of-range grants fail closed; [focused scope tests](experiments/clare_sparse_composition_v1/tests/test_run_phase4_scope.py) were added. This is an execution safety guard, not evidence that the sparse-training experiment has acquired a skill.
+
 ## Research directions
 
 1. **Efficient model composition:** kept-layer/weight interpolation, LoRA scaling, task-vector arithmetic, model soups, and separating dense single-pass cores from multi-arm routing.
