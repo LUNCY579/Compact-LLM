@@ -1,0 +1,65 @@
+name: Prune four merged research sources (one time)
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/prune-merged-research-once.yml"
+jobs:
+  prune:
+    if: "${{ github.event.head_commit.message == 'chore: prune four merged refs' }}"
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    permissions:
+      contents: write
+      pull-requests: read
+    steps:
+      - name: Verify exact source tips, Git ancestry, and prune
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import json, os, urllib.request, urllib.parse, urllib.error
+          token = os.environ["GH_TOKEN"]
+          repo = os.environ["GITHUB_REPOSITORY"]
+          base = f"https://api.github.com/repos/{repo}"
+          candidates = [["codex/worktree-save-20261002/chatbubble-mrs-phase2-dataset-selection-v1","9cbc48031dd52789f3e136b464a5cd9adb60e2b8"],["codex/rineya-worktree-cleanup-20261009","7f1a5e6b63db7abd3a7a998cbae5ca12330fb021"],["research/rineya-reasoning-corpus-v1","1f91ddcf124beb9b56f43767141d01cf59ccf9e7"],["codex/worktree-save-20261002/chatbubble-dmrf","1e67cef6f3b9a900ed6acfbc0df185d9599c1a4c"]]
+          headers = {"Authorization": f"Bearer {token}", "Accept": "application/vnd.github+json", "X-GitHub-Api-Version": "2022-11-28"}
+          def api(method, path, missing_ok=False):
+              req = urllib.request.Request(base + path, headers=headers, method=method)
+              try:
+                  with urllib.request.urlopen(req, timeout=30) as response:
+                      raw = response.read()
+                      return json.loads(raw) if raw else {}
+              except urllib.error.HTTPError as e:
+                  if missing_ok and e.code == 404: return None
+                  raise RuntimeError(f"{method} {path}: GitHub HTTP {e.code}") from None
+          
+          open_prs = api("GET", "/pulls?state=open&per_page=100")
+          main_sha = api("GET", "/git/ref/heads/main")["object"]["sha"]
+          print(f"Preflight {len(candidates)} historical refs against main {main_sha[:12]}")
+          for branch, approved_sha in candidates:
+              if branch == "main" or len(approved_sha) != 40: raise RuntimeError("Invalid ref approval")
+              quote = urllib.parse.quote(branch, safe="/")
+              obj = api("GET", f"/git/ref/heads/{quote}")
+              if obj["object"]["sha"] != approved_sha: raise RuntimeError(f"Branch moved: {branch}")
+              detail = api("GET", f"/branches/{quote}")
+              if detail.get("protected"): raise RuntimeError(f"Protected branch: {branch}")
+              if any(pr.get("head",{}).get("ref")==branch and pr.get("head",{}).get("repo",{}).get("full_name")==repo for pr in open_prs):
+                  raise RuntimeError(f"Open PR source: {branch}")
+              c = api("GET", f"/compare/main...{approved_sha}?per_page=1")
+              if c.get("ahead_by") != 0 or c.get("status") not in ("behind", "identical"):
+                  raise RuntimeError(f"Unmerged commits: {branch}")
+              print(f"VERIFIED {branch}@{approved_sha[:12]}")
+          for branch, approved_sha in candidates:
+              quote = urllib.parse.quote(branch, safe="/")
+              if api("GET", f"/git/ref/heads/{quote}")["object"]["sha"] != approved_sha:
+                  raise RuntimeError(f"Ref moved during operation: {branch}")
+              api("DELETE", f"/git/refs/heads/{quote}")
+              if api("GET", f"/git/ref/heads/{quote}", missing_ok=True) is not None:
+                  raise RuntimeError(f"Ref still exists: {branch}")
+              print(f"DELETED {branch}")
+          print("VERIFIED_PRUNED", len(candidates))
+          
+          PY
