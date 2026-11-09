@@ -89,6 +89,12 @@ The consolidated [retention-design evidence bank](experiments/architecture_bench
 
 The large Rineya dataset foundry is preserved as a **source-commit ancestor**, not bulk-copied into the active tree. Its [publication report](docs/repository-consolidation/2026-11-08/foundry_publication/PUBLICATION_REPORT.source.md) and [limitations review](docs/repository-consolidation/2026-11-08/foundry_publication/REVIEW_SUMMARY.source.md) document archived file identity, exclusions, private backup custody and outstanding training authorization. **TRAIN labels, backup completeness, and archived research do not imply permitted training data, model improvements or native readiness.**
 
+## CED floor-rule erratum and historical data-worktree status
+
+The [floor-rule erratum](ERRATUM_FLOOR_RULE.md) documents a disagreement between transcribed floor thresholds and the stricter **implemented Clopper–Pearson lower-bound rule**. The D0 seed-17 ledger result (41/128) does not clear the implemented floor; original preregistrations, thresholds and outcomes remain unchanged.
+
+Four historical CED/FWA/TGSA/cross-scale worktree sources are retained through merge ancestry. Their [LCR-6000](docs/repository-consolidation/2026-11-08/worktree_dataset_status/LCR_6000_README.source.md), [Reasoning Forge v1](docs/repository-consolidation/2026-11-08/worktree_dataset_status/REASONING_FORGE_V1_README.source.md), and [Reasoning Forge RL v2](docs/repository-consolidation/2026-11-08/worktree_dataset_status/REASONING_FORGE_RL_V2_README.source.md) descriptions are preserved as source metadata, **not** newly admitted training corpora. The cross-scale snapshot's sealed local banks and the FWA/model artifacts are not imported into active `main` directories; original commits preserve them for explicit review.
+
 ## Research directions
 
 1. **Efficient model composition:** kept-layer/weight interpolation, LoRA scaling, task-vector arithmetic, model soups, and separating dense single-pass cores from multi-arm routing.
