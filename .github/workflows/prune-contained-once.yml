@@ -1,4 +1,4 @@
-name: Prune contained composable-skills worktree source refs
+name: Prune contained TGSA programme ledger ref
 on:
   push:
     branches:
@@ -24,7 +24,7 @@ jobs:
           token = os.environ["GH_TOKEN"]
           repo = os.environ["GITHUB_REPOSITORY"]
           base = f"https://api.github.com/repos/{repo}"
-          candidates = [["codex/worktree-save-20261002/chatbubble-slft","7f34ce84ae1ccf1b6ab7b9b5512ffe99468791ca"],["codex/worktree-save-20261002/chatbubble-dose-param","40bfac02c8bdf547bcfd7fdec3684c4918613dd7"]]
+          candidates = [["research/tgsa-programme-ledger","9427c6d57e0c142ca5844b738f4cf8dd17f7d48f"]]
           headers = {"Authorization": f"Bearer {token}", "Accept": "application/vnd.github+json", "X-GitHub-Api-Version": "2022-11-28"}
           def api(method, path, missing_ok=False):
               req = urllib.request.Request(base + path, headers=headers, method=method)
