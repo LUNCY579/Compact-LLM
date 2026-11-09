@@ -73,6 +73,10 @@ The [CS-PILOT-001 independent old-input KL study](research/composable_skills_v1/
 
 The [MRS Phase II dataset-repair contract](research/mrs_phase2_dataset_selection_v1/PHASE_II_DATASET_REPAIR_CONTRACT.md) records why a candidate 6,000-row long-context corpus remains **rejected**, including a short-band tokenizer violation, allocation mismatch and unresolved structural partitioning. Its audit scripts and receipts are preserved as research, **not** authorized training data. The [October worktree cleanup archive](research/worktree_cleanup_20261009/README.md) preserves historical source/hardware custody and recovery records, and the [quality-pattern recount utility](research/rineya_quality_patterns_v1/recompute_behavior.py) is an offline diagnostic. None establishes new model capability or authorizes GPU runs.
 
+## RTG-1 reasoning corpus
+
+The [RTG-1.0.0 reasoning corpus](research/rineya_reasoning_corpus_v1/CORPUS_DESIGN.md) contains **24,000 generated examples** across register-state, counterfactual-state, prerequisite-schedule and evidence-chain tasks, with 19,157 TRAIN, 2,395 DEV and 2,448 holdout rows. The report records 24,000 distinct structural fingerprints, zero cross-split structure collisions, two independent solvers, and systematic shortcut tests. It also discloses **non-isolated semantic equivalence classes** for two families and residual surface cues. This corpus is **open-development candidate training material, not model-evaluated or newly approved training data**; a separate acceptance and custody decision is required before any training. Its immutable [manifest](research/rineya_reasoning_corpus_v1/MANIFEST.json) pins data files, source and tokenizer hashes.
+
 ## Research directions
 
 1. **Efficient model composition:** kept-layer/weight interpolation, LoRA scaling, task-vector arithmetic, model soups, and separating dense single-pass cores from multi-arm routing.
