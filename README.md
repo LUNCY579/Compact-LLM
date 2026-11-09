@@ -83,6 +83,12 @@ A [matched Supa-A1.1 abstention-gate diagnostic](rineya_single_layer_ft_v1/evide
 
 The FWA, adaptive-compute, TGSA v5.1 and pretrained-retrofit experiment trees were previously imported at their original source hashes. This consolidation retains their source histories while leaving newer shared-path implementations unchanged. Older FWA provenance/statistics and TGSA workflow variants are archived as [inert research files](docs/repository-consolidation/2026-11-08/family_variant_sources/) rather than enabling historical CI/training workflows under `.github/workflows/`. These preserved source variants do not establish native model improvement or renewed experiment authorization.
 
+## Binding, retention and foundry source preservation
+
+The consolidated [retention-design evidence bank](experiments/architecture_benchmark_001/evidence/retention-design-v1/) now contains 90 additional historical JSON reports from independent binding, mixture, LoRA dose, LWF and composition experiment branches. They were preserved as exact Git blob objects, not rerun, selected anew or combined into a single score. The [checkpoint verifier](experiments/rab001_exploration/hf_checkpoint.py) checks HF candidate/source weight and sidecar hashes, with [synthetic tests](experiments/rab001_exploration/test_hf_checkpoint.py); [text-contact auditing](experiments/reasoning_posttraining_v1/text_contact.py) screens declared, permitted source panels for ID, shared text and digit-blinded stems. This is source-code preservation, not native model qualification. Three historical retention output records are also kept.
+
+The large Rineya dataset foundry is preserved as a **source-commit ancestor**, not bulk-copied into the active tree. Its [publication report](docs/repository-consolidation/2026-11-08/foundry_publication/PUBLICATION_REPORT.source.md) and [limitations review](docs/repository-consolidation/2026-11-08/foundry_publication/REVIEW_SUMMARY.source.md) document archived file identity, exclusions, private backup custody and outstanding training authorization. **TRAIN labels, backup completeness, and archived research do not imply permitted training data, model improvements or native readiness.**
+
 ## Research directions
 
 1. **Efficient model composition:** kept-layer/weight interpolation, LoRA scaling, task-vector arithmetic, model soups, and separating dense single-pass cores from multi-arm routing.
