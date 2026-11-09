@@ -95,6 +95,12 @@ The [floor-rule erratum](ERRATUM_FLOOR_RULE.md) documents a disagreement between
 
 Four historical CED/FWA/TGSA/cross-scale worktree sources are retained through merge ancestry. Their [LCR-6000](docs/repository-consolidation/2026-11-08/worktree_dataset_status/LCR_6000_README.source.md), [Reasoning Forge v1](docs/repository-consolidation/2026-11-08/worktree_dataset_status/REASONING_FORGE_V1_README.source.md), and [Reasoning Forge RL v2](docs/repository-consolidation/2026-11-08/worktree_dataset_status/REASONING_FORGE_RL_V2_README.source.md) descriptions are preserved as source metadata, **not** newly admitted training corpora. The cross-scale snapshot's sealed local banks and the FWA/model artifacts are not imported into active `main` directories; original commits preserve them for explicit review.
 
+## Distinct CRS/PPT/Synth tracks and historical snapshots
+
+The primary [CRS-001 research branch](https://github.com/LUNCY579/Compact-LLM/tree/research/rineya-centralized-reasoning-system-v1) remains **separate** and explicitly reports `NOT_READY`: scope014 was exhausted and a subsequent integration source rejected before its fixture. The complementary [PPT-001 branch](https://github.com/LUNCY579/Compact-LLM/tree/research/rineya-ppt-centralized-reasoning-v1) preserves an independently scoped CPU sampler, with native scoring and model gains unqualified. The [Synth-CRS branch](https://github.com/LUNCY579/Compact-LLM/tree/research/rineya-synth-centralized-reasoning-v1) remains a large distinct body of evidence rather than an active default-branch training configuration. These are **not automatically superseded research tracks**.
+
+Two older historical-main snapshots and two superseded CRS owner/desktop worktree snapshots are preserved as exact Git merge-parent commits, with no archived model data or historical runtime executable copied into the active `main` tree. The [snapshot reconciliation](docs/repository-consolidation/2026-11-08/CRS_AND_HISTORICAL_SNAPSHOT_DISPOSITION.md) records original refs, unresolved research questions, and recovery. Branch-name retirement does not approve new native work or alter the dedicated CRS/PPT/Synth research scopes.
+
 ## Research directions
 
 1. **Efficient model composition:** kept-layer/weight interpolation, LoRA scaling, task-vector arithmetic, model soups, and separating dense single-pass cores from multi-arm routing.
