@@ -1,4 +1,4 @@
-name: Prune four archived worktree source refs
+name: Prune four historical and CRS snapshot refs
 on:
   push:
     branches:
@@ -7,7 +7,7 @@ on:
       - ".github/workflows/prune-merged-research-once.yml"
 jobs:
   prune:
-    if: "${{ github.event.head_commit.message == 'chore: prune four archived worktree refs' }}"
+    if: "${{ github.event.head_commit.message == 'chore: prune four historical snapshots' }}"
     runs-on: ubuntu-latest
     timeout-minutes: 8
     permissions:
@@ -24,7 +24,7 @@ jobs:
           token = os.environ["GH_TOKEN"]
           repo = os.environ["GITHUB_REPOSITORY"]
           base = f"https://api.github.com/repos/{repo}"
-          candidates = [["codex/worktree-save-20261002/chat-bubble-rineya-retrofit","6647eabf3bac9c3f08fce9dfa4998cc07bac3d16"],["codex/worktree-save-20261002/rineyabeta-supa-fwa-v1","96c3931eb51c1b272951d4ddbc60b8c863c17257"],["codex/worktree-save-20261002/chatbubble-ced-native-loader-qualification","840714fa269db8d5d3382b00b0aaf302b3bf1bf4"],["codex/worktree-save-20261002/chatbubble-cross-scale","174ee4fecd7a69b3746d8c2e6107220685047dc9"]]
+          candidates = [["codex/archive-20261004/historical-main-snapshots-24","6b539d9abf3a71e0c60c7b8342a3c79871205f0a"],["codex/archive-20261004/historical-main-snapshots-27","4f273e4efc443d422ed5c151bb00938d7fa65ccb"],["codex/crs-owner-exception-001","e47796f1e9b198f9c3213f471f0151ce517a183b"],["codex/worktree-save-20261002/detached-crs-native-desktop-v2","f9e5e11997bc7e23bdb0378574fe447dc3c3ee8b"]]
           headers = {"Authorization": f"Bearer {token}", "Accept": "application/vnd.github+json", "X-GitHub-Api-Version": "2022-11-28"}
           def api(method, path, missing_ok=False):
               req = urllib.request.Request(base + path, headers=headers, method=method)
